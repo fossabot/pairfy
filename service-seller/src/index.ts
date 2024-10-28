@@ -5,6 +5,7 @@ import { app } from "./app";
 import compression from "compression";
 import DB from "./db";
 
+
 const main = async () => {
   try {
     if (!process.env.POD_TIMEOUT) {
@@ -117,7 +118,7 @@ const main = async () => {
       throw new NotFoundError();
     });
 
-    app.use(errorMiddleware);
+    app.use(errorMiddleware as any);
 
     app.use(compression());
   } catch (e) {
