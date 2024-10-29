@@ -4,6 +4,6 @@
 
 <template>
   <main>
-x
+    Home view
   </main>
 </template>

@@ -4,8 +4,6 @@ import NavMenu from './components/NavMenu.vue'
 </script>
 
 <template>
-  <header>
-
     <div class="wrapper">
       <NavMenu />
 
@@ -14,8 +12,6 @@ import NavMenu from './components/NavMenu.vue'
       </div>
 
     </div>
-  </header>
-
 
 </template>
 
