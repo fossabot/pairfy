@@ -31,6 +31,14 @@
                 Create Product
             </div>
 
+            <div class="container">
+                <div class="left-column">
+                    Left Column (70%)
+                </div>
+                <div class="right-column">
+                    Right Column (30%)
+                </div>
+            </div>
         </div>
     </main>
 </template>
@@ -64,10 +72,34 @@ main {
 }
 
 .wrap {
-    border: 1px solid green;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
     margin-bottom: 1.5rem;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 1rem;
+}
+
+.left-column {
+    background-color: lightblue;
+    padding: 20px;
+}
+
+.right-column {
+    background-color: lightcoral;
+    padding: 20px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
 }
 </style>

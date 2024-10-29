@@ -33,7 +33,6 @@ header {
 
 .wrapper-content {
   flex: 1;
-  background: red;
   height: 100%;
   overflow: auto;
 }
