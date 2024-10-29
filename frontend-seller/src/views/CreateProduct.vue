@@ -4,6 +4,6 @@
 
 <template>
   <main>
-x
+    create product
   </main>
 </template>

@@ -9,14 +9,10 @@ defineProps({
 
 <template>
   <div class="wrap">
-
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/create-product">Create Product</RouterLink>
     </nav>
-
-
-
   </div>
 </template>
 
@@ -37,4 +33,7 @@ defineProps({
   user-select: none;
   transition: margin .4s cubic-bezier(.05, .74, .2, .99), transform .4s cubic-bezier(.05, .74, .2, .99);
 }
+
+
+
 </style>

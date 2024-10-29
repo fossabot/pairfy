@@ -7,16 +7,20 @@ import NavMenu from './components/NavMenu.vue'
   <header>
 
     <div class="wrapper">
-      <NavMenu msg="You did it!" />
-      
+      <NavMenu />
+
+      <div class="wrapper-content">
+        <RouterView />
+      </div>
+
     </div>
   </header>
 
-  <RouterView />
+
 </template>
 
 <style scoped>
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -31,6 +35,11 @@ header {
   transition: all .2s ease;
 }
 
+.wrapper-content {
+  width: 100%;
+  height: 100%;
+  background: red;
+}
 
 @media (min-width: 1024px) {
   header {
