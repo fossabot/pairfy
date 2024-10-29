@@ -4,14 +4,14 @@ import NavMenu from './components/NavMenu.vue'
 </script>
 
 <template>
-    <div class="wrapper">
-      <NavMenu />
+  <div class="wrapper">
+    <NavMenu />
 
-      <div class="wrapper-content">
-        <RouterView />
-      </div>
-
+    <div class="wrapper-content">
+      <RouterView />
     </div>
+
+  </div>
 
 </template>
 
@@ -32,9 +32,10 @@ header {
 }
 
 .wrapper-content {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   background: red;
+  height: 100%;
+  overflow: auto;
 }
 
 @media (min-width: 1024px) {

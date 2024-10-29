@@ -10,8 +10,21 @@ defineProps({
 <template>
   <div class="wrap">
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/create-product">Create Product</RouterLink>
+      <ul>
+        <li>
+          Dashboard
+        </li>
+        <li>
+          <RouterLink to="/"><span>Home</span></RouterLink>
+        </li>
+        <li>
+          <i class="pi pi-plus" style="color: slateblue"></i>
+          <RouterLink to="/create-product"><span>Create Product</span></RouterLink>
+        </li>
+      </ul>
+
+
+
     </nav>
   </div>
 </template>
@@ -34,6 +47,25 @@ defineProps({
   transition: margin .4s cubic-bezier(.05, .74, .2, .99), transform .4s cubic-bezier(.05, .74, .2, .99);
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
+li {
+  display: flex;
+  align-items: center;
+  position: relative;
+  font-weight: 500 !important;
+  padding: .45rem .75rem;
+  box-shadow: none !important;
+  cursor: pointer;
+}
 
+li i {
+  margin-right: 1rem;
+}
+
+li span {}
 </style>
