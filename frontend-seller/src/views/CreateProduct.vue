@@ -4,7 +4,9 @@
             <template #start>
                 <Button icon="pi pi-plus" class="mr-2" severity="secondary" text />
                 <Breadcrumb :model="navItems">
-
+                    <template #item="{ item }">
+                        <span style="font-weight: 600;">{{ item.label }}</span>
+                    </template>
                     <template #separator> / </template>
 
                 </Breadcrumb>
@@ -33,10 +35,11 @@
 
             <div class="container">
                 <div class="left-column">
-                    Left Column (70%)
+                    <InputText v-model="value2" type="text" placeholder="Product Name" class="input" />
+                    <Editor v-model="value" editorStyle="height: 320px" />
                 </div>
                 <div class="right-column">
-                    Right Column (30%)
+
                 </div>
             </div>
         </div>
@@ -65,6 +68,10 @@ const navItems = ref([
 </script>
 
 <style scoped>
+::v-deep(.p-inputtext) {
+    font-size: var(--text-size-a);
+}
+
 main {
     padding: 2rem;
     flex: 1 1 auto;
@@ -90,14 +97,16 @@ main {
     grid-template-columns: 70% 30%;
 }
 
-.left-column {
-    background-color: lightblue;
-    padding: 20px;
-}
+.left-column {}
 
 .right-column {
-    background-color: lightcoral;
-    padding: 20px;
+
+    padding: 1rem;
+}
+
+.input {
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 /* Responsive design for smaller screens */

@@ -14,6 +14,7 @@ import InputIcon from 'primevue/inputicon'
 import InputText from 'primevue/inputtext'
 import SplitButton from 'primevue/splitbutton';
 import Breadcrumb from 'primevue/breadcrumb';
+import Editor from 'primevue/editor';
 
 const app = createApp(App)
 
@@ -32,6 +33,7 @@ app.component('InputIcon', InputIcon);
 app.component('InputText', InputText);
 app.component('SplitButton', SplitButton);
 app.component('Breadcrumb', Breadcrumb);
+app.component('Editor', Editor);
 
 
 app.mount('#app')
