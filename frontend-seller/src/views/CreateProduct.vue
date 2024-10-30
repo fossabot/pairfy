@@ -82,6 +82,7 @@ main {
 
 .title {
     margin-bottom: 1.5rem;
+    font-weight: 700;
 }
 
 .container {
