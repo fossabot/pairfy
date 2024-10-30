@@ -36,6 +36,24 @@
   --section-gap: 160px;
 }
 
+:root {
+  --primary-a: #0046be;
+  --primary-b: #ffe000;
+  --primary-c: #0866FF;
+
+  --text-w: #ffffff;
+
+  --text-size-a: 0.833rem;
+  --text-size-b: 1rem;
+  --text-size-c: 1.2rem;
+  --text-size-d: 1.44rem;
+  --text-size-e: 1.728rem;
+  --text-size-f: 2.074rem;
+  --text-size-g: 2.488rem;
+  --text-size-h: 2.986rem;
+
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --color-background: var(--vt-c-black);
@@ -70,9 +88,9 @@ body {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-variation-settings:
-  "wdth" 100;
+    "wdth" 100;
   font-style: normal;
-  font-size: 1rem;
+  font-size: var(--text-size-b);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

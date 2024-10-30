@@ -9,17 +9,24 @@ defineProps({
 
 <template>
   <div class="wrap">
+    <img class="logo" src="@/assets/logo.svg" alt="logo">
     <nav>
       <ul>
-        <li>
-          Dashboard
+        <li class="label">
+          HOME
         </li>
         <li>
-          <RouterLink to="/"><span>Home</span></RouterLink>
+          <RouterLink to="/">
+            <i class="pi pi-home"/>
+            <span>Home</span>
+          </RouterLink>
         </li>
         <li>
-          <i class="pi pi-plus" style="color: slateblue"></i>
-          <RouterLink to="/create-product"><span>Create Product</span></RouterLink>
+
+          <RouterLink to="/create-product">
+            <i class="pi pi-plus"/>
+            <span>Create Product</span>
+          </RouterLink>
         </li>
       </ul>
 
@@ -31,7 +38,7 @@ defineProps({
 
 <style scoped>
 .wrap {
-  background-color: #020617;
+  background-color: var(--primary-a);
   margin-left: 0;
   width: 17rem;
   z-index: 10;
@@ -57,15 +64,28 @@ li {
   display: flex;
   align-items: center;
   position: relative;
-  font-weight: 500 !important;
+  font-weight: 500;
   padding: .45rem .75rem;
-  box-shadow: none !important;
+  box-shadow: none;
   cursor: pointer;
 }
 
 li i {
-  margin-right: 1rem;
+  margin-right: 0.75rem;
+  color: var(--text-w);
 }
 
-li span {}
+li span {
+  color: var(--text-w);
+}
+
+.logo {
+  padding: 0.5rem;
+}
+
+.label {
+  color: var(--text-w);
+  font-size: var(--text-size-a);
+  font-weight: 700;
+}
 </style>
