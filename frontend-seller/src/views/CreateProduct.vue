@@ -48,6 +48,17 @@
                         <InputText v-model="productSKU" type="text" placeholder="Product SKU"
                             v-keyfilter="/^[0-9]+$/" />
                     </InputGroup>
+
+                    <InputGroup>
+
+                        <InputText v-model="productModel" type="text" placeholder="Model" style="margin-right: 1rem;"
+                            v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
+
+                        <InputText v-model="productBrand" type="text" placeholder="Brand"
+                            v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
+                    </InputGroup>
+
+
                     <Editor v-model="editor" editorStyle="height: 320px" />
                 </div>
                 <div class="right-column">
@@ -115,6 +126,9 @@ const productName = ref();
 const productPrice = ref();
 const productCollateral = ref();
 const productSKU = ref();
+const productModel = ref();
+const productBrand = ref();
+
 
 const editor = ref();
 
