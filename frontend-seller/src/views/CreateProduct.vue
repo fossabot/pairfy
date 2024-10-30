@@ -35,15 +35,15 @@
 
             <div class="container">
                 <div class="left-column">
-                    <InputText v-model="name" type="text" placeholder="Product Name" v-keyfilter.alphanum />
+                    <InputText v-model="name" type="text" placeholder="Product Name" v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
                     <InputGroup>
 
-                        <InputText v-model="price" type="text" placeholder="Product Price" v-keyfilter.int />
+                        <InputText v-model="price" type="text" placeholder="Product Price" v-keyfilter="/^[0-9]+$/" />
 
                         <InputText v-model="collateral" type="text" placeholder="Product Collateral"
-                            style="margin: 0 1rem;" v-keyfilter.int />
+                            style="margin: 0 1rem;" v-keyfilter="/^[0-9]+$/"/>
 
-                        <InputText v-model="sku" type="text" placeholder="Product SKU" />
+                        <InputText v-model="sku" type="text" placeholder="Product SKU"  v-keyfilter="/^[0-9]+$/"/>
                     </InputGroup>
                     <Editor v-model="value" editorStyle="height: 320px" />
                 </div>
