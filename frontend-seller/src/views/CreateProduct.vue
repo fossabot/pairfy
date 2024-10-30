@@ -2,7 +2,7 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-plus" class="mr-2" severity="secondary" text />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -277,7 +277,7 @@ main {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
 }
 
