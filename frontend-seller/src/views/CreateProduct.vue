@@ -36,7 +36,7 @@
             <div class="container">
                 <div class="left-column">
                     <InputText v-model="productName" type="text" placeholder="Product Name"
-                        v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
+                        v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
                     <InputGroup>
 
                         <InputText v-model="productPrice" type="text" placeholder="Product Price"
