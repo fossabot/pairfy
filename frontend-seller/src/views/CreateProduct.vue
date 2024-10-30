@@ -26,7 +26,7 @@
             </template>
         </Toolbar>
 
-        <div class="wrap">
+        <div class="card">
             <div class="title">
                 Create Product
             </div>
@@ -71,13 +71,13 @@ main {
     position: relative;
 }
 
-.wrap {
+.card {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-a);
-    padding: 1rem;
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 1.5rem;
+    margin-top: 1rem;
 }
 
 .title {
@@ -88,7 +88,6 @@ main {
 .container {
     display: grid;
     grid-template-columns: 70% 30%;
-    gap: 1rem;
 }
 
 .left-column {
