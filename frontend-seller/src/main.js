@@ -18,7 +18,8 @@ import Editor from 'primevue/editor';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import KeyFilter from 'primevue/keyfilter';
-
+import Checkbox from 'primevue/checkbox';
+import Select from 'primevue/select';
 
 const app = createApp(App)
 
@@ -40,6 +41,8 @@ app.component('Breadcrumb', Breadcrumb);
 app.component('Editor', Editor);
 app.component('InputGroup', InputGroup);
 app.component('InputGroupAddon', InputGroupAddon);
+app.component('Checkbox', Checkbox);
+app.component('Select', Select);
 
 app.directive('keyfilter', KeyFilter);
 

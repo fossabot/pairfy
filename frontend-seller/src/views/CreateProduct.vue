@@ -35,20 +35,32 @@
 
             <div class="container">
                 <div class="left-column">
-                    <InputText v-model="name" type="text" placeholder="Product Name" v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
+                    <InputText v-model="productName" type="text" placeholder="Product Name"
+                        v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
                     <InputGroup>
 
-                        <InputText v-model="price" type="text" placeholder="Product Price" v-keyfilter="/^[0-9]+$/" />
+                        <InputText v-model="productPrice" type="text" placeholder="Product Price"
+                            v-keyfilter="/^[0-9]+$/" />
 
-                        <InputText v-model="collateral" type="text" placeholder="Product Collateral"
-                            style="margin: 0 1rem;" v-keyfilter="/^[0-9]+$/"/>
+                        <InputText v-model="productCollateral" type="text" placeholder="Product Collateral"
+                            style="margin: 0 1rem;" v-keyfilter="/^[0-9]+$/" />
 
-                        <InputText v-model="sku" type="text" placeholder="Product SKU"  v-keyfilter="/^[0-9]+$/"/>
+                        <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                            v-keyfilter="/^[0-9]+$/" />
                     </InputGroup>
-                    <Editor v-model="value" editorStyle="height: 320px" />
+                    <Editor v-model="editor" editorStyle="height: 320px" />
                 </div>
                 <div class="right-column">
+                    <div class="box">
+                        <div class="subtitle">
+                            Category
+                        </div>
 
+                        <div class="box-content">
+                            <Select v-model="selectedCity" :options="cities" optionLabel="name"
+                                placeholder="Select a category" style="width:100%; font-size: var(--text-size-a)" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -69,17 +81,39 @@ const items = ref([
     }
 ])
 
+const productName = ref();
+const productPrice = ref();
+const productCollateral = ref();
+const productSKU = ref();
+
+const editor = ref();
+
 const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Create Product' }
 ]);
 
+const selectedCity = ref();
+
+const cities = ref([
+    { name: 'New York', code: 'NY' },
+    { name: 'Rome', code: 'RM' },
+    { name: 'London', code: 'LDN' },
+    { name: 'Istanbul', code: 'IST' },
+    { name: 'Paris', code: 'PRS' }
+]);
 </script>
 
 <style scoped>
 ::v-deep(.p-inputtext) {
     font-size: var(--text-size-a);
 }
+
+::v-deep(.p-select-label) {
+    font-size: var(--text-size-a);
+}
+
+
 
 main {
     padding: 2rem;
@@ -112,13 +146,30 @@ main {
 }
 
 .right-column {
-
-    padding: 1rem;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .input {
     width: 100%;
     margin-bottom: 1rem;
+}
+
+.box {
+    border: 1px solid var(--border-a);
+    border-radius: .25rem;
+}
+
+.subtitle {
+    border-bottom: 1px solid var(--border-a);
+    font-size: var(--text-size-a);
+    font-weight: 700;
+    padding: 1rem;
+}
+
+.box-content {
+    padding: 1rem;
 }
 
 /* Responsive design for smaller screens */
