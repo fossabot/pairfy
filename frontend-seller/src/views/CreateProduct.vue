@@ -96,11 +96,22 @@ const navItems = ref([
 const selectedCity = ref();
 
 const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
+    { name: "Electronics", code: "electronics" },
+    { name: "Books", code: "books" },
+    { name: "Music", code: "music" },
+    { name: "Movies", code: "movies" },
+    { name: "Games", code: "games" },
+    { name: "Clothing & Accessories", code: "clothing" },
+    { name: "Home & Garden", code: "home" },
+    { name: "Beauty & Personal Care", code: "beauty" },
+    { name: "Health & Household", code: "health" },
+    { name: "Grocery & Gourmet Food", code: "food" },
+    { name: "Toys, Hobbies & Collectibles", code: "toys" },
+    { name: "Sports & Outdoors", code: "sports" },
+    { name: "Automotive & Industrial", code: "industrial" },
+    { name: "Pet Supplies", code: "pets" },
+    { name: "Office Supplies & Equipment", code: "office" },
+    { name: "Digital Content & Software", code: "software" },
 ]);
 </script>
 
