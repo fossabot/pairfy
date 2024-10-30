@@ -15,12 +15,7 @@
             </template>
 
             <template #center>
-                <IconField>
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText placeholder="Search" />
-                </IconField>
+
             </template>
 
             <template #end>
@@ -60,6 +55,21 @@
 
 
                     <Editor v-model="editor" editorStyle="height: 320px" />
+
+
+                    <div class="uploader">
+                        <div class="grid" id="sortable-grid">
+                            <div class="grid-item" data-id="1">1</div>
+                            <div class="grid-item" data-id="2">2</div>
+                            <div class="grid-item" data-id="3">3</div>
+                            <div class="grid-item" data-id="4">4</div>
+                            <div class="grid-item" data-id="5">5</div>
+                            <div class="grid-item" data-id="6">6</div>
+                            <div class="grid-item" data-id="7">7</div>
+                            <div class="grid-item" data-id="8">8</div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="right-column">
                     <div class="box">
@@ -109,7 +119,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import Sortable from 'sortablejs';
+
 
 const items = ref([
     {
@@ -161,6 +173,27 @@ const cities = ref([
 const color = ref("#000000");
 
 const checked = ref(false);
+
+
+onMounted(() => {
+    new Sortable(document.getElementById('sortable-grid'), {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onEnd: function (evt) {
+            var items = document.querySelectorAll('.grid-item');
+            var orderArray = [];
+
+            items.forEach(function (item) {
+                orderArray.push(item.getAttribute('data-id'));
+            });
+
+            console.log('Final Order:', orderArray);
+        }
+    });
+})
+
+
+
 </script>
 
 <style scoped>
@@ -172,6 +205,9 @@ const checked = ref(false);
     font-size: var(--text-size-a);
 }
 
+::v-deep(.p-toolbar) {
+    padding: 0 1rem;
+}
 
 
 main {
@@ -237,6 +273,21 @@ main {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.grid-item {
+    background-color: #f1f1f1;
+    padding: 20px;
+    height: 150px;
+    text-align: center;
+    border: 1px solid #ccc;
+    cursor: grab;
 }
 
 /* Responsive design for smaller screens */

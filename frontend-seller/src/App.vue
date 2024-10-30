@@ -34,6 +34,8 @@ header {
 .wrapper-content {
   flex: 1;
   height: 100%;
+  overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
