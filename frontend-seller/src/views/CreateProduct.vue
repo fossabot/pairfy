@@ -61,6 +61,36 @@
                                 placeholder="Select a category" style="width:100%; font-size: var(--text-size-a)" />
                         </div>
                     </div>
+
+                    <div class="box">
+                        <div class="subtitle">
+                            Color
+                        </div>
+
+                        <div class="box-content">
+                            <ColorPicker v-model="color" />
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <div class="subtitle">
+                            Stock
+                        </div>
+
+                        <div class="box-content">
+                            <ToggleSwitch v-model="checked" />
+                        </div>
+                    </div>
+
+                    <div class="box-buttons">
+
+                        <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
+                            outlined style="width: 100%; font-size: var(--text-size-a)" />
+
+                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading" @click="load"
+                            style="width: 100%; font-size: var(--text-size-a)" />
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,6 +143,10 @@ const cities = ref([
     { name: "Office Supplies & Equipment", code: "office" },
     { name: "Digital Content & Software", code: "software" },
 ]);
+
+const color = ref("#000000");
+
+const checked = ref(false);
 </script>
 
 <style scoped>
@@ -170,6 +204,7 @@ main {
 .box {
     border: 1px solid var(--border-a);
     border-radius: .25rem;
+    margin-bottom: 1rem
 }
 
 .subtitle {
@@ -181,6 +216,13 @@ main {
 
 .box-content {
     padding: 1rem;
+}
+
+
+.box-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 /* Responsive design for smaller screens */

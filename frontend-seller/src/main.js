@@ -20,6 +20,8 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import KeyFilter from 'primevue/keyfilter';
 import Checkbox from 'primevue/checkbox';
 import Select from 'primevue/select';
+import ColorPicker from 'primevue/colorpicker';
+import ToggleSwitch from 'primevue/toggleswitch';
 
 const app = createApp(App)
 
@@ -43,6 +45,8 @@ app.component('InputGroup', InputGroup);
 app.component('InputGroupAddon', InputGroupAddon);
 app.component('Checkbox', Checkbox);
 app.component('Select', Select);
+app.component('ColorPicker', ColorPicker);
+app.component('ToggleSwitch', ToggleSwitch);
 
 app.directive('keyfilter', KeyFilter);
 
