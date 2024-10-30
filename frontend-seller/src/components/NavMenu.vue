@@ -80,7 +80,7 @@ li span {
 }
 
 .logo {
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
 }
 
 .label {
