@@ -52,6 +52,8 @@
   --text-size-g: 2.488rem;
   --text-size-h: 2.986rem;
 
+  --border-a: #e2e8f0;
+
 }
 
 @media (prefers-color-scheme: dark) {

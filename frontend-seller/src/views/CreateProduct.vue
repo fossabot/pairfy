@@ -64,7 +64,7 @@ const navItems = ref([
 
 </script>
 
-<style>
+<style scoped>
 main {
     padding: 2rem;
     flex: 1 1 auto;
@@ -74,6 +74,10 @@ main {
 .wrap {
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--border-a);
+    padding: 1rem;
+    border-radius: 1rem;
+    padding: 2rem;
 }
 
 .title {
