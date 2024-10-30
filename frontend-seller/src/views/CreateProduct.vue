@@ -35,7 +35,16 @@
 
             <div class="container">
                 <div class="left-column">
-                    <InputText v-model="value2" type="text" placeholder="Product Name" class="input" />
+                    <InputText v-model="name" type="text" placeholder="Product Name" v-keyfilter.alphanum />
+                    <InputGroup>
+
+                        <InputText v-model="price" type="text" placeholder="Product Price" v-keyfilter.int />
+
+                        <InputText v-model="collateral" type="text" placeholder="Product Collateral"
+                            style="margin: 0 1rem;" v-keyfilter.int />
+
+                        <InputText v-model="sku" type="text" placeholder="Product SKU" />
+                    </InputGroup>
                     <Editor v-model="value" editorStyle="height: 320px" />
                 </div>
                 <div class="right-column">
@@ -97,7 +106,10 @@ main {
     grid-template-columns: 70% 30%;
 }
 
-.left-column {}
+.left-column {
+    display: grid;
+    gap: 1rem;
+}
 
 .right-column {
 

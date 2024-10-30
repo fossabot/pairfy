@@ -15,6 +15,10 @@ import InputText from 'primevue/inputtext'
 import SplitButton from 'primevue/splitbutton';
 import Breadcrumb from 'primevue/breadcrumb';
 import Editor from 'primevue/editor';
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
+import KeyFilter from 'primevue/keyfilter';
+
 
 const app = createApp(App)
 
@@ -34,6 +38,9 @@ app.component('InputText', InputText);
 app.component('SplitButton', SplitButton);
 app.component('Breadcrumb', Breadcrumb);
 app.component('Editor', Editor);
+app.component('InputGroup', InputGroup);
+app.component('InputGroupAddon', InputGroupAddon);
 
+app.directive('keyfilter', KeyFilter);
 
 app.mount('#app')
