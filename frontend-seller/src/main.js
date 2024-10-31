@@ -33,6 +33,7 @@ import SelectButton from 'primevue/selectbutton';
 import Fluid from 'primevue/fluid';
 import Password from 'primevue/password';
 import IftaLabel from 'primevue/iftalabel';
+import Divider from 'primevue/divider';
 
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -78,6 +79,8 @@ app.component('SelectButton', SelectButton);
 app.component('Fluid', Fluid);
 app.component('Password', Password);
 app.component('IftaLabel', IftaLabel);
+app.component('Divider', Divider);
+
 
 app.directive('keyfilter', KeyFilter);
 

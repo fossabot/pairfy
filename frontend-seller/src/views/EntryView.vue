@@ -3,7 +3,7 @@
         <div class="wrap-left"></div>
         <div class="wrap-right">
 
-
+            <!--LOGIN-->
             <div class="login">
                 <div class="title">
                     <span>Welcome back!</span>
@@ -11,13 +11,11 @@
                 </div>
 
                 <div class="email">
-                    <InputGroup>
-                        <InputGroupAddon>
-                            <i class="pi pi-envelope" />
-                        </InputGroupAddon>
-                        <InputText v-model="loginForm.email" placeholder="Email" type="email" style=" font-size: var(--text-size-a);" autofocus fluid/>
-                    </InputGroup>
-
+                    <IftaLabel>
+                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
+                            style=" font-size: var(--text-size-a)" />
+                        <label for="email">Email</label>
+                    </IftaLabel>
                 </div>
 
 
@@ -31,10 +29,22 @@
 
                         </IftaLabel>
                     </Fluid>
-
                 </div>
 
+
+                <div class="legend">
+                    <span>Forgot password?</span>
+                </div>
+
+                <div class="control">
+                    <Button label="Login" fluid style=" font-size: var(--text-size-a);" />
+                </div>
+
+                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
+                </Divider>
             </div>
+            <!--LOGIN-->
+
 
         </div>
     </div>
@@ -54,6 +64,14 @@ const loginForm = ref({
 </script>
 
 <style lang="css" scoped>
+::v-deep(.p-button-label) {
+    font-weight: 600;
+}
+
+::v-deep(.p-divider-content) {
+    color: var(--text-b);
+}
+
 .wrap {
     display: flex;
     height: 100vh;
@@ -72,7 +90,7 @@ const loginForm = ref({
 }
 
 .login {
-    min-width: 300px;
+    min-width: 325px;
     min-height: 600px;
 }
 
@@ -111,5 +129,23 @@ const loginForm = ref({
 
 .password {
     margin-top: 1rem;
+}
+
+.legend {
+    display: flex;
+    justify-content: flex-end;
+    color: var(--primary-c);
+    font-size: var(--text-size-a);
+    line-height: 2rem;
+}
+
+.legend span {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.control {
+    margin-top: 2rem;
+
 }
 </style>
