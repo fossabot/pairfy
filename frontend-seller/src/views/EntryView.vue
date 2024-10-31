@@ -1,7 +1,6 @@
 <template>
     <div class="wrap">
         <div class="wrap-left">
-
             <div class="card">
                 <div class="logo">
                     <span> Buy and sell in the Cardano ecosystem.</span>
@@ -11,8 +10,6 @@
                     αdαbuy
                 </span>
             </div>
-
-
         </div>
 
         <div class="wrap-right">
@@ -27,7 +24,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
-                            placeholder="example@gmail.com" style=" font-size: var(--text-size-a)" />
+                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -102,7 +99,7 @@ const loginForm = ref({
 .logo {
     font-family: "Manrope", serif;
     font-weight: 600 !important;
-    font-size: var(--text-size-g);
+    font-size: var(--text-size-h);
     padding: 1rem;
     color: white;
     font-kerning: normal;
@@ -164,7 +161,7 @@ const loginForm = ref({
 }
 
 .password {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .legend {
@@ -172,7 +169,7 @@ const loginForm = ref({
     justify-content: flex-end;
     color: var(--primary-c);
     font-size: var(--text-size-a);
-    line-height: 2rem;
+    line-height: 3rem;
 }
 
 .legend span {
