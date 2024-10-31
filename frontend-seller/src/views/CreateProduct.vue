@@ -74,11 +74,22 @@
                 <div class="right-column">
                     <div class="box">
                         <div class="subtitle">
+                            Tags
+                        </div>
+
+                        <div class="box-content">
+                            <AutoComplete v-model="productTags" inputId="multiple-ac-2" multiple fluid
+                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)" />
+                        </div>
+                    </div>
+
+                    <div class="box">
+                        <div class="subtitle">
                             Category
                         </div>
 
                         <div class="box-content">
-                            <Select v-model="selectedCity" :options="cities" optionLabel="name"
+                            <Select v-model="productCategory" :options="productCategories" optionLabel="name"
                                 placeholder="Select a category" style="width:100%; font-size: var(--text-size-a)" />
                         </div>
                     </div>
@@ -134,24 +145,25 @@ const items = ref([
     }
 ])
 
-const productName = ref();
-const productPrice = ref();
-const productCollateral = ref();
-const productSKU = ref();
-const productModel = ref();
-const productBrand = ref();
-
-
-const editor = ref();
-
 const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Create Product' }
 ]);
 
-const selectedCity = ref();
+const editor = ref();
 
-const cities = ref([
+const productName = ref(null);
+const productPrice = ref(null);
+const productCollateral = ref(null);
+const productSKU = ref(null);
+const productModel = ref(null);
+const productBrand = ref(null);
+const productTags = ref(null);
+
+
+const productCategory = ref();
+
+const productCategories = ref([
     { name: "Electronics", code: "electronics" },
     { name: "Books", code: "books" },
     { name: "Music", code: "music" },
@@ -209,6 +221,13 @@ onMounted(() => {
     padding: 0 1rem;
 }
 
+::v-deep(.p-colorpicker-preview) {
+    border-radius: 50%;
+}
+
+::v-deep(.p-chip) {
+    font-size: var(--text-size-a);
+}
 
 main {
     padding: 2rem;

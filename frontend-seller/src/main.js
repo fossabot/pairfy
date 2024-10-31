@@ -22,6 +22,7 @@ import Checkbox from 'primevue/checkbox';
 import Select from 'primevue/select';
 import ColorPicker from 'primevue/colorpicker';
 import ToggleSwitch from 'primevue/toggleswitch';
+import AutoComplete from 'primevue/autocomplete';
 
 const app = createApp(App)
 
@@ -47,6 +48,7 @@ app.component('Checkbox', Checkbox);
 app.component('Select', Select);
 app.component('ColorPicker', ColorPicker);
 app.component('ToggleSwitch', ToggleSwitch);
+app.component('AutoComplete', AutoComplete);
 
 app.directive('keyfilter', KeyFilter);
 
