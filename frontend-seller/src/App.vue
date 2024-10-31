@@ -1,11 +1,6 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import NavMenu from './components/NavMenu.vue'
-</script>
-
 <template>
   <div class="wrapper">
-    <NavMenu />
+    <NavMenu v-if="getUserData" />
 
     <div class="wrapper-content">
       <RouterView />
@@ -14,6 +9,16 @@ import NavMenu from './components/NavMenu.vue'
   </div>
 
 </template>
+
+<script setup>
+import { RouterView } from 'vue-router'
+import NavMenu from './components/NavMenu.vue'
+
+import dashboardAPI from '@/views/api/index';
+
+const { getUserData } = dashboardAPI();
+
+</script>
 
 <style scoped>
 * {
@@ -35,7 +40,7 @@ header {
   flex: 1;
   height: 100%;
   overflow-y: scroll;
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 @media (min-width: 1024px) {
