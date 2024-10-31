@@ -93,11 +93,11 @@ const loginForm = ref({
 }
 
 .glass {
-    width: 90%;
-    height: 90%;
-    background: rgb(255 255 255 / 44%);
+    width: 70%;
+    height: 70%;
+    background: rgb(255 255 255);
     backdrop-filter: blur(10px);
-    border-radius: 1rem; 
+    border-radius: 1rem;
 }
 
 .wrap-right {
