@@ -102,8 +102,10 @@
                         </div>
 
                         <div class="box-content">
-                            <ColorPicker v-model="color" />
+                            <ColorPicker v-model="productHex" />
 
+                            <InputText v-model="productColor" type="text" placeholder="Color Name"
+                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-left: 1rem;" />
 
                         </div>
                     </div>
@@ -114,7 +116,7 @@
                         </div>
 
                         <div class="box-content">
-                            <ToggleSwitch v-model="checked" />
+                            <ToggleSwitch v-model="productStock" />
                         </div>
                     </div>
 
@@ -186,9 +188,11 @@ const productCategories = ref([
     { name: "Digital Content & Software", code: "software" },
 ]);
 
-const color = ref("#000000");
+const productHex = ref("#000000");
 
-const checked = ref(false);
+const productColor = ref(null);
+
+const productStock = ref(false);
 
 
 onMounted(() => {
