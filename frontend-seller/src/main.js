@@ -30,6 +30,9 @@ import Badge from 'primevue/badge';
 import OverlayBadge from 'primevue/overlaybadge';
 import Message from 'primevue/message';
 import SelectButton from 'primevue/selectbutton';
+import Fluid from 'primevue/fluid';
+import Password from 'primevue/password';
+import IftaLabel from 'primevue/iftalabel';
 
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -72,6 +75,9 @@ app.component('Badge', Badge);
 app.component('OverlayBadge', OverlayBadge);
 app.component('Message', Message);
 app.component('SelectButton', SelectButton);
+app.component('Fluid', Fluid);
+app.component('Password', Password);
+app.component('IftaLabel', IftaLabel);
 
 app.directive('keyfilter', KeyFilter);
 
