@@ -25,6 +25,9 @@ import ToggleSwitch from 'primevue/toggleswitch';
 import AutoComplete from 'primevue/autocomplete';
 import FileUpload from 'primevue/fileupload';
 import ProgressBar from 'primevue/progressbar';
+import Badge from 'primevue/badge';
+import OverlayBadge from 'primevue/overlaybadge';
+import Message from 'primevue/message';
 
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -61,6 +64,9 @@ app.component('ToggleSwitch', ToggleSwitch);
 app.component('AutoComplete', AutoComplete);
 app.component('FileUpload', FileUpload);
 app.component('ProgressBar', ProgressBar);
+app.component('Badge', Badge);
+app.component('OverlayBadge', OverlayBadge);
+app.component('Message', Message);
 
 app.directive('keyfilter', KeyFilter);
 

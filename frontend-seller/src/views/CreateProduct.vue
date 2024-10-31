@@ -76,6 +76,17 @@
                                                 :disabled="!files || files.length === 0"></Button>
                                             <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
                                                 severity="danger" :disabled="!files || files.length === 0"></Button>
+
+                                            <Message severity="secondary">
+
+                                                <div style="display: flex; align-items: center">
+
+                                                    <i class="pi pi-exclamation-circle" />
+                                                    <span style="margin-left: 0.5rem;"> Drag the images to the desired
+                                                        order.</span>
+                                                </div>
+
+                                            </Message>
                                         </div>
                                         <ProgressBar :value="totalSizePercent" :showValue="false" class="uploader-bar">
                                             <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
@@ -84,28 +95,28 @@
                                 </template>
                                 <template
                                     #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
-                                    <div class="flex flex-col gap-8 pt-4">
-                                        <div v-show="files.length > 0">
+                                    <div class="uploader-content">
 
-                                            <div class="media" id="sortable-media">
-                                                <div v-for="(file, index) of files"
-                                                    :key="file.name + file.type + file.size" class="media-item"
-                                                    :data-id="index">
-                                                    <div>
-                                                        <img role="presentation" :alt="file.name" :src="file.objectURL"
-                                                            width="100" height="50" />
-                                                    </div>
-                                                    <span
-                                                        class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{
-                                                            file.name }}</span>
-                                                    <div>{{ formatSize(file.size) }}</div>
-                                                    <Badge value="Pending" severity="warn" />
-                                                    <Button icon="pi pi-times"
-                                                        @click="onRemoveTemplatingFile(file, removeFileCallback, index)"
-                                                        outlined rounded severity="danger" />
+                                        <div v-show="files.length > 0" class="media" id="sortable-media">
+                                            <div v-for="(file, index) of files" :key="file.name + file.type + file.size"
+                                                class="media-item" :data-id="index">
+                                                <div>
+                                                    <img role="presentation" :alt="file.name" :src="file.objectURL"
+                                                        width="100" height="50" class="media-image" />
                                                 </div>
+
+                                                <div class="media-control">
+                                                    <div class="media-pending" />
+                                                    <button
+                                                        @click="onRemoveTemplatingFile(file, removeFileCallback, index)">
+
+                                                        <i class="pi pi-trash" />
+                                                    </button>
+                                                </div>
+
                                             </div>
                                         </div>
+
 
                                         <div v-if="uploadedFiles.length > 0">
                                             <h5>Completed</h5>
@@ -131,8 +142,8 @@
                                     </div>
                                 </template>
                                 <template #empty>
-                                    <div class="uploader-empty">
-                                        <i class="pi pi-cloud-upload" />
+                                    <div class="uploader-empty" @click="chooseCallback()">
+                                        <i class="pi pi-upload" />
                                         <p>Drag and drop images to here to upload.</p>
                                     </div>
                                 </template>
@@ -211,7 +222,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, nextTick } from 'vue';
+import { onMounted, ref } from 'vue';
 import Sortable from 'sortablejs';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
@@ -348,7 +359,7 @@ const formatSize = (bytes) => {
 
 <style scoped>
 ::v-deep(.p-progressbar) {
-    height: 0.5rem;
+    height: 0.4rem;
 }
 
 ::v-deep(.p-inputtext) {
@@ -361,6 +372,7 @@ const formatSize = (bytes) => {
 
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
+    padding-left: 0.5rem;
 }
 
 ::v-deep(.p-colorpicker-preview) {
@@ -368,6 +380,10 @@ const formatSize = (bytes) => {
 }
 
 ::v-deep(.p-chip) {
+    font-size: var(--text-size-a);
+}
+
+::v-deep(.p-message-text) {
     font-size: var(--text-size-a);
 }
 
@@ -455,6 +471,47 @@ main {
     border: 1px solid var(--border-a);
     cursor: grab;
     border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.media-item button {
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-b);
+    font-size: var(--text-size-a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    margin-left: 0.5rem;
+    border: 1px solid var(--border-a);
+    cursor: pointer;
+}
+
+.media-item button i {
+    font-size: 12px;
+}
+
+.media-image {
+    height: 80px;
+    width: 80px;
+    object-fit: contain;
+}
+
+.media-control {
+    display: flex;
+    align-items: center;
+}
+
+.media-pending {
+    background: orange;
+    font-size: var(--text-size-a);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
 }
 
 .media-preview {
@@ -479,6 +536,7 @@ main {
 }
 
 .uploader-empty {
+    height: 320px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -488,12 +546,17 @@ main {
 }
 
 .uploader-empty i {
-    font-size: 4rem;
+    font-size: 3rem;
 }
 
 .uploader-empty p {
     font-size: 1rem;
     margin-top: 1rem;
+}
+
+.uploader-content {
+    display: flex;
+    flex-direction: column;
 }
 
 /* Responsive design for smaller screens */
