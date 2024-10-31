@@ -28,6 +28,7 @@ import ProgressBar from 'primevue/progressbar';
 import Badge from 'primevue/badge';
 import OverlayBadge from 'primevue/overlaybadge';
 import Message from 'primevue/message';
+import SelectButton from 'primevue/selectbutton';
 
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -67,6 +68,7 @@ app.component('ProgressBar', ProgressBar);
 app.component('Badge', Badge);
 app.component('OverlayBadge', OverlayBadge);
 app.component('Message', Message);
+app.component('SelectButton', SelectButton);
 
 app.directive('keyfilter', KeyFilter);
 

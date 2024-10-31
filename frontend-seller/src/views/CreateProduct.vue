@@ -196,6 +196,19 @@
                         </div>
                     </div>
 
+
+
+                    <div class="box">
+                        <div class="subtitle">
+                            Condition
+                        </div>
+
+                        <div class="box-content">
+                            <SelectButton v-model="productState" :options="productStateOptions"
+                                aria-labelledby="basic" />
+                        </div>
+                    </div>
+
                     <div class="box">
                         <div class="subtitle">
                             Stock
@@ -281,8 +294,8 @@ const productColor = ref(null);
 
 const productStock = ref(false);
 
-
-
+const productState = ref('New');
+const productStateOptions = ref(['New', 'Used']);
 
 
 const $primevue = usePrimeVue();
@@ -384,6 +397,10 @@ const formatSize = (bytes) => {
 }
 
 ::v-deep(.p-message-text) {
+    font-size: var(--text-size-a);
+}
+
+::v-deep(.p-togglebutton) {
     font-size: var(--text-size-a);
 }
 
