@@ -72,16 +72,6 @@
 
                 </div>
                 <div class="right-column">
-                    <div class="box">
-                        <div class="subtitle">
-                            Tags
-                        </div>
-
-                        <div class="box-content">
-                            <AutoComplete v-model="productTags" inputId="multiple-ac-2" multiple fluid
-                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)" />
-                        </div>
-                    </div>
 
                     <div class="box">
                         <div class="subtitle">
@@ -93,6 +83,18 @@
                                 placeholder="Select a category" style="width:100%; font-size: var(--text-size-a)" />
                         </div>
                     </div>
+
+                    <div class="box">
+                        <div class="subtitle">
+                            Tags
+                        </div>
+
+                        <div class="box-content">
+                            <AutoComplete v-model="productTags" inputId="multiple-ac-2" multiple fluid
+                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)" />
+                        </div>
+                    </div>
+
 
                     <div class="box">
                         <div class="subtitle">
