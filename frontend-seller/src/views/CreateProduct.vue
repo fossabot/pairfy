@@ -85,12 +85,12 @@
                                 <template
                                     #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
                                     <div class="flex flex-col gap-8 pt-4">
-                                        <div v-if="files.length > 0">
-                                            <h5>Pending</h5>
-                                            <div class="flex flex-wrap gap-4">
+                                        <div v-show="files.length > 0">
+
+                                            <div class="media" id="sortable-media">
                                                 <div v-for="(file, index) of files"
-                                                    :key="file.name + file.type + file.size"
-                                                    class="p-8 rounded-border flex flex-col border border-surface items-center gap-4">
+                                                    :key="file.name + file.type + file.size" class="media-item"
+                                                    :data-id="index">
                                                     <div>
                                                         <img role="presentation" :alt="file.name" :src="file.objectURL"
                                                             width="100" height="50" />
@@ -142,17 +142,7 @@
 
 
 
-                        <!--/////////////////////////////-->
-                        <div class="media" id="sortable-media">
-                            <div class="media-item" data-id="0">
-                                <FileUpload mode="basic" @select="(event) => onFileSelect(event, 0)" customUpload auto
-                                    severity="secondary" />
-                                <img v-if="src" :src="src" alt="Image" class="media-preview" style="" />
-                            </div>
-                            <div class="media-item" data-id="1">2</div>
-                            <div class="media-item" data-id="2">3</div>
-                        </div>
-                        <!--/////////////////////////////-->
+
                     </div>
 
                 </div>
@@ -221,7 +211,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch, nextTick } from 'vue';
 import Sortable from 'sortablejs';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
@@ -281,6 +271,17 @@ const productColor = ref(null);
 const productStock = ref(false);
 
 
+
+
+
+const $primevue = usePrimeVue();
+const toast = useToast();
+
+const totalSize = ref(0);
+const totalSizePercent = ref(0);
+const files = ref([]);
+
+
 onMounted(() => {
     new Sortable(document.getElementById('sortable-media'), {
         animation: 150,
@@ -296,31 +297,9 @@ onMounted(() => {
             console.log('Final Order:', orderArray);
         }
     });
+
 })
 
-
-const src = ref(null);
-
-function onFileSelect(event, index) {
-    const file = event.files[0];
-    const reader = new FileReader();
-
-    reader.onload = async (e) => {
-        src.value = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-
-    console.log(index);
-}
-
-
-const $primevue = usePrimeVue();
-const toast = useToast();
-
-const totalSize = ref(0);
-const totalSizePercent = ref(0);
-const files = ref([]);
 
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
     removeFileCallback(index);
