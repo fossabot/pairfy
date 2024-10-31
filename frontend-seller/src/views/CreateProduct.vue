@@ -47,10 +47,10 @@
                     <InputGroup>
 
                         <InputText v-model="productModel" type="text" placeholder="Model" style="margin-right: 1rem;"
-                            v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
+                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
 
                         <InputText v-model="productBrand" type="text" placeholder="Brand"
-                            v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
+                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
                     </InputGroup>
 
 
@@ -103,6 +103,8 @@
 
                         <div class="box-content">
                             <ColorPicker v-model="color" />
+
+
                         </div>
                     </div>
 
