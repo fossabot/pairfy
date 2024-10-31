@@ -23,6 +23,12 @@ import Select from 'primevue/select';
 import ColorPicker from 'primevue/colorpicker';
 import ToggleSwitch from 'primevue/toggleswitch';
 import AutoComplete from 'primevue/autocomplete';
+import FileUpload from 'primevue/fileupload';
+import ProgressBar from 'primevue/progressbar';
+
+import ConfirmationService from 'primevue/confirmationservice'
+import DialogService from 'primevue/dialogservice'
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App)
 
@@ -33,6 +39,10 @@ app.use(PrimeVue, {
         preset: Aura
     }
 });
+
+app.use(ConfirmationService);
+app.use(ToastService);
+app.use(DialogService);
 
 app.component('Button', Button);
 app.component('Toolbar', Toolbar);
@@ -49,6 +59,8 @@ app.component('Select', Select);
 app.component('ColorPicker', ColorPicker);
 app.component('ToggleSwitch', ToggleSwitch);
 app.component('AutoComplete', AutoComplete);
+app.component('FileUpload', FileUpload);
+app.component('ProgressBar', ProgressBar);
 
 app.directive('keyfilter', KeyFilter);
 

@@ -35,22 +35,24 @@
                     <InputGroup>
 
                         <InputText v-model="productPrice" type="text" placeholder="Product Price"
-                            v-keyfilter="/^[0-9]+$/" />
+                            v-keyfilter="/^[0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
 
                         <InputText v-model="productCollateral" type="text" placeholder="Product Collateral"
-                            style="margin: 0 1rem;" v-keyfilter="/^[0-9]+$/" />
-
-                        <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                            style="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)"
                             v-keyfilter="/^[0-9]+$/" />
+
+                        <InputText v-model="productSKU" type="text" placeholder="Product SKU" v-keyfilter="/^[0-9]+$/"
+                            style="border-radius: var(--p-inputtext-border-radius)" />
                     </InputGroup>
 
                     <InputGroup>
 
-                        <InputText v-model="productModel" type="text" placeholder="Model" style="margin-right: 1rem;"
+                        <InputText v-model="productModel" type="text" placeholder="Model"
+                            style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
                             v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
 
                         <InputText v-model="productBrand" type="text" placeholder="Brand"
-                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
+                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
                     </InputGroup>
 
 
@@ -58,16 +60,99 @@
 
 
                     <div class="uploader">
-                        <div class="grid" id="sortable-grid">
-                            <div class="grid-item" data-id="1">1</div>
-                            <div class="grid-item" data-id="2">2</div>
-                            <div class="grid-item" data-id="3">3</div>
-                            <div class="grid-item" data-id="4">4</div>
-                            <div class="grid-item" data-id="5">5</div>
-                            <div class="grid-item" data-id="6">6</div>
-                            <div class="grid-item" data-id="7">7</div>
-                            <div class="grid-item" data-id="8">8</div>
+                        <!--/////////////////////////////-->
+
+                        <div class="uploader-wrap">
+                            <Toast />
+                            <FileUpload name="demo[]" url="/api/upload" @upload="onTemplatedUpload($event)"
+                                :multiple="true" accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
+                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                                    <div class="uploader-top">
+                                        <div class="uploader-control">
+                                            <Button @click="chooseCallback()" icon="pi pi-image" rounded outlined
+                                                severity="secondary"></Button>
+                                            <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
+                                                rounded outlined severity="success"
+                                                :disabled="!files || files.length === 0"></Button>
+                                            <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
+                                                severity="danger" :disabled="!files || files.length === 0"></Button>
+                                        </div>
+                                        <ProgressBar :value="totalSizePercent" :showValue="false" class="uploader-bar">
+                                            <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
+                                        </ProgressBar>
+                                    </div>
+                                </template>
+                                <template
+                                    #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
+                                    <div class="flex flex-col gap-8 pt-4">
+                                        <div v-if="files.length > 0">
+                                            <h5>Pending</h5>
+                                            <div class="flex flex-wrap gap-4">
+                                                <div v-for="(file, index) of files"
+                                                    :key="file.name + file.type + file.size"
+                                                    class="p-8 rounded-border flex flex-col border border-surface items-center gap-4">
+                                                    <div>
+                                                        <img role="presentation" :alt="file.name" :src="file.objectURL"
+                                                            width="100" height="50" />
+                                                    </div>
+                                                    <span
+                                                        class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{
+                                                            file.name }}</span>
+                                                    <div>{{ formatSize(file.size) }}</div>
+                                                    <Badge value="Pending" severity="warn" />
+                                                    <Button icon="pi pi-times"
+                                                        @click="onRemoveTemplatingFile(file, removeFileCallback, index)"
+                                                        outlined rounded severity="danger" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div v-if="uploadedFiles.length > 0">
+                                            <h5>Completed</h5>
+                                            <div class="flex flex-wrap gap-4">
+                                                <div v-for="(file, index) of uploadedFiles"
+                                                    :key="file.name + file.type + file.size"
+                                                    class="p-8 rounded-border flex flex-col border border-surface items-center gap-4">
+                                                    <div>
+                                                        <img role="presentation" :alt="file.name" :src="file.objectURL"
+                                                            width="100" height="50" />
+                                                    </div>
+                                                    <span
+                                                        class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{
+                                                            file.name }}</span>
+                                                    <div>{{ formatSize(file.size) }}</div>
+                                                    <Badge value="Completed" class="mt-4" severity="success" />
+                                                    <Button icon="pi pi-times"
+                                                        @click="removeUploadedFileCallback(index)" outlined rounded
+                                                        severity="danger" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template #empty>
+                                    <div class="uploader-empty">
+                                        <i class="pi pi-cloud-upload" />
+                                        <p>Drag and drop images to here to upload.</p>
+                                    </div>
+                                </template>
+                            </FileUpload>
                         </div>
+
+
+
+
+                        <!--/////////////////////////////-->
+                        <div class="media" id="sortable-media">
+                            <div class="media-item" data-id="0">
+                                <FileUpload mode="basic" @select="(event) => onFileSelect(event, 0)" customUpload auto
+                                    severity="secondary" />
+                                <img v-if="src" :src="src" alt="Image" class="media-preview" style="" />
+                            </div>
+                            <div class="media-item" data-id="1">2</div>
+                            <div class="media-item" data-id="2">3</div>
+                        </div>
+                        <!--/////////////////////////////-->
                     </div>
 
                 </div>
@@ -138,7 +223,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import Sortable from 'sortablejs';
-
+import { useToast } from "primevue/usetoast";
+import { usePrimeVue } from 'primevue/config';
 
 const items = ref([
     {
@@ -196,11 +282,11 @@ const productStock = ref(false);
 
 
 onMounted(() => {
-    new Sortable(document.getElementById('sortable-grid'), {
+    new Sortable(document.getElementById('sortable-media'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
         onEnd: function (evt) {
-            var items = document.querySelectorAll('.grid-item');
+            var items = document.querySelectorAll('.media-item');
             var orderArray = [];
 
             items.forEach(function (item) {
@@ -213,10 +299,80 @@ onMounted(() => {
 })
 
 
+const src = ref(null);
+
+function onFileSelect(event, index) {
+    const file = event.files[0];
+    const reader = new FileReader();
+
+    reader.onload = async (e) => {
+        src.value = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+
+    console.log(index);
+}
+
+
+const $primevue = usePrimeVue();
+const toast = useToast();
+
+const totalSize = ref(0);
+const totalSizePercent = ref(0);
+const files = ref([]);
+
+const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
+    removeFileCallback(index);
+    totalSize.value -= parseInt(formatSize(file.size));
+    totalSizePercent.value = totalSize.value / 10;
+};
+
+const onClearTemplatingUpload = (clear) => {
+    clear();
+    totalSize.value = 0;
+    totalSizePercent.value = 0;
+};
+
+const onSelectedFiles = (event) => {
+    files.value = event.files;
+    files.value.forEach((file) => {
+        totalSize.value += parseInt(formatSize(file.size));
+    });
+};
+
+const uploadEvent = (callback) => {
+    totalSizePercent.value = totalSize.value / 10;
+    callback();
+};
+
+const onTemplatedUpload = () => {
+    toast.add({ severity: "info", summary: "Success", detail: "File Uploaded", life: 3000 });
+};
+
+const formatSize = (bytes) => {
+    const k = 1024;
+    const dm = 3;
+    const sizes = $primevue.config.locale.fileSizeTypes;
+
+    if (bytes === 0) {
+        return `0 ${sizes[0]}`;
+    }
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
+
+    return `${formattedSize} ${sizes[i]}`;
+};
+
 
 </script>
 
 <style scoped>
+::v-deep(.p-progressbar) {
+    height: 0.5rem;
+}
+
 ::v-deep(.p-inputtext) {
     font-size: var(--text-size-a);
 }
@@ -242,6 +398,9 @@ main {
     flex: 1 1 auto;
     position: relative;
 }
+
+
+
 
 .card {
     display: flex;
@@ -302,7 +461,7 @@ main {
     gap: 1rem;
 }
 
-.grid {
+.media {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
@@ -310,14 +469,53 @@ main {
     padding: 1rem;
 }
 
-.grid-item {
+.media-item {
     background: #f1f5f9;
-    padding: 20px;
+    overflow: hidden;
     height: 150px;
     text-align: center;
     border: 1px solid var(--border-a);
     cursor: grab;
     border-radius: 1rem;
+}
+
+.media-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.uploader-top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.uploader-control {
+    display: flex;
+    gap: 1rem;
+}
+
+.uploader-bar {
+    margin-top: 1rem;
+}
+
+.uploader-empty {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: var(--text-size-b);
+    color: var(--text-b);
+}
+
+.uploader-empty i {
+    font-size: 4rem;
+}
+
+.uploader-empty p {
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 
 /* Responsive design for smaller screens */
