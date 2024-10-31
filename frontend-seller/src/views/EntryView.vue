@@ -1,6 +1,10 @@
 <template>
     <div class="wrap">
-        <div class="wrap-left"></div>
+        <div class="wrap-left">
+            <div class="glass">
+
+            </div>
+        </div>
         <div class="wrap-right">
 
             <!--LOGIN-->
@@ -13,7 +17,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" />
+                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -80,6 +84,20 @@ const loginForm = ref({
 .wrap-left {
     width: 40%;
     background: var(--background-b);
+    background-image: url('/src/assets/woman.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass {
+    width: 90%;
+    height: 90%;
+    background: rgb(255 255 255 / 44%);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem; 
 }
 
 .wrap-right {
