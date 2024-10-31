@@ -306,15 +306,18 @@ main {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
+    border: 1px solid var(--border-a);
+    padding: 1rem;
 }
 
 .grid-item {
-    background-color: #f1f1f1;
+    background-color: #f1f5f9;
     padding: 20px;
     height: 150px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-a);
     cursor: grab;
+    border-radius: 1rem;
 }
 
 /* Responsive design for smaller screens */
