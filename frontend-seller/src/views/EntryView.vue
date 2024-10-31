@@ -6,9 +6,7 @@
                     <span> Buy and sell in the Cardano ecosystem.</span>
                 </div>
 
-                <span>
-                    αdαbuy
-                </span>
+
             </div>
         </div>
 
