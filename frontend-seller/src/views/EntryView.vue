@@ -92,8 +92,8 @@ const loginForm = ref({
 }
 
 .wrap-left {
-    width: 40%;
-    background: var(--primary-a);
+    width: 30%;
+    background: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -101,7 +101,7 @@ const loginForm = ref({
 
 .logo {
     font-family: "Manrope", serif;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     font-size: var(--text-size-g);
     padding: 1rem;
     color: white;
@@ -109,14 +109,17 @@ const loginForm = ref({
 }
 
 .card {
-    width: 70%;
-    height: 70%;
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
     display: flex;
     flex-direction: column;
+    background: var(--primary-a);
+    border-radius: 1rem;
+    padding: 2rem;
 }
 
 .wrap-right {
-    width: 60%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
