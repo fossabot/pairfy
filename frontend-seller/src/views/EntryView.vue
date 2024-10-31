@@ -1,10 +1,20 @@
 <template>
     <div class="wrap">
         <div class="wrap-left">
-            <div class="glass">
 
+            <div class="card">
+                <div class="logo">
+                    <span> Buy and sell in the Cardano ecosystem.</span>
+                </div>
+
+                <span>
+                    αdαbuy
+                </span>
             </div>
+
+
         </div>
+
         <div class="wrap-right">
 
             <!--LOGIN-->
@@ -17,7 +27,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
-                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
+                            placeholder="example@gmail.com" style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -83,21 +93,26 @@ const loginForm = ref({
 
 .wrap-left {
     width: 40%;
-    background: var(--background-b);
-    background-image: url('/src/assets/woman.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
+    background: var(--primary-a);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.glass {
+.logo {
+    font-family: "Manrope", serif;
+    font-weight: 700 !important;
+    font-size: var(--text-size-g);
+    padding: 1rem;
+    color: white;
+    font-kerning: normal;
+}
+
+.card {
     width: 70%;
     height: 70%;
-    background: rgb(255 255 255);
-    backdrop-filter: blur(10px);
-    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .wrap-right {
@@ -164,6 +179,5 @@ const loginForm = ref({
 
 .control {
     margin-top: 2rem;
-
 }
 </style>
