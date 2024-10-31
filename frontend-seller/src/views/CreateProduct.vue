@@ -297,7 +297,6 @@ onMounted(() => {
             console.log('Final Order:', orderArray);
         }
     });
-
 })
 
 
