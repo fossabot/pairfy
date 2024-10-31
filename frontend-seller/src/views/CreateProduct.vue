@@ -311,7 +311,7 @@ main {
 }
 
 .grid-item {
-    background-color: #f1f5f9;
+    background: #f1f5f9;
     padding: 20px;
     height: 150px;
     text-align: center;
