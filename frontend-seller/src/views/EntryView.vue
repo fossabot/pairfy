@@ -2,7 +2,7 @@
     <div class="wrap">
         <div class="wrap-left">
             <div class="card">
-                <div class="logo">
+                <div class="logan">
                     <span> Buy and sell in the Cardano ecosystem.</span>
                 </div>
 
@@ -94,13 +94,14 @@ const loginForm = ref({
     align-items: center;
 }
 
-.logo {
+.logan {
     font-family: "Manrope", serif;
     font-weight: 600 !important;
     font-size: var(--text-size-h);
     padding: 1rem;
     color: white;
     font-kerning: normal;
+   
 }
 
 .card {
@@ -111,6 +112,7 @@ const loginForm = ref({
     background: var(--primary-a);
     border-radius: 1rem;
     padding: 3rem;
+    background-image: url('@/assets/blue-pattern.png');
 }
 
 .wrap-right {
