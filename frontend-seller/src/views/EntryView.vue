@@ -6,7 +6,7 @@
                     <img src="@/assets/logo-white.png" alt="">
                 </div>
                 <div class="logan">
-                    <span> Buy and sell in the Cardano ecosystem.</span>
+                    <span> Buy and sell products in Cardano.</span>
                 </div>
                 <div class="subtext">
                     <span>Discover the largest native P2P marketplace where you can trade everything with ADA.</span>
