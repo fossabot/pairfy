@@ -9,7 +9,7 @@
                     <span> Buy and sell in the Cardano ecosystem.</span>
                 </div>
                 <div class="subtext">
-                    <span> Discover the largest native P2P marketplace on ADA.</span>
+                    <span>Discover the largest native P2P marketplace where you can trade everything with ADA.</span>
                 </div>
 
             </div>
