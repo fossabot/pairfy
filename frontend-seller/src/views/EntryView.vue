@@ -115,7 +115,7 @@ const loginForm = ref({
 }
 
 .entry-left {
-    width: 40%;
+    width: 35%;
     background: white;
     display: flex;
     justify-content: center;
@@ -157,7 +157,7 @@ const loginForm = ref({
 }
 
 .entry-right {
-    width: 60%;
+    width: 65%;
     display: flex;
     justify-content: center;
     align-items: center;
