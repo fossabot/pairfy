@@ -134,7 +134,7 @@ const loginForm = ref({
 }
 
 .subtext {
-    font-size: var(--text-size-e);
+    font-size: var(--text-size-d);
     color: var(--text-w);
     padding: 1rem;
 }
