@@ -7,7 +7,9 @@ import router from './router'
 import { stores } from "./store";
 
 import PrimeVue from 'primevue/config';
-import Aura from '@primevue/themes/aura';
+import Lara from '@primevue/themes/lara';
+
+
 import Button from "primevue/button"
 import Toolbar from 'primevue/toolbar';
 import IconField from 'primevue/iconfield'
@@ -35,6 +37,7 @@ import Password from 'primevue/password';
 import IftaLabel from 'primevue/iftalabel';
 import Divider from 'primevue/divider';
 
+
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
@@ -47,7 +50,7 @@ app.use(router);
 
 app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: Lara
     }
 });
 

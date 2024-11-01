@@ -112,7 +112,6 @@ const loginForm = ref({
     background: var(--primary-a);
     border-radius: 1rem;
     padding: 3rem;
-    background-image: url('@/assets/blue-pattern.png');
 }
 
 .wrap-right {
