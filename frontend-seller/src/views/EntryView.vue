@@ -8,6 +8,9 @@
                 <div class="logan">
                     <span> Buy and sell in the Cardano ecosystem.</span>
                 </div>
+                <div class="subtext">
+                    <span> Discover the largest native P2P marketplace on ADA.</span>
+                </div>
 
             </div>
 
@@ -121,13 +124,19 @@ const loginForm = ref({
 }
 
 .logan {
-    font-family: "Manrope", serif;
     font-weight: 600 !important;
     font-size: var(--text-size-h);
     padding: 1rem;
-    color: white;
+    color: var(--text-w);
     font-kerning: normal;
 
+
+}
+
+.subtext {
+    font-size: var(--text-size-e);
+    color: var(--text-w);
+    padding: 1rem;
 }
 
 .logo {
