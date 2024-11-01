@@ -8,9 +8,28 @@
                 <div class="logan">
                     <span> Buy and sell in the Cardano ecosystem.</span>
                 </div>
-                <div class="visual">
-                
-                </div>
+
+            </div>
+
+            <div class="visual">
+                <ul class="circles">
+                    <li>
+                        <img src="@/assets/lace.svg" alt="">
+                    </li>
+                    <li>
+                        <img src="@/assets/eternl.png" alt="">
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li>
+                       <img src="@/assets/vespr.png" alt="">
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li> <img src="@/assets/nami.svg" alt=""></li>
+                    <li></li>
+                </ul>
             </div>
         </div>
 
@@ -96,6 +115,7 @@ const loginForm = ref({
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .logan {
@@ -110,11 +130,6 @@ const loginForm = ref({
 
 .logo {
     padding: 1rem;
-}
-
-.visual img {
-    width: 400px;
-    
 }
 
 .card {
@@ -194,5 +209,136 @@ const loginForm = ref({
 
 .control {
     margin-top: 2rem;
+}
+
+.visual {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    padding: 0.5rem;
+}
+
+
+.circles {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.circles li img {
+    width: 100%;
+    padding: 10%;
+    border-radius: 2rem;
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+}
+
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+
+
+@keyframes animate {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
 }
 </style>
