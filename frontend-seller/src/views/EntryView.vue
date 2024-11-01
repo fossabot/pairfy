@@ -110,7 +110,7 @@ const loginForm = ref({
     flex-direction: column;
     background: var(--primary-a);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 3rem;
 }
 
 .wrap-right {
