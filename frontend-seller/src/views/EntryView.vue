@@ -23,9 +23,11 @@
                     <li></li>
                     <li></li>
                     <li>
-                       <img src="@/assets/vespr.png" alt="">
+                        <img src="@/assets/vespr.png" alt="">
                     </li>
-                    <li></li>
+                    <li>
+                        <img src="@/assets/daedalus.svg" alt="">
+                    </li>
                     <li></li>
                     <li> <img src="@/assets/nami.svg" alt=""></li>
                     <li></li>
