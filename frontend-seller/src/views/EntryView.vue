@@ -1,6 +1,6 @@
 <template>
-    <div class="wrap">
-        <div class="wrap-left">
+    <div class="entry">
+        <div class="entry-left">
             <div class="card">
                 <div class="logo">
                     <img src="@/assets/logo-white.png" alt="">
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="wrap-right">
+        <div class="entry-right">
 
             <!--LOGIN-->
             <div class="login">
@@ -109,13 +109,13 @@ const loginForm = ref({
     color: var(--text-b);
 }
 
-.wrap {
+.entry {
     display: flex;
     height: 100vh;
 }
 
-.wrap-left {
-    width: 30%;
+.entry-left {
+    width: 40%;
     background: white;
     display: flex;
     justify-content: center;
@@ -156,8 +156,8 @@ const loginForm = ref({
     background-repeat: no-repeat;
 }
 
-.wrap-right {
-    width: 70%;
+.entry-right {
+    width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
