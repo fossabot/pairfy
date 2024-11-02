@@ -38,9 +38,8 @@
         </div>
 
         <div class="entry-right">
-
             <!--LOGIN-->
-            <div v-if="currentMode === 'login'" class="login">
+            <div v-if="currentMode === 'login'" class="form">
                 <div class="title">
                     <span>Welcome back!</span>
                     <span>Start managing your inventory</span>
@@ -69,7 +68,7 @@
 
 
                 <div class="legend">
-                    <span>Forgot password?</span>
+                    <span @click="navitageTo('recovery')">Forgot password?</span>
                 </div>
 
                 <div class="control">
@@ -84,11 +83,54 @@
                 </div>
             </div>
             <!--LOGIN-->
+
+
+
             <!--REGISTER-->
-            <div v-if="currentMode === 'register'">
-                register
+            <div v-if="currentMode === 'register'" class="form">
+                <div class="title">
+                    <span>Be a seller!</span>
+                    <span>Start managing your inventory</span>
+                </div>
+
+                <div class="email">
+                    <IftaLabel>
+                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
+                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
+                        <label for="email">Email</label>
+                    </IftaLabel>
+                </div>
+
+
+                <div class="password">
+                    <Fluid>
+                        <IftaLabel>
+
+                            <Password v-model="loginForm.password" inputId="password" variant="filled" toggleMask
+                                :feedback="false" inputStyle="font-size: var(--text-size-a);" />
+                            <label for="password">Password</label>
+
+                        </IftaLabel>
+                    </Fluid>
+                </div>
+
+                <div class="control">
+                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-a);" />
+                </div>
+
+                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
+                </Divider>
+
+                <div class="bottom">
+                    Do you have an account? <span @click="navitageTo('login')">Sign In</span>
+                </div>
             </div>
             <!--REGISTER-->
+            <!--RECOVER-->
+            <div v-if="currentMode === 'recovery'" class="form">
+                Recovery
+            </div>
+            <!--RECOVER-->
 
 
 
@@ -108,21 +150,26 @@ const loginForm = ref({
     password: ""
 });
 
+const registerForm = ref({
+    email: "",
+    username: "",
+    password: ""
+});
+
 const router = useRouter()
 
 const route = useRoute()
 
-const modes = ["register", "login", "recovery", "email"];
+const modes = ["register", "login", "recovery", "confirmation"];
 
 let currentMode = ref('login');
 
 const setupRoute = (mode) => {
-    if (!mode) {
-        return (currentMode.value = "login");
-    }
+    console.log(mode)
 
-    if (!modes.includes(mode)) {
-        return (currentMode.value = "login");
+    if (!mode || !modes.includes(mode)) {
+        (currentMode = "login")
+        return navitageTo("login");
     }
 
     currentMode = mode;
@@ -209,7 +256,7 @@ function navitageTo(mode) {
     align-items: center;
 }
 
-.login {
+.form {
     min-width: 325px;
     min-height: 600px;
 }
