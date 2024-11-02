@@ -141,9 +141,7 @@ function navitageTo(mode) {
         query: {
             mode
         },
-    }).then(() => {
-  window.location.reload();
-});
+    })
 }
 
 
