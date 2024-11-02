@@ -104,7 +104,7 @@
                 <div class="username">
                     <IftaLabel>
                         <InputText id="username" v-model="registerForm.username" type="text" fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" />
+                            style=" font-size: var(--text-size-a)" v-keyfilter="/^[a-z0-9]+$/" />
                         <label for="username">Username</label>
                     </IftaLabel>
                 </div>
