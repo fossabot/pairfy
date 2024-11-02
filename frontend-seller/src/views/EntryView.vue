@@ -136,8 +136,34 @@
                     </Fluid>
                 </div>
 
+                <div class="country">
+                    <Select v-model="registerForm.country" :options="countries" filter optionLabel="name"
+                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);'>
+                        <template #value="slotProps">
+                            <div v-if="slotProps.value" class="country-item">
+                                <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
+                                    :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+                                    style="width: 18px" />
+                                <div>{{ slotProps.value.name }}</div>
+                            </div>
+                            <span v-else>
+                                {{ slotProps.placeholder }}
+                            </span>
+                        </template>
+                        <template #option="slotProps">
+                            <div class="country-item">
+                                <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
+                                    :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+                                    style="width: 18px" />
+                                <div>{{ slotProps.option.name }}</div>
+                            </div>
+                        </template>
+                    </Select>
+
+                </div>
+
                 <div class="control">
-                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-a);" />
+                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-a);" @click="doRegister" />
                 </div>
 
                 <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
@@ -186,7 +212,7 @@ import { ref, watch } from 'vue';
 import dashboardAPI from '@/views/api/index';
 import { useRouter, useRoute } from 'vue-router'
 
-const { getUserData, loginUser } = dashboardAPI();
+const { getUserData, loginUser, createUser } = dashboardAPI();
 
 const loginForm = ref({
     email: "",
@@ -196,7 +222,8 @@ const loginForm = ref({
 const registerForm = ref({
     email: "",
     username: "",
-    password: ""
+    password: "",
+    country: ""
 });
 
 const recoveryForm = ref({
@@ -207,12 +234,12 @@ const router = useRouter()
 
 const route = useRoute()
 
-const modes = ["register", "login", "recovery", "confirmation"];
+const layoutModes = ["register", "login", "recovery", "confirmation"];
 
 let currentMode = ref('login');
 
 const setupRoute = (mode) => {
-    if (!mode || !modes.includes(mode)) {
+    if (!mode || !layoutModes.includes(mode)) {
         (currentMode = "login")
         return navitageTo("login");
     }
@@ -227,9 +254,30 @@ watch(
 );
 
 async function doLogin() {
-    console.log(loginForm.value);
-    
-    const response = await loginUser(loginForm.value);
+    const { ok } = await loginUser(loginForm.value);
+
+    if (ok) {
+        router.push({
+            name: '/',
+            query: {
+            },
+        })
+    }
+}
+
+async function doRegister() {
+    console.log(registerForm.value);
+
+    const { ok } = await createUser(registerForm.value);
+
+    if (ok) {
+        router.push({
+            name: 'entry',
+            query: {
+                mode: 'login'
+            },
+        })
+    }
 }
 
 
@@ -242,6 +290,10 @@ function navitageTo(mode) {
     })
 }
 
+const countries = ref([
+    { name: 'Colombia', code: 'CO' },
+    { name: 'United States', code: 'US' }
+]);
 
 </script>
 
@@ -467,6 +519,10 @@ function navitageTo(mode) {
     margin-top: 2rem;
 }
 
+.country {
+    margin-top: 1rem;
+}
+
 .legend {
     display: flex;
     justify-content: flex-end;
@@ -495,5 +551,14 @@ function navitageTo(mode) {
     color: var(--primary-c);
     margin-left: 0.5rem;
     cursor: pointer;
+}
+
+.country-item {
+    display: flex;
+    align-items: center;
+}
+
+.country-item div {
+    margin-left: 0.5rem;
 }
 </style>

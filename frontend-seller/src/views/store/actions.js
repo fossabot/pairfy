@@ -1,6 +1,6 @@
 import axiosAPI from "@/api/axios";
 
-const createUser = async (_,params) => {
+const createUser = async (_, params) => {
   try {
     const response = await axiosAPI.post("/api/seller/create-seller", params);
 
@@ -8,7 +8,7 @@ const createUser = async (_,params) => {
 
     return { ok: true, response: response.data };
   } catch (error) {
-    throw { ok: false, response: error.response.data };
+    return { ok: false, response: error.response.data };
   }
 };
 
@@ -22,7 +22,7 @@ const loginUser = async ({ commit }, params) => {
 
     return { ok: true, response: response.data };
   } catch (error) {
-    throw { ok: false, response: error.response.data };
+    return { ok: false, response: error.response.data };
   }
 };
 

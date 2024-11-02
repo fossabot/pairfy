@@ -13,14 +13,10 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
   const params = req.body;
   
-  console.log("1");
-
   try {
     connection = await DB.client.getConnection();
 
     await connection.beginTransaction();
-
-    console.log("2");
 
     const token = createToken({
       role: "create-seller",
@@ -53,7 +49,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       params.email,
       password,
       false,
-      params.country,
+      params.country.code,
       "Terms and conditions: Provide correct data for effective shipping.",
       params.terms_accepted,
       "https://example.com",
@@ -72,7 +68,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     _.error(err);
 
-    throw new BadRequestError("invalid username or email");
+    throw new BadRequestError("Invalid username or email");
   } finally {
     connection.release();
   }
