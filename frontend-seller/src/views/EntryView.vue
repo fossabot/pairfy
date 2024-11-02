@@ -48,7 +48,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
-                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
+                            style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -94,7 +94,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="registerForm.email" type="email" autofocus fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" />
+                            style=" font-size: var(--text-size-a)"  placeholder="you@example.com"/>
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
