@@ -53,11 +53,9 @@
                     </IftaLabel>
                 </div>
 
-
                 <div class="password">
                     <Fluid>
                         <IftaLabel>
-
                             <Password v-model="loginForm.password" inputId="password" variant="filled" toggleMask
                                 :feedback="false" inputStyle="font-size: var(--text-size-a);" />
                             <label for="password">Password</label>
@@ -89,7 +87,7 @@
             <!--REGISTER-->
             <div v-if="currentMode === 'register'" class="form">
                 <div class="title">
-                    <span>Register</span>
+                    <span>New Account.</span>
                     <span>Start managing your inventory</span>
                 </div>
 
@@ -152,10 +150,31 @@
             <!--REGISTER-->
             <!--RECOVER-->
             <div v-if="currentMode === 'recovery'" class="form">
-                Recovery
-            </div>
-            <!--RECOVER-->
+                <div class="title">
+                    <span>Restore Your Account.</span>
+                    <span>Receive a recovery email.</span>
+                </div>
 
+                <div class="email">
+                    <IftaLabel>
+                        <InputText id="email" v-model="recoveryForm.email" type="email" autofocus fluid variant="filled"
+                            style=" font-size: var(--text-size-a)" />
+                        <label for="email">Email</label>
+                    </IftaLabel>
+                </div>
+
+
+                <div class="control">
+                    <Button label="Submit" fluid style=" font-size: var(--text-size-a);" />
+                </div>
+
+                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
+                </Divider>
+
+                <div class="bottom">
+                    Don't you have an account? <span @click="navitageTo('register')">Sign Up</span>
+                </div>
+            </div>
 
 
         </div>
@@ -178,6 +197,10 @@ const registerForm = ref({
     email: "",
     username: "",
     password: ""
+});
+
+const recoveryForm = ref({
+    email: ""
 });
 
 const router = useRouter()
@@ -272,6 +295,7 @@ function navitageTo(mode) {
     font-size: var(--text-size-d);
     color: var(--text-w);
     padding: 1rem;
+    margin-top: 1rem;
 }
 
 .visual {
@@ -466,6 +490,4 @@ function navitageTo(mode) {
     margin-left: 0.5rem;
     cursor: pointer;
 }
-
-
 </style>
