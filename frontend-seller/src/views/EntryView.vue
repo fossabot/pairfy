@@ -89,15 +89,23 @@
             <!--REGISTER-->
             <div v-if="currentMode === 'register'" class="form">
                 <div class="title">
-                    <span>Be a seller!</span>
+                    <span>Register</span>
                     <span>Start managing your inventory</span>
                 </div>
 
                 <div class="email">
                     <IftaLabel>
-                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled"
-                            placeholder="you@example.com" style=" font-size: var(--text-size-a)" />
+                        <InputText id="email" v-model="registerForm.email" type="email" autofocus fluid variant="filled"
+                             style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
+                    </IftaLabel>
+                </div>
+
+                <div class="username">
+                    <IftaLabel>
+                        <InputText id="username" v-model="registerForm.username" type="text" fluid variant="filled"
+                            style=" font-size: var(--text-size-a)" />
+                        <label for="username">Username</label>
                     </IftaLabel>
                 </div>
 
@@ -106,7 +114,7 @@
                     <Fluid>
                         <IftaLabel>
 
-                            <Password v-model="loginForm.password" inputId="password" variant="filled" toggleMask
+                            <Password v-model="registerForm.password" inputId="password" variant="filled" toggleMask
                                 :feedback="false" inputStyle="font-size: var(--text-size-a);" />
                             <label for="password">Password</label>
 
@@ -165,8 +173,6 @@ const modes = ["register", "login", "recovery", "confirmation"];
 let currentMode = ref('login');
 
 const setupRoute = (mode) => {
-    console.log(mode)
-
     if (!mode || !modes.includes(mode)) {
         (currentMode = "login")
         return navitageTo("login");
@@ -292,6 +298,10 @@ function navitageTo(mode) {
 .title span:nth-child(2) {
     color: var(--text-b);
     font-size: var(--text-size-a);
+}
+
+.username {
+    margin-top: 2rem;
 }
 
 .password {
