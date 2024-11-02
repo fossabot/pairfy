@@ -11,7 +11,6 @@
                 <div class="subtext">
                     <span>Discover the largest native P2P marketplace where you can trade everything with ADA.</span>
                 </div>
-
             </div>
 
             <div class="visual">
@@ -41,7 +40,7 @@
         <div class="entry-right">
 
             <!--LOGIN-->
-            <div class="login">
+            <div v-if="currentMode === 'login'" class="login">
                 <div class="title">
                     <span>Welcome back!</span>
                     <span>Start managing your inventory</span>
@@ -61,7 +60,7 @@
                         <IftaLabel>
 
                             <Password v-model="loginForm.password" inputId="password" variant="filled" toggleMask
-                                :feedback="false" inputStyle=" font-size: var(--text-size-a);" />
+                                :feedback="false" inputStyle="font-size: var(--text-size-a);" />
                             <label for="password">Password</label>
 
                         </IftaLabel>
@@ -79,8 +78,18 @@
 
                 <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
                 </Divider>
+
+                <div class="bottom">
+                    Don't you have an account? <span @click="navitageTo('register')">Sign Up</span>
+                </div>
             </div>
             <!--LOGIN-->
+            <!--REGISTER-->
+            <div v-if="currentMode === 'register'">
+                register
+            </div>
+            <!--REGISTER-->
+
 
 
         </div>
@@ -88,15 +97,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import dashboardAPI from '@/views/api/index';
+import { useRouter, useRoute } from 'vue-router'
 
 const { getUserData } = dashboardAPI();
 
 const loginForm = ref({
     email: "",
     password: ""
-})
+});
+
+const router = useRouter()
+
+const route = useRoute()
+
+const modes = ["register", "login", "recovery", "email"];
+
+let currentMode = ref('login');
+
+const setupRoute = (mode) => {
+    if (!mode) {
+        return (currentMode.value = "login");
+    }
+
+    if (!modes.includes(mode)) {
+        return (currentMode.value = "login");
+    }
+
+    currentMode = mode;
+}
+
+watch(
+    () => route.query,
+    (e) => setupRoute(e.mode),
+    { immediate: true }
+);
+
+
+function navitageTo(mode) {
+    router.push({
+        name: 'entry',
+        query: {
+            mode
+        },
+    }).then(() => {
+  window.location.reload();
+});
+}
+
 
 </script>
 
@@ -129,8 +178,6 @@ const loginForm = ref({
     padding: 1rem;
     color: var(--text-w);
     font-kerning: normal;
-
-
 }
 
 .subtext {
@@ -229,6 +276,18 @@ const loginForm = ref({
     position: absolute;
 }
 
+.bottom {
+    font-size: var(--text-size-a);
+    color: var(--text-b);
+    font-weight: 600;
+    text-align: center;
+}
+
+.bottom span {
+    color: var(--primary-c);
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
 
 .circles {
     top: 0;
@@ -334,8 +393,6 @@ const loginForm = ref({
     animation-delay: 0s;
     animation-duration: 11s;
 }
-
-
 
 @keyframes animate {
 
