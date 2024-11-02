@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Login" fluid style=" font-size: var(--text-size-a);" />
+                    <Button label="Login" fluid style=" font-size: var(--text-size-a);" @click="doLogin" />
                 </div>
 
                 <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
@@ -94,7 +94,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="registerForm.email" type="email" autofocus fluid variant="filled"
-                            style=" font-size: var(--text-size-a)"  placeholder="you@example.com"/>
+                            style=" font-size: var(--text-size-a)" placeholder="you@example.com" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -186,7 +186,7 @@ import { ref, watch } from 'vue';
 import dashboardAPI from '@/views/api/index';
 import { useRouter, useRoute } from 'vue-router'
 
-const { getUserData } = dashboardAPI();
+const { getUserData, loginUser } = dashboardAPI();
 
 const loginForm = ref({
     email: "",
@@ -225,6 +225,12 @@ watch(
     (e) => setupRoute(e.mode),
     { immediate: true }
 );
+
+async function doLogin() {
+    console.log(loginForm.value);
+    
+    const response = await loginUser(loginForm.value);
+}
 
 
 function navitageTo(mode) {
