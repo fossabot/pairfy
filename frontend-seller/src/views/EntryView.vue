@@ -150,6 +150,10 @@
                                 {{ slotProps.placeholder }}
                             </span>
                         </template>
+
+                        <template #dropdownicon>
+                            <i class="pi pi-map-marker" />
+                        </template>
                         <template #option="slotProps">
                             <div class="country-item">
                                 <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
