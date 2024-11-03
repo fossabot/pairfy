@@ -4,7 +4,6 @@
         <Dialog v-model:visible="dialogLayout" modal header="Message" :style="{ width: '25rem' }">
             <div class="dialog">
                 <span>{{ dialogMessage }}</span>
-
             </div>
 
             <template #footer>
@@ -356,7 +355,7 @@ const countries = ref([
 }
 
 .dialog span {
-    line-height: 2rem;
+    line-height: 3rem;
 }
 
 .entry {
