@@ -1,5 +1,6 @@
 <template>
     <div class="entry">
+        <Toast />
         <div class="entry-left">
             <div class="card">
                 <div class="logo">
@@ -166,6 +167,13 @@
 
                 </div>
 
+                <div class="terms">
+                    <Checkbox v-model="registerForm.terms_accepted" binary />
+                    <span>I accept the
+                        <a href="">Terms of Use</a> and <a href="">Privacy Policies.</a>
+                    </span>
+                </div>
+
                 <div class="control">
                     <Button label="Sign Up" fluid style=" font-size: var(--text-size-a);" @click="doRegister" />
                 </div>
@@ -215,6 +223,8 @@
 import { ref, watch } from 'vue';
 import dashboardAPI from '@/views/api/index';
 import { useRouter, useRoute } from 'vue-router'
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 const { getUserData, loginUser, createUser } = dashboardAPI();
 
@@ -227,7 +237,8 @@ const registerForm = ref({
     email: "",
     username: "",
     password: "",
-    country: ""
+    country: "",
+    terms_accepted: false
 });
 
 const recoveryForm = ref({
@@ -257,6 +268,15 @@ watch(
     { immediate: true }
 );
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
+
 async function doLogin() {
     const { ok } = await loginUser(loginForm.value);
 
@@ -270,9 +290,9 @@ async function doLogin() {
 }
 
 async function doRegister() {
-    console.log(registerForm.value);
 
-    const { ok } = await createUser(registerForm.value);
+
+    const { ok, response } = await createUser(registerForm.value);
 
     if (ok) {
         router.push({
@@ -281,7 +301,11 @@ async function doRegister() {
                 mode: 'login'
             },
         })
+    } else {
+        showError(response.errors.map(item => item.message))
     }
+
+
 }
 
 
@@ -349,7 +373,7 @@ const countries = ref([
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 1rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 
 }
 
@@ -524,7 +548,7 @@ const countries = ref([
 }
 
 .country {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .legend {
@@ -538,6 +562,16 @@ const countries = ref([
 .legend span {
     font-weight: 600;
     cursor: pointer;
+}
+
+.terms {
+    margin-top: 1rem;
+}
+
+.terms span {
+    margin-left: 1rem;
+    font-size: var(--text-size-a);
+    color: var(--text-b);
 }
 
 .control {
