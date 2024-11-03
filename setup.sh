@@ -2,8 +2,6 @@
 
 WORKDIR=$(pwd)
 
-sh z/kafka/kafka.sh
-
 cd plugin-debezium
 
 sh ./setup.sh
