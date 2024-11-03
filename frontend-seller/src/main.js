@@ -39,6 +39,7 @@ import Password from 'primevue/password';
 import IftaLabel from 'primevue/iftalabel';
 import Divider from 'primevue/divider';
 import Toast from 'primevue/toast';
+import Dialog from 'primevue/dialog';
 
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -105,6 +106,7 @@ app.component('Password', Password);
 app.component('IftaLabel', IftaLabel);
 app.component('Divider', Divider);
 app.component('Toast', Toast);
+app.component('Dialog', Dialog);
 
 app.directive('keyfilter', KeyFilter);
 

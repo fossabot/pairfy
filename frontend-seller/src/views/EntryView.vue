@@ -1,6 +1,19 @@
 <template>
     <div class="entry">
         <Toast />
+        <Dialog v-model:visible="dialogLayout" modal header="Message" :style="{ width: '25rem' }">
+            <div class="dialog">
+                <span>{{ dialogMessage }}</span>
+
+            </div>
+
+            <template #footer>
+                <div>
+                    <Button type="button" label="Done" @click="navigateTo('login')" />
+                </div>
+            </template>
+        </Dialog>
+
         <div class="entry-left">
             <div class="card">
                 <div class="logo">
@@ -67,7 +80,7 @@
 
 
                 <div class="legend">
-                    <span @click="navitageTo('recovery')">Forgot password?</span>
+                    <span @click="navigateTo('recovery')">Forgot password?</span>
                 </div>
 
                 <div class="control">
@@ -78,7 +91,7 @@
                 </Divider>
 
                 <div class="bottom">
-                    Don't you have an account? <span @click="navitageTo('register')">Sign Up</span>
+                    Don't you have an account? <span @click="navigateTo('register')">Sign Up</span>
                 </div>
             </div>
             <!--LOGIN-->
@@ -87,6 +100,8 @@
 
             <!--REGISTER-->
             <div v-if="currentMode === 'register'" class="form">
+
+
                 <div class="title">
                     <span>New Account.</span>
                     <span>Start managing your inventory</span>
@@ -139,7 +154,7 @@
 
                 <div class="country">
                     <Select v-model="registerForm.country" :options="countries" filter optionLabel="name"
-                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);'>
+                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);' variant="filled">
                         <template #value="slotProps">
                             <div v-if="slotProps.value" class="country-item">
                                 <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
@@ -164,7 +179,6 @@
                             </div>
                         </template>
                     </Select>
-
                 </div>
 
                 <div class="terms">
@@ -182,7 +196,7 @@
                 </Divider>
 
                 <div class="bottom">
-                    Do you have an account? <span @click="navitageTo('login')">Sign In</span>
+                    Do you have an account? <span @click="navigateTo('login')">Sign In</span>
                 </div>
             </div>
             <!--REGISTER-->
@@ -210,7 +224,7 @@
                 </Divider>
 
                 <div class="bottom">
-                    Don't you have an account? <span @click="navitageTo('register')">Sign Up</span>
+                    Don't you have an account? <span @click="navigateTo('register')">Sign Up</span>
                 </div>
             </div>
 
@@ -224,9 +238,10 @@ import { ref, watch } from 'vue';
 import dashboardAPI from '@/views/api/index';
 import { useRouter, useRoute } from 'vue-router'
 import { useToast } from "primevue/usetoast";
+
 const toast = useToast();
 
-const { getUserData, loginUser, createUser } = dashboardAPI();
+const { loginUser, createUser } = dashboardAPI();
 
 const loginForm = ref({
     email: "",
@@ -256,7 +271,7 @@ let currentMode = ref('login');
 const setupRoute = (mode) => {
     if (!mode || !layoutModes.includes(mode)) {
         (currentMode = "login")
-        return navitageTo("login");
+        return navigateTo("login");
     }
 
     currentMode = mode;
@@ -276,6 +291,13 @@ const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
+const dialogLayout = ref(false);
+
+let dialogMessage = ref("");
+
+const showDialog = (e) => {
+    dialogLayout.value = e;
+};
 
 async function doLogin() {
     const { ok } = await loginUser(loginForm.value);
@@ -290,26 +312,19 @@ async function doLogin() {
 }
 
 async function doRegister() {
-
-
     const { ok, response } = await createUser(registerForm.value);
 
     if (ok) {
-        router.push({
-            name: 'entry',
-            query: {
-                mode: 'login'
-            },
-        })
+        dialogMessage.value = "Please check the verification email."
+        showDialog(true);
     } else {
         showError(response.errors.map(item => item.message))
     }
-
-
 }
 
+function navigateTo(mode) {
+    showDialog(false);
 
-function navitageTo(mode) {
     router.push({
         name: 'entry',
         query: {
@@ -332,6 +347,16 @@ const countries = ref([
 
 ::v-deep(.p-divider-content) {
     color: var(--text-b);
+}
+
+.dialog {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.dialog span {
+    line-height: 2rem;
 }
 
 .entry {
