@@ -13,7 +13,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
   let params = req.body;
   try {
     if (params.sellerData) {
-      throw new BadRequestError("LOGGED");
+      throw new Error("LOGGED");
     }
 
     connection = await DB.client.getConnection();
@@ -24,7 +24,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (rows.length === 0) {
-      throw new BadRequestError("NOT_EXIST");
+      throw new Error("NOT_EXIST");
     }
 
     const SELLER = rows[0];
@@ -34,10 +34,10 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       params.password
     );
 
-    if (!passwordsMatch) throw new BadRequestError("failed");
+    if (!passwordsMatch) {  throw new Error("failed") }
 
     if (SELLER.verified !== 1) {
-      throw new BadRequestError("UNVERIFIED");
+      throw new Error("UNVERIFIED");
     }
 
     const sellerData: SellerToken = {
@@ -56,12 +56,12 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     };
 
     res.status(200).send({ success: true, data: sellerData });
-  } catch (err) {
+  } catch (err: any) {
     await connection.rollback();
 
     _.error(err);
 
-    throw new BadRequestError("Invalid credentials or unverified.");
+    throw new BadRequestError(err.message);
   } finally {
     connection.release();
   }
