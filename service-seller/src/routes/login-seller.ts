@@ -13,7 +13,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
   let params = req.body;
   try {
     if (params.sellerData) {
-      throw new Error("logged");
+      throw new BadRequestError("LOGGED");
     }
 
     connection = await DB.client.getConnection();
@@ -24,7 +24,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (rows.length === 0) {
-      throw new Error("nonexist");
+      throw new BadRequestError("NOT_EXIST");
     }
 
     const SELLER = rows[0];
@@ -37,7 +37,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     if (!passwordsMatch) throw new BadRequestError("failed");
 
     if (SELLER.verified !== 1) {
-      throw new Error("unverified");
+      throw new BadRequestError("UNVERIFIED");
     }
 
     const sellerData: SellerToken = {

@@ -8,7 +8,7 @@
 
             <template #footer>
                 <div>
-                    <Button type="button" label="Done" @click="navigateTo('login')" />
+                    <Button type="button" label="Done" @click="closeRegister" />
                 </div>
             </template>
         </Dialog>
@@ -298,6 +298,11 @@ const showDialog = (e) => {
     dialogLayout.value = e;
 };
 
+const closeRegister = () => {
+    showDialog(false);
+    navigateTo('login');
+};
+
 async function doLogin() {
     const { ok } = await loginUser(loginForm.value);
 
@@ -322,8 +327,6 @@ async function doRegister() {
 }
 
 function navigateTo(mode) {
-    showDialog(false);
-
     router.push({
         name: 'entry',
         query: {
