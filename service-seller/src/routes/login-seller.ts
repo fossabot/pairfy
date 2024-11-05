@@ -34,7 +34,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       params.password
     );
 
-    if (!passwordsMatch) {  throw new Error("failed") }
+    if (!passwordsMatch) {  throw new Error("INVALID_CREDENTIALS") }
 
     if (SELLER.verified !== 1) {
       throw new Error("UNVERIFIED");

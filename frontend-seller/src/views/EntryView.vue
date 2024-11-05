@@ -303,19 +303,21 @@ const closeRegister = () => {
     navigateTo('login');
 };
 
-async function doLogin() {
-    const { ok } = await loginUser(loginForm.value);
+const doLogin = async () => {
+    const { ok, response } = await loginUser(loginForm.value);
 
     if (ok) {
         router.push({
-            name: '/',
+            name: 'home',
             query: {
             },
         })
+    } else {
+        showError(response.errors.map(item => item.message))
     }
 }
 
-async function doRegister() {
+const doRegister = async () => {
     const { ok, response } = await createUser(registerForm.value);
 
     if (ok) {
