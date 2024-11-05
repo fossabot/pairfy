@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <Toast closeIcon="false"/>
     <NavMenu v-if="getUserData" />
 
     <div class="wrapper-content">
@@ -11,12 +12,25 @@
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView } from 'vue-router';
+import { useToast } from "primevue/usetoast";
 import NavMenu from './components/NavMenu.vue'
-
 import dashboardAPI from '@/views/api/index';
 
-const { getUserData } = dashboardAPI();
+const toast = useToast();
+
+const { getUserData, getUser } = dashboardAPI();
+
+const showSuccess = (content) => {
+  toast.add({ severity: 'secondary', summary: '', detail: content, life: 3000, closable: false });
+};
+
+
+const showError = (content) => {
+  toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
+getUser().then(() => showSuccess('Welcome')).catch(() => showError('AUTH_ERROR'))
 
 </script>
 

@@ -12,22 +12,21 @@
         </li>
         <li>
           <RouterLink to="/">
-            <i class="pi pi-home"/>
+            <i class="pi pi-home" />
             <span>Home</span>
           </RouterLink>
         </li>
         <li>
 
           <RouterLink to="/create-product">
-            <i class="pi pi-plus"/>
+            <i class="pi pi-plus" />
             <span>Create Product</span>
           </RouterLink>
         </li>
       </ul>
-
-
-
     </nav>
+
+
   </div>
 </template>
 
@@ -36,6 +35,7 @@
   background-color: var(--primary-a);
   margin-left: 0;
   width: 17rem;
+  padding: 1rem;
   z-index: 10;
   height: 100%;
   border-radius: 0 1.5rem 1.5rem 0;
@@ -75,7 +75,7 @@ li span {
 }
 
 .logo {
-  padding: 1rem 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .label {

@@ -19,7 +19,7 @@
             </template>
 
             <template #end>
-          
+
             </template>
         </Toolbar>
 
@@ -70,12 +70,12 @@
                                     <div class="uploader-top">
                                         <div class="uploader-control">
                                             <Button @click="chooseCallback()" icon="pi pi-image" rounded outlined
-                                                severity="secondary"></Button>
+                                                severity="secondary"/>
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
                                                 rounded outlined severity="success"
-                                                :disabled="!files || files.length === 0"></Button>
+                                                :disabled="!files || files.length === 0"/>
                                             <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
-                                                severity="danger" :disabled="!files || files.length === 0"></Button>
+                                                severity="danger" :disabled="!files || files.length === 0"/>
 
                                             <Message severity="secondary">
 
@@ -220,13 +220,11 @@
                     </div>
 
                     <div class="box-buttons">
-
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
-                            outlined style="width: 100%; font-size: var(--text-size-a)" />
+                            outlined style="font-size: var(--text-size-a)"  fluid/>
 
                         <Button type="button" label="Publish" icon="pi pi-check" :loading="loading" @click="load"
-                            style="width: 100%; font-size: var(--text-size-a)" />
-
+                            style="font-size: var(--text-size-a)" fluid/>
                     </div>
                 </div>
             </div>
@@ -386,6 +384,7 @@ const formatSize = (bytes) => {
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
     padding-left: 0.5rem;
+    background: #ffffff;
 }
 
 ::v-deep(.p-colorpicker-preview) {
@@ -403,6 +402,8 @@ const formatSize = (bytes) => {
 ::v-deep(.p-togglebutton) {
     font-size: var(--text-size-a);
 }
+
+
 
 main {
     padding: 2rem;

@@ -34,7 +34,7 @@ const getUser = async ({ commit }) => {
 
     return { ok: true, response: response.data };
   } catch (error) {
-    throw { ok: false, response: error.response.data };
+    return { ok: false, response: error.response.data };
   }
 };
 export { createUser, loginUser, getUser };
