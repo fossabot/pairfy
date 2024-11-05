@@ -166,7 +166,7 @@
 
                         <div class="box-content">
                             <Select v-model="productCategory" :options="productCategories" optionLabel="name"
-                                placeholder="Select a category" style="width:100%; font-size: var(--text-size-a)" />
+                                placeholder="Select a category" style="font-size: var(--text-size-a)" fluid />
                         </div>
                     </div>
 
