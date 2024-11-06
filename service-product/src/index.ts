@@ -4,9 +4,41 @@ import cors from 'cors';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { createPool, PoolOptions, Pool } from "mysql2/promise";
+import { Logger } from "tslog";
+
+const logger = new Logger({ name: "myLogger" });
+
+const catcher = (message?: any, error?: any, bypass?: boolean) => {
+    logger.error(`EXIT=>${message}-${error}`);
+
+    return bypass || process.exit(1);
+};
+
+/////////////////////////////////
+
+class DatabaseWrap {
+    private _client?: any;
+
+    get client() {
+        if (!this._client) {
+            throw new Error("Cannot access the client before connecting");
+        }
+
+        return this._client;
+    }
+
+    connect(options: PoolOptions): Pool {
+        this._client = createPool(options);
+        return this.client;
+    }
+}
+
+const database = new DatabaseWrap();
 
 
 
+/////////////////////////////////
 const books = [
     {
         title: 'The Awakening',
@@ -51,6 +83,8 @@ type Query {
   books: [Book]
 }
 
+#/////////////////////////////////////////////////
+
 type CreateProductResponse {
   success: Boolean!
   payload: Book!
@@ -64,7 +98,11 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
 }
 
+#/////////////////////////////////////////////////
+
 `;
+
+
 
 const resolvers = {
     Query: {
@@ -117,20 +155,71 @@ const server = new ApolloServer({
 });
 
 const main = async () => {
-    await server.start();
 
-    app.use(
-        "/api/product/graphql",
-        cors<cors.CorsRequest>(corsOptions),
-        express.json(),
-        expressMiddleware(server, {
-            context: async ({ req }) => ({ token: null }),
-        })
-    );
+    try {
+        if (!process.env.POD_TIMEOUT) {
+            throw new Error("POD_TIMEOUT error");
+        }
 
-    await new Promise<void>((resolve) =>
-        httpServer.listen({ port: 4000 }, resolve)
-    );
+        if (!process.env.EXPRESS_PORT) {
+            throw new Error("EXPRESS_PORT error");
+        }
+
+        if (!process.env.EXPRESS_TIMEOUT) {
+            throw new Error("EXPRESS_TIMEOUT error");
+        }
+
+        if (!process.env.CORS_DOMAINS) {
+            throw new Error("CORS_DOMAINS error");
+        }
+
+        if (!process.env.SELLER_JWT_KEY) {
+            throw new Error("SELLER_JWT_KEY error");
+        }
+
+        if (!process.env.TOKEN_EXPIRATION) {
+            throw new Error("TOKEN_EXPIRATION error");
+        }
+
+        database.connect({
+            host: "mysql",
+            port: 3306,
+            user: "marketplace",
+            password: "password",
+            database: "service_product",
+        });
+
+        const errorEvents: string[] = [
+            "exit",
+            "SIGINT",
+            "SIGTERM",
+            "SIGQUIT",
+            "uncaughtException",
+            "unhandledRejection",
+        ];
+
+
+        errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+
+        await server.start();
+
+        app.use(
+            "/api/product/graphql",
+            cors<cors.CorsRequest>(corsOptions),
+            express.json(),
+            expressMiddleware(server, {
+                context: async ({ req }) => ({ token: null }),
+            })
+        );
+
+        await new Promise<void>((resolve) =>
+            httpServer.listen({ port: 4000 }, resolve)
+        );
+
+    } catch (err) {
+        catcher(err)
+    }
+
 };
 
 main();
