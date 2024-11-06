@@ -5,6 +5,8 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 
+
+
 const books = [
     {
         title: 'The Awakening',
@@ -57,7 +59,7 @@ type Mutation {
 
 const resolvers = {
     Query: {
-        getProduct: (id) => [],
+        getProduct: (id: any) => [],
         books: () => books
     },
     Mutation: {
