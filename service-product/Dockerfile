@@ -6,6 +6,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN ls
 
 RUN npm install
 
@@ -19,4 +20,4 @@ RUN npm run build
 EXPOSE 4000
 
 # Run the built JavaScript code
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]

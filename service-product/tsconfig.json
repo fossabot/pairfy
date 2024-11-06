@@ -16,9 +16,9 @@
     "declarationMap": true,                         // Generate declaration maps for better debugging
     "sourceMap": true,                              // Enable source maps for easier debugging
     "outDir": "./dist",                             // Output directory for compiled files
-    "baseUrl": ".",                                 // Set base directory for module resolution
+    "baseUrl": "./src",
     "paths": {
-      "*": ["node_modules/*", "src/types/*"]        // Custom path mappings
+      "@/*": ["./*"]
     },
     "lib": ["ESNext", "DOM"],                       // Include ES and DOM type definitions
     "experimentalDecorators": true,                 // Enable decorators support

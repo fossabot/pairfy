@@ -5,10 +5,10 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { createPool, PoolOptions, Pool } from "mysql2/promise";
-import { Logger } from "tslog";
 import { customAlphabet } from "nanoid";
+import { logger } from './utils/index.js';
 
-const logger = new Logger({ name: "service-product" });
+
 
 const catcher = (message?: any, error?: any, bypass?: boolean) => {
     logger.error(`EXIT=>${message}-${error}`);
