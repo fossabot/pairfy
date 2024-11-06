@@ -50,14 +50,15 @@ type Query {
 }
 
 type Mutation {
-  createProduct(name: String!): Product!
+  createProduct(name: String!): Book!
 }
 
 `;
 
 const resolvers = {
     Query: {
-        books: () => books,
+        getProduct: (id) => [],
+        books: () => books
     },
     Mutation: {
         createProduct: (parent: any, args: any) => {

@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 
-EXPOSE 8000
+EXPOSE 4000
 
 # Run the built JavaScript code
 CMD ["node", "dist/index.js"]
