@@ -6,14 +6,17 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { createPool, PoolOptions, Pool } from "mysql2/promise";
 import { Logger } from "tslog";
+import { customAlphabet } from "nanoid";
 
-const logger = new Logger({ name: "myLogger" });
+const logger = new Logger({ name: "service-product" });
 
 const catcher = (message?: any, error?: any, bypass?: boolean) => {
     logger.error(`EXIT=>${message}-${error}`);
 
     return bypass || process.exit(1);
 };
+
+const getProductId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);
 
 /////////////////////////////////
 
@@ -87,11 +90,24 @@ type Query {
 
 type CreateProductResponse {
   success: Boolean!
-  payload: Book!
 }
 
 input CreateProductInput {
   name: String!
+  price: Int! 
+  collateral: Int!
+  sku: String!              
+  model: String!
+  brand: String!
+  features: String!
+  category: String!
+  keywords: String!
+  stock: Int!
+  color: String!
+  color_name: String!
+  quality: String!
+  image_set: String!
+  video_set: String!
 }
 
 type Mutation {
@@ -102,7 +118,96 @@ type Mutation {
 
 `;
 
+///////////////////////////////////////////////////////////////////
 
+
+const createProduct = async (args: any) => {
+    const params = args.createProductInput;
+
+    const SELLER = "";
+
+    let connection = null;
+
+    try {
+        if (params.collateral >= params.price) {
+            throw new Error("MAX_COLLATERAL");
+        }
+
+        connection = await database.client.getConnection();
+
+        await connection.beginTransaction();
+
+        const schemeData = `
+      INSERT INTO products (
+        id,
+        seller_id,
+        name,
+        price,  
+        collateral,
+        sku,              
+        model,
+        brand,
+        features,
+        category,
+        keywords,
+        stock,
+        color,
+        color_name,
+        quality,
+        country,
+        media_url,
+        media_path,
+        image_set,
+        video_set,
+        schema_v
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const schemeValue = [
+            "P" + getProductId(),
+            "seller_id",
+            params.name,
+            params.price,
+            params.collateral,
+            params.sku,
+            params.model,
+            params.brand,
+            params.features,
+            params.category,
+            params.keywords,
+            params.stock,
+            params.color,
+            params.color_name,
+            params.quality,
+            "country",
+            "https://pairfy.dev",
+            "/api/media/get-image/",
+            params.image_set,
+            params.video_set,
+            0,
+        ];
+
+        await connection.execute(schemeData, schemeValue);
+
+        await connection.commit();
+
+        return { success: true }
+
+    } catch (err) {
+        await connection.rollback();
+
+        logger.error(err);
+    } finally {
+        connection.release();
+    }
+};
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////
 
 const resolvers = {
     Query: {
@@ -110,23 +215,7 @@ const resolvers = {
         books: () => books
     },
     Mutation: {
-        createProduct: (_: any, args: any) => {
-            const newProduct = {
-                title: args.createProductInput.name,
-                author: '2',
-            };
-
-            books.push(newProduct);
-
-            console.log(books);
-
-            const response = {
-                success: true,
-                payload: newProduct
-            }
-
-            return response;
-        }
+        createProduct: (_: any, args: any) => createProduct(args)
     }
 };
 
@@ -189,6 +278,8 @@ const main = async () => {
             database: "service_product",
         });
 
+        logger.info("DB");
+
         const errorEvents: string[] = [
             "exit",
             "SIGINT",
@@ -215,6 +306,8 @@ const main = async () => {
         await new Promise<void>((resolve) =>
             httpServer.listen({ port: 4000 }, resolve)
         );
+
+        logger.info("ONLINE");
 
     } catch (err) {
         catcher(err)
