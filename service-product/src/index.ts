@@ -51,8 +51,17 @@ type Query {
   books: [Book]
 }
 
+type CreateProductResponse {
+  success: Boolean!
+  payload: Book!
+}
+
+input CreateProductInput {
+  name: String!
+}
+
 type Mutation {
-  createProduct(name: String!): Book!
+  createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
 }
 
 `;
@@ -63,9 +72,9 @@ const resolvers = {
         books: () => books
     },
     Mutation: {
-        createProduct: (parent: any, args: any) => {
+        createProduct: (_: any, args: any) => {
             const newProduct = {
-                title: args.name,
+                title: args.createProductInput.name,
                 author: '2',
             };
 
@@ -73,7 +82,12 @@ const resolvers = {
 
             console.log(books);
 
-            return newProduct;
+            const response = {
+                success: true,
+                payload: newProduct
+            }
+
+            return response;
         }
     }
 };
