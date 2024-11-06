@@ -21,13 +21,37 @@ type Product {
   video_set: String
 }
 
-type Book {
-    title: String
-    autor: String
+input GetProductsInput {
+  page: Int!
 }
+
+type Product {
+    id: String!,
+    seller_id: String!,
+    name: String!,
+    price: Int!,
+    collateral: Int!,
+    sku: String!,
+    model: String!,
+    brand: String!,
+    features: String!,
+    category: String!,
+    keywords: String!,
+    stock: Int!,
+    color: String!,
+    color_name: String!,
+    quality: String!,
+    country: String!,
+    moderated: Int!,
+    media_url: String!,
+    media_path: String!,
+    image_set: String!,
+    video_set: String!,
+    created_at: String!
+  }
+
 type Query {
-  getProduct(id: String): [Product]
-  books: [Book]
+  getProducts(getProductsInput: GetProductsInput!): [Product]
 }
 
 #/////////////////////////////////////////////////

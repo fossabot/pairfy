@@ -5,7 +5,7 @@ import { database } from "../db/client.js";
 const createProduct = async (args: any, context: any) => {
     const params = args.createProductInput;
 
-    const SELLER = "";
+    const SELLER = context.sellerData;
 
     let connection = null;
 
@@ -45,7 +45,7 @@ const createProduct = async (args: any, context: any) => {
 
         const schemeValue = [
             "P" + getProductId(),
-            "seller_id",
+            SELLER.id,
             params.name,
             params.price,
             params.collateral,
@@ -59,7 +59,7 @@ const createProduct = async (args: any, context: any) => {
             params.color,
             params.color_name,
             params.quality,
-            "country",
+            SELLER.country,
             "https://pairfy.dev",
             "/api/media/get-image/",
             params.image_set,
@@ -77,13 +77,52 @@ const createProduct = async (args: any, context: any) => {
         await connection.rollback();
 
         logger.error(err);
+
+        return { success: false }
     } finally {
         connection.release();
     }
 };
 
 
+const getProducts = async (args: any, context: any) => {
+    const params = args.getProductsInput;
+
+    console.log(params);
+
+    const SELLER = context.sellerData;
+
+    console.log("context", SELLER);
+
+    let connection = null;
+
+    try {
+        connection = await database.client.getConnection();
+
+        const [products] = await connection.execute(
+            "SELECT * FROM products WHERE seller_id = ?",
+            [SELLER.id]
+        );
+
+        await connection.commit();
+
+        return products
+
+    } catch (err) {
+        await connection.rollback();
+
+        logger.error(err);
+
+        return []
+    } finally {
+        connection.release();
+    }
+};
+
 const products = {
+    Query: {
+        getProducts: (_: any, args: any, context: any) => getProducts(args, context)
+    },
     Mutation: {
         createProduct: (_: any, args: any, context: any) => createProduct(args, context)
     },

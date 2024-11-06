@@ -12,25 +12,13 @@ import { products } from './graphql/resolvers.js';
 import { sellerMiddleware } from './middleware/seller.js';
 import { requireAuth } from './middleware/required.js';
 
-
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
-
 const app = express();
 
 const httpServer = http.createServer(app);
 
 const resolvers = {
     Query: {
-        books: () => books
+        ...products.Query
     },
     Mutation: {
         ...products.Mutation
@@ -124,7 +112,7 @@ const main = async () => {
             cors<cors.CorsRequest>(corsOptions),
             express.json(),
             expressMiddleware(server, {
-                context: async ({ req }) => ({ seller: req.sellerData }),
+                context: async ({ req }) => ({ sellerData: req.sellerData }),
             })
         );
 
