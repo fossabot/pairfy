@@ -1,6 +1,14 @@
 import { Logger } from "tslog";
-
+import { customAlphabet } from "nanoid";
 
 const logger = new Logger({ name: "service-product" });
 
-export { logger }
+const catcher = (message?: any, error?: any, bypass?: boolean) => {
+    logger.error(`EXIT=>${message}-${error}`);
+
+    return bypass || process.exit(1);
+};
+
+const getProductId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);
+
+export { logger, catcher, getProductId }
