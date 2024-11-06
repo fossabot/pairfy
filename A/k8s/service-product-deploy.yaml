@@ -56,5 +56,5 @@ spec:
   ports:
     - name: service-product
       protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 4000
+      targetPort: 4000

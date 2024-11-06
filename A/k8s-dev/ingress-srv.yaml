@@ -42,13 +42,13 @@ spec:
                 name: service-user
                 port:
                   number: 8000
-          - path: /api/product/?(.*)
-            pathType: ImplementationSpecific
+          - path: /api/product/graphql
+            pathType: Prefix
             backend:
               service:
                 name: service-product
                 port:
-                  number: 8000
+                  number: 4000
           - path: /api/gate/?(.*)
             pathType: ImplementationSpecific
             backend:
