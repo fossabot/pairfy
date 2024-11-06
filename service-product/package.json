@@ -1,11 +1,12 @@
 {
-  "name": "new",
+  "name": "service-product",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "compile": "tsc",
+    "build": "npm run compile && node ./dist/index.js"
   },
+
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/node": "^22.9.0",
