@@ -2,7 +2,7 @@ import { getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 
 
-const createProduct = async (args: any) => {
+const createProduct = async (args: any, context: any) => {
     const params = args.createProductInput;
 
     const SELLER = "";
@@ -85,7 +85,7 @@ const createProduct = async (args: any) => {
 
 const products = {
     Mutation: {
-        createProduct: (_: any, args: any) => createProduct(args)
+        createProduct: (_: any, args: any, context: any) => createProduct(args, context)
     },
 };
 

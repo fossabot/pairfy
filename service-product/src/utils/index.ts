@@ -1,7 +1,10 @@
 import { Logger } from "tslog";
 import { customAlphabet } from "nanoid";
 
-const logger = new Logger({ name: "service-product" });
+const logger = new Logger({ name: "service-product", 
+    prettyLogTemplate: "{{logLevelName}} {{dateIsoStr}} {{fileNameWithLine}}",
+    type: "pretty"
+ });
 
 const catcher = (message?: any, error?: any, bypass?: boolean) => {
     logger.error(`EXIT=>${message}-${error}`);

@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
+import cookieSession from "cookie-session";
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
@@ -8,6 +9,8 @@ import { catcher, logger } from './utils/index.js';
 import { database } from './db/client.js';
 import { typeDefs } from './graphql/types.js';
 import { products } from './graphql/resolvers.js';
+import { sellerMiddleware } from './middleware/seller.js';
+import { requireAuth } from './middleware/required.js';
 
 
 const books = [
@@ -22,18 +25,6 @@ const books = [
 ];
 
 const app = express();
-
-const corsOrigin = process.env.CORS_DOMAINS!;
-
-const corsOptions = {
-    origin: corsOrigin?.split(",") || "*",
-    methods: ["GET", "POST"],
-    credentials: true,
-    maxAge: 86400,
-    preflightContinue: false,
-    exposedHeaders: ["Set-Cookie"],
-    optionsSuccessStatus: 204,
-};
 
 const httpServer = http.createServer(app);
 
@@ -79,15 +70,25 @@ const main = async () => {
             throw new Error("TOKEN_EXPIRATION error");
         }
 
-        database.connect({
-            host: "mysql",
-            port: 3306,
-            user: "marketplace",
-            password: "password",
-            database: "service_product",
-        });
+        const sessionOptions: object = {
+            maxAge: 168 * 60 * 60 * 1000,
+            signed: false,
+            secure: true,
+            httpOnly: true,
+            sameSite: "strict",
+        };
 
-        logger.info("DB");
+        const corsOrigin = process.env.CORS_DOMAINS;
+
+        const corsOptions = {
+            origin: corsOrigin?.split(",") || "*",
+            methods: ["GET", "POST"],
+            credentials: true,
+            maxAge: 86400,
+            preflightContinue: false,
+            exposedHeaders: ["Set-Cookie"],
+            optionsSuccessStatus: 204,
+        };
 
         const errorEvents: string[] = [
             "exit",
@@ -98,8 +99,23 @@ const main = async () => {
             "unhandledRejection",
         ];
 
-
         errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+
+        database.connect({
+            host: "mysql",
+            port: 3306,
+            user: "marketplace",
+            password: "password",
+            database: "service_product",
+        });
+
+        logger.info("DB");
+
+        app.use(cookieSession(sessionOptions));
+
+        app.use(sellerMiddleware);
+
+        app.use(requireAuth);
 
         await server.start();
 
@@ -108,7 +124,7 @@ const main = async () => {
             cors<cors.CorsRequest>(corsOptions),
             express.json(),
             expressMiddleware(server, {
-                context: async ({ req }) => ({ token: null }),
+                context: async ({ req }) => ({ seller: req.sellerData }),
             })
         );
 
