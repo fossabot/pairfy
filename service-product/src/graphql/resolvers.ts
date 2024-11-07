@@ -5,42 +5,44 @@ import { database } from "../db/client.js";
 const createProduct = async (args: any, context: any) => {
     const params = args.createProductInput;
 
+    console.log(params);
+
     const SELLER = context.sellerData;
+
+    if (params.collateral >= params.price) {
+        throw new Error("MAX_COLLATERAL");
+    }
 
     let connection = null;
 
     try {
-        if (params.collateral >= params.price) {
-            throw new Error("MAX_COLLATERAL");
-        }
-
         connection = await database.client.getConnection();
 
         await connection.beginTransaction();
 
         const schemeData = `
-      INSERT INTO products (
-        id,
-        seller_id,
-        name,
-        price,  
-        collateral,
-        sku,              
-        model,
-        brand,
-        features,
-        category,
-        keywords,
-        stock,
-        color,
-        color_name,
-        quality,
-        country,
-        media_url,
-        media_path,
-        image_set,
-        video_set,
-        schema_v
+        INSERT INTO products (
+            id,
+            seller_id,
+            name,
+            price,  
+            collateral,
+            sku,              
+            model,
+            brand,
+            features,
+            category,
+            keywords,
+            stock,
+            color,
+            color_name,
+            quality,
+            country,
+            media_url,
+            media_path,
+            image_set,
+            video_set,
+            schema_v
        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const schemeValue = [
@@ -78,7 +80,7 @@ const createProduct = async (args: any, context: any) => {
 
         logger.error(err);
 
-        return { success: false }
+        throw new Error('INTERNAL_ERROR');
     } finally {
         connection.release();
     }
@@ -91,8 +93,6 @@ const getProducts = async (args: any, context: any) => {
     console.log(params);
 
     const SELLER = context.sellerData;
-
-    console.log("context", SELLER);
 
     let connection = null;
 

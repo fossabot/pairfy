@@ -31,25 +31,25 @@
             <div class="container">
                 <div class="left-column">
                     <InputText v-model="productName" type="text" placeholder="Product Name"
-                        v-keyfilter="/^[a-zA-Z0-9- ]+$/" />
+                        v-keyfilter="/^[a-zA-Z0-9-()/+$ ]+$/" />
                     <InputGroup>
 
-                        <InputText v-model="productPrice" type="text" placeholder="Product Price"
+                        <InputText v-model="productPrice" type="number" placeholder="Product Price"
                             v-keyfilter="/^[0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
 
-                        <InputText v-model="productCollateral" type="text" placeholder="Product Collateral"
+                        <InputText v-model="productCollateral" type="number" placeholder="Product Collateral"
                             style="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)"
                             v-keyfilter="/^[0-9]+$/" />
 
-                        <InputText v-model="productSKU" type="text" placeholder="Product SKU" v-keyfilter="/^[0-9]+$/"
-                            style="border-radius: var(--p-inputtext-border-radius)" />
+                        <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                            v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
                     </InputGroup>
 
                     <InputGroup>
 
                         <InputText v-model="productModel" type="text" placeholder="Model"
                             style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
-                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" />
+                            v-keyfilter="/^[a-zA-Z0-9]+$/" />
 
                         <InputText v-model="productBrand" type="text" placeholder="Brand"
                             v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
@@ -183,9 +183,9 @@
                         </div>
 
                         <div class="box-content">
-                            <ColorPicker v-model="productHex" />
+                            <ColorPicker v-model="productColor" />
 
-                            <InputText v-model="productColor" type="text" placeholder="Color Name"
+                            <InputText v-model="productColorName" type="text" placeholder="Color Name"
                                 v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-left: 1rem;" />
 
                         </div>
@@ -199,7 +199,7 @@
                         </div>
 
                         <div class="box-content">
-                            <SelectButton v-model="productState" :options="productStateOptions"
+                            <SelectButton v-model="productQuality" :options="productStateOptions"
                                 aria-labelledby="basic" />
                         </div>
                     </div>
@@ -218,8 +218,8 @@
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
                             outlined style="font-size: var(--text-size-a)" fluid />
 
-                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading" @click="createProduct"
-                            style="font-size: var(--text-size-a)" fluid />
+                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading"
+                            @click="createProduct" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -273,13 +273,13 @@ const productCategories = ref([
     { name: "Digital Content & Software", code: "software" },
 ]);
 
-const productHex = ref("#000000");
+const productColor = ref("000000");
 
-const productColor = ref(null);
+const productColorName = ref(null);
 
 const productStock = ref(false);
 
-const productState = ref('New');
+const productQuality = ref('New');
 
 const productStateOptions = ref(['New', 'Used']);
 
@@ -378,21 +378,23 @@ onError(error => {
 })
 
 const createProduct = () => {
+    console.log(productColor.value);
+
     sendMessage({
         "createProductVariable": {
-            "name": "producto name",
-            "price": 1000,
-            "collateral": 100,
-            "sku": "ABCDK",
-            "model": "k11",
-            "brand": "apple",
-            "features": "features text",
-            "category": "tech",
-            "keywords": "cheap,new",
-            "stock": 1,
-            "color": "#000000",
-            "color_name": "black-window",
-            "quality": "New",
+            "name": productName.value,
+            "price": parseInt(productPrice.value),
+            "collateral": parseInt(productCollateral.value),
+            "sku": productSKU.value,
+            "model": productModel.value,
+            "brand": productBrand.value,
+            "features": "a",
+            "category": productCategory.value.code,
+            "keywords": productTags.value.join(','),
+            "stock": productStock.value ? 1 : 0,
+            "color": productColor.value,
+            "color_name": productColorName.value,
+            "quality": productQuality.value,
             "image_set": "1,2,3,4",
             "video_set": ""
         }
