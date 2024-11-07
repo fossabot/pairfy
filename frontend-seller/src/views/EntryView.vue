@@ -99,8 +99,6 @@
 
             <!--REGISTER-->
             <div v-if="currentMode === 'register'" class="form">
-
-
                 <div class="title">
                     <span>New Account.</span>
                     <span>Start managing your inventory</span>
@@ -233,10 +231,10 @@
 </template>
 
 <script setup>
+import dashboardAPI from '@/views/api/index';
 import { ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 import { useToast } from "primevue/usetoast";
-import dashboardAPI from '@/views/api/index';
 
 const toast = useToast();
 
@@ -246,6 +244,11 @@ const loginForm = ref({
     email: "",
     password: ""
 });
+
+const countries = ref([
+    { name: 'Colombia', code: 'CO' },
+    { name: 'United States', code: 'US' }
+]);
 
 const registerForm = ref({
     email: "",
@@ -337,10 +340,7 @@ function navigateTo(mode) {
     })
 }
 
-const countries = ref([
-    { name: 'Colombia', code: 'CO' },
-    { name: 'United States', code: 'US' }
-]);
+
 
 </script>
 

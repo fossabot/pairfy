@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
-import { createApolloProvider } from '@vue/apollo-option'
+import { HOST } from '../api';
 
 const cache = new InMemoryCache();
 
@@ -19,7 +19,7 @@ const defaultOptions = {
 }
 
 const clientProductOptions = {
-    uri: 'https://pairfy.dev/api/product/graphql',
+    uri: HOST + '/api/product/graphql',
     cache
 }
 

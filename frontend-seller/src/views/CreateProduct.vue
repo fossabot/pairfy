@@ -70,12 +70,12 @@
                                     <div class="uploader-top">
                                         <div class="uploader-control">
                                             <Button @click="chooseCallback()" icon="pi pi-image" rounded outlined
-                                                severity="secondary"/>
+                                                severity="secondary" />
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
                                                 rounded outlined severity="success"
-                                                :disabled="!files || files.length === 0"/>
+                                                :disabled="!files || files.length === 0" />
                                             <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
-                                                severity="danger" :disabled="!files || files.length === 0"/>
+                                                severity="danger" :disabled="!files || files.length === 0" />
 
                                             <Message severity="secondary">
 
@@ -149,11 +149,6 @@
                                 </template>
                             </FileUpload>
                         </div>
-
-
-
-
-
                     </div>
 
                 </div>
@@ -221,10 +216,10 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
-                            outlined style="font-size: var(--text-size-a)"  fluid/>
+                            outlined style="font-size: var(--text-size-a)" fluid />
 
-                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading" @click="load"
-                            style="font-size: var(--text-size-a)" fluid/>
+                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading" @click="createProduct"
+                            style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -233,21 +228,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
 import Sortable from 'sortablejs';
+import gql from 'graphql-tag'
+import { onMounted, ref } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
+import { useMutation } from '@vue/apollo-composable'
 
-const items = ref([
-    {
-        label: 'Update',
-        icon: 'pi pi-refresh'
-    },
-    {
-        label: 'Delete',
-        icon: 'pi pi-times'
-    }
-])
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -293,14 +280,17 @@ const productColor = ref(null);
 const productStock = ref(false);
 
 const productState = ref('New');
+
 const productStateOptions = ref(['New', 'Used']);
 
-
 const $primevue = usePrimeVue();
+
 const toast = useToast();
 
 const totalSize = ref(0);
+
 const totalSizePercent = ref(0);
+
 const files = ref([]);
 
 
@@ -364,6 +354,50 @@ const formatSize = (bytes) => {
 
     return `${formattedSize} ${sizes[i]}`;
 };
+
+
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
+const { mutate: sendMessage, onError } = useMutation(gql`
+mutation($createProductVariable: CreateProductInput!){
+    createProduct(createProductInput: $createProductVariable){
+        success
+    }
+}
+`)
+
+onError(error => {
+    showError(error);
+    console.log(error);
+})
+
+const createProduct = () => {
+    sendMessage({
+        "createProductVariable": {
+            "name": "producto name",
+            "price": 1000,
+            "collateral": 100,
+            "sku": "ABCDK",
+            "model": "k11",
+            "brand": "apple",
+            "features": "features text",
+            "category": "tech",
+            "keywords": "cheap,new",
+            "stock": 1,
+            "color": "#000000",
+            "color_name": "black-window",
+            "quality": "New",
+            "image_set": "1,2,3,4",
+            "video_set": ""
+        }
+    })
+}
 
 
 </script>
