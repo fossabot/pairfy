@@ -29,13 +29,15 @@ query($getProductsVariable: GetProductsInput!){
     getProducts(getProductsInput: $getProductsVariable){
         id
         name
+        category
     }
 }
-
 `, {
   "getProductsVariable": {
     "page": 1
   }
+}, {
+  pollInterval: 1000,
 }
 )
 
@@ -45,10 +47,5 @@ function setPage(page) {
   }
 }
 
-
-
-
-
-
-const products = computed(() => result.value || "aasddddddd")
+const products = computed(() => result.value.getProducts || "aasddddddd")
 </script>
