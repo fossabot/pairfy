@@ -12,10 +12,19 @@
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router';
-import { useToast } from "primevue/usetoast";
 import NavMenu from './components/NavMenu.vue'
 import dashboardAPI from '@/views/api/index';
+import { RouterView } from 'vue-router';
+import { useToast } from "primevue/usetoast";
+import { provide } from 'vue';
+import { ApolloClients } from '@vue/apollo-composable';
+import { productClient, blockchainClient } from './graphql/index';
+
+provide(ApolloClients, {
+  default: productClient,
+  product: productClient,
+  blockchain: blockchainClient,
+})
 
 const toast = useToast();
 

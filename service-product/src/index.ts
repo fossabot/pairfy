@@ -69,12 +69,11 @@ const main = async () => {
         const corsOrigin = process.env.CORS_DOMAINS;
 
         const corsOptions = {
-            origin: corsOrigin?.split(",") || "*",
-            methods: ["GET", "POST"],
+            origin: corsOrigin.split(",") || "*",
             credentials: true,
             maxAge: 86400,
             preflightContinue: false,
-            exposedHeaders: ["Set-Cookie"],
+            exposedHeaders: ["Set-Cookie", "Cookie"],
             optionsSuccessStatus: 204,
         };
 
@@ -88,6 +87,8 @@ const main = async () => {
         ];
 
         errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+
+        app.options('*', cors(corsOptions));
 
         database.connect({
             host: "mysql",
