@@ -39,7 +39,7 @@ const showError = (content) => {
   toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
-getUser().then(() => showSuccess('Welcome')).catch(() => showError('AUTH_ERROR'))
+getUser().then(() => showSuccess('👋 Welcome')).catch(() => showError('AUTH_ERROR'))
 
 </script>
 

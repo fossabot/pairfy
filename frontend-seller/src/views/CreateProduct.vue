@@ -31,7 +31,7 @@
             <div class="container">
                 <div class="left-column">
                     <InputText v-model="productName" type="text" placeholder="Product Name"
-                        v-keyfilter="/^[a-zA-Z0-9-()/+$ ]+$/" />
+                        v-keyfilter="/^[a-zA-Z0-9-()/+$ ]+$/" :invalid="formErrors.name" />
                     <InputGroup>
 
                         <InputText v-model="productPrice" type="number" placeholder="Product Price"
@@ -379,6 +379,24 @@ onError(error => {
 onDone(result => {
     showSuccess("Product Created");
 })
+
+const formErrors = ref({
+    "name": true,
+    "price": true,
+    "collateral": true,
+    "sku": true,
+    "model": true,
+    "brand": true,
+    "features": true,
+    "category": true,
+    "keywords": true,
+    "stock": true,
+    "color": true,
+    "color_name": true,
+    "quality": true,
+    "image_set": true,
+    "video_set": true
+});
 
 const createProduct = () => {
     console.log(productColor.value);
