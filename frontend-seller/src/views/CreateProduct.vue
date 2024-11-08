@@ -58,8 +58,24 @@
                             :invalid="formErrors.brand" />
                     </InputGroup>
 
+                    <div v-if="editor" class="editor container">
+                        <div class="editor-control">
+                            <div class="editor-control-group">
+                                <button @click="editor.chain().focus().toggleBold().run()"
+                                    :disabled="!editor.can().chain().focus().toggleBold().run()"
+                                    :class="{ 'is-active': editor.isActive('bold') }">
 
-                    <Editor v-model="editor" editorStyle="height: 320px" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linejoin="round"
+                                            d="M6.75 3.744h-.753v8.25h7.125a4.125 4.125 0 0 0 0-8.25H6.75Zm0 0v.38m0 16.122h6.747a4.5 4.5 0 0 0 0-9.001h-7.5v9h.753Zm0 0v-.37m0-15.751h6a3.75 3.75 0 1 1 0 7.5h-6m0-7.5v7.5m0 0v8.25m0-8.25h6.375a4.125 4.125 0 0 1 0 8.25H6.75m.747-15.38h4.875a3.375 3.375 0 0 1 0 6.75H7.497v-6.75Zm0 7.5h5.25a3.75 3.75 0 0 1 0 7.5h-5.25v-7.5Z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <editor-content :editor="editor" />
+                    </div>
 
 
                     <div class="uploader">
@@ -206,7 +222,7 @@
 
                         <div class="box-content">
                             <SelectButton v-model="productQuality" :options="productStateOptions"
-                                aria-labelledby="basic" :invalid="formErrors.quality"/>
+                                aria-labelledby="basic" :invalid="formErrors.quality" />
                         </div>
                     </div>
 
@@ -236,18 +252,21 @@
 <script setup>
 import Sortable from 'sortablejs';
 import gql from 'graphql-tag'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable'
-
+import StarterKit from '@tiptap/starter-kit'
+import { Color } from '@tiptap/extension-color'
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import { Editor, EditorContent } from '@tiptap/vue-3'
 
 const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Create Product' }
 ]);
 
-const editor = ref();
 
 const productName = ref(null);
 const productPrice = ref(null);
@@ -299,8 +318,9 @@ const totalSizePercent = ref(0);
 
 const files = ref([]);
 
+const editor = ref(null)
 
-onMounted(() => {
+onMounted(async () => {
     new Sortable(document.getElementById('sortable-media'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
@@ -315,6 +335,18 @@ onMounted(() => {
             console.log('Final Order:', orderArray);
         }
     });
+
+    await nextTick();
+
+    editor.value = new Editor({
+        extensions: [
+            StarterKit,
+        ],
+        content: `
+                Description
+
+      `,
+    })
 })
 
 
@@ -496,8 +528,6 @@ main {
 }
 
 
-
-
 .card {
     display: flex;
     flex-direction: column;
@@ -660,6 +690,34 @@ main {
     display: flex;
     flex-direction: column;
 }
+
+.editor {
+    height: 320px;
+    border: 1px solid var(--border-a);
+    border-radius: 5px 5px 0 0;
+    display: block;
+}
+
+.editor-control {
+    padding: 1rem;
+}
+
+.editor-control button {
+    background: transparent;
+    border: 1px solid var(--border-a);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+
+
+.editor-control button.is-active {
+    border: 1px solid black;
+}
+
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
