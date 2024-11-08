@@ -556,7 +556,7 @@ const createProduct = () => {
             "sku": productSKU.value,
             "model": productModel.value,
             "brand": productBrand.value,
-            "features": "a",
+            "features": JSON.stringify(editor.value.getJSON()),
             "category": productCategory.value.code,
             "keywords": productKeywords.value.join(','),
             "stock": productStock.value ? 1 : 0,
