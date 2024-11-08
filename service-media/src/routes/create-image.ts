@@ -10,7 +10,7 @@ import { _ } from "../utils/pino";
 const createImageMiddlewares: any = [
   sellerMiddleware,
   requireAuth,
-  uploadMiddleware.array("image", 5),
+  uploadMiddleware.array("image", 15),
 ];
 
 const createImageHandler = async (req: Request, res: Response) => {

@@ -153,21 +153,22 @@
 
                     <!--/////////////////////////////-->
                     <div class="uploader">
-                        <div class="uploader-wrap">
+                        <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
-                            <FileUpload name="image" mode="advanced" :url="mediaImagesURL"
-                                @upload="onTemplatedUpload($event)" :withCredentials="true" :multiple="true"
-                                accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
+                            <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
+                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
+                                invalidFileLimitMessage="File Limit"
+                                @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
-                                            <Button @click="chooseCallback()" icon="pi pi-image" rounded outlined
-                                                severity="secondary" />
+                                            <Button @click="chooseCallback()" icon="pi pi-image" outlined
+                                                severity="secondary" size="small" />
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
-                                                rounded outlined severity="success"
+                                                outlined severity="secondary"
                                                 :disabled="!files || files.length === 0" />
                                             <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
-                                                severity="danger" :disabled="!files || files.length === 0" />
+                                                severity="secondary" :disabled="!files || files.length === 0" />
 
                                             <Message severity="secondary">
 
@@ -448,6 +449,8 @@ const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 
 const productImageSet = ref([])
 
+const productImageSetLimit = ref(4);
+
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
@@ -543,7 +546,6 @@ const formErrors = ref({
 });
 
 const checkMandatory = () => {
-    console.log(editor.value.storage.characterCount.characters());
 
     formErrors.value.name = productName.value === null;
     formErrors.value.price = productPrice.value === null;
@@ -557,7 +559,7 @@ const checkMandatory = () => {
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
-    formErrors.value.image_set = false;
+    formErrors.value.image_set = productImageSet.value.length < 5;
     formErrors.value.video_set = false;
 
     return Object.values(formErrors.value).some(value => value === true);
@@ -594,7 +596,7 @@ const createProduct = () => {
 
 <style scoped>
 ::v-deep(.p-progressbar) {
-    height: 0.4rem;
+    height: 0.35rem;
 }
 
 ::v-deep(.p-inputtext) {
@@ -749,8 +751,8 @@ main {
 .media-pending {
     background: orange;
     font-size: var(--text-size-a);
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
 }
 
@@ -846,8 +848,9 @@ main {
     display: block;
 }
 
-.editor.invalid {
+.invalid {
     border: 1px solid var(--p-red-400);
+    border-radius: 5px 5px 0 0;
 }
 
 .editor-control {
