@@ -157,8 +157,7 @@
                             <Toast />
                             <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
                                 :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
-                                invalidFileLimitMessage="File Limit"
-                                @select="onSelectedFiles">
+                                invalidFileLimitMessage="File Limit" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
@@ -166,8 +165,8 @@
                                                 severity="secondary" size="small" />
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
                                                 outlined severity="secondary"
-                                                :disabled="!files || files.length === 0" />
-                                            <Button @click="clearCallback()" icon="pi pi-times" rounded outlined
+                                                :disabled="!files || files.length === 0 || files.length < 1 || files.length >= productImageSetLimit" />
+                                            <Button @click="clearCallback()" icon="pi pi-times" outlined
                                                 severity="secondary" :disabled="!files || files.length === 0" />
 
                                             <Message severity="secondary">
@@ -198,7 +197,6 @@
                                                 </div>
 
                                                 <div class="media-control">
-                                                    <div class="media-pending" />
                                                     <button
                                                         @click="onRemoveTemplatingFile(file, removeFileCallback, index)">
 
@@ -449,7 +447,7 @@ const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 
 const productImageSet = ref([])
 
-const productImageSetLimit = ref(4);
+const productImageSetLimit = ref(15);
 
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
@@ -728,7 +726,6 @@ main {
     justify-content: center;
     align-items: center;
     padding: 0.25rem 0.5rem;
-    margin-left: 0.5rem;
     border: 1px solid var(--border-a);
     cursor: pointer;
 }
@@ -748,13 +745,7 @@ main {
     align-items: center;
 }
 
-.media-pending {
-    background: orange;
-    font-size: var(--text-size-a);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-}
+
 
 .media-preview {
     width: 100px;
