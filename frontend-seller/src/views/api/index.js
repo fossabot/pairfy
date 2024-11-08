@@ -13,6 +13,9 @@ const dashboardAPI = () => {
   const createUser = async (params) =>
     await store.dispatch("dashboard/createUser", params);
 
+  const createImage = async (params) =>
+    await store.dispatch("dashboard/createImage", params);
+
   const sleep = (timeInMs) =>
     new Promise((resolve) => setTimeout(() => resolve(false), timeInMs));
 
@@ -20,6 +23,7 @@ const dashboardAPI = () => {
     loginUser,
     getUserData: computed(() => store.getters["dashboard/getUserData"]),
     createUser,
+    createImage,
     getUser,
     sleep,
   };

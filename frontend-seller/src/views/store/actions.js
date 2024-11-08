@@ -1,3 +1,4 @@
+import { HOST } from "@/api";
 import axiosAPI from "@/api/axios";
 
 const createUser = async (_, params) => {
@@ -37,4 +38,26 @@ const getUser = async ({ commit }) => {
     return { ok: false, response: error.response.data };
   }
 };
-export { createUser, loginUser, getUser };
+
+
+const createImage = async (_, params) => {
+  try {
+
+    const healthcheck = await axiosAPI.get("/api/media/healthcheck");
+
+    console.log(healthcheck);
+
+    const response = await fetch(HOST + "/api/media/create-image", {
+      method: "POST",
+      body: params,
+      credentials: "include",
+    });
+
+
+    return { ok: true, response: await response.json() };
+  } catch (error) {
+    return { ok: false, response: error.response };
+  }
+};
+
+export { createUser, loginUser, getUser, createImage };

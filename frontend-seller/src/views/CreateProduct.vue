@@ -157,7 +157,7 @@
 
                         <div class="uploader-wrap">
                             <Toast />
-                            <FileUpload name="demo[]" url="/api/upload" @upload="onTemplatedUpload($event)"
+                            <FileUpload name="image" :customUpload="true" @upload="onTemplatedUpload($event)"
                                 :multiple="true" accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
@@ -175,8 +175,8 @@
                                                 <div style="display: flex; align-items: center">
 
                                                     <i class="pi pi-exclamation-circle" />
-                                                    <span style="margin-left: 0.5rem;"> Drag the images to the desired
-                                                        order.</span>
+                                                    <span style="margin-left: 0.5rem;"> The first image is the preview
+                                                        thumbnail.</span>
                                                 </div>
 
                                             </Message>
@@ -326,16 +326,19 @@
 <script setup>
 import Sortable from 'sortablejs';
 import gql from 'graphql-tag'
+import StarterKit from '@tiptap/starter-kit'
+import ListItem from '@tiptap/extension-list-item'
+import TextStyle from '@tiptap/extension-text-style'
+import Placeholder from '@tiptap/extension-placeholder'
+import CharacterCount from '@tiptap/extension-character-count'
 import { onMounted, ref, nextTick } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable'
-import StarterKit from '@tiptap/starter-kit'
-import ListItem from '@tiptap/extension-list-item'
-import TextStyle from '@tiptap/extension-text-style'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import Placeholder from '@tiptap/extension-placeholder'
-import CharacterCount from '@tiptap/extension-character-count'
+import dashboardAPI from '@/views/api/index';
+
+const { createImage } = dashboardAPI();
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -436,6 +439,15 @@ onMounted(async () => {
 })
 
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
+
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
     removeFileCallback(index);
     totalSize.value -= parseInt(formatSize(file.size));
@@ -455,9 +467,30 @@ const onSelectedFiles = (event) => {
     });
 };
 
-const uploadEvent = (callback) => {
+const uploadEvent = async (callback) => {
     totalSizePercent.value = totalSize.value / 10;
-    callback();
+
+    const formData = new FormData();
+
+    files.value.forEach((file, index) => {
+        console.log(index, file.name);
+
+        formData.append(`image`, file, file.name);
+    });
+
+    await createImage(formData).then((res) => {
+        const data = res.response;
+
+        console.log(data);
+
+        if (data.success === true) {
+            callback();
+
+            showSuccess('Images Uploaded');
+        } else {
+            callback(false);
+        }
+    });
 };
 
 const onTemplatedUpload = () => {
@@ -480,13 +513,6 @@ const formatSize = (bytes) => {
 };
 
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
 
 const { mutate: sendMessage, onError, onDone } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
@@ -685,7 +711,7 @@ main {
 }
 
 .media-item {
-    background: #f1f5f9;
+    background: var(--background-b);
     overflow: hidden;
     height: 150px;
     text-align: center;

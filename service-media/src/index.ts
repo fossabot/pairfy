@@ -68,6 +68,10 @@ const main = async () => {
       route.getImageHandler
     );
 
+    app.get('/api/media/healthcheck', (req, res) => {
+      res.status(200).json({ status: 'UP', message: 'Test OK' });
+    });
+
     app.all("*", (_req, _res) => {
       throw new NotFoundError();
     });
