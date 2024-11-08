@@ -58,7 +58,7 @@
                             :invalid="formErrors.brand" />
                     </InputGroup>
 
-                    <div v-if="editor" class="editor container">
+                    <div v-if="editor" class="editor container" :class="{ invalid: formErrors.features }">
                         <div class="editor-control">
                             <div class="editor-control-group">
                                 <button @click="editor.chain().focus().toggleBold().run()"
@@ -143,6 +143,9 @@
                                 </button>
                             </div>
 
+                            <span class="editor-control-counter">
+                                {{ editor.storage.characterCount.characters() }} / {{ editorLimit }}
+                            </span>
                         </div>
 
                         <editor-content :editor="editor" />
@@ -328,11 +331,11 @@ import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable'
 import StarterKit from '@tiptap/starter-kit'
-import { Color } from '@tiptap/extension-color'
 import ListItem from '@tiptap/extension-list-item'
 import TextStyle from '@tiptap/extension-text-style'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import Placeholder from '@tiptap/extension-placeholder'
+import CharacterCount from '@tiptap/extension-character-count'
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -392,6 +395,8 @@ const files = ref([]);
 
 const editor = ref(null)
 
+const editorLimit = ref(6000);
+
 onMounted(async () => {
     new Sortable(document.getElementById('sortable-media'), {
         animation: 150,
@@ -416,6 +421,10 @@ onMounted(async () => {
             Placeholder.configure({
                 placeholder: 'Write something …',
             }),
+            CharacterCount.configure({
+                limit: editorLimit.value,
+            }),
+            TextStyle.configure({ types: [ListItem.name] }),
         ],
         editorProps: {
             attributes: {
@@ -514,13 +523,15 @@ const formErrors = ref({
 });
 
 const checkMandatory = () => {
+    console.log(editor.value.storage.characterCount.characters());
+
     formErrors.value.name = productName.value === null;
     formErrors.value.price = productPrice.value === null;
     formErrors.value.collateral = productCollateral.value === null;
     formErrors.value.sku = productSKU.value === null;
     formErrors.value.model = productModel.value === null;
     formErrors.value.brand = productBrand.value === null;
-    formErrors.value.features = false;
+    formErrors.value.features = editor.value.storage.characterCount.characters() === 0;
     formErrors.value.category = productCategory.value === null;
     formErrors.value.keywords = productKeywords.value === null;
     formErrors.value.color = productColor.value === null;
@@ -534,7 +545,7 @@ const checkMandatory = () => {
 
 const createProduct = () => {
     if (checkMandatory()) {
-        showError('Mandatory Fields');
+        return showError('Mandatory Fields');
     };
 
     sendMessage({
@@ -816,6 +827,10 @@ main {
     display: block;
 }
 
+.editor.invalid {
+    border: 1px solid var(--p-red-400);
+}
+
 .editor-control {
     display: flex;
     align-items: center;
@@ -846,7 +861,10 @@ main {
     border: 1px solid gray;
 }
 
-
+.editor-control-counter {
+    font-size: var(--text-size-a);
+    color: var(--text-b);
+}
 
 
 
