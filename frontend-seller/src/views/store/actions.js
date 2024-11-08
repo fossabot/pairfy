@@ -42,11 +42,6 @@ const getUser = async ({ commit }) => {
 
 const createImage = async (_, params) => {
   try {
-
-    const healthcheck = await axiosAPI.get("/api/media/healthcheck");
-
-    console.log(healthcheck);
-
     const response = await fetch(HOST + "/api/media/create-image", {
       method: "POST",
       body: params,

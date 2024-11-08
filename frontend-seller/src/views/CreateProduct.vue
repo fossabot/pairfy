@@ -151,14 +151,13 @@
                         <editor-content :editor="editor" />
                     </div>
 
-
+                    <!--/////////////////////////////-->
                     <div class="uploader">
-                        <!--/////////////////////////////-->
-
                         <div class="uploader-wrap">
                             <Toast />
-                            <FileUpload name="image" :customUpload="true" @upload="onTemplatedUpload($event)"
-                                :multiple="true" accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
+                            <FileUpload name="image" mode="advanced" url="https://pairfy.dev/api/media/create-image"
+                                @upload="onTemplatedUpload($event)" :withCredentials="true" :multiple="true"
+                                accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
@@ -189,7 +188,7 @@
                                 <template
                                     #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
                                     <div class="uploader-content">
-
+                                        {{ uploadedFiles }}
                                         <div v-show="files.length > 0" class="media" id="sortable-media">
                                             <div v-for="(file, index) of files" :key="file.name + file.type + file.size"
                                                 class="media-item" :data-id="index">
@@ -211,8 +210,9 @@
                                         </div>
 
 
-                                        <div v-if="uploadedFiles.length > 0">
+                                        <div v-show="uploadedFiles.length > 0">
                                             <h5>Completed</h5>
+
                                             <div class="flex flex-wrap gap-4">
                                                 <div v-for="(file, index) of uploadedFiles"
                                                     :key="file.name + file.type + file.size"
@@ -469,32 +469,12 @@ const onSelectedFiles = (event) => {
 
 const uploadEvent = async (callback) => {
     totalSizePercent.value = totalSize.value / 10;
-
-    const formData = new FormData();
-
-    files.value.forEach((file, index) => {
-        console.log(index, file.name);
-
-        formData.append(`image`, file, file.name);
-    });
-
-    await createImage(formData).then((res) => {
-        const data = res.response;
-
-        console.log(data);
-
-        if (data.success === true) {
-            callback();
-
-            showSuccess('Images Uploaded');
-        } else {
-            callback(false);
-        }
-    });
+    callback();
 };
 
-const onTemplatedUpload = () => {
-    toast.add({ severity: "info", summary: "Success", detail: "File Uploaded", life: 3000 });
+const onTemplatedUpload = (data) => {
+    console.log(data);
+    showSuccess('Images Uploaded');
 };
 
 const formatSize = (bytes) => {
