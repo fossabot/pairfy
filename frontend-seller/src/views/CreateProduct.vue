@@ -35,24 +35,27 @@
                     <InputGroup>
 
                         <InputText v-model="productPrice" type="number" placeholder="Product Price"
-                            v-keyfilter="/^[0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
+                            v-keyfilter="/^[0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
+                            :invalid="formErrors.price" />
 
                         <InputText v-model="productCollateral" type="number" placeholder="Product Collateral"
                             style="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)"
-                            v-keyfilter="/^[0-9]+$/" />
+                            v-keyfilter="/^[0-9]+$/" :invalid="formErrors.collateral" />
 
                         <InputText v-model="productSKU" type="text" placeholder="Product SKU"
-                            v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
+                            v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
+                            :invalid="formErrors.sku" />
                     </InputGroup>
 
                     <InputGroup>
 
                         <InputText v-model="productModel" type="text" placeholder="Model"
                             style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
-                            v-keyfilter="/^[a-zA-Z0-9]+$/" />
+                            v-keyfilter="/^[a-zA-Z0-9]+$/" :invalid="formErrors.model" />
 
                         <InputText v-model="productBrand" type="text" placeholder="Brand"
-                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)" />
+                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
+                            :invalid="formErrors.brand" />
                     </InputGroup>
 
 
@@ -161,7 +164,8 @@
 
                         <div class="box-content">
                             <Select v-model="productCategory" :options="productCategories" optionLabel="name"
-                                placeholder="Select a category" style="font-size: var(--text-size-a)" fluid />
+                                placeholder="Select a category" style="font-size: var(--text-size-a)" fluid
+                                :invalid="formErrors.category" />
                         </div>
                     </div>
 
@@ -171,8 +175,9 @@
                         </div>
 
                         <div class="box-content">
-                            <AutoComplete v-model="productTags" inputId="multiple-ac-2" multiple fluid
-                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)" />
+                            <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
+                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)"
+                                :invalid="formErrors.keywords" />
                         </div>
                     </div>
 
@@ -186,7 +191,8 @@
                             <ColorPicker v-model="productColor" />
 
                             <InputText v-model="productColorName" type="text" placeholder="Color Name"
-                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-left: 1rem;" />
+                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-left: 1rem;"
+                                :invalid="formErrors.color_name" />
 
                         </div>
                     </div>
@@ -200,7 +206,7 @@
 
                         <div class="box-content">
                             <SelectButton v-model="productQuality" :options="productStateOptions"
-                                aria-labelledby="basic" />
+                                aria-labelledby="basic" :invalid="formErrors.quality"/>
                         </div>
                     </div>
 
@@ -249,10 +255,10 @@ const productCollateral = ref(null);
 const productSKU = ref(null);
 const productModel = ref(null);
 const productBrand = ref(null);
-const productTags = ref(null);
+const productKeywords = ref(null);
 
 
-const productCategory = ref();
+const productCategory = ref(null);
 
 const productCategories = ref([
     { name: "Electronics", code: "electronics" },
@@ -279,7 +285,7 @@ const productColorName = ref(null);
 
 const productStock = ref(false);
 
-const productQuality = ref('New');
+const productQuality = ref(null);
 
 const productStateOptions = ref(['New', 'Used']);
 
@@ -381,25 +387,46 @@ onDone(result => {
 })
 
 const formErrors = ref({
-    "name": true,
-    "price": true,
-    "collateral": true,
-    "sku": true,
-    "model": true,
-    "brand": true,
-    "features": true,
-    "category": true,
-    "keywords": true,
-    "stock": true,
-    "color": true,
-    "color_name": true,
-    "quality": true,
-    "image_set": true,
-    "video_set": true
+    "name": false,
+    "price": false,
+    "collateral": false,
+    "sku": false,
+    "model": false,
+    "brand": false,
+    "features": false,
+    "category": false,
+    "keywords": false,
+    "stock": false,
+    "color": false,
+    "color_name": false,
+    "quality": false,
+    "image_set": false,
+    "video_set": false
 });
 
+const checkMandatory = () => {
+    formErrors.value.name = productName.value === null;
+    formErrors.value.price = productPrice.value === null;
+    formErrors.value.collateral = productCollateral.value === null;
+    formErrors.value.sku = productSKU.value === null;
+    formErrors.value.model = productModel.value === null;
+    formErrors.value.brand = productBrand.value === null;
+    formErrors.value.features = false;
+    formErrors.value.category = productCategory.value === null;
+    formErrors.value.keywords = productKeywords.value === null;
+    formErrors.value.color = productColor.value === null;
+    formErrors.value.color_name = productColorName.value === null;
+    formErrors.value.quality = productQuality.value === null;
+    formErrors.value.image_set = false;
+    formErrors.value.video_set = false;
+
+    return Object.values(formErrors.value).some(value => value === true);
+}
+
 const createProduct = () => {
-    console.log(productColor.value);
+    if (checkMandatory()) {
+        showError('Mandatory Fields');
+    };
 
     sendMessage({
         "createProductVariable": {
@@ -411,7 +438,7 @@ const createProduct = () => {
             "brand": productBrand.value,
             "features": "a",
             "category": productCategory.value.code,
-            "keywords": productTags.value.join(','),
+            "keywords": productKeywords.value.join(','),
             "stock": productStock.value ? 1 : 0,
             "color": productColor.value,
             "color_name": productColorName.value,
