@@ -200,7 +200,7 @@
                                                     <button
                                                         @click="onRemoveTemplatingFile(file, removeFileCallback, index)">
 
-                                                        <i class="pi pi-trash" />
+                                                        <i class="pi pi-times" />
                                                     </button>
                                                 </div>
 
