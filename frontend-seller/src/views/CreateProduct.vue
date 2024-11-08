@@ -357,14 +357,14 @@ const formatSize = (bytes) => {
 
 
 const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
 
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
-const { mutate: sendMessage, onError } = useMutation(gql`
+const { mutate: sendMessage, onError, onDone } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
     createProduct(createProductInput: $createProductVariable){
         success
@@ -374,7 +374,10 @@ mutation($createProductVariable: CreateProductInput!){
 
 onError(error => {
     showError(error);
-    console.log(error);
+})
+
+onDone(result => {
+    showSuccess("Product Created");
 })
 
 const createProduct = () => {
