@@ -342,10 +342,12 @@ onMounted(async () => {
         extensions: [
             StarterKit,
         ],
-        content: `
-                Description
-
-      `,
+        editorProps: {
+            attributes: {
+                class: 'editor-class',
+            },
+        },
+        content: ``,
     })
 })
 
@@ -691,7 +693,39 @@ main {
     flex-direction: column;
 }
 
+::v-deep(.editor-class) {
+
+    height: 250px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 1rem;
+    color: var(--text-a);
+    font-size: var(--text-size-a);
+    outline: none;
+    box-sizing: border-box;
+}
+
+::v-deep(.editor-class::-webkit-scrollbar) {
+    width: 13px;
+}
+
+::v-deep(.editor-class::-webkit-scrollbar-track) {
+    background: transparent;
+}
+
+::v-deep(.editor-class::-webkit-scrollbar-thumb) {
+    background-color: #888;
+    border-radius: 4px;
+    border: 2px solid #f1f1f1;
+    cursor: pointer;
+}
+
+::v-deep(.editor-class::-webkit-scrollbar-thumb:hover) {
+    background-color: #3b3b3b;
+}
+
 .editor {
+    overflow: auto;
     height: 320px;
     border: 1px solid var(--border-a);
     border-radius: 5px 5px 0 0;
@@ -699,7 +733,8 @@ main {
 }
 
 .editor-control {
-    padding: 1rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-a);
 }
 
 .editor-control button {
@@ -711,6 +746,7 @@ main {
     justify-content: center;
     width: 30px;
     height: 30px;
+    color: var(--text-b);
 }
 
 
@@ -719,10 +755,35 @@ main {
 }
 
 
-/* Responsive design for smaller screens */
+
+
+
+/* Extra small devices (phones, 320px and up) */
+@media (min-width: 320px) {}
+
+/* Small devices (landscape phones, 480px and up) */
+@media (min-width: 480px) {}
+
+/* Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
     }
+
+    ::v-deep(.editor-class) {
+        width: 700px;
+    }
 }
+
+/* Large devices (laptops/desktops, 1024px and up) */
+@media (min-width: 1024px) {}
+
+/* Extra large devices (large laptops/desktops, 1200px and up) */
+@media (min-width: 1200px) {}
+
+/* Ultra-wide screens (1440px and up) */
+@media (min-width: 1440px) {}
+
+/* 4K screens (2560px and up) */
+@media (min-width: 2560px) {}
 </style>
