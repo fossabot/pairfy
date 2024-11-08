@@ -153,9 +153,10 @@
 
                     <!--/////////////////////////////-->
                     <div class="uploader">
+                        {{ JSON.stringify(files) }}
                         <div class="uploader-wrap">
                             <Toast />
-                            <FileUpload name="image" mode="advanced" url="https://pairfy.dev/api/media/create-image"
+                            <FileUpload name="image" mode="advanced" :url="mediaImagesURL"
                                 @upload="onTemplatedUpload($event)" :withCredentials="true" :multiple="true"
                                 accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
@@ -188,10 +189,9 @@
                                 <template
                                     #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
                                     <div class="uploader-content">
-                                        {{ uploadedFiles }}
                                         <div v-show="files.length > 0" class="media" id="sortable-media">
                                             <div v-for="(file, index) of files" :key="file.name + file.type + file.size"
-                                                class="media-item" :data-id="index">
+                                                class="media-item" :data-id="file.name">
                                                 <div>
                                                     <img role="presentation" :alt="file.name" :src="file.objectURL"
                                                         width="100" height="50" class="media-image" />
@@ -336,9 +336,10 @@ import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable'
 import { Editor, EditorContent } from '@tiptap/vue-3'
-import dashboardAPI from '@/views/api/index';
+import { HOST } from '@/api';
+import { computed } from 'vue';
 
-const { createImage } = dashboardAPI();
+const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -412,7 +413,12 @@ onMounted(async () => {
                 orderArray.push(item.getAttribute('data-id'));
             });
 
-            console.log('Final Order:', orderArray);
+
+            files.value = orderArray.map(fileName => {
+                return files.value.find(file => file.name === fileName);
+            });
+
+            console.log(files.value);
         }
     });
 
