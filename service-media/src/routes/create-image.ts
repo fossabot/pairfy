@@ -29,7 +29,7 @@ const createImageHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    for (const item of req.files as Express.Multer.File[]) {
+    for (const image of req.files as Express.Multer.File[]) {
       const schemeData = `
       INSERT INTO media (
         media_id,
@@ -46,15 +46,15 @@ const createImageHandler = async (req: Request, res: Response) => {
         imageId,
         SELLER.id,
         "image",
-        item.mimetype,
-        item.buffer,
+        image.mimetype,
+        image.buffer,
         0,
       ];
 
       const [result] = await connection.execute(schemeData, schemeValue);
 
       if (result.affectedRows === 1) {
-        response.push(imageId);
+        response.push(imageId + "." + image.mimetype.split("/")[1]);
       }
     }
 

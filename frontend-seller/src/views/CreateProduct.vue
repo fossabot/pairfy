@@ -153,7 +153,6 @@
 
                     <!--/////////////////////////////-->
                     <div class="uploader">
-                        {{ JSON.stringify(files) }}
                         <div class="uploader-wrap">
                             <Toast />
                             <FileUpload name="image" mode="advanced" :url="mediaImagesURL"
@@ -445,6 +444,10 @@ onMounted(async () => {
 })
 
 
+const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
+
+const productImageSet = ref([])
+
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
@@ -479,7 +482,12 @@ const uploadEvent = async (callback) => {
 };
 
 const onTemplatedUpload = (data) => {
-    console.log(data);
+    const { payload } = JSON.parse(data.xhr.response);
+
+    productImageSet.value.push(...payload);
+
+    console.log(productImageSet.value);
+
     showSuccess('Images Uploaded');
 };
 
@@ -568,7 +576,7 @@ const createProduct = () => {
             "sku": productSKU.value,
             "model": productModel.value,
             "brand": productBrand.value,
-            "features": JSON.stringify(editor.value.getJSON()),
+            "features": productFeatures.value,
             "category": productCategory.value.code,
             "keywords": productKeywords.value.join(','),
             "stock": productStock.value ? 1 : 0,
@@ -697,7 +705,6 @@ main {
 }
 
 .media-item {
-    background: var(--background-b);
     overflow: hidden;
     height: 150px;
     text-align: center;
@@ -729,8 +736,8 @@ main {
 }
 
 .media-image {
-    height: 80px;
-    width: 80px;
+    height: 90px;
+    width: 90px;
     object-fit: contain;
 }
 
