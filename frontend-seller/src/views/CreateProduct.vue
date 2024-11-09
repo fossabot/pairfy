@@ -156,7 +156,7 @@
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
+                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000" 
                                 invalidFileLimitMessage="File Limit" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
@@ -170,15 +170,22 @@
                                                 severity="secondary" :disabled="!files || files.length === 0" />
 
                                             <Message severity="secondary">
-
                                                 <div style="display: flex; align-items: center">
-
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> The first image is the preview
                                                         thumbnail.</span>
                                                 </div>
-
                                             </Message>
+
+                                            <Message severity="secondary">
+                                                <div style="display: flex; align-items: center">
+                                                    <i class="pi pi-exclamation-circle" />
+                                                    <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
+                                                        {{ productImageSetLimit }}</span>
+                                                </div>
+                                            </Message>
+
+
                                         </div>
                                         <ProgressBar :value="totalSizePercent" :showValue="false" class="uploader-bar">
                                             <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
@@ -188,7 +195,7 @@
                                 <template
                                     #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
                                     <div class="uploader-content">
-                                        <div v-show="files.length > 0" class="media" id="sortable-media">
+                                        <div v-show="files.length > 0" class="media-box" id="sortable-media">
                                             <div v-for="(file, index) of files" :key="file.name + file.type + file.size"
                                                 class="media-item" :data-id="file.name">
                                                 <div>
@@ -203,33 +210,22 @@
                                                         <i class="pi pi-times" />
                                                     </button>
                                                 </div>
-
                                             </div>
                                         </div>
 
 
-                                        <div v-show="uploadedFiles.length > 0">
-                                            <h5>Completed</h5>
 
-                                            <div class="flex flex-wrap gap-4">
-                                                <div v-for="(file, index) of uploadedFiles"
-                                                    :key="file.name + file.type + file.size"
-                                                    class="p-8 rounded-border flex flex-col border border-surface items-center gap-4">
-                                                    <div>
-                                                        <img role="presentation" :alt="file.name" :src="file.objectURL"
-                                                            width="100" height="50" />
-                                                    </div>
-                                                    <span
-                                                        class="font-semibold text-ellipsis max-w-60 whitespace-nowrap overflow-hidden">{{
-                                                            file.name }}</span>
-                                                    <div>{{ formatSize(file.size) }}</div>
-                                                    <Badge value="Completed" class="mt-4" severity="success" />
-                                                    <Button icon="pi pi-times"
-                                                        @click="removeUploadedFileCallback(index)" outlined rounded
-                                                        severity="danger" />
+                                        <div v-show="uploadedFiles.length > 0" class="media-box">
+                                            <div v-for="(file, index) of uploadedFiles"
+                                                :key="file.name + file.type + file.size" class="media-item">
+                                                <div>
+                                                    <img role="presentation" :alt="file.name" :src="file.objectURL"
+                                                        width="100" height="50" class="media-image" />
                                                 </div>
+                                                <Badge value="Completed" class="mt-4" severity="success" />
                                             </div>
                                         </div>
+
                                     </div>
                                 </template>
                                 <template #empty>
@@ -696,12 +692,13 @@ main {
     gap: 1rem;
 }
 
-.media {
+.media-box {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     border: 1px solid var(--border-a);
     padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .media-item {
@@ -878,8 +875,6 @@ main {
     font-size: var(--text-size-a);
     color: var(--text-b);
 }
-
-
 
 /* Extra small devices (phones, 320px and up) */
 @media (min-width: 320px) {}
