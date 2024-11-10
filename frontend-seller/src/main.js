@@ -41,6 +41,12 @@ import Divider from 'primevue/divider';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
 
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';   
+import Row from 'primevue/row';                   
+
+
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
@@ -107,6 +113,10 @@ app.component('IftaLabel', IftaLabel);
 app.component('Divider', Divider);
 app.component('Toast', Toast);
 app.component('Dialog', Dialog);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('ColumnGroup', ColumnGroup);
+app.component('Row', Row);
 
 app.directive('keyfilter', KeyFilter);
 

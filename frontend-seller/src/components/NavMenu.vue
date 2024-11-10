@@ -23,6 +23,13 @@
             <span>Create Product</span>
           </RouterLink>
         </li>
+
+        <li>
+          <RouterLink to="/product-list">
+            <i class="pi pi-list" />
+            <span>Product List</span>
+          </RouterLink>
+        </li>
       </ul>
     </nav>
 
