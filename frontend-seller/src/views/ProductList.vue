@@ -1,5 +1,4 @@
 <template>
-
     <div class="card">
         <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true">
             <div class="flex flex-col gap-6">
@@ -37,31 +36,41 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <RouterLink to="/create-product">
-                    <Button label="New" icon="pi pi-plus" />
-                </RouterLink>
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text />
 
-
-                <Button label="Delete" icon="pi pi-trash" severity="danger" outlined @click="confirmDeleteSelected"
-                    :disabled="!selectedProducts || !selectedProducts.length" />
+                <Breadcrumb :model="navItems">
+                    <template #item="{ item }">
+                        <span style="font-weight: 600;">{{ item.label }}</span>
+                    </template>
+                    <template #separator> / </template>
+                </Breadcrumb>
             </template>
 
             <template #end>
                 <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" customUpload
-                    chooseLabel="Import" class="mr-2" auto :chooseButtonProps="{ severity: 'secondary' }" />
+                    chooseLabel="Import" class="mr-2" auto :chooseButtonProps="{ severity: 'secondary' }"
+                    style="margin-right: 1rem;" />
+
                 <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
             </template>
         </Toolbar>
 
-        <DataTable ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id" :paginator="true"
-            :rows="10" :filters="filters"
+        <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
+            :paginator="true" :rows="10" :filters="filters"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             :rowsPerPageOptions="[5, 10, 25]"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products">
             <template #header>
-                <div class="flex flex-wrap gap-2 items-center justify-between">
-                    <h4 class="m-0">Manage Products</h4>
-                    <IconField>
+                <div class="datatable-header">
+                    <RouterLink to="/create-product">
+                        <Button label="New" icon="pi pi-plus" style="margin-right: 1rem;" />
+                    </RouterLink>
+
+
+                    <Button label="Delete" icon="pi pi-trash" severity="danger" outlined @click="confirmDeleteSelected"
+                        :disabled="!selectedProducts || !selectedProducts.length" />
+
+                    <IconField style="margin-left: auto;">
                         <InputIcon>
                             <i class="pi pi-search" />
                         </InputIcon>
@@ -70,30 +79,31 @@
                 </div>
             </template>
 
-            <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
-            <Column field="code" header="Code" sortable style="min-width: 12rem"></Column>
-            <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
             <Column header="Image">
                 <template #body="slotProps">
                     <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
                         :alt="slotProps.data.image" class="rounded" style="width: 64px" />
                 </template>
             </Column>
-            <Column field="price" header="Price" sortable style="min-width: 8rem">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.price) }}
-                </template>
-            </Column>
-            <Column field="category" header="Category" sortable style="min-width: 10rem"></Column>
             <Column field="inventoryStatus" header="Status" sortable style="min-width: 12rem">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.inventoryStatus"
                         :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
                 </template>
             </Column>
+
+            <Column field="code" header="Code" sortable style="min-width: 12rem"></Column>
+            <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
+            <Column field="price" header="Price" sortable style="min-width: 8rem">
+                <template #body="slotProps">
+                    {{ formatCurrency(slotProps.data.price) }}
+                </template>
+            </Column>
+            <Column field="category" header="Category" sortable style="min-width: 10rem"></Column>
             <Column :exportable="false" style="min-width: 12rem">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
+                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)"
+                        style="margin-right: 1rem;" />
                     <Button icon="pi pi-trash" outlined rounded severity="danger"
                         @click="confirmDeleteProduct(slotProps.data)" />
                 </template>
@@ -107,6 +117,10 @@ import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 
+const navItems = ref([
+    { label: 'Dashboard' },
+    { label: 'Product List' }
+]);
 
 onMounted(() => {
     const productsData = ref([
@@ -246,9 +260,46 @@ const getStatusLabel = (status) => {
 
 
 <style scoped>
-
-.card{
-    padding: 1rem;
+::v-deep(.p-toolbar) {
+    background: transparent;
+    padding: 0 1rem;
+    padding-left: 0.5rem;
 }
 
+::v-deep(button) {
+    font-size: var(--text-size-a);
+}
+
+.p-inputtext {
+    font-size: var(--text-size-a);
+}
+
+::v-deep(.p-datatable-header) {
+    background: transparent;
+    border-left: 1px solid var(--border-a);
+    border-right: 1px solid var(--border-a);
+}
+
+.p-datatable {
+    font-size: var(--text-size-a);
+}
+
+.p-tag {
+    font-size: var(--text-size-a);
+}
+
+.card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-datatable {
+    margin-top: 1rem;
+}
+
+.datatable-header {
+    display: flex;
+    align-items: center;
+}
 </style>

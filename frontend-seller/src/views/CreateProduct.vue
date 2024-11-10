@@ -8,7 +8,6 @@
                         <span style="font-weight: 600;">{{ item.label }}</span>
                     </template>
                     <template #separator> / </template>
-
                 </Breadcrumb>
 
 

@@ -40,7 +40,7 @@ import IftaLabel from 'primevue/iftalabel';
 import Divider from 'primevue/divider';
 import Toast from 'primevue/toast';
 import Dialog from 'primevue/dialog';
-
+import Tag from 'primevue/tag';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   
@@ -117,6 +117,7 @@ app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
+app.component('Tag', Tag);
 
 app.directive('keyfilter', KeyFilter);
 

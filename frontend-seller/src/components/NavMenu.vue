@@ -7,9 +7,6 @@
     <img class="logo" src="@/assets/logo.svg" alt="logo">
     <nav>
       <ul>
-        <li class="label">
-          HOME
-        </li>
         <li>
           <RouterLink to="/">
             <i class="pi pi-home" />
