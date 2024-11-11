@@ -54,8 +54,7 @@
                 <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
             </template>
         </Toolbar>
-
-        {{ products }}
+        
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
             :paginator="true" :rows="10" :filters="filters"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -206,8 +205,7 @@ const formatCurrency = (value) => {
 };
 
 const buildImageUrl = (data) => {
-    console.log(data.media_url + data.image_path + data.image_set[0])
-    data.media_url + data.image_path + data.image_set[0]
+    return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
 
 const openNew = () => {
@@ -349,7 +347,8 @@ const getStockLabel = (status) => {
     background: var(--background-b);
     width: 50px;
     height: 50px;
-    border-radius: 8px;
-    object-fit: cover;
+    border-radius: 4px;
+    object-fit: contain;
+    border: 1px solid var(--border-a);
 }
 </style>
