@@ -30,7 +30,7 @@
             <div class="container">
                 <div class="left-column">
                     <InputText v-model="productName" type="text" placeholder="Product Name"
-                        v-keyfilter="/^[a-zA-Z0-9-()/+$ ]+$/" :invalid="formErrors.name" />
+                        v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
                     <InputGroup>
 
                         <InputText v-model="productPrice" type="number" placeholder="Product Price"
@@ -552,7 +552,7 @@ const checkMandatory = () => {
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
-    formErrors.value.image_set = productImageSet.value.length < 5;
+    formErrors.value.image_set = productImageSet.value.length < productImageSetLimit;
     formErrors.value.video_set = false;
 
     return Object.values(formErrors.value).some(value => value === true);

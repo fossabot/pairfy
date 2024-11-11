@@ -78,12 +78,13 @@
             <Column header="Image">
                 <template #body="slotProps">
                     <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
-                        :alt="slotProps.data.image" class="rounded" style="width: 64px" />
+                        :alt="slotProps.data.image" class="datatable-image" />
                 </template>
             </Column>
 
 
             <Column field="code" header="Code" sortable style="min-width: 8rem"></Column>
+            <Column field="sku" header="Sku" sortable style="min-width: 8rem"></Column>
             <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
@@ -129,6 +130,7 @@ onMounted(() => {
         {
             id: '1000',
             code: 'f230fh0g3',
+            sku: "K8DK",
             name: 'Bamboo Watch',
             description: 'Product Description',
             image: 'bamboo-watch.jpg',
@@ -303,5 +305,13 @@ const getStatusLabel = (status) => {
 .datatable-header {
     display: flex;
     align-items: center;
+}
+
+.datatable-image {
+    background: var(--background-b);
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
 }
 </style>
