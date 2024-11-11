@@ -85,21 +85,27 @@
                         :alt="slotProps.data.image" class="rounded" style="width: 64px" />
                 </template>
             </Column>
-            <Column field="inventoryStatus" header="Status" sortable style="min-width: 12rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.inventoryStatus"
-                        :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
-                </template>
-            </Column>
 
-            <Column field="code" header="Code" sortable style="min-width: 12rem"></Column>
+
+            <Column field="code" header="Code" sortable style="min-width: 8rem"></Column>
             <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.price) }}
                 </template>
             </Column>
-            <Column field="category" header="Category" sortable style="min-width: 10rem"></Column>
+            <Column field="collateral" header="Collateral" sortable style="min-width: 8rem">
+                <template #body="slotProps">
+                    {{ formatCurrency(slotProps.data.collateral) }}
+                </template>
+            </Column>
+            <Column field="category" header="Category" sortable style="min-width: 8rem"></Column>
+            <Column field="inventoryStatus" header="Status" sortable style="min-width: 8rem">
+                <template #body="slotProps">
+                    <Tag :value="slotProps.data.inventoryStatus"
+                        :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
+                </template>
+            </Column>
             <Column :exportable="false" style="min-width: 12rem">
                 <template #body="slotProps">
                     <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)"
@@ -131,6 +137,7 @@ onMounted(() => {
             description: 'Product Description',
             image: 'bamboo-watch.jpg',
             price: 65,
+            collateral: 50,
             category: 'Accessories',
             quantity: 24,
             inventoryStatus: 'INSTOCK',
@@ -160,7 +167,7 @@ const statuses = ref([
 
 const formatCurrency = (value) => {
     if (value)
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+        return value.toLocaleString('en-US', { style: 'currency', currency: 'ADA' });
     return;
 };
 const openNew = () => {
