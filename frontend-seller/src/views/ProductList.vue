@@ -66,10 +66,6 @@
                         <Button label="New" icon="pi pi-plus" style="margin-right: 1rem;" />
                     </RouterLink>
 
-
-                    <Button label="Delete" icon="pi pi-trash" severity="danger" outlined @click="confirmDeleteSelected"
-                        :disabled="!selectedProducts || !selectedProducts.length" />
-
                     <IconField style="margin-left: auto;">
                         <InputIcon>
                             <i class="pi pi-search" />
@@ -283,8 +279,6 @@ const getStatusLabel = (status) => {
 
 ::v-deep(.p-datatable-header) {
     background: transparent;
-    border-left: 1px solid var(--border-a);
-    border-right: 1px solid var(--border-a);
 }
 
 .p-datatable {
@@ -293,6 +287,7 @@ const getStatusLabel = (status) => {
 
 .p-tag {
     font-size: var(--text-size-a);
+    text-transform: lowercase;
 }
 
 .card {
