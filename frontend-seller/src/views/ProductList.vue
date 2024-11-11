@@ -305,10 +305,18 @@ const goBackRoute = () => {
 
 ::v-deep(.p-datatable-header) {
     background: transparent;
+    border: none;
+}
+
+::v-deep(.p-datatable-paginator-bottom) {
+    border: none;
+    padding: 0.2rem;
 }
 
 .p-datatable {
     font-size: var(--text-size-a);
+    border: 1px solid var(--border-a);
+    border-radius: 1rem;
 }
 
 .p-tag {
