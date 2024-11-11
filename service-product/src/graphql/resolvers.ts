@@ -39,11 +39,12 @@ const createProduct = async (args: any, context: any) => {
             quality,
             country,
             media_url,
-            media_path,
+            image_path,
+            video_path,
             image_set,
             video_set,
             schema_v
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const schemeValue = [
             "P" + getProductId(),
@@ -64,6 +65,7 @@ const createProduct = async (args: any, context: any) => {
             SELLER.country,
             "https://pairfy.dev",
             "/api/media/get-image/",
+            "/api/media/get-video/",
             params.image_set,
             params.video_set,
             0,

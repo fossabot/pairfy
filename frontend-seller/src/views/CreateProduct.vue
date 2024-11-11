@@ -155,7 +155,7 @@
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000" 
+                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
                                 invalidFileLimitMessage="File Limit" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
@@ -163,8 +163,8 @@
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
                                                 severity="secondary" size="small" />
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
-                                                outlined severity="secondary"
-                                                :disabled="!files || files.length === 0 || files.length < 1 || files.length >= productImageSetLimit" />
+                                                outlined severity="secondary" :disabled="disableUpload" />
+
                                             <Button @click="clearCallback()" icon="pi pi-times" outlined
                                                 severity="secondary" :disabled="!files || files.length === 0" />
 
@@ -551,11 +551,29 @@ const checkMandatory = () => {
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
-    formErrors.value.image_set = productImageSet.value.length < productImageSetLimit;
+    formErrors.value.image_set = productImageSet.value.length > productImageSetLimit.value || productImageSet.value.length === 0;
     formErrors.value.video_set = false;
 
     return Object.values(formErrors.value).some(value => value === true);
 }
+
+const disableUpload = computed(() => {
+
+    if (files.value.length === 0) {
+        return true;
+    }
+
+    if (files.value.length > productImageSetLimit.value) {
+        return true;
+    }
+
+    if (productImageSet.value.length >= productImageSetLimit.value) {
+        return true;
+    }
+
+});
+
+
 
 const createProduct = () => {
     if (checkMandatory()) {
@@ -577,7 +595,7 @@ const createProduct = () => {
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
-            "image_set": "1,2,3,4",
+            "image_set": productImageSet.value.join(','),
             "video_set": ""
         }
     })

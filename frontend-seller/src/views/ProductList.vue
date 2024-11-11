@@ -78,15 +78,14 @@
 
             <Column header="Image">
                 <template #body="slotProps">
-                    <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`"
-                        :alt="slotProps.data.image" class="datatable-image" />
+                    <img :src="buildImageUrl(slotProps.data)" :alt="slotProps.data.image" class="datatable-image" />
                 </template>
             </Column>
 
 
             <Column field="id" header="Id" sortable style="min-width: 8rem"></Column>
             <Column field="sku" header="Sku" sortable style="min-width: 8rem"></Column>
-            <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
+            <Column field="name" header="Name" sortable style="min-width: 8rem"></Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.price) }}
@@ -160,6 +159,8 @@ query($getProductsVariable: GetProductsInput!){
         collateral
         category
         stock
+        media_url
+        image_path
         image_set
     }
 }
@@ -203,6 +204,12 @@ const formatCurrency = (value) => {
         return value.toLocaleString('en-US', { style: 'currency', currency: 'ADA' });
     return;
 };
+
+const buildImageUrl = (data) => {
+    console.log(data.media_url + data.image_path + data.image_set[0])
+    data.media_url + data.image_path + data.image_set[0]
+}
+
 const openNew = () => {
     product.value = {};
     submitted.value = false;
