@@ -2,7 +2,7 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text @click="goBackRoute"/>
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text @click="goBackRoute" />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -271,11 +271,14 @@
                         </div>
 
                         <div class="box-content">
-                            <ColorPicker v-model="productColor" />
 
-                            <InputText v-model="productColorName" type="text" placeholder="Color Name"
-                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-left: 1rem;"
-                                :invalid="formErrors.color_name" />
+                            <div class="color-wrap">
+                                <InputText v-model="productColorName" type="text" placeholder="Model Color Name"
+                                    v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-right: 1rem;"
+                                    :invalid="formErrors.color_name"  />
+
+                                <ColorPicker v-model="productColor" />
+                            </div>
 
                         </div>
                     </div>
@@ -605,7 +608,7 @@ const createProduct = () => {
 }
 
 
-const goBackRoute = () =>{
+const goBackRoute = () => {
     router.go(-1)
 }
 
@@ -706,6 +709,9 @@ main {
 
 .box-content {
     padding: 1rem;
+}
+
+.color-wrap {
     display: flex;
     align-items: center;
 }
