@@ -47,10 +47,6 @@
             </template>
 
             <template #end>
-                <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" customUpload
-                    chooseLabel="Import" class="mr-2" auto :chooseButtonProps="{ severity: 'secondary' }"
-                    style="margin-right: 1rem;" />
-
                 <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
             </template>
         </Toolbar>
