@@ -539,7 +539,6 @@ const formErrors = ref({
 });
 
 const checkMandatory = () => {
-
     formErrors.value.name = productName.value === null;
     formErrors.value.price = productPrice.value === null;
     formErrors.value.collateral = productCollateral.value === null;
