@@ -55,6 +55,7 @@
             </template>
         </Toolbar>
 
+        {{ products }}
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
             :paginator="true" :rows="10" :filters="filters"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -83,7 +84,7 @@
             </Column>
 
 
-            <Column field="code" header="Code" sortable style="min-width: 8rem"></Column>
+            <Column field="id" header="Id" sortable style="min-width: 8rem"></Column>
             <Column field="sku" header="Sku" sortable style="min-width: 8rem"></Column>
             <Column field="name" header="Name" sortable style="min-width: 16rem"></Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
@@ -97,10 +98,10 @@
                 </template>
             </Column>
             <Column field="category" header="Category" sortable style="min-width: 8rem"></Column>
-            <Column field="inventoryStatus" header="Status" sortable style="min-width: 8rem">
+            <Column field="stock" header="Status" sortable style="min-width: 8rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.inventoryStatus"
-                        :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
+                    <Tag :value="slotProps.data.stock ? 'instock' : 'outstock'"
+                        :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
             </Column>
             <Column :exportable="false" style="min-width: 12rem">
@@ -116,9 +117,14 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
+import { computed } from 'vue';
+import { useQuery } from '@vue/apollo-composable';
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
+
+
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -141,13 +147,42 @@ onMounted(() => {
             inventoryStatus: 'INSTOCK',
             rating: 5
         }]);
-
-    products.value = productsData.value
 });
+
+
+const { result, variables, loading, error, refetch } = useQuery(gql`
+query($getProductsVariable: GetProductsInput!){
+    getProducts(getProductsInput: $getProductsVariable){
+        id
+        name
+        sku
+        price
+        collateral
+        category
+        stock
+        image_set
+    }
+}
+`, {
+    "getProductsVariable": {
+        "page": 1
+    }
+}, {
+    pollInterval: 1000,
+}
+)
+
+function setPage(page) {
+    variables.value = {
+        page,
+    }
+}
+
+const products = computed(() => result.value.getProducts || []);
+
 
 const toast = useToast();
 const dt = ref();
-const products = ref();
 const productDialog = ref(false);
 const deleteProductDialog = ref(false);
 const deleteProductsDialog = ref(false);
@@ -245,15 +280,11 @@ const deleteSelectedProducts = () => {
     toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
 };
 
-const getStatusLabel = (status) => {
+const getStockLabel = (status) => {
     switch (status) {
-        case 'INSTOCK':
+        case 1:
             return 'success';
-
-        case 'LOWSTOCK':
-            return 'warn';
-
-        case 'OUTOFSTOCK':
+        case 0:
             return 'danger';
 
         default:
