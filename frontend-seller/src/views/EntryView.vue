@@ -233,7 +233,7 @@
 <script setup>
 import dashboardAPI from '@/views/api/index';
 import { ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();

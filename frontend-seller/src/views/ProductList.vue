@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text @click="goBackRoute" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -54,7 +54,7 @@
                 <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
             </template>
         </Toolbar>
-        
+
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
             :paginator="true" :rows="10" :filters="filters"
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -121,8 +121,9 @@ import { useQuery } from '@vue/apollo-composable';
 import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
+import { useRouter, useRoute } from 'vue-router';
 
-
+const router = useRouter()
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -130,21 +131,7 @@ const navItems = ref([
 ]);
 
 onMounted(() => {
-    const productsData = ref([
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            sku: "K8DK",
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            collateral: 50,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        }]);
+
 });
 
 
@@ -192,11 +179,6 @@ const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 const submitted = ref(false);
-const statuses = ref([
-    { label: 'IN', value: 'instock' },
-    { label: 'LOW', value: 'lowstock' },
-    { label: 'OUT', value: 'outofstock' }
-]);
 
 const formatCurrency = (value) => {
     if (value)
@@ -296,6 +278,12 @@ const getStockLabel = (status) => {
             return null;
     }
 };
+
+
+const goBackRoute = () => {
+    router.go(-1)
+}
+
 
 </script>
 

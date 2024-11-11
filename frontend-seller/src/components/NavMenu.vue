@@ -64,7 +64,7 @@ li {
   align-items: center;
   position: relative;
   font-weight: 500;
-  padding: .45rem .75rem;
+
   box-shadow: none;
   cursor: pointer;
 }
@@ -72,10 +72,15 @@ li {
 li i {
   margin-right: 0.75rem;
   color: var(--text-w);
+  padding: 0.5rem 0;
 }
 
 li span {
   color: var(--text-w);
+}
+
+a {
+  padding: 0.5rem 1rem;
 }
 
 .logo {

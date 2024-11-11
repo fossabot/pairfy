@@ -2,7 +2,7 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text @click="goBackRoute"/>
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -331,6 +331,9 @@ import { useMutation } from '@vue/apollo-composable'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { HOST } from '@/api';
 import { computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter()
 
 const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
@@ -602,6 +605,10 @@ const createProduct = () => {
 }
 
 
+const goBackRoute = () =>{
+    router.go(-1)
+}
+
 </script>
 
 <style scoped>
@@ -702,7 +709,6 @@ main {
     display: flex;
     align-items: center;
 }
-
 
 .box-buttons {
     display: flex;
