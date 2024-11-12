@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary"  @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -92,24 +92,28 @@
                 </template>
             </Column>
             <Column field="category" header="Category" sortable style="min-width: 8rem"></Column>
-            <Column field="stock" header="Stock" sortable style="min-width: 8rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
-                </template>
-            </Column>
+
             <Column field="created_at" header="Date" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ convertDate(slotProps.data.created_at) }}
                 </template>
             </Column>
-
-            <Column :exportable="false" style="min-width: 12rem">
+            <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" outlined size="small" rounded class="mr-2" @click="editProduct(slotProps.data)"
-                        style="margin-right: 1rem;" />
-                    <Button icon="pi pi-trash" outlined size="small" rounded @click="confirmDeleteProduct(slotProps.data)" />
+                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
             </Column>
+            <Column :exportable="false" style="min-width: 12rem">
+                <template #body="slotProps">
+                    <div class="datatable-control">
+                        <Button icon="pi pi-pencil" outlined size="small" rounded class="mr-2"
+                            @click="editProduct(slotProps.data)" style="margin-right: 1rem;" />
+                        <Button icon="pi pi-trash" outlined size="small" rounded
+                            @click="confirmDeleteProduct(slotProps.data)" />
+                    </div>
+                </template>
+            </Column>
+
         </DataTable>
     </div>
 </template>
@@ -350,5 +354,10 @@ const goBackRoute = () => {
     border-radius: 4px;
     object-fit: contain;
     border: 1px solid var(--border-a);
+}
+
+.datatable-control {
+    display: flex;
+    justify-content: center;
 }
 </style>

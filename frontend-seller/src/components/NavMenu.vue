@@ -13,20 +13,21 @@
             <span>Home</span>
           </RouterLink>
         </li>
-        <li>
-
-          <RouterLink to="/create-product">
-            <i class="pi pi-plus" />
-            <span>Create Product</span>
-          </RouterLink>
-        </li>
-
+        
         <li>
           <RouterLink to="/product-list">
             <i class="pi pi-list" />
             <span>Product List</span>
           </RouterLink>
         </li>
+
+        <li>
+          <RouterLink to="/create-product">
+            <i class="pi pi-plus" />
+            <span>Create Product</span>
+          </RouterLink>
+        </li>
+
       </ul>
     </nav>
 

@@ -96,14 +96,22 @@ const getProducts = async (args: any, context: any) => {
 
     const SELLER = context.sellerData;
 
+    console.log(SELLER.id);
+
     let connection = null;
+
+    const pageSize = 5;
+
+    const offset = (params.page - 1) * pageSize;
 
     try {
         connection = await database.client.getConnection();
 
-        const [products] = await connection.execute(
-            "SELECT * FROM products WHERE seller_id = ?",
-            [SELLER.id]
+        const [products] = await connection.query(
+            `SELECT * FROM products
+             WHERE seller_id = ? AND created_at > ? 
+             ORDER BY created_at ASC LIMIT ?`,
+            [SELLER.id, "2024-11-11 22:23:45", 10]
         );
 
         await connection.commit();
