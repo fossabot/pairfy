@@ -105,10 +105,9 @@
 
             <Column :exportable="false" style="min-width: 12rem">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)"
+                    <Button icon="pi pi-pencil" outlined size="small"  class="mr-2" @click="editProduct(slotProps.data)"
                         style="margin-right: 1rem;" />
-                    <Button icon="pi pi-trash" outlined rounded severity="danger"
-                        @click="confirmDeleteProduct(slotProps.data)" />
+                    <Button icon="pi pi-trash" outlined size="small"  @click="confirmDeleteProduct(slotProps.data)" />
                 </template>
             </Column>
         </DataTable>
@@ -117,11 +116,13 @@
 
 <script setup>
 import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 import { ref, computed } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
+
 
 const router = useRouter()
 
@@ -163,11 +164,12 @@ function setPage(page) {
 }
 
 const convertDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date;
+    const date = dayjs(parseInt(timestamp));
+
+    return date.format('YYYY-MM-DD HH:mm:ss');
 }
 
-const products = computed(() => result.value.getProducts || []);
+const products = computed(() => result.value?.getProducts || []);
 
 
 const toast = useToast();

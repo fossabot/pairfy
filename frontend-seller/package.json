@@ -26,6 +26,7 @@
     "@vue/apollo-composable": "^4.2.1",
     "@vue/apollo-option": "^4.2.0",
     "axios": "^1.7.7",
+    "dayjs": "^1.11.13",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
     "primeicons": "^7.0.0",
