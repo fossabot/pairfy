@@ -92,12 +92,17 @@
                 </template>
             </Column>
             <Column field="category" header="Category" sortable style="min-width: 8rem"></Column>
-            <Column field="stock" header="Status" sortable style="min-width: 8rem">
+            <Column field="stock" header="Stock" sortable style="min-width: 8rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? 'instock' : 'outstock'"
-                        :severity="getStockLabel(slotProps.data.stock)" />
+                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
             </Column>
+            <Column field="created_at" header="Date" sortable style="min-width: 8rem">
+                <template #body="slotProps">
+                    {{ convertDate(slotProps.data.created_at) }}
+                </template>
+            </Column>
+
             <Column :exportable="false" style="min-width: 12rem">
                 <template #body="slotProps">
                     <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)"
@@ -112,12 +117,11 @@
 
 <script setup>
 import gql from 'graphql-tag';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
-import { ref, onMounted } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
@@ -125,10 +129,6 @@ const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Product List' }
 ]);
-
-onMounted(() => {
-
-});
 
 
 const { result, variables, loading, error, refetch } = useQuery(gql`
@@ -144,6 +144,7 @@ query($getProductsVariable: GetProductsInput!){
         media_url
         image_path
         image_set
+        created_at
     }
 }
 `, {
@@ -159,6 +160,11 @@ function setPage(page) {
     variables.value = {
         page,
     }
+}
+
+const convertDate = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    return date;
 }
 
 const products = computed(() => result.value.getProducts || []);
@@ -317,7 +323,8 @@ const goBackRoute = () => {
 
 .p-tag {
     font-size: var(--text-size-a);
-    text-transform: lowercase;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 .card {

@@ -282,9 +282,7 @@
 
                         </div>
                     </div>
-
-
-
+                    
                     <div class="box">
                         <div class="subtitle">
                             Condition
