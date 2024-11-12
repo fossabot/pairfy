@@ -699,7 +699,7 @@ const applyDiscount = computed(() => {
 
 
 main {
-    padding: 2rem;
+    padding: 1rem 2rem;
     flex: 1 1 auto;
     position: relative;
 }

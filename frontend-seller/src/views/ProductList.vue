@@ -85,22 +85,22 @@
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
 
             <Column field="sku" header="SKU" sortable style="min-width: 8rem">
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column field="name" header="Name" sortable style="min-width: 8rem">
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
@@ -108,9 +108,9 @@
                     {{ formatCurrency(slotProps.data.price) }}
                 </template>
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem">
@@ -118,16 +118,16 @@
                     {{ formatCurrency(slotProps.data.collateral) }}
                 </template>
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column field="category" header="Category" sortable style="min-width: 8rem">
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
 
@@ -136,9 +136,9 @@
                     {{ convertDate(slotProps.data.created_at) }}
                 </template>
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
@@ -146,9 +146,9 @@
                     <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
             <Column :exportable="false" style="min-width: 12rem">
@@ -249,8 +249,6 @@ const convertDate = (timestamp) => {
 
     return date.format('YYYY-MM-DD');
 }
-
-
 
 const products = computed(() => productsTemp.value);
 
@@ -426,7 +424,7 @@ const goBackRoute = () => {
 }
 
 .card {
-    padding: 2rem;
+    padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
 }
