@@ -2,8 +2,7 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute"
-                     />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute" />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -30,34 +29,37 @@
 
             <div class="container">
                 <div class="left-column">
-                    <InputText v-model="productName" type="text" placeholder="Product Name"
-                        v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
-                    <InputGroup>
+                    <div class="form-container">
+                        <InputText v-model="productName" type="text" placeholder="Product Name"
+                            v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
+                        <InputGroup>
 
-                        <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
-                            :invalid="formErrors.price" :min="0" :useGrouping="false"
-                            inputStyle="border-radius: var(--p-inputtext-border-radius)" />
+                            <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
+                                :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                inputStyle="border-radius: var(--p-inputtext-border-radius)" />
 
-                        <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
-                            :invalid="formErrors.collateral" :min="0" :useGrouping="false"
-                            inputStyle="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)" />
+                            <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
+                                :invalid="formErrors.collateral" :min="0" :useGrouping="false"
+                                inputStyle="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)" />
 
-                        <InputText v-model="productSKU" type="text" placeholder="Product SKU"
-                            v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
-                            :invalid="formErrors.sku" />
-                    </InputGroup>
+                            <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                                v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
+                                :invalid="formErrors.sku" />
+                        </InputGroup>
 
-                    <InputGroup>
+                        <InputGroup>
 
-                        <InputText v-model="productModel" type="text" placeholder="Model"
-                            style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
-                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" :invalid="formErrors.model" />
+                            <InputText v-model="productModel" type="text" placeholder="Model"
+                                style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
+                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" :invalid="formErrors.model" />
 
-                        <InputText v-model="productBrand" type="text" placeholder="Brand"
-                            v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
-                            :invalid="formErrors.brand" />
-                    </InputGroup>
+                            <InputText v-model="productBrand" type="text" placeholder="Brand"
+                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
+                                :invalid="formErrors.brand" />
+                        </InputGroup>
 
+
+                    </div>
                     <div v-if="editor" class="editor container" :class="{ invalid: formErrors.features }">
                         <div class="editor-control">
                             <div class="editor-control-group">
@@ -162,12 +164,15 @@
                                     <div class="uploader-top">
                                         <div class="uploader-control">
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
-                                                severity="secondary" size="small" />
+                                                severity="secondary" size="small" rounded />
+
                                             <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
-                                                outlined severity="secondary" :disabled="disableUpload" />
+                                                outlined severity="secondary" :disabled="disableUpload" size="small"
+                                                rounded />
 
                                             <Button @click="clearCallback()" icon="pi pi-times" outlined
-                                                severity="secondary" :disabled="!files || files.length === 0" />
+                                                severity="secondary" :disabled="!files || files.length === 0"
+                                                size="small" rounded />
 
                                             <Message severity="secondary">
                                                 <div style="display: flex; align-items: center">
@@ -187,9 +192,6 @@
 
 
                                         </div>
-                                        <ProgressBar :value="totalSizePercent" :showValue="false" class="uploader-bar">
-                                            <span class="whitespace-nowrap">{{ totalSize }}B / 1Mb</span>
-                                        </ProgressBar>
                                     </div>
                                 </template>
                                 <template
@@ -225,7 +227,6 @@
                                                 <Badge value="Completed" class="mt-4" severity="success" />
                                             </div>
                                         </div>
-
                                     </div>
                                 </template>
                                 <template #empty>
@@ -274,7 +275,7 @@
                         <div class="box-content">
 
                             <div class="box-content-flex">
-                                <InputText v-model="productColorName" type="text" placeholder="Model Color Name"
+                                <InputText v-model="productColorName" type="text" placeholder="Color Name"
                                     v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-right: 1rem;"
                                     :invalid="formErrors.color_name" />
 
@@ -418,8 +419,6 @@ const toast = useToast();
 
 const totalSize = ref(0);
 
-const totalSizePercent = ref(0);
-
 const files = ref([]);
 
 const editor = ref(null)
@@ -486,15 +485,13 @@ const showError = (content) => {
 
 
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
+    files.value.splice(index, 1);
     removeFileCallback(index);
-    totalSize.value -= parseInt(formatSize(file.size));
-    totalSizePercent.value = totalSize.value / 10;
 };
 
 const onClearTemplatingUpload = (clear) => {
     clear();
     totalSize.value = 0;
-    totalSizePercent.value = 0;
 };
 
 const onSelectedFiles = (event) => {
@@ -505,7 +502,6 @@ const onSelectedFiles = (event) => {
 };
 
 const uploadEvent = async (callback) => {
-    totalSizePercent.value = totalSize.value / 10;
     callback();
 };
 
@@ -513,6 +509,8 @@ const onTemplatedUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
     productImageSet.value.push(...payload);
+
+    files.value = [];
 
     console.log(productImageSet.value);
 
@@ -601,10 +599,13 @@ const disableUpload = computed(() => {
         return true;
     }
 
-    if (productImageSet.value.length >= productImageSetLimit.value) {
+    if (files.value.length + productImageSet.value.length > productImageSetLimit.value) {
         return true;
     }
 
+    if (productImageSet.value.length >= productImageSetLimit.value) {
+        return true;
+    }
 });
 
 
@@ -692,6 +693,9 @@ const applyDiscount = computed(() => {
     font-size: var(--text-size-a);
 }
 
+::v-deep(.p-fileupload-header) {
+    padding: 0.5rem;
+}
 
 
 
@@ -862,6 +866,13 @@ main {
     flex-direction: column;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 150px;
+}
+
 ::v-deep(.editor-class) {
 
     height: 250px;
@@ -933,8 +944,8 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 2rem;
+    height: 2rem;
     color: var(--text-b);
     margin-right: 0.5rem;
 }
@@ -954,7 +965,8 @@ main {
     font-size: var(--text-size-a);
     margin-left: 1rem;
     padding: 5px;
-    font-weight: 600;
+    font-weight: 500;
+    border-radius: 0.25rem;
 }
 
 /* Extra small devices (phones, 320px and up) */

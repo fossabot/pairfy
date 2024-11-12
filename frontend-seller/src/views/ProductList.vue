@@ -211,7 +211,6 @@ const productsTemp = ref([]);
 const products = computed(() => productsTemp.value);
 
 watch(result, value => {
-
     if (value) {
         productsTemp.value.push(...value.getProducts.products)
     }
