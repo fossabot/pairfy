@@ -101,7 +101,7 @@
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? 'instock' : 'outstock'"
+                    <Tag :value="slotProps.data.stock ? '' : ''"
                         :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
             </Column>
@@ -322,7 +322,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'secondary';
+            return 'danger';
 
         default:
             return null;
