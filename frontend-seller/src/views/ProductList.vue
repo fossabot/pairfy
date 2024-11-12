@@ -113,8 +113,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="collateral" header="Collateral" sortable
-                style="min-width: 8rem;">
+            <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
                 </template>
@@ -402,6 +401,7 @@ const goBackRoute = () => {
 
 ::v-deep(.p-datatable-header-cell) {
     background: white;
+    border-top: 1px solid var(--border-a);
 }
 
 ::v-deep(.p-datatable-paginator-bottom) {
