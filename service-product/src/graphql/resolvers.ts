@@ -92,31 +92,45 @@ const createProduct = async (args: any, context: any) => {
 const getProducts = async (args: any, context: any) => {
     const params = args.getProductsInput;
 
-    console.log(params);
-
     const SELLER = context.sellerData;
-
-    console.log(SELLER.id);
 
     let connection = null;
 
     const pageSize = 5;
 
-    const offset = (params.page - 1) * pageSize;
+    console.log(params);
+
+    let query = 'SELECT * FROM products WHERE seller_id = ?';
+
+    let queryParams: any = [SELLER.id];
+
+    if (params.cursor !== "NOT") {
+        query += ' AND created_at < ?';
+
+        const date = new Date(parseInt(params.cursor)).toISOString();
+
+        queryParams.push(date);
+    }
+
+    query += ' ORDER BY created_at DESC LIMIT ?';
+
+    queryParams.push(pageSize);
+
+    console.log(query);
 
     try {
         connection = await database.client.getConnection();
 
-        const [products] = await connection.query(
-            `SELECT * FROM products
-             WHERE seller_id = ? AND created_at > ? 
-             ORDER BY created_at ASC LIMIT ?`,
-            [SELLER.id, "2024-11-11 22:23:45", 10]
-        );
+        const [products] = await connection.query(query, queryParams);
+
+        const cursor = products[products.length - 1].created_at;
 
         await connection.commit();
 
-        return products
+        return {
+            products,
+            cursor
+        }
 
     } catch (err) {
         await connection.rollback();
