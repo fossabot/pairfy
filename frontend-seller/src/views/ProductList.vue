@@ -96,7 +96,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="name" header="Name" sortable style="min-width: 8rem">
+            <Column field="name" header="Name" sortable style="min-width: 8rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -113,7 +113,8 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="collateral" header="Collateral" sortable style="min-width: 8rem">
+            <Column field="collateral" header="Collateral" sortable
+                style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
                 </template>
@@ -123,7 +124,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="category" header="Category" sortable style="min-width: 8rem">
+            <Column field="category" header="Category" sortable style="min-width: 8rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
