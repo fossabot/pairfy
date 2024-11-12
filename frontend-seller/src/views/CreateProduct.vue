@@ -320,7 +320,7 @@
                                     :invalid="formErrors.discount" />
 
                                 <span class="price-discount">
-                                    {{ applyDiscount }}
+                                    {{ discountResult }}
                                 </span>
                             </div>
                         </div>
@@ -356,7 +356,19 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 
+const $primevue = usePrimeVue();
+
+const toast = useToast();
+
 const router = useRouter()
+
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 
 const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
@@ -365,18 +377,12 @@ const navItems = ref([
     { label: 'Create Product' }
 ]);
 
-
 const productName = ref(null);
 const productPrice = ref(null);
 const productCollateral = ref(null);
 const productSKU = ref(null);
 const productModel = ref(null);
 const productBrand = ref(null);
-const productKeywords = ref(null);
-
-
-const productCategory = ref(null);
-
 const productCategories = ref([
     { name: "Electronics", code: "electronics" },
     { name: "Books", code: "books" },
@@ -396,9 +402,17 @@ const productCategories = ref([
     { name: "Digital Content & Software", code: "software" },
 ]);
 
+const productCategory = ref(null);
+
+const productKeywords = ref(null);
+
 const productColor = ref("000000");
 
 const productColorName = ref(null);
+
+const productStateOptions = ref(['New', 'Used']);
+
+const productQuality = ref(null);
 
 const productStock = ref(false);
 
@@ -406,19 +420,9 @@ const productDiscount = ref(false);
 
 const productDiscountValue = ref(null);
 
-const productQuality = ref(null);
-
-const productStateOptions = ref(['New', 'Used']);
-
-const $primevue = usePrimeVue();
-
-const toast = useToast();
-
-const totalSize = ref(0);
-
 const files = ref([]);
 
-const editor = ref(null)
+const editor = ref(null);
 
 const editorLimit = ref(6000);
 
@@ -472,15 +476,6 @@ const productImageSet = ref([])
 
 const productImageSetLimit = ref(15);
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
-
-
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
     files.value.splice(index, 1);
     removeFileCallback(index);
@@ -488,14 +483,10 @@ const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
 
 const onClearTemplatingUpload = (clear) => {
     clear();
-    totalSize.value = 0;
 };
 
 const onSelectedFiles = (event) => {
     files.value = event.files;
-    files.value.forEach((file) => {
-        totalSize.value += parseInt(formatSize(file.size));
-    });
 };
 
 const uploadEvent = async (callback) => {
@@ -513,23 +504,6 @@ const onTemplatedUpload = (data) => {
 
     showSuccess('Images Uploaded');
 };
-
-const formatSize = (bytes) => {
-    const k = 1024;
-    const dm = 3;
-    const sizes = $primevue.config.locale.fileSizeTypes;
-
-    if (bytes === 0) {
-        return `0 ${sizes[0]}`;
-    }
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    const formattedSize = parseFloat((bytes / Math.pow(k, i)).toFixed(dm));
-
-    return `${formattedSize} ${sizes[i]}`;
-};
-
-
 
 const { mutate: sendMessage, onError, onDone } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
@@ -641,7 +615,7 @@ const goBackRoute = () => {
 }
 
 
-const applyDiscount = computed(() => {
+const discountResult = computed(() => {
     if (productDiscountValue.value < 0 || productDiscountValue.value > 100) {
         throw new Error('Discount percentage must be between 0 and 100');
     }
