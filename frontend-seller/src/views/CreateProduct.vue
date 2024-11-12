@@ -2,7 +2,7 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBackRoute" />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -163,6 +163,7 @@
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
+                                            <div class="uploader-mask" @click="chooseCallback()" />
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
                                                 severity="secondary" size="small" rounded />
 
@@ -189,8 +190,6 @@
                                                         {{ productImageSetLimit }}</span>
                                                 </div>
                                             </Message>
-
-
                                         </div>
                                     </div>
                                 </template>
@@ -231,8 +230,8 @@
                                 </template>
                                 <template #empty>
                                     <div class="uploader-empty" @click="chooseCallback()">
-                                        <i class="pi pi-upload" />
-                                        <p>Drag and drop images to here to upload.</p>
+                                        <i class="pi pi-image" />
+                                        <p>Select images to upload.</p>
                                     </div>
                                 </template>
                             </FileUpload>
@@ -853,7 +852,7 @@ main {
 }
 
 .uploader-empty i {
-    font-size: 3rem;
+    font-size: 4rem;
 }
 
 .uploader-empty p {
@@ -967,6 +966,14 @@ main {
     padding: 5px;
     font-weight: 500;
     border-radius: 0.25rem;
+}
+
+.uploader-mask {
+    width: 225px;
+    height: 325px;
+    left: 29%;
+    cursor: pointer;
+    position: absolute;
 }
 
 /* Extra small devices (phones, 320px and up) */

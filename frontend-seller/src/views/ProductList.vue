@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBackRoute" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -59,16 +59,16 @@
         </Toolbar>
 
 
-
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="false" :rows="15" :filters="filters">
+            :paginator="true" :rows="10" :filters="filters"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks  NextPageLink LastPageLink CurrentPageReport"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" @page="updateCursor(false)"
+            :totalRecords="productCount">
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
                         <Button label="New" icon="pi pi-plus" />
                     </RouterLink>
-
-
                 </div>
             </template>
 
@@ -101,7 +101,8 @@
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
+                    <Tag :value="slotProps.data.stock ? 'instock' : 'outstock'"
+                        :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
             </Column>
             <Column :exportable="false" style="min-width: 12rem">
@@ -114,13 +115,6 @@
                     </div>
                 </template>
             </Column>
-            <template #footer>
-                <div>
-                    <span @click="backPage">BACK</span>
-                    <span> {{ products.length }} / {{ productCount }} total</span>
-                    <span @click="updateCursor(false)">NEXT</span>
-                </div>
-            </template>
         </DataTable>
     </div>
 </template>
@@ -193,7 +187,11 @@ const backPage = () => {
 
 }
 
+const productsTemp = ref([]);
+
 const updateCursor = (revert) => {
+    console.log("UPDATED");
+
     variablesRef.value = {
         getProductsVariable: {
             cursor: result.value?.getProducts.cursor,
@@ -208,7 +206,7 @@ const convertDate = (timestamp) => {
     return date.format('YYYY-MM-DD HH:mm:ss');
 }
 
-const productsTemp = ref([]);
+
 
 const products = computed(() => productsTemp.value);
 
@@ -216,7 +214,7 @@ watch(result, value => {
     if (value) {
         productsTemp.value.push(...value.getProducts.products)
     }
-})
+}, { immediate: true })
 
 const productCount = computed(() => result.value?.getProducts.count);
 
@@ -324,7 +322,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'danger';
+            return 'secondary';
 
         default:
             return null;
@@ -368,6 +366,10 @@ const goBackRoute = () => {
     padding: 0.2rem;
 }
 
+::v-deep(.p-datatable-column-title) {
+    font-weight: 600;
+}
+
 .p-datatable {
     font-size: var(--text-size-a);
     border: 1px solid var(--border-a);
@@ -376,7 +378,6 @@ const goBackRoute = () => {
 
 .p-tag {
     font-size: var(--text-size-a);
-    text-transform: uppercase;
     font-weight: 600;
 }
 
