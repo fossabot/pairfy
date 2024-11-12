@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast closeIcon="false"/>
+    <Toast closeIcon="false" />
     <NavMenu v-if="getUserData" />
 
     <div class="wrapper-content">
@@ -46,7 +46,14 @@ getUser().then(() => console.log('👋 Welcome')).catch(() => showError('AUTH_ER
 <style scoped>
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+
 
 header {
   line-height: 1.5;

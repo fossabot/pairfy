@@ -47,6 +47,8 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';                   
 
 
+
+import Ripple from 'primevue/ripple';
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
@@ -77,6 +79,7 @@ const MyPreset = definePreset(Lara, {
 
 
 app.use(PrimeVue, {
+    ripple: true,
     theme: {
         preset: MyPreset
     }
@@ -85,6 +88,7 @@ app.use(PrimeVue, {
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
+
 
 app.component('Button', Button);
 app.component('Toolbar', Toolbar);
@@ -120,5 +124,6 @@ app.component('Row', Row);
 app.component('Tag', Tag);
 
 app.directive('keyfilter', KeyFilter);
+app.directive('ripple', Ripple);
 
 app.mount('#app')
