@@ -34,13 +34,13 @@
                         v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
                     <InputGroup>
 
-                        <InputText v-model="productPrice" type="number" placeholder="Product Price"
-                            v-keyfilter="/^[0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
-                            :invalid="formErrors.price" />
+                        <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
+                            :invalid="formErrors.price" :min="0" :useGrouping="false"
+                            inputStyle="border-radius: var(--p-inputtext-border-radius)" />
 
-                        <InputText v-model="productCollateral" type="number" placeholder="Product Collateral"
-                            style="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)"
-                            v-keyfilter="/^[0-9]+$/" :invalid="formErrors.collateral" />
+                        <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
+                            :invalid="formErrors.collateral" :min="0" :useGrouping="false"
+                            inputStyle="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)" />
 
                         <InputText v-model="productSKU" type="text" placeholder="Product SKU"
                             v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
@@ -316,12 +316,12 @@
                                 <ToggleSwitch v-model="productDiscount" />
 
                                 <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %"
-                                    prefix="% " showButtons :min="0" :max="99" :useGrouping="false" :defaultValue="0"
+                                    prefix="% " showButtons :min="0" :max="99" :useGrouping="false"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :invalid="formErrors.discount" />
 
                                 <span class="price-discount">
-                                    {{ applyDiscount }} 
+                                    {{ applyDiscount }}
                                 </span>
                             </div>
                         </div>
