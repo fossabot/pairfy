@@ -62,8 +62,15 @@
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
             :paginator="true" :rows="15" :filters="filters" rowReorderIcon="pi pi-user"
             paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" @page="updateCursor()"
-            :totalRecords="productCount">
+            currentPageReportTemplate="Showing {first} to {last}" @page="updateCursor()">
+
+
+            <template #paginatorstart>
+                <div style="color: var(--text-b);">
+                    <span>{{ productCount }} Products</span>
+                </div>
+            </template>
+
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
@@ -226,17 +233,9 @@ onError(error => {
     showError("The connection to the server has failed, please try again later.");
 })
 
-let cursors = reactive({});
-
-const backPage = () => {
-
-}
-
 const productsTemp = ref([]);
 
 const updateCursor = () => {
-    console.log("UPDATED");
-
     variablesRef.value = {
         getProductsVariable: {
             cursor: result.value?.getProducts.cursor
