@@ -315,10 +315,14 @@
                             <div class="box-content-flex">
                                 <ToggleSwitch v-model="productDiscount" />
 
-                                <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %" suffix="%"
-                                    :min="0" :useGrouping="false" :defaultValue="0"
+                                <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %"
+                                    prefix="% " showButtons :min="0" :max="99" :useGrouping="false" :defaultValue="0"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :invalid="formErrors.discount" />
+
+                                <span class="price-discount">
+                                    {{ applyDiscount }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -638,6 +642,20 @@ const goBackRoute = () => {
     router.go(-1)
 }
 
+
+const applyDiscount = computed(() => {
+    if (productDiscountValue.value < 0 || productDiscountValue.value > 100) {
+        throw new Error('Discount percentage must be between 0 and 100');
+    }
+
+    const discountAmount = (productPrice.value * productDiscountValue.value) / 100;
+
+    const discountedPrice = productPrice.value - discountAmount;
+
+    return discountedPrice.toFixed(0) + " ADA";
+})
+
+
 </script>
 
 <style scoped>
@@ -929,6 +947,14 @@ main {
 .editor-control-counter {
     font-size: var(--text-size-a);
     color: var(--text-b);
+}
+
+.price-discount {
+    background: var(--background-b);
+    font-size: var(--text-size-a);
+    margin-left: 1rem;
+    padding: 5px;
+    font-weight: 600;
 }
 
 /* Extra small devices (phones, 320px and up) */
