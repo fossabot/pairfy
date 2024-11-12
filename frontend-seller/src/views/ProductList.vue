@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" text @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary"  @click="goBackRoute"  variant="outlined"/>
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -59,7 +59,7 @@
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
-                        <Button label="New" icon="pi pi-plus" style="margin-right: 1rem;" />
+                        <Button label="New" icon="pi pi-plus" />
                     </RouterLink>
 
                     <IconField style="margin-left: auto;">
@@ -296,7 +296,6 @@ const goBackRoute = () => {
 ::v-deep(.p-toolbar) {
     background: transparent;
     padding: 0 1rem;
-    padding-left: 0.5rem;
 }
 
 ::v-deep(button) {
