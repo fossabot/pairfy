@@ -30,11 +30,13 @@ type Product {
 
 input GetProductsInput {
   cursor: String!
+  revert: Boolean!
 }  
 
 type getProductsResponse {
   products: [Product]
   cursor: String!
+  count: Int!
 }
 
 type Query {

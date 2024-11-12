@@ -92,20 +92,25 @@ const createProduct = async (args: any, context: any) => {
 const getProducts = async (args: any, context: any) => {
     const params = args.getProductsInput;
 
+    console.log(params);
+
     const SELLER = context.sellerData;
 
     let connection = null;
 
-    const pageSize = 5;
-
-    console.log(params);
+    const pageSize = 15;
 
     let query = 'SELECT * FROM products WHERE seller_id = ?';
 
     let queryParams: any = [SELLER.id];
 
-    if (params.cursor !== "NOT") {
-        query += ' AND created_at < ?';
+    if (params.cursor !== 'NOT') {
+
+        if (params.revert === true) {
+            query += ' AND created_at > ?';
+        } else {
+            query += ' AND created_at < ?';
+        }
 
         const date = new Date(parseInt(params.cursor)).toISOString();
 
@@ -116,20 +121,25 @@ const getProducts = async (args: any, context: any) => {
 
     queryParams.push(pageSize);
 
-    console.log(query);
+    console.log(query, queryParams);
 
     try {
         connection = await database.client.getConnection();
 
         const [products] = await connection.query(query, queryParams);
 
-        const cursor = products[products.length - 1].created_at;
+        const [count] = await connection.execute(`SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?`, [SELLER.id]);
+
+        const cursor = products.length ? products[products.length - 1].created_at : params.cursor;
+
+        console.log(products.length, cursor, count);
 
         await connection.commit();
 
         return {
             products,
-            cursor
+            cursor,
+            count: count[0].total_products
         }
 
     } catch (err) {
@@ -137,7 +147,6 @@ const getProducts = async (args: any, context: any) => {
 
         logger.error(err);
 
-        return []
     } finally {
         connection.release();
     }

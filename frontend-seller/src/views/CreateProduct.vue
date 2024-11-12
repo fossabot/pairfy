@@ -629,8 +629,8 @@ const createProduct = () => {
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
-            "discount": productDiscount.value,
-            "discount_value": productDiscountValue.value,
+            //"discount": productDiscount.value,
+            //"discount_value": productDiscountValue.value,
             "image_set": productImageSet.value.join(','),
             "video_set": ""
         }

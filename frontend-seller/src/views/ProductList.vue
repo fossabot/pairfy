@@ -51,11 +51,10 @@
             </template>
         </Toolbar>
 
+
+
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="true" :rows="10" :filters="filters"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            :rowsPerPageOptions="[5, 10, 25]"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products">
+            :paginator="false" :rows="15" :filters="filters">
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
@@ -78,8 +77,8 @@
             </Column>
 
 
-            <Column field="id" header="Id" sortable style="min-width: 8rem"></Column>
-            <Column field="sku" header="Sku" sortable style="min-width: 8rem"></Column>
+            <Column field="id" header="ID" sortable style="min-width: 8rem"></Column>
+            <Column field="sku" header="SKU" sortable style="min-width: 8rem"></Column>
             <Column field="name" header="Name" sortable style="min-width: 8rem"></Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
@@ -113,7 +112,13 @@
                     </div>
                 </template>
             </Column>
-
+            <template #footer>
+                <div>
+                    <span @click="backPage">BACK</span>
+                    <span> {{ products.length }} / {{ productCount }} total</span>
+                    <span @click="updateCursor(false)">NEXT</span>
+                </div>
+            </template>
         </DataTable>
     </div>
 </template>
@@ -121,7 +126,7 @@
 <script setup>
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
-import { ref, computed } from 'vue';
+import { ref, computed, reactive, watch } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
@@ -135,35 +140,63 @@ const navItems = ref([
     { label: 'Product List' }
 ]);
 
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 1000 });
+};
 
-const { result, variables, loading, error, refetch } = useQuery(gql`
+const queryOptions = {
+    pollInterval: 1500,
+}
+
+const variablesRef = ref({
+    "getProductsVariable": {
+        "cursor": "NOT",
+        "revert": false
+    }
+})
+
+const { result, onError } = useQuery(gql`
 query($getProductsVariable: GetProductsInput!){
     getProducts(getProductsInput: $getProductsVariable){
-        id
-        name
-        sku
-        price
-        collateral
-        category
-        stock
-        media_url
-        image_path
-        image_set
-        created_at
-    }
-}
-`, {
-    "getProductsVariable": {
-        "page": 1
-    }
-}, {
-    pollInterval: 1000,
-}
-)
+        products {
+            id
+            name
+            sku
+            price
+            collateral
+            category
+            stock
+            media_url
+            image_path
+            image_set
+            created_at
+        }
 
-function setPage(page) {
-    variables.value = {
-        page,
+        cursor
+        count
+    }
+}
+`,
+    () => (variablesRef.value),
+    queryOptions
+);
+
+onError(error => {
+    showError("The connection to the server has failed, please try again later.");
+})
+
+let cursors = reactive({});
+
+const backPage = () => {
+
+}
+
+const updateCursor = (revert) => {
+    variablesRef.value = {
+        getProductsVariable: {
+            cursor: result.value?.getProducts.cursor,
+            revert: revert
+        }
     }
 }
 
@@ -173,8 +206,18 @@ const convertDate = (timestamp) => {
     return date.format('YYYY-MM-DD HH:mm:ss');
 }
 
-const products = computed(() => result.value?.getProducts || []);
+const productsTemp = ref([]);
 
+const products = computed(() => productsTemp.value);
+
+watch(result, value => {
+
+    if (value) {
+        productsTemp.value.push(...value.getProducts.products)
+    }
+})
+
+const productCount = computed(() => result.value?.getProducts.count);
 
 const toast = useToast();
 const dt = ref();
@@ -313,6 +356,10 @@ const goBackRoute = () => {
 ::v-deep(.p-datatable-header) {
     background: transparent;
     border: none;
+}
+
+::v-deep(.p-datatable-header-cell) {
+    background: white;
 }
 
 ::v-deep(.p-datatable-paginator-bottom) {
