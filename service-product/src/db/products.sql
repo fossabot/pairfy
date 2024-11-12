@@ -29,6 +29,7 @@ create table if not exists products(
   created_at timestamp default current_timestamp,
   schema_t timestamp default current_timestamp,
   schema_v int unsigned not null,
-  primary key(id)
+  primary key(id),
+  INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB;
 
