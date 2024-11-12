@@ -2,7 +2,8 @@
     <main>
         <Toolbar>
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary"  @click="goBackRoute" variant="outlined" />
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute"
+                    variant="outlined" />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>
@@ -272,17 +273,17 @@
 
                         <div class="box-content">
 
-                            <div class="color-wrap">
+                            <div class="box-content-flex">
                                 <InputText v-model="productColorName" type="text" placeholder="Model Color Name"
                                     v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-right: 1rem;"
-                                    :invalid="formErrors.color_name"  />
+                                    :invalid="formErrors.color_name" />
 
                                 <ColorPicker v-model="productColor" />
                             </div>
 
                         </div>
                     </div>
-                    
+
                     <div class="box">
                         <div class="subtitle">
                             Condition
@@ -303,6 +304,25 @@
                             <ToggleSwitch v-model="productStock" />
                         </div>
                     </div>
+
+
+                    <div class="box">
+                        <div class="subtitle">
+                            Discount
+                        </div>
+
+                        <div class="box-content">
+                            <div class="box-content-flex">
+                                <ToggleSwitch v-model="productDiscount" />
+
+                                <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %" suffix="%"
+                                    :min="0" :useGrouping="false" :defaultValue="0"
+                                    style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
+                                    :invalid="formErrors.discount" />
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
@@ -379,6 +399,10 @@ const productColor = ref("000000");
 const productColorName = ref(null);
 
 const productStock = ref(false);
+
+const productDiscount = ref(false);
+
+const productDiscountValue = ref(null);
 
 const productQuality = ref(null);
 
@@ -538,6 +562,7 @@ const formErrors = ref({
     "color": false,
     "color_name": false,
     "quality": false,
+    "discount": false,
     "image_set": false,
     "video_set": false
 });
@@ -555,6 +580,7 @@ const checkMandatory = () => {
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
+    formErrors.value.discount = productDiscount.value && productDiscountValue.value < 1;
     formErrors.value.image_set = productImageSet.value.length > productImageSetLimit.value || productImageSet.value.length === 0;
     formErrors.value.video_set = false;
 
@@ -599,6 +625,8 @@ const createProduct = () => {
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
+            "discount": productDiscount.value,
+            "discount_value": productDiscountValue.value,
             "image_set": productImageSet.value.join(','),
             "video_set": ""
         }
@@ -708,7 +736,7 @@ main {
     padding: 1rem;
 }
 
-.color-wrap {
+.box-content-flex {
     display: flex;
     align-items: center;
 }

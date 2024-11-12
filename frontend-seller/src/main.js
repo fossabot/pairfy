@@ -45,6 +45,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   
 import Row from 'primevue/row';                   
+import InputNumber from 'primevue/inputnumber';
 
 
 
@@ -122,6 +123,7 @@ app.component('Column', Column);
 app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Tag', Tag);
+app.component('InputNumber', InputNumber);
 
 app.directive('keyfilter', KeyFilter);
 app.directive('ripple', Ripple);

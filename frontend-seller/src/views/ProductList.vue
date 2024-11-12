@@ -105,9 +105,9 @@
 
             <Column :exportable="false" style="min-width: 12rem">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" outlined size="small"  class="mr-2" @click="editProduct(slotProps.data)"
+                    <Button icon="pi pi-pencil" outlined size="small" rounded class="mr-2" @click="editProduct(slotProps.data)"
                         style="margin-right: 1rem;" />
-                    <Button icon="pi pi-trash" outlined size="small"  @click="confirmDeleteProduct(slotProps.data)" />
+                    <Button icon="pi pi-trash" outlined size="small" rounded @click="confirmDeleteProduct(slotProps.data)" />
                 </template>
             </Column>
         </DataTable>
