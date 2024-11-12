@@ -27,13 +27,13 @@
                 Create Product
             </div>
 
-            <div class="container">
+            <div class="card-wrap">
                 <div class="left-column">
-                    <div class="form-container">
+                    <div class="formulary">
                         <InputText v-model="productName" type="text" placeholder="Product Name"
                             v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
-                        <InputGroup>
 
+                        <InputGroup>
                             <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
                                 :invalid="formErrors.price" :min="0" :useGrouping="false"
                                 inputStyle="border-radius: var(--p-inputtext-border-radius)" />
@@ -47,8 +47,8 @@
                                 :invalid="formErrors.sku" />
                         </InputGroup>
 
-                        <InputGroup>
 
+                        <InputGroup>
                             <InputText v-model="productModel" type="text" placeholder="Model"
                                 style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
                                 v-keyfilter="/^[a-zA-Z0-9 ]+$/" :invalid="formErrors.model" />
@@ -57,10 +57,9 @@
                                 v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
                                 :invalid="formErrors.brand" />
                         </InputGroup>
-
-
                     </div>
-                    <div v-if="editor" class="editor container" :class="{ invalid: formErrors.features }">
+
+                    <div v-if="editor" class="editor" :class="{ invalid: formErrors.features }">
                         <div class="editor-control">
                             <div class="editor-control-group">
                                 <button @click="editor.chain().focus().toggleBold().run()"
@@ -153,7 +152,7 @@
                         <editor-content :editor="editor" />
                     </div>
 
-                    <!--/////////////////////////////-->
+                    <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
@@ -237,7 +236,7 @@
                             </FileUpload>
                         </div>
                     </div>
-
+                    <!--//////////////UPLOADER///////////////-->
                 </div>
                 <div class="right-column">
 
@@ -343,20 +342,19 @@
 
 <script setup>
 import Sortable from 'sortablejs';
-import gql from 'graphql-tag'
-import StarterKit from '@tiptap/starter-kit'
-import ListItem from '@tiptap/extension-list-item'
-import TextStyle from '@tiptap/extension-text-style'
-import Placeholder from '@tiptap/extension-placeholder'
-import CharacterCount from '@tiptap/extension-character-count'
-import { onMounted, ref, nextTick } from 'vue';
+import gql from 'graphql-tag';
+import StarterKit from '@tiptap/starter-kit';
+import ListItem from '@tiptap/extension-list-item';
+import TextStyle from '@tiptap/extension-text-style';
+import Placeholder from '@tiptap/extension-placeholder';
+import CharacterCount from '@tiptap/extension-character-count';
+import { onMounted, ref, nextTick, computed } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
-import { useMutation } from '@vue/apollo-composable'
-import { Editor, EditorContent } from '@tiptap/vue-3'
-import { HOST } from '@/api';
-import { computed } from 'vue';
+import { useMutation } from '@vue/apollo-composable';
+import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
+import { HOST } from '@/api';
 
 const router = useRouter()
 
@@ -719,7 +717,7 @@ main {
     font-weight: 700;
 }
 
-.container {
+.card-wrap {
     display: grid;
     grid-template-columns: 70% 30%;
 }
@@ -865,7 +863,7 @@ main {
     flex-direction: column;
 }
 
-.form-container {
+.formulary {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -984,7 +982,7 @@ main {
 
 /* Medium devices (tablets, 768px and up) */
 @media (max-width: 768px) {
-    .container {
+    .card-wrap {
         grid-template-columns: 1fr;
     }
 

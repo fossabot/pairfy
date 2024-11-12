@@ -150,7 +150,7 @@
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '✔' : '✗'"
+                    <Tag :value="slotProps.data.stock ? '' : ''"
                         :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
