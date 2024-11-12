@@ -47,6 +47,13 @@
             </template>
 
             <template #end>
+                <IconField style="margin-right: 1rem;">
+                    <InputIcon>
+                        <i class="pi pi-search" />
+                    </InputIcon>
+                    <InputText v-model="filters['global'].value" placeholder="Search..." />
+                </IconField>
+
                 <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
             </template>
         </Toolbar>
@@ -61,12 +68,7 @@
                         <Button label="New" icon="pi pi-plus" />
                     </RouterLink>
 
-                    <IconField style="margin-left: auto;">
-                        <InputIcon>
-                            <i class="pi pi-search" />
-                        </InputIcon>
-                        <InputText v-model="filters['global'].value" placeholder="Search..." />
-                    </IconField>
+
                 </div>
             </template>
 
