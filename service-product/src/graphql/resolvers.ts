@@ -98,7 +98,7 @@ const getProducts = async (args: any, context: any) => {
 
     let connection = null;
 
-    const pageSize = 15;
+    const pageSize = 16;
 
     let query = 'SELECT * FROM products WHERE seller_id = ?';
 
@@ -106,11 +106,7 @@ const getProducts = async (args: any, context: any) => {
 
     if (params.cursor !== 'NOT') {
 
-        if (params.revert === true) {
-            query += ' AND created_at > ?';
-        } else {
-            query += ' AND created_at < ?';
-        }
+        query += ' AND created_at < ?';
 
         const date = new Date(parseInt(params.cursor)).toISOString();
 

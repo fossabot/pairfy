@@ -60,9 +60,9 @@
 
 
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="true" :rows="10" :filters="filters"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks  NextPageLink LastPageLink CurrentPageReport"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" @page="updateCursor(false)"
+            :paginator="true" :rows="15" :filters="filters" rowReorderIcon="pi pi-user"
+            paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products" @page="updateCursor()"
             :totalRecords="productCount">
             <template #header>
                 <div class="datatable-header">
@@ -72,37 +72,83 @@
                 </div>
             </template>
 
+
             <Column header="Image">
                 <template #body="slotProps">
                     <img :src="buildImageUrl(slotProps.data)" :alt="slotProps.data.image" class="datatable-image" />
                 </template>
+
             </Column>
 
 
-            <Column field="id" header="ID" sortable style="min-width: 8rem"></Column>
-            <Column field="sku" header="SKU" sortable style="min-width: 8rem"></Column>
-            <Column field="name" header="Name" sortable style="min-width: 8rem"></Column>
+            <Column field="id" header="ID" sortable style="min-width: 8rem">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
+            </Column>
+
+            <Column field="sku" header="SKU" sortable style="min-width: 8rem">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
+            </Column>
+            <Column field="name" header="Name" sortable style="min-width: 8rem">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
+            </Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.price) }}
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
                 </template>
             </Column>
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
                 </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
             </Column>
-            <Column field="category" header="Category" sortable style="min-width: 8rem"></Column>
+            <Column field="category" header="Category" sortable style="min-width: 8rem">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
+            </Column>
 
             <Column field="created_at" header="Date" sortable style="min-width: 8rem">
                 <template #body="slotProps">
                     {{ convertDate(slotProps.data.created_at) }}
                 </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
+                </template>
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '' : ''"
-                        :severity="getStockLabel(slotProps.data.stock)" />
+                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow"  />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow"  />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow"  />
                 </template>
             </Column>
             <Column :exportable="false" style="min-width: 12rem">
@@ -146,8 +192,7 @@ const queryOptions = {
 
 const variablesRef = ref({
     "getProductsVariable": {
-        "cursor": "NOT",
-        "revert": false
+        "cursor": "NOT"
     }
 })
 
@@ -189,13 +234,12 @@ const backPage = () => {
 
 const productsTemp = ref([]);
 
-const updateCursor = (revert) => {
+const updateCursor = () => {
     console.log("UPDATED");
 
     variablesRef.value = {
         getProductsVariable: {
-            cursor: result.value?.getProducts.cursor,
-            revert: revert
+            cursor: result.value?.getProducts.cursor
         }
     }
 }
@@ -203,7 +247,7 @@ const updateCursor = (revert) => {
 const convertDate = (timestamp) => {
     const date = dayjs(parseInt(timestamp));
 
-    return date.format('YYYY-MM-DD HH:mm:ss');
+    return date.format('YYYY-MM-DD');
 }
 
 
@@ -408,5 +452,9 @@ const goBackRoute = () => {
 .datatable-control {
     display: flex;
     justify-content: center;
+}
+
+.arrow {
+    font-size: 12px;
 }
 </style>
