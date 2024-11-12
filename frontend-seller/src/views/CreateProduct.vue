@@ -321,7 +321,7 @@
                                     :invalid="formErrors.discount" />
 
                                 <span class="price-discount">
-                                    {{ applyDiscount }}
+                                    {{ applyDiscount }} 
                                 </span>
                             </div>
                         </div>
