@@ -3,7 +3,7 @@
         <Toolbar>
             <template #start>
                 <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary" @click="goBackRoute"
-                    variant="outlined" />
+                     />
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
                         <span style="font-weight: 600;">{{ item.label }}</span>

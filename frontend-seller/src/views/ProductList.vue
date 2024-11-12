@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary"  @click="goBackRoute"  variant="outlined"/>
+                <Button icon="pi pi-chevron-left" class="mr-2" severity="secondary"  @click="goBackRoute" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
