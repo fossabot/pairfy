@@ -233,8 +233,6 @@ onError(error => {
     showError("The connection to the server has failed, please try again later.");
 })
 
-const productsTemp = ref([]);
-
 const updateCursor = () => {
     variablesRef.value = {
         getProductsVariable: {
@@ -248,6 +246,8 @@ const convertDate = (timestamp) => {
 
     return date.format('YYYY-MM-DD');
 }
+
+const productsTemp = ref([]);
 
 const products = computed(() => productsTemp.value);
 
