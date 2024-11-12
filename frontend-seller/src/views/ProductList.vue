@@ -400,7 +400,7 @@ const goBackRoute = () => {
 }
 
 ::v-deep(.p-datatable-header-cell) {
-    background: white;
+    background: transparent;
     border-top: 1px solid var(--border-a);
 }
 
