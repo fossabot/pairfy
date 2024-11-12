@@ -9,8 +9,6 @@
                     </template>
                     <template #separator> / </template>
                 </Breadcrumb>
-
-
             </template>
 
             <template #center>
@@ -328,10 +326,10 @@
 
 
                     <div class="box-buttons">
-                        <Button type="button" label="Discard" icon="pi pi-trash" :loading="loading" @click="load"
-                            outlined style="font-size: var(--text-size-a)" fluid />
+                        <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading"
+                            @click="load" outlined style="font-size: var(--text-size-a)" fluid />
 
-                        <Button type="button" label="Publish" icon="pi pi-check" :loading="loading"
+                        <Button type="button" label="Publish" icon="pi pi-check" :loading="sendMessageLoading"
                             @click="createProduct" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
@@ -505,7 +503,7 @@ const onTemplatedUpload = (data) => {
     showSuccess('Images Uploaded');
 };
 
-const { mutate: sendMessage, onError, onDone } = useMutation(gql`
+const { mutate: sendMessage, loading: sendMessageLoading, onError, onDone } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
     createProduct(createProductInput: $createProductVariable){
         success
@@ -668,8 +666,6 @@ const discountResult = computed(() => {
     padding: 0.5rem;
 }
 
-
-
 main {
     padding: 1rem 2rem;
     flex: 1 1 auto;
@@ -701,15 +697,17 @@ main {
     gap: 1rem;
 }
 
+.formulary {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 150px;
+}
+
 .right-column {
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
-}
-
-.input {
-    width: 100%;
-    margin-bottom: 1rem;
 }
 
 .box {
@@ -790,8 +788,6 @@ main {
     align-items: center;
 }
 
-
-
 .media-preview {
     width: 100px;
     height: 100px;
@@ -837,12 +833,7 @@ main {
     flex-direction: column;
 }
 
-.formulary {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    height: 150px;
-}
+
 
 ::v-deep(.editor-class) {
 
