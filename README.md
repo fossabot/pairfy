@@ -42,6 +42,17 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 
 [BINANCE ACTIVE USERS](https://www.binance.com/en/feed/post/2023-12-28-binance-ends-2023-with-30-user-growth-committed-to-compliance-and-web3-products-1989369934178) At the end of 2023, Binance reached approximately 170M+ registered users. A large percentage of users carry out P2P negotiations using bank accounts and physical world payment methods. Binance has demonstrated that the Peer-to-Peer exchange system with appeal mechanism is effective and scalable.
 
+## Road Map
+
+- [X] Add User UI
+- [X] Add Seller UI
+- [X] Multi-Wallet Support
+  - [X] Nami
+  - [X] Lace
+  - [X] Eternl 
+- [ ] Add Blockchain Integration (In Progress)
+- [ ] Add Liquidity Pool
+
 ## Table Of Content
 
 [Installation](#installation)
@@ -49,8 +60,6 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 [Documentation](#documentation)
 
 [License](#license)
-
-[Links](#links)
 
 ### 1\. Requeriments
 
@@ -88,18 +97,7 @@ skaffold dev
 
 Distributed under the MIT License.
 
-### 4\. Road Map
-
-- [X] Add User UI
-- [X] Add Seller UI
-- [ ] Add Blockchain Integration (In Progress)
-- [ ] Add Liquidity Pool
-- [X] Multi-Wallet Support
-  - [X] Nami
-  - [X] Lace
-  - [X] Eternl 
-
-### 5\. Contact
+### 4\. Contact
 
 Juan Caballero R. - sudo.delete.evil@gmail.com
 
