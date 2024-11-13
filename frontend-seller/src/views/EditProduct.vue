@@ -19,7 +19,7 @@
 
             </template>
         </Toolbar>
-
+        {{ result }}
         <div class="card">
             <div class="title">
                 Create Product
@@ -349,7 +349,7 @@ import CharacterCount from '@tiptap/extension-character-count';
 import { onMounted, ref, nextTick, computed, watch } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
-import { useMutation } from '@vue/apollo-composable';
+import { useMutation, useQuery } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
@@ -362,11 +362,43 @@ const toast = useToast();
 
 const router = useRouter()
 
+const queryVariablesRef = ref({
+    "getProductVariable": {
+        "id": null
+    }
+})
+
+const { result, onError: onErrorQuery } = useQuery(gql`
+query ($getProductVariable: GetProductInput!) {
+    getProduct(getProductInput: $getProductVariable) {
+        id
+        name
+        price
+    }
+}
+`,
+    () => (queryVariablesRef.value)
+);
+
+const updateQueryVariables = (id) => {
+    queryVariablesRef.value = {
+        getProductVariable: {
+            id
+        }
+    }
+}
+
 watch(
     () => route.params.id,
-    (e) => console.log(e),
+    (id) => updateQueryVariables(id),
     { immediate: true }
 );
+
+onErrorQuery(error => {
+    showError("The connection to the server has failed, please try again later.");
+})
+
+///////////////////////////////////////////////////////
 
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
@@ -482,13 +514,17 @@ const productImageSet = ref([])
 
 const productImageSetLimit = ref(15);
 
+watch(result, value => {
+    if (value) {
+        const product = value.getProduct[0];
+        productName.value = product.name;
+        productPrice.value = product.price;
+    }
+}, { immediate: true })
+
 const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
     files.value.splice(index, 1);
     removeFileCallback(index);
-};
-
-const onClearTemplatingUpload = (clear) => {
-    clear();
 };
 
 const onSelectedFiles = (event) => {
@@ -511,7 +547,7 @@ const onTemplatedUpload = (data) => {
     showSuccess('Images Uploaded');
 };
 
-const { mutate: sendMessage, loading: sendMessageLoading, onError, onDone } = useMutation(gql`
+const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
     createProduct(createProductInput: $createProductVariable){
         success
@@ -519,7 +555,7 @@ mutation($createProductVariable: CreateProductInput!){
 }
 `)
 
-onError(error => {
+onErrorMutation(error => {
     showError(error);
 })
 

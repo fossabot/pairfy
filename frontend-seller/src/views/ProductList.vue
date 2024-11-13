@@ -238,12 +238,6 @@ const updateCursor = () => {
     }
 }
 
-const convertDate = (timestamp) => {
-    const date = dayjs(parseInt(timestamp));
-
-    return date.format('YYYY-MM-DD');
-}
-
 const productsTemp = ref([]);
 
 const products = computed(() => productsTemp.value);
@@ -278,6 +272,12 @@ const formatCurrency = (value) => {
     }
 
 };
+
+const convertDate = (timestamp) => {
+    const date = dayjs(parseInt(timestamp));
+
+    return date.format('YYYY-MM-DD');
+}
 
 const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
