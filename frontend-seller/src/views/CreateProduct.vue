@@ -34,15 +34,15 @@
                         <InputGroup>
                             <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
                                 :invalid="formErrors.price" :min="0" :useGrouping="false"
-                                inputStyle="border-radius: var(--p-inputtext-border-radius)" />
+                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
                             <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
                                 :invalid="formErrors.collateral" :min="0" :useGrouping="false"
-                                inputStyle="margin: 0 1rem; border-radius: var(--p-inputtext-border-radius)" />
+                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
 
                             <InputText v-model="productSKU" type="text" placeholder="Product SKU"
-                                v-keyfilter="/^[a-zA-Z0-9]+$/" style="border-radius: var(--p-inputtext-border-radius)"
-                                :invalid="formErrors.sku" />
+                                v-keyfilter="/^[a-zA-Z0-9]+$/" :invalid="formErrors.sku"
+                                style="border-radius: var(--p-inputtext-border-radius)" />
                         </InputGroup>
 
 
@@ -257,8 +257,8 @@
 
                         <div class="box-content">
                             <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
-                                placeholder="Keywords" :typeahead="false" inputStyle="font-size: var(--text-size-a)"
-                                :invalid="formErrors.keywords" />
+                                placeholder="Keywords" :typeahead="false"
+                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="formErrors.keywords" />
                         </div>
                     </div>
 
@@ -326,8 +326,8 @@
 
 
                     <div class="box-buttons">
-                        <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading"
-                            @click="load" outlined style="font-size: var(--text-size-a)" fluid />
+                        <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
+                            style="font-size: var(--text-size-a)" fluid />
 
                         <Button type="button" label="Publish" icon="pi pi-check" :loading="sendMessageLoading"
                             @click="createProduct" style="font-size: var(--text-size-a)" fluid />
