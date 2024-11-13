@@ -172,7 +172,7 @@
                                                 severity="secondary" :disabled="!files || files.length === 0"
                                                 size="small" rounded />
 
-                                            <Message severity="secondary">
+                                            <Message severity="secondary" variant="simple">
                                                 <div style="display: flex; align-items: center">
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> The first image is the preview
@@ -180,7 +180,7 @@
                                                 </div>
                                             </Message>
 
-                                            <Message severity="secondary">
+                                            <Message severity="secondary" >
                                                 <div style="display: flex; align-items: center">
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
