@@ -374,6 +374,19 @@ query ($getProductVariable: GetProductInput!) {
         id
         name
         price
+        collateral
+        sku
+        model
+        brand
+        features
+        category
+        keywords
+        stock
+        color
+        color_name
+        quality
+        image_set
+        video_set
     }
 }
 `,
@@ -519,6 +532,17 @@ watch(result, value => {
         const product = value.getProduct[0];
         productName.value = product.name;
         productPrice.value = product.price;
+        productCollateral.value = product.collateral;
+        productSKU.value = product.sku;
+        productModel.value = product.model;
+        productBrand.value = product.brand;
+        editor.value.commands.setContent(JSON.parse(product.features));
+        productCategory.value = productCategories.value.find(e => e.code === product.category);
+        productKeywords.value = [product.keywords || product.keywords.join(',')];
+        productColorName.value = product.color_name;
+        productColor.value = product.color;
+        productQuality.value = product.quality;
+        productStock.value = product.stock ? true : false;
     }
 }, { immediate: true })
 
