@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2"  severity="secondary" @click="goBackRoute" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -60,11 +60,10 @@
 
 
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="true" :rows="15" :filters="filters" rowReorderIcon="pi pi-user"
+            :paginator="true" :rows="15" :filters="filters"
+            @page="updateCursor()" @rowSelect="editProduct" selectionMode="single"
             paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
-            currentPageReportTemplate="Showing {first} to {last}" @page="updateCursor()">
-
-
+            currentPageReportTemplate="Showing {first} to {last}" >
             <template #paginatorstart>
                 <div style="color: var(--text-b);">
                     <span>{{ productCount }} Products</span>
@@ -159,11 +158,9 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column :exportable="false" style="min-width: 12rem">
+            <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
-                        <Button icon="pi pi-pencil" outlined size="small" rounded class="mr-2"
-                            @click="editProduct(slotProps.data)" style="margin-right: 1rem;" />
                         <Button icon="pi pi-trash" outlined size="small" rounded
                             @click="confirmDeleteProduct(slotProps.data)" />
                     </div>
@@ -313,10 +310,8 @@ const saveProduct = () => {
         product.value = {};
     }
 };
-const editProduct = (prod) => {
-    product.value = { ...prod };
-    productDialog.value = true;
-};
+
+
 const confirmDeleteProduct = (prod) => {
     product.value = prod;
     deleteProductDialog.value = true;
@@ -374,6 +369,16 @@ const getStockLabel = (status) => {
 
 const goBackRoute = () => {
     router.go(-1)
+}
+
+
+const editProduct = (event) => {
+    router.push({
+        name: 'edit-product',
+        params: {
+            id: event.data.id
+        }
+    })
 }
 
 
