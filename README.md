@@ -16,17 +16,19 @@ A system of blind reviewers trained in conflict resolution can decide on a dispu
 
 ### Features
 
+
 | Feature      | yes | Description                                          |
-| ------------ | --- | ---------------------------------------------------- |
-| P2P          | ✓   | Cardano  preview-testnet, testnet, mainnet           |
-| E2E          | ✓   | Signing and sending transactions only in the browser |
-| Multi-wallet | ✓   | Nami, Lace, Eternl, VESPR                            |
-| Aiken        | ✓   | Aiken validators Plutus V3                           |
+| -------------- | ----- | ------------------------------------------------------ |
+| P2P          | ✓  | Cardano  preview-testnet, testnet, mainnet          |
+| E2E          | ✓  | Signing and sending transactions only in the browser |
+| Multi-wallet | ✓  | Nami, Lace, Eternl, VESPR                            |
+| Aiken        | ✓  | Aiken validators Plutus V3                           |
 
 ### Stack
 
+
 | Stack    | Type      | Description                  | Keywords                     | Version | Licence            | Repository                                                         |
-| -------- | --------- | ---------------------------- | ---------------------------- | ------- | ------------------ | ------------------------------------------------------------------ |
+| ---------- | ----------- | ------------------------------ | ------------------------------ | --------- | -------------------- | -------------------------------------------------------------------- |
 | mysql    | database  | cloud-native database        | sharding                     | 8.0     | GPL license        | [https://www.mysql.com/downloads](https://www.mysql.com/downloads) |
 | Debezium | cdc       | database change data capture | cdc, kafka, stream, sync     | 2.5     | Apache Version 2.0 | [https://github.com/debezium](https://github.com/debezium)         |
 | Kafka    | streaming | event streaming              | high-throughput, low-latency | 3.6.1   | Apache Version 2.0 | [https://github.com/apache/kafka](https://github.com/apache/kafka) |
@@ -82,3 +84,25 @@ Command
 ```
 skaffold dev
 ```
+### 3\. License
+
+Distributed under the MIT License.
+
+### 4\. License
+
+- [X] Add User UI
+- [X] Add Seller UI
+- [ ] Add Blockchain Integration
+- [ ] Add Liquidity Pool
+- [ ] Multi-Wallet Support
+  - [ ] Nami
+  - [ ] Lace
+  - [ ] Eternl 
+
+### 5\. Contact
+
+Juan Caballero R. - sudo.delete.evil@gmail.com
+
+GitHub: [https://github.com/rey-sudo](https://github.com/rey-sudo)
+
+LinkedIn: [https://www.linkedin.com/in/juanrey1](https://www.linkedin.com/in/juanrey1https:/)
