@@ -94,7 +94,7 @@ Distributed under the MIT License.
 - [X] Add Seller UI
 - [ ] Add Blockchain Integration (In Progress)
 - [ ] Add Liquidity Pool
-- [ ] Multi-Wallet Support
+- [X] Multi-Wallet Support
   - [X] Nami
   - [X] Lace
   - [X] Eternl 
