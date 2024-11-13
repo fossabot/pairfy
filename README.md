@@ -88,7 +88,7 @@ skaffold dev
 
 Distributed under the MIT License.
 
-### 4\. Roadmap
+### 4\. Road Map
 
 - [X] Add User UI
 - [X] Add Seller UI
