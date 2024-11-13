@@ -19,7 +19,6 @@
 
             </template>
         </Toolbar>
-        {{ result }}
         <div class="card">
             <div class="title">
                 Create Product
@@ -152,86 +151,26 @@
 
                     <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
-                        <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
+                        <div class="uploader-header">
+                            x
+                        </div>
+                        <div class="uploader-content" :class="{ invalid: formErrors.image_set }">
                             <Toast />
-                            <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
-                                invalidFileLimitMessage="File Limit" @select="onSelectedFiles">
-                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                    <div class="uploader-top">
-                                        <div class="uploader-control">
-                                            <div class="uploader-mask" @click="chooseCallback()" />
-                                            <Button @click="chooseCallback()" icon="pi pi-image" outlined
-                                                severity="secondary" size="small" rounded />
 
-                                            <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
-                                                outlined severity="secondary" :disabled="disableUpload" size="small"
-                                                rounded />
-
-                                            <Button @click="clearCallback()" icon="pi pi-times" outlined
-                                                severity="secondary" :disabled="!files || files.length === 0"
-                                                size="small" rounded />
-
-                                            <Message severity="secondary" variant="simple">
-                                                <div style="display: flex; align-items: center">
-                                                    <i class="pi pi-exclamation-circle" />
-                                                    <span style="margin-left: 0.5rem;"> The first image is the preview
-                                                        thumbnail.</span>
-                                                </div>
-                                            </Message>
-
-                                            <Message severity="secondary">
-                                                <div style="display: flex; align-items: center">
-                                                    <i class="pi pi-exclamation-circle" />
-                                                    <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
-                                                        {{ productImageSetLimit }}</span>
-                                                </div>
-                                            </Message>
-                                        </div>
+                            <div class="uploader-box" id="sortable-media">
+                                <div class="uploader-image" v-for="(file, index) of productImageSet" :key="file.name"
+                                    :data-id="file.name">
+                                    <div>
+                                        <img role="presentation" :alt="file.name" :src="file.url" width="100"
+                                            height="50" class="media-image" />
                                     </div>
-                                </template>
-                                <template
-                                    #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
-                                    <div class="uploader-content">
-                                        <div v-show="files.length > 0" class="media-box" id="sortable-media">
-                                            <div v-for="(file, index) of files" :key="file.name + file.type + file.size"
-                                                class="media-item" :data-id="file.name">
-                                                <div>
-                                                    <img role="presentation" :alt="file.name" :src="file.objectURL"
-                                                        width="100" height="50" class="media-image" />
-                                                </div>
-
-                                                <div class="media-control">
-                                                    <button
-                                                        @click="onRemoveTemplatingFile(file, removeFileCallback, index)">
-
-                                                        <i class="pi pi-times" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div v-show="uploadedFiles.length > 0" class="media-box">
-                                            <div v-for="(file, index) of uploadedFiles"
-                                                :key="file.name + file.type + file.size" class="media-item">
-                                                <div>
-                                                    <img role="presentation" :alt="file.name" :src="file.objectURL"
-                                                        width="100" height="50" class="media-image" />
-                                                </div>
-                                                <Badge value="Completed" class="mt-4" severity="success" />
-                                            </div>
-                                        </div>
+                                    <div class="media-control">
+                                        <button>
+                                            <i class="pi pi-times" />
+                                        </button>
                                     </div>
-                                </template>
-                                <template #empty>
-                                    <div class="uploader-empty" @click="chooseCallback()">
-                                        <i class="pi pi-image" />
-                                        <p>Select images to upload.</p>
-                                    </div>
-                                </template>
-                            </FileUpload>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--//////////////UPLOADER///////////////-->
@@ -385,6 +324,8 @@ query ($getProductVariable: GetProductInput!) {
         color
         color_name
         quality
+        media_url
+        image_path
         image_set
         video_set
         discount
@@ -484,7 +425,7 @@ onMounted(async () => {
         animation: 150,
         ghostClass: 'sortable-ghost',
         onEnd: function (evt) {
-            var items = document.querySelectorAll('.media-item');
+            var items = document.querySelectorAll('.uploader-image');
             var orderArray = [];
 
             items.forEach(function (item) {
@@ -529,6 +470,17 @@ const productImageSet = ref([])
 
 const productImageSetLimit = ref(15);
 
+const processImageSet = (product) => {
+    const images = product.image_set.split(",");
+
+    return images.map((item) => {
+        return {
+            name: item,
+            url: product.media_url + product.image_path + item
+        }
+    });
+}
+
 watch(result, value => {
     if (value) {
         const product = value.getProduct[0];
@@ -548,6 +500,7 @@ watch(result, value => {
         productStock.value = product.stock ? true : false;
         productDiscount.value = product.discount;
         productDiscountValue.value = product.discount_value;
+        productImageSet.value = processImageSet(product);
     }
 }, { immediate: true })
 
@@ -811,7 +764,16 @@ main {
     gap: 1rem;
 }
 
-.media-box {
+.uploader {
+    border: 1px solid var(--border-a);
+}
+
+.uploader-header {
+    height: 50px;
+    background: var(--background-b);
+}
+
+.uploader-box {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
@@ -820,7 +782,7 @@ main {
     margin-bottom: 1rem;
 }
 
-.media-item {
+.uploader-image {
     overflow: hidden;
     height: 150px;
     text-align: center;
@@ -833,7 +795,7 @@ main {
     flex-direction: column;
 }
 
-.media-item button {
+.uploader-image button {
     border-radius: 4px;
     background: transparent;
     color: var(--text-b);
@@ -846,7 +808,7 @@ main {
     cursor: pointer;
 }
 
-.media-item button i {
+.uploader-image button i {
     font-size: 12px;
 }
 
@@ -865,45 +827,6 @@ main {
     width: 100px;
     height: 100px;
     object-fit: contain;
-}
-
-.uploader-top {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.uploader-control {
-    display: flex;
-    gap: 1rem;
-}
-
-.uploader-bar {
-    margin-top: 1rem;
-}
-
-.uploader-empty {
-    height: 320px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    font-size: var(--text-size-b);
-    color: var(--text-b);
-}
-
-.uploader-empty i {
-    font-size: 4rem;
-}
-
-.uploader-empty p {
-    font-size: 1rem;
-    margin-top: 1rem;
-}
-
-.uploader-content {
-    display: flex;
-    flex-direction: column;
 }
 
 
@@ -1004,13 +927,7 @@ main {
     border-radius: 0.25rem;
 }
 
-.uploader-mask {
-    width: 225px;
-    height: 325px;
-    left: 29%;
-    cursor: pointer;
-    position: absolute;
-}
+
 
 /* Extra small devices (phones, 320px and up) */
 @media (min-width: 320px) {}
