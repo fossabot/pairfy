@@ -20,8 +20,8 @@ A system of blind reviewers trained in conflict resolution can decide on a dispu
 | ------------ | --- | ---------------------------------------------------- |
 | P2P          | ✓   | Cardano  preview-testnet, testnet, mainnet           |
 | E2E          | ✓   | Signing and sending transactions only in the browser |
-| Multi-wallet | ✓   | Nami                                                 |
-| PAB          | ✓   | Does not depend on third-party tools                 |
+| Multi-wallet | ✓   | Nami, Lace, Eternl, VESPR                            |
+| Aiken        | ✓   | Aiken validators Plutus V3                           |
 
 ### Stack
 
