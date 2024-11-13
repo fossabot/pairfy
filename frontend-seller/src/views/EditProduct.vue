@@ -387,6 +387,8 @@ query ($getProductVariable: GetProductInput!) {
         quality
         image_set
         video_set
+        discount
+        discount_value
     }
 }
 `,
@@ -530,6 +532,7 @@ const productImageSetLimit = ref(15);
 watch(result, value => {
     if (value) {
         const product = value.getProduct[0];
+
         productName.value = product.name;
         productPrice.value = product.price;
         productCollateral.value = product.collateral;
@@ -538,11 +541,13 @@ watch(result, value => {
         productBrand.value = product.brand;
         editor.value.commands.setContent(JSON.parse(product.features));
         productCategory.value = productCategories.value.find(e => e.code === product.category);
-        productKeywords.value = [product.keywords || product.keywords.join(',')];
+        productKeywords.value = product.keywords.split(',');
         productColorName.value = product.color_name;
         productColor.value = product.color;
         productQuality.value = product.quality;
         productStock.value = product.stock ? true : false;
+        productDiscount.value = product.discount;
+        productDiscountValue.value = product.discount_value;
     }
 }, { immediate: true })
 
@@ -667,8 +672,8 @@ const createProduct = () => {
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
-            //"discount": productDiscount.value,
-            //"discount_value": productDiscountValue.value,
+            "discount": productDiscount.value,
+            "discount_value": productDiscountValue.value,
             "image_set": productImageSet.value.join(','),
             "video_set": ""
         }
