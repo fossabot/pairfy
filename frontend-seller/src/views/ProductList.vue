@@ -36,7 +36,7 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2"  severity="secondary" @click="goBackRoute" />
+                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBack" />
 
                 <Breadcrumb :model="navItems">
                     <template #item="{ item }">
@@ -60,10 +60,9 @@
 
 
         <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="true" :rows="15" :filters="filters"
-            @page="updateCursor()" @rowSelect="editProduct" selectionMode="single"
-            paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
-            currentPageReportTemplate="Showing {first} to {last}" >
+            :paginator="true" :rows="15" :filters="filters" @page="updateCursor()" @rowSelect="editProduct"
+            selectionMode="single" paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
+            currentPageReportTemplate="Showing {first} to {last}">
             <template #paginatorstart>
                 <div style="color: var(--text-b);">
                     <span>{{ productCount }} Products</span>
@@ -73,7 +72,7 @@
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
-                        <Button label="New" icon="pi pi-plus" />
+                        <Button label="New" icon="pi pi-plus" variant="outlined" />
                     </RouterLink>
                 </div>
             </template>
@@ -271,7 +270,11 @@ const submitted = ref(false);
 
 const formatCurrency = (value) => {
     if (value)
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'ADA' });
+        return value.toLocaleString('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+
+        }) + " ₳";
     return;
 };
 
@@ -367,7 +370,7 @@ const getStockLabel = (status) => {
 };
 
 
-const goBackRoute = () => {
+const goBack = () => {
     router.go(-1)
 }
 
