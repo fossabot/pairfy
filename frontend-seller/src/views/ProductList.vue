@@ -86,7 +86,7 @@
             </Column>
 
 
-            <Column field="id" header="ID" sortable style="min-width: 8rem">
+            <Column field="id" header="ID" sortable>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -118,6 +118,18 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
+
+            <Column field="discount_value" header="Discount" sortable style="min-width: 2rem; text-transform: capitalize;">
+                <template #body="slotProps">
+                    {{ slotProps.data.discount_value }} %
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
+
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
@@ -148,8 +160,7 @@
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? 'stock' : 'out'"
-                        :severity="getStockLabel(slotProps.data.stock)" />
+                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -215,6 +226,7 @@ query($getProductsVariable: GetProductsInput!){
             image_path
             image_set
             created_at
+            discount_value
         }
 
         cursor

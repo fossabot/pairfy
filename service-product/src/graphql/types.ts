@@ -24,6 +24,8 @@ type Product {
     video_path: String!
     image_set: String!
     video_set: String!
+    discount: Boolean!
+    discount_value: Int!
     created_at: String!
   }
 
@@ -71,6 +73,8 @@ input CreateProductInput {
   quality: String!
   image_set: String!
   video_set: String!
+  discount: Boolean!
+  discount_value: Int!
 }
 
 type Mutation {

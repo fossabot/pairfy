@@ -26,6 +26,8 @@ create table if not exists products(
   video_path varchar(255) not null,
   image_set varchar(500) not null,
   video_set varchar(500) not null,
+  discount boolean default false,
+  discount_value int unsigned default 0,
   created_at timestamp default current_timestamp,
   schema_t timestamp default current_timestamp,
   schema_v int unsigned not null,

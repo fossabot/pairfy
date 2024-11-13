@@ -43,8 +43,10 @@ const createProduct = async (args: any, context: any) => {
             video_path,
             image_set,
             video_set,
+            discount,
+            discount_value,
             schema_v
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const schemeValue = [
             "P" + getProductId(),
@@ -68,6 +70,8 @@ const createProduct = async (args: any, context: any) => {
             "/api/media/get-video/",
             params.image_set,
             params.video_set,
+            params.discount,
+            params.discount_value,
             0,
         ];
 
@@ -137,6 +141,7 @@ const getProducts = async (args: any, context: any) => {
 
         logger.error(err);
 
+        throw new Error('INTERNAL_ERROR');
     } finally {
         connection.release();
     }
@@ -167,6 +172,7 @@ const getProduct = async (args: any, context: any) => {
 
         logger.error(err);
 
+        throw new Error('INTERNAL_ERROR');
     } finally {
         connection.release();
     }

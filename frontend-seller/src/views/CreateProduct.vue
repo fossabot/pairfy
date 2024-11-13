@@ -180,7 +180,7 @@
                                                 </div>
                                             </Message>
 
-                                            <Message severity="secondary" >
+                                            <Message severity="secondary">
                                                 <div style="display: flex; align-items: center">
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
@@ -313,9 +313,9 @@
                                 <ToggleSwitch v-model="productDiscount" />
 
                                 <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %"
-                                    prefix="% " showButtons :min="0" :max="99" :useGrouping="false"
+                                    suffix=" %" showButtons :min="0" :max="99" :useGrouping="false"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
-                                    :invalid="formErrors.discount" />
+                                    :invalid="formErrors.discount" :disabled="!productDiscount" />
 
                                 <span class="price-discount">
                                     {{ discountResult }}
@@ -416,7 +416,7 @@ const productStock = ref(false);
 
 const productDiscount = ref(false);
 
-const productDiscountValue = ref(null);
+const productDiscountValue = ref(0);
 
 const files = ref([]);
 
@@ -533,9 +533,9 @@ const formErrors = ref({
     "color": false,
     "color_name": false,
     "quality": false,
-    "discount": false,
     "image_set": false,
-    "video_set": false
+    "video_set": false,
+    "discount": false
 });
 
 const checkMandatory = () => {
@@ -599,8 +599,8 @@ const createProduct = () => {
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
-            //"discount": productDiscount.value,
-            //"discount_value": productDiscountValue.value,
+            "discount": productDiscount.value,
+            "discount_value": productDiscountValue.value,
             "image_set": productImageSet.value.join(','),
             "video_set": ""
         }
@@ -611,7 +611,6 @@ const createProduct = () => {
 const goBackRoute = () => {
     router.go(-1)
 }
-
 
 const discountResult = computed(() => {
     if (productDiscountValue.value < 0 || productDiscountValue.value > 100) {
