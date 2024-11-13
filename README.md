@@ -88,16 +88,16 @@ skaffold dev
 
 Distributed under the MIT License.
 
-### 4\. License
+### 4\. Roadmap
 
 - [X] Add User UI
 - [X] Add Seller UI
-- [ ] Add Blockchain Integration
+- [ ] Add Blockchain Integration (In Progress)
 - [ ] Add Liquidity Pool
 - [ ] Multi-Wallet Support
-  - [ ] Nami
-  - [ ] Lace
-  - [ ] Eternl 
+  - [X] Nami
+  - [X] Lace
+  - [X] Eternl 
 
 ### 5\. Contact
 
