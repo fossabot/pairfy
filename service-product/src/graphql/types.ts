@@ -32,14 +32,21 @@ input GetProductsInput {
   cursor: String!
 }  
 
-type getProductsResponse {
+input GetProductInput {
+  id: String!
+} 
+  
+type GetProductsResponse {
   products: [Product]
   cursor: String!
   count: Int!
 }
 
+ 
+
 type Query {
-  getProducts(getProductsInput: GetProductsInput!): getProductsResponse!
+  getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
+  getProduct(getProductInput: GetProductInput!): [Product]
 }
 
 #/////////////////////////////////////////////////

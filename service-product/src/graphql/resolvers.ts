@@ -92,8 +92,6 @@ const createProduct = async (args: any, context: any) => {
 const getProducts = async (args: any, context: any) => {
     const params = args.getProductsInput;
 
-    console.log(params);
-
     const SELLER = context.sellerData;
 
     let connection = null;
@@ -117,8 +115,6 @@ const getProducts = async (args: any, context: any) => {
 
     queryParams.push(pageSize);
 
-    console.log(query, queryParams);
-
     try {
         connection = await database.client.getConnection();
 
@@ -127,8 +123,6 @@ const getProducts = async (args: any, context: any) => {
         const [count] = await connection.execute(`SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?`, [SELLER.id]);
 
         const cursor = products.length ? products[products.length - 1].created_at : params.cursor;
-
-        console.log(products.length, cursor, count);
 
         await connection.commit();
 
@@ -148,9 +142,40 @@ const getProducts = async (args: any, context: any) => {
     }
 };
 
+
+
+const getProduct = async (args: any, context: any) => {
+    const params = args.getProductInput;
+
+    console.log(params);
+
+    const SELLER = context.sellerData;
+
+    let connection = null;
+
+    try {
+        connection = await database.client.getConnection();
+
+        const [product] = await connection.execute(`SELECT * FROM products WHERE id = ? AND seller_id = ?`, [params.id, SELLER.id]);
+
+        await connection.commit();
+
+        return product
+
+    } catch (err) {
+        await connection.rollback();
+
+        logger.error(err);
+
+    } finally {
+        connection.release();
+    }
+};
+
 const products = {
     Query: {
-        getProducts: (_: any, args: any, context: any) => getProducts(args, context)
+        getProducts: (_: any, args: any, context: any) => getProducts(args, context),
+        getProduct: (_: any, args: any, context: any) => getProduct(args, context)
     },
     Mutation: {
         createProduct: (_: any, args: any, context: any) => createProduct(args, context)

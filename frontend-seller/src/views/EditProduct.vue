@@ -346,7 +346,7 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
-import { onMounted, ref, nextTick, computed } from 'vue';
+import { onMounted, ref, nextTick, computed, watch } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable';
@@ -354,11 +354,19 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 
+const route = useRoute()
+
 const $primevue = usePrimeVue();
 
 const toast = useToast();
 
 const router = useRouter()
+
+watch(
+    () => route.params.id,
+    (e) => console.log(e),
+    { immediate: true }
+);
 
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
