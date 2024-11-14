@@ -59,7 +59,7 @@
 \textbf{Abstract.}
 Adabuy is an electronic commerce protocol that uses smart contracts to decentralize functional requirements necessary for the processes of selling and buying a physical product.
 Any member of the community can post a product for sale and any member of the community can express an intention to purchase that product. During a negotiation session the buyer and seller generate the context by engaging in bilateral communication through live chat via websocket.
-If a dispute arises during the session it is possible to appeal so that a mediator can decide on the specific case in accordance with the fulfillment of the obligations of the buyer and the seller. The fundamental idea behind Adabuy is to avoid using expensive tracker hardware and infrastructure as a source of truth. Instead, use mediators to resolve unsuccessful product negotiations. To face the competition it uses a liquidity pool fueled by low transaction fees to generate discounts on the top selling products.
+If a dispute arises during the session it is possible to appeal so that a mediator can decide on the specific case in accordance with the fulfillment of the obligations of the buyer and the seller. The fundamental idea behind Adabuy is to avoid using expensive tracker hardware and infrastructure as a source of truth. Instead, use mediators to resolve unsuccessful product negotiations. To encourage users to buy from Adabuy instead of the traditional marketplace, a liquidity pool helps create discounts on best-selling products. The liquidity pool is a way to return the money from the fees to the users and sell the products cheaper with a discount.
 }
 
 
@@ -311,8 +311,9 @@ Mediators can have two states: active and inactive.
 \subsubsection { Liquidity Pool }
 
 Each transaction on Adabuy generates a commission that goes to a liquidity pool. This pool has the function of treasury to pay for the infrastructure and the mediators.
-The transaction commission must comply with these principles: It must always benefit the buyer more than the seller. It must not be repulsive. It must be lower than that of the competition. It must be reported to the user. Therefore, if 10,000 transactions occur with commissions of 0.5 ADA, then 2,500 ADA can go to discounts returning to users and 2,500 ADA to pay for technological infrastructure and mediators. All paid from the liquidity pool.
- 
+The transaction commission must comply with these principles: It must always benefit the buyer. It must not be repulsive. It must be lower than that of the competition. Therefore, if 10,000 transactions occur with commissions of 0.5 ADA, then 2,500 ADA can go to discounts returning to users and 2,500 ADA to pay for technological infrastructure and mediators. 
+
+To create discounts on products using money from the liquidity pool the best-selling published products will eventually have a discount tag. The buyer will pay the discounted price and when the delivery is completed. The amount in ADA of the product price with the discount will be sent to the seller and finally a transaction from the liquidity pool will cover the shortfall of the original price of the product.
 
 \subsection{ UI/UIX }
 
