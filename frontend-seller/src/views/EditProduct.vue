@@ -796,6 +796,7 @@ main {
     border-radius: var(--p-fileupload-border-radius);
     display: flex;
     flex-direction: column;
+    min-height: 400px;
 }
 
 .uploader-grid {
