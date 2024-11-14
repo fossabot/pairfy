@@ -152,8 +152,20 @@
                     <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
                         <Toast />
-                        <div class="uploader-header">
+                        <div class="uploader-header" v-if="productImageSet.length < productImageSetLimit">
+                            <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
+                                @upload="onTemplatedUpload($event)" :multiple="true" accept="image/*"
+                                :maxFileSize="1000000" @select="onSelectedFiles">
 
+                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                                    <Button @click="chooseCallback()" icon="pi pi-image" outlined
+                                    severity="secondary" size="small" rounded />
+                                </template>
+
+                                <template #content="{ files }">
+                                    <div></div>
+                                </template>
+                            </FileUpload>
                         </div>
 
                         <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
@@ -174,22 +186,7 @@
                             </div>
                         </div>
 
-                        <div class="uploader-bottom" v-if="productImageSet.length < productImageSetLimit">
-                            <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
-                                @upload="onTemplatedUpload($event)" :multiple="true" accept="image/*"
-                                :maxFileSize="1000000" @select="onSelectedFiles" style="width:400px">
 
-                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                    <div class="uploader-upload" @click="chooseCallback()">
-                                        <i class="pi pi-images" />
-                                    </div>
-                                </template>
-
-                                <template #content="{ files }">
-                                    <div></div>
-                                </template>
-                            </FileUpload>
-                        </div>
                     </div>
                     <!--//////////////UPLOADER///////////////-->
                 </div>
@@ -718,6 +715,9 @@ const discountResult = computed(() => {
     font-size: var(--text-size-a);
 }
 
+::v-deep(.p-fileupload-advanced) {
+    border: none;
+}
 
 
 main {
@@ -794,16 +794,10 @@ main {
 
 .uploader {
     border: 1px solid var(--border-a);
+    border-radius: var(--p-fileupload-border-radius);
     display: flex;
     flex-direction: column;
 }
-
-
-.uploader-header {
-    height: 50px;
-    background: var(--background-b);
-}
-
 
 .uploader-grid {
     display: grid;
@@ -865,9 +859,9 @@ main {
     background: red;
 }
 
-.uploader-upload {
-    width: 75px;
-    height: 75px;
+.uploader-choose {
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -878,20 +872,18 @@ main {
     justify-content: center;
 }
 
-.uploader-upload i {
-    font-size: var(--text-size-e);
+.uploader-choose i {
+    font-size: var(--text-size-b);
 }
 
-.uploader-bottom {
-    border-top: 1px solid var(--border-a);
-    margin-top: auto;
+.uploader-header {
+    border-bottom: 1px solid var(--border-a);
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
-.uploader-bottom span {
+.uploader-header span {
     font-size: var(--text-size-a);
     margin-top: 1rem;
 }
@@ -946,7 +938,6 @@ main {
 
 .editor {
     overflow: auto;
-    height: 320px;
     border: 1px solid var(--border-a);
     border-radius: 5px 5px 0 0;
     display: block;

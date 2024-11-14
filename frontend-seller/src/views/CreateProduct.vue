@@ -663,6 +663,7 @@ const discountResult = computed(() => {
 
 ::v-deep(.p-fileupload-header) {
     padding: 0.5rem;
+    background: transparent;
 }
 
 main {
