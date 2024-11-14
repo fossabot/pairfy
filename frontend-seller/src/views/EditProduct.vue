@@ -158,17 +158,42 @@
                             <Toast />
 
                             <div class="uploader-box" id="sortable-media">
-                                <div class="uploader-image" v-for="(file, index) of productImageSet" :key="file.name"
+                                <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
                                     :data-id="file.name">
-                                    <div>
-                                        <img role="presentation" :alt="file.name" :src="file.url" width="100"
-                                            height="50" class="media-image" />
-                                    </div>
-                                    <div class="media-control">
-                                        <button>
-                                            <i class="pi pi-times" />
-                                        </button>
-                                    </div>
+
+                                    <template v-if="!file.empty">
+                                        <div>
+                                            <img role="presentation" :alt="file.name" :src="file.url"
+                                                class="uploader-image" />
+                                        </div>
+                                        <div class="uploader-pad">
+                                            <button>
+                                                <i class="pi pi-pencil" />
+                                            </button>
+                                            <button>
+                                                <i class="pi pi-times" />
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template v-else>
+
+                                        <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
+                                            @upload="onTemplatedUpload($event)" :multiple="false" accept="image/*"
+                                            :maxFileSize="1000000" @select="onSelectedFiles" style="width:400px">
+
+                                            <template
+                                                #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                                                <div class="uploader-mask" @click="chooseCallback()">
+                                                    <i class="pi pi-plus" />
+                                                </div>
+                                            </template>
+
+                                            <template #content="{ files }">
+                                                <div></div>
+                                            </template>
+                                        </FileUpload>
+
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -268,7 +293,7 @@
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
                             style="font-size: var(--text-size-a)" fluid />
 
-                        <Button type="button" label="Publish" icon="pi pi-check" :loading="sendMessageLoading"
+                        <Button type="button" label="Save" icon="pi pi-check" :loading="sendMessageLoading"
                             @click="createProduct" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
@@ -425,19 +450,21 @@ onMounted(async () => {
         animation: 150,
         ghostClass: 'sortable-ghost',
         onEnd: function (evt) {
-            var items = document.querySelectorAll('.uploader-image');
+            var items = document.querySelectorAll('.uploader-item');
             var orderArray = [];
 
             items.forEach(function (item) {
                 orderArray.push(item.getAttribute('data-id'));
             });
 
-
-            files.value = orderArray.map(fileName => {
-                return files.value.find(file => file.name === fileName);
-            });
-
-            console.log(files.value);
+            /*
+                        files.value = orderArray.map(fileName => {
+                            return files.value.find(file => file.name === fileName);
+                        });
+            
+                        console.log(files.value);
+            
+                        */
         }
     });
 
@@ -473,12 +500,27 @@ const productImageSetLimit = ref(15);
 const processImageSet = (product) => {
     const images = product.image_set.split(",");
 
-    return images.map((item) => {
+    const mapped = images.map((item) => {
         return {
+            empty: false,
             name: item,
-            url: product.media_url + product.image_path + item
+            url: product.media_url + product.image_path + item,
+            local: false
         }
     });
+
+    if (mapped.length < productImageSetLimit.value) {
+
+        mapped.push({
+            empty: true,
+            name: `image-empty`,
+            url: null,
+            local: true
+        });
+    }
+
+
+    return mapped;
 }
 
 watch(result, value => {
@@ -504,12 +546,18 @@ watch(result, value => {
     }
 }, { immediate: true })
 
-const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
-    files.value.splice(index, 1);
-    removeFileCallback(index);
-};
 
 const onSelectedFiles = (event) => {
+    event.files.forEach(file => {
+        productImageSet.value.push({
+            empty: false,
+            name: `image-empty`,
+            url: file.objectURL,
+            local: true
+        })
+    });
+
+
     files.value = event.files;
 };
 
@@ -688,9 +736,7 @@ const discountResult = computed(() => {
     font-size: var(--text-size-a);
 }
 
-::v-deep(.p-fileupload-header) {
-    padding: 0.5rem;
-}
+
 
 main {
     padding: 1rem 2rem;
@@ -782,7 +828,7 @@ main {
     margin-bottom: 1rem;
 }
 
-.uploader-image {
+.uploader-item {
     overflow: hidden;
     height: 150px;
     text-align: center;
@@ -795,7 +841,7 @@ main {
     flex-direction: column;
 }
 
-.uploader-image button {
+.uploader-item button {
     border-radius: 4px;
     background: transparent;
     color: var(--text-b);
@@ -808,19 +854,23 @@ main {
     cursor: pointer;
 }
 
-.uploader-image button i {
+.uploader-item button i {
     font-size: 12px;
 }
 
-.media-image {
+.uploader-image {
     height: 90px;
     width: 90px;
     object-fit: contain;
 }
 
-.media-control {
+.uploader-pad {
     display: flex;
     align-items: center;
+}
+
+.uploader-pad button {
+    margin: 0 0.25rem;
 }
 
 .media-preview {
@@ -832,7 +882,6 @@ main {
 
 
 ::v-deep(.editor-class) {
-
     height: 250px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -927,7 +976,31 @@ main {
     border-radius: 0.25rem;
 }
 
+.uploader-item-control {
+    display: flex;
+}
 
+.uploader-body {
+    background: red;
+}
+
+.uploader-mask {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::v-deep(.p-fileupload-content) {
+    display: none;
+}
+
+::v-deep(.p-fileupload-header) {
+    background: transparent;
+    border: none;
+    padding: initial;
+}
 
 /* Extra small devices (phones, 320px and up) */
 @media (min-width: 320px) {}

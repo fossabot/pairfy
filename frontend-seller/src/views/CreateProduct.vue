@@ -198,7 +198,7 @@
                                                 class="media-item" :data-id="file.name">
                                                 <div>
                                                     <img role="presentation" :alt="file.name" :src="file.objectURL"
-                                                        width="100" height="50" class="media-image" />
+                                                        class="media-image" />
                                                 </div>
 
                                                 <div class="media-control">
