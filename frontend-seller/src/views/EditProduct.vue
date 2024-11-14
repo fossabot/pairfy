@@ -220,9 +220,8 @@
                         </div>
 
                         <div class="box-content">
-                            <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
-                                placeholder="Keywords" :typeahead="false"
-                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="formErrors.keywords" />
+                            <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid :typeahead="false"
+                            :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="formErrors.keywords" />
                         </div>
                     </div>
 
