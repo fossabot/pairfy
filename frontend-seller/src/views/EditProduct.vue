@@ -159,7 +159,7 @@
 
                             <div class="uploader-box" id="sortable-media">
                                 <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
-                                    :data-id="file.name">
+                                    :data-id="file.name" :data-empty="file.empty">
 
                                     <template v-if="!file.empty">
                                         <div>
@@ -457,6 +457,8 @@ onMounted(async () => {
                 orderArray.push(item.getAttribute('data-id'));
             });
 
+            console.log(orderArray);
+
             /*
                         files.value = orderArray.map(fileName => {
                             return files.value.find(file => file.name === fileName);
@@ -513,7 +515,7 @@ const processImageSet = (product) => {
 
         mapped.push({
             empty: true,
-            name: `image-empty`,
+            name: `empty-image`,
             url: null,
             local: true
         });
@@ -548,17 +550,18 @@ watch(result, value => {
 
 
 const onSelectedFiles = (event) => {
+    console.log(productImageSet.value.length);
+
     event.files.forEach(file => {
         productImageSet.value.push({
             empty: false,
-            name: `image-empty`,
+            name: file.name,
             url: file.objectURL,
             local: true
         })
     });
 
-
-    files.value = event.files;
+    console.log(productImageSet.value.length);
 };
 
 const uploadEvent = async (callback) => {
