@@ -151,51 +151,44 @@
 
                     <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
+                        <Toast />
                         <div class="uploader-header">
-                            x
+
                         </div>
-                        <div class="uploader-content" :class="{ invalid: formErrors.image_set }">
-                            <Toast />
 
-                            <div class="uploader-box" id="sortable-media">
-                                <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
-                                    :data-id="file.name" :data-empty="file.empty">
+                        <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
+                            <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
+                                :data-id="file.name" :data-empty="file.empty">
 
-                                    <template v-if="!file.empty">
-                                        <div>
-                                            <img role="presentation" :alt="file.name" :src="file.url"
-                                                class="uploader-image" />
-                                        </div>
-                                        <div class="uploader-pad">
-                                            <button>
-                                                <i class="pi pi-pencil" />
-                                            </button>
-                                            <button>
-                                                <i class="pi pi-times" />
-                                            </button>
-                                        </div>
-                                    </template>
-                                    <template v-else>
-
-                                        <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
-                                            @upload="onTemplatedUpload($event)" :multiple="false" accept="image/*"
-                                            :maxFileSize="1000000" @select="onSelectedFiles" style="width:400px">
-
-                                            <template
-                                                #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                                <div class="uploader-mask" @click="chooseCallback()">
-                                                    <i class="pi pi-plus" />
-                                                </div>
-                                            </template>
-
-                                            <template #content="{ files }">
-                                                <div></div>
-                                            </template>
-                                        </FileUpload>
-
-                                    </template>
-                                </div>
+                                <template v-if="!file.empty">
+                                    <div>
+                                        <img role="presentation" :alt="file.name" :src="file.url"
+                                            class="uploader-image" />
+                                    </div>
+                                    <div class="uploader-pad">
+                                        <button>
+                                            <i class="pi pi-times" />
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
+                        </div>
+
+                        <div class="uploader-bottom" v-if="productImageSet.length < productImageSetLimit">
+                            <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
+                                @upload="onTemplatedUpload($event)" :multiple="true" accept="image/*"
+                                :maxFileSize="1000000" @select="onSelectedFiles" style="width:400px">
+
+                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                                    <div class="uploader-upload" @click="chooseCallback()">
+                                        <i class="pi pi-images" />
+                                    </div>
+                                </template>
+
+                                <template #content="{ files }">
+                                    <div></div>
+                                </template>
+                            </FileUpload>
                         </div>
                     </div>
                     <!--//////////////UPLOADER///////////////-->
@@ -220,8 +213,9 @@
                         </div>
 
                         <div class="box-content">
-                            <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid :typeahead="false"
-                            :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="formErrors.keywords" />
+                            <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
+                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
+                                :invalid="formErrors.keywords" />
                         </div>
                     </div>
 
@@ -444,28 +438,23 @@ const editor = ref(null);
 
 const editorLimit = ref(6000);
 
+
+
 onMounted(async () => {
     new Sortable(document.getElementById('sortable-media'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
         onEnd: function (evt) {
-            var items = document.querySelectorAll('.uploader-item');
-            var orderArray = [];
+            let items = document.querySelectorAll('.uploader-item');
+            let orderArray = [];
 
             items.forEach(function (item) {
                 orderArray.push(item.getAttribute('data-id'));
             });
 
-            console.log(orderArray);
-
-            /*
-                        files.value = orderArray.map(fileName => {
-                            return files.value.find(file => file.name === fileName);
-                        });
-            
-                        console.log(files.value);
-            
-                        */
+            productImageSet.value = orderArray.map(fileName => {
+                return productImageSet.value.find(file => file.name === fileName)
+            });
         }
     });
 
@@ -510,17 +499,6 @@ const processImageSet = (product) => {
         }
     });
 
-    if (mapped.length < productImageSetLimit.value) {
-
-        mapped.push({
-            empty: true,
-            name: `empty-image`,
-            url: null,
-            local: true
-        });
-    }
-
-
     return mapped;
 }
 
@@ -549,18 +527,21 @@ watch(result, value => {
 
 
 const onSelectedFiles = (event) => {
-    console.log(productImageSet.value.length);
-
-    event.files.forEach(file => {
-        productImageSet.value.push({
+    event.files.forEach((file) => {
+        const newImage = {
             empty: false,
             name: file.name,
             url: file.objectURL,
-            local: true
-        })
-    });
+            local: true,
+            deleted: false
+        };
 
-    console.log(productImageSet.value.length);
+        let isRepeated = productImageSet.value.some(item => JSON.stringify(item) === JSON.stringify(newImage));
+
+        if (!isRepeated) {
+            productImageSet.value.push(newImage);
+        }
+    })
 };
 
 const uploadEvent = async (callback) => {
@@ -688,7 +669,6 @@ const goBackRoute = () => {
     router.go(-1)
 }
 
-
 const discountResult = computed(() => {
     if (productDiscountValue.value < 0 || productDiscountValue.value > 100) {
         throw new Error('Discount percentage must be between 0 and 100');
@@ -814,20 +794,22 @@ main {
 
 .uploader {
     border: 1px solid var(--border-a);
+    display: flex;
+    flex-direction: column;
 }
+
 
 .uploader-header {
     height: 50px;
     background: var(--background-b);
 }
 
-.uploader-box {
+
+.uploader-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
-    border: 1px solid var(--border-a);
     padding: 1rem;
-    margin-bottom: 1rem;
 }
 
 .uploader-item {
@@ -875,13 +857,54 @@ main {
     margin: 0 0.25rem;
 }
 
-.media-preview {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
+.uploader-item-control {
+    display: flex;
 }
 
+.uploader-body {
+    background: red;
+}
 
+.uploader-upload {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.uploader-upload i {
+    font-size: var(--text-size-e);
+}
+
+.uploader-bottom {
+    border-top: 1px solid var(--border-a);
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.uploader-bottom span {
+    font-size: var(--text-size-a);
+    margin-top: 1rem;
+}
+
+::v-deep(.p-fileupload-content) {
+    display: none;
+}
+
+::v-deep(.p-fileupload-header) {
+    background: transparent;
+    border: none;
+    padding: initial;
+}
 
 ::v-deep(.editor-class) {
     height: 250px;
@@ -978,31 +1001,6 @@ main {
     border-radius: 0.25rem;
 }
 
-.uploader-item-control {
-    display: flex;
-}
-
-.uploader-body {
-    background: red;
-}
-
-.uploader-mask {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-::v-deep(.p-fileupload-content) {
-    display: none;
-}
-
-::v-deep(.p-fileupload-header) {
-    background: transparent;
-    border: none;
-    padding: initial;
-}
 
 /* Extra small devices (phones, 320px and up) */
 @media (min-width: 320px) {}
