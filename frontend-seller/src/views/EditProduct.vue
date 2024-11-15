@@ -154,14 +154,12 @@
                         <Toast />
                         <div class="uploader-header" v-if="productImageSet.length < productImageSetLimit">
                             <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
+                                :multiple="true"  :auto="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
                                 @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <Button @click="chooseCallback()" icon="pi pi-image" outlined severity="secondary"
-                                        size="small" rounded />
-
-                                    <span @click="upload">xxxxxxx</span>
+                                        size="small" rounded />                                 
                                 </template>
 
                                 <template #content="{ files }">
@@ -455,6 +453,8 @@ onMounted(async () => {
             productImageSet.value = orderArray.map(fileName => {
                 return productImageSet.value.find(file => file.name === fileName)
             });
+
+            console.log(productImageSet.value);
         }
     });
 
@@ -570,12 +570,11 @@ const onTemplatedUpload = (data) => {
         };
 
         productImageSet.value.push(newImage);
-    })
-
-
-    files.value = [];
+    });
 
     console.log(productImageSet.value);
+
+    files.value = [];
 
     showSuccess('Images Uploaded');
 };
