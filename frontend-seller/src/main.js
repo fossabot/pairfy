@@ -7,10 +7,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { stores } from "./store";
-
 import PrimeVue from 'primevue/config';
-import Lara from '@primevue/themes/lara';
-import { definePreset } from '@primevue/themes';
+
 
 import Button from "primevue/button"
 import Toolbar from 'primevue/toolbar';
@@ -47,12 +45,11 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';                   
 import InputNumber from 'primevue/inputnumber';
 
-
-
 import Ripple from 'primevue/ripple';
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
+import { MyPreset } from './assets/theme';
 
 const app = createApp(App)
 
@@ -60,23 +57,7 @@ app.use(stores);
 app.use(router);
 
 
-const MyPreset = definePreset(Lara, {
-    semantic: {
-        primary: {
-            50: '{blue.50}',
-            100: '{blue.100}',
-            200: '{blue.200}',
-            300: '{blue.300}',
-            400: '{blue.400}',
-            500: '{blue.500}',
-            600: '{blue.600}',
-            700: '{blue.700}',
-            800: '{blue.800}',
-            900: '{blue.900}',
-            950: '{blue.950}'
-        }
-    }
-});
+
 
 
 app.use(PrimeVue, {
