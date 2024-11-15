@@ -160,7 +160,7 @@
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
-                                           
+
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
                                                 severity="secondary" size="small" rounded />
 
@@ -527,10 +527,7 @@ onErrorProductCreated(error => {
 onProductCreated(result => {
     showSuccess("The product has been created successfully.");
 
-    setTimeout(() => {
-        refreshPage();
-    }, 3000)
-
+    setTimeout(() => window.location.reload(), 3000)
 })
 
 const formErrors = ref({
@@ -621,9 +618,6 @@ const createProduct = () => {
     })
 }
 
-const refreshPage = () => {
-    window.location.reload();
-};
 
 const goBackRoute = () => {
     router.go(-1)
