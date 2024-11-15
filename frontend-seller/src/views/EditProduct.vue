@@ -387,7 +387,7 @@ const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Edit Product' }
 ]);
-
+const productId = ref(null);
 const productName = ref(null);
 const productPrice = ref(null);
 const productCollateral = ref(null);
@@ -526,7 +526,7 @@ const upload = () => {
 watch(result, value => {
     if (value) {
         const product = value.getProduct[0];
-
+        productId.value = product.id;
         productName.value = product.name;
         productPrice.value = product.price;
         productCollateral.value = product.collateral;
@@ -592,8 +592,8 @@ const onTemplatedUpload = (data) => {
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
-    mutation($createProductVariable: CreateProductInput!){
-        createProduct(createProductInput: $createProductVariable){
+    mutation($updateProductVariable: UpdateProductInput!){
+        updateProduct(updateProductInput: $updateProductVariable){
             success
         }
 }
@@ -604,7 +604,7 @@ onErrorMutation(error => {
 })
 
 onDone(result => {
-    showSuccess("Product Created");
+    showSuccess("Product Updated");
 })
 
 const formErrors = ref({
@@ -673,7 +673,7 @@ const createProduct = () => {
     };
 
     sendMessage({
-        "createProductVariable": {
+        "updateProductVariable": {
             "name": productName.value,
             "price": parseInt(productPrice.value),
             "collateral": parseInt(productCollateral.value),
@@ -689,8 +689,9 @@ const createProduct = () => {
             "quality": productQuality.value,
             "discount": productDiscount.value,
             "discount_value": productDiscountValue.value,
-            "image_set": productImageSet.value.join(','),
-            "video_set": ""
+            "image_set": productImageSet.value.map(item => item.name).join(','),
+            "video_set": "",
+            "id": productId.value
         }
     })
 }
@@ -709,7 +710,7 @@ const discountResult = computed(() => {
 
     const discountedPrice = productPrice.value - discountAmount;
 
-    return discountedPrice.toFixed(0) + " ADA";
+    return discountedPrice.toFixed(0) + " USD";
 })
 
 

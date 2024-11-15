@@ -1,6 +1,87 @@
 import { getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 
+const updateProduct = async (args: any, context: any) => {
+    const params = args.updateProductInput;
+
+    console.log(params);
+
+    const SELLER = context.sellerData;
+
+    if (params.collateral >= params.price) {
+        throw new Error("MAX_COLLATERAL");
+    }
+
+    let connection = null;
+
+    try {
+        connection = await database.client.getConnection();
+
+        await connection.beginTransaction();
+
+        const schemeData = `
+        UPDATE products
+        SET name = ?,
+            price = ?,  
+            collateral = ?,
+            sku = ?,              
+            model = ?,
+            brand = ?,
+            features = ?,
+            category = ?,
+            keywords = ?,
+            stock = ?,
+            color = ?,
+            color_name = ?,
+            quality = ?,
+            image_set = ?,
+            video_set = ?,
+            discount = ?,
+            discount_value = ?,
+            schema_v = schema_v + 1
+        WHERE id = ? AND seller_id = ?
+       `;
+
+        const schemeValue = [
+            params.name,
+            params.price,
+            params.collateral,
+            params.sku,
+            params.model,
+            params.brand,
+            params.features,
+            params.category,
+            params.keywords,
+            params.stock,
+            params.color,
+            params.color_name,
+            params.quality,
+            params.image_set,
+            params.video_set,
+            params.discount,
+            params.discount_value,
+            params.id,
+            SELLER.id
+        ];
+
+        await connection.execute(schemeData, schemeValue);
+
+        await connection.commit();
+
+        return { success: true }
+
+    } catch (err) {
+        await connection.rollback();
+
+        logger.error(err);
+
+        throw new Error('INTERNAL_ERROR');
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+};
 
 const createProduct = async (args: any, context: any) => {
     const params = args.createProductInput;
@@ -88,7 +169,9 @@ const createProduct = async (args: any, context: any) => {
 
         throw new Error('INTERNAL_ERROR');
     } finally {
-        connection.release();
+        if (connection) {
+            connection.release();
+        }
     }
 };
 
@@ -143,7 +226,9 @@ const getProducts = async (args: any, context: any) => {
 
         throw new Error('INTERNAL_ERROR');
     } finally {
-        connection.release();
+        if (connection) {
+            connection.release();
+        }
     }
 };
 
@@ -174,7 +259,9 @@ const getProduct = async (args: any, context: any) => {
 
         throw new Error('INTERNAL_ERROR');
     } finally {
-        connection.release();
+        if (connection) {
+            connection.release();
+        }
     }
 };
 
@@ -184,7 +271,8 @@ const products = {
         getProduct: (_: any, args: any, context: any) => getProduct(args, context)
     },
     Mutation: {
-        createProduct: (_: any, args: any, context: any) => createProduct(args, context)
+        createProduct: (_: any, args: any, context: any) => createProduct(args, context),
+        updateProduct: (_: any, args: any, context: any) => updateProduct(args, context)
     },
 };
 

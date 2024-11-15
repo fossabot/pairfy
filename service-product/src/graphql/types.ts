@@ -44,8 +44,6 @@ type GetProductsResponse {
   count: Int!
 }
 
- 
-
 type Query {
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
   getProduct(getProductInput: GetProductInput!): [Product]
@@ -54,6 +52,10 @@ type Query {
 #/////////////////////////////////////////////////
 
 type CreateProductResponse {
+  success: Boolean!
+}
+
+type UpdateProductResponse {
   success: Boolean!
 }
 
@@ -77,8 +79,30 @@ input CreateProductInput {
   discount_value: Int!
 }
 
+input UpdateProductInput {
+  name: String!
+  price: Int! 
+  collateral: Int!
+  sku: String!              
+  model: String!
+  brand: String!
+  features: String!
+  category: String!
+  keywords: String!
+  stock: Int!
+  color: String!
+  color_name: String!
+  quality: String!
+  image_set: String!
+  video_set: String!
+  discount: Boolean!
+  discount_value: Int!
+  id: String!
+}
+
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
+  updateProduct(updateProductInput: UpdateProductInput!): UpdateProductResponse!
 }
 
 #/////////////////////////////////////////////////
