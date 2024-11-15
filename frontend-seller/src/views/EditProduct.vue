@@ -502,19 +502,24 @@ watch(productImageSet, () => {
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 
 const processImageSet = (product) => {
-    const images = product.image_set.split(",");
+    if (product.image_set.length) {
+        const images = product.image_set.split(",");
 
-    const mapped = images.map((item) => {
-        return {
-            name: item,
-            url: getImageURL.value + item,
-            local: false,
-            deleted: false,
-            uploaded: false
-        }
-    });
+        const mapped = images.map((item) => {
+            return {
+                name: item,
+                url: getImageURL.value + item,
+                local: false,
+                deleted: false,
+                uploaded: false
+            }
+        });
 
-    return mapped;
+        return mapped;
+    } else {
+        return []
+    }
+
 }
 
 const fileupload = ref();
@@ -647,7 +652,6 @@ const checkMandatory = () => {
 }
 
 const disableUpload = computed(() => {
-
     if (files.value.length === 0) {
         return true;
     }
@@ -671,6 +675,8 @@ const createProduct = () => {
     if (checkMandatory()) {
         return showError('Mandatory Fields');
     };
+
+    console.log(productImageSet.value.map(item => item.name));
 
     sendMessage({
         "updateProductVariable": {
