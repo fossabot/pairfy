@@ -160,7 +160,7 @@
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-control flex">
                                         <Button @click="chooseCallback()" icon="pi pi-image" outlined
-                                            severity="secondary" size="small" rounded :disabled="disableUpload" />
+                                            severity="secondary" size="small" rounded :disabled="disableChoose" />
 
                                         <Message severity="secondary" variant="simple">
                                             <div class="flex" style="margin: 0 1rem;">
@@ -169,7 +169,7 @@
                                                     thumbnail.</span>
                                             </div>
                                         </Message>
-                                        
+
                                         <Message severity="secondary">
                                             <div class="flex">
                                                 <i class="pi pi-exclamation-circle" />
@@ -671,7 +671,7 @@ const checkMandatory = () => {
     return Object.values(formErrors.value).some(value => value === true);
 }
 
-const disableUpload = computed(() => {
+const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
 
