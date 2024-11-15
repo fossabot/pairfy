@@ -46,7 +46,7 @@ type GetProductsResponse {
 
 type Query {
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
-  getProduct(getProductInput: GetProductInput!): [Product]
+  getProduct(getProductInput: GetProductInput!): [Product!]
 }
 
 #/////////////////////////////////////////////////

@@ -70,12 +70,10 @@ const updateProduct = async (args: any, context: any) => {
 
         return { success: true }
 
-    } catch (err) {
+    } catch (err: any) {
         await connection.rollback();
 
-        logger.error(err);
-
-        throw new Error('INTERNAL_ERROR');
+        throw new Error(err.message);
     } finally {
         if (connection) {
             connection.release();
@@ -162,12 +160,10 @@ const createProduct = async (args: any, context: any) => {
 
         return { success: true }
 
-    } catch (err) {
+    } catch (err: any) {
         await connection.rollback();
 
-        logger.error(err);
-
-        throw new Error('INTERNAL_ERROR');
+        throw new Error(err.message);
     } finally {
         if (connection) {
             connection.release();
@@ -219,12 +215,10 @@ const getProducts = async (args: any, context: any) => {
             count: count[0].total_products
         }
 
-    } catch (err) {
+    } catch (err: any) {
         await connection.rollback();
 
-        logger.error(err);
-
-        throw new Error('INTERNAL_ERROR');
+        throw new Error(err.message);
     } finally {
         if (connection) {
             connection.release();
@@ -248,16 +242,20 @@ const getProduct = async (args: any, context: any) => {
 
         const [product] = await connection.execute(`SELECT * FROM products WHERE id = ? AND seller_id = ?`, [params.id, SELLER.id]);
 
+        console.log(product);
+        
         await connection.commit();
+
+        if (!product.length) {
+            throw new Error('NOT_PRODUCT');
+        }
 
         return product
 
-    } catch (err) {
+    } catch (err: any) {
         await connection.rollback();
 
-        logger.error(err);
-
-        throw new Error('INTERNAL_ERROR');
+        throw new Error(err.message);
     } finally {
         if (connection) {
             connection.release();

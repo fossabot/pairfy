@@ -28,7 +28,16 @@ const resolvers = {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    formatError: (error) => {
+        logger.error(error);
+
+        return {
+            message: error.message,
+            details: error.message,
+            code: 'INTERNAL_SERVER_ERROR',
+        }
+    }
 });
 
 const main = async () => {

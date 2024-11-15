@@ -379,7 +379,7 @@ watch(
 );
 
 onErrorQuery(error => {
-    showError("The connection to the server has failed, please try again later.");
+    showError(error);
 })
 
 ///////////////////////////////////////////////////////
@@ -537,6 +537,7 @@ const fileupload = ref();
 watch(result, value => {
     if (value) {
         const product = value.getProduct[0];
+        
         productId.value = product.id;
         productName.value = product.name;
         productPrice.value = product.price;
@@ -680,7 +681,7 @@ const createProduct = () => {
             "color_name": productColorName.value,
             "quality": productQuality.value,
             "discount": productDiscount.value,
-            "discount_value": productDiscountValue.value,
+            "discount_value": productDiscount.value ? productDiscountValue.value : 0,
             "image_set": productImageSet.value.map(item => item.name).join(','),
             "video_set": "",
             "id": productId.value

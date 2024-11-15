@@ -155,7 +155,7 @@
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000" 
+                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
                                 @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
@@ -173,15 +173,15 @@
                                                 size="small" rounded />
 
                                             <Message severity="secondary" variant="simple">
-                                                <div style="display: flex; align-items: center">
+                                                <div class="flex" style="margin: 0 1rem;">
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> The first image is the preview
                                                         thumbnail.</span>
                                                 </div>
                                             </Message>
 
-                                            <Message severity="secondary">
-                                                <div style="display: flex; align-items: center">
+                                            <Message severity="secondary" variant="simple">
+                                                <div class="flex">
                                                     <i class="pi pi-exclamation-circle" />
                                                     <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
                                                         {{ productImageSetLimit }}</span>
@@ -600,7 +600,7 @@ const createProduct = () => {
             "color_name": productColorName.value,
             "quality": productQuality.value,
             "discount": productDiscount.value,
-            "discount_value": productDiscountValue.value,
+            "discount_value": productDiscount.value ? productDiscountValue.value : 0,
             "image_set": productImageSet.value.join(','),
             "video_set": ""
         }

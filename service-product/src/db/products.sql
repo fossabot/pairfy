@@ -11,7 +11,7 @@ create table if not exists products(
   sku varchar(100) not null,
   model varchar(200) not null,
   brand varchar(200) not null,
-  features varchar(1000) not null,
+  features mediumtext not null,
   category varchar(100) not null,
   keywords varchar(100) not null,
   stock boolean not null,
