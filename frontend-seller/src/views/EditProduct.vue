@@ -315,9 +315,8 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
-import { onMounted, ref, nextTick, computed, watch } from 'vue';
+import { onMounted, ref, nextTick, computed, watch, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
-import { usePrimeVue } from 'primevue/config';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
@@ -713,6 +712,13 @@ const showSuccess = (content) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
+
+onBeforeUnmount(() => {
+    if (editor.value) {
+        editor.value.destroy();
+    }
+});
+
 </script>
 
 <style scoped>

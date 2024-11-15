@@ -160,7 +160,7 @@
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
-                                            <div class="uploader-mask" @click="chooseCallback()" />
+                                           
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
                                                 severity="secondary" size="small" rounded />
 
@@ -210,8 +210,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
 
                                         <div v-show="uploadedFiles.length > 0" class="media-box">
                                             <div v-for="(file, index) of uploadedFiles"
@@ -346,7 +344,7 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
-import { onMounted, ref, nextTick, computed } from 'vue';
+import { onMounted, ref, nextTick, computed, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable';
@@ -424,47 +422,58 @@ const editor = ref(null);
 
 const editorLimit = ref(6000);
 
-onMounted(async () => {
-    new Sortable(document.getElementById('sortable-media'), {
-        animation: 150,
-        ghostClass: 'sortable-ghost',
-        onEnd: function (evt) {
-            var items = document.querySelectorAll('.media-item');
-            var orderArray = [];
+let sortableJs = null;
 
-            items.forEach(function (item) {
-                orderArray.push(item.getAttribute('data-id'));
-            });
+const setupSortable = async () => {
+    await nextTick(() => {
+        sortableJs = new Sortable(document.getElementById('sortable-media'), {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                var items = document.querySelectorAll('.media-item');
+                var orderArray = [];
+
+                items.forEach(function (item) {
+                    orderArray.push(item.getAttribute('data-id'));
+                });
 
 
-            files.value = orderArray.map(fileName => {
-                return files.value.find(file => file.name === fileName);
-            });
+                files.value = orderArray.map(fileName => {
+                    return files.value.find(file => file.name === fileName);
+                });
 
-            console.log(files.value);
-        }
+                console.log(files.value);
+            }
+        });
     });
+}
 
-    await nextTick();
-
-    editor.value = new Editor({
-        extensions: [
-            StarterKit,
-            Placeholder.configure({
-                placeholder: 'Write something …',
-            }),
-            CharacterCount.configure({
-                limit: editorLimit.value,
-            }),
-            TextStyle.configure({ types: [ListItem.name] }),
-        ],
-        editorProps: {
-            attributes: {
-                class: 'editor-class',
+const setupEditor = async () => {
+    await nextTick(() => {
+        editor.value = new Editor({
+            extensions: [
+                StarterKit,
+                Placeholder.configure({
+                    placeholder: 'Write something …',
+                }),
+                CharacterCount.configure({
+                    limit: editorLimit.value,
+                }),
+                TextStyle.configure({ types: [ListItem.name] }),
+            ],
+            editorProps: {
+                attributes: {
+                    class: 'editor-class',
+                },
             },
-        },
-        content: ``,
-    })
+            content: ``,
+        })
+    });
+}
+onMounted(() => {
+    setupSortable();
+
+    setupEditor();
 })
 
 
@@ -503,7 +512,7 @@ const onTemplatedUpload = (data) => {
     showSuccess('Images Uploaded');
 };
 
-const { mutate: sendMessage, loading: sendMessageLoading, onError, onDone } = useMutation(gql`
+const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorProductCreated, onDone: onProductCreated } = useMutation(gql`
 mutation($createProductVariable: CreateProductInput!){
     createProduct(createProductInput: $createProductVariable){
         success
@@ -511,12 +520,17 @@ mutation($createProductVariable: CreateProductInput!){
 }
 `)
 
-onError(error => {
+onErrorProductCreated(error => {
     showError(error);
 })
 
-onDone(result => {
-    showSuccess("Product Created");
+onProductCreated(result => {
+    showSuccess("The product has been created successfully.");
+
+    setTimeout(() => {
+        refreshPage();
+    }, 3000)
+
 })
 
 const formErrors = ref({
@@ -607,6 +621,9 @@ const createProduct = () => {
     })
 }
 
+const refreshPage = () => {
+    window.location.reload();
+};
 
 const goBackRoute = () => {
     router.go(-1)
@@ -624,6 +641,12 @@ const discountResult = computed(() => {
     return discountedPrice.toFixed(0) + " USD";
 })
 
+
+onBeforeUnmount(() => {
+    if (editor.value) {
+        editor.value.destroy();
+    }
+});
 
 </script>
 
@@ -931,13 +954,7 @@ main {
     border-radius: 0.25rem;
 }
 
-.uploader-mask {
-    width: 225px;
-    height: 325px;
-    left: 29%;
-    cursor: pointer;
-    position: absolute;
-}
+
 
 /* Extra small devices (phones, 320px and up) */
 @media (min-width: 320px) {}
