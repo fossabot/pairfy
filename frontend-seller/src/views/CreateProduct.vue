@@ -155,8 +155,8 @@
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
-                                invalidFileLimitMessage="File Limit" @select="onSelectedFiles">
+                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000" 
+                                @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">

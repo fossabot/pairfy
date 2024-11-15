@@ -153,13 +153,15 @@
                     <div class="uploader">
                         <Toast />
                         <div class="uploader-header" v-if="productImageSet.length < productImageSetLimit">
-                            <FileUpload class="uploader-body" name="demo[]" :url="mediaImagesURL"
-                                @upload="onTemplatedUpload($event)" :multiple="true" accept="image/*"
-                                :maxFileSize="1000000" @select="onSelectedFiles">
+                            <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
+                                :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
+                                @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                    <Button @click="chooseCallback()" icon="pi pi-image" outlined
-                                    severity="secondary" size="small" rounded />
+                                    <Button @click="chooseCallback()" icon="pi pi-image" outlined severity="secondary"
+                                        size="small" rounded />
+
+                                    <span @click="upload">xxxxxxx</span>
                                 </template>
 
                                 <template #content="{ files }">
@@ -170,19 +172,18 @@
 
                         <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
                             <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
-                                :data-id="file.name" :data-empty="file.empty">
+                                :data-id="file.name">
 
-                                <template v-if="!file.empty">
-                                    <div>
-                                        <img role="presentation" :alt="file.name" :src="file.url"
-                                            class="uploader-image" />
-                                    </div>
-                                    <div class="uploader-pad">
-                                        <button>
-                                            <i class="pi pi-times" />
-                                        </button>
-                                    </div>
-                                </template>
+                                <div>
+                                    <img role="presentation" :alt="file.name" :src="file.url" class="uploader-image" />
+                                </div>
+                                <div class="uploader-pad">
+                                    <button>
+                                        <i class="pi pi-times" />
+                                    </button>
+                                </div>
+
+
                             </div>
                         </div>
 
@@ -379,7 +380,9 @@ const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
-const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
+const createImageURL = computed(() => HOST + '/api/media/create-image')
+
+const getImageURL = computed(() => HOST + '/api/media/get-image/')
 
 const navItems = ref([
     { label: 'Dashboard' },
@@ -489,15 +492,22 @@ const processImageSet = (product) => {
 
     const mapped = images.map((item) => {
         return {
-            empty: false,
             name: item,
-            url: product.media_url + product.image_path + item,
-            local: false
+            url: getImageURL.value + item,
+            local: false,
+            deleted: false,
+            uploaded: false
         }
     });
 
     return mapped;
 }
+
+const fileupload = ref();
+
+const upload = () => {
+    fileupload.value.upload();
+};
 
 watch(result, value => {
     if (value) {
@@ -526,11 +536,11 @@ watch(result, value => {
 const onSelectedFiles = (event) => {
     event.files.forEach((file) => {
         const newImage = {
-            empty: false,
             name: file.name,
             url: file.objectURL,
             local: true,
-            deleted: false
+            deleted: false,
+            uploaded: false
         };
 
         let isRepeated = productImageSet.value.some(item => JSON.stringify(item) === JSON.stringify(newImage));
@@ -548,7 +558,20 @@ const uploadEvent = async (callback) => {
 const onTemplatedUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
-    productImageSet.value.push(...payload);
+    productImageSet.value = productImageSet.value.filter(item => item.local !== true);
+
+    payload.forEach((name) => {
+        const newImage = {
+            name: name,
+            url: getImageURL.value + name,
+            local: false,
+            deleted: false,
+            uploaded: true
+        };
+
+        productImageSet.value.push(newImage);
+    })
+
 
     files.value = [];
 
