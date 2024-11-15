@@ -466,29 +466,34 @@ const setupSortable = async () => {
     });
 }
 
-onMounted(async () => {
+const setupEditor = async () => {
+    await nextTick(() => {
+        editor.value = new Editor({
+            extensions: [
+                StarterKit,
+                Placeholder.configure({
+                    placeholder: 'Write something …',
+                }),
+                CharacterCount.configure({
+                    limit: editorLimit.value,
+                }),
+                TextStyle.configure({ types: [ListItem.name] }),
+            ],
+            editorProps: {
+                attributes: {
+                    class: 'editor-class',
+                },
+            },
+            content: ``,
+        })
+
+    });
+}
+
+onMounted(() => {
     setupSortable();
 
-    await nextTick();
-
-    editor.value = new Editor({
-        extensions: [
-            StarterKit,
-            Placeholder.configure({
-                placeholder: 'Write something …',
-            }),
-            CharacterCount.configure({
-                limit: editorLimit.value,
-            }),
-            TextStyle.configure({ types: [ListItem.name] }),
-        ],
-        editorProps: {
-            attributes: {
-                class: 'editor-class',
-            },
-        },
-        content: ``,
-    })
+    setupEditor();
 })
 
 watch(productImageSet, () => {
@@ -668,8 +673,6 @@ const disableUpload = computed(() => {
         return true;
     }
 });
-
-
 
 const createProduct = () => {
     if (checkMandatory()) {
