@@ -154,12 +154,12 @@
                         <Toast />
                         <div class="uploader-header" v-if="productImageSet.length < productImageSetLimit">
                             <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                :multiple="true"  :auto="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
-                                @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
+                                :multiple="true" :auto="true" accept="image/*" :maxFileSize="1000000"
+                                :withCredentials="true" @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <Button @click="chooseCallback()" icon="pi pi-image" outlined severity="secondary"
-                                        size="small" rounded />                                 
+                                        size="small" rounded />
                                 </template>
 
                                 <template #content="{ files }">
@@ -167,6 +167,8 @@
                                 </template>
                             </FileUpload>
                         </div>
+
+
 
                         <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
                             <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
@@ -180,10 +182,9 @@
                                         <i class="pi pi-times" />
                                     </button>
                                 </div>
-
-
                             </div>
                         </div>
+
 
 
                     </div>
@@ -436,27 +437,37 @@ const editor = ref(null);
 
 const editorLimit = ref(6000);
 
+const productImageSet = ref([])
 
+const productImageSetLimit = ref(15);
+
+let sortableJs = null;
+
+const setupSortable = async () => {
+    await nextTick(() => {
+        sortableJs = new Sortable(document.getElementById('sortable-media'), {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                let items = document.querySelectorAll('.uploader-item');
+                let orderArray = [];
+
+                items.forEach(function (item) {
+                    orderArray.push(item.getAttribute('data-id'));
+                });
+
+                productImageSet.value = orderArray.map(fileName => {
+                    return productImageSet.value.find(file => file.name === fileName)
+                });
+
+                console.log(productImageSet.value);
+            }
+        });
+    });
+}
 
 onMounted(async () => {
-    new Sortable(document.getElementById('sortable-media'), {
-        animation: 150,
-        ghostClass: 'sortable-ghost',
-        onEnd: function (evt) {
-            let items = document.querySelectorAll('.uploader-item');
-            let orderArray = [];
-
-            items.forEach(function (item) {
-                orderArray.push(item.getAttribute('data-id'));
-            });
-
-            productImageSet.value = orderArray.map(fileName => {
-                return productImageSet.value.find(file => file.name === fileName)
-            });
-
-            console.log(productImageSet.value);
-        }
-    });
+    setupSortable();
 
     await nextTick();
 
@@ -480,12 +491,15 @@ onMounted(async () => {
     })
 })
 
+watch(productImageSet, () => {
+    if (sortableJs) {
+            sortableJs.destroy();
+        }
+
+        setupSortable();
+});
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
-
-const productImageSet = ref([])
-
-const productImageSetLimit = ref(15);
 
 const processImageSet = (product) => {
     const images = product.image_set.split(",");
