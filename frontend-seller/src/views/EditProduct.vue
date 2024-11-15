@@ -170,7 +170,7 @@
                                             </div>
                                         </Message>
 
-                                        <Message severity="secondary">
+                                        <Message severity="secondary" variant="simple">
                                             <div class="flex">
                                                 <i class="pi pi-exclamation-circle" />
                                                 <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
