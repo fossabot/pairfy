@@ -325,8 +325,6 @@ import { HOST } from '@/api';
 
 const route = useRoute()
 
-const $primevue = usePrimeVue();
-
 const toast = useToast();
 
 const router = useRouter()
@@ -385,14 +383,6 @@ onErrorQuery(error => {
 })
 
 ///////////////////////////////////////////////////////
-
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
 
 const createImageURL = computed(() => HOST + '/api/media/create-image')
 
@@ -544,10 +534,6 @@ const processImageSet = (product) => {
 
 const fileupload = ref();
 
-const upload = () => {
-    fileupload.value.upload();
-};
-
 watch(result, value => {
     if (value) {
         const product = value.getProduct[0];
@@ -588,10 +574,6 @@ const onSelectedFiles = (event) => {
             productImageSet.value.push(newImage);
         }
     })
-};
-
-const uploadEvent = async (callback) => {
-    callback();
 };
 
 const onTemplatedUpload = (data) => {
@@ -723,7 +705,13 @@ const discountResult = computed(() => {
     return discountedPrice.toFixed(0) + " USD";
 })
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
 
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 </script>
 
 <style scoped>
