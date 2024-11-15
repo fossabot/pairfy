@@ -855,7 +855,7 @@ main {
 }
 
 .uploader-item button {
-    border-radius: 4px;
+    border-radius: 50%;
     background: transparent;
     color: var(--text-b);
     font-size: var(--text-size-a);
@@ -868,7 +868,7 @@ main {
 }
 
 .uploader-item button i {
-    font-size: 12px;
+    font-size: var(--text-size-a);
 }
 
 .uploader-image {
