@@ -280,7 +280,7 @@ const formatCurrency = (value) => {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
 
-        }) + " ADA";
+        }) + " USD";
     }
 
 };

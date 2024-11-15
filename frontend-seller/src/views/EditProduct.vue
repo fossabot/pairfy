@@ -493,10 +493,10 @@ onMounted(async () => {
 
 watch(productImageSet, () => {
     if (sortableJs) {
-            sortableJs.destroy();
-        }
+        sortableJs.destroy();
+    }
 
-        setupSortable();
+    setupSortable();
 });
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
@@ -586,18 +586,16 @@ const onTemplatedUpload = (data) => {
         productImageSet.value.push(newImage);
     });
 
-    console.log(productImageSet.value);
-
     files.value = [];
 
     showSuccess('Images Uploaded');
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
-mutation($createProductVariable: CreateProductInput!){
-    createProduct(createProductInput: $createProductVariable){
-        success
-    }
+    mutation($createProductVariable: CreateProductInput!){
+        createProduct(createProductInput: $createProductVariable){
+            success
+        }
 }
 `)
 
