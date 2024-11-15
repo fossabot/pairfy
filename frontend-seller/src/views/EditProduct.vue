@@ -158,8 +158,26 @@
                                 :withCredentials="true" @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                    <Button @click="chooseCallback()" icon="pi pi-image" outlined severity="secondary"
-                                        size="small" rounded />
+                                    <div class="uploader-control flex">
+                                        <Button @click="chooseCallback()" icon="pi pi-image" outlined
+                                            severity="secondary" size="small" rounded />
+
+                                        <Message severity="secondary" variant="simple">
+                                            <div class="flex" style="margin: 0 1rem;">
+                                                <i class="pi pi-exclamation-circle" />
+                                                <span style="margin-left: 0.5rem;"> The first image is the preview
+                                                    thumbnail.</span>
+                                            </div>
+                                        </Message>
+
+                                        <Message severity="secondary">
+                                            <div class="flex">
+                                                <i class="pi pi-exclamation-circle" />
+                                                <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
+                                                    {{ productImageSetLimit }}</span>
+                                            </div>
+                                        </Message>
+                                    </div>
                                 </template>
 
                                 <template #content="{ files }">
@@ -184,9 +202,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                     <!--//////////////UPLOADER///////////////-->
                 </div>
@@ -903,6 +918,10 @@ main {
     background: red;
 }
 
+.uploader-control {
+    justify-content: space-between;
+}
+
 .uploader-choose {
     width: 40px;
     height: 40px;
@@ -925,11 +944,6 @@ main {
     display: flex;
     align-items: center;
     padding: 0.5rem;
-}
-
-.uploader-header span {
-    font-size: var(--text-size-a);
-    margin-top: 1rem;
 }
 
 ::v-deep(.p-fileupload-content) {
