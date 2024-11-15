@@ -536,8 +536,8 @@ const fileupload = ref();
 
 watch(result, value => {
     if (value) {
-        const product = value.getProduct[0];
-        
+        const product = value.getProduct;
+
         productId.value = product.id;
         productName.value = product.name;
         productPrice.value = product.price;

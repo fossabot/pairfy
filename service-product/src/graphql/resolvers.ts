@@ -242,15 +242,13 @@ const getProduct = async (args: any, context: any) => {
 
         const [product] = await connection.execute(`SELECT * FROM products WHERE id = ? AND seller_id = ?`, [params.id, SELLER.id]);
 
-        console.log(product);
-        
         await connection.commit();
 
         if (!product.length) {
             throw new Error('NOT_PRODUCT');
         }
 
-        return product
+        return product[0]
 
     } catch (err: any) {
         await connection.rollback();
