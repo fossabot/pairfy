@@ -267,7 +267,7 @@
                                 <ToggleSwitch v-model="productDiscount" />
 
                                 <InputNumber v-model="productDiscountValue" type="number" placeholder="OFF %"
-                                    prefix="% " showButtons :min="0" :max="99" :useGrouping="false"
+                                    suffix=" %" showButtons :min="0" :max="99" :useGrouping="false"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :invalid="formErrors.discount" />
 
