@@ -152,7 +152,7 @@
                     <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
                         <Toast />
-                        <div class="uploader-header" v-if="productImageSet.length < productImageSetLimit">
+                        <div class="uploader-header">
                             <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
                                 :multiple="true" :auto="true" accept="image/*" :maxFileSize="1000000"
                                 :withCredentials="true" @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
@@ -160,7 +160,7 @@
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-control flex">
                                         <Button @click="chooseCallback()" icon="pi pi-image" outlined
-                                            severity="secondary" size="small" rounded />
+                                            severity="secondary" size="small" rounded :disabled="disableUpload" />
 
                                         <Message severity="secondary" variant="simple">
                                             <div class="flex" style="margin: 0 1rem;">
@@ -169,7 +169,7 @@
                                                     thumbnail.</span>
                                             </div>
                                         </Message>
-
+                                        
                                         <Message severity="secondary">
                                             <div class="flex">
                                                 <i class="pi pi-exclamation-circle" />
@@ -672,21 +672,7 @@ const checkMandatory = () => {
 }
 
 const disableUpload = computed(() => {
-    if (files.value.length === 0) {
-        return true;
-    }
-
-    if (files.value.length > productImageSetLimit.value) {
-        return true;
-    }
-
-    if (files.value.length + productImageSet.value.length > productImageSetLimit.value) {
-        return true;
-    }
-
-    if (productImageSet.value.length >= productImageSetLimit.value) {
-        return true;
-    }
+    return productImageSet.value.length >= productImageSetLimit.value;
 });
 
 const createProduct = () => {
