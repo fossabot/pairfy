@@ -189,11 +189,11 @@ This means more resource consumption on the backend watching the script state. T
 
 \subsubsection { Pending }
 
-When the buyer sees a product in their feed and makes the purchase action the CBOR transaction is built in the backend containing everything needed for the trade. The backend also makes the respective USD to ADA appraisal corresponding to the price of the product. The backend checks to see if the transaction is validated by the nodes using the associated ThreadToken. When the transaction is confirmed, the backend notifies the seller to accept the trade. If they choose not to accept it, then the script in the blockchain will return the amount of ADA corresponding to the price given by the buyer. On the other hand, if the seller decides to accept the trade, then they must provide the collateral and deliver the product. At this stage the buyer's funds are secured by a time logic and only the seller with the specific PubKeyHash can interact with the script.
+When the buyer sees a product and makes the purchase action the CBOR transaction is built in the backend containing everything needed for the trade. The backend also makes the respective USD to ADA appraisal corresponding to the price of the product. The backend checks to see if the transaction is validated by the nodes using the associated ThreadToken. When the transaction is confirmed the backend notifies the seller to accept the trade. If he decides not to accept it, then the buyer can claim his money back from the script. On the other hand, if the seller decides to accept the trade then they must provide the collateral and deliver the product. At this stage the buyer's funds are secured by a time logic and only the seller with the specific PubKeyHash can interact with the script.
 
 \subsubsection { Locking }
 
-At this stage, the seller is notified via the user interface, email, and telegram of the purchase of a published product. The seller accepts on time and the backend builds a CBOR transaction that allows interaction with the script previously deployed by the buyer, which has a set time for the seller to accept. The transaction contains a small collateral that affirms the seller's commitment to the trade. When the transaction is confirmed the contract goes into the \emph{Locking} state. After this moment the funds are blocked and the seller must send the product before the deadline is met.
+At this stage the seller is notified via the user interface, email, and telegram of the purchase of a published product. The seller accepts on time and the backend builds a CBOR transaction that allows interaction with the script previously deployed by the buyer which has a set time for the seller to accept. The transaction contains a small collateral that affirms the seller's commitment to the trade. When the transaction is confirmed the contract goes into the \emph{Locking} state. After this moment the funds are blocked and the seller must send the product before the deadline is met.
 
 \subsubsection { Shipping }
 
@@ -209,7 +209,7 @@ A state machine also known as a finite state machine (FSM), is a mathematical mo
 
 A deterministic finite state machine (DFSM) is a specific type of state machine that exhibits deterministic behavior, meaning that for any given state and input there is a unique and unambiguous next state. In a deterministic state machine, the transition from one state to another is uniquely determined by the current state and the input with no ambiguity or randomness involved.
 
-Figure 5 shows the deterministic state machine concepts applied to the steps of a negotiation session. 
+Figure 6 shows the deterministic state machine concepts applied to the steps of a negotiation session. 
 The EUTXO model of the Cardano blockchain implies that smart contracts need an initial transaction for their logic to be activated and establish their initial state.
 
 \begin{figure}[ht]
