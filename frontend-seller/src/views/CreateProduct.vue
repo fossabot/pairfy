@@ -49,7 +49,7 @@
                         <InputGroup>
                             <InputText v-model="productModel" type="text" placeholder="Model"
                                 style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
-                                v-keyfilter="/^[a-zA-Z0-9- ]+$/" :invalid="formErrors.model" />
+                                v-keyfilter="/^[a-zA-Z0-9/ -]+$/" :invalid="formErrors.model" />
 
                             <InputText v-model="productBrand" type="text" placeholder="Brand"
                                 v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
