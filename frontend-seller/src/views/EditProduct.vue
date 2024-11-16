@@ -296,10 +296,10 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
-                            style="font-size: var(--text-size-a)" fluid />
+                            style="font-size: var(--text-size-a)" fluid @click="reloadPage" />
 
                         <Button type="button" label="Save" icon="pi pi-check" :loading="sendMessageLoading"
-                            @click="createProduct" style="font-size: var(--text-size-a)" fluid />
+                            @click="submitForm" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -611,7 +611,7 @@ onErrorMutation(error => {
 })
 
 onDone(result => {
-    showSuccess("Product Updated");
+    showSuccess("The product has been updated successfully.");
 })
 
 const formErrors = ref({
@@ -657,7 +657,7 @@ const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
 
-const createProduct = () => {
+const submitForm = () => {
     if (checkMandatory()) {
         return showError('Mandatory Fields');
     };
@@ -712,6 +712,10 @@ const showSuccess = (content) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
+
+const reloadPage = () =>{
+    window.location.reload();
+}
 
 onBeforeUnmount(() => {
     if (editor.value) {
