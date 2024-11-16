@@ -1,34 +1,13 @@
 <template>
     <div class="card">
-        <Dialog v-model:visible="productDialog" :style="{ width: '450px' }" header="Product Details" :modal="true">
-            <div class="flex flex-col gap-6">
-            </div>
-
-            <template #footer>
-                <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
-                <Button label="Save" icon="pi pi-check" @click="saveProduct" />
-            </template>
-        </Dialog>
-
         <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
-            <div class="flex items-center gap-4">
-                <i class="pi pi-exclamation-triangle !text-3xl" />
-                <span v-if="product">Are you sure you want to delete <b>{{ product.name }}</b>?</span>
-            </div>
-            <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteProductDialog = false" />
-                <Button label="Yes" icon="pi pi-check" @click="deleteProduct" />
-            </template>
-        </Dialog>
+            <div class="flex">
 
-        <Dialog v-model:visible="deleteProductsDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
-            <div class="flex items-center gap-4">
-                <i class="pi pi-exclamation-triangle !text-3xl" />
-                <span v-if="product">Are you sure you want to delete the selected products?</span>
+                <span v-if="product">Are you sure you want to delete: <b>{{ product.name }}</b>?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteProductsDialog = false" />
-                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedProducts" />
+                <Button label="No" icon="pi pi-times" variant="outlined" @click="deleteProductDialog = false" />
+                <Button label="Yes" icon="pi pi-check" @click="onDeleteConfirmed" />
             </template>
         </Dialog>
 
@@ -119,7 +98,8 @@
                 </template>
             </Column>
 
-            <Column field="discount_value" header="Discount" sortable style="min-width: 2rem; text-transform: capitalize;">
+            <Column field="discount_value" header="Discount" sortable
+                style="min-width: 2rem; text-transform: capitalize;">
                 <template #body="slotProps">
                     {{ slotProps.data.discount_value }} %
                 </template>
@@ -172,7 +152,7 @@
                 <template #body="slotProps">
                     <div class="datatable-control">
                         <Button icon="pi pi-trash" outlined size="small" rounded
-                            @click="confirmDeleteProduct(slotProps.data)" />
+                            @click="beforeDeleteProduct(slotProps.data.id)" />
                     </div>
                 </template>
             </Column>
@@ -183,22 +163,27 @@
 <script setup>
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
-import { ref, computed, reactive, watch } from 'vue';
-import { useQuery } from '@vue/apollo-composable';
+import { ref, computed, watch } from 'vue';
+import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 
+const toast = useToast();
 
-const router = useRouter()
+const router = useRouter();
 
 const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Product List' }
 ]);
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
 const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 1000 });
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
 const queryOptions = {
@@ -211,7 +196,7 @@ const variablesRef = ref({
     }
 })
 
-const { result, onError } = useQuery(gql`
+const { result: getProductsResult, onError: onGetProductsError } = useQuery(gql`
 query($getProductsVariable: GetProductsInput!){
     getProducts(getProductsInput: $getProductsVariable){
         products {
@@ -238,14 +223,14 @@ query($getProductsVariable: GetProductsInput!){
     queryOptions
 );
 
-onError(error => {
+onGetProductsError(error => {
     showError("The connection to the server has failed, please try again later.");
 })
 
 const updateCursor = () => {
     variablesRef.value = {
         getProductsVariable: {
-            cursor: result.value?.getProducts.cursor
+            cursor: getProductsResult.value?.getProducts.cursor
         }
     }
 }
@@ -254,25 +239,53 @@ const productsTemp = ref([]);
 
 const products = computed(() => productsTemp.value);
 
-watch(result, value => {
+watch(getProductsResult, value => {
     if (value) {
         productsTemp.value.push(...value.getProducts.products)
     }
 }, { immediate: true })
 
-const productCount = computed(() => result.value?.getProducts.count);
+const productCount = computed(() => getProductsResult.value?.getProducts.count);
 
-const toast = useToast();
 const dt = ref();
-const productDialog = ref(false);
+
+const deleteProductRef = ref(null);
+
 const deleteProductDialog = ref(false);
-const deleteProductsDialog = ref(false);
+
 const product = ref({});
+
 const selectedProducts = ref();
+
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-const submitted = ref(false);
+
+
+const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
+    mutation($deleteProductVariable: DeleteProductInput!){
+        deleteProduct(deleteProductInput: $deleteProductVariable){
+            success
+        }
+}
+`)
+
+onErrorDeleteProduct(error => {
+    showError(error);
+})
+
+onDeleteProduct(result => {
+    showSuccess("The product has been deleted successfully.");
+    deleteProductDialog.value = true;
+})
+
+const onDeleteConfirmed = () => {
+    sendDeleteProduct({
+        "deleteProductVariable": {
+            "id": deleteProductRef.value
+        }
+    })
+}
 
 const formatCurrency = (value) => {
     if (value) {
@@ -295,79 +308,14 @@ const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
 
-const openNew = () => {
-    product.value = {};
-    submitted.value = false;
-    productDialog.value = true;
-};
-const hideDialog = () => {
-    productDialog.value = false;
-    submitted.value = false;
-};
-const saveProduct = () => {
-    submitted.value = true;
+const beforeDeleteProduct = (id) => {
+    deleteProductRef.value = id;
 
-    if (product?.value.name?.trim()) {
-        if (product.value.id) {
-            product.value.inventoryStatus = product.value.inventoryStatus.value ? product.value.inventoryStatus.value : product.value.inventoryStatus;
-            products.value[findIndexById(product.value.id)] = product.value;
-            toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
-        }
-        else {
-            product.value.id = createId();
-            product.value.code = createId();
-            product.value.image = 'product-placeholder.svg';
-            product.value.inventoryStatus = product.value.inventoryStatus ? product.value.inventoryStatus.value : 'INSTOCK';
-            products.value.push(product.value);
-            toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
-        }
-
-        productDialog.value = false;
-        product.value = {};
-    }
-};
-
-
-const confirmDeleteProduct = (prod) => {
-    product.value = prod;
     deleteProductDialog.value = true;
 };
-const deleteProduct = () => {
-    products.value = products.value.filter(val => val.id !== product.value.id);
-    deleteProductDialog.value = false;
-    product.value = {};
-    toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
-};
-const findIndexById = (id) => {
-    let index = -1;
-    for (let i = 0; i < products.value.length; i++) {
-        if (products.value[i].id === id) {
-            index = i;
-            break;
-        }
-    }
 
-    return index;
-};
-const createId = () => {
-    let id = '';
-    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (var i = 0; i < 5; i++) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return id;
-}
 const exportCSV = () => {
     dt.value.exportCSV();
-};
-const confirmDeleteSelected = () => {
-    deleteProductsDialog.value = true;
-};
-const deleteSelectedProducts = () => {
-    products.value = products.value.filter(val => !selectedProducts.value.includes(val));
-    deleteProductsDialog.value = false;
-    selectedProducts.value = null;
-    toast.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
 };
 
 const getStockLabel = (status) => {
@@ -382,11 +330,9 @@ const getStockLabel = (status) => {
     }
 };
 
-
 const goBack = () => {
     router.go(-1)
 }
-
 
 const editProduct = (event) => {
     router.push({
@@ -396,8 +342,6 @@ const editProduct = (event) => {
         }
     })
 }
-
-
 </script>
 
 

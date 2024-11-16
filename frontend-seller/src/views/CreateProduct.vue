@@ -156,7 +156,7 @@
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload ref="fileupload" name="image" :url="mediaImagesURL"
-                                @upload="onTemplatedUpload($event)" :withCredentials="true" :multiple="true"
+                                @upload="onImagesUpload($event)" :withCredentials="true" :multiple="true"
                                 accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
@@ -490,7 +490,7 @@ const onSelectedFiles = (event) => {
     files.value = event.files;
 };
 
-const onTemplatedUpload = (data) => {
+const onImagesUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
     productImageSet.value.push(...payload);
@@ -517,7 +517,7 @@ onErrorProductCreated(error => {
 onProductCreated(result => {
     showSuccess("The product has been created successfully.");
 
-    setTimeout(() => window.location.reload(), 4000)
+    setTimeout(() => window.location.reload(), 2000)
 })
 
 const formErrors = ref({
@@ -561,7 +561,11 @@ const checkMandatory = () => {
 
 
 const beforeCreate = () => {
-    uploadImages();
+    if (files.value.length) {
+        uploadImages();
+    }
+
+    submitProduct();
 }
 
 const submitProduct = () => {
