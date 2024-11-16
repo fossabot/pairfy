@@ -14,6 +14,8 @@ const deleteImageHandler = async (req: Request, res: Response) => {
 
   const SELLER = req.sellerData;
 
+  const params = req.body
+
   let connection: any = null;
 
   try {
@@ -21,13 +23,15 @@ const deleteImageHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    const [result] = await connection.execute(
-      "DELETE FROM media WHERE media_name = ? AND seller_id = ?",
-      [req.params.mediaName, SELLER.id]
-    );
+    for (const mediaName of params.images) {
+      const [result] = await connection.execute(
+        "DELETE FROM media WHERE media_name = ? AND seller_id = ?",
+        [mediaName, SELLER.id]
+      );
 
-    if (result.affectedRows !== 1) {
-      throw new Error("INTERNAL_ERROR");
+      if (result.affectedRows !== 1) {
+        throw new Error("INTERNAL_ERROR");
+      }
     }
 
     await connection.commit();
@@ -35,8 +39,6 @@ const deleteImageHandler = async (req: Request, res: Response) => {
     res.status(200).send({ success: true });
   } catch (err: any) {
     await connection.rollback();
-
-    _.error(err);
 
     throw new BadRequestError(err.message);
   } finally {

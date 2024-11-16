@@ -316,13 +316,14 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
+import dashboardAPI from './api';
 import { onMounted, ref, nextTick, computed, watch, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useMutation, useQuery } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
-import dashboardAPI from './api';
+
 
 const fileupload = ref();
 
@@ -401,6 +402,7 @@ const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Edit Product' }
 ]);
+
 const productId = ref(null);
 const productName = ref(null);
 const productPrice = ref(null);
@@ -549,7 +551,6 @@ const processImageSet = (product) => {
 
 }
 
-
 watch(result, value => {
     if (value) {
         const product = value.getProduct;
@@ -573,7 +574,6 @@ watch(result, value => {
         productImageSet.value = processImageSet(product);
     }
 }, { immediate: true })
-
 
 const onSelectedFiles = (event) => {
     event.files.forEach((file) => {
@@ -617,7 +617,7 @@ const onImagesUpload = (data) => {
 
 ////////////////////////////////////////////UPDATE MUTATION//////////////////
 
-const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
+const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone: onProductUpdate } = useMutation(gql`
     mutation($updateProductVariable: UpdateProductInput!){
         updateProduct(updateProductInput: $updateProductVariable){
             success
@@ -629,8 +629,11 @@ onErrorMutation(error => {
     showError(error);
 })
 
-onDone(result => {
+onProductUpdate(result => {
     showSuccess("The product has been updated successfully.");
+    setTimeout(() => {
+        reloadPage()
+    }, 3000)
 })
 
 const formErrors = ref({
@@ -676,19 +679,13 @@ const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
 
-const deleteAllImages = () => {
-    deletedImages.value.forEach(async (name) => {
-        await deleteImage(name).then((res) => {
+const beforeUpdate = async () => {
+    if (deletedImages.value.length) {
+        await deleteImage({ images: deletedImages.value }).then((res) => {
             if (res.response.success === true) {
-                deletedImages.value = deletedImages.value.filter(item => item !== name);
+                deletedImages.value = []
             }
         });
-    })
-}
-
-const beforeUpdate = () => {
-    if (deletedImages.value.length) {
-        deleteAllImages();
     }
 
     const newImages = productImageSet.value.some(e => e.local === true);
@@ -729,7 +726,6 @@ const submitForm = () => {
     })
 }
 
-
 const goBackRoute = () => {
     router.go(-1)
 }
@@ -747,7 +743,7 @@ const discountResult = computed(() => {
 })
 
 const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
 };
 
 const showError = (content) => {

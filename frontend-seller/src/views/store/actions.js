@@ -5,8 +5,6 @@ const createUser = async (_, params) => {
   try {
     const response = await axiosAPI.post("/api/seller/create-seller", params);
 
-    console.log(response);
-
     return { ok: true, response: response.data };
   } catch (error) {
     return { ok: false, response: error.response.data };
@@ -16,8 +14,6 @@ const createUser = async (_, params) => {
 const loginUser = async ({ commit }, params) => {
   try {
     const response = await axiosAPI.post("/api/seller/login-seller", params);
-
-    console.log(response);
 
     commit("userData", response.data);
 
@@ -57,7 +53,7 @@ const createImage = async (_, params) => {
 
 const deleteImage = async (_, params) => {
   try {
-    const response = await axiosAPI.get("/api/media/delete-image/" + params);
+    const response = await axiosAPI.post("/api/media/delete-image", params);
 
     return { ok: true, response: response.data };
   } catch (error) {

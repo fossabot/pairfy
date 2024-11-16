@@ -69,8 +69,8 @@ const main = async () => {
       route.getImageHandler
     );
 
-    app.get(
-      "/api/media/delete-image/:mediaName",
+    app.post(
+      "/api/media/delete-image",
 
       route.deleteImageMiddlewares,
 
