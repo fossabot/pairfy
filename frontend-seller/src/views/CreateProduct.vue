@@ -325,7 +325,7 @@
                             style="font-size: var(--text-size-a)" fluid />
 
                         <Button type="button" label="Publish" icon="pi pi-check" :loading="sendMessageLoading"
-                            @click="createProduct" style="font-size: var(--text-size-a)" fluid />
+                            @click="beforeCreate" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -441,8 +441,6 @@ const setupSortable = async () => {
                 files.value = orderArray.map(fileName => {
                     return files.value.find(file => file.name === fileName);
                 });
-
-                console.log(files.value);
             }
         });
     });
@@ -501,7 +499,7 @@ const onTemplatedUpload = (data) => {
 
     console.log(productImageSet.value);
 
-    showSuccess('Images Uploaded');
+    createProduct();
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorProductCreated, onDone: onProductCreated } = useMutation(gql`
@@ -561,13 +559,12 @@ const checkMandatory = () => {
     return Object.values(formErrors.value).some(value => value === true);
 }
 
-const beforeUpload = () => {
+
+const beforeCreate = () => {
     uploadImages();
-};
+}
 
 const createProduct = () => {
-    beforeUpload();
-
     if (checkMandatory()) {
         return showError('Mandatory Fields');
     };
