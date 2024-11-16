@@ -1,9 +1,10 @@
+import compression from "compression";
+import DB from "./db";
 import * as route from "./routes";
 import { catcher, check, checkpoint } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
 import { app } from "./app";
-import compression from "compression";
-import DB from "./db";
+
 
 const main = async () => {
   try {
@@ -66,6 +67,14 @@ const main = async () => {
       route.getImageMiddlewares,
 
       route.getImageHandler
+    );
+
+    app.get(
+      "/api/media/delete-image/:mediaName",
+
+      route.deleteImageMiddlewares,
+
+      route.deleteImageHandler
     );
 
     app.get('/api/media/healthcheck', (req, res) => {

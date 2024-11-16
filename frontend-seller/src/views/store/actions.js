@@ -1,5 +1,5 @@
-import { HOST } from "@/api";
 import axiosAPI from "@/api/axios";
+import { HOST } from "@/api";
 
 const createUser = async (_, params) => {
   try {
@@ -55,4 +55,15 @@ const createImage = async (_, params) => {
   }
 };
 
-export { createUser, loginUser, getUser, createImage };
+const deleteImage = async (_, params) => {
+  try {
+    const response = await axiosAPI.get("/api/media/delete-image/" + params);
+
+    return { ok: true, response: response.data };
+  } catch (error) {
+    return { ok: false, response: error.response.data };
+  }
+};
+
+
+export { createUser, loginUser, getUser, createImage, deleteImage };

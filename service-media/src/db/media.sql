@@ -4,6 +4,7 @@ use service_media;
 
 create table if not exists media(
   media_id varchar(20) not null,
+  media_name varchar(200) not null,
   seller_id varchar(20) not null,
   media_type varchar(20) not null,
   media_mimetype varchar(20) not null,
@@ -12,6 +13,6 @@ create table if not exists media(
   created_at timestamp default current_timestamp,
   schema_t timestamp default current_timestamp,
   schema_v int unsigned not null,
-  primary key(media_id)
+  primary key(media_name)
 ) ENGINE=InnoDB;
 

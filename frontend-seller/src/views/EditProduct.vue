@@ -196,7 +196,7 @@
                                     <img role="presentation" :alt="file.name" :src="file.url" class="uploader-image" />
                                 </div>
                                 <div class="uploader-pad">
-                                    <button>
+                                    <button @click="onDeleteImage(file.name)">
                                         <i class="pi pi-times" />
                                     </button>
                                 </div>
@@ -321,6 +321,9 @@ import { useMutation, useQuery } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
+import dashboardAPI from './api';
+
+const { deleteImage } = dashboardAPI();
 
 const route = useRoute()
 
@@ -441,10 +444,22 @@ const editor = ref(null);
 
 const editorLimit = ref(6000);
 
-const productImageSet = ref([])
+let productImageSet = ref([])
 
 const productImageSetLimit = ref(15);
 
+const onDeleteImage = async (name) => {
+    await deleteImage(name).then((res) => {
+        if (res.response.success === true) {
+            showSuccess('Deleted')
+            productImageSet.value = productImageSet.value.filter(item => item.name !== name);
+
+        } else {
+            showError('ERROR')
+        }
+    })
+
+};
 let sortableJs = null;
 
 const setupSortable = async () => {
@@ -595,7 +610,7 @@ const onTemplatedUpload = (data) => {
 
     files.value = [];
 
-    showSuccess('Images Uploaded');
+    showSuccess('Image Uploaded');
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
@@ -662,8 +677,6 @@ const submitForm = () => {
         return showError('Mandatory Fields');
     };
 
-    console.log(productImageSet.value.map(item => item.name));
-
     sendMessage({
         "updateProductVariable": {
             "name": productName.value,
@@ -713,7 +726,7 @@ const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
-const reloadPage = () =>{
+const reloadPage = () => {
     window.location.reload();
 }
 

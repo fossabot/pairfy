@@ -16,6 +16,9 @@ const dashboardAPI = () => {
   const createImage = async (params) =>
     await store.dispatch("dashboard/createImage", params);
 
+  const deleteImage = async (params) =>
+    await store.dispatch("dashboard/deleteImage", params);  
+  
   const sleep = (timeInMs) =>
     new Promise((resolve) => setTimeout(() => resolve(false), timeInMs));
 
@@ -24,6 +27,7 @@ const dashboardAPI = () => {
     getUserData: computed(() => store.getters["dashboard/getUserData"]),
     createUser,
     createImage,
+    deleteImage,
     getUser,
     sleep,
   };
