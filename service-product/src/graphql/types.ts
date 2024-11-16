@@ -59,6 +59,10 @@ type UpdateProductResponse {
   success: Boolean!
 }
 
+type DeleteProductResponse {
+  success: Boolean!
+}
+
 input CreateProductInput {
   name: String!
   price: Int! 
@@ -100,9 +104,14 @@ input UpdateProductInput {
   id: String!
 }
 
+input DeleteProductInput {
+  id: String!
+}
+
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
   updateProduct(updateProductInput: UpdateProductInput!): UpdateProductResponse!
+  deleteProduct(deleteProductInput: DeleteProductInput!): DeleteProductResponse!
 }
 
 #/////////////////////////////////////////////////

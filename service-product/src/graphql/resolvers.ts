@@ -64,7 +64,11 @@ const updateProduct = async (args: any, context: any) => {
             SELLER.id
         ];
 
-        await connection.execute(schemeData, schemeValue);
+        const [result] = await connection.execute(schemeData, schemeValue);
+
+        if (result.affectedRows !== 1) {
+            throw new Error('INTERNAL_ERROR');
+        }
 
         await connection.commit();
 
@@ -261,6 +265,49 @@ const getProduct = async (args: any, context: any) => {
     }
 };
 
+
+
+const deleteProduct = async (args: any, context: any) => {
+    const params = args.deleteProductInput;
+
+    console.log(params);
+
+    const SELLER = context.sellerData;
+
+    let connection = null;
+
+    try {
+        connection = await database.client.getConnection();
+
+        await connection.beginTransaction();
+
+        const schemeData = "DELETE FROM products WHERE id = ? AND seller_id = ?";
+
+        const schemeValue = [params.id, SELLER.id];
+
+        const [result] = await connection.execute(schemeData, schemeValue);
+
+        if (result.affectedRows !== 1) {
+            throw new Error('INTERNAL_ERROR');
+        }
+
+        await connection.commit();
+
+        return { success: true }
+
+    } catch (err: any) {
+        await connection.rollback();
+
+        throw new Error(err.message);
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+};
+
+
+
 const products = {
     Query: {
         getProducts: (_: any, args: any, context: any) => getProducts(args, context),
@@ -268,7 +315,8 @@ const products = {
     },
     Mutation: {
         createProduct: (_: any, args: any, context: any) => createProduct(args, context),
-        updateProduct: (_: any, args: any, context: any) => updateProduct(args, context)
+        updateProduct: (_: any, args: any, context: any) => updateProduct(args, context),
+        deleteProduct: (_: any, args: any, context: any) => deleteProduct(args, context)
     },
 };
 
