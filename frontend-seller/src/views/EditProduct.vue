@@ -154,8 +154,8 @@
                         <Toast />
                         <div class="uploader-header">
                             <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                :multiple="true"  accept="image/*" :maxFileSize="1000000"
-                                :withCredentials="true" @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
+                                :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
+                                @upload="onImagesUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-control flex">
@@ -170,7 +170,8 @@
                                             </div>
                                         </Message>
 
-                                        <Message severity="secondary" variant="simple">
+                                        <Message :severity="formErrors.image_set ? 'warn' : 'secondary'"
+                                            variant="simple">
                                             <div class="flex">
                                                 <i class="pi pi-exclamation-circle" />
                                                 <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
@@ -196,7 +197,7 @@
                                     <img role="presentation" :alt="file.name" :src="file.url" class="uploader-image" />
                                 </div>
                                 <div class="uploader-pad">
-                                    <button @click="onDeleteImage(file.name)">
+                                    <button @click="onDeleteImage(file)">
                                         <i class="pi pi-times" />
                                     </button>
                                 </div>
@@ -454,18 +455,14 @@ let productImageSet = ref([])
 
 const productImageSetLimit = ref(15);
 
-const onDeleteImage = async (name) => {
-    await deleteImage(name).then((res) => {
-        if (res.response.success === true) {
-            showSuccess('Deleted')
-            productImageSet.value = productImageSet.value.filter(item => item.name !== name);
+const deletedImages = ref([]);
 
-        } else {
-            showError('ERROR')
-        }
-    })
+const onDeleteImage = async (file) => {
+    productImageSet.value = productImageSet.value.filter(item => item.name !== file.name);
 
+    deletedImages.value.push(file.name);
 };
+
 let sortableJs = null;
 
 const setupSortable = async () => {
@@ -596,7 +593,7 @@ const onSelectedFiles = (event) => {
     })
 };
 
-const onTemplatedUpload = (data) => {
+const onImagesUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
     productImageSet.value = productImageSet.value.filter(item => item.local !== true);
@@ -617,6 +614,8 @@ const onTemplatedUpload = (data) => {
 
     submitForm();
 };
+
+////////////////////////////////////////////UPDATE MUTATION//////////////////
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
     mutation($updateProductVariable: UpdateProductInput!){
@@ -677,13 +676,33 @@ const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
 
+const deleteAllImages = () => {
+    deletedImages.value.forEach(async (name) => {
+        await deleteImage(name).then((res) => {
+            if (res.response.success === true) {
+                deletedImages.value = deletedImages.value.filter(item => item !== name);
+            }
+        });
+    })
+}
+
 const beforeUpdate = () => {
-    uploadImages();
+    if (deletedImages.value.length) {
+        deleteAllImages();
+    }
+
+    const newImages = productImageSet.value.some(e => e.local === true);
+
+    if (newImages) {
+        return uploadImages();
+    }
+
+    submitForm();
 }
 
 const submitForm = () => {
     if (checkMandatory()) {
-        return showError('Mandatory Fields');
+        return showError('Please check the required fields.');
     };
 
     sendMessage({
