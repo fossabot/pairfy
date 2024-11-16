@@ -159,7 +159,7 @@
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-control flex">
-                                        <Button @click="chooseCallback()" icon="pi pi-image" outlined
+                                        <Button @click="chooseCallback()" icon="pi pi-images" outlined
                                             severity="secondary" size="small" rounded :disabled="disableChoose" />
 
                                         <Message severity="secondary" variant="simple">

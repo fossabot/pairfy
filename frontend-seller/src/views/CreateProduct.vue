@@ -162,7 +162,7 @@
                                     <div class="uploader-top">
                                         <div class="uploader-control">
 
-                                            <Button @click="chooseCallback()" icon="pi pi-image" outlined
+                                            <Button @click="chooseCallback()" icon="pi pi-images" outlined
                                                 severity="secondary" size="small" rounded />
 
                                             <Button @click="clearCallback()" icon="pi pi-times" outlined
@@ -222,7 +222,7 @@
                                 </template>
                                 <template #empty>
                                     <div class="uploader-empty" @click="chooseCallback()">
-                                        <i class="pi pi-image" />
+                                        <i class="pi pi-cloud-upload" />
                                         <p>Select images to upload.</p>
                                     </div>
                                 </template>
