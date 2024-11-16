@@ -30,7 +30,7 @@
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
     "primeicons": "^7.0.0",
-    "primevue": "^4.2.1",
+    "primevue": "^4.2.2",
     "quill": "^2.0.2",
     "serve": "^14.2.4",
     "sortablejs": "^1.15.3",
