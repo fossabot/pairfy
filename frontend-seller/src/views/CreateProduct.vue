@@ -345,7 +345,7 @@ import { onMounted, ref, nextTick, computed, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useMutation } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { HOST } from '@/api';
 
 const fileupload = ref();
@@ -488,16 +488,8 @@ const onRemoveTemplatingFile = (file, removeFileCallback, index) => {
     removeFileCallback(index);
 };
 
-const onClearTemplatingUpload = (clear) => {
-    clear();
-};
-
 const onSelectedFiles = (event) => {
     files.value = event.files;
-};
-
-const uploadEvent = async (callback) => {
-    callback();
 };
 
 const onTemplatedUpload = (data) => {
