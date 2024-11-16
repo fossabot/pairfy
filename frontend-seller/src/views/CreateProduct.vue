@@ -152,21 +152,18 @@
 
                     <!--//////////////UPLOADER///////////////-->
                     <div class="uploader">
+
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
-                            <FileUpload name="image" :url="mediaImagesURL" @upload="onTemplatedUpload($event)"
-                                :withCredentials="true" :multiple="true" accept="image/*" :maxFileSize="1000000"
-                                @select="onSelectedFiles">
+                            <FileUpload ref="fileupload" name="image" :url="mediaImagesURL"
+                                @upload="onTemplatedUpload($event)" :withCredentials="true" :multiple="true"
+                                accept="image/*" :maxFileSize="1000000" @select="onSelectedFiles">
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
                                     <div class="uploader-top">
                                         <div class="uploader-control">
 
                                             <Button @click="chooseCallback()" icon="pi pi-image" outlined
                                                 severity="secondary" size="small" rounded />
-
-                                            <Button @click="uploadEvent(uploadCallback)" icon="pi pi-cloud-upload"
-                                                outlined severity="secondary" :disabled="disableUpload" size="small"
-                                                rounded />
 
                                             <Button @click="clearCallback()" icon="pi pi-times" outlined
                                                 severity="secondary" :disabled="!files || files.length === 0"
@@ -346,13 +343,16 @@ import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
 import { onMounted, ref, nextTick, computed, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
-import { usePrimeVue } from 'primevue/config';
 import { useMutation } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 
-const $primevue = usePrimeVue();
+const fileupload = ref();
+
+const uploadImages = () => {
+    fileupload.value.upload();
+}
 
 const toast = useToast();
 
@@ -569,28 +569,13 @@ const checkMandatory = () => {
     return Object.values(formErrors.value).some(value => value === true);
 }
 
-const disableUpload = computed(() => {
-
-    if (files.value.length === 0) {
-        return true;
-    }
-
-    if (files.value.length > productImageSetLimit.value) {
-        return true;
-    }
-
-    if (files.value.length + productImageSet.value.length > productImageSetLimit.value) {
-        return true;
-    }
-
-    if (productImageSet.value.length >= productImageSetLimit.value) {
-        return true;
-    }
-});
-
-
+const beforeUpload = () => {
+    uploadImages();
+};
 
 const createProduct = () => {
+    beforeUpload();
+
     if (checkMandatory()) {
         return showError('Mandatory Fields');
     };
