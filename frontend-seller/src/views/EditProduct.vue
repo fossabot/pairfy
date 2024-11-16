@@ -154,7 +154,7 @@
                         <Toast />
                         <div class="uploader-header">
                             <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                :multiple="true" :auto="true" accept="image/*" :maxFileSize="1000000"
+                                :multiple="true"  accept="image/*" :maxFileSize="1000000"
                                 :withCredentials="true" @upload="onTemplatedUpload($event)" @select="onSelectedFiles">
 
                                 <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
@@ -299,7 +299,7 @@
                             style="font-size: var(--text-size-a)" fluid @click="reloadPage" />
 
                         <Button type="button" label="Save" icon="pi pi-check" :loading="sendMessageLoading"
-                            @click="submitForm" style="font-size: var(--text-size-a)" fluid />
+                            @click="beforeCreate" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -322,6 +322,12 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 import dashboardAPI from './api';
+
+const fileupload = ref();
+
+const uploadImages = () => {
+    fileupload.value.upload();
+}
 
 const { deleteImage } = dashboardAPI();
 
@@ -546,7 +552,6 @@ const processImageSet = (product) => {
 
 }
 
-const fileupload = ref();
 
 watch(result, value => {
     if (value) {
@@ -610,7 +615,7 @@ const onTemplatedUpload = (data) => {
 
     files.value = [];
 
-    showSuccess('Image Uploaded');
+    submitForm();
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone } = useMutation(gql`
@@ -671,6 +676,10 @@ const checkMandatory = () => {
 const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
+
+const beforeCreate = () => {
+    uploadImages();
+}
 
 const submitForm = () => {
     if (checkMandatory()) {
