@@ -499,7 +499,7 @@ const onTemplatedUpload = (data) => {
 
     console.log(productImageSet.value);
 
-    createProduct();
+    submitProduct();
 };
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorProductCreated, onDone: onProductCreated } = useMutation(gql`
@@ -517,7 +517,7 @@ onErrorProductCreated(error => {
 onProductCreated(result => {
     showSuccess("The product has been created successfully.");
 
-    setTimeout(() => window.location.reload(), 3000)
+    setTimeout(() => window.location.reload(), 4000)
 })
 
 const formErrors = ref({
@@ -564,7 +564,7 @@ const beforeCreate = () => {
     uploadImages();
 }
 
-const createProduct = () => {
+const submitProduct = () => {
     if (checkMandatory()) {
         return showError('Mandatory Fields');
     };
