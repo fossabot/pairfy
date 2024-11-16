@@ -631,9 +631,7 @@ onErrorMutation(error => {
 
 onProductUpdate(result => {
     showSuccess("The product has been updated successfully.");
-    setTimeout(() => {
-        reloadPage()
-    }, 3000)
+    setTimeout(() => reloadPage(), 1000)
 })
 
 const formErrors = ref({
