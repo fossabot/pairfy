@@ -299,7 +299,7 @@
                             style="font-size: var(--text-size-a)" fluid @click="reloadPage" />
 
                         <Button type="button" label="Save" icon="pi pi-check" :loading="sendMessageLoading"
-                            @click="beforeCreate" style="font-size: var(--text-size-a)" fluid />
+                            @click="beforeUpdate" style="font-size: var(--text-size-a)" fluid />
                     </div>
                 </div>
             </div>
@@ -677,7 +677,7 @@ const disableChoose = computed(() => {
     return productImageSet.value.length >= productImageSetLimit.value;
 });
 
-const beforeCreate = () => {
+const beforeUpdate = () => {
     uploadImages();
 }
 
