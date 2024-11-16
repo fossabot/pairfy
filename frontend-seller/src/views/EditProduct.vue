@@ -631,7 +631,7 @@ onErrorMutation(error => {
 
 onProductUpdate(result => {
     showSuccess("The product has been updated successfully.");
-    setTimeout(() => reloadPage(), 1000)
+    setTimeout(() => reloadPage(), 2000)
 })
 
 const formErrors = ref({
@@ -1050,6 +1050,11 @@ main {
     height: 2rem;
     color: var(--text-b);
     margin-right: 0.5rem;
+}
+
+.editor-control button svg {
+    width: var(--text-size-b);
+    height: var(--text-size-b);
 }
 
 

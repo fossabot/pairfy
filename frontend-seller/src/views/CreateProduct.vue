@@ -490,6 +490,7 @@ const onSelectedFiles = (event) => {
     files.value = event.files;
 };
 
+
 const onImagesUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
@@ -516,8 +517,7 @@ onErrorProductCreated(error => {
 
 onProductCreated(result => {
     showSuccess("The product has been created successfully.");
-
-    setTimeout(() => window.location.reload(), 2000)
+    setTimeout(() => reloadPage(), 1000)
 })
 
 const formErrors = ref({
@@ -562,7 +562,7 @@ const checkMandatory = () => {
 
 const beforeCreate = () => {
     if (files.value.length) {
-        uploadImages();
+        return uploadImages();
     }
 
     submitProduct();
@@ -613,6 +613,10 @@ const discountResult = computed(() => {
     return discountedPrice.toFixed(0) + " USD";
 })
 
+
+const reloadPage = () => {
+    window.location.reload();
+}
 
 onBeforeUnmount(() => {
     if (editor.value) {
@@ -908,6 +912,10 @@ main {
     margin-right: 0.5rem;
 }
 
+.editor-control button svg {
+    width: var(--text-size-b);
+    height: var(--text-size-b);
+}
 
 .editor-control button.is-active {
     border: 1px solid gray;

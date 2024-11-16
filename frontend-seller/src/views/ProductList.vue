@@ -1,9 +1,10 @@
 <template>
     <div class="card">
-        <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true">
+        <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true"
+            :draggable="false">
             <div class="flex">
 
-                <span v-if="product">Are you sure you want to delete: <b>{{ product.name }}</b>?</span>
+                <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name }}</b>?</span>
             </div>
             <template #footer>
                 <Button label="No" icon="pi pi-times" variant="outlined" @click="deleteProductDialog = false" />
@@ -38,9 +39,9 @@
         </Toolbar>
 
 
-        <DataTable class="card-datatable" ref="dt" v-model:selection="selectedProducts" :value="products" dataKey="id"
-            :paginator="true" :rows="15" :filters="filters" @page="updateCursor()" @rowSelect="editProduct"
-            selectionMode="single" paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
+        <DataTable class="card-datatable" ref="dt" :value="products" dataKey="id" :paginator="true" :rows="15"
+            :filters="filters" @page="updateCursor()" @rowSelect="editProduct" selectionMode="single"
+            paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
             currentPageReportTemplate="Showing {first} to {last}">
             <template #paginatorstart>
                 <div style="color: var(--text-b);">
@@ -152,7 +153,7 @@
                 <template #body="slotProps">
                     <div class="datatable-control">
                         <Button icon="pi pi-trash" outlined size="small" rounded
-                            @click="beforeDeleteProduct(slotProps.data.id)" />
+                            @click="beforeDeleteProduct(slotProps.data)" />
                     </div>
                 </template>
             </Column>
@@ -249,18 +250,13 @@ const productCount = computed(() => getProductsResult.value?.getProducts.count);
 
 const dt = ref();
 
-const deleteProductRef = ref(null);
-
 const deleteProductDialog = ref(false);
 
-const product = ref({});
-
-const selectedProducts = ref();
+const selectedProduct = ref(null);
 
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
 
 const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
     mutation($deleteProductVariable: DeleteProductInput!){
@@ -276,15 +272,16 @@ onErrorDeleteProduct(error => {
 
 onDeleteProduct(result => {
     showSuccess("The product has been deleted successfully.");
-    deleteProductDialog.value = true;
 })
 
 const onDeleteConfirmed = () => {
     sendDeleteProduct({
         "deleteProductVariable": {
-            "id": deleteProductRef.value
+            "id": selectedProduct.value.id
         }
-    })
+    });
+    productsTemp.value = []
+    deleteProductDialog.value = false;
 }
 
 const formatCurrency = (value) => {
@@ -308,8 +305,8 @@ const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
 
-const beforeDeleteProduct = (id) => {
-    deleteProductRef.value = id;
+const beforeDeleteProduct = (data) => {
+    selectedProduct.value = data;
 
     deleteProductDialog.value = true;
 };
