@@ -403,8 +403,9 @@ const editProduct = (event) => {
 
 <style scoped>
 ::v-deep(.p-toolbar) {
-    background: transparent;
     padding: 0 1rem;
+    background: transparent;
+    border-radius: 1rem;
 }
 
 ::v-deep(button) {

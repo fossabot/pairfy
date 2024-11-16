@@ -736,7 +736,8 @@ onBeforeUnmount(() => {
 
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
-    background: #ffffff;
+    background: transparent;
+    border-radius: 1rem;
 }
 
 ::v-deep(.p-colorpicker-preview) {
