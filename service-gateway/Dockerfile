@@ -1,23 +1,23 @@
-FROM node:alpine
+FROM node:lts
+
 
 WORKDIR /app
 
-COPY package.json .
 
-RUN npm config set fetch-timeout 30000
+COPY package*.json ./
 
-RUN npm config set fetch-retry-maxtimeout 30000
+RUN ls
 
-RUN npm config set fetch-retry-mintimeout 30000
+RUN npm install
 
-RUN npm install --verbose
 
 COPY . .
 
-RUN rm -rf /app/src/blockchain/test
 
-RUN npm run build 
+RUN npm run build
 
-RUN npm install --omit=dev
 
+EXPOSE 4000
+
+# Run the built JavaScript code
 CMD ["npm", "start"]

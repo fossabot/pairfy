@@ -107,8 +107,6 @@ const main = async () => {
             database: "service_product",
         });
 
-        logger.info("DB");
-
         app.use(cookieSession(sessionOptions));
 
         app.use(sellerMiddleware);

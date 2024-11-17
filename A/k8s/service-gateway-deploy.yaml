@@ -45,7 +45,7 @@ spec:
             - name: LOCKING_TX_MS
               value: "900000"                            
             - name: CORS_DOMAINS
-              value: "https://pairfy.dev,http://pairfy.dev,http://localhost:8080,http://localhost:8081,https://pairfy.dev,https://dashboard.pairfy.dev"                           
+              value: "http://localhost:5173,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
           resources:
             limits:
               memory: "500Mi"
@@ -62,5 +62,5 @@ spec:
   ports:
     - name: service-gateway
       protocol: TCP
-      port: 8000
-      targetPort: 8000
+      port: 4000
+      targetPort: 4000

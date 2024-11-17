@@ -49,13 +49,13 @@ spec:
                 name: service-product
                 port:
                   number: 4000
-          - path: /api/gate/?(.*)
-            pathType: ImplementationSpecific
+          - path: /api/gateway/graphql
+            pathType: Prefix
             backend:
               service:
                 name: service-gateway
                 port:
-                  number: 8000
+                  number: 4000
           - path: /api/media/?(.*)
             pathType: ImplementationSpecific
             backend:
