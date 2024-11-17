@@ -1,4 +1,4 @@
-import { getProductId, logger } from "../utils/index.js";
+import { getEventId, getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 
 const updateProduct = async (args: any, context: any) => {
@@ -131,8 +131,12 @@ const createProduct = async (args: any, context: any) => {
             schema_v
        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
+        const productId = getProductId();
+
+        const productVersion = 0;
+
         const schemeValue = [
-            "P" + getProductId(),
+            productId,
             SELLER.id,
             params.name,
             params.price,
@@ -155,10 +159,25 @@ const createProduct = async (args: any, context: any) => {
             params.video_set,
             params.discount,
             params.discount_value,
-            0,
+            productVersion,
         ];
 
         await connection.execute(schemeData, schemeValue);
+
+        const eventId = productId + "-" + productVersion;
+
+        const eventSchema = `
+        INSERT INTO events (
+        id,
+        event_type,
+        payload,
+        agent_id
+        ) VALUES (?, ?, ?, ?)
+        `;
+
+        const eventValue = [eventId, "CreateProduct", JSON.stringify(schemeValue), SELLER.id];
+
+        await connection.execute(eventSchema, eventValue);
 
         await connection.commit();
 

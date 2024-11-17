@@ -1,0 +1,1 @@
+helm install nats nats/nats --set=config.jetstream.enabled=true
