@@ -67,22 +67,18 @@ const main = async () => {
             checkAPI: false
         });
 
-        const streams = await jsm.streams.list().next();
+        const STREAM_NAME = "product";
 
-        streams.forEach((si) => {
-            console.log(si);
-        });
+        const EVENT_SUBJECTS = STREAM_NAME + ".*"
 
         await jsm.streams.add({
-            name: "product",
-            subjects: ["product.*"],
+            name: STREAM_NAME,
+            subjects: [EVENT_SUBJECTS],
             retention: RetentionPolicy.Workqueue,
             storage: StorageType.File
         });
 
         const jetStream = jsm.jetstream();
-
-        const EVENT_NAME = "product";
 
         const runWorker = async () => {
             let connection = null;
@@ -92,11 +88,13 @@ const main = async () => {
 
                 await connection.beginTransaction();
 
-                const findEvents = await connection.execute("SELECT * FROM events WHERE published = ?", [false]);
+                const [findEvents] = await connection.execute("SELECT * FROM events WHERE published = ?", [false]);
+
+                console.log(findEvents);
 
                 for (const event of findEvents.rows) {
 
-                    let ack = await jetStream.publish(`${EVENT_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
+                    let ack = await jetStream.publish(`${STREAM_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
 
                     console.log(ack);
 
@@ -105,8 +103,6 @@ const main = async () => {
                     if (updateEvent.affectedRows !== 1) {
                         throw new Error('UPDATE_EVENT_ERROR');
                     }
-
-
                 }
 
                 await connection.commit();
