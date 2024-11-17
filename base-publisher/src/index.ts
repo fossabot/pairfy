@@ -52,7 +52,7 @@ const main = async () => {
 
         const podName = "axxxxx";
 
-        const nc = await connect({
+        const natsClient = await connect({
             name: podName,
             servers: ["nats:4222"],
             pingInterval: 20 * 1000,
@@ -60,22 +60,18 @@ const main = async () => {
             reconnectTimeWait: 10 * 1000
         });
 
-        console.log(`connected to ${nc.getServer()}`);
+        console.log(`connected to ${natsClient.getServer()}`);
 
-        const stats = nc.stats();
 
-        console.log(stats);
-
-        const jsm = await jetstreamManager(nc, {
+        const jsm = await jetstreamManager(natsClient, {
             checkAPI: false
         });
 
         const streams = await jsm.streams.list().next();
+
         streams.forEach((si) => {
             console.log(si);
         });
-
-        console.log("1");
 
         await jsm.streams.add({
             name: "product",
@@ -84,21 +80,49 @@ const main = async () => {
             storage: StorageType.File
         });
 
-        console.log("2");
+        const jetStream = jsm.jetstream();
 
-        const js = jsm.jetstream();
+        const EVENT_NAME = "product";
 
-        console.log("3");
+        const runWorker = async () => {
+            let connection = null;
 
-        let pa = await js.publish("product.createProduct", "paylo", { msgID: "ocuhxqo6" });
+            try {
+                connection = await database.client.getConnection();
 
-        console.log(pa);
+                await connection.beginTransaction();
 
-        const stream = pa.stream;
+                const findEvents = await connection.execute("SELECT * FROM events WHERE published = ?", [false]);
 
-        const seq = pa.seq;
+                for (const event of findEvents.rows) {
 
-        const duplicate = pa.duplicate;
+                    let ack = await jetStream.publish(`${EVENT_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
+
+                    console.log(ack);
+
+                    const updateEvent = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
+
+                    if (updateEvent.affectedRows !== 1) {
+                        throw new Error('UPDATE_EVENT_ERROR');
+                    }
+
+
+                }
+
+                await connection.commit();
+
+            } catch (err: any) {
+                await connection.rollback();
+
+                throw new Error(err.message);
+            } finally {
+                if (connection) {
+                    connection.release();
+                }
+            }
+        }
+
+        const workerInterval = setInterval(runWorker, 5000);
 
         logger.info("ONLINE");
 
