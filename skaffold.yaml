@@ -45,15 +45,7 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .    
-    - image: pairfy/debezium-mysql-connector
-      context: plugin-debezium
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.ts'
-            dest: .                     
+            dest: .                       
     - image: pairfy/service-user
       context: service-user
       docker:
@@ -101,4 +93,12 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                         
+            dest: .            
+    - image: pairfy/base-publisher
+      context: base-publisher
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .             
