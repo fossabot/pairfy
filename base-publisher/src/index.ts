@@ -96,12 +96,12 @@ const main = async () => {
 
                     console.log(ack);
 
-                    const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
-
-                    console.log(updateEvent);
-
-                    if (updateEvent.affectedRows !== 1) {
-                        throw new Error('UPDATE_EVENT_ERROR');
+                    if(ack.seq){
+                        const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
+                        
+                        if (updateEvent.affectedRows !== 1) {
+                            throw new Error('UPDATE_EVENT_ERROR');
+                        }
                     }
                 }
 
