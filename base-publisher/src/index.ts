@@ -80,9 +80,9 @@ const main = async () => {
 
         const jetStream = jsm.jetstream();
 
-        const runWorker = async () => {
-            let connection = null;
+        let connection: any = null;
 
+        const runWorker = async () => {
             try {
                 connection = await database.client.getConnection();
 
@@ -90,15 +90,15 @@ const main = async () => {
 
                 const [findEvents] = await connection.execute("SELECT * FROM events WHERE published = ?", [false]);
 
-                console.log(findEvents);
-
-                for (const event of findEvents.rows) {
+                for (const event of findEvents) {
 
                     let ack = await jetStream.publish(`${STREAM_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
 
                     console.log(ack);
 
-                    const updateEvent = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
+                    const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
+
+                    console.log(updateEvent);
 
                     if (updateEvent.affectedRows !== 1) {
                         throw new Error('UPDATE_EVENT_ERROR');
@@ -110,7 +110,7 @@ const main = async () => {
             } catch (err: any) {
                 await connection.rollback();
 
-                throw new Error(err.message);
+                logger.error(err)
             } finally {
                 if (connection) {
                     connection.release();
