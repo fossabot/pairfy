@@ -71,6 +71,10 @@ const main = async () => {
 
         const EVENT_SUBJECTS = STREAM_NAME + ".*"
 
+        const QUERY_LIMIT = parseInt("100");
+
+        const QUERY_INTERVAL = parseInt("5000");
+
         await jsm.streams.add({
             name: STREAM_NAME,
             subjects: [EVENT_SUBJECTS],
@@ -88,20 +92,22 @@ const main = async () => {
 
                 await connection.beginTransaction();
 
-                const [findEvents] = await connection.execute("SELECT * FROM events WHERE published = ?", [false]);
+                const [findEvents] = await connection.query("SELECT * FROM events WHERE published = ? ORDER BY created_at ASC LIMIT ? FOR UPDATE", [false, QUERY_LIMIT]);
 
                 for (const event of findEvents) {
+
+                    const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
+
+                    if (updateEvent.affectedRows !== 1) {
+                        throw new Error('UPDATE_EVENT_ERROR');
+                    }
 
                     let ack = await jetStream.publish(`${STREAM_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
 
                     console.log(ack);
 
-                    if(ack.seq){
-                        const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
-                        
-                        if (updateEvent.affectedRows !== 1) {
-                            throw new Error('UPDATE_EVENT_ERROR');
-                        }
+                    if (!ack.seq) {
+                        throw new Error('EVENT_ACK_ERROR');
                     }
                 }
 
@@ -118,7 +124,7 @@ const main = async () => {
             }
         }
 
-        const workerInterval = setInterval(runWorker, 5000);
+        const workerInterval = setInterval(runWorker, QUERY_INTERVAL);
 
         logger.info("ONLINE");
 
