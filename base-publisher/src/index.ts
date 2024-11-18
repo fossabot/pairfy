@@ -48,8 +48,6 @@ const main = async () => {
             database: "service_product",
         });
 
-        const serviceName = "service-product"
-
         const podName = "axxxxx";
 
         const natsClient = await connect({
