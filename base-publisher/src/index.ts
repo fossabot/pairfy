@@ -88,8 +88,6 @@ const main = async () => {
             try {
                 connection = await database.client.getConnection();
 
-                await connection.beginTransaction();
-
                 const [findEvents] = await connection.query(`
                     SELECT * FROM events
                     WHERE published = ?
@@ -99,6 +97,7 @@ const main = async () => {
                     [false, QUERY_LIMIT]);
 
                 for (const event of findEvents) {
+                    await connection.beginTransaction();
 
                     const [updateEvent] = await connection.execute("UPDATE events SET published = ? WHERE id = ?", [true, event.id]);
 
@@ -113,9 +112,11 @@ const main = async () => {
                     if (!ack.seq) {
                         throw new Error('EVENT_ACK_ERROR');
                     }
+
+                    await connection.commit();
                 }
 
-                await connection.commit();
+             
 
             } catch (err: any) {
                 await connection.rollback();
