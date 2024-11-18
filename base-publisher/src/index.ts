@@ -90,7 +90,13 @@ const main = async () => {
 
                 await connection.beginTransaction();
 
-                const [findEvents] = await connection.query("SELECT * FROM events WHERE published = ? ORDER BY created_at ASC LIMIT ? FOR UPDATE", [false, QUERY_LIMIT]);
+                const [findEvents] = await connection.query(`
+                    SELECT * FROM events
+                    WHERE published = ?
+                    ORDER BY created_at ASC
+                    LIMIT ? 
+                    FOR UPDATE SKIP LOCKED`,
+                    [false, QUERY_LIMIT]);
 
                 for (const event of findEvents) {
 

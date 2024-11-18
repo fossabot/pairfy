@@ -9,6 +9,7 @@ create table if not exists events(
   payload mediumtext not null,
   agent_id varchar(50) default null,
   created_at timestamp default current_timestamp,
-  primary key(id)
+  primary key(id),
+  INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB;
 
