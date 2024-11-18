@@ -1,32 +1,45 @@
+import { jetstreamManager, RetentionPolicy, StorageType } from "@nats-io/jetstream";
 import { catcher, logger } from './utils/index.js';
 import { database } from './db/client.js';
 import { connect } from "@nats-io/transport-node";
-import { jetstreamManager, RetentionPolicy, StorageType } from "@nats-io/jetstream";
 
 const main = async () => {
     try {
+
+        if (!process.env.POD_NAME) {
+            throw new Error("POD_NAME error");
+        }
+
         if (!process.env.POD_TIMEOUT) {
             throw new Error("POD_TIMEOUT error");
         }
 
-        if (!process.env.EXPRESS_PORT) {
-            throw new Error("EXPRESS_PORT error");
+        if (!process.env.DATABASE_USER) {
+            throw new Error("DATABASE_USER error");
         }
 
-        if (!process.env.EXPRESS_TIMEOUT) {
-            throw new Error("EXPRESS_TIMEOUT error");
+        if (!process.env.DATABASE_PASSWORD) {
+            throw new Error("DATABASE_PASSWORD error");
         }
 
-        if (!process.env.CORS_DOMAINS) {
-            throw new Error("CORS_DOMAINS error");
+        if (!process.env.DATABASE_NAME) {
+            throw new Error("DATABASE_NAME error");
         }
 
-        if (!process.env.SELLER_JWT_KEY) {
-            throw new Error("SELLER_JWT_KEY error");
+        if (!process.env.STREAM_NAME) {
+            throw new Error("STREAM_NAME error");
         }
 
-        if (!process.env.TOKEN_EXPIRATION) {
-            throw new Error("TOKEN_EXPIRATION error");
+        if (!process.env.STREAM_SUBJECT) {
+            throw new Error("STREAM_SUBJECT error");
+        }
+
+        if (!process.env.QUERY_INTERVAL) {
+            throw new Error("QUERY_INTERVAL error");
+        }
+
+        if (!process.env.QUERY_LIMIT) {
+            throw new Error("QUERY_LIMIT error");
         }
 
         const errorEvents: string[] = [
@@ -43,39 +56,26 @@ const main = async () => {
         database.connect({
             host: "mysql",
             port: 3306,
-            user: "marketplace",
-            password: "password",
-            database: "service_product",
+            user: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE_NAME,
         });
 
-        const podName = "axxxxx";
-
         const natsClient = await connect({
-            name: podName,
+            name: process.env.POD_NAME,
             servers: ["nats:4222"],
             pingInterval: 20 * 1000,
             maxPingOut: 5,
             reconnectTimeWait: 10 * 1000
         });
 
-        console.log(`connected to ${natsClient.getServer()}`);
-
-
         const jsm = await jetstreamManager(natsClient, {
             checkAPI: false
         });
 
-        const STREAM_NAME = "product";
-
-        const EVENT_SUBJECTS = STREAM_NAME + ".*"
-
-        const QUERY_LIMIT = parseInt("100");
-
-        const QUERY_INTERVAL = parseInt("5000");
-
         await jsm.streams.add({
-            name: STREAM_NAME,
-            subjects: [EVENT_SUBJECTS],
+            name: process.env.STREAM_NAME,
+            subjects: [process.env.STREAM_SUBJECT],
             retention: RetentionPolicy.Workqueue,
             storage: StorageType.File
         });
@@ -83,6 +83,8 @@ const main = async () => {
         const jetStream = jsm.jetstream();
 
         let connection: any = null;
+
+        const queryLimit = parseInt(process.env.QUERY_LIMIT);
 
         const runWorker = async () => {
             try {
@@ -94,7 +96,7 @@ const main = async () => {
                     ORDER BY created_at ASC
                     LIMIT ? 
                     FOR UPDATE SKIP LOCKED`,
-                    [false, QUERY_LIMIT]);
+                    [false, queryLimit]);
 
                 for (const event of findEvents) {
                     await connection.beginTransaction();
@@ -105,7 +107,7 @@ const main = async () => {
                         throw new Error('UPDATE_EVENT_ERROR');
                     }
 
-                    let ack = await jetStream.publish(`${STREAM_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
+                    let ack = await jetStream.publish(`${process.env.STREAM_NAME}.${event.event_type}`, event.payload, { msgID: event.id });
 
                     console.log(ack);
 
@@ -115,8 +117,6 @@ const main = async () => {
 
                     await connection.commit();
                 }
-
-             
 
             } catch (err: any) {
                 await connection.rollback();
@@ -129,7 +129,7 @@ const main = async () => {
             }
         }
 
-        const workerInterval = setInterval(runWorker, QUERY_INTERVAL);
+        setInterval(runWorker, parseInt(process.env.QUERY_INTERVAL));
 
         logger.info("ONLINE");
 
