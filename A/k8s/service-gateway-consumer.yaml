@@ -28,14 +28,12 @@ spec:
               value: password
             - name: DATABASE_NAME
               value: service_product                                                                                                                                                               
-            - name: STREAM_NAME
-              value: product
-            - name: STREAM_SUBJECT
-              value: product.*              
-            - name: QUERY_INTERVAL
-              value: "5000"    
-            - name: QUERY_LIMIT
-              value: "100"                                   
+            - name: STREAM_LIST
+              value: product,query            
+            - name: SERVICE_NAME
+              value: service-gateway  
+            - name: CONSUMER_GROUP
+              value: service-gateway-group                                  
           resources:
             limits:
               memory: "500Mi"

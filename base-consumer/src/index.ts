@@ -1,10 +1,4 @@
-import {
-  AckPolicy,
-  DeliverPolicy,
-  jetstreamManager,
-  RetentionPolicy,
-  StorageType,
-} from "@nats-io/jetstream";
+import { AckPolicy, DeliverPolicy, jetstreamManager } from "@nats-io/jetstream";
 import { catcher, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { connect } from "@nats-io/transport-node";
@@ -19,6 +13,10 @@ const main = async () => {
       throw new Error("POD_TIMEOUT error");
     }
 
+    if (!process.env.SERVICE_NAME) {
+      throw new Error("SERVICE_NAME error");
+    }
+
     if (!process.env.DATABASE_USER) {
       throw new Error("DATABASE_USER error");
     }
@@ -31,21 +29,17 @@ const main = async () => {
       throw new Error("DATABASE_NAME error");
     }
 
-    if (!process.env.STREAM_NAME) {
-      throw new Error("STREAM_NAME error");
+    if (!process.env.STREAM_LIST) {
+      throw new Error("STREAM_LIST error");
     }
 
-    if (!process.env.STREAM_SUBJECT) {
-      throw new Error("STREAM_SUBJECT error");
+    if (!process.env.CONSUMER_GROUP) {
+      throw new Error("CONSUMER_GROUP error");
     }
 
-    if (!process.env.QUERY_INTERVAL) {
-      throw new Error("QUERY_INTERVAL error");
-    }
-
-    if (!process.env.QUERY_LIMIT) {
-      throw new Error("QUERY_LIMIT error");
-    }
+    const MODU = await import(
+      `./handlers/${process.env.SERVICE_NAME}/index.js`
+    );
 
     const errorEvents: string[] = [
       "exit",
@@ -80,30 +74,26 @@ const main = async () => {
 
     const jetStream = jsm.jetstream();
 
-    const CONSUMER_NAME = "service-gateway";
+    const streamList = process.env.STREAM_LIST.split(",");
 
-    const CONSUMER_GROUP = "service-gateway-group";
+    for (const stream of streamList) {
+      await jsm.consumers.add(stream, {
+        durable_name: process.env.SERVICE_NAME,
+        deliver_group: process.env.CONSUMER_GROUP,
+        ack_policy: AckPolicy.Explicit,
+        deliver_policy: DeliverPolicy.All,
+      });
 
-    const STREAM_NAME = "product";
+      const consumer = await jetStream.consumers.get(
+        stream,
+        process.env.SERVICE_NAME
+      );
 
-    await jsm.consumers.add(STREAM_NAME, {
-      durable_name: CONSUMER_NAME,
-      deliver_group: CONSUMER_GROUP,
-      ack_policy: AckPolicy.Explicit,
-      deliver_policy: DeliverPolicy.All,
-    });
+      const messages: any = await consumer.consume({ max_messages: 1 });
 
-    const consumer = await jetStream.consumers.get(STREAM_NAME, CONSUMER_NAME);
-
-    const messages: any = await consumer.consume({ max_messages: 1 });
-
-    for await (const m of messages) {
-      
-      const jsonString = new TextDecoder().decode(m.data);
-
-      console.log(jsonString);
-
-      m.ack();
+      for await (const message of messages) {
+        MODU.processEvent(message);
+      }
     }
 
     logger.info("ONLINE");
