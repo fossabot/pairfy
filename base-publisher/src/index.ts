@@ -85,8 +85,8 @@ const main = async () => {
       retention: RetentionPolicy.Limits,
       storage: StorageType.File,
       max_age: 200 * 60 * 60 * 1000,   // Retain messages for 200 hours (in ms)
-      max_msgs: 500000,                // Max number of messages to retain
-      max_bytes: 10368709120,          // Max size (10 GB),
+      max_msgs: 100000,                // Max number of messages to retain
+      max_bytes: 5368709120,          // Max size (10 GB),
       discard: DiscardPolicy.Old
     });
 
