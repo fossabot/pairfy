@@ -74,16 +74,25 @@ const main = async () => {
 
     const jetStream = jsm.jetstream();
 
+    console.log("1");
+
     const streamList = process.env.STREAM_LIST.split(",");
 
+    console.log("2");
     for (const stream of streamList) {
-      await jsm.consumers.add(stream, {
-        durable_name: process.env.SERVICE_NAME,
-        deliver_group: process.env.CONSUMER_GROUP,
-        ack_policy: AckPolicy.Explicit,
-        deliver_policy: DeliverPolicy.All,
-      });
+      console.log("3");
 
+      await jsm.consumers
+        .add(stream, {
+          durable_name: process.env.SERVICE_NAME,
+          deliver_group: process.env.CONSUMER_GROUP,
+          ack_policy: AckPolicy.Explicit,
+          deliver_policy: DeliverPolicy.All,
+          filter_subject: stream + ".*"
+        })
+        .catch((err) => logger.error(err));
+
+      console.log("4");
       const consumer = await jetStream.consumers.get(
         stream,
         process.env.SERVICE_NAME

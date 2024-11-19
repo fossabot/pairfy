@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-gateway-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-gateway-consumer
+  template:
+    metadata:
+      labels:
+        role: service-gateway-consumer
+    spec:
+      containers:
+        - name: service-query-consumer
+          image: pairfy/base-consumer
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name                                                             
+            - name: POD_TIMEOUT
+              value: '120000'   
+            - name: DATABASE_USER
+              value: marketplace
+            - name: DATABASE_PASSWORD
+              value: password
+            - name: DATABASE_NAME
+              value: service_product                                                                                                                                                               
+            - name: STREAM_LIST
+              value: product           
+            - name: SERVICE_NAME
+              value: service-query 
+            - name: CONSUMER_GROUP
+              value: service-query-group                                  
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"       
