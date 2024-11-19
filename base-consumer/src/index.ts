@@ -89,18 +89,12 @@ const main = async () => {
         .then((res) => console.log(res))
         .catch((err) => logger.error(err));
 
-      console.log("1");
-
       const consumer = await jetStream.consumers.get(
         stream,
         process.env.POD_NAME
       );
 
-      console.log("2");
-
       const messages: any = await consumer.consume({ max_messages: 1 });
-
-      console.log("3");
 
       for await (const message of messages) {
         console.log(process.env.POD_NAME);
