@@ -84,10 +84,10 @@ const main = async () => {
       subjects: [process.env.STREAM_SUBJECT],
       retention: RetentionPolicy.Limits,
       storage: StorageType.File,
-      max_age: 200 * 60 * 60 * 1000,   // Retain messages for 200 hours (in ms)
-      max_msgs: 100000,                // Max number of messages to retain
-      max_bytes: 5368709120,          // Max size (10 GB),
-      discard: DiscardPolicy.Old
+      max_age: 200 * 60 * 60 * 1000, // Retain messages for 200 hours (in ms)
+      max_msgs: 100000, // Max number of messages to retain
+      max_bytes: 5368709120, // Max size (10 GB),
+      discard: DiscardPolicy.Old,
     });
 
     const jetStream = jsm.jetstream();
@@ -102,11 +102,11 @@ const main = async () => {
 
         const [findEvents] = await connection.query(
           `
-                    SELECT * FROM events
-                    WHERE published = ?
-                    ORDER BY created_at ASC
-                    LIMIT ? 
-                    FOR UPDATE SKIP LOCKED`,
+          SELECT * FROM events
+          WHERE published = ?
+          ORDER BY created_at ASC
+          LIMIT ? 
+          FOR UPDATE SKIP LOCKED`,
           [false, queryLimit]
         );
 
@@ -124,11 +124,15 @@ const main = async () => {
 
           const payload = JSON.stringify(event);
 
-          await jetStream.publish(
+          const result = await jetStream.publish(
             `${process.env.STREAM_NAME}.${event.event_type}`,
             payload,
             { msgID: event.id }
           );
+
+          if (!result.seq) {
+            throw new Error("PUBLISH_ERROR");
+          }
 
           await connection.commit();
         }
