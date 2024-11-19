@@ -102,6 +102,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .   
+    - image: pairfy/base-consumer
+      context: base-consumer
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .             
     - image: pairfy/testing
       context: testing
       docker:
