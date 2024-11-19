@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: service-gateway-consumer
 spec:
-  replicas: 1
   selector:
     matchLabels:
       role: service-gateway-consumer
+  replicas: 1
   template:
     metadata:
       labels:

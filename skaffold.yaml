@@ -5,7 +5,7 @@ deploy:
   kubectl:
     manifests:
       - ./A/k8s/*
-      - ./A/k8s-dev/*         
+      - ./A/k8s-dev/*             
 build:
   local:
     useDockerCLI: true

@@ -37,6 +37,8 @@ const main = async () => {
       throw new Error("CONSUMER_GROUP error");
     }
 
+    console.log(process.env.POD_NAME);
+
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`
     );
@@ -74,28 +76,22 @@ const main = async () => {
 
     const jetStream = jsm.jetstream();
 
-    console.log("1");
-
     const streamList = process.env.STREAM_LIST.split(",");
 
-    console.log("2");
     for (const stream of streamList) {
-      console.log("3");
-
       await jsm.consumers
         .add(stream, {
-          durable_name: process.env.SERVICE_NAME,
+          durable_name: process.env.POD_NAME,
           deliver_group: process.env.CONSUMER_GROUP,
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
-          filter_subject: stream + ".*"
         })
+        .then((res) => console.log(res))
         .catch((err) => logger.error(err));
 
-      console.log("4");
       const consumer = await jetStream.consumers.get(
         stream,
-        process.env.SERVICE_NAME
+        process.env.POD_NAME
       );
 
       const messages: any = await consumer.consume({ max_messages: 1 });
@@ -112,6 +108,5 @@ const main = async () => {
 };
 
 main();
-
 
 //Service
