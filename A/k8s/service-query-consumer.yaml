@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-gateway-consumer
+  name: service-query-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      role: service-gateway-consumer
+      role: service-query-consumer
   template:
     metadata:
       labels:
-        role: service-gateway-consumer
+        role: service-query-consumer
     spec:
       containers:
         - name: service-query-consumer
