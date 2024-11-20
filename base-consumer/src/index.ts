@@ -37,10 +37,6 @@ const main = async () => {
       throw new Error("CONSUMER_GROUP error");
     }
 
-    if (!process.env.QUERY_LIMIT) {
-      throw new Error("QUERY_LIMIT error");
-    }
-
     console.log(process.env.POD_NAME);
 
     const MODU = await import(
@@ -98,9 +94,7 @@ const main = async () => {
         process.env.POD_NAME
       );
 
-      const queryLimit = parseInt(process.env.QUERY_LIMIT);
-
-      const messages: any = await consumer.consume({ max_messages: queryLimit });
+      const messages: any = await consumer.consume({ max_messages: 1 });
 
       for await (const message of messages) {
         console.log(process.env.POD_NAME);
