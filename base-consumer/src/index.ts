@@ -33,6 +33,10 @@ const main = async () => {
       throw new Error("STREAM_LIST error");
     }
 
+    if (!process.env.DURABLE_NAME) {
+      throw new Error("DURABLE_NAME error");
+    }
+
     if (!process.env.CONSUMER_GROUP) {
       throw new Error("CONSUMER_GROUP error");
     }
@@ -79,9 +83,11 @@ const main = async () => {
     const streamList = process.env.STREAM_LIST.split(",");
 
     for (const stream of streamList) {
+      //await jsm.consumers.delete(stream, process.env.POD_NAME);
+
       await jsm.consumers
         .add(stream, {
-          durable_name: process.env.POD_NAME,
+          durable_name: process.env.DURABLE_NAME,
           deliver_group: process.env.CONSUMER_GROUP,
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
@@ -89,15 +95,11 @@ const main = async () => {
         .then((res) => console.log(res))
         .catch((err) => logger.error(err));
 
-      const consumer = await jetStream.consumers.get(
-        stream,
-        process.env.POD_NAME
-      );
+      const consumer = await jetStream.consumers.get(stream, process.env.DURABLE_NAME);
 
       const messages: any = await consumer.consume({ max_messages: 1 });
 
       for await (const message of messages) {
-        console.log(process.env.POD_NAME);
         MODU.processEvent(message);
       }
     }
