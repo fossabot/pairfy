@@ -49,13 +49,12 @@ kind: Service
 metadata:
   name: locust-master-node
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8089
     targetPort: 8089
-    nodePort: 30089
   selector:
-    app: locust-master  
+    app: locust-master
 
 ---
 

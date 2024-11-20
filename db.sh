@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-alias mysql="mysql -h localhost -P 3306 -u marketplace -ppassword"
+alias mysql="mysql -h localhost -P 3306 -u root -ppassword"
 
 
 

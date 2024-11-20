@@ -110,6 +110,10 @@ const main = async () => {
           [false, queryLimit]
         );
 
+        if(!findEvents.length){
+          return;
+        }
+
         for (const event of findEvents) {
           await connection.beginTransaction();
 
@@ -137,9 +141,10 @@ const main = async () => {
           await connection.commit();
         }
       } catch (err: any) {
+        logger.error(err);
+
         await connection.rollback();
 
-        logger.error(err);
       } finally {
         if (connection) {
           connection.release();
