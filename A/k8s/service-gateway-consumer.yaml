@@ -33,7 +33,9 @@ spec:
             - name: SERVICE_NAME
               value: service-gateway  
             - name: CONSUMER_GROUP
-              value: service-gateway-group                                  
+              value: service-gateway-group  
+            - name: DURABLE_NAME
+              value: service-gateway-consumer                                
           resources:
             limits:
               memory: "500Mi"
