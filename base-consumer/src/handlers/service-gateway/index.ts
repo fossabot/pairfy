@@ -19,7 +19,7 @@ const createProduct = async (message: any, data: any) => {
     await connection.beginTransaction();
 
     const schemeData = `
-      INSERT INTO products (
+      INSERT IGNORE INTO products (
           id,
           seller_id,
           name,
@@ -49,7 +49,7 @@ const createProduct = async (message: any, data: any) => {
     await connection.execute(schemeData, JSON.parse(data.payload));
 
     const processedSchema =
-      "INSERT INTO processed (id, event_type, processed) VALUES (?, ?, ?)";
+      "INSERT IGNORE INTO processed (id, event_type, processed) VALUES (?, ?, ?)";
 
     const processedEvent = [data.id, data.event_type, true];
 
