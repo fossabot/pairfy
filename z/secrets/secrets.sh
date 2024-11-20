@@ -11,12 +11,6 @@ kubectl create secret generic encrypto-secret --from-literal=ENCRYPTO_KEY=passwo
 
 
 
-kubectl create secret docker-registry registry-secret \
-    --docker-server=10.111.65.44:5000 \
-    --docker-username='pairfy' \
-    --docker-password='password' \
-    --docker-email='pairfy.io@gmail.com' \
-    --dry-run=client -o yaml | kubectl apply -f -
 
 
 

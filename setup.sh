@@ -2,16 +2,16 @@
 
 WORKDIR=$(pwd)
 
-cd plugin-debezium
+cd $WORKDIR
 
-sh ./setup.sh
+cd z/nats
+
+helm install nats nats/nats --set=config.jetstream.enabled=true
 
 cd $WORKDIR
 
-sh z/ingress/setup.sh
-
-sh z/secrets/secrets.sh
-
+cd z/secrets
+sh ./secrets.sh
 
 # Prompt for input
 read response
