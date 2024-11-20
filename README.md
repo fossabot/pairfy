@@ -78,6 +78,8 @@ minikube start --driver=docker --cpus="6" --memory=14gb --disk-size=200g
 
 ```
 minikube addons enable ingress
+minikube addons enable dashboard
+minikube addons enable metrics-server
 ```
 
 Clone this repository in the work directory
