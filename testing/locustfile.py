@@ -14,7 +14,7 @@ SELLER_TOKEN="session=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSj
 
 class ServiceSeller(HttpUser):
 
-    host = "http://service-seller:8000"
+    host = "http://service-seller.default.svc.cluster.local:8000"
     
     wait_time = between(1, 2)
 
@@ -24,7 +24,7 @@ class ServiceSeller(HttpUser):
 
 class ServiceUser(HttpUser):
 
-    host = "http://service-user:8000"
+    host = "http://service-user.default.svc.cluster.local:8000"
     
     wait_time = between(1, 2)
 
@@ -90,5 +90,5 @@ class CreateProductTest(TaskSet):
 
 class ServiceProduct(HttpUser):
     tasks = [CreateProductTest]
-    host = "http://service-product:4000"
+    host = "http://service-product.default.svc.cluster.local:4000"
     wait_time = between(1, 3)  

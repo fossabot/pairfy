@@ -33,7 +33,9 @@ spec:
             - name: SERVICE_NAME
               value: service-gateway  
             - name: CONSUMER_GROUP
-              value: service-gateway-group                                  
+              value: service-gateway-group 
+            - name: QUERY_LIMIT
+              value: "1000"                                   
           resources:
             limits:
               memory: "500Mi"
