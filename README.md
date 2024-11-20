@@ -49,7 +49,7 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 - [X] Multi-Wallet Support
   - [X] Nami
   - [X] Lace
-  - [X] Eternl 
+  - [X] Eternl
 - [ ] Add Blockchain Integration (In Progress)
 - [ ] Add Liquidity Pool
 
@@ -61,43 +61,55 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 
 [License](#license)
 
-### 1\. Requeriments
+### 1\. Installation
 
-Install kubernetes local cluster
+Install kubernetes minikube (Linux x86 .deb)
 
-- with docker-desktop [https://docs.docker.com/desktop/install/linux-install/](https://docs.docker.com/desktop/install/linux-install/)
-- or minikube [https://minikube.sigs.k8s.io/docs/start/](https://minikube.sigs.k8s.io/docs/start/)
+https://minikube.sigs.k8s.io/docs/
 
-Clone this repository
+```
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+sudo dpkg -i minikube_latest_amd64.deb
+```
+
+```
+minikube start --driver=docker --cpus="6" --memory=14gb --disk-size=200g 
+```
+
+```
+minikube addons enable ingress
+```
+
+Clone this repository in the work directory
 
 ```
 git clone https://github.com/rey-sudo/core.git
 ```
 
-Install skaffold dev
+Install skafold dev
+[https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
 ```
-https://skaffold.dev/docs/install
+skaffold run
 ```
+
 
 Install kubectl
-
 ```
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux
 ```
 
-### 2\. Installation
-
 Command
 
 ```
-skaffold dev
+skaffold run
 ```
-### 3\. License
+
+### 2\. License
 
 Distributed under the MIT License.
 
-### 4\. Contact
+### 3\. Contact
 
 Juan Caballero R. - sudo.delete.evil@gmail.com
 
