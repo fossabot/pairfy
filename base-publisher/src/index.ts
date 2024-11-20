@@ -88,6 +88,8 @@ const main = async () => {
       max_msgs: 100000, // Max number of messages to retain
       max_bytes: 5368709120, // Max size (10 GB),
       discard: DiscardPolicy.Old,
+      max_consumers: -1,
+
     });
 
     const jetStream = jsm.jetstream();
