@@ -86,6 +86,7 @@ Clone this repository in the work directory
 git clone https://github.com/rey-sudo/core.git
 ```
 
+
 Install skafold dev
 [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
@@ -100,6 +101,10 @@ https://kubernetes.io/docs/tasks/tools/install-kubectl-linux
 ```
 
 Command
+
+```
+sh ./setup.sh
+```
 
 ```
 skaffold run

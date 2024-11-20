@@ -62,10 +62,9 @@ kind: Service
 metadata:
   name: mysql-node
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 3306
     targetPort: 3306
-    nodePort: 30006
   selector:
     app: mysql
