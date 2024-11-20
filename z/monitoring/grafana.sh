@@ -6,4 +6,4 @@ kubectl get secret --namespace default monitoring-grafana -o jsonpath="{.data.ad
 
 
 
-helm upgrade monitoring prometheus-community/kube-prometheus-stack -f values.yaml --set prometheus-node-exporter.hostRootFsMount.enabled=false
+helm upgrade monitoring prometheus-community/kube-prometheus-stack -f values.yaml
