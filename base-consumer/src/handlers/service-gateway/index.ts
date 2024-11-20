@@ -8,8 +8,8 @@ const createProduct = async (message: any, data: any) => {
     connection = await database.client.getConnection();
 
     const [findProcessed] = await connection.execute(
-      "SELECT * FROM processed WHERE id = ? AND processed = ?",
-      [data.id, true]
+      "SELECT * FROM processed WHERE id = ?",
+      [data.id]
     );
 
     if (findProcessed.length > 0) {
@@ -61,7 +61,9 @@ const createProduct = async (message: any, data: any) => {
   } catch (err: any) {
     logger.error(err);
 
-    await connection.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
 
     message.nak();
   } finally {
