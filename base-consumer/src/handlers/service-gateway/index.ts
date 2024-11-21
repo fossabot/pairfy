@@ -1,7 +1,7 @@
 import { database } from "../../db/client.js";
 import { logger } from "../../utils/index.js";
 
-const createProduct = async (message: any, data: any) => {
+const createProductHandler = async (message: any, data: any) => {
   let connection = null;
 
   try {
@@ -59,13 +59,13 @@ const createProduct = async (message: any, data: any) => {
 
     message.ack();
   } catch (err: any) {
+    message.nak();
+
     logger.error(err);
 
     if (connection) {
       await connection.rollback();
     }
-
-    message.nak();
   } finally {
     if (connection) {
       connection.release();
@@ -74,16 +74,16 @@ const createProduct = async (message: any, data: any) => {
 };
 
 const handlers: any = {
-  CreateProduct: (message: any, payload: any) =>
-    createProduct(message, payload),
+  CreateProduct: async (message: any, payload: any) =>
+    await createProductHandler(message, payload),
 };
 
-export const processEvent = (message: any) => {
+export const processEvent = async (message: any) => {
   const messageDecoded = new TextDecoder().decode(message.data);
 
   const data = JSON.parse(messageDecoded);
 
   console.log(data.id, data.event_type);
 
-  handlers[data.event_type](message, data);
+  await handlers[data.event_type](message, data);
 };

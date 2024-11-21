@@ -95,12 +95,18 @@ const main = async () => {
         .then((res) => console.log(res))
         .catch((err) => logger.error(err));
 
-      const consumer = await jetStream.consumers.get(stream, process.env.DURABLE_NAME);
+      const consumer = await jetStream.consumers.get(
+        stream,
+        process.env.DURABLE_NAME
+      );
 
-      const messages: any = await consumer.consume({ max_messages: 1 });
+      const messages: any = await consumer.consume({
+        max_messages: 1000,
+        expires: 30_000,
+      });
 
       for await (const message of messages) {
-        MODU.processEvent(message);
+        await MODU.processEvent(message);
       }
     }
 
