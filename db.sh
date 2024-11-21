@@ -20,4 +20,26 @@ FROM performance_schema.global_variables WHERE variable_name='log_bin';
 
 FLUSH PRIVILEGES;
 
+
+
+SET GLOBAL max_connections = 100000;
+
 SET GLOBAL binlog_expire_logs_seconds = 604800;
+
+SET GLOBAL thread_cache_size = 256;
+
+SET GLOBAL innodb_buffer_pool_size = 10000000000;
+
+SET GLOBAL innodb_log_buffer_size = 500000000;
+
+SET GLOBAL innodb_flush_log_at_trx_commit = 2;
+
+SET GLOBAL innodb_io_capacity = 4000;
+
+SET GLOBAL tmp_table_size = 250000000;
+
+SET GLOBAL max_heap_table_size = 250000000;
+
+SET GLOBAL max_allowed_packet = 64000000;
+
+SET GLOBAL net_buffer_length = 64000;

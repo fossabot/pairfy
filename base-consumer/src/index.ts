@@ -2,6 +2,7 @@ import { AckPolicy, DeliverPolicy, jetstreamManager } from "@nats-io/jetstream";
 import { catcher, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { connect } from "@nats-io/transport-node";
+import pLimit from "p-limit";
 
 const main = async () => {
   try {
@@ -64,6 +65,12 @@ const main = async () => {
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
+      waitForConnections: true,
+      connectionLimit: 1000,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+      connectTimeout: 30000,
     });
 
     const natsClient = await connect({
@@ -74,6 +81,8 @@ const main = async () => {
       maxPingOut: 5,
       reconnectTimeWait: 10 * 1000,
     });
+    
+    const limit = pLimit(10);
 
     const jsm = await jetstreamManager(natsClient, {
       checkAPI: false,
@@ -102,8 +111,9 @@ const main = async () => {
         max_messages: 1,
       });
 
+
       for await (const message of messages) {
-        await MODU.processEvent(message);
+        limit(() => MODU.processEvent(message));
       }
     }
 
