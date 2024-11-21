@@ -85,15 +85,12 @@ const main = async () => {
     for (const stream of streamList) {
       //await jsm.consumers.delete(stream, process.env.POD_NAME);
 
-      await jsm.consumers
-        .add(stream, {
-          durable_name: process.env.DURABLE_NAME,
-          deliver_group: process.env.CONSUMER_GROUP,
-          ack_policy: AckPolicy.Explicit,
-          deliver_policy: DeliverPolicy.All,
-        })
-        .then((res) => console.log(res))
-        .catch((err) => logger.error(err));
+      await jsm.consumers.add(stream, {
+        durable_name: process.env.DURABLE_NAME,
+        deliver_group: process.env.CONSUMER_GROUP,
+        ack_policy: AckPolicy.Explicit,
+        deliver_policy: DeliverPolicy.All,
+      });
 
       const consumer = await jetStream.consumers.get(
         stream,
