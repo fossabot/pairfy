@@ -62,6 +62,7 @@ metadata:
 data:
   my.cnf: |
     [mysqld]
+    bind-address = 0.0.0.0
     max_connections = 100000
     binlog_expire_logs_seconds = 604800
     thread_cache_size = 256
