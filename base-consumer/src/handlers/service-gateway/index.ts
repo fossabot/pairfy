@@ -13,6 +13,7 @@ const createProductHandler = async (message: any, data: any) => {
     );
 
     if (findProcessed.length > 0) {
+      console.log("-----------repeated-------------");
       return message.ack();
     }
 

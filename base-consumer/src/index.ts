@@ -98,8 +98,7 @@ const main = async () => {
       );
 
       const messages: any = await consumer.consume({
-        max_messages: 1000,
-        expires: 30_000,
+        max_messages: 1,
       });
 
       for await (const message of messages) {
