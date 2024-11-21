@@ -67,7 +67,8 @@ const main = async () => {
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
-      servers: ["nats:4222"],
+      servers: ["nats:4222", "nats:4222"],
+      reconnect: true,
       pingInterval: 20 * 1000,
       maxPingOut: 5,
       reconnectTimeWait: 10 * 1000,
@@ -111,7 +112,7 @@ const main = async () => {
           [false, queryLimit]
         );
 
-        if(!findEvents.length){
+        if (!findEvents.length) {
           return;
         }
 
@@ -145,7 +146,6 @@ const main = async () => {
         logger.error(err);
 
         await connection.rollback();
-
       } finally {
         if (connection) {
           connection.release();
