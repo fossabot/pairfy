@@ -67,7 +67,7 @@ const main = async () => {
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
-      servers: ["nats:4222", "nats:4222"],
+      servers: ["nats:4222"],
       reconnect: true,
       pingInterval: 20 * 1000,
       maxPingOut: 5,
