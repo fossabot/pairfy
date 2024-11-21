@@ -7,6 +7,13 @@ config:
     fileStore:
       pvc:
         size: 50Gi
+  monitor:
+    enabled: true
+    port: 8222
+    tls:
+      # config.nats.tls must be enabled also
+      # when enabled, monitoring port will use HTTPS with the options from config.nats.tls
+      enabled: false
 
 podTemplate:
   topologySpreadConstraints:
@@ -28,3 +35,4 @@ container:
       limits:
         cpu: "2"
         memory: 2Gi      
+
