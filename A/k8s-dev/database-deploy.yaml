@@ -63,17 +63,23 @@ data:
   my.cnf: |
     [mysqld]
     bind-address = 0.0.0.0
-    max_connections = 100000
+    max_connections = 10000
     binlog_expire_logs_seconds = 604800
     thread_cache_size = 600
-    innodb_buffer_pool_size = 10000000000
-    innodb_log_buffer_size = 500000000
+    innodb_buffer_pool_size = 20000000000
+    innodb_buffer_pool_instances = 5
     innodb_flush_log_at_trx_commit = 2
+    innodb_log_buffer_size = 500000000
+    innodb_log_file_size = 4294967296
     innodb_io_capacity = 4000
+    innodb_io_capacity_max = 10000
+    innodb_flush_log_at_trx_commit = 2
     tmp_table_size = 250000000
     max_heap_table_size = 250000000
     max_allowed_packet = 64000000
     net_buffer_length = 64000
+    innodb_read_io_threads = 6
+    innodb_write_io_threads = 6
 
 
 ---

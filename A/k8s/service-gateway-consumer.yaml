@@ -19,25 +19,27 @@ spec:
             - name: POD_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.name                                                             
+                  fieldPath: metadata.name
             - name: POD_TIMEOUT
-              value: '120000'   
+              value: "120000"
             - name: DATABASE_USER
               value: marketplace
             - name: DATABASE_PASSWORD
               value: password
             - name: DATABASE_NAME
-              value: service_gateway                                                                                                                                                               
+              value: service_gateway
             - name: STREAM_LIST
-              value: product,query            
+              value: product,query
             - name: SERVICE_NAME
-              value: service-gateway  
+              value: service-gateway
             - name: CONSUMER_GROUP
-              value: service-gateway-group  
+              value: service-gateway-group
             - name: DURABLE_NAME
-              value: service-gateway-consumer                                
+              value: service-gateway-consumer
+            - name: CONCURRENT_LIMIT
+              value: "100"
           resources:
             limits:
               memory: "500Mi"
             requests:
-              memory: "256Mi"       
+              memory: "256Mi"

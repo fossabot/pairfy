@@ -42,6 +42,10 @@ const main = async () => {
       throw new Error("CONSUMER_GROUP error");
     }
 
+    if (!process.env.CONCURRENT_LIMIT) {
+      throw new Error("CONCURRENT_LIMIT error");
+    }
+
     console.log(process.env.POD_NAME);
 
     const MODU = await import(
@@ -81,8 +85,10 @@ const main = async () => {
       maxPingOut: 5,
       reconnectTimeWait: 10 * 1000,
     });
-    
-    const limit = pLimit(20);
+
+    const maxConcurrency = parseInt(process.env.CONCURRENT_LIMIT);
+
+    const limit = pLimit(maxConcurrency);
 
     const jsm = await jetstreamManager(natsClient, {
       checkAPI: false,
@@ -110,7 +116,6 @@ const main = async () => {
       const messages: any = await consumer.consume({
         max_messages: 1,
       });
-
 
       for await (const message of messages) {
         limit(() => MODU.processEvent(message));
