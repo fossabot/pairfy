@@ -82,7 +82,7 @@ const main = async () => {
       reconnectTimeWait: 10 * 1000,
     });
     
-    const limit = pLimit(10);
+    const limit = pLimit(20);
 
     const jsm = await jetstreamManager(natsClient, {
       checkAPI: false,

@@ -26,7 +26,7 @@ SET GLOBAL max_connections = 100000;
 
 SET GLOBAL binlog_expire_logs_seconds = 604800;
 
-SET GLOBAL thread_cache_size = 256;
+SET GLOBAL thread_cache_size = 600;
 
 SET GLOBAL innodb_buffer_pool_size = 10000000000;
 
