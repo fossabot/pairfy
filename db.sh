@@ -1,8 +1,11 @@
 #!/bin/sh
 
 
-alias mysql="mysql -h localhost -P 3306 -u root -ppassword"
+mysql -u root -ppassword
 
+use service_gateway;
+
+SELECT COUNT(*) AS total FROm products;
 
 
 GRANT ALL PRIVILEGES ON *.* TO 'marketplace'@'%';
