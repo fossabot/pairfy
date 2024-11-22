@@ -35,7 +35,7 @@ spec:
             - name: QUERY_INTERVAL
               value: "5000"    
             - name: QUERY_LIMIT
-              value: "1000"                                   
+              value: "100"                                   
           resources:
             limits:
               memory: "500Mi"
