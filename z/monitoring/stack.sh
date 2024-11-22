@@ -9,4 +9,4 @@ helm repo update
 
 helm install monitoring prometheus-community/kube-prometheus-stack
 
-helm upgrade monitoring prometheus-community/kube-prometheus-stack -f values.yaml
+helm upgrade monitoring prometheus-community/kube-prometheus-stack -f stack.yaml
