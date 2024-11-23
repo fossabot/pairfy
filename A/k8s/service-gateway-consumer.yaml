@@ -16,6 +16,16 @@ spec:
       containers:
         - name: service-gateway-consumer
           image: pairfy/base-consumer
+          ports:
+            - containerPort: 3000    
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3                  
           env:
             - name: POD_NAME
               valueFrom:

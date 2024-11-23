@@ -1,3 +1,4 @@
+import express from "express";
 import pLimit from "p-limit";
 import {
   AckPolicy,
@@ -51,11 +52,21 @@ const main = async () => {
       throw new Error("CONCURRENT_LIMIT error");
     }
 
-    console.log(process.env.POD_NAME);
-
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`
     );
+
+    const app = express();
+
+    const port = 3000;
+
+    app.get("/healthz", (req, res) => {
+      res.status(200).send("OK");
+    });
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
 
     const errorEvents: string[] = [
       "exit",
@@ -105,6 +116,8 @@ const main = async () => {
 
     errorEvents.forEach((e: string) =>
       process.on(e, async (err) => {
+        logger.error(err);
+
         for (let key in consumerList) {
           if (consumerList.hasOwnProperty(key)) {
             await consumerList[key].close();
@@ -122,7 +135,12 @@ const main = async () => {
     );
 
     streamList.forEach(async (stream) => {
-      //await jetStreamManager.consumers.delete(stream, process.env.DURABLE_NAME);
+      /* 
+     await jetStreamManager.consumers.delete(
+        stream,
+        process.env.DURABLE_NAME!
+      );
+      */
 
       await jetStreamManager.consumers.add(stream, {
         durable_name: process.env.DURABLE_NAME,
@@ -143,10 +161,6 @@ const main = async () => {
       });
 
       consumerList[stream] = messages;
-
-      setTimeout(() => {
-        throw new Error("testi");
-      }, 120_000);
 
       for await (const message of consumerList[stream]) {
         limit(() => MODU.processEvent(message));
