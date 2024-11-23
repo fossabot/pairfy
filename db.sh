@@ -5,7 +5,7 @@ mysql -u root -ppassword
 
 use service_gateway;
 
-SELECT COUNT(*) AS total FROm products;
+SELECT COUNT(*) AS total FROM products;
 
 
 GRANT ALL PRIVILEGES ON *.* TO 'marketplace'@'%';

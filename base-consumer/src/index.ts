@@ -1,4 +1,9 @@
-import { AckPolicy, DeliverPolicy, jetstreamManager } from "@nats-io/jetstream";
+import {
+  AckPolicy,
+  DeliverPolicy,
+  jetstreamManager,
+  ReplayPolicy,
+} from "@nats-io/jetstream";
 import { catcher, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { connect } from "@nats-io/transport-node";
@@ -70,7 +75,7 @@ const main = async () => {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       waitForConnections: true,
-      connectionLimit: 200,
+      connectionLimit: 150,
       queueLimit: 0,
       enableKeepAlive: true,
       keepAliveInitialDelay: 0,
@@ -99,13 +104,22 @@ const main = async () => {
     const streamList = process.env.STREAM_LIST.split(",");
 
     for (const stream of streamList) {
-      //await jsm.consumers.delete(stream, process.env.POD_NAME);
+      /*
+      try {
+        await jsm.consumers.delete(stream, process.env.DURABLE_NAME);
+      } catch (err) {
+        console.log(err);
+      }
+*/
 
       await jsm.consumers.add(stream, {
         durable_name: process.env.DURABLE_NAME,
         deliver_group: process.env.CONSUMER_GROUP,
         ack_policy: AckPolicy.Explicit,
         deliver_policy: DeliverPolicy.All,
+        replay_policy: ReplayPolicy.Instant,
+        ack_wait: 30 * 1000,
+        max_deliver: -1,
       });
 
       const consumer = await jetStream.consumers.get(

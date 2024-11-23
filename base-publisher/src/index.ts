@@ -64,7 +64,7 @@ const main = async () => {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       waitForConnections: true,
-      connectionLimit: 200,
+      connectionLimit: 150,
       queueLimit: 0,
       enableKeepAlive: true,
       keepAliveInitialDelay: 0,
