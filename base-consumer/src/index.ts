@@ -118,6 +118,8 @@ const main = async () => {
 
       for (let key in consumerList) {
         if (consumerList.hasOwnProperty(key)) {
+          await consumerList[key].stop();
+
           await consumerList[key].close();
           console.log("STREAM_STOPPED");
         }
@@ -152,7 +154,7 @@ const main = async () => {
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
           replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1,
+          max_deliver: -1
         });
 
         const consumer = await jetStream.consumers.get(
