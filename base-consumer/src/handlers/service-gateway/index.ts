@@ -58,11 +58,9 @@ const createProductHandler = async (message: any, data: any) => {
 
     await connection.commit();
 
-    const isAck = await message.ackAck();
+    const consumed = await message.ackAck();
 
-    console.log(isAck);
-
-    if (!isAck) {
+    if (!consumed) {
       throw new Error("ACK_ERROR");
     }
 
@@ -76,14 +74,13 @@ const createProductHandler = async (message: any, data: any) => {
     }
   } finally {
     if (connection) {
-      connection.release();
+      await connection.release();
     }
   }
 };
 
 const handlers: any = {
-  CreateProduct: async (message: any, payload: any) =>
-    await createProductHandler(message, payload),
+  CreateProduct: (message: any, payload: any) => createProductHandler(message, payload),
 };
 
 export const processEvent = async (message: any) => {
@@ -93,5 +90,5 @@ export const processEvent = async (message: any) => {
 
   console.log(data.id, data.event_type);
 
-  await handlers[data.event_type](message, data);
+  return handlers[data.event_type](message, data);
 };

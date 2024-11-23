@@ -116,15 +116,6 @@ const main = async () => {
 
       database.client.pool.config.connectionLimit = 0;
 
-      for (let key in consumerList) {
-        if (consumerList.hasOwnProperty(key)) {
-          await consumerList[key].stop();
-
-          await consumerList[key].close();
-          console.log("STREAM_STOPPED");
-        }
-      }
-
       await natsClient.drain();
       await natsClient.close();
       await database.client.end();
@@ -154,7 +145,7 @@ const main = async () => {
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
           replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1
+          max_deliver: -1,
         });
 
         const consumer = await jetStream.consumers.get(
@@ -162,18 +153,16 @@ const main = async () => {
           process.env.DURABLE_NAME
         );
 
-        const messages: any = await consumer.consume({
-          max_messages: 1,
-        });
+        while (true) {
+          console.log("loop");
 
-        consumerList[stream] = messages;
+          const message = await consumer.next();
 
-        setTimeout(() => {
-          throw new Error("CRASH");
-        }, 120_000);
-
-        for await (const message of consumerList[stream]) {
-          MODU.processEvent(message);
+          if (message) {
+            await MODU.processEvent(message);
+          } else {
+            console.log(`didn't get a message`);
+          }
         }
       });
     } catch (err) {
