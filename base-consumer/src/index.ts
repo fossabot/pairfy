@@ -136,6 +136,32 @@ const main = async () => {
 
     try {
       streamList.forEach(async (stream) => {
+        /*
+        try {
+          await jetStreamManager.consumers.delete(
+            stream,
+            process.env.DURABLE_NAME!
+          );
+        } catch (err) {
+          console.error(err);
+        }
+*/
+        await jetStreamManager.consumers.add(stream, {
+          durable_name: process.env.DURABLE_NAME,
+          deliver_group: process.env.CONSUMER_GROUP,
+          ack_policy: AckPolicy.Explicit,
+          deliver_policy: DeliverPolicy.All,
+          replay_policy: ReplayPolicy.Instant,
+          max_deliver: -1,
+        });
+
+        const consumerInfo = await jetStreamManager.consumers.info(
+          stream,
+          process.env.DURABLE_NAME!
+        );
+
+        console.log(consumerInfo);
+
         const consumer = await jetStream.consumers.get(
           stream,
           process.env.DURABLE_NAME

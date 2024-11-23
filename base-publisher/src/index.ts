@@ -84,20 +84,27 @@ const main = async () => {
       checkAPI: false,
     });
 
+
     //await jsm.streams.delete(process.env.STREAM_NAME);
-/* 
+
+ 
     await jsm.streams.add({
       name: process.env.STREAM_NAME,
       subjects: [process.env.STREAM_SUBJECT],
       retention: RetentionPolicy.Limits,
       storage: StorageType.File,
-      max_age: 200 * 60 * 60 * 1000, // Retain messages for 200 hours (in ms)
+      max_age: 0, // Retain messages for 200 hours (in ms)
       max_msgs: -1, // Max number of messages to retain
       max_bytes: -1, // Max size (10 GB),
       discard: DiscardPolicy.Old,
       max_consumers: -1,
+      num_replicas: 3
     });
-*/
+
+    const getInfo = await jsm.streams.info(process.env.STREAM_NAME);
+
+    console.log(getInfo);
+
     const jetStream = jsm.jetstream();
 
     let connection: any = null;
