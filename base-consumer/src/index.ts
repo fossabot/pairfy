@@ -75,6 +75,10 @@ const main = async () => {
       "SIGQUIT",
       "uncaughtException",
       "unhandledRejection",
+      "SIGHUP",
+      "SIGCONT",
+      "SIGUSR1",
+      "SIGUSR2",
     ];
 
     database.connect({
@@ -116,7 +120,7 @@ const main = async () => {
 
     errorEvents.forEach((e: string) =>
       process.on(e, async (err) => {
-        logger.error(err);
+        database.client.config.connectionLimit = 0;
 
         for (let key in consumerList) {
           if (consumerList.hasOwnProperty(key)) {
@@ -127,6 +131,10 @@ const main = async () => {
         await natsClient.drain();
         await natsClient.close();
         await database.client.end();
+
+        logger.info(e);
+
+        logger.error(err);
 
         console.log("POD EXIT");
 
@@ -162,13 +170,13 @@ const main = async () => {
 
       consumerList[stream] = messages;
 
-      for await (const message of consumerList[stream]) {
-        limit(() => MODU.processEvent(message));
-      }
-
       setTimeout(() => {
         throw new Error("SUPERCRASH");
       }, 120_000);
+
+      for await (const message of consumerList[stream]) {
+        limit(() => MODU.processEvent(message));
+      }
     });
 
     logger.info("ONLINE");
