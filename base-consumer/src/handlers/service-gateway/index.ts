@@ -58,7 +58,14 @@ const createProductHandler = async (message: any, data: any) => {
 
     await connection.commit();
 
-    message.ack();
+    const isAck = await message.ackAck();
+
+    console.log(isAck);
+
+    if (!isAck) {
+      throw new Error("ACK_ERROR");
+    }
+
   } catch (err: any) {
     message.nak();
 
