@@ -11,7 +11,9 @@ const catcher = async (message?: any, error?: any, bypass?: boolean) => {
 
   logger.error(`EXIT=>${message}-${error}`);
 
-  return bypass || process.exit(0);
+  process.kill(process.pid, 'SIGTERM'); 
+  
+  return bypass
 };
 
 const generateId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);

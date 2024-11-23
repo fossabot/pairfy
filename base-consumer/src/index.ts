@@ -1,3 +1,4 @@
+import pLimit from "p-limit";
 import {
   AckPolicy,
   DeliverPolicy,
@@ -7,7 +8,6 @@ import {
 import { catcher, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { connect } from "@nats-io/transport-node";
-import pLimit from "p-limit";
 
 const main = async () => {
   try {
@@ -93,70 +93,65 @@ const main = async () => {
 
     const limit = pLimit(maxConcurrency);
 
-    const jsm = await jetstreamManager(natsClient, {
+    const jetStreamManager = await jetstreamManager(natsClient, {
       checkAPI: false,
     });
 
-    const jetStream = jsm.jetstream();
+    const jetStream = jetStreamManager.jetstream();
 
     const streamList = process.env.STREAM_LIST.split(",");
 
     let consumerList: any = {};
 
-    setTimeout(() => {
-      console.log("Graceful shutdown completed.");
-      process.exit(0);
-    }, 120_000);
-
-    streamList.forEach(async (stream) => {
-      try {
-        //await jsm.consumers.delete(stream, process.env.DURABLE_NAME);
-
-        await jsm.consumers.add(stream, {
-          durable_name: process.env.DURABLE_NAME,
-          deliver_group: process.env.CONSUMER_GROUP,
-          ack_policy: AckPolicy.Explicit,
-          deliver_policy: DeliverPolicy.All,
-          replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1,
-        });
-
-        const consumer = await jetStream.consumers.get(
-          stream,
-          process.env.DURABLE_NAME
-        );
-
-        const messages: any = await consumer.consume({
-          max_messages: 1,
-        });
-
-        consumerList[stream] = messages;
-
-        for await (const message of consumerList[stream]) {
-          limit(() => MODU.processEvent(message));
-        }
-      } catch (err) {
-        catcher(err);
-      }
-    });
-
     errorEvents.forEach((e: string) =>
       process.on(e, async (err) => {
-        console.log("YES", e);
-
-        streamList.forEach(async (stream) => {
-          if (stream) {
-            await consumerList[stream].close();
-            console.log("stream stop", stream);
+        for (let key in consumerList) {
+          if (consumerList.hasOwnProperty(key)) {
+            await consumerList[key].close();
           }
-        });
+        }
 
         await natsClient.drain();
         await natsClient.close();
         await database.client.end();
-        catcher(err);
+
+        console.log("POD EXIT");
+
+        process.exit(0);
       })
     );
+
+    streamList.forEach(async (stream) => {
+      //await jetStreamManager.consumers.delete(stream, process.env.DURABLE_NAME);
+
+      await jetStreamManager.consumers.add(stream, {
+        durable_name: process.env.DURABLE_NAME,
+        deliver_group: process.env.CONSUMER_GROUP,
+        ack_policy: AckPolicy.Explicit,
+        deliver_policy: DeliverPolicy.All,
+        replay_policy: ReplayPolicy.Instant,
+        max_deliver: -1,
+      });
+
+      const consumer = await jetStream.consumers.get(
+        stream,
+        process.env.DURABLE_NAME
+      );
+
+      const messages: any = await consumer.consume({
+        max_messages: 1,
+      });
+
+      consumerList[stream] = messages;
+
+      setTimeout(() => {
+        throw new Error("testi");
+      }, 120_000);
+
+      for await (const message of consumerList[stream]) {
+        limit(() => MODU.processEvent(message));
+      }
+    });
 
     logger.info("ONLINE");
   } catch (err) {
@@ -165,5 +160,3 @@ const main = async () => {
 };
 
 main();
-
-//Service
