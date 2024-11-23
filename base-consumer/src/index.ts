@@ -119,6 +119,7 @@ const main = async () => {
       for (let key in consumerList) {
         if (consumerList.hasOwnProperty(key)) {
           await consumerList[key].close();
+          console.log("STREAM_STOPPED");
         }
       }
 
@@ -126,9 +127,10 @@ const main = async () => {
       await natsClient.close();
       await database.client.end();
 
-      console.log("POD EXIT");
-
-      process.exit(0);
+      setTimeout(() => {
+        console.log("POD_EXIT");
+        process.exit(0);
+      }, 60_000);
     };
 
     errorEvents.forEach((e: string) =>
@@ -165,8 +167,7 @@ const main = async () => {
         consumerList[stream] = messages;
 
         setTimeout(() => {
-          console.log("TEST");
-          //throw new Error("CATACRASH");
+          throw new Error("CRASH");
         }, 120_000);
 
         for await (const message of consumerList[stream]) {
