@@ -47,8 +47,6 @@ spec:
               value: service-gateway-group
             - name: DURABLE_NAME
               value: service-gateway-consumer
-            - name: CONCURRENT_LIMIT
-              value: "47"
           resources:
             limits:
               memory: "500Mi"

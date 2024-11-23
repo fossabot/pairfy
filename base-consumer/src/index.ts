@@ -1,5 +1,4 @@
 import express from "express";
-import pLimit from "p-limit";
 import {
   AckPolicy,
   DeliverPolicy,
@@ -46,10 +45,6 @@ const main = async () => {
 
     if (!process.env.CONSUMER_GROUP) {
       throw new Error("CONSUMER_GROUP error");
-    }
-
-    if (!process.env.CONCURRENT_LIMIT) {
-      throw new Error("CONCURRENT_LIMIT error");
     }
 
     const MODU = await import(
@@ -103,10 +98,6 @@ const main = async () => {
       maxPingOut: 5,
       reconnectTimeWait: 10 * 1000,
     });
-
-    const maxConcurrency = parseInt(process.env.CONCURRENT_LIMIT);
-
-    const limit = pLimit(maxConcurrency);
 
     const jetStreamManager = await jetstreamManager(natsClient, {
       checkAPI: false,
@@ -176,7 +167,7 @@ const main = async () => {
         setTimeout(() => {
           console.log("mega lol");
           throw new Error("CATACRASH");
-        }, 50_000);
+        }, 120_000);
 
         for await (const message of consumerList[stream]) {
           MODU.processEvent(message);
