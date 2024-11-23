@@ -165,6 +165,10 @@ const main = async () => {
       for await (const message of consumerList[stream]) {
         limit(() => MODU.processEvent(message));
       }
+
+      setTimeout(() => {
+        throw new Error("SUPERCRASH");
+      }, 120_000);
     });
 
     logger.info("ONLINE");
