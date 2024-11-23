@@ -68,7 +68,7 @@ const main = async () => {
       queueLimit: 0,
       enableKeepAlive: true,
       keepAliveInitialDelay: 0,
-      connectTimeout: 30000
+      connectTimeout: 30000,
     });
 
     const natsClient = await connect({
@@ -85,7 +85,7 @@ const main = async () => {
     });
 
     //await jsm.streams.delete(process.env.STREAM_NAME);
-
+/* 
     await jsm.streams.add({
       name: process.env.STREAM_NAME,
       subjects: [process.env.STREAM_SUBJECT],
@@ -97,7 +97,7 @@ const main = async () => {
       discard: DiscardPolicy.Old,
       max_consumers: -1,
     });
-
+*/
     const jetStream = jsm.jetstream();
 
     let connection: any = null;
@@ -123,35 +123,41 @@ const main = async () => {
         }
 
         for (const event of findEvents) {
-          await connection.beginTransaction();
+          try {
+            await connection.beginTransaction();
 
-          const [updateEvent] = await connection.execute(
-            "UPDATE events SET published = ? WHERE id = ?",
-            [true, event.id]
-          );
+            const [updateEvent] = await connection.execute(
+              "UPDATE events SET published = ? WHERE id = ?",
+              [true, event.id]
+            );
 
-          if (updateEvent.affectedRows !== 1) {
-            throw new Error("UPDATE_EVENT_ERROR");
+            if (updateEvent.affectedRows !== 1) {
+              throw new Error("UPDATE_EVENT_ERROR");
+            }
+
+            const payload = JSON.stringify(event);
+
+            const result = await jetStream.publish(
+              `${process.env.STREAM_NAME}.${event.event_type}`,
+              payload,
+              { msgID: event.id }
+            );
+
+            if (!result.seq) {
+              throw new Error("PUBLISH_ERROR");
+            }
+
+            await connection.commit();
+          } catch (err) {
+            console.log(err);
           }
-
-          const payload = JSON.stringify(event);
-
-          const result = await jetStream.publish(
-            `${process.env.STREAM_NAME}.${event.event_type}`,
-            payload,
-            { msgID: event.id }
-          );
-
-          if (!result.seq) {
-            throw new Error("PUBLISH_ERROR");
-          }
-
-          await connection.commit();
         }
       } catch (err: any) {
         logger.error(err);
 
-        await connection.rollback();
+        if (connection) {
+          await connection.rollback();
+        }
       } finally {
         if (connection) {
           connection.release();

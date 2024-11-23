@@ -7,6 +7,25 @@ config:
     fileStore:
       pvc:
         size: 50Gi
+    streams:
+    - name: product
+      subjects: ["product.*"]  
+      storage: file 
+      retention: limits 
+      maxMsgs: 1000  
+      maxBytes: 1Gi  
+      maxAge: 72h 
+      replicas: 3 
+    consumers:
+    - name: service-gateway-consumer
+      stream: product
+      durableName: service-gateway-consumer
+      deliverGroup: service-gateway-group
+      ackPolicy: explicit 
+      deliverPolicy: all 
+      replayPolicy: instant
+      maxAckPending: 100
+      maxDeliver: -1
   monitor:
     enabled: true
     port: 8222

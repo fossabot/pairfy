@@ -116,9 +116,13 @@ const main = async () => {
 
       database.client.pool.config.connectionLimit = 0;
 
-      await natsClient.drain();
-      await natsClient.close();
-      await database.client.end();
+      try {
+        await natsClient.drain();
+        await natsClient.close();
+        await database.client.end();
+      } catch (err) {
+        console.log(err);
+      }
 
       setTimeout(() => {
         console.log("POD_EXIT");
@@ -132,26 +136,14 @@ const main = async () => {
 
     try {
       streamList.forEach(async (stream) => {
-        /* 
-     await jetStreamManager.consumers.delete(
-        stream,
-        process.env.DURABLE_NAME!
-      );
-      */
-
-        await jetStreamManager.consumers.add(stream, {
-          durable_name: process.env.DURABLE_NAME,
-          deliver_group: process.env.CONSUMER_GROUP,
-          ack_policy: AckPolicy.Explicit,
-          deliver_policy: DeliverPolicy.All,
-          replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1,
-        });
-
         const consumer = await jetStream.consumers.get(
           stream,
           process.env.DURABLE_NAME
         );
+
+        setTimeout(() => {
+          /// throw new Error("CRASH");
+        }, 120_000);
 
         while (true) {
           console.log("loop");
@@ -159,7 +151,15 @@ const main = async () => {
           const message = await consumer.next();
 
           if (message) {
-            await MODU.processEvent(message);
+            const maybe = await MODU.processEvent(message);
+
+            console.log(maybe);
+
+            if (maybe) {
+              await message.ack();
+            } else {
+              await message.nak(30_000);
+            }
           } else {
             console.log(`didn't get a message`);
           }
