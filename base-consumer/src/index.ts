@@ -119,7 +119,11 @@ const main = async () => {
     let consumerList: any = {};
 
     const disableConnections = async (signal: any, error: any) => {
-      database.client.config.connectionLimit = 0;
+      logger.info(signal);
+
+      logger.error(error);
+
+      database.client.pool.config.connectionLimit = 0;
 
       for (let key in consumerList) {
         if (consumerList.hasOwnProperty(key)) {
@@ -131,10 +135,6 @@ const main = async () => {
       await natsClient.close();
       await database.client.end();
 
-      logger.info(signal);
-
-      logger.error(error);
-
       console.log("POD EXIT");
 
       process.exit(0);
@@ -144,8 +144,8 @@ const main = async () => {
       process.on(e, (err) => disableConnections(e, err))
     );
 
-    streamList.forEach(async (stream) => {
-      try {
+    try {
+      streamList.forEach(async (stream) => {
         /* 
      await jetStreamManager.consumers.delete(
         stream,
@@ -174,16 +174,17 @@ const main = async () => {
         consumerList[stream] = messages;
 
         setTimeout(() => {
-          throw new Error("SUPERCRASH");
-        }, 120_000);
+          console.log("mega lol");
+          throw new Error("CATACRASH");
+        }, 50_000);
 
         for await (const message of consumerList[stream]) {
-          limit(() => MODU.processEvent(message));
+          MODU.processEvent(message);
         }
-      } catch (err) {
-        disableConnections("IE", err);
-      }
-    });
+      });
+    } catch (err) {
+      disableConnections("IE", err);
+    }
 
     logger.info("ONLINE");
   } catch (err) {
