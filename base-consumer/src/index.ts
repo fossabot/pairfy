@@ -165,7 +165,7 @@ const main = async () => {
         consumerList[stream] = messages;
 
         setTimeout(() => {
-          console.log("mega lol");
+          console.log("mega loxl");
           throw new Error("CATACRASH");
         }, 120_000);
 
