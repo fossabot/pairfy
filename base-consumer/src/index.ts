@@ -146,7 +146,7 @@ const main = async () => {
 
         streamList.forEach(async (stream) => {
           if (stream) {
-            consumerList[stream].stop();
+            await consumerList[stream].close();
             console.log("stream stop", stream);
           }
         });

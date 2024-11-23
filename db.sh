@@ -3,8 +3,11 @@
 
 mysql -u root -ppassword
 
-use service_gateway;
+DROP DATABASE service_gateway;
+DROP DATABASE service_product;
 
+
+use service_gateway;
 SELECT COUNT(*) AS total FROM products;
 
 
