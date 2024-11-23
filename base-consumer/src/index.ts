@@ -118,64 +118,70 @@ const main = async () => {
 
     let consumerList: any = {};
 
-    errorEvents.forEach((e: string) =>
-      process.on(e, async (err) => {
-        database.client.config.connectionLimit = 0;
+    const disableConnections = async (signal: any, error: any) => {
+      database.client.config.connectionLimit = 0;
 
-        for (let key in consumerList) {
-          if (consumerList.hasOwnProperty(key)) {
-            await consumerList[key].close();
-          }
+      for (let key in consumerList) {
+        if (consumerList.hasOwnProperty(key)) {
+          await consumerList[key].close();
         }
+      }
 
-        await natsClient.drain();
-        await natsClient.close();
-        await database.client.end();
+      await natsClient.drain();
+      await natsClient.close();
+      await database.client.end();
 
-        logger.info(e);
+      logger.info(signal);
 
-        logger.error(err);
+      logger.error(error);
 
-        console.log("POD EXIT");
+      console.log("POD EXIT");
 
-        process.exit(0);
-      })
+      process.exit(0);
+    };
+
+    errorEvents.forEach((e: string) =>
+      process.on(e, (err) => disableConnections(e, err))
     );
 
     streamList.forEach(async (stream) => {
-      /* 
+      try {
+        /* 
      await jetStreamManager.consumers.delete(
         stream,
         process.env.DURABLE_NAME!
       );
       */
 
-      await jetStreamManager.consumers.add(stream, {
-        durable_name: process.env.DURABLE_NAME,
-        deliver_group: process.env.CONSUMER_GROUP,
-        ack_policy: AckPolicy.Explicit,
-        deliver_policy: DeliverPolicy.All,
-        replay_policy: ReplayPolicy.Instant,
-        max_deliver: -1,
-      });
+        await jetStreamManager.consumers.add(stream, {
+          durable_name: process.env.DURABLE_NAME,
+          deliver_group: process.env.CONSUMER_GROUP,
+          ack_policy: AckPolicy.Explicit,
+          deliver_policy: DeliverPolicy.All,
+          replay_policy: ReplayPolicy.Instant,
+          max_deliver: -1,
+        });
 
-      const consumer = await jetStream.consumers.get(
-        stream,
-        process.env.DURABLE_NAME
-      );
+        const consumer = await jetStream.consumers.get(
+          stream,
+          process.env.DURABLE_NAME
+        );
 
-      const messages: any = await consumer.consume({
-        max_messages: 1,
-      });
+        const messages: any = await consumer.consume({
+          max_messages: 1,
+        });
 
-      consumerList[stream] = messages;
+        consumerList[stream] = messages;
 
-      setTimeout(() => {
-        throw new Error("SUPERCRASH");
-      }, 120_000);
+        setTimeout(() => {
+          throw new Error("SUPERCRASH");
+        }, 120_000);
 
-      for await (const message of consumerList[stream]) {
-        limit(() => MODU.processEvent(message));
+        for await (const message of consumerList[stream]) {
+          limit(() => MODU.processEvent(message));
+        }
+      } catch (err) {
+        disableConnections("IE", err);
       }
     });
 
