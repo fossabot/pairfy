@@ -66,8 +66,6 @@ const main = async () => {
       "unhandledRejection",
     ];
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
-
     database.connect({
       host: "mysql",
       port: 3306,
@@ -103,38 +101,62 @@ const main = async () => {
 
     const streamList = process.env.STREAM_LIST.split(",");
 
-    for (const stream of streamList) {
-      /*
+    let consumerList: any = {};
+
+    setTimeout(() => {
+      console.log("Graceful shutdown completed.");
+      process.exit(0);
+    }, 120_000);
+
+    streamList.forEach(async (stream) => {
       try {
-        await jsm.consumers.delete(stream, process.env.DURABLE_NAME);
+        //await jsm.consumers.delete(stream, process.env.DURABLE_NAME);
+
+        await jsm.consumers.add(stream, {
+          durable_name: process.env.DURABLE_NAME,
+          deliver_group: process.env.CONSUMER_GROUP,
+          ack_policy: AckPolicy.Explicit,
+          deliver_policy: DeliverPolicy.All,
+          replay_policy: ReplayPolicy.Instant,
+          max_deliver: -1,
+        });
+
+        const consumer = await jetStream.consumers.get(
+          stream,
+          process.env.DURABLE_NAME
+        );
+
+        const messages: any = await consumer.consume({
+          max_messages: 1,
+        });
+
+        consumerList[stream] = messages;
+
+        for await (const message of consumerList[stream]) {
+          limit(() => MODU.processEvent(message));
+        }
       } catch (err) {
-        console.log(err);
+        catcher(err);
       }
-*/
+    });
 
-      await jsm.consumers.add(stream, {
-        durable_name: process.env.DURABLE_NAME,
-        deliver_group: process.env.CONSUMER_GROUP,
-        ack_policy: AckPolicy.Explicit,
-        deliver_policy: DeliverPolicy.All,
-        replay_policy: ReplayPolicy.Instant,
-        ack_wait: 30 * 1000,
-        max_deliver: -1,
-      });
+    errorEvents.forEach((e: string) =>
+      process.on(e, async (err) => {
+        console.log("YES", e);
 
-      const consumer = await jetStream.consumers.get(
-        stream,
-        process.env.DURABLE_NAME
-      );
+        streamList.forEach(async (stream) => {
+          if (stream) {
+            consumerList[stream].stop();
+            console.log("stream stop", stream);
+          }
+        });
 
-      const messages: any = await consumer.consume({
-        max_messages: 1,
-      });
-
-      for await (const message of messages) {
-        limit(() => MODU.processEvent(message));
-      }
-    }
+        await natsClient.drain();
+        await natsClient.close();
+        await database.client.end();
+        catcher(err);
+      })
+    );
 
     logger.info("ONLINE");
   } catch (err) {
