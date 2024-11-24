@@ -164,11 +164,13 @@ const main = async () => {
 
         const consumer = await jetStream.consumers.get(
           stream,
-          process.env.DURABLE_NAME
+          { name_prefix: process.env.DURABLE_NAME,
+            opt_start_seq: 1,
+          }
         );
 
         setTimeout(() => {
-          /// throw new Error("CRASH");
+          // throw new Error("CRASH");
         }, 120_000);
 
         while (true) {
