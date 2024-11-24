@@ -38,7 +38,6 @@ const server = new ApolloServer({
 });
 
 const main = async () => {
-
     try {
         if (!process.env.POD_TIMEOUT) {
             throw new Error("POD_TIMEOUT error");
@@ -90,6 +89,10 @@ const main = async () => {
             "SIGQUIT",
             "uncaughtException",
             "unhandledRejection",
+            "SIGHUP",
+            "SIGCONT",
+            "SIGUSR1",
+            "SIGUSR2",
         ];
 
         errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
@@ -101,7 +104,7 @@ const main = async () => {
             port: 3306,
             user: "marketplace",
             password: "password",
-            database: "service_product",
+            database: "service_gateway",
         });
 
         app.use(cookieSession(sessionOptions));

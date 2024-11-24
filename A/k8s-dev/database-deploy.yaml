@@ -120,6 +120,8 @@ data:
     CREATE DATABASE service_product;
 
     CREATE DATABASE service_gateway;
+
+    CREATE DATABASE service_seller;
     
 ---
 apiVersion: v1

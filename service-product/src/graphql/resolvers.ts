@@ -212,28 +212,28 @@ const getProducts = async (args: any, context: any) => {
 
   const pageSize = 16;
 
-  let query = "SELECT * FROM products WHERE seller_id = ?";
+  let queryScheme = "SELECT * FROM products WHERE seller_id = ?";
 
   let queryParams: any = [SELLER.id];
 
   if (params.cursor !== "NOT") {
-    query += " AND created_at < ?";
+    queryScheme += " AND created_at < ?";
 
     const date = new Date(parseInt(params.cursor)).toISOString();
 
     queryParams.push(date);
   }
 
-  query += " ORDER BY created_at DESC LIMIT ?";
+  queryScheme += " ORDER BY created_at DESC LIMIT ?";
 
   queryParams.push(pageSize);
 
   try {
     connection = await database.client.getConnection();
 
-    const [products] = await connection.query(query, queryParams);
+    const [products] = await connection.query(queryScheme, queryParams);
 
-    const [count] = await connection.execute(
+    const [productCount] = await connection.execute(
       `SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?`,
       [SELLER.id]
     );
@@ -242,12 +242,13 @@ const getProducts = async (args: any, context: any) => {
       ? products[products.length - 1].created_at
       : params.cursor;
 
-    await connection.commit();
+
+    const count = productCount[0].total_products;
 
     return {
       products,
       cursor,
-      count: count[0].total_products,
+      count,
     };
   } catch (err: any) {
     if (connection) {

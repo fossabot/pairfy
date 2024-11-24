@@ -27,7 +27,7 @@ type Product {
     discount: Boolean!
     discount_value: Int!
     created_at: String!
-  }
+}
 
 
 input GetProductsInput {
