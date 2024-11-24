@@ -148,7 +148,7 @@ const main = async () => {
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
           replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1
+          max_deliver: -1,
         });
 
         const consumerInfo = await jetStreamManager.consumers.info(
@@ -158,12 +158,13 @@ const main = async () => {
 
         console.log(consumerInfo);
 
-        const consumer = await jetStream.consumers.get(stream, {
-          name_prefix: process.env.DURABLE_NAME
-        });
+        const consumer = await jetStream.consumers.get(
+          stream,
+          process.env.DURABLE_NAME
+        );
 
         setTimeout(() => {
-          throw new Error("CRASH");
+          //throw new Error("CRASH");
         }, 200_000);
 
         while (true) {
