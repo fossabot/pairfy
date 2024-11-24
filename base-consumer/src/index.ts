@@ -120,9 +120,14 @@ const main = async () => {
         await connection.ping();
         console.timeEnd("DB_PING");
       } catch (error) {
+        if (connection) {
+          connection.rollback();
+        }
         logger.error("DB_CONNECTION_ERROR", error);
       } finally {
-        connection.release();
+        if (connection) {
+          connection.release();
+        }
       }
     }
 
