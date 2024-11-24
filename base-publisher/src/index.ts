@@ -1,3 +1,11 @@
+/*
++---------+-------------------------------------------------+
+| Version |                   Description                   |
++---------+-------------------------------------------------+
+|   1.0.0 | Deduplication, failsafe                         |
++---------+-------------------------------------------------+
+*/
+
 import {
   DiscardPolicy,
   jetstreamManager,
@@ -53,6 +61,10 @@ const main = async () => {
       "SIGQUIT",
       "uncaughtException",
       "unhandledRejection",
+      "SIGHUP",
+      "SIGCONT",
+      "SIGUSR1",
+      "SIGUSR2",
     ];
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
@@ -67,9 +79,34 @@ const main = async () => {
       connectionLimit: 150,
       queueLimit: 0,
       enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
+      keepAliveInitialDelay: 5000,
       connectTimeout: 30000,
+      timezone: "Z",
+      supportBigNumbers: true,
+      bigNumberStrings: true,
     });
+
+    async function healthCheck() {
+      let connection = null;
+      try {
+        console.time("DB_PING");
+        connection = await database.client.getConnection();
+        await connection.ping();
+        console.timeEnd("DB_PING");
+      } catch (error) {
+        logger.error("DB_PING_ERROR", error);
+
+        if (connection) {
+          connection.rollback();
+        }
+      } finally {
+        if (connection) {
+          connection.release();
+        }
+      }
+    }
+
+    setInterval(healthCheck, 30000);
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
@@ -80,36 +117,36 @@ const main = async () => {
       reconnectTimeWait: 10 * 1000,
     });
 
-    const jsm = await jetstreamManager(natsClient, {
+    const jetStreamManager = await jetstreamManager(natsClient, {
       checkAPI: false,
     });
 
+    //await jetStreamManager.streams.delete(process.env.STREAM_NAME);
 
-    //await jsm.streams.delete(process.env.STREAM_NAME);
-
- 
-    await jsm.streams.add({
+    await jetStreamManager.streams.add({
       name: process.env.STREAM_NAME,
       subjects: [process.env.STREAM_SUBJECT],
       retention: RetentionPolicy.Limits,
       storage: StorageType.File,
-      max_age: 0, // Retain messages for 200 hours (in ms)
-      max_msgs: -1, // Max number of messages to retain
-      max_bytes: -1, // Max size (10 GB),
+      max_age: 0,
+      max_msgs: -1,
+      max_bytes: -1,
       discard: DiscardPolicy.Old,
       max_consumers: -1,
-      num_replicas: 3
+      num_replicas: 3,
     });
 
-    const getInfo = await jsm.streams.info(process.env.STREAM_NAME);
+    const getInfo = await jetStreamManager.streams.info(
+      process.env.STREAM_NAME
+    );
 
     console.log(getInfo);
 
-    const jetStream = jsm.jetstream();
-
-    let connection: any = null;
+    const jetStream = jetStreamManager.jetstream();
 
     const queryLimit = parseInt(process.env.QUERY_LIMIT);
+
+    let connection: any = null;
 
     const runWorker = async () => {
       try {

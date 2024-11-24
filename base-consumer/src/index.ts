@@ -204,7 +204,7 @@ const main = async () => {
 
         setTimeout(() => {
           //throw new Error("CRASH");
-        }, 200_000);
+        }, 60_000);
 
         while (true) {
           const message = await consumer.next();

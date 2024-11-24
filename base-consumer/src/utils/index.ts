@@ -2,7 +2,7 @@ import { Logger } from "tslog";
 import { customAlphabet } from "nanoid";
 
 const logger = new Logger({
-  name: "service-product",
+  name: "POD",
   prettyLogTemplate: "{{logLevelName}} {{dateIsoStr}} {{fileNameWithLine}}",
   type: "pretty",
 });
