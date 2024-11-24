@@ -1,3 +1,11 @@
+/*
++---------+-------------------------------------------------+
+| Version |                   Description                   |
++---------+-------------------------------------------------+
+|   1.0.0 | Idempotent, failsafe, delivery all, manual ack. |
++---------+-------------------------------------------------+
+*/
+
 import express from "express";
 import {
   AckPolicy,
@@ -19,10 +27,6 @@ const main = async () => {
       throw new Error("POD_TIMEOUT error");
     }
 
-    if (!process.env.SERVICE_NAME) {
-      throw new Error("SERVICE_NAME error");
-    }
-
     if (!process.env.DATABASE_USER) {
       throw new Error("DATABASE_USER error");
     }
@@ -39,18 +43,27 @@ const main = async () => {
       throw new Error("STREAM_LIST error");
     }
 
-    if (!process.env.DURABLE_NAME) {
-      throw new Error("DURABLE_NAME error");
+    if (!process.env.SERVICE_NAME) {
+      throw new Error("SERVICE_NAME error");
     }
 
     if (!process.env.CONSUMER_GROUP) {
       throw new Error("CONSUMER_GROUP error");
     }
 
+    if (!process.env.DURABLE_NAME) {
+      throw new Error("DURABLE_NAME error");
+    }
+
+    if (!process.env.DURABLE_NAME) {
+      throw new Error("DURABLE_NAME error");
+    }
+
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`
     );
 
+    /////////////////////////////////////////////////////////////////////////
     const app = express();
 
     const port = 3000;
@@ -62,6 +75,9 @@ const main = async () => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
+
+    /////////////////////////////////////////////////////////////////////////
+
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -75,6 +91,10 @@ const main = async () => {
       "SIGUSR2",
     ];
 
+    errorEvents.forEach((e: string) =>
+      process.on(e, (err) => disableConnections(e, err))
+    );
+
     database.connect({
       host: "mysql",
       port: 3306,
@@ -85,9 +105,28 @@ const main = async () => {
       connectionLimit: 150,
       queueLimit: 0,
       enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
+      keepAliveInitialDelay: 5000,
       connectTimeout: 30000,
+      timezone: "Z",
+      supportBigNumbers: true,
+      bigNumberStrings: true,
     });
+
+    async function healthCheck() {
+      let connection = null;
+      try {
+        console.time("DB_PING");
+        connection = await database.client.getConnection();
+        await connection.ping();
+        console.timeEnd("DB_PING");
+      } catch (error) {
+        logger.error("DB_CONNECTION_ERROR", error);
+      } finally {
+        connection.release();
+      }
+    }
+
+    setInterval(healthCheck, 30000);
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
@@ -106,11 +145,7 @@ const main = async () => {
 
     const streamList = process.env.STREAM_LIST.split(",");
 
-    ////////////////////////////////////////
-
-    const disableConnections = async (signal: any, error: any) => {
-      logger.info(signal);
-
+    async function disableConnections(signal: any, error: any) {
       logger.error(error);
 
       database.client.pool.config.connectionLimit = 0;
@@ -124,14 +159,12 @@ const main = async () => {
       }
 
       setTimeout(() => {
-        console.log("POD_EXIT");
+        console.log("POD_EXIT", signal);
         process.exit(1);
       }, 30_000);
-    };
+    }
 
-    errorEvents.forEach((e: string) =>
-      process.on(e, (err) => disableConnections(e, err))
-    );
+    ////////////////////////////////////////
 
     try {
       streamList.forEach(async (stream) => {
@@ -173,15 +206,13 @@ const main = async () => {
           if (message) {
             const maybe = await MODU.processEvent(message);
 
-            console.log(maybe);
-
             if (maybe) {
               await message.ack();
             } else {
               await message.nak(30_000);
             }
           } else {
-            console.log(`didn't get a message`);
+            console.log(`EMPTY_QUEUE`);
           }
         }
       });
