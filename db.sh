@@ -71,9 +71,9 @@ create table if not exists processed(
   processed boolean default false,
   created_at timestamp default current_timestamp,
   primary key(id),
-  KEY idx_processed (processed),
-  KEY idx_seq (seq)
+  KEY idx_processed (processed)
 ) ENGINE=InnoDB;
+
 
 
 

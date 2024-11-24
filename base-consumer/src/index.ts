@@ -125,8 +125,8 @@ const main = async () => {
 
       setTimeout(() => {
         console.log("POD_EXIT");
-        process.exit(0);
-      }, 60_000);
+        process.exit(1);
+      }, 30_000);
     };
 
     errorEvents.forEach((e: string) =>
@@ -158,39 +158,13 @@ const main = async () => {
 
         console.log(consumerInfo);
 
-        /////////////////////////////////////////////
-
-        const connection = await database.client.getConnection();
-
-        const [findProcessed] = await connection.query(`
-           SELECT seq
-           FROM processed
-           WHERE processed = TRUE
-           ORDER BY created_at DESC 
-           LIMIT 1`);
-
-        let sequenceNumber = 1;
-
-        if (findProcessed.length > 0) {
-          sequenceNumber = findProcessed[0].seq;
-        }
-
-        /////////////////////////////////////////////
-
-        const LAST_EVENT_RANGE = 100;
-
-        const sequenceRange = Math.max(1, sequenceNumber - LAST_EVENT_RANGE);
-
-        console.log(sequenceRange);
-
         const consumer = await jetStream.consumers.get(stream, {
-          name_prefix: process.env.DURABLE_NAME,
-          opt_start_seq: sequenceRange,
+          name_prefix: process.env.DURABLE_NAME
         });
 
         setTimeout(() => {
           throw new Error("CRASH");
-        }, 120_000);
+        }, 200_000);
 
         while (true) {
           const message = await consumer.next();
