@@ -4,9 +4,12 @@ use service_gateway;
 
 create table if not exists processed(
   id varchar(50) not null,
+  seq bigint not null,
   event_type varchar(100) not null,
-  processed boolean not null,
+  processed boolean default false,
   created_at timestamp default current_timestamp,
-  primary key(id)
+  primary key(id),
+  KEY idx_processed (processed),
+  KEY idx_seq (seq)
 ) ENGINE=InnoDB;
 

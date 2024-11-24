@@ -62,7 +62,6 @@ const main = async () => {
     app.listen(port, () => {
       console.log(`Server running on port ${port}`);
     });
-
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -107,7 +106,7 @@ const main = async () => {
 
     const streamList = process.env.STREAM_LIST.split(",");
 
-    let consumerList: any = {};
+    ////////////////////////////////////////
 
     const disableConnections = async (signal: any, error: any) => {
       logger.info(signal);
@@ -137,22 +136,19 @@ const main = async () => {
     try {
       streamList.forEach(async (stream) => {
         /*
-        try {
-          await jetStreamManager.consumers.delete(
-            stream,
-            process.env.DURABLE_NAME!
-          );
-        } catch (err) {
-          console.error(err);
-        }
-*/
+        await jetStreamManager.consumers.delete(
+          stream,
+          process.env.DURABLE_NAME!
+        );
+        */
+
         await jetStreamManager.consumers.add(stream, {
           durable_name: process.env.DURABLE_NAME,
           deliver_group: process.env.CONSUMER_GROUP,
           ack_policy: AckPolicy.Explicit,
           deliver_policy: DeliverPolicy.All,
           replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1,
+          max_deliver: -1
         });
 
         const consumerInfo = await jetStreamManager.consumers.info(
@@ -162,20 +158,41 @@ const main = async () => {
 
         console.log(consumerInfo);
 
-        const consumer = await jetStream.consumers.get(
-          stream,
-          { name_prefix: process.env.DURABLE_NAME,
-            opt_start_seq: 1,
-          }
-        );
+        /////////////////////////////////////////////
+
+        const connection = await database.client.getConnection();
+
+        const [findProcessed] = await connection.query(`
+           SELECT seq
+           FROM processed
+           WHERE processed = TRUE
+           ORDER BY created_at DESC 
+           LIMIT 1`);
+
+        let sequenceNumber = 1;
+
+        if (findProcessed.length > 0) {
+          sequenceNumber = findProcessed[0].seq;
+        }
+
+        /////////////////////////////////////////////
+
+        const LAST_EVENT_RANGE = 100;
+
+        const sequenceRange = Math.max(1, sequenceNumber - LAST_EVENT_RANGE);
+
+        console.log(sequenceRange);
+
+        const consumer = await jetStream.consumers.get(stream, {
+          name_prefix: process.env.DURABLE_NAME,
+          opt_start_seq: sequenceRange,
+        });
 
         setTimeout(() => {
-          // throw new Error("CRASH");
+          throw new Error("CRASH");
         }, 120_000);
 
         while (true) {
-          console.log("loop");
-
           const message = await consumer.next();
 
           if (message) {
