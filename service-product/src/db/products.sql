@@ -35,3 +35,4 @@ create table if not exists products(
   INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB;
 
+--INDICE seller_id
