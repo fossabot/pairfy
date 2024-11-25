@@ -14,7 +14,7 @@ const catcher = (message?: any, error?: any, bypass?: boolean) => {
 };
 
 const getProductId = () => {
-    const nanoId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);
+    const nanoId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 16);
 
     const result = nanoId();
 
@@ -22,7 +22,7 @@ const getProductId = () => {
 
 };
 
-const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz23456789", 21);
+const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 21);
 
 
 export { logger, catcher, getProductId, getEventId }

@@ -138,13 +138,15 @@ const createProduct = async (args: any, context: any) => {
 
     const productVersion = 0;
 
+    const productSKU = params.sku + `:${SELLER.id}`;
+
     const schemeValue = [
       productId,
       SELLER.id,
       params.name,
       params.price,
       params.collateral,
-      params.sku,
+      productSKU,
       params.model,
       params.brand,
       params.features,
@@ -241,7 +243,6 @@ const getProducts = async (args: any, context: any) => {
     const cursor = products.length
       ? products[products.length - 1].created_at
       : params.cursor;
-
 
     const count = productCount[0].total_products;
 

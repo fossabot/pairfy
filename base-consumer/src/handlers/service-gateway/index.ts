@@ -2,7 +2,7 @@ import { database } from "../../db/client.js";
 import { logger } from "../../utils/index.js";
 
 const createProductHandler = async (
-  data: any,
+  event: any,
   seq: number
 ): Promise<boolean> => {
   let response = null;
@@ -14,7 +14,7 @@ const createProductHandler = async (
 
     const [findProcessed] = await connection.execute(
       "SELECT id FROM processed WHERE id = ? AND processed = ?",
-      [data.id, true]
+      [event.id, true]
     );
 
     if (findProcessed.length > 0) {
@@ -22,6 +22,8 @@ const createProductHandler = async (
 
       return Promise.resolve(true);
     }
+
+    const payload = JSON.parse(event.payload);
 
     await connection.beginTransaction();
 
@@ -53,14 +55,14 @@ const createProductHandler = async (
           schema_v
      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    await connection.execute(schemeData, JSON.parse(data.payload));
+    await connection.execute(schemeData, payload);
 
-    const processedSchema =
-      "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)";
+    await connection.execute("INSERT INTO books (id, product_sku) VALUES (?, ?)", [event.id, payload[5]]);
 
-    const processedEvent = [data.id, seq, data.event_type, true];
-
-    await connection.execute(processedSchema, processedEvent);
+    await connection.execute(
+      "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)",
+      [event.id, seq, event.event_type, true]
+    );
 
     await connection.commit();
 
@@ -83,16 +85,16 @@ const createProductHandler = async (
 };
 
 const handlers: any = {
-  CreateProduct: (payload: any, seq: number) =>
-    createProductHandler(payload, seq),
+  CreateProduct: (event: any, seq: number) =>
+    createProductHandler(event, seq),
 };
 
 export const processEvent = (message: any) => {
   const messageDecoded = new TextDecoder().decode(message.data);
 
-  const data = JSON.parse(messageDecoded);
+  const event = JSON.parse(messageDecoded);
 
-  console.log(message.seq, data.id, data.event_type);
+  console.log(message.seq, event.id, event.event_type);
 
-  return handlers[data.event_type](data, message.seq);
+  return handlers[event.event_type](event, message.seq);
 };

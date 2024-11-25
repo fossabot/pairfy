@@ -41,7 +41,7 @@
                                 :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
 
                             <InputText v-model="productSKU" type="text" placeholder="Product SKU"
-                                v-keyfilter="/^[a-zA-Z0-9]+$/" :invalid="formErrors.sku"
+                                v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                 style="border-radius: var(--p-inputtext-border-radius)" />
                         </InputGroup>
 

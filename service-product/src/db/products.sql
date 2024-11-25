@@ -32,7 +32,7 @@ create table if not exists products(
   schema_t timestamp default current_timestamp,
   schema_v int unsigned not null,
   primary key(id),
-  INDEX idx_created_at (created_at)
+  INDEX idx_created_at (created_at),
+  INDEX idx_seller_id (seller_id)
 ) ENGINE=InnoDB;
 
---INDICE seller_id
