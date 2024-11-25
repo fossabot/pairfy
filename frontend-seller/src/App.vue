@@ -18,12 +18,12 @@ import { RouterView } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { provide } from 'vue';
 import { ApolloClients } from '@vue/apollo-composable';
-import { productClient, blockchainClient } from './graphql/index';
+import { productClient, gatewayClient } from './graphql/index';
 
 provide(ApolloClients, {
   default: productClient,
   product: productClient,
-  blockchain: blockchainClient,
+  gateway: gatewayClient,
 })
 
 const toast = useToast();

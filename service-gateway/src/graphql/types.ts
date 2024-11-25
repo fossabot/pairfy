@@ -30,15 +30,7 @@ type Product {
 }
 
 
-input GetProductsInput {
-  cursor: String!
-}  
-
-input GetOrdersInput {
-  id: String!
-} 
-
-type ProductWithBook {
+type ProductBook {
    id: String!
    name: String!
    price: Int!
@@ -52,19 +44,24 @@ type ProductWithBook {
    book_blocked_orders: Int!
 }
 
-type GetProductsResponse {
-  products: [ProductWithBook!]
+type GetBooksResponse {
+  products: [ProductBook!]
   cursor: String!
   count: Int!
 }
+  
+input GetBooksInput {
+  cursor: String!
+}  
+
+input GetOrdersInput {
+  id: String!
+} 
 
 type Query {
   getOrders: String
-  getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
+  getBooks(getBooksInput: GetBooksInput!): GetBooksResponse!
 }
-
-#/////////////////////////////////////////////////
-
 
 #/////////////////////////////////////////////////
 

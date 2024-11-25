@@ -23,8 +23,8 @@ const clientProductOptions = {
     cache
 }
 
-const clientBlockchainOptions = {
-    uri: 'http://example.org/graphql',
+const clientGatewayOptions = {
+    uri: HOST + '/api/gateway/graphql',
     cache
 }
 
@@ -33,11 +33,11 @@ const productClient = new ApolloClient({
     ...clientProductOptions,
 });
 
-const blockchainClient = new ApolloClient({
+const gatewayClient = new ApolloClient({
     ...defaultOptions,
-    ...clientBlockchainOptions,
+    ...clientGatewayOptions,
 });
 
 
 
-export { productClient, blockchainClient }
+export { productClient, gatewayClient }

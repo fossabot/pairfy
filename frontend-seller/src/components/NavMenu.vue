@@ -13,7 +13,7 @@
             <span>Home</span>
           </RouterLink>
         </li>
-        
+
         <li>
           <RouterLink to="/product-list">
             <i class="pi pi-list" />
@@ -25,6 +25,13 @@
           <RouterLink to="/create-product">
             <i class="pi pi-plus" />
             <span>Create Product</span>
+          </RouterLink>
+        </li>
+
+        <li>
+          <RouterLink to="/product-books">
+            <i class="pi pi-folder" />
+            <span>Product Books</span>
           </RouterLink>
         </li>
 
@@ -82,6 +89,8 @@ li span {
 
 a {
   padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .logo {

@@ -29,8 +29,8 @@ const getOrders = async (args: any, context: any) => {
   }
 };
 
-const getProducts = async (args: any, context: any) => {
-  const params = args.getProductsInput;
+const getBooks = async (args: any, context: any) => {
+  const params = args.getBooksInput;
 
   const SELLER = context.sellerData;
 
@@ -113,8 +113,7 @@ const getProducts = async (args: any, context: any) => {
 const products = {
   Query: {
     getOrders: (_: any, args: any, context: any) => getOrders(args, context),
-    getProducts: (_: any, args: any, context: any) =>
-      getProducts(args, context),
+    getBooks: (_: any, args: any, context: any) => getBooks(args, context),
   },
 };
 
