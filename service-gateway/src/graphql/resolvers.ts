@@ -36,21 +36,43 @@ const getProducts = async (args: any, context: any) => {
 
   const pageSize = 16;
 
+  const defaultCursor = "NOT";
+
   let connection = null;
 
-  let queryScheme = "SELECT * FROM products WHERE seller_id = ?";
+  let queryScheme = `
+    SELECT
+      p.id AS id,
+      p.name AS name,
+      p.price AS price,
+      p.collateral AS collateral,
+      p.media_url AS media_url,
+      p.image_path  AS image_path,
+      p.image_set  AS image_set,
+      p.created_at AS created_at,
+      b.product_stock AS book_product_stock,
+      b.ready_stock AS book_ready_stock,
+      b.blocked_orders AS book_blocked_orders
+    FROM
+      products p
+    JOIN
+      books b
+    ON
+      p.id = b.id    
+    WHERE
+      p.seller_id = ?`;
 
   let queryParams: any = [SELLER.id];
 
-  if (params.cursor !== "NOT") {
-    queryScheme += " AND created_at < ?";
+  if (params.cursor !== defaultCursor) {
+    queryScheme += " AND p.created_at < ?";
 
     const date = new Date(parseInt(params.cursor)).toISOString();
 
     queryParams.push(date);
   }
 
-  queryScheme += " ORDER BY created_at DESC LIMIT ?";
+  queryScheme += " ORDER BY p.created_at DESC LIMIT ?";
 
   queryParams.push(pageSize);
 
@@ -69,7 +91,7 @@ const getProducts = async (args: any, context: any) => {
       : params.cursor;
 
     const count = productCount[0].total_products;
-    
+
     return {
       products,
       cursor,

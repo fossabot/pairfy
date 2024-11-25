@@ -38,8 +38,22 @@ input GetOrdersInput {
   id: String!
 } 
 
+type ProductWithBook {
+   id: String!
+   name: String!
+   price: Int!
+   collateral: Int!
+   media_url: String!
+   image_path: String!
+   image_set: String!
+   created_at: String!
+   book_product_stock: Int!
+   book_ready_stock: Int!
+   book_blocked_orders: Int!
+}
+
 type GetProductsResponse {
-  products: [Product]
+  products: [ProductWithBook!]
   cursor: String!
   count: Int!
 }

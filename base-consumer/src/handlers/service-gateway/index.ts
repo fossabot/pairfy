@@ -57,7 +57,7 @@ const createProductHandler = async (
 
     await connection.execute(schemeData, payload);
 
-    await connection.execute("INSERT INTO books (id, product_sku) VALUES (?, ?)", [event.id, payload[5]]);
+    await connection.execute("INSERT INTO books (id, product_sku) VALUES (?, ?)", [payload[0], payload[5]]);
 
     await connection.execute(
       "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)",
