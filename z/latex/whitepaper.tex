@@ -179,7 +179,7 @@ Finally the buyer confirms whether he received the product by invoking the @rece
 
 
 
-\subsubsection { Advantages And Disadvantages }
+\subsubsection { Disadvantages }
 
 The main disadvantage of this pattern is that scripts can last a long time without being taken up by buyers.
 This means more resource consumption on the backend watching the script state. The seller may need to change prices. The conversion from USD to ADA occurs when the seller deploys the script so the price can fluctuate greatly if the trade is delayed. All these problems are solved with the Buyer pattern.
@@ -224,8 +224,8 @@ The EUTXO model of the Cardano blockchain implies that smart contracts need an i
 Connecting the blockchain to the real world is an expensive challenge at least for trading physical products.
 Shipping companies would have to connect their vehicles to supervised oracles and the products must have an infallible tracker to check if were delivered.
 A lot of infrastructure deployed around the world is necessary to achieve a fully decentralized ecommerce protocol.
-Clearly this represents a very difficult challenge to achieve in contrast to another option which is to use the human brain as a source of truth.
-With the right conditions the human brain can make logical reasoning about facts or propositions to declare a truth.
+Clearly this represents a very difficult challenge to achieve in contrast to another option which is to use the human as a source of truth.
+With the right conditions the human can make logical reasoning about facts or propositions to declare a truth.
 For example, the peer review system in the academic world allows a research paper to be reviewed by randomly assigned experts.
 A blind reviewer does not know who is the author of the paper he is reviewing and the author also does not know who the reviewers are.
 The system maintains confidentiality to prevent biases, ensuring a rigorous and impartial assessment. Serving as a crucial quality control mechanism, it identifies errors, provides constructive feedback to authors and contributes to the overall accuracy and reliability of published work. 
@@ -257,7 +257,7 @@ The negotiation of a product generates a context and this can be validated using
 \subsection { Scalability } 
 
 According to the principle of least cardinality in data modeling which states that one-to-many relationships such as between the author and the $N$ of published posts, the identifier that relates them should be stored on the ``many" side. In other words, when data modeling is designed posts should store the author identifier, authors should not store identifiers about their posts. As long as the author has a small number of published posts there are no problems with storing and consulting the information. The problem arises when the author has a large number of published posts, the storage of post identifiers in one of the author variables represents a scaling problem and the query time can be affected.
-The application of this principle in the protocol architecture allows high horizontal scalability and the design of the plutus scripts. Scripts being individual do not depend on a main contract and execute their logic independently. This allows for high transaction batches per second. This architecture allows for high horizontal scalability and availability. Each service-gateway-1 or 2,3... contains several routes that build transactions in CBOR and are sent to the browser to be signed and sent by the user. The state service finds out about the new order and starts checking its status on the blockchain using the providers. In this way, the status is communicated to the other services and finally to the users.
+The application of this principle in the protocol architecture allows high horizontal scalability and the design of the plutus scripts. Scripts being individual do not depend on a main contract and execute their logic independently. This allows for high transaction batches per second. This architecture allows for high horizontal scalability and availability. Each service-gateway-1, service-gateway-2,3,4... contains several routes that build transactions in CBOR and are sent to the browser to be signed and sent by the user. The state service finds out about the new order and starts checking its status on the blockchain using the providers. In this way, the status is communicated to the other services and finally to the users.
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\textwidth]{horizontal.drawio.pdf}
@@ -269,7 +269,7 @@ Sharding databases allow for unlimited horizontal nodes to be added and Kubernet
 
 \subsection { Governance/Utility Token} 
 
-The community using governance can change the policies and parameters of the protocol. For example: who meets the characteristics to be a mediator or not between the candidates. The token can also be assigned a purpose, such as appearing in product suggestions (visibility). In this case, the product timeline should be grouped to be fair to sellers who do not use the token.
+The community using governance can change the policies and parameters of the protocol. For example: who meets the characteristics to be a mediator or not between the candidates. The token can also be assigned as utility such as visibility for the products. In this case, the product timeline/feed/views should be grouped to be fair to sellers who do not use the token.
 
 
 \subsection { Liquidity Pool }
