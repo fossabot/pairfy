@@ -559,7 +559,7 @@ watch(result, value => {
         productName.value = product.name;
         productPrice.value = product.price;
         productCollateral.value = product.collateral;
-        productSKU.value = product.sku;
+        productSKU.value = formatSKU(product.sku);
         productModel.value = product.model;
         productBrand.value = product.brand;
         editor.value.commands.setContent(JSON.parse(product.features));
@@ -751,6 +751,13 @@ const showError = (content) => {
 const reloadPage = () => {
     window.location.reload();
 }
+
+const formatSKU = (value) => {
+    if (value) {
+        return value.split(":")[0]
+    }
+};
+
 
 onBeforeUnmount(() => {
     if (editor.value) {

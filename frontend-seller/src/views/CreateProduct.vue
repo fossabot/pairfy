@@ -222,7 +222,7 @@
                                 </template>
                                 <template #empty>
                                     <div class="uploader-empty" @click="chooseCallback()">
-                                        <i class="pi pi-cloud-upload" />
+                                        <i class="pi pi-image" />
                                         <p>Select images to upload.</p>
                                     </div>
                                 </template>

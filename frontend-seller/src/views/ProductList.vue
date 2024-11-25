@@ -80,6 +80,10 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
+
+                <template #body="slotProps">
+                    {{ formatSKU(slotProps.data.sku) }}
+                </template>
             </Column>
             <Column field="name" header="Name" sortable style="min-width: 8rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
@@ -293,6 +297,12 @@ const formatCurrency = (value) => {
         }) + " USD";
     }
 
+};
+
+const formatSKU = (value) => {
+    if (value) {
+        return value.split(":")[0]
+    }
 };
 
 const convertDate = (timestamp) => {
