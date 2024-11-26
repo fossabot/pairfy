@@ -124,6 +124,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
+            
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
