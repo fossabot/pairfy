@@ -46,6 +46,7 @@ const getBooks = async (args: any, context: any) => {
       p.name AS name,
       p.price AS price,
       p.collateral AS collateral,
+      p.sku AS sku,
       p.media_url AS media_url,
       p.image_path  AS image_path,
       p.image_set  AS image_set,

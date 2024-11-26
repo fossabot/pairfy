@@ -517,7 +517,6 @@ onErrorProductCreated(error => {
 
 onProductCreated(result => {
     showSuccess("The product has been created successfully.");
-    setTimeout(() => reloadPage(), 1000)
 })
 
 const formErrors = ref({

@@ -52,7 +52,7 @@
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
-                        <Button label="New" icon="pi pi-plus" variant="outlined" />
+                        .
                     </RouterLink>
                 </div>
             </template>
@@ -103,18 +103,6 @@
                 </template>
             </Column>
 
-            <Column field="discount_value" header="Discount" sortable
-                style="min-width: 2rem; text-transform: capitalize;">
-                <template #body="slotProps">
-                    {{ slotProps.data.discount_value }} %
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
@@ -125,7 +113,27 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="category" header="Category" sortable style="min-width: 8rem; text-transform: capitalize;">
+
+            <Column field="book_product_stock" header="Stock" sortable
+                style="min-width: 4rem; text-transform: capitalize;">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
+
+            <Column field="book_ready_stock" header="Ready" sortable
+                style="min-width: 4rem; text-transform: capitalize;">
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
+
+            <Column field="book_blocked_orders" header="Locked" sortable
+                style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -143,20 +151,14 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="stock" header="Stock" sortable style="min-width: 4rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
+
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
-                        <Button icon="pi pi-trash" outlined size="small" rounded
+                        <Button icon="pi pi-pencil" outlined size="small" rounded
+                            @click="beforeDeleteProduct(slotProps.data)" />
+
+                        <Button icon="pi pi-eye" outlined size="small" rounded
                             @click="beforeDeleteProduct(slotProps.data)" />
                     </div>
                 </template>
@@ -208,6 +210,16 @@ query($getBooksVariable: GetBooksInput!){
         products {
             id
             name
+            price
+            collateral
+            sku
+            media_url
+            image_path
+            image_set
+            created_at
+            book_product_stock
+            book_ready_stock
+            book_blocked_orders
         }
 
         cursor
@@ -226,22 +238,22 @@ onGetBooksError(error => {
 const updateCursor = () => {
     variablesRef.value = {
         getBooksVariable: {
-            cursor: getProductsResult.value?.getBooks.cursor
+            cursor: getBooksResult.value?.getBooks.cursor
         }
     }
 }
 
-const productsTemp = ref([]);
+const booksTemp = ref([]);
 
-const products = computed(() => productsTemp.value);
+const products = computed(() => booksTemp.value);
 
 watch(getBooksResult, value => {
     if (value) {
-        productsTemp.value.push(...value.getBooks.products)
+        booksTemp.value.push(...value.getBooks.products)
     }
 }, { immediate: true })
 
-const productCount = computed(() => getProductsResult.value?.getBooks.count);
+const productCount = computed(() => getBooksResult.value?.getBooks.count);
 
 const dt = ref();
 
@@ -275,7 +287,7 @@ const onDeleteConfirmed = () => {
             "id": selectedProduct.value.id
         }
     });
-    productsTemp.value = []
+    booksTemp.value = []
     deleteProductDialog.value = false;
 }
 
@@ -416,6 +428,11 @@ const editProduct = (event) => {
     display: flex;
     justify-content: center;
 }
+
+.datatable-control button {
+    margin-left: 1rem;
+}
+
 
 .arrow {
     font-size: 12px;

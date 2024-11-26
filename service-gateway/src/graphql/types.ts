@@ -35,6 +35,7 @@ type ProductBook {
    name: String!
    price: Int!
    collateral: Int!
+   sku: String!
    media_url: String!
    image_path: String!
    image_set: String!
