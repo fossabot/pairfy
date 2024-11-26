@@ -145,7 +145,7 @@
             </Column>
             <Column field="stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? '' : ''" :severity="getStockLabel(slotProps.data.stock)" />
+                    <Tag :value="slotProps.data.stock ? 'in' : 'out'" :severity="getStockLabel(slotProps.data.stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
