@@ -72,6 +72,10 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
+
+                <template #body="slotProps">
+                    {{ formatWithDots(slotProps.data.id, 5) }}
+                </template>
             </Column>
 
             <Column field="sku" header="SKU" sortable style="min-width: 8rem">
@@ -139,6 +143,9 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
+                <template #body="slotProps">
+                    <Tag :value="slotProps.data.book_blocked_orders" severity="secondary" />
+                </template>
             </Column>
 
             <Column field="created_at" header="Date" sortable style="min-width: 8rem">
@@ -175,6 +182,10 @@ import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
+import { inject } from 'vue';
+
+
+const { formatWithDots } = inject('utils');
 
 const toast = useToast();
 

@@ -72,6 +72,9 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
+                <template #body="slotProps">
+                    {{ formatWithDots(slotProps.data.id, 5) }}
+                </template>
             </Column>
 
             <Column field="sku" header="SKU" sortable style="min-width: 8rem">
@@ -94,7 +97,7 @@
             </Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.price) }}
+                    <Tag :value="formatCurrency(slotProps.data.price)" severity="secondary" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -173,6 +176,9 @@ import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
+import { inject } from 'vue';
+
+const { formatWithDots } = inject('utils')
 
 const toast = useToast();
 
@@ -330,7 +336,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'danger';
+            return 'secondary';
 
         default:
             return null;
