@@ -152,17 +152,6 @@
                 </template>
             </Column>
 
-            <Column field="created_at" header="Date" sortable style="min-width: 8rem">
-                <template #body="slotProps">
-                    {{ convertDate(slotProps.data.created_at) }}
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
