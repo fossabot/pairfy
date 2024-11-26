@@ -10,6 +10,7 @@ create table if not exists events(
   agent_id varchar(50) default null,
   created_at timestamp default current_timestamp,
   primary key(id),
+  INDEX idx_id_published (id,published),
   INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB;
 
