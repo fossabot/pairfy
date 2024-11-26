@@ -123,7 +123,7 @@
             </Column>
 
             <Column field="book_product_stock" header="Stock" sortable
-                style="min-width: 6rem; text-transform: capitalize;">
+                style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -132,7 +132,7 @@
             </Column>
 
             <Column field="book_ready_stock" header="Ready" sortable
-                style="min-width: 6rem; text-transform: capitalize;">
+                style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -141,7 +141,7 @@
             </Column>
 
             <Column field="book_blocked_orders" header="Locked" sortable
-                style="min-width: 6rem; text-transform: capitalize;">
+                style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
