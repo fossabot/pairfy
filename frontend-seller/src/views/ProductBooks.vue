@@ -160,9 +160,6 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.book_blocked_orders" severity="secondary" />
-                </template>
             </Column>
 
             <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
