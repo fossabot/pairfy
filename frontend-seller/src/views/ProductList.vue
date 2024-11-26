@@ -115,7 +115,10 @@
             <Column field="discount_value" header="Discount" sortable
                 style="min-width: 2rem; text-transform: capitalize;">
                 <template #body="slotProps">
-                    {{ slotProps.data.discount_value }} %
+                    <div v-if="slotProps.data.discount">
+                        <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
+                    </div>
+                 
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -152,16 +155,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
             </Column>
-            <Column field="stock" header="Stock" sortable style="min-width: 4rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.stock ? 'in' : 'out'" :severity="getStockLabel(slotProps.data.stock)" />
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
+
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
@@ -227,8 +221,9 @@ query($getProductsVariable: GetProductsInput!){
             media_url
             image_path
             image_set
+            discount
+            discount_value            
             created_at
-            discount_value
         }
 
         cursor

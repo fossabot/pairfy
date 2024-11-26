@@ -39,6 +39,8 @@ type ProductBook {
    media_url: String!
    image_path: String!
    image_set: String!
+   discount: Boolean!
+   discount_value: Int!   
    created_at: String!
    book_product_stock: Int!
    book_ready_stock: Int!

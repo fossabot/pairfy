@@ -102,7 +102,7 @@
             </Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.price) }}
+                    <Tag :value="formatCurrency(slotProps.data.price)" severity="secondary" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -111,6 +111,19 @@
                 </template>
             </Column>
 
+            <Column field="discount_value" header="Discount" sortable
+                style="min-width: 2rem; text-transform: capitalize;">
+                <template #body="slotProps">
+                    <div v-if="slotProps.data.discount">
+                        <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
+                    </div>
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
             <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
                 <template #body="slotProps">
                     {{ formatCurrency(slotProps.data.collateral) }}
@@ -151,6 +164,19 @@
                     <Tag :value="slotProps.data.book_blocked_orders" severity="secondary" />
                 </template>
             </Column>
+
+            <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
+                <template #body="slotProps">
+                    <Tag :value="slotProps.data.book_ready_stock ? 'instock' : 'outstock'"
+                        :severity="getStockLabel(slotProps.data.book_ready_stock)" />
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
+
 
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
@@ -220,6 +246,8 @@ query($getBooksVariable: GetBooksInput!){
             media_url
             image_path
             image_set
+            discount
+            discount_value            
             created_at
             book_product_stock
             book_ready_stock
@@ -337,7 +365,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'danger';
+            return 'secondary';
 
         default:
             return null;

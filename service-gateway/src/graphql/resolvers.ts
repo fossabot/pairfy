@@ -50,7 +50,9 @@ const getBooks = async (args: any, context: any) => {
       p.media_url AS media_url,
       p.image_path  AS image_path,
       p.image_set  AS image_set,
-      p.created_at AS created_at,
+      p.discount AS discount,
+      p.discount_value AS discount_value,
+      p.created_at AS created_at,      
       b.product_stock AS book_product_stock,
       b.ready_stock AS book_ready_stock,
       b.blocked_orders AS book_blocked_orders
