@@ -102,6 +102,7 @@ li i {
 
 li span {
   color: var(--text-w);
+  font-weight: 600;
 }
 
 a {

@@ -73,7 +73,7 @@
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
                 <template #body="slotProps">
-                    {{ formatWithDots(slotProps.data.id, 5) }}
+                    {{ formatWithDots(slotProps.data.id, 7) }}
                 </template>
             </Column>
 
@@ -94,6 +94,12 @@
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                     <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                 </template>
+
+                <template #body="slotProps">
+                    {{ reduceByLength(slotProps.data.name, 50) }}
+                </template>
+
+
             </Column>
             <Column field="price" header="Price" sortable style="min-width: 8rem">
                 <template #body="slotProps">
@@ -178,7 +184,7 @@ import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 
-const { formatWithDots } = inject('utils')
+const { formatWithDots, reduceByLength } = inject('utils')
 
 const toast = useToast();
 
