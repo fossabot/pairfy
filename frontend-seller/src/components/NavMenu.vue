@@ -63,7 +63,6 @@ onBeforeUnmount(() => {
   background-color: var(--primary-a);
   margin-left: 0;
   width: 17rem;
-
   z-index: 10;
   height: 100%;
   border-radius: 0 1.5rem 1.5rem 0;
@@ -107,8 +106,8 @@ li span {
 
 a {
   padding: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   align-items: center;
 }

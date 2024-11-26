@@ -14,7 +14,7 @@ create table if not exists products(
   features mediumtext not null,
   category varchar(100) not null,
   keywords varchar(100) not null,
-  stock boolean not null,
+  stock boolean not null,                     --------------------
   color varchar(100) not null,
   color_name varchar(100) default "",
   quality varchar(50) not null,

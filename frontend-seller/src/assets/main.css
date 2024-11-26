@@ -10,6 +10,8 @@ a {
   transition: 0.1s;
   padding: 3px;
   border-radius: 6px;
+  border-top-left-radius: initial;
+  border-bottom-left-radius: initial;
 }
 
 @media (hover: hover) {
