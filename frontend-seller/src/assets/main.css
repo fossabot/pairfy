@@ -7,9 +7,9 @@
 
 a {
   text-decoration: none;
-  transition: 0.2s;
+  transition: 0.1s;
   padding: 3px;
-  border-radius: 0.5rem;
+  border-radius: 6px;
 }
 
 @media (hover: hover) {
@@ -23,7 +23,6 @@ a {
     display: flex;
     place-items: center;
   }
-
 }
 
 .p-select-option {
@@ -34,4 +33,3 @@ a {
   display: flex;
   align-items: center;
 }
-
