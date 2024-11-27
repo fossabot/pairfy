@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "database": "node setup.js",
     "start": "node dist/index.js",
     "build": "tsc --build"
   },
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
     "nanoid": "^5.0.8",
+    "ts-node": "^10.9.2",
     "tslog": "^4.9.3"
   }
 }

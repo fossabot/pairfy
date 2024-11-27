@@ -1,7 +1,3 @@
-CREATE DATABASE service_product;
-
-use service_product;
-
 create table if not exists products(
   id varchar(20) not null,
   seller_id varchar(20) not null,
@@ -14,7 +10,7 @@ create table if not exists products(
   features mediumtext not null,
   category varchar(100) not null,
   keywords varchar(100) not null,
-  stock boolean not null,                     --------------------
+  stock boolean not null,                     
   color varchar(100) not null,
   color_name varchar(100) default "",
   quality varchar(50) not null,
@@ -29,11 +25,12 @@ create table if not exists products(
   discount boolean default false,
   discount_value int unsigned default 0,
   created_at timestamp default current_timestamp,
-  schema_t timestamp default current_timestamp,             -------------------
+  schema_t timestamp default current_timestamp,            
   schema_v int unsigned not null,
   primary key(id),
   unique(sku),
   INDEX idx_created_at (created_at),
   INDEX idx_seller_id (seller_id)
 ) ENGINE=InnoDB;
+
 

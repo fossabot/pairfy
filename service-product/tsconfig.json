@@ -27,7 +27,7 @@
   "include": [
     "src/**/*",                                     // Include all TypeScript files in the 'src' folder
     "types/**/*"                                    // Include custom types (if any)
-  ],
+, "setup.js"  ],
   "exclude": [
     "node_modules",                                 // Exclude 'node_modules'
     "dist",                                          // Exclude 'dist' directory

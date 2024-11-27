@@ -1,7 +1,3 @@
-CREATE DATABASE service_product;
-
-use service_product;
-
 create table if not exists events(
   id varchar(50) not null,
   event_type varchar(100) not null,
