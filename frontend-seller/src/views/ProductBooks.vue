@@ -1,13 +1,13 @@
 <template>
     <div class="card">
         <Dialog v-model:visible="bookConfigDialog" :style="{ width: '400px' }" header="Edit Book" :modal="true"
-            :draggable="false">
+            :draggable="false"  dismissableMask>
 
 
             <template #default>
                 <div class="dialog-content">
                     <div class="dialog-row">
-                        <Message severity="info" icon="pi pi-exclamation-circle">
+                        <Message severity="secondary" icon="pi pi-exclamation-circle">
                             The product book allows to manage keeping stock, stock ready to sell and stock blocked by
                             active orders in the blockchain.
                         </Message>
