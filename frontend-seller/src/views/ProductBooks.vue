@@ -6,13 +6,21 @@
 
             <template #default>
                 <div class="dialog-content">
+                    <InputGroup>
+                        <InputNumber v-model="bookForm.product_stock" type="number" placeholder="Stock"
+                            :invalid="bookFormErrors.price" :min="0" :useGrouping="false"
+                            :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
+                        <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready"
+                            :invalid="bookFormErrors.collateral" :min="0" :useGrouping="false"
+                            :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
+                    </InputGroup>
                 </div>
             </template>
 
             <template #footer>
                 <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
-                <Button label="Done"  />
+                <Button label="Done" />
             </template>
         </Dialog>
 
@@ -70,7 +78,7 @@
             </Column>
 
 
-            <Column field="id" header="ID" sortable>
+            <Column field="id" header="ID" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -82,7 +90,7 @@
                 </template>
             </Column>
 
-            <Column field="sku" header="SKU" sortable style="min-width: 8rem">
+            <Column field="sku" header="SKU" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -116,7 +124,7 @@
             </Column>
 
             <Column field="discount_value" header="Discount" sortable
-                style="min-width: 2rem; text-transform: capitalize;">
+                style="min-width: 8rem; text-transform: capitalize;">
                 <template #body="slotProps">
                     <div v-if="slotProps.data.discount">
                         <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
@@ -170,7 +178,7 @@
                 </template>
             </Column>
 
-            <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
+            <Column field="book_ready_stock" header="ST" sortable style="min-width: 4rem">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
                         :severity="getStockLabel(slotProps.data.book_ready_stock)" />
@@ -187,10 +195,9 @@
                 <template #body="slotProps">
                     <div class="datatable-control">
                         <Button icon="pi pi-cog" outlined size="small" rounded
-                            @click="beforeDeleteProduct(slotProps.data)" />
+                            @click="beforeEditBook(slotProps.data)" />
 
-                        <Button icon="pi pi-eye" outlined size="small" rounded
-                            @click="beforeDeleteProduct(slotProps.data)" />
+                        <Button icon="pi pi-eye" outlined size="small" rounded />
                     </div>
                 </template>
             </Column>
@@ -296,7 +303,22 @@ const dt = ref();
 
 const bookConfigDialog = ref(false);
 
+const bookForm = ref({
+    product_stock: null,
+    ready_stock: null,
+    stop_orders: null
+});
+
+const bookFormErrors = ref({
+    product_stock: false,
+    ready_stock: false,
+    stop_orders: false,
+});
+
 const selectedProduct = ref(null);
+
+
+
 
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -355,7 +377,7 @@ const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
 
-const beforeDeleteProduct = (data) => {
+const beforeEditBook = (data) => {
     selectedProduct.value = data;
 
     bookConfigDialog.value = true;
@@ -393,7 +415,6 @@ const editProduct = (event) => {
 
 
 <style scoped>
-
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
     background: transparent;
@@ -404,9 +425,10 @@ const editProduct = (event) => {
     font-size: var(--text-size-a);
 }
 
-.p-inputtext {
+::v-deep(.p-inputtext) {
     font-size: var(--text-size-a);
 }
+
 
 ::v-deep(.p-datatable-header) {
     background: transparent;

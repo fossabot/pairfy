@@ -66,7 +66,7 @@
             </Column>
 
 
-            <Column field="id" header="ID" sortable>
+            <Column field="id" header="ID" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -77,7 +77,7 @@
                 </template>
             </Column>
 
-            <Column field="sku" header="SKU" sortable style="min-width: 8rem">
+            <Column field="sku" header="SKU" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -113,7 +113,7 @@
             </Column>
 
             <Column field="discount_value" header="Discount" sortable
-                style="min-width: 2rem; text-transform: capitalize;">
+                style="min-width: 8rem; text-transform: capitalize;">
                 <template #body="slotProps">
                     <div v-if="slotProps.data.discount">
                         <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />

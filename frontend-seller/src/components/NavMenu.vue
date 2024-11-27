@@ -101,13 +101,12 @@ li i {
 
 li span {
   color: var(--text-w);
-  font-weight: 600;
 }
 
 a {
   padding: 0.5rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   display: flex;
   align-items: center;
 }
