@@ -169,20 +169,16 @@
                                                 severity="secondary" :disabled="!files || files.length === 0"
                                                 size="small" rounded />
 
-                                            <Message severity="secondary" variant="simple">
-                                                <div class="flex" style="margin: 0 1rem;">
-                                                    <i class="pi pi-exclamation-circle" />
-                                                    <span style="margin-left: 0.5rem;"> The first image is the preview
-                                                        thumbnail.</span>
-                                                </div>
+                                            <Message severity="secondary" variant="simple"
+                                                icon="pi pi-exclamation-circle">
+                                                <span> The first image is the preview
+                                                    thumbnail.</span>
                                             </Message>
 
-                                            <Message severity="secondary" variant="simple">
-                                                <div class="flex">
-                                                    <i class="pi pi-exclamation-circle" />
-                                                    <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
-                                                        {{ productImageSetLimit }}</span>
-                                                </div>
+                                            <Message severity="secondary" variant="simple"
+                                                icon="pi pi-exclamation-circle">
+                                                <span> {{ productImageSet.length }} /
+                                                    {{ productImageSetLimit }}</span>
                                             </Message>
                                         </div>
                                     </div>

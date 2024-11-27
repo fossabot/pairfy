@@ -91,16 +91,16 @@ li {
   cursor: pointer;
   font-size: var(--text-size-a);
   border: 1px solid transparent;
+  color: var(--text-c);
 }
 
 li i {
   margin-right: 0.75rem;
-  color: var(--text-w);
   padding: 0.5rem 0;
 }
 
 li span {
-  color: var(--text-w);
+  color: inherit;
 }
 
 a {
@@ -109,19 +109,21 @@ a {
   padding-right: 1.5rem;
   display: flex;
   align-items: center;
+  color: inherit;
 }
 
 .logo {
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .label {
-  color: var(--text-w);
   font-size: var(--text-size-a);
   font-weight: 700;
+  color: inherit;
 }
 
 .actived {
   border-left: 2px solid white;
+  color: var(--text-w);
 }
 </style>

@@ -35,3 +35,30 @@ a {
   display: flex;
   align-items: center;
 }
+
+.p-dialog-header,
+.p-dialog-footer {
+  padding: 1rem !important;
+}
+
+.p-dialog-content {
+  padding: 0 1.5rem !important;
+}
+
+.p-dialog-title {
+  font-size: var(--text-size-b) !important;
+}
+
+.p-button {
+  font-size: var(--text-size-a) !important;
+}
+
+.p-message-icon {
+  font-size: var(--text-size-b) !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.p-message-text {
+  font-size: var(--text-size-a) !important;
+}

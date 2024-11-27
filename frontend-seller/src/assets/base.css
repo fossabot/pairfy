@@ -47,6 +47,7 @@
 
   --text-a: #334155;
   --text-b: #64748b;
+  --text-c: var(--p-surface-400);
   --text-w: #ffffff;
 
   --text-size-a: 0.833rem;

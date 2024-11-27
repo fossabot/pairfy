@@ -6,15 +6,34 @@
 
             <template #default>
                 <div class="dialog-content">
-                    <InputGroup>
-                        <InputNumber v-model="bookForm.product_stock" type="number" placeholder="Stock"
-                            :invalid="bookFormErrors.price" :min="0" :useGrouping="false"
-                            :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                    <div class="dialog-row"> 
+                    <Message severity="info" icon="pi pi-exclamation-circle">
+                        The product book allows you to manage still stock, stock ready to sell and stock blocked by
+                        active orders until they are completed.
+                    </Message>
+                </div>
+                    <div class="dialog-row">
+                        <div class="dialog-content-title">
+                            Stock Configuration
+                        </div>
+                        <InputGroup>
+                            <InputNumber v-model="bookForm.product_stock" type="number" placeholder="Stock"
+                                :invalid="bookFormErrors.price" :min="0" :useGrouping="false"
+                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                        <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready"
-                            :invalid="bookFormErrors.collateral" :min="0" :useGrouping="false"
-                            :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
-                    </InputGroup>
+                            <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready To Sell"
+                                :invalid="bookFormErrors.collateral" :min="0" :useGrouping="false"
+                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                        </InputGroup>
+
+                    </div>
+                    <div class="dialog-row">
+                        <div class="dialog-content-title">
+                            Disable Purchases
+                        </div>
+                        <ToggleSwitch v-model="productStock" />
+
+                    </div>
                 </div>
             </template>
 
@@ -392,7 +411,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'warn';
+            return 'danger';
 
         default:
             return null;
@@ -474,6 +493,16 @@ const editProduct = (event) => {
 
 .dialog-content {
     min-height: 500px;
+}
+
+.dialog-row {
+    margin-bottom: 1rem; 
+}
+
+.dialog-content-title {
+    font-size: var(--text-size-a);
+    margin-bottom: 0.5rem;
+    color: var(--text-b);
 }
 
 .card-datatable {

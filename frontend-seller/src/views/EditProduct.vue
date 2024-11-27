@@ -162,21 +162,19 @@
                                         <Button @click="chooseCallback()" icon="pi pi-images" outlined
                                             severity="secondary" size="small" rounded :disabled="disableChoose" />
 
-                                        <Message severity="secondary" variant="simple">
-                                            <div class="flex" style="margin: 0 1rem;">
-                                                <i class="pi pi-exclamation-circle" />
-                                                <span style="margin-left: 0.5rem;"> The first image is the preview
-                                                    thumbnail.</span>
-                                            </div>
+                                        <Message severity="secondary" variant="simple" icon="pi pi-exclamation-circle"
+                                            style="margin: 0 1rem;">
+                                            <span> The first image is the preview
+                                                thumbnail.</span>
                                         </Message>
 
+
                                         <Message :severity="formErrors.image_set ? 'warn' : 'secondary'"
-                                            variant="simple">
-                                            <div class="flex">
-                                                <i class="pi pi-exclamation-circle" />
-                                                <span style="margin-left: 0.5rem;"> {{ productImageSet.length }} /
-                                                    {{ productImageSetLimit }}</span>
-                                            </div>
+                                            variant="simple" icon="pi pi-exclamation-circle">
+
+                                            <span> {{ productImageSet.length }} /
+                                                {{ productImageSetLimit }}</span>
+
                                         </Message>
                                     </div>
                                 </template>
