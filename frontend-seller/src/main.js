@@ -45,6 +45,7 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';                   
 import InputNumber from 'primevue/inputnumber';
 
+import Tooltip from 'primevue/tooltip';
 import Ripple from 'primevue/ripple';
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -108,5 +109,6 @@ app.component('InputNumber', InputNumber);
 
 app.directive('keyfilter', KeyFilter);
 app.directive('ripple', Ripple);
+app.directive('tooltip', Tooltip);
 
 app.mount('#app')

@@ -288,8 +288,8 @@
                     </div>
 
                     <div class="box">
-                        <div class="subtitle">
-                            Stock
+                        <div class="subtitle" v-tooltip="'Manage product visibility.'">
+                            Pause
                         </div>
 
                         <div class="box-content">

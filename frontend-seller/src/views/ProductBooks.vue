@@ -1,14 +1,18 @@
 <template>
     <div class="card">
-        <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true"
+        <Dialog v-model:visible="bookConfigDialog" :style="{ width: '450px' }" header="Edit Book" :modal="true"
             :draggable="false">
-            <div class="flex">
 
-                <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name }}</b>?</span>
-            </div>
+
+            <template #default>
+                <div class="dialog-content">
+
+                </div>
+            </template>
+
             <template #footer>
-                <Button label="No" icon="pi pi-times" variant="outlined" @click="deleteProductDialog = false" />
-                <Button label="Yes" icon="pi pi-check" @click="onDeleteConfirmed" />
+                <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
+                <Button label="Done"  />
             </template>
         </Dialog>
 
@@ -168,7 +172,7 @@
 
             <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.book_ready_stock ? 'instock' : 'outstock'"
+                    <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
                         :severity="getStockLabel(slotProps.data.book_ready_stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
@@ -182,7 +186,7 @@
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
-                        <Button icon="pi pi-pencil" outlined size="small" rounded
+                        <Button icon="pi pi-cog" outlined size="small" rounded
                             @click="beforeDeleteProduct(slotProps.data)" />
 
                         <Button icon="pi pi-eye" outlined size="small" rounded
@@ -290,7 +294,7 @@ const productCount = computed(() => getBooksResult.value?.getBooks.count);
 
 const dt = ref();
 
-const deleteProductDialog = ref(false);
+const bookConfigDialog = ref(false);
 
 const selectedProduct = ref(null);
 
@@ -321,7 +325,7 @@ const onDeleteConfirmed = () => {
         }
     });
     booksTemp.value = []
-    deleteProductDialog.value = false;
+    bookConfigDialog.value = false;
 }
 
 const formatCurrency = (value) => {
@@ -354,7 +358,7 @@ const buildImageUrl = (data) => {
 const beforeDeleteProduct = (data) => {
     selectedProduct.value = data;
 
-    deleteProductDialog.value = true;
+    bookConfigDialog.value = true;
 };
 
 const exportCSV = () => {
@@ -366,7 +370,7 @@ const getStockLabel = (status) => {
         case 1:
             return 'success';
         case 0:
-            return 'secondary';
+            return 'warn';
 
         default:
             return null;
@@ -389,6 +393,7 @@ const editProduct = (event) => {
 
 
 <style scoped>
+
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
     background: transparent;
@@ -437,6 +442,16 @@ const editProduct = (event) => {
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
+}
+
+.dialog-title {
+    font-size: var(--text-size-c);
+    color: var(--text-a);
+    font-weight: 700;
+}
+
+.dialog-content {
+    min-height: 500px;
 }
 
 .card-datatable {
