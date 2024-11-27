@@ -29,7 +29,7 @@ create table if not exists products(
   discount boolean default false,
   discount_value int unsigned default 0,
   created_at timestamp default current_timestamp,
-  schema_t timestamp default current_timestamp,
+  schema_t timestamp default current_timestamp,             -------------------
   schema_v int unsigned not null,
   primary key(id),
   unique(sku),

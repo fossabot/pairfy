@@ -42,7 +42,7 @@ type ProductBook {
    discount: Boolean!
    discount_value: Int!   
    created_at: String!
-   book_product_stock: Int!
+   book_keeping_stock: Int!
    book_ready_stock: Int!
    book_blocked_orders: Int!
 }
@@ -68,7 +68,21 @@ type Query {
 
 #/////////////////////////////////////////////////
 
+type UpdateBookResponse {
+  success: Boolean!
+}
+
+input UpdateBookInput {
+  id: String!
+  keeping_stock: String!
+  ready_stock: String!
+  disable_purchases: Boolean!
+} 
+
+type Mutation {
+  updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
+}
+
 `;
 
-
-export { typeDefs }
+export { typeDefs };

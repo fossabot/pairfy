@@ -17,7 +17,7 @@
                             Configuration
                         </div>
                         <InputGroup>
-                            <InputNumber v-model="bookForm.product_stock" type="number" placeholder="Stock"
+                            <InputNumber v-model="bookForm.keeping_stock" type="number" placeholder="Stock"
                                 :invalid="bookFormErrors.price" :min="0" :useGrouping="false"
                                 :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
@@ -28,7 +28,7 @@
                     </div>
                     <div class="dialog-row">
                         <Message severity="secondary" icon="pi pi-exclamation-circle">
-                            Stopping purchases disables the option to purchase the product.
+                            Disable purchases disables the option to purchase the product.
                         </Message>
                     </div>
 
@@ -174,7 +174,7 @@
                 </template>
             </Column>
 
-            <Column field="book_product_stock" header="Keeping" sortable
+            <Column field="book_keeping_stock" header="Keeping" sortable
                 style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -284,7 +284,7 @@ query($getBooksVariable: GetBooksInput!){
             discount
             discount_value            
             created_at
-            book_product_stock
+            book_keeping_stock
             book_ready_stock
             book_blocked_orders
         }
@@ -327,13 +327,13 @@ const dt = ref();
 const bookConfigDialog = ref(false);
 
 const bookForm = ref({
-    product_stock: null,
+    keeping_stock: null,
     ready_stock: null,
     stop_orders: null
 });
 
 const bookFormErrors = ref({
-    product_stock: false,
+    keeping_stock: false,
     ready_stock: false,
     stop_orders: false,
 });

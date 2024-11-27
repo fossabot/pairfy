@@ -8,7 +8,7 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import { catcher, logger } from './utils/index.js';
 import { database } from './db/client.js';
 import { typeDefs } from './graphql/types.js';
-import { products } from './graphql/resolvers.js';
+import { books } from './graphql/resolvers.js';
 import { sellerMiddleware } from './middleware/seller.js';
 import { requireAuth } from './middleware/required.js';
 
@@ -18,8 +18,11 @@ const httpServer = http.createServer(app);
 
 const resolvers = {
     Query: {
-        ...products.Query
+        ...books.Query
     },
+    Mutation: {
+        ...books.Mutation
+    }
 };
 
 const server = new ApolloServer({
