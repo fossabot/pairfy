@@ -29,8 +29,8 @@ create table if not exists products(
   schema_v int unsigned not null,
   primary key(id),
   unique(sku),
-  INDEX idx_created_at (created_at),
-  INDEX idx_seller_id (seller_id)
+  index idx_created_at (created_at),
+  index idx_seller_id (seller_id)
 ) ENGINE=InnoDB;
 
 

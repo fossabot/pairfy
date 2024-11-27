@@ -10,9 +10,7 @@ RUN ls
 
 RUN npm install --verbose
 
-
 COPY . .
-
 
 RUN npm run build
 

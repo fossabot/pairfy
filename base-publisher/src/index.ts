@@ -62,9 +62,7 @@ const main = async () => {
       "uncaughtException",
       "unhandledRejection",
       "SIGHUP",
-      "SIGCONT",
-      "SIGUSR1",
-      "SIGUSR2",
+      "SIGCONT"
     ];
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));

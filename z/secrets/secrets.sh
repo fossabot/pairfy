@@ -8,6 +8,7 @@ kubectl create secret generic admin-token-secret --from-literal=ADMIN_TOKEN_KEY=
 
 kubectl create secret generic encrypto-secret --from-literal=ENCRYPTO_KEY=password567567567
 
+kubectl create secret generic db-password --from-literal=password=password
 
 
 

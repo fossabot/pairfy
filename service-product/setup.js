@@ -10,52 +10,44 @@ const __dirname = dirname(__filename);
 
 const sqlDirectoryPath = path.join(__dirname, "src/db");
 
-
-const mysqlHost = "mysql";
-const mysqlUser = "root"; 
-const mysqlPassword = "password";
-const mysqlDatabase = process.env.MYSQL_DATABASE;
-
 const connection = mysql.createConnection({
-  host: "mysql",
-  port: 3306,
-  user: "root",
-  password: "password",
+  host: process.env.DATABASE_HOST,
+  port: parseInt(process.env.DATABASE_PORT) || 3306,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
 });
 
 connection.connect((err) => {
   if (err) {
-    console.error("Error de conexión a la base de datos:", err);
+    console.error("SETUP: database connection error", err);
     process.exit(1);
   }
 
-  console.log("Conexión exitosa a MySQL");
+  console.log("SETUP: database success connection");
 
   connection.query(
-    "CREATE DATABASE IF NOT EXISTS service_product",
+    `CREATE DATABASE IF NOT EXISTS ${process.env.DATABASE_NAME}`,
     (err, results) => {
       if (err) {
-        console.error("Error creating database:", err);
+        console.error("SETUP: error creating database:", err);
         process.exit(1);
       }
 
-      console.log('Database "service_product" is ready.');
+      console.log(`SETUP: database ${process.env.DATABASE_NAME} is ready.`);
 
-      connection.query("USE service_product", (err, results) => {
+      connection.query(`USE ${process.env.DATABASE_NAME}`, (err, results) => {
         if (err) {
-          console.error("Error selecting database:", err);
+          console.error("SETUP: Error selecting database:", err);
           process.exit(1);
         }
 
-        executeSqlScripts();
+        executeScripts();
       });
     }
   );
 });
 
-
-
-function executeSqlScripts() {
+function executeScripts() {
   fs.readdir(sqlDirectoryPath, (err, files) => {
     if (err) {
       console.error("Error reading directory:", err);
@@ -70,16 +62,16 @@ function executeSqlScripts() {
         "utf8",
         (err, sqlScript) => {
           if (err) {
-            console.error(`Error reading file ${file}:`, err);
+            console.error(`SETUP: Error reading ${file}:`, err);
             process.exit(1);
           }
 
           connection.query(sqlScript, (err, results) => {
             if (err) {
-              console.error(`Error executing SQL from file ${file}:`, err);
+              console.error(`SETUP: Error executing ${file}:`, err);
               process.exit(1);
             } else {
-              console.log(`${file} executed successfully.`);
+              console.log(`SETUP: ${file} executed successfully.`);
             }
           });
         }
