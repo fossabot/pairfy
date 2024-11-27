@@ -40,7 +40,7 @@
   --primary-a: #0046be;
   --primary-b: #ffe000;
   --primary-c: #0866FF;
-  --dark-a: #020617;
+  --dark-a: var(--p-surface-950);
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;
