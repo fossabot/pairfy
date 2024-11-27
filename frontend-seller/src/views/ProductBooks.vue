@@ -6,12 +6,12 @@
 
             <template #default>
                 <div class="dialog-content">
-                    <div class="dialog-row"> 
-                    <Message severity="info" icon="pi pi-exclamation-circle">
-                        The product book allows you to manage still stock, stock ready to sell and stock blocked by
-                        active orders until they are completed.
-                    </Message>
-                </div>
+                    <div class="dialog-row">
+                        <Message severity="info" icon="pi pi-exclamation-circle">
+                            The product book allows to manage keeping stock, stock ready to sell and stock blocked by
+                            active orders in the blockchain.
+                        </Message>
+                    </div>
                     <div class="dialog-row">
                         <div class="dialog-content-title">
                             Configuration
@@ -25,14 +25,18 @@
                                 :invalid="bookFormErrors.collateral" :min="0" :useGrouping="false"
                                 :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
                         </InputGroup>
-
                     </div>
+                    <div class="dialog-row">
+                        <Message severity="secondary" icon="pi pi-exclamation-circle">
+                            Stopping purchases disables the option to purchase the product.
+                        </Message>
+                    </div>
+
                     <div class="dialog-row">
                         <div class="dialog-content-title">
                             Disable Purchases
                         </div>
                         <ToggleSwitch v-model="productStock" />
-
                     </div>
                 </div>
             </template>
@@ -170,7 +174,7 @@
                 </template>
             </Column>
 
-            <Column field="book_product_stock" header="Stock" sortable
+            <Column field="book_product_stock" header="Keeping" sortable
                 style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -496,7 +500,7 @@ const editProduct = (event) => {
 }
 
 .dialog-row {
-    margin-bottom: 1.5rem; 
+    margin-bottom: 1.5rem;
 }
 
 .dialog-content-title {
