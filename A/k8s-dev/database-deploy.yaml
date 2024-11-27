@@ -116,15 +116,7 @@ data:
 
 
     FLUSH PRIVILEGES;
-
-    CREATE DATABASE service_product;
-
-    CREATE DATABASE service_gateway;
-
-    CREATE DATABASE service_seller;
-
-    CREATE DATABASE service_media;
-    
+     
 ---
 apiVersion: v1
 kind: Service

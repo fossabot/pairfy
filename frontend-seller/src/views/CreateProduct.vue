@@ -143,16 +143,15 @@
                             </div>
 
                             <span class="editor-control-counter">
-                                {{ editor.storage.characterCount.characters() }} / {{ editorLimit }}
+                                {{ productDiscountComputed }} / {{ editorLimit }}
                             </span>
                         </div>
 
                         <editor-content :editor="editor" />
                     </div>
 
-                    <!--//////////////UPLOADER///////////////-->
+                    <!--/////////////////////////////-->
                     <div class="uploader">
-
                         <div class="uploader-wrap" :class="{ invalid: formErrors.image_set }">
                             <Toast />
                             <FileUpload ref="fileupload" name="image" :url="mediaImagesURL"
@@ -218,7 +217,7 @@
                                 </template>
                                 <template #empty>
                                     <div class="uploader-empty" @click="chooseCallback()">
-                                        <i class="pi pi-image" />
+                                        <i class="pi pi-upload" />
                                         <p>Select images to upload.</p>
                                     </div>
                                 </template>
@@ -228,6 +227,21 @@
                     <!--//////////////UPLOADER///////////////-->
                 </div>
                 <div class="right-column">
+                    <div class="box">
+                        <div class="subtitle">
+                            Bullet List
+                        </div>
+
+                        <div class="box-content">
+
+                            <Button type="button" label="Use AI" :loading="sendMessageLoading" @click="beforeCreate"
+                                style="font-size: var(--text-size-a); margin-bottom: 1rem" variant="outlined"
+                                :disabled="!productDiscountComputed" />
+
+                            <Textarea v-model="productBulletList" rows="5" cols="30" autoResize fluid
+                                style="font-size: var(--text-size-a); min-height: 200px; max-height: 200px" />
+                        </div>
+                    </div>
 
                     <div class="box">
                         <div class="subtitle">
@@ -240,6 +254,7 @@
                                 :invalid="formErrors.category" />
                         </div>
                     </div>
+
 
                     <div class="box">
                         <div class="subtitle">
@@ -284,17 +299,6 @@
                     </div>
 
                     <div class="box">
-                        <div class="subtitle" v-tooltip="'Manage product visibility.'">
-                            Pause
-                        </div>
-
-                        <div class="box-content">
-                            <ToggleSwitch v-model="productStock" />
-                        </div>
-                    </div>
-
-
-                    <div class="box">
                         <div class="subtitle">
                             Discount
                         </div>
@@ -312,6 +316,17 @@
                                     {{ discountResult }}
                                 </span>
                             </div>
+                        </div>
+                    </div>
+
+
+                    <div class="box">
+                        <div class="subtitle" v-tooltip="'Pause the publication'">
+                            Paused
+                        </div>
+
+                        <div class="box-content">
+                            <ToggleSwitch v-model="productStock" />
                         </div>
                     </div>
 
@@ -448,7 +463,7 @@ const setupEditor = async () => {
             extensions: [
                 StarterKit,
                 Placeholder.configure({
-                    placeholder: 'Write something …',
+                    placeholder: 'Product description, terms of sale, warranty and others...',
                 }),
                 CharacterCount.configure({
                     limit: editorLimit.value,
@@ -609,9 +624,13 @@ const discountResult = computed(() => {
 })
 
 
-const reloadPage = () => {
-    window.location.reload();
-}
+const productDiscountComputed = computed(() => {
+    if (editor) {
+        return editor.value?.storage.characterCount.characters()
+    } else {
+        return 0
+    }
+})
 
 onBeforeUnmount(() => {
     if (editor.value) {
@@ -895,14 +914,14 @@ main {
 }
 
 .editor-control button {
+    width: 2rem;
+    height: 2rem;
     background: transparent;
     border: 1px solid var(--border-a);
-    border-radius: 4px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
     color: var(--text-b);
     margin-right: 0.5rem;
 }

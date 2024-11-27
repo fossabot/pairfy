@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .wrap {
-  background: var(--dark-a);
+  background: var(--primary-a);
   margin-left: 0;
   width: 17rem;
   z-index: 10;
@@ -91,7 +91,7 @@ li {
   cursor: pointer;
   font-size: var(--text-size-a);
   border: 1px solid transparent;
-  color: var(--text-c);
+  color: var(--text-w);
 }
 
 li i {
@@ -125,5 +125,6 @@ a {
 .actived {
   border-left: 2px solid white;
   color: var(--text-w);
+ background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 30%);;
 }
 </style>

@@ -44,6 +44,7 @@ import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';   
 import Row from 'primevue/row';                   
 import InputNumber from 'primevue/inputnumber';
+import Textarea from 'primevue/textarea';
 
 import Tooltip from 'primevue/tooltip';
 import Ripple from 'primevue/ripple';
@@ -106,6 +107,7 @@ app.component('ColumnGroup', ColumnGroup);
 app.component('Row', Row);
 app.component('Tag', Tag);
 app.component('InputNumber', InputNumber);
+app.component('Textarea', Textarea);
 
 app.directive('keyfilter', KeyFilter);
 app.directive('ripple', Ripple);
