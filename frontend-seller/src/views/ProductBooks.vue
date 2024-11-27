@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <Dialog v-model:visible="bookConfigDialog" :style="{ width: '450px' }" header="Edit Book" :modal="true"
+        <Dialog v-model:visible="bookConfigDialog" :style="{ width: '400px' }" header="Edit Book" :modal="true"
             :draggable="false">
 
 
@@ -14,7 +14,7 @@
                 </div>
                     <div class="dialog-row">
                         <div class="dialog-content-title">
-                            Stock Configuration
+                            Configuration
                         </div>
                         <InputGroup>
                             <InputNumber v-model="bookForm.product_stock" type="number" placeholder="Stock"
@@ -496,13 +496,14 @@ const editProduct = (event) => {
 }
 
 .dialog-row {
-    margin-bottom: 1rem; 
+    margin-bottom: 1.5rem; 
 }
 
 .dialog-content-title {
     font-size: var(--text-size-a);
     margin-bottom: 0.5rem;
     color: var(--text-b);
+    font-weight: 600;
 }
 
 .card-datatable {
