@@ -60,7 +60,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .wrap {
-  background-color: var(--primary-a);
+  background: var(--dark-a);
   margin-left: 0;
   width: 17rem;
   z-index: 10;

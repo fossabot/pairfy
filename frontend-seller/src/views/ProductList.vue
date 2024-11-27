@@ -118,7 +118,9 @@
                     <div v-if="slotProps.data.discount">
                         <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
                     </div>
-                 
+                    <div v-else>
+                        -
+                    </div>
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
