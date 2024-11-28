@@ -858,11 +858,8 @@ main {
     flex-direction: column;
 }
 
-
-
 ::v-deep(.editor-class) {
-
-    height: 250px;
+    height: auto;
     overflow-y: scroll;
     overflow-x: hidden;
     padding: 1rem;
@@ -901,7 +898,7 @@ main {
 
 .editor {
     overflow: auto;
-    height: 320px;
+    height: 400px;
     border: 1px solid var(--border-a);
     border-radius: 5px 5px 0 0;
     display: block;

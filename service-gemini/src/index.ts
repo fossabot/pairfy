@@ -77,7 +77,7 @@ const main = async () => {
       });
 
       let prepare =
-        "generates an array with the most important features first, separated by commas using the language of the following text: ";
+        "generates an array with the most important technical features first, separated by commas using the language of the following text: ";
 
       const inputText = (prepare += params.content);
 
