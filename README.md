@@ -60,8 +60,6 @@ Viewing contributions and repository maintenance level.
 
 ![Descripción de la imagen](z/docs/work.png)
 
-![Descripción de la imagen](z/docs/logo.png)
-
 ## Table Of Content
 
 [Installation](#installation)
