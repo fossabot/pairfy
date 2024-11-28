@@ -2,6 +2,8 @@
 
 Adabuy is an e-commerce protocol that uses smart contracts for the process of selling and buying physical products on Cardano using the ADA cryptocurrency.
 
+![Descripción de la imagen](z/docs/portada.png)
+
 ### Introduction
 
 Adabuy aims to allow the community to sell physical products and be purchased with ADA by the same community using a **plutus** P2P exchange system based on blind mediators and trust rating.
