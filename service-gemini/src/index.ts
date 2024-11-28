@@ -6,6 +6,10 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 
+import pkg from 'body-parser';       
+                                                                                                                                                      
+const { json, urlencoded } = pkg; 
+
 const main = async () => {
   try {
     if (!process.env.POD_NAME) {
@@ -22,16 +26,11 @@ const main = async () => {
 
     const app = express();
 
+    app.use(urlencoded({ extended: true, parameterLimit: 15 }));
+
+    app.use(json({ limit: 5000000 }));
+
     const port = 8000;
-
-    app.get("/healthz", (req, res) => {
-      res.status(200).send("OK");
-    });
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-
     /////////////////////////////////////////////////////////////////////////
 
     const errorEvents: string[] = [
@@ -47,7 +46,6 @@ const main = async () => {
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(e, err)));
 
-
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
     const model = genAI.getGenerativeModel({
@@ -62,17 +60,40 @@ const main = async () => {
       responseMimeType: "text/plain",
     };
 
-    async function run() {
+    app.get("/api/gemini/healthz", (req, res) => {
+      res.status(200).send("OK");
+    });
+
+    app.post("/api/gemini/test", async (req, res) => {
+      const params = req.body;
+      
+      console.log(params);
+
+      //LENGTH
+
       const chatSession = model.startChat({
         generationConfig,
         history: [],
       });
 
-      const result = await chatSession.sendMessage("where is colombia");
-      console.log(result.response.text());
-    }
+      let prepare =
+        "generates an array with the most important features first, separated by commas using the language of the following text: ";
 
-    run();
+      const inputText = (prepare += params.content);
+
+      const result = await chatSession.sendMessage(inputText);
+
+      const response = {
+        success: true,
+        payload: result.response.text(),
+      };
+
+      res.status(200).send(response);
+    });
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
 
     logger.info("ONLINE");
   } catch (err) {
