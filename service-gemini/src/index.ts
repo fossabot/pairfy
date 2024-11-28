@@ -6,9 +6,12 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 
-import pkg from 'body-parser';       
-                                                                                                                                                      
-const { json, urlencoded } = pkg; 
+import pkg from "body-parser";
+import cors from "cors";
+import helmet from "helmet";
+import cookieSession from "cookie-session";
+
+const { json, urlencoded } = pkg;
 
 const main = async () => {
   try {
@@ -24,11 +27,42 @@ const main = async () => {
       throw new Error("GEMINI_API_KEY error");
     }
 
+    if (!process.env.CORS_DOMAINS) {
+      throw new Error("CORS_DOMAINS error");
+    }
+    const corsOrigin = process.env.CORS_DOMAINS as string;
+
+    const corsOptions = {
+      origin: corsOrigin?.split(",") || "*",
+      methods: ["GET", "POST"],
+      credentials: true,
+      maxAge: 86400,
+      preflightContinue: false,
+      exposedHeaders: ["Set-Cookie"],
+      optionsSuccessStatus: 204,
+    };
+
+    const sessionOptions: object = {
+      maxAge: 168 * 60 * 60 * 1000,
+      signed: false,
+      secure: true,
+      httpOnly: true,
+      sameSite: "none", 
+    };
+    
     const app = express();
+
+    app.set("trust proxy", 1);
+
+    app.use(helmet());
+
+    app.use(cors(corsOptions));
 
     app.use(urlencoded({ extended: true, parameterLimit: 15 }));
 
     app.use(json({ limit: 5000000 }));
+
+    app.use(cookieSession(sessionOptions));
 
     const port = 8000;
     /////////////////////////////////////////////////////////////////////////
@@ -64,9 +98,9 @@ const main = async () => {
       res.status(200).send("OK");
     });
 
-    app.post("/api/gemini/test", async (req, res) => {
+    app.post("/api/gemini/bullet-list", async (req, res) => {
       const params = req.body;
-      
+
       console.log(params);
 
       //LENGTH

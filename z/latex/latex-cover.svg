@@ -26,13 +26,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="0.38583845"
-     inkscape:cx="-67.385715"
-     inkscape:cy="806.03683"
+     inkscape:zoom="0.7716769"
+     inkscape:cx="723.10056"
+     inkscape:cy="843.61732"
      inkscape:window-width="1920"
-     inkscape:window-height="1020"
-     inkscape:window-x="3840"
-     inkscape:window-y="28"
+     inkscape:window-height="1048"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:showpageshadow="2"
@@ -58,15 +58,15 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:238.528px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-11.181px;display:inline;fill:#ffffff;stroke:#ff9a00;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:stroke fill markers"
-       x="120.45888"
-       y="846.52808"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:202.703px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-9.50169px;display:inline;fill:#ffffff;stroke:#ff9a00;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:stroke fill markers"
+       x="168.63086"
+       y="825.91742"
        id="text2"><tspan
          sodipodi:role="line"
          id="tspan2"
-         x="120.45888"
-         y="846.52808"
-         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:238.528px;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0">αdαbuy</tspan></text>
+         x="168.63086"
+         y="825.91742"
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:202.703px;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0">αdαbuy</tspan></text>
     <text
        xml:space="preserve"
        id="text29993"
@@ -83,18 +83,23 @@
          y="1378.2314" /></text>
     <text
        xml:space="preserve"
-       style="font-weight:800;font-size:85.3333px;line-height:0;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';letter-spacing:-1px;fill:#ffffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
-       x="222.88483"
-       y="1125.0033"
+       style="font-weight:800;font-size:72.5168px;line-height:0;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';letter-spacing:-0.849807px;fill:#ffffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       x="154.89702"
+       y="1005.7272"
        id="text3"><tspan
          sodipodi:role="line"
          id="tspan3"
-         x="222.88483"
-         y="1125.0033"
-         style="font-size:85.3333px;fill:#ffffff">whitepaper V1</tspan></text>
+         x="154.89702"
+         y="1005.7272"
+         style="font-size:72.5168px;fill:#ffffff;stroke-width:0">Cardano Marketplace</tspan></text>
     <text
        xml:space="preserve"
        id="text4"
        style="fill:#f2f2f2;paint-order:stroke fill markers;-inkscape-font-specification:'Manrope Ultra-Bold';font-family:Manrope;font-size:85.33333333px;line-height:0;letter-spacing:-1px;stroke-width:0;stroke-linejoin:round;stroke-linecap:round;font-weight:800;white-space:pre;shape-inside:url(#rect4)" />
+    <path
+       d="m 585.25264,548.34248 c -1.25147,8.42204 -6.99471,15.40997 -14.88233,18.81939 -15.22732,6.62937 -37.13139,3.90979 -50.03842,-10.43138 44.74488,-129.02529 4.88738,-0.49519 -25.29995,7.92843 -4.30234,2.32706 -8.42204,3.76794 -12.36586,4.11294 -18.10907,2.69911 -32.30818,-14.86881 -25.86141,-32.9914 0.89292,-2.33382 2.67204,-6.6294 5.71617,-13.26557 l 0.169,-0.35852 c 9.89676,-21.48467 21.91762,-45.90521 35.73111,-72.99103 l 0.35852,-0.89293 3.92352,-7.54263 c 3.04411,-5.56057 4.29558,-8.05 9.13911,-11.11439 2.33382,-1.41383 5.20205,-2.12412 8.42204,-2.12412 6.45352,0 11.47967,3.76794 13.63085,6.80529 1.06883,1.61675 2.33382,3.76791 3.93706,6.44674 l 3.7747,7.35999 0.54116,1.07557 c 13.79997,27.0723 25.83435,51.4455 35.6905,72.98427 l 0.17586,0.16925 3.6056,8.25292 2.15116,5.16822 c 1.64382,4.13998 1.98882,8.25968 1.44087,12.56202 z m 8.24616,-16.16084 c -1.25823,-3.94381 -3.40942,-8.59792 -6.08824,-14.15852 v -0.20304 C 574.64559,490.72747 562.7871,466.3746 551.53065,444.4908 l -0.75089,-1.09587 c -8.02291,-16.45173 -13.76615,-26.33495 -30.44787,-26.33495 -16.49232,0 -23.50055,11.45939 -30.66436,26.36202 l -0.54792,1.08235 c -11.28351,21.87701 -23.13525,46.26373 -35.85966,73.34279 v 0.35852 l -3.77469,8.24616 c -1.42057,3.40939 -2.1444,5.19527 -2.3338,5.7297 -9.13235,25.11052 9.68703,47.16341 32.47051,47.16341 0.18272,0 0.89293,0 1.78588,-0.18272 h 2.51646 c 11.83822,-1.44087 24.03496,-8.9632 36.40758,-22.43172 12.36586,13.44822 24.57612,20.99085 36.39403,22.43172 h 2.51646 c 0.89295,0.18272 1.61,0.18272 1.78588,0.18272 22.78348,0.0203 41.60286,-22.05289 32.47054,-47.16341 z"
+       id="path39297"
+       style="fill:#ffffff;stroke-width:6.76468"
+       sodipodi:nodetypes="ccccccccccccscccccccccccccccsccccccscccccccc" />
   </g>
 </svg>

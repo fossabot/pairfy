@@ -237,13 +237,13 @@
                         </div>
 
                         <div class="box-content">
-                            <Button type="button" label="Use AI" :loading="sendMessageLoading" @click="beforeCreate"
+                            <Button type="button" label="Use AI" :loading="sendMessageLoading" @click="handleBulletList"
                                 style="font-size: var(--text-size-a); margin-bottom: 1rem" variant="outlined"
                                 :disabled="!productDiscountComputed" />
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
                                 :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
-                                :invalid="formErrors.keywords" size="large" placeholder="(↵)"
+                                :invalid="formErrors.keywords" size="large" placeholder="..."
                                 removeTokenIcon="pi pi-minus" />
                         </div>
                     </div>
@@ -357,12 +357,16 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
+import dashboardAPI from "@/views/api"
 import { onMounted, ref, nextTick, computed, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useMutation } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter } from 'vue-router';
 import { HOST } from '@/api';
+
+
+const { getBulletList } = dashboardAPI();
 
 const fileupload = ref();
 
@@ -495,6 +499,21 @@ onMounted(() => {
 
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
+
+const handleBulletList = async () => {
+
+    if (editor) {
+        const content = editor.value.getHTML();
+
+        const result = await getBulletList({ content });
+
+        const { success, payload } = result.response;
+
+        console.log(payload);
+
+        productBulletList.value = payload.split(",");
+    }
+}
 
 const productImageSet = ref([])
 
