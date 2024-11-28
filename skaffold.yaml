@@ -21,7 +21,15 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                         
+            dest: .              
+    - image: pairfy/service-gemini
+      context: service-gemini
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .                        
     - image: pairfy/service-product
       context: service-product
       docker:

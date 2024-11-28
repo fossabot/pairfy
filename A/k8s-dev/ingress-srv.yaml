@@ -42,6 +42,13 @@ spec:
                 name: service-user
                 port:
                   number: 8000
+          - path: /api/gemini/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-gemini
+                port:
+                  number: 8000                  
           - path: /api/product/graphql
             pathType: Prefix
             backend:

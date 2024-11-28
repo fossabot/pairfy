@@ -6,3 +6,4 @@ service-index/index.db
 service-index/index.db-shm
 service-index/index.db-wal
 vitess
+secrets.sh
