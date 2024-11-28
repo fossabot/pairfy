@@ -5,7 +5,7 @@ Adabuy is an e-commerce protocol that uses smart contracts for the process of se
 ![Descripción de la imagen](z/docs/portada.png)
 
 
-[Whitepaper-v1](z/latex/whitepaper.pdf) ⬅️
+[Whitepaper V1](z/latex/whitepaper.pdf)
 
 ### Introduction
 
