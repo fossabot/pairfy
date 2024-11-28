@@ -5,7 +5,7 @@ Adabuy is an e-commerce protocol that uses smart contracts for the process of se
 ![Descripción de la imagen](z/docs/portada.png)
 
 
-[Whitepaper V1](z/latex/whitepaper.pdf)
+[Whitepaper V1](z/latex/whitepaper.pdf) 👈
 
 ### Introduction
 
@@ -13,7 +13,7 @@ Adabuy aims to allow the community to sell physical products and be purchased wi
 
 In a successful P2P negotiation the seller delivers the product and the buyer pays the price of the product in this case the trade ends naturally. The problem arises when one of the participants does not fulfill their obligations such as when the seller does not deliver the product but argues that he does. Using physical blockchain infrastructure, i.e. hardware connected to oracles it is possible to determine if the product was actually delivered. The problem with this is that many shipping companies do not have blockchain infrastructure so humans inevitably participate throughout the product delivery process.
 
-Connecting the blockchain to the real world is an expensive challenge at least for trading physical products. Shipping companies would have to connect their vehicles to supervised oracles and the products must have an infallible tracker to check if were delivered. A lot of infrastructure deployed around the world is necessary to achieve a fully decentralized e-commerce protocol. Clearly this represents a very difficult challenge to achieve in contrast to another option which is to use the human brain as a source of truth. With the right conditions the human brain can make logical reasoning about facts or propositions to declare a truth as happens in the legal or scientific area (Peer review).
+Connecting the blockchain to the real world is an expensive challenge at least for trading physical products. Shipping companies would have to connect their vehicles to supervised oracles and the products must have an infallible tracker to check if were delivered. A lot of infrastructure deployed around the world is necessary to achieve a fully decentralized e-commerce protocol. Clearly this represents a very difficult challenge to achieve in contrast to another option which is to use reviewers trained in conflict resolution. With the right conditions the human can make logical reasoning about facts or propositions to declare a truth as happens in the legal or scientific area (Peer review).
 
 The peer review system in the academic world allows a research paper to be reviewed by randomly assigned experts. A blind reviewer does not know who is the author of the paper he is reviewing and the author also does not know who the reviewers are. The system maintains confidentiality to prevent biases ensuring an impartial assessment. The system acts as a quality control mechanism identifying errors and providing arguments based on scientific knowledge to ensure the greatest precision and reliability of the research paper.
 
@@ -39,7 +39,7 @@ A system of blind reviewers trained in conflict resolution can decide on a dispu
 | Kafka    | streaming | event streaming              | high-throughput, low-latency | 3.6.1   | Apache Version 2.0 | [https://github.com/apache/kafka](https://github.com/apache/kafka) |
 | Node.js  | runtime   | javascript runtime           | code, javascript             | alpine  | MIT                | [https://github.com/nodejs/node](https://github.com/nodejs/node)   |
 
-### P2P trading and Mediator Pool Scalability
+### P2P trading and Mediator Scalability
 
 Peer-to-Peer cryptocurrency exchange services such as localbitcoins or binance P2P have proven to be systems that work for secure trades. These systems are based on trust rating and involve real-world action on the part of the buyer such as making a transaction to the bank account provided by the seller. In Binance P2P, disputes between buyers and sellers can be addressed through an appeal process. Common reasons for initiating an appeal involves problems with payment confirmation, disagreements over payment quality, or disputes regarding trade terms. To protect the cryptocurrency involved in the trade an escrow system locks the funds.
 
