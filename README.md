@@ -4,6 +4,9 @@ Adabuy is an e-commerce protocol that uses smart contracts for the process of se
 
 ![Descripción de la imagen](z/docs/portada.png)
 
+
+[Whitepaper-v1](z/latex/whitepaper.pdf) ⬅️
+
 ### Introduction
 
 Adabuy aims to allow the community to sell physical products and be purchased with ADA by the same community using a **plutus** P2P exchange system based on blind mediators and trust rating.
@@ -56,7 +59,7 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 - [ ] Add Blockchain Integration (In Progress)
 - [ ] Add Liquidity Pool
 
-Viewing contributions and repository maintenance level.
+Contributions and repository maintenance level:
 
 ![Descripción de la imagen](z/docs/work.png)
 
