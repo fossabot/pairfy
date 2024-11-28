@@ -48,12 +48,19 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 
 - [X] Add User UI
 - [X] Add Seller UI
+- [X] Backend
 - [X] Multi-Wallet Support
   - [X] Nami
   - [X] Lace
   - [X] Eternl
 - [ ] Add Blockchain Integration (In Progress)
 - [ ] Add Liquidity Pool
+
+Viewing contributions and repository maintenance level.
+
+![Descripción de la imagen](z/docs/work.png)
+
+![Descripción de la imagen](z/docs/logo.png)
 
 ## Table Of Content
 
