@@ -1,7 +1,7 @@
 import { getEventId, getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 
-const updateProduct = async (args: any, context: any) => {
+const updateProduct = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
 
   console.log(params);
@@ -88,7 +88,7 @@ const updateProduct = async (args: any, context: any) => {
   }
 };
 
-const createProduct = async (args: any, context: any) => {
+const createProduct = async (_: any, args: any, context: any) => {
   console.log(process.env.POD_NAME);
 
   const params = args.createProductInput;
@@ -209,7 +209,7 @@ const createProduct = async (args: any, context: any) => {
   }
 };
 
-const getProducts = async (args: any, context: any) => {
+const getProducts = async (_: any, args: any, context: any) => {
   const params = args.getProductsInput;
 
   const SELLER = context.sellerData;
@@ -268,7 +268,7 @@ const getProducts = async (args: any, context: any) => {
   }
 };
 
-const getProduct = async (args: any, context: any) => {
+const getProduct = async (_: any, args: any, context: any) => {
   const params = args.getProductInput;
 
   console.log(params);
@@ -305,7 +305,7 @@ const getProduct = async (args: any, context: any) => {
   }
 };
 
-const deleteProduct = async (args: any, context: any) => {
+const deleteProduct = async (_: any, args: any, context: any) => {
   const params = args.deleteProductInput;
 
   console.log(params);
@@ -347,17 +347,13 @@ const deleteProduct = async (args: any, context: any) => {
 
 const products = {
   Query: {
-    getProducts: (_: any, args: any, context: any) =>
-      getProducts(args, context),
-    getProduct: (_: any, args: any, context: any) => getProduct(args, context),
+    getProducts,
+    getProduct,
   },
   Mutation: {
-    createProduct: (_: any, args: any, context: any) =>
-      createProduct(args, context),
-    updateProduct: (_: any, args: any, context: any) =>
-      updateProduct(args, context),
-    deleteProduct: (_: any, args: any, context: any) =>
-      deleteProduct(args, context),
+    createProduct,
+    updateProduct,
+    deleteProduct,
   },
 };
 

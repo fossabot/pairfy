@@ -146,7 +146,7 @@
                             </div>
 
                             <span class="editor-control-counter">
-                                {{ productDiscountComputed }} / {{ editorLimit }}
+                                {{ productEditorCounter }} / {{ editorLimit }}
                             </span>
                         </div>
 
@@ -228,8 +228,9 @@
 
                         </div>
                     </div>
-                    <!--//////////////UPLOADER///////////////-->
                 </div>
+
+                <!--///////////////////////////////////////-->
                 <div class="right-column">
                     <div class="box">
                         <div class="subtitle" v-tooltip="'List of important features'">
@@ -239,7 +240,7 @@
                         <div class="box-content">
                             <Button type="button" label="Generate" :loading="bulletListLoading"
                                 @click="handleBulletList" style="font-size: var(--text-size-a); margin-bottom: 1rem"
-                                variant="outlined" :disabled="!productDiscountComputed" />
+                                variant="outlined" :disabled="!productEditorCounter" />
 
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
@@ -393,6 +394,8 @@ const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Create Product' }
 ]);
+
+////////////////////////////////
 
 const productName = ref(null);
 const productPrice = ref(null);
@@ -611,7 +614,7 @@ const beforeCreate = () => {
 
 const submitProduct = () => {
     if (checkMandatory()) {
-        return showError('Mandatory Fields');
+        return showError('Please check the required fields.');
     };
 
     sendMessage({
@@ -656,13 +659,20 @@ const discountResult = computed(() => {
 })
 
 
-const productDiscountComputed = computed(() => {
+const productEditorCounter = computed(() => {
     if (editor) {
         return editor.value?.storage.characterCount.characters()
     } else {
         return 0
     }
 })
+
+const formatSKU = (value) => {
+    if (value) {
+        return value.split(":")[0]
+    }
+};
+
 
 onBeforeUnmount(() => {
     if (editor.value) {

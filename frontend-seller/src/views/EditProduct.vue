@@ -26,34 +26,37 @@
 
             <div class="card-wrap">
                 <div class="left-column">
-                    <div class="formulary">
-                        <InputText v-model="productName" type="text" placeholder="Product Name"
-                            v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
+                    <div class="left-column-item">
+                        <div class="formulary">
+                            <InputText v-model="productName" type="text" placeholder="Product Name"
+                                v-keyfilter='/^[a-zA-Z0-9-(")/+$ ]+$/' :invalid="formErrors.name" />
 
-                        <InputGroup>
-                            <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
-                                :invalid="formErrors.price" :min="0" :useGrouping="false"
-                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                            <InputGroup>
+                                <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
+                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                            <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
-                                :invalid="formErrors.collateral" :min="0" :useGrouping="false"
-                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
+                                <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
+                                    :invalid="formErrors.collateral" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
 
-                            <InputText v-model="productSKU" type="text" placeholder="Product SKU"
-                                v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
-                                style="border-radius: var(--p-inputtext-border-radius)" />
-                        </InputGroup>
+                                <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
+                                    style="border-radius: var(--p-inputtext-border-radius)" />
+                            </InputGroup>
 
 
-                        <InputGroup>
-                            <InputText v-model="productModel" type="text" placeholder="Model"
-                                style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
-                                v-keyfilter="/^[a-zA-Z0-9/ -]+$/" :invalid="formErrors.model" />
+                            <InputGroup>
+                                <InputText v-model="productModel" type="text" placeholder="Model"
+                                    style="margin-right: 1rem; border-radius: var(--p-inputtext-border-radius)"
+                                    v-keyfilter="/^[a-zA-Z0-9/ -]+$/" :invalid="formErrors.model" />
 
-                            <InputText v-model="productBrand" type="text" placeholder="Brand"
-                                v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="border-radius: var(--p-inputtext-border-radius)"
-                                :invalid="formErrors.brand" />
-                        </InputGroup>
+                                <InputText v-model="productBrand" type="text" placeholder="Brand"
+                                    v-keyfilter="/^[a-zA-Z0-9 ]+$/"
+                                    style="border-radius: var(--p-inputtext-border-radius)"
+                                    :invalid="formErrors.brand" />
+                            </InputGroup>
+                        </div>
                     </div>
 
                     <div v-if="editor" class="editor" :class="{ invalid: formErrors.features }">
@@ -142,69 +145,91 @@
                             </div>
 
                             <span class="editor-control-counter">
-                                {{ editor.storage.characterCount.characters() }} / {{ editorLimit }}
+                                {{ productEditorCounter }} / {{ editorLimit }}
                             </span>
                         </div>
 
                         <editor-content :editor="editor" />
                     </div>
 
-                    <!--//////////////UPLOADER///////////////-->
-                    <div class="uploader">
-                        <Toast />
-                        <div class="uploader-header">
-                            <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
-                                @upload="onImagesUpload($event)" @select="onSelectedFiles">
+                    <!--////////////////////////////////-->
+                    <div class="left-column-item">
+                        <div class="uploader">
+                            <Toast />
+                            <div class="uploader-header">
+                                <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
+                                    :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
+                                    @upload="onImagesUpload($event)" @select="onSelectedFiles">
 
-                                <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
-                                    <div class="uploader-control flex">
-                                        <Button @click="chooseCallback()" icon="pi pi-images" outlined
-                                            severity="secondary" size="small" rounded :disabled="disableChoose" />
+                                    <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
+                                        <div class="uploader-control flex">
+                                            <Button @click="chooseCallback()" icon="pi pi-images" outlined
+                                                severity="secondary" size="small" rounded :disabled="disableChoose" />
 
-                                        <Message severity="secondary" variant="simple" icon="pi pi-exclamation-circle"
-                                            style="margin: 0 1rem;">
-                                            <span> The first image is the preview
-                                                thumbnail.</span>
-                                        </Message>
+                                            <Message severity="secondary" variant="simple"
+                                                icon="pi pi-exclamation-circle" style="margin: 0 1rem;">
+                                                <span> The first image is the preview
+                                                    thumbnail.</span>
+                                            </Message>
 
 
-                                        <Message :severity="formErrors.image_set ? 'warn' : 'secondary'"
-                                            variant="simple" icon="pi pi-exclamation-circle">
+                                            <Message :severity="formErrors.image_set ? 'warn' : 'secondary'"
+                                                variant="simple" icon="pi pi-exclamation-circle">
 
-                                            <span> {{ productImageSet.length }} /
-                                                {{ productImageSetLimit }}</span>
+                                                <span> {{ productImageSet.length }} /
+                                                    {{ productImageSetLimit }}</span>
 
-                                        </Message>
+                                            </Message>
+                                        </div>
+                                    </template>
+
+                                    <template #content="{ files }">
+                                        <div></div>
+                                    </template>
+                                </FileUpload>
+                            </div>
+
+
+
+                            <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
+                                <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
+                                    :data-id="file.name">
+
+                                    <div>
+                                        <img role="presentation" :alt="file.name" :src="file.url"
+                                            class="uploader-image" />
                                     </div>
-                                </template>
-
-                                <template #content="{ files }">
-                                    <div></div>
-                                </template>
-                            </FileUpload>
-                        </div>
-
-
-
-                        <div class="uploader-grid" id="sortable-media" :class="{ invalid: formErrors.image_set }">
-                            <div class="uploader-item" v-for="(file, index) of productImageSet" :key="file.name"
-                                :data-id="file.name">
-
-                                <div>
-                                    <img role="presentation" :alt="file.name" :src="file.url" class="uploader-image" />
-                                </div>
-                                <div class="uploader-pad">
-                                    <button @click="onDeleteImage(file)">
-                                        <i class="pi pi-times" />
-                                    </button>
+                                    <div class="uploader-pad">
+                                        <button @click="onDeleteImage(file)">
+                                            <i class="pi pi-times" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--//////////////UPLOADER///////////////-->
                 </div>
+
+
                 <div class="right-column">
+
+                    <div class="box">
+                        <div class="subtitle" v-tooltip="'List of important features'">
+                            Bullet List
+                        </div>
+
+                        <div class="box-content">
+                            <Button type="button" label="Generate" :loading="bulletListLoading"
+                                @click="handleBulletList" style="font-size: var(--text-size-a); margin-bottom: 1rem"
+                                variant="outlined" :disabled="!productEditorCounter" />
+
+
+                            <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
+                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
+                                :invalid="formErrors.bullet_list" size="large" placeholder=""
+                                removeTokenIcon="pi pi-minus" />
+                        </div>
+                    </div>
 
                     <div class="box">
                         <div class="subtitle">
@@ -262,7 +287,7 @@
 
                     <div class="box">
                         <div class="subtitle">
-                            Stock
+                          Paused
                         </div>
 
                         <div class="box-content">
@@ -322,6 +347,8 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 
+const { getBulletList } = dashboardAPI();
+
 const fileupload = ref();
 
 const uploadImages = () => {
@@ -330,11 +357,28 @@ const uploadImages = () => {
 
 const { deleteImage } = dashboardAPI();
 
-const route = useRoute()
-
 const toast = useToast();
 
+const route = useRoute()
+
 const router = useRouter()
+
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
+const createImageURL = computed(() => HOST + '/api/media/create-image')
+
+const getImageURL = computed(() => HOST + '/api/media/get-image/')
+
+const navItems = ref([
+    { label: 'Dashboard' },
+    { label: 'Edit Product' }
+]);
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -355,6 +399,7 @@ query ($getProductVariable: GetProductInput!) {
         features
         category
         keywords
+        bullet_list
         paused
         color
         color_name
@@ -390,15 +435,6 @@ onErrorQuery(error => {
 })
 
 ///////////////////////////////////////////////////////
-
-const createImageURL = computed(() => HOST + '/api/media/create-image')
-
-const getImageURL = computed(() => HOST + '/api/media/get-image/')
-
-const navItems = ref([
-    { label: 'Dashboard' },
-    { label: 'Edit Product' }
-]);
 
 const productId = ref(null);
 const productName = ref(null);
@@ -530,6 +566,30 @@ watch(productImageSet, () => {
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 
+const setEditorContent = (content) => {
+    editor.value.commands.setContent(JSON.parse(content));
+}
+
+const bulletListLoading = ref(false);
+
+const handleBulletList = async () => {
+
+    if (editor) {
+        bulletListLoading.value = true
+
+        const content = editor.value.getHTML();
+
+        const result = await getBulletList({ content });
+
+        const { success, payload } = result.response;
+
+        productBulletList.value = payload.split(",");
+
+        bulletListLoading.value = false;
+    }
+}
+
+
 const processImageSet = (product) => {
     if (product.image_set.length) {
         const images = product.image_set.split(",");
@@ -562,9 +622,10 @@ watch(result, value => {
         productSKU.value = formatSKU(product.sku);
         productModel.value = product.model;
         productBrand.value = product.brand;
-        editor.value.commands.setContent(JSON.parse(product.features));
+        setEditorContent(product.features);
         productCategory.value = productCategories.value.find(e => e.code === product.category);
         productKeywords.value = product.keywords.split(',');
+        productBulletList.value = product.bullet_list.split(',');
         productColorName.value = product.color_name;
         productColor.value = product.color;
         productQuality.value = product.quality;
@@ -574,6 +635,7 @@ watch(result, value => {
         productImageSet.value = processImageSet(product);
     }
 }, { immediate: true })
+
 
 const onSelectedFiles = (event) => {
     event.files.forEach((file) => {
@@ -625,9 +687,9 @@ const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutati
 }
 `)
 
-onErrorMutation(error => {
-    showError(error);
-})
+onErrorMutation(error =>
+    showError(error)
+)
 
 onProductUpdate(result => {
     showSuccess("The product has been updated successfully.");
@@ -644,6 +706,7 @@ const formErrors = ref({
     "features": false,
     "category": false,
     "keywords": false,
+    "bullet_list": false,
     "paused": false,
     "color": false,
     "color_name": false,
@@ -663,6 +726,7 @@ const checkMandatory = () => {
     formErrors.value.features = editor.value.storage.characterCount.characters() === 0;
     formErrors.value.category = productCategory.value === null;
     formErrors.value.keywords = productKeywords.value === null;
+    formErrors.value.bullet_list = productBulletList.value === null;
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
@@ -711,6 +775,7 @@ const submitForm = () => {
             "features": productFeatures.value,
             "category": productCategory.value.code,
             "keywords": productKeywords.value.join(','),
+            "bullet_list": productBulletList.value.join(','),
             "paused": productPaused.value ? 1 : 0,
             "color": productColor.value,
             "color_name": productColorName.value,
@@ -740,24 +805,23 @@ const discountResult = computed(() => {
     return discountedPrice.toFixed(0) + " USD";
 })
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
-
 const reloadPage = () => {
     window.location.reload();
 }
+
+const productEditorCounter = computed(() => {
+    if (editor) {
+        return editor.value?.storage.characterCount.characters()
+    } else {
+        return 0
+    }
+})
 
 const formatSKU = (value) => {
     if (value) {
         return value.split(":")[0]
     }
 };
-
 
 onBeforeUnmount(() => {
     if (editor.value) {
@@ -835,8 +899,12 @@ main {
 
 .left-column {
     display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: 1fr;
     gap: 1rem;
 }
+
+.left-column-item {}
 
 .formulary {
     display: flex;
