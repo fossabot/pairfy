@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <Dialog v-model:visible="bookConfigDialog" :style="{ width: '400px' }" header="Edit Book" :modal="true"
-            :draggable="false"  dismissableMask>
+            :draggable="false" dismissableMask>
 
 
             <template #default>
@@ -36,14 +36,14 @@
                         <div class="dialog-content-title">
                             Disable Purchases
                         </div>
-                        <ToggleSwitch v-model="productStock" />
+                        <ToggleSwitch v-model="bookForm.disable_purchases" />
                     </div>
                 </div>
             </template>
 
             <template #footer>
                 <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
-                <Button label="Done" />
+                <Button label="Done" @click="onConfigDone" />
             </template>
         </Dialog>
 
@@ -74,13 +74,13 @@
         </Toolbar>
 
 
-        <DataTable class="card-datatable" ref="dt" :value="products" dataKey="id" :paginator="true" :rows="15"
-            :filters="filters" @page="updateCursor()" @rowSelect="editProduct" selectionMode="single"
+        <DataTable class="card-datatable" ref="dt" :value="books" dataKey="id" :paginator="true" :rows="15"
+            :filters="filters" @page="updateCursor()" @rowSelect="goEditProduct" selectionMode="single"
             paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
             currentPageReportTemplate="Showing {first} to {last}">
             <template #paginatorstart>
                 <div style="color: var(--text-b);">
-                    <span>{{ productCount }} Products</span>
+                    <span>{{ bookCount }} Books</span>
                 </div>
             </template>
 
@@ -239,7 +239,7 @@ import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 
 
-const { formatWithDots, reduceByLength } = inject('utils');
+const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
 
 const toast = useToast();
 
@@ -272,7 +272,7 @@ const variablesRef = ref({
 const { result: getBooksResult, onError: onGetBooksError } = useQuery(gql`
 query($getBooksVariable: GetBooksInput!){
     getBooks(getBooksInput: $getBooksVariable){
-        products {
+        books {
             id
             name
             price
@@ -312,15 +312,15 @@ const updateCursor = () => {
 
 const booksTemp = ref([]);
 
-const products = computed(() => booksTemp.value);
+const books = computed(() => booksTemp.value);
 
 watch(getBooksResult, value => {
     if (value) {
-        booksTemp.value.push(...value.getBooks.products)
+        booksTemp.value.push(...value.getBooks.books)
     }
 }, { immediate: true })
 
-const productCount = computed(() => getBooksResult.value?.getBooks.count);
+const bookCount = computed(() => getBooksResult.value?.getBooks.count);
 
 const dt = ref();
 
@@ -338,51 +338,40 @@ const bookFormErrors = ref({
     stop_orders: false,
 });
 
-const selectedProduct = ref(null);
-
-
-
+const selectedBook = ref(null);
 
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
-    mutation($deleteProductVariable: DeleteProductInput!){
-        deleteProduct(deleteProductInput: $deleteProductVariable){
+const { mutate: sendUpdateBook, onError: onUpdateBookError, onDone: onUpdateBook } = useMutation(gql`
+    mutation($updateBookVariable: UpdateBookInput!){
+        updateBook(updateBookInput: $updateBookVariable){
             success
         }
 }
 `)
 
-onErrorDeleteProduct(error => {
+onUpdateBookError(error => {
     showError(error);
 })
 
-onDeleteProduct(result => {
-    showSuccess("The product has been deleted successfully.");
+onUpdateBook(result => {
+    showSuccess("The book has been updated.");
 })
 
-const onDeleteConfirmed = () => {
-    sendDeleteProduct({
-        "deleteProductVariable": {
-            "id": selectedProduct.value.id
+const onConfigDone = () => {
+    sendUpdateBook({
+        "updateBookVariable": {
+            "id": selectedBook.value.id,
+            "keeping_stock": bookForm.keeping_stock,
+            "ready_stock": bookForm.ready_stock,
+            "disable_purchases": bookForm.disable_purchases
         }
     });
     booksTemp.value = []
     bookConfigDialog.value = false;
 }
-
-const formatCurrency = (value) => {
-    if (value) {
-        return value.toLocaleString('en-US', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-
-        }) + " USD";
-    }
-
-};
 
 const formatSKU = (value) => {
     if (value) {
@@ -390,18 +379,12 @@ const formatSKU = (value) => {
     }
 };
 
-const convertDate = (timestamp) => {
-    const date = dayjs(parseInt(timestamp));
-
-    return date.format('YYYY-MM-DD');
-}
-
 const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
 
 const beforeEditBook = (data) => {
-    selectedProduct.value = data;
+    selectedBook.value = data;
 
     bookConfigDialog.value = true;
 };
@@ -426,7 +409,7 @@ const goBack = () => {
     router.go(-1)
 }
 
-const editProduct = (event) => {
+const goEditProduct = (event) => {
     router.push({
         name: 'edit-product',
         params: {

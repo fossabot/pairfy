@@ -56,8 +56,8 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     await connection.execute(schemeData, payload);
 
     await connection.execute(
-      "INSERT INTO books (id, product_sku) VALUES (?, ?)",
-      [payload[0], payload[5]]
+      "INSERT INTO books (id, seller_id, product_sku) VALUES (?, ?, ?)",
+      [payload[0], payload[1], payload[5]]
     );
 
     await connection.execute(

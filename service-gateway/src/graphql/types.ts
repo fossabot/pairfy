@@ -50,7 +50,7 @@ type ProductBook {
 }
 
 type GetBooksResponse {
-  products: [ProductBook!]
+  books: [ProductBook!]
   cursor: String!
   count: Int!
 }

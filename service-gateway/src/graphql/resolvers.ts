@@ -84,21 +84,21 @@ const getBooks = async (_:any, args: any, context: any) => {
   try {
     connection = await database.client.getConnection();
 
-    const [products] = await connection.query(queryScheme, queryParams);
+    const [books] = await connection.query(queryScheme, queryParams);
 
     const [productCount] = await connection.execute(
-      `SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?`,
+      "SELECT COUNT(*) AS total_books FROM books WHERE seller_id = ?",
       [SELLER.id]
     );
 
-    const cursor = products.length
-      ? products[products.length - 1].created_at
+    const cursor = books.length
+      ? books[books.length - 1].created_at
       : params.cursor;
 
-    const count = productCount[0].total_products;
+    const count = productCount[0].total_books;
 
     return {
-      products,
+      books,
       cursor,
       count,
     };
