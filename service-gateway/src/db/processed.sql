@@ -1,7 +1,3 @@
-CREATE DATABASE service_gateway;
-
-use service_gateway;
-
 create table if not exists processed(
   id varchar(50) not null,
   seq bigint not null,

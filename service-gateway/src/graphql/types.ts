@@ -2,6 +2,9 @@ const typeDefs = `#graphql
 
 type Product {
     id: String!
+    state: String!
+    state_label: String!
+    moderated: Int!
     seller_id: String!
     name: String!
     price: Int!
@@ -12,13 +15,12 @@ type Product {
     features: String!
     category: String!
     keywords: String!
-    stock: Int!
+    bullet_list: String!
+    paused: Int!
     color: String!
     color_name: String!
     quality: String!
     country: String!
-    moderated: Int!
-    visible: Int!
     media_url: String!
     image_path: String!
     video_path: String!
@@ -44,7 +46,7 @@ type ProductBook {
    created_at: String!
    book_keeping_stock: Int!
    book_ready_stock: Int!
-   book_blocked_orders: Int!
+   book_blocked_stock: Int!
 }
 
 type GetBooksResponse {

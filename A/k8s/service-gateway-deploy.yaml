@@ -36,14 +36,25 @@ spec:
               value: "8000"
             - name: EXPRESS_TIMEOUT
               value: "30000"                                                                  
-            - name: REDIS_URI  
-              value: redis://service-gateway-redis:6379                                                                                  
-            - name: TOKEN_EXPIRATION
-              value: "7d"
-            - name: SHIPPING_TIME
-              value: "1"
-            - name: LOCKING_TX_MS
-              value: "900000"                            
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-password
+                  key: password   
+            - name: DATABASE_NAME
+              value: service_gateway       
+            - name: DATABASE_USER
+              value: marketplace                           
             - name: CORS_DOMAINS
               value: "http://localhost:5173,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
           resources:

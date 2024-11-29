@@ -192,7 +192,7 @@
                 </template>
             </Column>
 
-            <Column field="book_blocked_orders" header="Locked" sortable
+            <Column field="book_blocked_stock" header="Locked" sortable
                 style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -286,7 +286,7 @@ query($getBooksVariable: GetBooksInput!){
             created_at
             book_keeping_stock
             book_ready_stock
-            book_blocked_orders
+            book_blocked_stock
         }
 
         cursor

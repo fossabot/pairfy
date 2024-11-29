@@ -62,10 +62,26 @@ const main = async () => {
             throw new Error("SELLER_JWT_KEY error");
         }
 
-        if (!process.env.TOKEN_EXPIRATION) {
-            throw new Error("TOKEN_EXPIRATION error");
+        if (!process.env.DATABASE_HOST) {
+            throw new Error("DATABASE_HOST error");
         }
 
+        if (!process.env.DATABASE_PORT) {
+            throw new Error("DATABASE_PORT error");
+        }
+
+        if (!process.env.DATABASE_USER) {
+            throw new Error("DATABASE_USER error");
+        }        
+
+        if (!process.env.DATABASE_PASSWORD) {
+            throw new Error("DATABASE_PASSWORD error");
+        }   
+
+        if (!process.env.DATABASE_NAME) {
+            throw new Error("DATABASE_NAME error");
+        }   
+        
         const sessionOptions: object = {
             maxAge: 168 * 60 * 60 * 1000,
             signed: false,
@@ -74,10 +90,8 @@ const main = async () => {
             sameSite: "strict",
         };
 
-        const corsOrigin = process.env.CORS_DOMAINS;
-
         const corsOptions = {
-            origin: corsOrigin.split(",") || "*",
+            origin: process.env.CORS_DOMAINS.split(",") || "*",
             credentials: true,
             maxAge: 86400,
             preflightContinue: false,
@@ -101,11 +115,11 @@ const main = async () => {
         app.options('*', cors(corsOptions));
 
         database.connect({
-            host: "mysql",
-            port: 3306,
-            user: "marketplace",
-            password: "password",
-            database: "service_gateway",
+            host: process.env.DATABASE_HOST,
+            port: parseInt(process.env.DATABASE_PORT) || 3306,
+            user: process.env.DATABASE_USER,
+            password: process.env.DATABASE_PASSWORD,
+            database: process.env.DATABASE_NAME
         });
 
         app.use(cookieSession(sessionOptions));

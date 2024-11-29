@@ -510,7 +510,9 @@ const deletedImages = ref([]);
 const onDeleteImage = async (file) => {
     productImageSet.value = productImageSet.value.filter(item => item.name !== file.name);
 
-    deletedImages.value.push(file.name);
+    if (!file.local) {
+        deletedImages.value.push(file.name);
+    }
 };
 
 let sortableJs = null;
@@ -689,6 +691,16 @@ const onImagesUpload = (data) => {
     submitForm();
 };
 
+const deleteImages = async () => {
+    if (deletedImages.value.length) {
+        await deleteImage({ images: deletedImages.value }).then((res) => {
+            if (res.response.success === true) {
+                deletedImages.value = []
+            }
+        });
+    }
+}
+
 ////////////////////////////////////////////UPDATE MUTATION//////////////////
 
 const { mutate: sendMessage, loading: sendMessageLoading, onError: onErrorMutation, onDone: onProductUpdate } = useMutation(gql`
@@ -705,8 +717,10 @@ onErrorMutation(error =>
 
 onProductUpdate(result => {
     showSuccess("The product has been updated successfully.");
+    deleteImages();
     setTimeout(() => reloadPage(), 1000)
 })
+
 
 const formErrors = ref({
     "name": false,
@@ -754,13 +768,6 @@ const disableChoose = computed(() => {
 });
 
 const beforeUpdate = async () => {
-    if (deletedImages.value.length) {
-        await deleteImage({ images: deletedImages.value }).then((res) => {
-            if (res.response.success === true) {
-                deletedImages.value = []
-            }
-        });
-    }
 
     const newImages = productImageSet.value.some(e => e.local === true);
 

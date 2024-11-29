@@ -33,12 +33,25 @@ spec:
                   fieldPath: metadata.name
             - name: POD_TIMEOUT
               value: "120000"
-            - name: DATABASE_USER
-              value: marketplace
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
             - name: DATABASE_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: db-password
+                  key: password   
             - name: DATABASE_NAME
-              value: service_gateway
+              value: service_gateway       
+            - name: DATABASE_USER
+              value: marketplace 
             - name: STREAM_LIST
               value: product
             - name: SERVICE_NAME

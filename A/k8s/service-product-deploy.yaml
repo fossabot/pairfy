@@ -50,8 +50,6 @@ spec:
               value: service_product        
             - name: DATABASE_USER
               value: marketplace                                                                                                                                                                                       
-            - name: TOKEN_EXPIRATION
-              value: "7d"
             - name: CORS_DOMAINS
               value: "http://localhost:5173,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
           resources:

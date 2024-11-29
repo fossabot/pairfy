@@ -1,7 +1,7 @@
 import { getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 
-const getOrders = async (args: any, context: any) => {
+const getOrders = async (_:any, args: any, context: any) => {
   const params = args.updateProductInput;
 
   console.log(params);
@@ -19,7 +19,9 @@ const getOrders = async (args: any, context: any) => {
 
     return { success: true };
   } catch (err: any) {
-    await connection.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
 
     throw new Error(err.message);
   } finally {
@@ -29,7 +31,7 @@ const getOrders = async (args: any, context: any) => {
   }
 };
 
-const getBooks = async (args: any, context: any) => {
+const getBooks = async (_:any, args: any, context: any) => {
   const params = args.getBooksInput;
 
   const SELLER = context.sellerData;
@@ -55,7 +57,7 @@ const getBooks = async (args: any, context: any) => {
       p.created_at AS created_at,      
       b.keeping_stock AS book_keeping_stock,
       b.ready_stock AS book_ready_stock,
-      b.blocked_orders AS book_blocked_orders
+      b.blocked_stock AS book_blocked_stock
     FROM
       products p
     JOIN
@@ -115,11 +117,11 @@ const getBooks = async (args: any, context: any) => {
 
 const products = {
   Query: {
-    getOrders: (_: any, args: any, context: any) => getOrders(args, context),
+    getOrders
   },
 };
 
-const updateBook = async (args: any, context: any) => {
+const updateBook = async (_:any, args: any, context: any) => {
   const params = args.updateBookInput;
 
   console.log(params);
@@ -174,10 +176,10 @@ const updateBook = async (args: any, context: any) => {
 
 const books = {
   Query: {
-    getBooks: (_: any, args: any, context: any) => getBooks(args, context),
+    getBooks,
   },
   Mutation: {
-    updateBook: (_: any, args: any, context: any) => updateBook(args, context),
+    updateBook,
   },
 };
 

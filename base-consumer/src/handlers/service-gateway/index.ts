@@ -1,10 +1,7 @@
 import { database } from "../../db/client.js";
 import { logger } from "../../utils/index.js";
 
-const createProductHandler = async (
-  event: any,
-  seq: number
-): Promise<boolean> => {
+const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
 
   let connection = null;
@@ -40,7 +37,8 @@ const createProductHandler = async (
           features,
           category,
           keywords,
-          stock,
+          bullet_list,
+          paused,
           color,
           color_name,
           quality,
@@ -53,11 +51,14 @@ const createProductHandler = async (
           discount,
           discount_value,
           schema_v
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     await connection.execute(schemeData, payload);
 
-    await connection.execute("INSERT INTO books (id, product_sku) VALUES (?, ?)", [payload[0], payload[5]]);
+    await connection.execute(
+      "INSERT INTO books (id, product_sku) VALUES (?, ?)",
+      [payload[0], payload[5]]
+    );
 
     await connection.execute(
       "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)",
@@ -85,8 +86,7 @@ const createProductHandler = async (
 };
 
 const handlers: any = {
-  CreateProduct: (event: any, seq: number) =>
-    createProductHandler(event, seq),
+  CreateProduct,
 };
 
 export const processEvent = (message: any) => {

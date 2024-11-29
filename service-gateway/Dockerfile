@@ -8,16 +8,12 @@ COPY package*.json ./
 
 RUN ls
 
-RUN npm install
-
+RUN npm install --verbose
 
 COPY . .
 
-
 RUN npm run build
-
 
 EXPOSE 4000
 
-# Run the built JavaScript code
-CMD ["npm", "start"]
+CMD ["sh", "-c", "npm run database && npm start"]

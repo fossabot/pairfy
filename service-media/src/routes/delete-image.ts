@@ -8,13 +8,13 @@ import { _ } from "../utils/pino";
 const deleteImageMiddlewares: any = [sellerMiddleware, requireAuth];
 
 const deleteImageHandler = async (req: Request, res: Response) => {
-  res.setHeader('Cross-Origin-Resource-Policy', 'none');
+  res.setHeader("Cross-Origin-Resource-Policy", "none");
 
-  res.setHeader('Cross-Origin-Opener-Policy', 'none');
+  res.setHeader("Cross-Origin-Opener-Policy", "none");
 
   const SELLER = req.sellerData;
 
-  const params = req.body
+  const params = req.body;
 
   let connection: any = null;
 
