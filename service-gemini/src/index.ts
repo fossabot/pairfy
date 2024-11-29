@@ -47,9 +47,9 @@ const main = async () => {
       signed: false,
       secure: true,
       httpOnly: true,
-      sameSite: "none", 
+      sameSite: "none",
     };
-    
+
     const app = express();
 
     app.set("trust proxy", 1);
@@ -107,11 +107,21 @@ const main = async () => {
 
       const chatSession = model.startChat({
         generationConfig,
-        history: [],
+        history: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `generates an array with the most important technical features first, separated by commas using the language of the text.
+                use only commas to separate. Do not use line separators and special symbols.
+                `,
+              },
+            ],
+          },
+        ],
       });
 
-      let prepare =
-        "generates an array with the most important technical features first, separated by commas using the language of the following text: ";
+      let prepare = "";
 
       const inputText = (prepare += params.content);
 

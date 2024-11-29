@@ -232,18 +232,19 @@
                 </div>
                 <div class="right-column">
                     <div class="box">
-                        <div class="subtitle" v-tooltip="'Short product descriptions with great visibility'">
+                        <div class="subtitle" v-tooltip="'List of important features'">
                             Bullet List
                         </div>
 
                         <div class="box-content">
-                            <Button type="button" label="Use AI" :loading="sendMessageLoading" @click="handleBulletList"
-                                style="font-size: var(--text-size-a); margin-bottom: 1rem" variant="outlined"
-                                :disabled="!productDiscountComputed" />
+                            <Button type="button" label="Generate" :loading="bulletListLoading"
+                                @click="handleBulletList" style="font-size: var(--text-size-a); margin-bottom: 1rem"
+                                variant="outlined" :disabled="!productDiscountComputed" />
+
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
                                 :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
-                                :invalid="formErrors.keywords" size="large" placeholder="..."
+                                :invalid="formErrors.keywords" size="large" placeholder=""
                                 removeTokenIcon="pi pi-minus" />
                         </div>
                     </div>
@@ -500,18 +501,22 @@ onMounted(() => {
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 
+const bulletListLoading = ref(false);
+
 const handleBulletList = async () => {
 
     if (editor) {
+        bulletListLoading.value = true
+
         const content = editor.value.getHTML();
 
         const result = await getBulletList({ content });
 
         const { success, payload } = result.response;
 
-        console.log(payload);
-
         productBulletList.value = payload.split(",");
+
+        bulletListLoading.value = false;
     }
 }
 
