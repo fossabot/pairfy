@@ -30,7 +30,8 @@ const updateProduct = async (args: any, context: any) => {
             features = ?,
             category = ?,
             keywords = ?,
-            stock = ?,
+            bullet_list = ?,
+            paused = ?,
             color = ?,
             color_name = ?,
             quality = ?,
@@ -52,7 +53,8 @@ const updateProduct = async (args: any, context: any) => {
       params.features,
       params.category,
       params.keywords,
-      params.stock,
+      params.bullet_list,
+      params.paused,
       params.color,
       params.color_name,
       params.quality,
@@ -119,7 +121,8 @@ const createProduct = async (args: any, context: any) => {
             features,
             category,
             keywords,
-            stock,
+            bullet_list,
+            paused,
             color,
             color_name,
             quality,
@@ -132,7 +135,7 @@ const createProduct = async (args: any, context: any) => {
             discount,
             discount_value,
             schema_v
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const productId = getProductId();
 
@@ -152,7 +155,8 @@ const createProduct = async (args: any, context: any) => {
       params.features,
       params.category,
       params.keywords,
-      params.stock,
+      params.bullet_list,
+      params.paused,
       params.color,
       params.color_name,
       params.quality,

@@ -244,7 +244,7 @@
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
                                 :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
-                                :invalid="formErrors.keywords" size="large" placeholder=""
+                                :invalid="formErrors.bullet_list" size="large" placeholder=""
                                 removeTokenIcon="pi pi-minus" />
                         </div>
                     </div>
@@ -332,7 +332,7 @@
                         </div>
 
                         <div class="box-content">
-                            <ToggleSwitch v-model="productStock" />
+                            <ToggleSwitch v-model="productPaused" />
                         </div>
                     </div>
 
@@ -409,17 +409,17 @@ const productCategories = ref([
     { name: "Music", code: "music" },
     { name: "Movies", code: "movies" },
     { name: "Games", code: "games" },
-    { name: "Clothing & Accessories", code: "clothing" },
-    { name: "Home & Garden", code: "home" },
-    { name: "Beauty & Personal Care", code: "beauty" },
-    { name: "Health & Household", code: "health" },
-    { name: "Grocery & Gourmet Food", code: "food" },
-    { name: "Toys, Hobbies & Collectibles", code: "toys" },
-    { name: "Sports & Outdoors", code: "sports" },
-    { name: "Automotive & Industrial", code: "industrial" },
-    { name: "Pet Supplies", code: "pets" },
-    { name: "Office Supplies & Equipment", code: "office" },
-    { name: "Digital Content & Software", code: "software" },
+    { name: "Clothing & Accessories", code: "clothing-accessories" },
+    { name: "Home & Garden", code: "home-garden" },
+    { name: "Beauty & Personal Care", code: "beauty-personal-care" },
+    { name: "Health & Household", code: "health-household" },
+    { name: "Grocery & Gourmet Food", code: "grocery-gourmet-food" },
+    { name: "Toys, Hobbies & Collectibles", code: "toys-hobbies-collectibles" },
+    { name: "Sports & Outdoors", code: "sports-outdoors" },
+    { name: "Automotive & Industrial", code: "automotive-industrial" },
+    { name: "Pet Supplies", code: "pets-supplies" },
+    { name: "Office Supplies & Equipment", code: "office-supplies-equipment" },
+    { name: "Digital Content & Software", code: "digital-content-software" },
 ]);
 
 const productCategory = ref(null);
@@ -434,7 +434,7 @@ const productStateOptions = ref(['New', 'Used']);
 
 const productQuality = ref(null);
 
-const productStock = ref(false);
+const productPaused = ref(false);
 
 const productDiscount = ref(false);
 
@@ -533,15 +533,12 @@ const onSelectedFiles = (event) => {
     files.value = event.files;
 };
 
-
 const onImagesUpload = (data) => {
     const { payload } = JSON.parse(data.xhr.response);
 
     productImageSet.value.push(...payload);
 
     files.value = [];
-
-    console.log(productImageSet.value);
 
     submitProduct();
 };
@@ -572,7 +569,8 @@ const formErrors = ref({
     "features": false,
     "category": false,
     "keywords": false,
-    "stock": false,
+    "bullet_list": false,
+    "paused": false,
     "color": false,
     "color_name": false,
     "quality": false,
@@ -591,6 +589,7 @@ const checkMandatory = () => {
     formErrors.value.features = editor.value.storage.characterCount.characters() === 0;
     formErrors.value.category = productCategory.value === null;
     formErrors.value.keywords = productKeywords.value === null;
+    formErrors.value.bullet_list = productBulletList.value === null;
     formErrors.value.color = productColor.value === null;
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
@@ -626,7 +625,8 @@ const submitProduct = () => {
             "features": productFeatures.value,
             "category": productCategory.value.code,
             "keywords": productKeywords.value.join(','),
-            "stock": productStock.value ? 1 : 0,
+            "bullet_list": productBulletList.value.join(','),
+            "paused": productPaused.value ? 1 : 0,
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,

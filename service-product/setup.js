@@ -42,6 +42,8 @@ connection.connect((err) => {
         }
 
         executeScripts();
+
+       
       });
     }
   );
@@ -72,10 +74,13 @@ function executeScripts() {
               process.exit(1);
             } else {
               console.log(`SETUP: ${file} executed successfully.`);
+              return;
             }
           });
         }
       )
     );
   });
+
+ 
 }
