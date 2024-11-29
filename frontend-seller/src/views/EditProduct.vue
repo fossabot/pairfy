@@ -266,7 +266,7 @@
                         </div>
 
                         <div class="box-content">
-                            <ToggleSwitch v-model="productStock" />
+                            <ToggleSwitch v-model="productPaused" />
                         </div>
                     </div>
 
@@ -322,7 +322,6 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { HOST } from '@/api';
 
-
 const fileupload = ref();
 
 const uploadImages = () => {
@@ -356,7 +355,7 @@ query ($getProductVariable: GetProductInput!) {
         features
         category
         keywords
-        stock
+        paused
         color
         color_name
         quality
@@ -408,23 +407,26 @@ const productCollateral = ref(null);
 const productSKU = ref(null);
 const productModel = ref(null);
 const productBrand = ref(null);
+
+const productBulletList = ref(null);
+
 const productCategories = ref([
     { name: "Electronics", code: "electronics" },
     { name: "Books", code: "books" },
     { name: "Music", code: "music" },
     { name: "Movies", code: "movies" },
     { name: "Games", code: "games" },
-    { name: "Clothing & Accessories", code: "clothing" },
-    { name: "Home & Garden", code: "home" },
-    { name: "Beauty & Personal Care", code: "beauty" },
-    { name: "Health & Household", code: "health" },
-    { name: "Grocery & Gourmet Food", code: "food" },
-    { name: "Toys, Hobbies & Collectibles", code: "toys" },
-    { name: "Sports & Outdoors", code: "sports" },
-    { name: "Automotive & Industrial", code: "industrial" },
-    { name: "Pet Supplies", code: "pets" },
-    { name: "Office Supplies & Equipment", code: "office" },
-    { name: "Digital Content & Software", code: "software" },
+    { name: "Clothing & Accessories", code: "clothing-accessories" },
+    { name: "Home & Garden", code: "home-garden" },
+    { name: "Beauty & Personal Care", code: "beauty-personal-care" },
+    { name: "Health & Household", code: "health-household" },
+    { name: "Grocery & Gourmet Food", code: "grocery-gourmet-food" },
+    { name: "Toys, Hobbies & Collectibles", code: "toys-hobbies-collectibles" },
+    { name: "Sports & Outdoors", code: "sports-outdoors" },
+    { name: "Automotive & Industrial", code: "automotive-industrial" },
+    { name: "Pet Supplies", code: "pets-supplies" },
+    { name: "Office Supplies & Equipment", code: "office-supplies-equipment" },
+    { name: "Digital Content & Software", code: "digital-content-software" },
 ]);
 
 const productCategory = ref(null);
@@ -439,7 +441,7 @@ const productStateOptions = ref(['New', 'Used']);
 
 const productQuality = ref(null);
 
-const productStock = ref(false);
+const productPaused = ref(false);
 
 const productDiscount = ref(false);
 
@@ -566,7 +568,7 @@ watch(result, value => {
         productColorName.value = product.color_name;
         productColor.value = product.color;
         productQuality.value = product.quality;
-        productStock.value = product.stock ? true : false;
+        productPaused.value = product.paused ? true : false;
         productDiscount.value = product.discount;
         productDiscountValue.value = product.discount_value;
         productImageSet.value = processImageSet(product);
@@ -642,7 +644,7 @@ const formErrors = ref({
     "features": false,
     "category": false,
     "keywords": false,
-    "stock": false,
+    "paused": false,
     "color": false,
     "color_name": false,
     "quality": false,
@@ -709,7 +711,7 @@ const submitForm = () => {
             "features": productFeatures.value,
             "category": productCategory.value.code,
             "keywords": productKeywords.value.join(','),
-            "stock": productStock.value ? 1 : 0,
+            "paused": productPaused.value ? 1 : 0,
             "color": productColor.value,
             "color_name": productColorName.value,
             "quality": productQuality.value,
