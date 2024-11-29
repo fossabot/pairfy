@@ -287,7 +287,7 @@
 
                     <div class="box">
                         <div class="subtitle">
-                          Paused
+                            Paused
                         </div>
 
                         <div class="box-content">
@@ -385,8 +385,9 @@ const queryVariablesRef = ref({
         "id": null
     }
 })
+const queryEnabled = ref(false)
 
-const { result, onError: onErrorQuery } = useQuery(gql`
+const { result: getProductResult, onError: onGetProductError } = useQuery(gql`
 query ($getProductVariable: GetProductInput!) {
     getProduct(getProductInput: $getProductVariable) {
         id
@@ -414,6 +415,12 @@ query ($getProductVariable: GetProductInput!) {
 }
 `,
     () => (queryVariablesRef.value)
+    ,
+    () => ({
+        enabled: queryEnabled.value,
+    })
+
+
 );
 
 const updateQueryVariables = (id) => {
@@ -426,11 +433,16 @@ const updateQueryVariables = (id) => {
 
 watch(
     () => route.params.id,
-    (id) => updateQueryVariables(id),
+    (id) => {
+        if (id) {
+            queryEnabled.value = true;
+            updateQueryVariables(id)
+        }
+    },
     { immediate: true }
 );
 
-onErrorQuery(error => {
+onGetProductError(error => {
     showError(error);
 })
 
@@ -579,9 +591,9 @@ const handleBulletList = async () => {
 
         const content = editor.value.getHTML();
 
-        const result = await getBulletList({ content });
+        const bl = await getBulletList({ content });
 
-        const { success, payload } = result.response;
+        const { success, payload } = bl.response;
 
         productBulletList.value = payload.split(",");
 
@@ -611,7 +623,7 @@ const processImageSet = (product) => {
 
 }
 
-watch(result, value => {
+watch(getProductResult, value => {
     if (value) {
         const product = value.getProduct;
 
