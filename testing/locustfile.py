@@ -65,16 +65,17 @@ class CreateProductTest(TaskSet):
                 "sku": fake.lexify(text="???-???-????-???", letters="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
                 "model": fake.lexify(text="Modelo ???????", letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ"),
                 "brand": "Razer",
-                "features": "{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"kaka There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.  koko\"}]}]}",
+                "features": "{\"type\":\"doc\",\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\"kaka There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.\"}]}]}",
                 "category": "electronics",
                 "keywords": ",".join([fake.word() for _ in range(5)]),
-                "stock": fake.random_int(min=0, max=1),
+                "bullet_list": ",".join([fake.word() for _ in range(5)]),
+                "paused": fake.random_int(min=0, max=1),
                 "color": "000000",
                 "color_name": fake.color_name(),
                 "quality": random.choice(["New", "Used"]),
                 "discount": True,
                 "discount_value": fake.random_int(min=1, max=99),
-                "image_set": "ZggRX9fbKUlIpjAnUcIv.jpeg",
+                "image_set": "uAsVBnacJdamf9wGEbXx.jpeg",
                 "video_set": ""
             }
         }
