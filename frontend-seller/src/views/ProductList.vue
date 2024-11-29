@@ -158,6 +158,18 @@
                 </template>
             </Column>
 
+            <Column field="paused" header="Paused" sortable style="min-width: 4rem">
+                <template #body="slotProps">
+                    <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
+                        :severity="getLabelColor(slotProps.data.paused)" />
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
+
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
                     <div class="datatable-control">
@@ -180,7 +192,7 @@ import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 
-const { formatWithDots, reduceByLength } = inject('utils')
+const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
 
 const toast = useToast();
 
@@ -219,7 +231,7 @@ query($getProductsVariable: GetProductsInput!){
             price
             collateral
             category
-            stock
+            paused
             media_url
             image_path
             image_set
@@ -297,17 +309,6 @@ const onDeleteConfirmed = () => {
     deleteProductDialog.value = false;
 }
 
-const formatCurrency = (value) => {
-    if (value) {
-        return value.toLocaleString('en-US', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-
-        }) + " USD";
-    }
-
-};
-
 const formatSKU = (value) => {
     if (value) {
         return value.split(":")[0]
@@ -334,17 +335,6 @@ const exportCSV = () => {
     dt.value.exportCSV();
 };
 
-const getStockLabel = (status) => {
-    switch (status) {
-        case 1:
-            return 'success';
-        case 0:
-            return 'secondary';
-
-        default:
-            return null;
-    }
-};
 
 const goBack = () => {
     router.go(-1)
@@ -358,6 +348,19 @@ const editProduct = (event) => {
         }
     })
 }
+
+const getLabelColor = (status) => {
+    switch (status) {
+        case 1:
+            return 'warn';
+        case 0:
+            return 'secondary';
+
+        default:
+            return null;
+    }
+};
+
 </script>
 
 

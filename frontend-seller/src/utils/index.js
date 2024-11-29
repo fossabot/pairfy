@@ -23,9 +23,18 @@ export function reduceByLength(input, maxLength) {
     result += word + ' '
   }
 
-  return result.trim() + "..."
+  return result.trim() + '...'
 }
 
-export function functionThree() {
-  return 'This is function three!'
+export function formatCurrency(value, type_) {
+  let type = type_ || 'USD';
+
+  if (value) {
+    let result = value.toLocaleString('en-US', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    })
+
+    return result + ' ' + type
+  }
 }

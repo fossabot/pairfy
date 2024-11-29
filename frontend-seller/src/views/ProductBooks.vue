@@ -204,7 +204,7 @@
             <Column field="book_ready_stock" header="ST" sortable style="min-width: 4rem">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
-                        :severity="getStockLabel(slotProps.data.book_ready_stock)" />
+                        :severity="getLabelColor(slotProps.data.book_ready_stock)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -410,7 +410,7 @@ const exportCSV = () => {
     dt.value.exportCSV();
 };
 
-const getStockLabel = (status) => {
+const getLabelColor = (status) => {
     switch (status) {
         case 1:
             return 'success';

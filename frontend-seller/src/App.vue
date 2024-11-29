@@ -19,7 +19,7 @@ import { useToast } from "primevue/usetoast";
 import { provide } from 'vue';
 import { ApolloClients } from '@vue/apollo-composable';
 import { productClient, gatewayClient } from './graphql/index';
-import { formatWithDots, reduceByLength } from "./utils/index"
+import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
 
 provide(ApolloClients, {
   default: productClient,
@@ -29,7 +29,8 @@ provide(ApolloClients, {
 
 provide('utils', {
   formatWithDots,
-  reduceByLength
+  reduceByLength,
+  formatCurrency
 });
 
 const toast = useToast();
