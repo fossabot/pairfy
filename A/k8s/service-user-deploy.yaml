@@ -36,11 +36,25 @@ spec:
               value: "8000"
             - name: EXPRESS_TIMEOUT
               value: "120000"                                                                  
-            - name: BUS_STREAMING_URI  
+            - name: DATABASE_HOST  
               valueFrom:
                 configMapKeyRef:
-                  name: streaming-config
-                  key: redis                                                                                  
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-password
+                  key: password   
+            - name: DATABASE_NAME
+              value: service_user       
+            - name: DATABASE_USER
+              value: marketplace                                                                                   
             - name: TOKEN_EXPIRATION
               value: "7d"
             - name: CORS_DOMAINS

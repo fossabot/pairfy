@@ -1,7 +1,3 @@
-CREATE DATABASE service_user;
-
-use service_user;
-
 create table if not exists users(
   id varchar(20) not null,
   username varchar(50) not null,

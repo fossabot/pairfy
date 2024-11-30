@@ -11,6 +11,7 @@
   "author": "https://github.com/rey-sudo",
   "license": "MIT",
   "scripts": {
+    "database": "node setup.js",
     "build": "tsc --build",
     "dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",

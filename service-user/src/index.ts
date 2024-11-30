@@ -35,12 +35,32 @@ const main = async () => {
       throw new Error("TOKEN_EXPIRATION error");
     }
 
+    if (!process.env.DATABASE_HOST) {
+      throw new Error("DATABASE_HOST error");
+    }
+
+    if (!process.env.DATABASE_PORT) {
+      throw new Error("DATABASE_PORT error");
+    }
+
+    if (!process.env.DATABASE_USER) {
+      throw new Error("DATABASE_USER error");
+    }
+
+    if (!process.env.DATABASE_PASSWORD) {
+      throw new Error("DATABASE_PASSWORD error");
+    }
+
+    if (!process.env.DATABASE_NAME) {
+      throw new Error("DATABASE_NAME error");
+    }
+
     DB.connect({
-      host: "mysql",
-      port: 3306,
-      user: "marketplace",
-      password: "password",
-      database: "service_user",
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT) || 3306,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME
     });
 
     checkpoint("ready");

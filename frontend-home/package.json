@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.4",
-    "@emurgo/cardano-serialization-lib-browser": "^11.5.0",
+    "@emurgo/cardano-serialization-lib-browser": "^13.2.0",
     "@tiptap/core": "^2.5.6",
     "@tiptap/extension-character-count": "^2.5.6",
     "@tiptap/extension-document": "^2.5.6",

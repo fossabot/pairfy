@@ -23,7 +23,7 @@ const loginUserHandler = async (req: Request, res: Response) => {
     const address32: string = address.to_bech32();
     const pubkeyhash = getPubKeyHash(address);
     const signature = params.signature;
-    const message = "PLEASE SIGN TO AUTHENTICATE IN PAIRFY";
+    const message = "PLEASE SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
 
     const verifySignature = verifyDataSignature(
       signature.signature,
@@ -100,10 +100,14 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, data: userData });
   } catch (err) {
-    await connection.rollback();
+    if(connection){
+      await connection.rollback();
+    }
     _.error(err);
   } finally {
-    connection.release();
+    if(connection){
+      connection.release();
+    }
   }
 };
 

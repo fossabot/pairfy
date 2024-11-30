@@ -66,7 +66,7 @@ const getAddress = async () => {
 };
 
 const getMessage = () => {
-  const message = "PLEASE SIGN TO AUTHENTICATE IN PAIRFY";
+  const message = "PLEASE SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
 
   return Buffer.from(message, "utf8").toString("hex");
 };
@@ -126,6 +126,8 @@ const stopWalletService = () => {
 
 const balanceTx = async (unbalancedTx) => {
   const utx = CardanoWasm.Transaction.from_hex(unbalancedTx);
+  
+  console.log(utx);
 
   const tx = CardanoWasm.Transaction.new(utx.body(), utx.witness_set());
 
@@ -153,9 +155,6 @@ const balanceTx = async (unbalancedTx) => {
     Buffer.from(signedTx.to_bytes(), "utf8").toString("hex")
   );
 };
-
-
-
 
 export {
   walletClient,
