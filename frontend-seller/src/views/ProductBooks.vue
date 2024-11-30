@@ -18,11 +18,11 @@
                         </div>
                         <InputGroup>
                             <InputNumber v-model="bookForm.keeping_stock" type="number" placeholder="Stock"
-                                :invalid="bookFormErrors.price" :min="0" :useGrouping="false"
+                                :invalid="bookFormErrors.keeping_stock" :min="0" :useGrouping="false"
                                 :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
                             <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready To Sell"
-                                :invalid="bookFormErrors.collateral" :min="0" :useGrouping="false"
+                                :invalid="bookFormErrors.ready_stock" :min="0" :useGrouping="false"
                                 :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
                         </InputGroup>
                     </div>
@@ -204,7 +204,7 @@
             <Column field="book_ready_stock" header="ST" sortable style="min-width: 4rem">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
-                        :severity="getLabelColor(slotProps.data.book_ready_stock)" />
+                        :severity="getLabelColor(slotProps.data.book_ready_stock ? 1 : 0)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -329,13 +329,13 @@ const bookConfigDialog = ref(false);
 const bookForm = ref({
     keeping_stock: null,
     ready_stock: null,
-    stop_orders: null
+    disable_purchases: false
 });
 
 const bookFormErrors = ref({
     keeping_stock: false,
     ready_stock: false,
-    stop_orders: false,
+    disable_purchases: false
 });
 
 const selectedBook = ref(null);
@@ -349,8 +349,12 @@ const { mutate: sendUpdateBook, onError: onUpdateBookError, onDone: onUpdateBook
         updateBook(updateBookInput: $updateBookVariable){
             success
         }
-}
-`)
+    }
+`,
+    {
+        clientId: "gateway"
+    }
+)
 
 onUpdateBookError(error => {
     showError(error);
@@ -364,12 +368,13 @@ const onConfigDone = () => {
     sendUpdateBook({
         "updateBookVariable": {
             "id": selectedBook.value.id,
-            "keeping_stock": bookForm.keeping_stock,
-            "ready_stock": bookForm.ready_stock,
-            "disable_purchases": bookForm.disable_purchases
+            "keeping_stock": bookForm.value.keeping_stock,
+            "ready_stock": bookForm.value.ready_stock,
+            "disable_purchases": bookForm.value.disable_purchases
         }
     });
-    booksTemp.value = []
+
+    booksTemp.value = [];
     bookConfigDialog.value = false;
 }
 

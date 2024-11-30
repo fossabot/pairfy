@@ -76,8 +76,8 @@ type UpdateBookResponse {
 
 input UpdateBookInput {
   id: String!
-  keeping_stock: String!
-  ready_stock: String!
+  keeping_stock: Int!
+  ready_stock: Int!
   disable_purchases: Boolean!
 } 
 
