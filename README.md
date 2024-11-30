@@ -4,7 +4,6 @@ Adabuy is an e-commerce protocol that uses smart contracts for the process of se
 
 ![Descripción de la imagen](z/docs/portada.png)
 
-
 [Whitepaper V1](z/latex/whitepaper.pdf) 👈
 
 ### Introduction
@@ -38,7 +37,7 @@ Both the buyer and seller are afforded the opportunity to present evidence or ex
 | Debezium | cdc       | database change data capture | cdc, kafka, stream, sync     | 2.5     | Apache Version 2.0 | [https://github.com/debezium](https://github.com/debezium)         |
 | Kafka    | streaming | event streaming              | high-throughput, low-latency | 3.6.1   | Apache Version 2.0 | [https://github.com/apache/kafka](https://github.com/apache/kafka) |
 | Node.js  | runtime   | javascript runtime           | code, javascript             | alpine  | MIT                | [https://github.com/nodejs/node](https://github.com/nodejs/node)   |
-
+| GraphQL  | API       | A GraphQL server can fetch data from separate sources for a single client query | query, polling, websocket | 4.11.2 | MIT | [https://github.com/apollographql/apollo-server](https://github.com/apollographql/apollo-server)
 ## Road Map
 
 - [X] Add User UI
@@ -90,7 +89,6 @@ Clone this repository in the work directory
 git clone https://github.com/rey-sudo/core.git
 ```
 
-
 Install skafold dev
 [https://skaffold.dev/docs/install/](https://skaffold.dev/docs/install/)
 
@@ -98,8 +96,8 @@ Install skafold dev
 skaffold run
 ```
 
-
 Install kubectl
+
 ```
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux
 ```
