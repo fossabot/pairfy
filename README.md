@@ -122,4 +122,4 @@ Juan Caballero R. - sudo.delete.evil@gmail.com
 
 GitHub: [https://github.com/rey-sudo](https://github.com/rey-sudo)
 
-LinkedIn: [https://www.linkedin.com/in/juanrey1](https://www.linkedin.com/in/juanrey1https:/)
+LinkedIn: [https://www.linkedin.com/in/juanrey1](https://www.linkedin.com/in/juanrey1)
