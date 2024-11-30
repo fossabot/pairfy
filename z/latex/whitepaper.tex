@@ -327,4 +327,16 @@ Product books allow inventory control of products in still stock, ready-to-sell 
   \label{fig:web}
 \end{figure}
 
+\subsubsection { Wallet Support } 
+
+Adabuy implements CIP-30 for connecting via API to any Cardano wallet such as Nami, Lace, Eternl, VESPR. The wallet is used to log in to the platform with a public signature check in the backend. This process is secure and is used in Dapps such as summon-platform. Read more: https://cips.cardano.org/cip/CIP-30.
+
+To buy with the wallet it is necessary to be on the chosen product page and then press the buy button which creates a post request with the pubKeyHash and address[0]. After receiving the CBOR in the backend the buyer must send the transaction with the ADA corresponding to the price. The backend has previously saved the ThreadToken to monitor the transaction. When the UTXO datum is detected as  \emph{Locking}, the seller is notified by all possible means about a new purchase. The seller has a certain time to accept the trading intention. If he does not do so after a POSIX time, the buyer can recover the money locked in the plutus v3 script (Smart Contract).
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.88\textwidth, keepaspectratio]{walletSupport.png}
+  \caption{walletSupport}
+  \label{fig:web}
+\end{figure}
 \end{document}
