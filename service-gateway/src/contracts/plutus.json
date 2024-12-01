@@ -12,6 +12,47 @@
   },
   "validators": [
     {
+      "title": "marketplace.statemachine.spend",
+      "datum": {
+        "title": "datum_opt",
+        "schema": {
+          "$ref": "#/definitions/marketplace~1StateMachineDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/marketplace~1StateMachineInput"
+        }
+      },
+      "parameters": [
+        {
+          "title": "threadtoken",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        }
+      ],
+      "compiledCode": "59029d0101003232323232323223225333004323232323253330093370e900118051baa0011323322323232533300f300300115333012301137540100042c2a66601e66e1d200200115333012301137540100042c2c601e6ea801c54ccc034c004c038dd50010992999807180118079baa3013301400113232323232333333222222323232323232533301f301330203754002264646464a666046602e60486ea80044c8c8c94ccc09803454ccc09802c54ccc09800840045280a5014a066ebccdd2a40086605266e952000330294c01012000330293752022660526ea4040cc0a4dd4007998149ba800e33029375001a97ae04bd70180218139baa0023300a32330010013756600a604e6ea8008894ccc0a400452f5c0266054604e60560026600400460580020446050604a6ea800458cc014dd6180098121baa01c23375e600e604a6ea8004c01cc094dd5180198129baa00423027302830280012302630270013024302137540022c660026eb0c008c080dd500c119baf30033021375400202a44646600200200644a6660480022980103d87a8000133225333023300500213374a90001981380125eb804cc010010004c098004c09c0048c088004cc004dd6181018109810981098109810981098109810980e9baa01500722323300100100322533302100114a026644a66604066e3c0080145288998020020009bae30230013024001300d006375a603000a6eb8c060010dd7180c0019bad3018002375a60300026eb4c060c064004c060004c05c004c058004c054004c040dd51809800898011bad3013301037546026002660226024601e6ea8008cc0440192f5c02c6e1d2000300f001300f3010001300b37540022c601a601c006601800460160046016002600c6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
+      "hash": "6db8896e2840808607b167ca9398fa6b8243db8ec4c7cb175eba33ab"
+    },
+    {
+      "title": "marketplace.statemachine.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "threadtoken",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        }
+      ],
+      "compiledCode": "59029d0101003232323232323223225333004323232323253330093370e900118051baa0011323322323232533300f300300115333012301137540100042c2a66601e66e1d200200115333012301137540100042c2c601e6ea801c54ccc034c004c038dd50010992999807180118079baa3013301400113232323232333333222222323232323232533301f301330203754002264646464a666046602e60486ea80044c8c8c94ccc09803454ccc09802c54ccc09800840045280a5014a066ebccdd2a40086605266e952000330294c01012000330293752022660526ea4040cc0a4dd4007998149ba800e33029375001a97ae04bd70180218139baa0023300a32330010013756600a604e6ea8008894ccc0a400452f5c0266054604e60560026600400460580020446050604a6ea800458cc014dd6180098121baa01c23375e600e604a6ea8004c01cc094dd5180198129baa00423027302830280012302630270013024302137540022c660026eb0c008c080dd500c119baf30033021375400202a44646600200200644a6660480022980103d87a8000133225333023300500213374a90001981380125eb804cc010010004c098004c09c0048c088004cc004dd6181018109810981098109810981098109810980e9baa01500722323300100100322533302100114a026644a66604066e3c0080145288998020020009bae30230013024001300d006375a603000a6eb8c060010dd7180c0019bad3018002375a60300026eb4c060c064004c060004c05c004c058004c054004c040dd51809800898011bad3013301037546026002660226024601e6ea8008cc0440192f5c02c6e1d2000300f001300f3010001300b37540022c601a601c006601800460160046016002600c6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
+      "hash": "6db8896e2840808607b167ca9398fa6b8243db8ec4c7cb175eba33ab"
+    },
+    {
       "title": "marketplace.threadtoken.mint",
       "redeemer": {
         "title": "redeemer",
@@ -66,6 +107,18 @@
     "Int": {
       "dataType": "integer"
     },
+    "POSIXTime": {
+      "title": "POSIXTime",
+      "dataType": "integer"
+    },
+    "PolicyId": {
+      "title": "PolicyId",
+      "dataType": "bytes"
+    },
+    "VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
     "cardano/transaction/OutputReference": {
       "title": "OutputReference",
       "description": "An `OutputReference` is a unique reference to an output on-chain. The `output_index`\n corresponds to the position in the output list of the transaction (identified by its id)\n that produced that output",
@@ -84,6 +137,59 @@
               "$ref": "#/definitions/Int"
             }
           ]
+        }
+      ]
+    },
+    "marketplace/StateMachineDatum": {
+      "title": "StateMachineDatum",
+      "anyOf": [
+        {
+          "title": "StateMachineDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "state",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "buyer",
+              "$ref": "#/definitions/VerificationKeyHash"
+            },
+            {
+              "title": "seller",
+              "$ref": "#/definitions/VerificationKeyHash"
+            },
+            {
+              "title": "price",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "collateral",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "accept_range",
+              "$ref": "#/definitions/POSIXTime"
+            }
+          ]
+        }
+      ]
+    },
+    "marketplace/StateMachineInput": {
+      "title": "StateMachineInput",
+      "anyOf": [
+        {
+          "title": "Return",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Locking",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
         }
       ]
     },
