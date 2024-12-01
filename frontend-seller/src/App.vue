@@ -6,7 +6,6 @@
     <div class="wrapper-content">
       <RouterView />
     </div>
-
   </div>
 
 </template>
@@ -58,13 +57,6 @@ getUser().then(() => console.log('👋 Welcome')).catch(() => showError('AUTH_ER
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
 }
 
 .wrapper {

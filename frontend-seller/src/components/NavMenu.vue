@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="navigation">
     <img class="logo" src="@/assets/logo.svg" alt="logo">
     <nav>
       <ul>
@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-.wrap {
+.navigation {
   background: var(--primary-a);
   margin-left: 0;
   width: 17rem;
