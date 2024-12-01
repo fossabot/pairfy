@@ -3,9 +3,10 @@
         <span>Stock</span>
         <span>Stock</span>
         <span>Quantity</span>
-        <Button label="Buy Now" fluid />
-        <Button label="Add to Cart" fluid outlined />
-
+        <div class="buy-control">
+            <Button label="Buy Now" fluid />
+            <Button label="Add to Cart" fluid outlined />
+        </div>
         <span>seller</span>
         <span>legends</span>
     </div>
@@ -22,5 +23,11 @@
     min-height: 100px;
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+}
+
+.buy-control {
+    display: grid;
+    gap: 0.5rem;
 }
 </style>
