@@ -57,10 +57,11 @@ const getBooks = async (_:any, args: any, context: any) => {
       p.created_at AS created_at,      
       b.keeping_stock AS book_keeping_stock,
       b.ready_stock AS book_ready_stock,
-      b.blocked_stock AS book_blocked_stock
+      b.blocked_stock AS book_blocked_stock,
+      b.disable_purchases AS disable_purchases
     FROM
       products p
-    JOIN
+    INNER JOIN
       books b
     ON
       p.id = b.id    

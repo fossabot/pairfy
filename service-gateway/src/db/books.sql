@@ -9,8 +9,7 @@ create table if not exists books(
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,
   primary key(id),
-  key idx_product_sku (product_sku),
-  index idx_seller_id (seller_id)
+  index idx_product_sku (product_sku),
+  index idx_seller_id (seller_id),
+  foreign key (id) REFERENCES products(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
-
----FOREIGN KEY
