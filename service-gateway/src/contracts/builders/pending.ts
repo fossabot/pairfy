@@ -160,4 +160,4 @@ pendingTransactionBuilder(
 
 export { pendingTransactionBuilder };
 
-//signature, collateral, validAfter
+//two signature, collateral, validAfter
