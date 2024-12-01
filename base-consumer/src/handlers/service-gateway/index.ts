@@ -25,33 +25,34 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     await connection.beginTransaction();
 
     const schemeData = `
-      INSERT IGNORE INTO products (
-          id,
-          seller_id,
-          name,
-          price,  
-          collateral,
-          sku,              
-          model,
-          brand,
-          features,
-          category,
-          keywords,
-          bullet_list,
-          paused,
-          color,
-          color_name,
-          quality,
-          country,
-          media_url,
-          image_path,
-          video_path,
-          image_set,
-          video_set,
-          discount,
-          discount_value,
-          schema_v
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        INSERT INTO products (
+            id,
+            seller_id,
+            name,
+            price,  
+            collateral,
+            sku,              
+            model,
+            brand,
+            features,
+            category,
+            keywords,
+            bullet_list,
+            paused,
+            color,
+            color_name,
+            quality,
+            country,
+            media_url,
+            image_path,
+            video_path,
+            image_set,
+            video_set,
+            discount,
+            discount_value,
+            schema_v
+       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
 
     await connection.execute(schemeData, payload);
 

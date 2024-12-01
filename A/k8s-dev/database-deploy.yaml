@@ -81,7 +81,8 @@ data:
 
 
     thread_cache_size = 256   
-
+    
+    max_allowed_packet = 67108864
 
     innodb_flush_log_at_trx_commit = 1            
     innodb_log_buffer_size = 134217728            
