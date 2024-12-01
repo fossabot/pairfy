@@ -285,8 +285,6 @@ const getProduct = async (_: any, args: any, context: any) => {
       [params.id, SELLER.id]
     );
 
-    await connection.commit();
-
     if (!product.length) {
       throw new Error("NOT_PRODUCT");
     }
