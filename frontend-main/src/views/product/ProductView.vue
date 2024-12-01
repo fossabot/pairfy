@@ -4,13 +4,18 @@
             x
         </div>
         <div class="card">
-
+            <div class="card-left">
+                1
+            </div>
+            <div class="card-right">
+                <BuyModule />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-
+import BuyModule from "@/views/product/BuyModule.vue"
 </script>
 
 <style lang="css" scoped>
@@ -26,8 +31,7 @@
 .mask {
     height: 300px;
     width: inherit;
-    position: absolute;
-    top: 100px;
+    position: relative;
     z-index: 1;
     background-repeat: no-repeat;
     background-size: cover;
@@ -37,12 +41,27 @@
 .card {
     max-width: 1184px;
     width: 80%;
-    height: 500px;
-    margin-top: 150px;
+    height: auto;
+    margin-top: -150px;
     background: #ffffff;
     position: relative;
     z-index: 10;
-    border-radius: 8px;
+    border-radius: 20px;
     border: 1px solid var(--border-a);
+    display: grid;
+    grid-template-columns: 70% 30%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.card-left {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.card-right {
+    min-height: 100vh;
 }
 </style>
