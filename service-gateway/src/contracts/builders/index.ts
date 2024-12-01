@@ -40,4 +40,7 @@ function readValidators(): Validators {
 
 const lucid = await Lucid(provider, "Preprod");
 
-export { provider, readValidators, lucid };
+
+const validators = readValidators();
+
+export { provider, readValidators, lucid, validators };

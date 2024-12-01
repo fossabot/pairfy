@@ -13,3 +13,4 @@ create table if not exists books(
   index idx_seller_id (seller_id)
 ) ENGINE=InnoDB;
 
+---FOREIGN KEY
