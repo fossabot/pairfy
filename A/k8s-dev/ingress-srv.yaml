@@ -67,7 +67,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: service-gateway
+                name: service-query
                 port:
                   number: 4000                  
           - path: /api/media/?(.*)
