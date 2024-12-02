@@ -12,6 +12,7 @@ import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';
 import { provide } from 'vue';
+import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
 
 provide(ApolloClients, {
   default: queryClient,
@@ -19,6 +20,12 @@ provide(ApolloClients, {
   gateway: gatewayClient
 })
 
+
+provide('utils', {
+  formatWithDots,
+  reduceByLength,
+  formatCurrency
+});
 </script>
 
 

@@ -1,6 +1,8 @@
 <template>
     <div class="media">
-        <div class="media-nav">
+        <Skeleton v-if="!getProductData" width="100%" height="100%" />
+
+        <div v-if="getProductData" class="media-nav">
             <div class="media-item" :class="{ selected: selectedImageIndex === index }"
                 v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)">
                 <img :src="item" alt="item">
