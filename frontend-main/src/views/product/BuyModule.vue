@@ -1,7 +1,7 @@
 <template>
     <div class="buy">
         <span>Stock</span>
-        <span>Stock</span>
+        <span>Available Stock</span>
         <span>Quantity</span>
         <div class="buy-control">
             <Button label="Buy Now" fluid />

@@ -1,12 +1,21 @@
 <template>
     <div class="wrap">
-        <div class="mask">
-            x
-        </div>
-
+        <div class="mask" />
         <div class="container">
             <div class="card-header">
-                x
+                <span @click="backRoute">Back</span>
+                <div class="flex" style="margin: 0 0.5rem;">
+                    <i class="pi pi-angle-right" />
+                </div>
+                <span>Home</span>
+                <div class="flex" style="margin: 0 0.5rem;">
+                    <i class="pi pi-angle-right" />
+                </div>
+                <span>Categories</span>
+                <div class="flex" style="margin: 0 0.5rem;">
+                    <i class="pi pi-angle-right" />
+                </div>
+                <span>{{ getProductData?.category }}</span>
             </div>
             <div class="card">
                 <div class="card-left">
@@ -14,8 +23,10 @@
                         <MediaModule />
                         <PreviewModule />
                     </div>
+                    <Divider/>
                     <div>Suggestions</div>
-                    <div>Description</div>
+                    <Divider/>
+                    <DescriptionModule/>
                 </div>
                 <div class="card-right">
                     <BuyModule />
@@ -32,10 +43,11 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
 import productAPI from '@/views/product/api/index';
 import MediaModule from './MediaModule.vue';
 import PreviewModule from './PreviewModule.vue';
-import gql from 'graphql-tag';
+import DescriptionModule from '@/views/product/DescriptionModule.vue';
 import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
@@ -43,7 +55,7 @@ import { ref, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 
 
-const { setProductData } = productAPI();
+const { setProductData, getProductData } = productAPI();
 
 const toast = useToast();
 
@@ -58,6 +70,10 @@ const showError = (content) => {
 const route = useRoute()
 
 const router = useRouter()
+
+const backRoute = () => {
+    router.go(-1)
+}
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -173,14 +189,20 @@ onGetProductError(error => {
 }
 
 .card-header {
-    height: 50px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
     background: var(--background-b);
+    font-size: var(--text-size-a);
+    color: var(--primary-c);
+    border: 1px solid var(--border-a);
+    border-bottom: none;
 }
 
 .card {
     display: grid;
     grid-template-columns: 73% 27%;
-    padding: 1rem;
+    padding: 1.5rem;
     box-sizing: border-box;
     border: 1px solid var(--border-a);
 }

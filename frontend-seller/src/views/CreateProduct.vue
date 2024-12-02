@@ -495,6 +495,7 @@ const setupEditor = async () => {
         })
     });
 }
+
 onMounted(() => {
     setupSortable();
 

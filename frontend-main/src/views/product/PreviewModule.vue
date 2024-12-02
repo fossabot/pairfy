@@ -65,7 +65,6 @@ const { getProductData } = productAPI();
 .preview-price{
     font-size: var(--text-size-d);
     margin-top: 1rem;
-    font-weight: 600;
 }
 
 .preview-top {
