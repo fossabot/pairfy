@@ -160,8 +160,9 @@ const createProduct = async (_: any, args: any, context: any) => {
         id,
         event_type,
         payload,
-        agent_id
-        ) VALUES (?, ?, ?, ?)
+        agent_id,
+        event_version
+        ) VALUES (?, ?, ?, ?, ?)
         `;
 
     const eventValue = [
@@ -169,6 +170,7 @@ const createProduct = async (_: any, args: any, context: any) => {
       "CreateProduct",
       JSON.stringify(productData),
       SELLER.id,
+      0
     ];
 
     await connection.execute(eventSchema, eventValue);
