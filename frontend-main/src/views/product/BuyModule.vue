@@ -1,15 +1,20 @@
 <template>
     <div class="buy">
-        <span>Stock</span>
-        <span>Available Stock</span>
-        <span>Quantity</span>
-        <div class="buy-control">
-            <Button label="Buy Now" fluid />
-            <Button label="Add to Cart" fluid outlined />
+        <div class="buy-top">
+        
         </div>
-        <span>seller</span>
-        <span>legends</span>
-      
+
+        <Skeleton v-if="!getProductData" width="100%" height="500px" />
+
+        <div v-if="getProductData">
+            <div>
+                {{ getProductData.sku.split(":")[0] }}
+            </div>
+            <div class="buy-control">
+                <Button label="Buy Now" fluid />
+                <Button label="Add to Cart" fluid outlined />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -33,5 +38,11 @@ const { getProductData } = productAPI();
 .buy-control {
     display: grid;
     gap: 0.5rem;
+}
+
+.buy-top {
+    display: flex;
+    color: var(--text-b);
+    font-size: var(--text-size-a);
 }
 </style>

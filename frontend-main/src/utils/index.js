@@ -26,15 +26,29 @@ export function reduceByLength(input, maxLength) {
   return result.trim() + '...'
 }
 
-export function formatCurrency(value, type_) {
-  let type = type_ || 'USD';
-
+export function formatCurrency(value) {
   if (value) {
     let result = value.toLocaleString('en-US', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     })
 
-    return result + ' ' + type
+    return result
   }
+}
+
+export function applyDiscount(active, originalPrice, discountPercent) {
+  if (!active) {
+    return originalPrice
+  }
+
+  if (discountPercent < 0 || discountPercent > 100) {
+    throw new Error('Discount percentage must be between 0 and 100')
+  }
+
+  const discountAmount = (originalPrice * discountPercent) / 100
+
+  const discountedPrice = originalPrice - discountAmount
+
+  return parseInt(discountedPrice)
 }

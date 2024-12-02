@@ -9,8 +9,8 @@
             </div>
         </div>
         <div class="media-image">
-            <Image :src="productImageList[selectedImageIndex]" alt="Image" width="400" preview
-                previewIcon="pi-search" />
+            <Image :src="productImageList[selectedImageIndex]" alt="Image" width="350" previewIcon="pi-search"
+                preview  />
         </div>
     </div>
 </template>
@@ -59,14 +59,14 @@ const selectImage = (index) => {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .media-item {
-    border: 2px solid var(--border-a);
+    border: 1px solid var(--border-a);
     border-radius: 8px;
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
     margin-bottom: 1rem;
     overflow: hidden;
     cursor: pointer;
@@ -80,8 +80,12 @@ const selectImage = (index) => {
 }
 
 .media-item img {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
     object-fit: contain;
+}
+
+::v-deep(.p-image-preview-mask:hover){
+    background: transparent !important;
 }
 </style>

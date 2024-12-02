@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast closeIcon="pi-user"/>
+    <Toast closeIcon="pi-user" />
     <HeaderComp />
     <RouterView />
   </div>
@@ -12,7 +12,7 @@ import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';
 import { provide } from 'vue';
-import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
+import { formatWithDots, reduceByLength, formatCurrency, applyDiscount } from "./utils/index"
 
 provide(ApolloClients, {
   default: queryClient,
@@ -24,7 +24,8 @@ provide(ApolloClients, {
 provide('utils', {
   formatWithDots,
   reduceByLength,
-  formatCurrency
+  formatCurrency,
+  applyDiscount
 });
 </script>
 
@@ -39,5 +40,4 @@ provide('utils', {
   flex: 1;
   height: 100%;
 }
-
 </style>

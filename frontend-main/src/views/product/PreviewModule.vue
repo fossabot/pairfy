@@ -13,7 +13,17 @@
             </div>
 
             <div class="preview-price">
-                {{ formatCurrency(getProductData.price) }}
+                <label style="font-size: 15px;">$</label>
+                {{ formatCurrency(applyDiscount(getProductData.discount, getProductData.price,
+                    getProductData.discount_value)) }}
+      
+            </div>
+
+            <div class="preview-discount" v-if="getProductData.discount">
+                <Tag :value="`- ${getProductData.discount_value}%`" severity="contrast" />
+
+                <Tag :value="`$${getProductData.price}`" severity="secondary"
+                    style="text-decoration: line-through; margin-left: 1rem;" />
             </div>
 
             <div class="preview-variants">
@@ -23,19 +33,8 @@
             </div>
 
             <div class="preview-about">About this product</div>
-
             <ul class="preview-bullet">
-                <li>Memoria RAM: 8 GB</li>
-                <li>Memoria interna: 256 GB</li>
-                <li>Imponente diseño de titanio.</li>
-                <li> Diseñado para Apple Intelligence.</li>
-                <li> Control de la cámara.</li>
-                <li>Capturas soñadas.</li>
-                <li>Estilos fotográficos.</li>
-                <li>La potencia del chip A18 Pro.</li>
-                <li>Un salto enorme en batería.</li>
-                <li>Personaliza tu iPhone.</li>
-                <li> Funcionalidades esenciales de seguridad.</li>
+                <li v-for="item in bulletList" :key="item">{{ item }}</li>
             </ul>
         </div>
     </div>
@@ -43,17 +42,23 @@
 
 <script setup>
 import productAPI from '@/views/product/api/index';
-import { inject } from 'vue';
+import { inject, computed } from 'vue';
 
-const { formatCurrency } = inject('utils')
+const { formatCurrency, applyDiscount } = inject('utils')
 
 const { getProductData } = productAPI();
 
+const bulletList = computed(() => {
+    const strings = getProductData.value.bullet_list.split(",");
+
+    return strings.sort((a, b) => a.length - b.length);
+})
 </script>
 
 <style lang="css" scoped>
 .preview {
-    height: 700px;
+    min-height: 400px;
+    padding: 1rem;
 }
 
 .preview-name {
@@ -62,8 +67,12 @@ const { getProductData } = productAPI();
     margin-top: 1rem;
 }
 
-.preview-price{
-    font-size: var(--text-size-d);
+.preview-price {
+    font-size: var(--text-size-f);
+    margin-top: 2rem;
+}
+
+.preview-discount {
     margin-top: 1rem;
 }
 
@@ -74,9 +83,9 @@ const { getProductData } = productAPI();
 }
 
 .preview-about {
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--text-size-a);
-    margin-top: 2rem; 
+    margin-top: 2rem;
 }
 
 .preview-bullet {
@@ -85,10 +94,9 @@ const { getProductData } = productAPI();
 }
 
 .preview-bullet li {
-    line-height: 1.43em;
+    line-height: 1.5rem;
     margin-top: 8px;
     padding-left: 10px;
-    text-indent: -11px;
 }
 
 .preview-variants {

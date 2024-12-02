@@ -30,8 +30,6 @@
                 </div>
                 <div class="card-right">
                     <BuyModule />
-                    <div>Seller</div>
-                    <div>pay methods</div>
                 </div>
             </div>
 
@@ -178,7 +176,7 @@ onGetProductError(error => {
     display: flex;
     flex-direction: column;
     margin-top: -125px;
-    max-width: 1184px;
+    max-width: 1200px;
     width: 80%;
     height: auto;
     position: relative;

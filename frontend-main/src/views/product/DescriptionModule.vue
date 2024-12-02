@@ -1,7 +1,7 @@
 <template>
     <div>
-
-        <editor-content :editor="editor" />
+        <Skeleton v-if="!getProductData" width="100%" height="500px"/>
+        <editor-content v-if="getProductData" :editor="editor" />
     </div>
 </template>
 
@@ -21,6 +21,7 @@ const editor = ref(null);
 const setupEditor = async () => {
     await nextTick(() => {
         editor.value = new Editor({
+            editable: false,
             extensions: [
                 StarterKit,
                 TextStyle.configure({ types: [ListItem.name] }),
@@ -37,7 +38,7 @@ const setupEditor = async () => {
 
 watch(getProductData, () => {
     if (editor) {
-      editor.value.commands.setContent(JSON.parse(getProductData.value?.features));
+        editor.value.commands.setContent(JSON.parse(getProductData.value?.features));
     }
 })
 
@@ -53,4 +54,8 @@ onBeforeUnmount(() => {
 
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+::v-deep(.editor-class) {
+    line-height: 2rem;
+}
+</style>
