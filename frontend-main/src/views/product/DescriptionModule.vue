@@ -1,6 +1,7 @@
 <template>
     <div>
-        <Skeleton v-if="!getProductData" width="100%" height="500px"/>
+        <div class="title">Description</div>
+        <Skeleton v-if="!getProductData" width="100%" height="500px" />
         <editor-content v-if="getProductData" :editor="editor" />
     </div>
 </template>
@@ -57,5 +58,11 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 ::v-deep(.editor-class) {
     line-height: 2rem;
+}
+
+.title {
+    font-size: var(--text-size-c);
+    font-weight: 500;
+    line-height: 4rem;
 }
 </style>

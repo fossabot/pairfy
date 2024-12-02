@@ -23,8 +23,7 @@
                         <MediaModule />
                         <PreviewModule />
                     </div>
-                    <Divider/>
-                    <div>Suggestions</div>
+
                     <Divider/>
                     <DescriptionModule/>
                 </div>
@@ -192,7 +191,7 @@ onGetProductError(error => {
     align-items: center;
     background: var(--background-b);
     font-size: var(--text-size-a);
-    color: var(--primary-c);
+    color: var(--text-b);
     border: 1px solid var(--border-a);
     border-bottom: none;
 }

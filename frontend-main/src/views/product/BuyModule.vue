@@ -1,14 +1,22 @@
 <template>
     <div class="buy">
-        <div class="buy-top">
-        
-        </div>
+
 
         <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
         <div v-if="getProductData">
-            <div>
-                {{ getProductData.sku.split(":")[0] }}
+
+            <div class="buy-legend">
+                SKU: {{ getProductData.sku.split(":")[0] }}
+            </div>
+            <div class="buy-legend">
+                Model: {{ getProductData.model }}
+            </div>
+            <div class="buy-legend">
+                Brand: {{ getProductData.brand }}
+            </div>
+            <div class="buy-legend">
+                Collateral: {{ getProductData.collateral }} USD
             </div>
             <div class="buy-control">
                 <Button label="Buy Now" fluid />
@@ -38,11 +46,12 @@ const { getProductData } = productAPI();
 .buy-control {
     display: grid;
     gap: 0.5rem;
+    margin-top: 2rem;  
 }
 
-.buy-top {
+.buy-legend {
     display: flex;
-    color: var(--text-b);
     font-size: var(--text-size-a);
+    line-height: 1.5rem;
 }
 </style>
