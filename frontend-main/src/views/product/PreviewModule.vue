@@ -1,15 +1,26 @@
 <template>
-    <div class="buy">
-        <span>Stock</span>
-        <span>Stock</span>
-        <span>Quantity</span>
-        <div class="buy-control">
-            <Button label="Buy Now" fluid />
-            <Button label="Add to Cart" fluid outlined />
+    <div class="preview">
+        <div class="preview-title">
+            {{ getProductData?.name }}
         </div>
-        <span>seller</span>
-        <span>legends</span>
-      
+
+        <div class="preview-price">
+            {{ getProductData?.price }}
+        </div>
+        <span>all you know</span>
+        <ul>
+            <li>Memoria RAM: 8 GB</li>
+            <li>Memoria interna: 256 GB</li>
+            <li>Imponente diseño de titanio.</li>
+            <li> Diseñado para Apple Intelligence.</li>
+            <li> Control de la cámara.</li>
+            <li>Capturas soñadas.</li>
+            <li>Estilos fotográficos.</li>
+            <li>La potencia del chip A18 Pro.</li>
+            <li>Un salto enorme en batería.</li>
+            <li>Personaliza tu iPhone.</li>
+            <li> Funcionalidades esenciales de seguridad.</li>
+        </ul>
     </div>
 </template>
 
@@ -21,17 +32,13 @@ const { getProductData } = productAPI();
 </script>
 
 <style lang="css" scoped>
-.buy {
-    border: 1px solid var(--border-a);
-    border-radius: 8px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
+.preview {
+    height: 700px;
 }
 
-.buy-control {
-    display: grid;
-    gap: 0.5rem;
+.preview-title {
+    font-size: var(--text-size-c);
+    font-weight: 600;
+    
 }
 </style>

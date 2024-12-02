@@ -3,45 +3,56 @@
         <div class="mask">
             x
         </div>
-        <div class="card">
-            <div class="card-left">
-                <div card="card-row">
-                    <MediaModule />
 
-                    /preview
-                </div>
-                <div>Suggestions</div>
-                <div>Description</div>
+        <div class="container">
+            <div class="card-header">
+                x
             </div>
-            <div class="card-right">
-                <BuyModule />
-                <div>Seller</div>
-                <div>pay methods</div>
+            <div class="card">
+                <div class="card-left">
+                    <div class="card-image-preview">
+                        <MediaModule />
+                        <PreviewModule />
+                    </div>
+                    <div>Suggestions</div>
+                    <div>Description</div>
+                </div>
+                <div class="card-right">
+                    <BuyModule />
+                    <div>Seller</div>
+                    <div>pay methods</div>
+                </div>
+            </div>
+
+            <div class="footer">
+                x
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import productAPI from '@/views/product/api/index';
+import MediaModule from './MediaModule.vue';
+import PreviewModule from './PreviewModule.vue';
 import gql from 'graphql-tag';
 import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { ref, watch } from "vue";
 import { useToast } from "primevue/usetoast";
-import productAPI from '@/views/product/api/index';
-import MediaModule from './MediaModule.vue';
+
 
 const { setProductData } = productAPI();
 
 const toast = useToast();
 
 const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000 });
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: false });
 };
 
 const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000, closable: false });
 };
 
 const route = useRoute()
@@ -138,7 +149,7 @@ onGetProductError(error => {
 }
 
 .mask {
-    height: 300px;
+    height: 250px;
     width: inherit;
     position: relative;
     z-index: 1;
@@ -147,20 +158,31 @@ onGetProductError(error => {
     background-image: url("https://http2.mlstatic.com/D_NQ_NP_611714-MLA74839334020_032024-OO.jpg");
 }
 
-.card {
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: -125px;
     max-width: 1184px;
     width: 80%;
     height: auto;
-    margin-top: -150px;
-    background: #ffffff;
     position: relative;
     z-index: 10;
     border-radius: 20px;
-    border: 1px solid var(--border-a);
+    overflow: hidden;
+    background: var(--background-a);
+}
+
+.card-header {
+    height: 50px;
+    background: var(--background-b);
+}
+
+.card {
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 73% 27%;
     padding: 1rem;
     box-sizing: border-box;
+    border: 1px solid var(--border-a);
 }
 
 .card-left {
@@ -174,7 +196,14 @@ onGetProductError(error => {
     min-height: 100vh;
 }
 
-.card-row {
+.card-image-preview {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.footer {
+    height: 200px;
+    background: blue;
     display: flex;
 }
 </style>

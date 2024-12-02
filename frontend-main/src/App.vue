@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast/>
+    <Toast closeIcon="pi-user"/>
     <HeaderComp />
     <RouterView />
   </div>
@@ -33,5 +33,4 @@ provide(ApolloClients, {
   height: 100%;
 }
 
-.wrapper-content {}
 </style>
