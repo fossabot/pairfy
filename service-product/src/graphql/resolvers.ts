@@ -89,8 +89,6 @@ const updateProduct = async (_: any, args: any, context: any) => {
 };
 
 const createProduct = async (_: any, args: any, context: any) => {
-  console.log(process.env.POD_NAME);
-
   const params = args.createProductInput;
 
   console.log(params);
@@ -108,70 +106,52 @@ const createProduct = async (_: any, args: any, context: any) => {
 
     await connection.beginTransaction();
 
-    const schemeData = `
-        INSERT INTO products (
-            id,
-            seller_id,
-            name,
-            price,  
-            collateral,
-            sku,              
-            model,
-            brand,
-            features,
-            category,
-            keywords,
-            bullet_list,
-            paused,
-            color,
-            color_name,
-            quality,
-            country,
-            media_url,
-            image_path,
-            video_path,
-            image_set,
-            video_set,
-            discount,
-            discount_value,
-            schema_v
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
     const productId = getProductId();
 
     const productVersion = 0;
 
     const productSKU = params.sku + `:${SELLER.id}`;
 
-    const schemeValue = [
-      productId,
-      SELLER.id,
-      params.name,
-      params.price,
-      params.collateral,
-      productSKU,
-      params.model,
-      params.brand,
-      params.features,
-      params.category,
-      params.keywords,
-      params.bullet_list,
-      params.paused,
-      params.color,
-      params.color_name,
-      params.quality,
-      SELLER.country,
-      "https://pairfy.dev",
-      "/api/media/get-image/",
-      "/api/media/get-video/",
-      params.image_set,
-      params.video_set,
-      params.discount,
-      params.discount_value,
-      productVersion,
-    ];
+    const productData = {
+      id: productId,
+      seller_id: SELLER.id,
+      name: params.name,
+      price: params.price,
+      collateral: params.collateral,
+      sku: productSKU,
+      model: params.model,
+      brand: params.brand,
+      features: params.features,
+      category: params.category,
+      keywords: params.keywords,
+      bullet_list: params.bullet_list,
+      paused: params.paused,
+      color: params.color,
+      color_name: params.color_name,
+      quality: params.quality,
+      country: SELLER.country,
+      media_url: "https://pairfy.dev",
+      image_path: "/api/media/get-image/",
+      video_path: "/api/media/get-video/",
+      image_set: params.image_set,
+      video_set: params.video_set,
+      discount: params.discount,
+      discount_value: params.discount_value,
+      schema_v: productVersion,
+    };
+    
+    const columns = Object.keys(productData);
 
-    await connection.execute(schemeData, schemeValue);
+    const values = Object.values(productData);
+
+    const schemeData = `
+      INSERT INTO products (${columns.join(", ")})
+      VALUES (${columns.map(() => "?").join(", ")})
+    `;
+
+    await connection.execute(schemeData, values);
+
+    //Create Event
 
     const eventId = productId + "-" + productVersion;
 
@@ -187,7 +167,7 @@ const createProduct = async (_: any, args: any, context: any) => {
     const eventValue = [
       eventId,
       "CreateProduct",
-      JSON.stringify(schemeValue),
+      JSON.stringify(productData),
       SELLER.id,
     ];
 

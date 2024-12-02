@@ -19,47 +19,27 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     }
 
     const payload = JSON.parse(event.payload);
-
+    //Transaction Start
     await connection.beginTransaction();
 
+    const columns = Object.keys(payload);
+
+    const values = Object.values(payload);
+
     const schemeData = `
-        INSERT INTO products (
-            id,
-            seller_id,
-            name,
-            price,  
-            collateral,
-            sku,              
-            model,
-            brand,
-            features,
-            category,
-            keywords,
-            bullet_list,
-            paused,
-            color,
-            color_name,
-            quality,
-            country,
-            media_url,
-            image_path,
-            video_path,
-            image_set,
-            video_set,
-            discount,
-            discount_value,
-            schema_v
-       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      INSERT INTO products (${columns.join(", ")})
+      VALUES (${columns.map(() => "?").join(", ")})
+    `;
 
-    await connection.execute(schemeData, payload);
-
+    await connection.execute(schemeData, values);
+  
     await connection.execute(
       "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)",
       [event.id, seq, event.event_type, true]
     );
 
     await connection.commit();
-
+    //Transaction End
     response = Promise.resolve(true);
   } catch (err: any) {
     logger.error(err);
