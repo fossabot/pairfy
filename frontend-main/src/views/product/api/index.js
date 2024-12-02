@@ -1,11 +1,20 @@
-const env = "dev";
-const NETWORK = "preprod";
-const baseURL = {
-  local: "https://localhost:443",
-  dev: "https://pairfy.dev",
-  prod: "https://pairfy.io",
-};
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
-const HOST = baseURL[env];
+const productAPI = () => {
+  const store = useStore()
 
-export { env, baseURL, HOST, NETWORK };
+  const sleep = timeInMs =>
+    new Promise(resolve => setTimeout(() => resolve(false), timeInMs))
+
+  const setProductData = async params =>
+    await store.dispatch('product/setProductData', params)
+
+  return {
+    sleep,
+    setProductData,
+    getProductData: computed(() => store.getters['product/getProductData'])
+  }
+}
+
+export default productAPI

@@ -1,5 +1,5 @@
-const userData = (state, data) => {
-  state.userData = data;
+const setProductData = (state, data) => {
+  state.productData = data;
 };
 
-export { userData };
+export { setProductData };

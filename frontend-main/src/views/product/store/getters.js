@@ -1,11 +1,10 @@
-/**GETTER */
-const getUserData = (state) => {
-  return state.userData;
+const getProductData = (state) => {
+  return state.productData;
 };
 
 
 
 
 
-export { getUserData };
+export { getProductData };
  

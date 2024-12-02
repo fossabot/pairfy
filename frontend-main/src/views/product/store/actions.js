@@ -59,14 +59,10 @@ const deleteImage = async (_, params) => {
   }
 }
 
-const getBulletList = async (_, params) => {
-  try {
-    const response = await axiosAPI.post('/api/gemini/bullet-list', params)
-
-    return { ok: true, response: response.data }
-  } catch (error) {
-    return { ok: false, response: error.response.data }
-  }
+const setProductData = async ({ commmit }, params) => {
+  commit('setProductData', params)
 }
 
-export { createUser, loginUser, getUser, createImage, deleteImage, getBulletList }
+export {
+  setProductData
+}

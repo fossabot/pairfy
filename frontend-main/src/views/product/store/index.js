@@ -3,7 +3,7 @@ import * as actions from "./actions";
 import * as getters from "./getters";
 import * as mutations from "./mutations";
 
-const dashboardModule = {
+const productModule = {
   namespaced: true,
   actions,
   getters,
@@ -11,4 +11,4 @@ const dashboardModule = {
   state,
 };
 
-export { dashboardModule as dashboard };
+export { productModule as product };
