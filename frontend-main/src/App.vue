@@ -7,9 +7,7 @@ import HeaderComp from '@/components/HeaderComp.vue';
 <template>
   <div class="wrapper">
     <HeaderComp />
-    <div class="wrapper-content">
-      <RouterView />
-    </div>
+    <RouterView />
   </div>
 </template>
 
@@ -20,12 +18,11 @@ import HeaderComp from '@/components/HeaderComp.vue';
   display: flex;
   flex-direction: column;
   transition: all .2s ease;
+  flex: 1;
+  height: 100%;
 }
 
 .wrapper-content {
-  flex: 1;
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+
 }
 </style>
