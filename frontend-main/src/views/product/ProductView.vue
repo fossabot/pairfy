@@ -16,6 +16,7 @@
 
 <script setup>
 import BuyModule from "@/views/product/BuyModule.vue"
+
 </script>
 
 <style lang="css" scoped>
