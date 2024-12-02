@@ -59,7 +59,7 @@ const deleteImage = async (_, params) => {
   }
 }
 
-const setProductData = async ({ commmit }, params) => {
+const setProductData = async ({ commit }, params) => {
   commit('setProductData', params)
 }
 

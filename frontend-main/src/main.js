@@ -5,6 +5,7 @@ import "./assets/flags.css";
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import { stores } from "./store";
 
 import PrimeVue from 'primevue/config';
 
@@ -43,6 +44,7 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';                   
 import InputNumber from 'primevue/inputnumber';
 import Textarea from 'primevue/textarea';
+import Image from 'primevue/image';
 
 
 import Tooltip from 'primevue/tooltip';
@@ -56,6 +58,7 @@ import { MyPreset } from './assets/theme';
 
 const app = createApp(App)
 
+app.use(stores);
 app.use(router)
 
 app.use(PrimeVue, {
@@ -103,6 +106,7 @@ app.component('Row', Row);
 app.component('Tag', Tag);
 app.component('InputNumber', InputNumber);
 app.component('Textarea', Textarea);
+app.component('Image', Image);
 
 app.directive('keyfilter', KeyFilter);
 app.directive('ripple', Ripple);
