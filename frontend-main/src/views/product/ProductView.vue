@@ -33,7 +33,7 @@
             </div>
 
             <div class="footer">
-                x
+                
             </div>
         </div>
     </div>
@@ -175,7 +175,7 @@ onGetProductError(error => {
     display: flex;
     flex-direction: column;
     margin-top: -100px;
-    max-width: 1250px;
+    max-width: 1200px;
     width: 80%;
     height: auto;
     position: relative;
@@ -200,7 +200,7 @@ onGetProductError(error => {
 
 .card {
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 77% 23%;
     padding: 1.5rem;
     box-sizing: border-box;
     border: 1px solid var(--border-a);
@@ -211,6 +211,7 @@ onGetProductError(error => {
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
     gap: 1rem;
+    padding: 1rem;
 }
 
 .card-right {
@@ -225,7 +226,6 @@ onGetProductError(error => {
 
 .footer {
     height: 200px;
-    background: blue;
     display: flex;
 }
 </style>
