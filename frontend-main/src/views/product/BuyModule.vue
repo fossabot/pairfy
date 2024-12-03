@@ -7,12 +7,10 @@
 
             <div class="dialog-sub">Are you sure to buy ({{ selectedQuantity.code }}) units of</div>
 
-            <div class="dialog-row">
-                <Message severity="info" size="small">
-                    Razer - Blade 16 - 16" Gaming Laptop -
+            <div class="dialog-name">
+                Razer - Blade 16 - 16" Gaming Laptop -
                     OLED QHD + 240 Hz
                     - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
-                </Message>
             </div>
 
             <div class="dialog-row">
@@ -166,6 +164,6 @@ const openBuyDialog = () => {
 }
 
 .dialog-row {
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 </style>
