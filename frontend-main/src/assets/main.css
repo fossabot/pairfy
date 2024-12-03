@@ -9,3 +9,24 @@
   display: flex;
   align-items: center;
 }
+
+.p-select-sm .p-select-label {
+  font-size: var(--text-size-a) !important;
+}
+
+.p-select-option {
+  font-size: var(--text-size-a) !important;
+}
+
+.p-button-label {
+  font-size: var(--text-size-a);
+}
+
+.p-rating {
+  gap: 1px !important;
+}
+
+.p-rating-icon {
+  width: 1rem !important;
+  height: 1rem !important;
+}

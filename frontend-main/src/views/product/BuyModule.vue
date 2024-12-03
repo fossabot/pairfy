@@ -18,8 +18,17 @@
             <div class="buy-legend">
                 Collateral: {{ getProductData.collateral }} USD
             </div>
+
+            <div class="buy-legend">
+                Keeping Stock: 15
+            </div>
+            <div class="buy-legend">
+                Available: 15
+            </div>
             <div class="buy-control">
-                <Button label="Buy Now" fluid />
+                <Select v-model="selectedQuantity" :options="quantityOptions" optionLabel="name" placeholder="Units"
+                    class="w-full md:w-56" size="small" />
+                <Button label="Buy Now" fluid  @click="openBuyDialog"/>
                 <Button label="Add to Cart" fluid outlined />
             </div>
         </div>
@@ -28,8 +37,24 @@
 
 <script setup>
 import productAPI from '@/views/product/api/index';
+import { ref } from "vue";
 
 const { getProductData } = productAPI();
+
+const selectedQuantity = ref({ name: '1', code: 1 });
+
+const quantityOptions = ref([
+    { name: '1', code: 1 },
+    { name: '2', code: 2 },
+    { name: '3', code: 3 },
+    { name: '4', code: 4 },
+    { name: '5', code: 5 },
+    { name: '6', code: 6 },
+    { name: '7', code: 7 },
+    { name: '8', code: 8 },
+    { name: '9', code: 9 },
+    { name: '10', code: 10 }
+]);
 
 </script>
 
@@ -46,7 +71,7 @@ const { getProductData } = productAPI();
 .buy-control {
     display: grid;
     gap: 0.5rem;
-    margin-top: 2rem;  
+    margin-top: 2rem;
 }
 
 .buy-legend {

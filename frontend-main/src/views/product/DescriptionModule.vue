@@ -62,7 +62,7 @@ onBeforeUnmount(() => {
 
 .title {
     font-size: var(--text-size-c);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 4rem;
 }
 </style>

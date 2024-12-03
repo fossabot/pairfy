@@ -12,11 +12,18 @@
                 {{ getProductData.name }}
             </div>
 
-            <div class="preview-price">
-                <label style="font-size: 15px;">$</label>
-                {{ formatCurrency(applyDiscount(getProductData.discount, getProductData.price,
-                    getProductData.discount_value)) }}
-      
+            <div class="preview-rating">
+                <Rating v-model="productRating" :stars="5" readonly />
+
+            </div>
+            <Divider />
+
+            <div class="preview-price flex">
+                <div>$</div>
+                <span>
+                    {{ formatCurrency(applyDiscount(getProductData.discount, getProductData.price,
+                        getProductData.discount_value)) }}
+                </span>
             </div>
 
             <div class="preview-discount" v-if="getProductData.discount">
@@ -42,7 +49,7 @@
 
 <script setup>
 import productAPI from '@/views/product/api/index';
-import { inject, computed } from 'vue';
+import { inject, computed, ref } from 'vue';
 
 const { formatCurrency, applyDiscount } = inject('utils')
 
@@ -52,7 +59,9 @@ const bulletList = computed(() => {
     const strings = getProductData.value.bullet_list.split(",");
 
     return strings.sort((a, b) => a.length - b.length);
-})
+});
+
+const productRating = ref(4);
 </script>
 
 <style lang="css" scoped>
@@ -67,9 +76,19 @@ const bulletList = computed(() => {
     margin-top: 1rem;
 }
 
+.preview-rating {
+    margin-top: 0.5rem;
+}
+
 .preview-price {
     font-size: var(--text-size-f);
-    margin-top: 2rem;
+    margin-top: 1rem;
+}
+
+.preview-price div {
+    font-size: 15px;
+    margin-bottom: 12px;
+    margin-right: 6px;
 }
 
 .preview-discount {

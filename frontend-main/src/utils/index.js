@@ -33,7 +33,7 @@ export function formatCurrency(value) {
       maximumFractionDigits: 0,
     })
 
-    return result
+    return result 
   }
 }
 

@@ -198,7 +198,7 @@ onGetProductError(error => {
 
 .card {
     display: grid;
-    grid-template-columns: 73% 27%;
+    grid-template-columns: 75% 25%;
     padding: 1.5rem;
     box-sizing: border-box;
     border: 1px solid var(--border-a);
