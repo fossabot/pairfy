@@ -22,9 +22,20 @@
             <div class="buy-legend">
                 Keeping Stock: 15
             </div>
-            <div class="buy-legend">
-                Available: 15
+
+            <div class="buy-rating">
+                <Rating v-model="productRating" :stars="5" readonly />
+                <span> 4.5 (1250 reviews)</span>
             </div>
+
+            <div class="buy-stock" :class="{ green: 15 > 0, }">
+                {{ getStockLabel(15) }}
+            </div>
+
+            <div class="buy-available">
+                Available (15)
+            </div>
+
             <div class="buy-control">
                 <Select v-model="selectedQuantity" :options="quantityOptions" optionLabel="name" placeholder="Units"
                     variant="filled" size="small" />
@@ -56,6 +67,11 @@ const quantityOptions = ref([
     { name: '10', code: 10 }
 ]);
 
+const productRating = ref(4);
+
+const getStockLabel = (readyStock) => {
+    return readyStock > 0 ? "In Stock" : "Out Stock";
+}
 </script>
 
 <style lang="css" scoped>
@@ -71,12 +87,37 @@ const quantityOptions = ref([
 .buy-control {
     display: grid;
     gap: 0.5rem;
-    margin-top: 2rem;
+}
+
+.buy-available {
+    margin-top: 1rem;
+    font-size: var(--text-size-a);
+    color: var(--text-b);
 }
 
 .buy-legend {
     display: flex;
     font-size: var(--text-size-a);
     line-height: 1.5rem;
+}
+
+.buy-rating {
+    margin-top: 1rem;
+    display: flex;
+}
+
+.buy-rating span {
+    margin-left: 0.5rem;
+    font-size: var(--text-size-a);
+}
+
+.buy-stock {
+    color: var(--red-a);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.buy-stock.green {
+    color: var(--green-a);
 }
 </style>

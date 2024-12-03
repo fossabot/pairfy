@@ -175,7 +175,7 @@ onGetProductError(error => {
     display: flex;
     flex-direction: column;
     margin-top: -125px;
-    max-width: 1200px;
+    max-width: 1300px;
     width: 80%;
     height: auto;
     position: relative;

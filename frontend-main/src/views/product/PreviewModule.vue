@@ -12,10 +12,7 @@
                 {{ getProductData.name }}
             </div>
 
-            <div class="preview-rating">
-                <Rating v-model="productRating" :stars="5" readonly />
 
-            </div>
             <Divider />
 
             <div class="preview-price flex">
@@ -33,6 +30,8 @@
                     style="text-decoration: line-through; margin-left: 1rem;" />
             </div>
 
+
+            
             <div class="preview-variants flex ">
                 <span>Color</span>
                 <span>:</span>
@@ -65,7 +64,7 @@ const bulletList = computed(() => {
     return strings.sort((a, b) => a.length - b.length);
 });
 
-const productRating = ref(4);
+
 </script>
 
 <style lang="css" scoped>
