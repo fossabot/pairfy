@@ -53,13 +53,13 @@
 :root {
   --primary-a: #0046be;
   --primary-b: #ffe000;
-  --primary-c: #0866FF;
+  --primary-c: #0866ff;
   --dark-a: var(--p-surface-950);
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;
 
-  --text-a: #334155;
+  --text-a: #0f1111;
   --text-b: #64748b;
   --text-c: var(--p-surface-400);
   --text-w: #ffffff;
@@ -99,16 +99,15 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
+  color: var(--text-a);
   background: var(--color-background);
   transition:
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings:
-    "wdth" 100;
+  font-variation-settings: 'wdth' 100;
   font-style: normal;
   font-size: var(--text-size-b);
   text-rendering: optimizeLegibility;
