@@ -14,7 +14,7 @@
             </div>
 
             <div class="dialog-row">
-                <Message size="small" icon="pi pi-exclamation-circle" severity="warn">
+                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
                     The time limit for sending the transaction is (3) minutes. The seller has (15) minutes to accept the
                     purchase.
                     Otherwise you can get your money back.
