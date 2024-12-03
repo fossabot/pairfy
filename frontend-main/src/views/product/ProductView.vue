@@ -174,8 +174,8 @@ onGetProductError(error => {
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: -125px;
-    max-width: 1300px;
+    margin-top: -100px;
+    max-width: 1250px;
     width: 80%;
     height: auto;
     position: relative;
@@ -220,6 +220,7 @@ onGetProductError(error => {
 .card-image-preview {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
 
 .footer {

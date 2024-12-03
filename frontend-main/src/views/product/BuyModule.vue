@@ -1,6 +1,6 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Buy" :style="{ width: '25rem' }" :draggable="false">
+        <Dialog v-model:visible="showBuyDialog" modal header="Confirmation" :style="{ width: '25rem' }" :draggable="false">
             <template #header>
 
             </template>
@@ -121,6 +121,7 @@ const openBuyDialog = () => {
 .buy-control {
     display: grid;
     gap: 0.5rem;
+    margin-top: 0.5rem; 
 }
 
 .buy-available {
@@ -157,10 +158,7 @@ const openBuyDialog = () => {
 
 .dialog-name {
     font-weight: 600;
-}
-
-.dialog-sub {
-    line-height: 3rem;
+    margin-top: 1rem;
 }
 
 .dialog-row {

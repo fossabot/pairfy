@@ -2,15 +2,19 @@
     <div class="media">
         <Skeleton v-if="!getProductData" width="100%" height="100%" />
 
-        <div v-if="getProductData" class="media-nav">
-            <div class="media-item" :class="{ selected: selectedImageIndex === index }"
-                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)">
-                <img :src="item" alt="item">
+        <section v-if="getProductData">
+            <div class="media-nav">
+                <div class="media-item" :class="{ selected: selectedImageIndex === index }"
+                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)">
+                    <img :src="item" alt="item">
+                </div>
             </div>
-        </div>
-        <div class="media-image">
-            <Image :src="productImageList[selectedImageIndex]" alt="Image" width="300" previewIcon="pi-search" preview/>
-        </div>
+            <div class="media-image">
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="250" previewIcon="pi-search"
+                    preview />
+            </div>
+        </section>
+
     </div>
 </template>
 
@@ -45,7 +49,7 @@ const selectImage = (index) => {
 </script>
 
 <style lang="css" scoped>
-.media {
+section {
     display: flex;
 }
 
@@ -56,9 +60,10 @@ const selectImage = (index) => {
 
 .media-image {
     justify-content: center;
-    padding: 2rem;
+   
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .media-item {
@@ -84,7 +89,7 @@ const selectImage = (index) => {
     object-fit: contain;
 }
 
-::v-deep(.p-image-preview-mask:hover){
+::v-deep(.p-image-preview-mask:hover) {
     background: transparent !important;
 }
 </style>
