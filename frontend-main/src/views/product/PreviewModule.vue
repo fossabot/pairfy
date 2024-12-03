@@ -41,7 +41,7 @@
 
 
 
-            <Divider />
+  
             <div class="preview-about">About this product</div>
             <ul class="preview-bullet">
                 <li v-for="item in bulletList" :key="item">{{ item }}</li>

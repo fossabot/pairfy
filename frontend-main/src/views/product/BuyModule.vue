@@ -1,40 +1,39 @@
 <template>
     <div class="buy">
+        <Dialog v-model:visible="showBuyDialog" modal header="Buy" :style="{ width: '25rem' }" :draggable="false">
+            <template #header>
+
+            </template>
+
+            <div class="dialog-sub">Are you sure to buy ({{ selectedQuantity.code }}) units of</div>
+
+            <div class="dialog-row">
+                <Message severity="info" size="small">
+                    Razer - Blade 16 - 16" Gaming Laptop -
+                    OLED QHD + 240 Hz
+                    - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
+                </Message>
+            </div>
+
+            <div class="dialog-row">
+                <Message size="small" icon="pi pi-exclamation-circle" severity="warn">
+                    The time limit for sending the transaction is (3) minutes. The seller has (15) minutes to accept the
+                    purchase.
+                    Otherwise you can get your money back.
+                </Message>
+            </div>
+
+            <template #footer>
+                <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
+                <Button label="Buy" outlined severity="secondary" @click="visible = false" autofocus />
+            </template>
+        </Dialog>
 
 
         <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
         <div v-if="getProductData">
-            <Dialog v-model:visible="showBuyDialog" modal header="Buy" :style="{ width: '25rem' }" :draggable="false">
-                <template #header>
 
-                </template>
-
-                <div class="dialog-sub">Are you sure to buy ({{ selectedQuantity.code }}) quantities of:</div>
-
-                <div class="dialog-row">
-                    <Message severity="secondary" size="small">
-                        Razer - Blade 16 - 16" Gaming Laptop -
-                        OLED QHD + 240 Hz
-                        - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
-                    </Message>
-                </div>
-                <div class="dialog-row">
-                    <Message size="small" icon="pi pi-exclamation-circle" severity="success">
-                        The seller has (15) minutes to accept the purchase. Otherwise you can get your money back.
-                    </Message>
-                </div>
-
-                <div class="dialog-row">
-                    <Message size="small" icon="pi pi-exclamation-circle" severity="warn">
-                        The time limit for sending the transaction is (3) minutes.
-                    </Message>
-                </div>
-                <template #footer>
-                    <Button label="Cancel" text severity="secondary" @click="visible = false" autofocus />
-                    <Button label="Buy" outlined severity="secondary" @click="visible = false" autofocus />
-                </template>
-            </Dialog>
 
             <div class="buy-legend">
                 SKU: {{ getProductData.sku.split(":")[0] }}
@@ -167,6 +166,6 @@ const openBuyDialog = () => {
 }
 
 .dialog-row {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 </style>
