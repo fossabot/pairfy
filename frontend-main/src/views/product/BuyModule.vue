@@ -27,8 +27,8 @@
             </div>
             <div class="buy-control">
                 <Select v-model="selectedQuantity" :options="quantityOptions" optionLabel="name" placeholder="Units"
-                    class="w-full md:w-56" size="small" />
-                <Button label="Buy Now" fluid  @click="openBuyDialog"/>
+                    variant="filled" size="small" />
+                <Button label="Buy Now" fluid @click="openBuyDialog" />
                 <Button label="Add to Cart" fluid outlined />
             </div>
         </div>

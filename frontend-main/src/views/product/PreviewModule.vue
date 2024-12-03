@@ -33,12 +33,16 @@
                     style="text-decoration: line-through; margin-left: 1rem;" />
             </div>
 
-            <div class="preview-variants">
-                Color: <label>{{ getProductData.color_name }}</label>
-
+            <div class="preview-variants flex ">
+                <span>Color</span>
+                <span>:</span>
+                <label> {{ getProductData.color_name }}</label>
                 <div :style="{ backgroundColor: `#${getProductData.color}` }" />
             </div>
 
+
+
+            <Divider />
             <div class="preview-about">About this product</div>
             <ul class="preview-bullet">
                 <li v-for="item in bulletList" :key="item">{{ item }}</li>
@@ -77,7 +81,7 @@ const productRating = ref(4);
 }
 
 .preview-rating {
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 }
 
 .preview-price {
@@ -119,16 +123,17 @@ const productRating = ref(4);
 }
 
 .preview-variants {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .preview-variants label {
     font-weight: 600;
+    margin: 0 0.5rem;
 }
 
 .preview-variants div {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
 }
 </style>
