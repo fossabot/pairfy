@@ -1,6 +1,7 @@
 import { catcher, logger } from "./utils/index.js";
-import { axiosAPI } from "./axios/index.js";
-import { Queue, Worker, WorkerOptions } from "bullmq";
+import { Queue, QueueEvents, Worker, WorkerOptions } from "bullmq";
+import { redisClient } from "./db/redis.js";
+import { getAssetPrice } from "./bullmq/assets.js";
 
 const main = async () => {
   try {
@@ -55,19 +56,31 @@ const main = async () => {
     });
 */
 
-    const queue = new Queue("cardano-price", {
+    await redisClient
+      .connect({
+        url: process.env.REDIS_HOST,
+        connectTimeout: 100000,
+        keepAlive: 100000,
+      })
+      .then(() => console.log("redisClient connected"))
+      .catch((err: any) => catcher(err));
+
+    /////////////////////////////////////////
+
+    const watchAssetPriceQueue = new Queue("watchAssetPrice", {
       connection: { url: process.env.REDIS_HOST },
     });
 
-    queue.on("waiting", (job: any) => {
+    watchAssetPriceQueue.on("waiting", (job: any) => {
       console.log("waiting", job.id);
-    });
-    /*
-    const globalEvents = new QueueEvents("cardano-price", {
-      connection: redisClient.client,
     });
 
     /////////////////////////////////////////////////////
+    /* 
+    const globalEvents = new QueueEvents("watchAssetPrice", {
+      connection: { url: process.env.REDIS_HOST },
+    });
+
     globalEvents.on("completed", ({ jobId }: { jobId: string }) => {
       console.log("completed", jobId);
     });
@@ -78,17 +91,47 @@ const main = async () => {
         console.log("completed", jobId);
       }
     );
-    */
+*/
     /////////////////////////////////////////////////////
-    
-    //await queue.obliterate();
 
-    const watchAssetPriceJob = await queue.add(
+    const watchAssetPrice = new Worker("watchAssetPrice", getAssetPrice, {
+      autorun: true,
+      // concurrency: 10,
+      connection: { url: process.env.REDIS_HOST },
+    } as WorkerOptions);
+
+    ////////////////////////////////////////////////////////
+
+    watchAssetPrice.on("failed", (job: any, err) => {
+      logger.error(job.id, err);
+    });
+
+    watchAssetPrice.on("completed", (job: any, result) => {
+      logger.info(job.id + result);
+    });
+
+    watchAssetPrice.on("error", (err) => {
+      logger.error(err);
+    });
+
+    watchAssetPrice.on("stalled", (job: any) => {
+      console.warn(`Job ${job.id} stalled.`);
+    });
+
+    watchAssetPrice.on("drained", () => {
+      console.log("Queue is drained.");
+    });
+
+    ////////////////////////////////////////////////////////
+
+    await watchAssetPriceQueue.add(
       "ADAUSDT",
-      {},
+      {
+        symbol: "ADAUSDT",
+      },
       {
         repeat: {
-          every: 50000,
+          every: 30000,
         },
         attempts: 99,
         backoff: {
@@ -97,65 +140,9 @@ const main = async () => {
         },
         removeOnComplete: false,
         removeOnFail: false,
+        deduplication: { id: "ADAUSDT" },
       }
     );
-
-    //await watchAssetPriceJob.remove();
-
-    type BinanceResponse = { mins: number; price: string; closeTime: number };
-
-    const worker = new Worker(
-      "cardano-price",
-      async (job) => {
-        try {
-          console.log("QUERY", job.id);
-
-          const response: any = await axiosAPI.get(
-            "/api/v3/avgPrice?symbol=ADAUSDT"
-          );
-
-          console.log(response.status);
-
-          if (response.status === 200) {
-            const payload: BinanceResponse = response.data;
-
-            const assetPrice = Number(parseFloat(payload.price).toFixed(2));
-
-            console.log(assetPrice);
-          } else {
-            throw new Error("BINANCE_API_ERROR");
-          }
-        } catch (err) {
-          logger.error(err);
-          throw err;
-        }
-      },
-      {
-        autorun: true,
-        // concurrency: 10,
-        connection: { url: process.env.REDIS_HOST },
-      } as WorkerOptions
-    );
-
-    worker.on("failed", (job: any, err) => {
-      logger.error(job.id, err);
-    });
-
-    worker.on("completed", (job: any, result) => {
-      logger.info(job.id + result);
-    });
-
-    worker.on("error", (err) => {
-      logger.error(err);
-    });
-
-    worker.on("stalled", (job: any) => {
-      console.warn(`Job ${job.id} stalled.`);
-    });
-
-    worker.on("drained", () => {
-      console.log("Queue is drained.");
-    });
 
     logger.info("ONLINE");
   } catch (err) {
