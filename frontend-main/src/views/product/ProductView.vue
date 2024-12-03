@@ -194,6 +194,8 @@ onGetProductError(error => {
     color: var(--text-b);
     border: 1px solid var(--border-a);
     border-bottom: none;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
 
 .card {
