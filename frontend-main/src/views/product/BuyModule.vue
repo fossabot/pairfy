@@ -5,6 +5,36 @@
         <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
         <div v-if="getProductData">
+            <Dialog v-model:visible="showBuyDialog" modal header="Buy" :style="{ width: '25rem' }" :draggable="false">
+                <template #header>
+
+                </template>
+
+                <div class="dialog-sub">Are you sure to buy ({{ selectedQuantity.code }}) quantities of:</div>
+
+                <div class="dialog-row">
+                    <Message severity="secondary" size="small">
+                        Razer - Blade 16 - 16" Gaming Laptop -
+                        OLED QHD + 240 Hz
+                        - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
+                    </Message>
+                </div>
+                <div class="dialog-row">
+                    <Message size="small" icon="pi pi-exclamation-circle" severity="success">
+                        The seller has (15) minutes to accept the purchase. Otherwise you can get your money back.
+                    </Message>
+                </div>
+
+                <div class="dialog-row">
+                    <Message size="small" icon="pi pi-exclamation-circle" severity="warn">
+                        The time limit for sending the transaction is (3) minutes.
+                    </Message>
+                </div>
+                <template #footer>
+                    <Button label="Cancel" text severity="secondary" @click="visible = false" autofocus />
+                    <Button label="Buy" outlined severity="secondary" @click="visible = false" autofocus />
+                </template>
+            </Dialog>
 
             <div class="buy-legend">
                 SKU: {{ getProductData.sku.split(":")[0] }}
@@ -39,7 +69,7 @@
             <div class="buy-control">
                 <Select v-model="selectedQuantity" :options="quantityOptions" optionLabel="name" placeholder="Units"
                     variant="filled" size="small" />
-                <Button label="Buy Now" fluid @click="openBuyDialog" />
+                <Button label="Buy Now" fluid @click="openBuyDialog()" />
                 <Button label="Add to Cart" fluid outlined />
             </div>
         </div>
@@ -72,6 +102,13 @@ const productRating = ref(4);
 const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
 }
+
+const showBuyDialog = ref(false);
+
+const openBuyDialog = () => {
+    showBuyDialog.value = true;
+}
+
 </script>
 
 <style lang="css" scoped>
@@ -119,5 +156,17 @@ const getStockLabel = (readyStock) => {
 
 .buy-stock.green {
     color: var(--green-a);
+}
+
+.dialog-name {
+    font-weight: 600;
+}
+
+.dialog-sub {
+    line-height: 3rem;
+}
+
+.dialog-row {
+    margin-top: 1rem;
 }
 </style>

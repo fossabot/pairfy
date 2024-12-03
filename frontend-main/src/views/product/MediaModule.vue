@@ -9,8 +9,7 @@
             </div>
         </div>
         <div class="media-image">
-            <Image :src="productImageList[selectedImageIndex]" alt="Image" width="300" previewIcon="pi-search"
-                preview  />
+            <Image :src="productImageList[selectedImageIndex]" alt="Image" width="300" previewIcon="pi-search" preview/>
         </div>
     </div>
 </template>
@@ -56,10 +55,10 @@ const selectImage = (index) => {
 }
 
 .media-image {
-    display: flex;
     justify-content: center;
-    align-items: flex-start;
     padding: 2rem;
+    display: flex;
+    align-items: center;
 }
 
 .media-item {

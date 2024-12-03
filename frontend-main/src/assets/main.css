@@ -30,3 +30,20 @@
   width: 0.75rem !important;
   height: 0.75rem !important;
 }
+
+.p-dialog-header {
+  padding: 1rem !important;
+  border-radius: 20px !important;
+}
+
+.p-dialog {
+  border: initial;
+}
+
+.p-dialog-footer {
+  padding: 1rem !important;
+}
+
+.p-dialog-content {
+  padding: 0 1.5rem !important;
+}
