@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-gateway-redis
+  name: service-state-redis
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: service-gateway-redis
+      app: service-state-redis
   template:
     metadata:
       labels:
-        app: service-gateway-redis
+        app: service-state-redis
     spec:
       containers:
-        - name: service-gateway-redis
+        - name: service-state-redis
           image: redis
           resources:
             limits:
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-gateway-redis
+  name: service-state-redis
 spec:
   selector:
-    app: service-gateway-redis
+    app: service-state-redis
   ports:
     - name: db
       protocol: TCP
