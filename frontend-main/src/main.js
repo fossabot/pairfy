@@ -47,6 +47,7 @@ import Textarea from 'primevue/textarea';
 import Image from 'primevue/image';
 import Skeleton from 'primevue/skeleton';
 import Rating from 'primevue/rating';
+import Drawer from 'primevue/drawer';
 
 import Tooltip from 'primevue/tooltip';
 import Ripple from 'primevue/ripple';
@@ -110,6 +111,7 @@ app.component('Textarea', Textarea);
 app.component('Image', Image);
 app.component('Skeleton', Skeleton);
 app.component('Rating', Rating);
+app.component('Drawer', Drawer);
 
 
 app.directive('keyfilter', KeyFilter);

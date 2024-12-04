@@ -137,8 +137,6 @@ watch(
 watch(getProductResult, value => {
     if (value) {
         console.log(value);
-        showSuccess("updated");
-
         setProductData(value.getProduct)
     }
 })

@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import HeaderComp from '@/components/HeaderComp.vue';
+import HeaderComp from '@/components/header/HeaderComp.vue';
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';

@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
+    "@cardano-foundation/cardano-connect-with-wallet-core": "^0.2.5",
+    "@emurgo/cardano-serialization-lib-browser": "^13.2.0",
     "@primevue/themes": "^4.2.4",
     "@tiptap/extension-character-count": "^2.10.3",
     "@tiptap/extension-list-item": "^2.10.3",
@@ -25,6 +27,7 @@
     "axios": "^1.7.8",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
+    "lucid-cardano": "^0.10.11",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.4",
     "vue": "^3.5.13",

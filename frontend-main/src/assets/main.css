@@ -33,7 +33,7 @@
 }
 
 .p-rating-option-active .p-rating-icon{
-  color: var(--primary-b) !important;
+  color: var(--primary-c) !important;
 }
 
 .p-dialog-header {
@@ -60,4 +60,8 @@
 
 .p-overflow-hidden{
   overflow: initial !important;
+}
+.p-badge{
+  min-width: 1rem !important;
+  height: 1rem !important;
 }
