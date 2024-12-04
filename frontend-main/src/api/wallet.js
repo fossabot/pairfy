@@ -1,6 +1,7 @@
 import { Wallet } from "@cardano-foundation/cardano-connect-with-wallet-core";
 import * as CardanoWasm from "@emurgo/cardano-serialization-lib-browser";
 import { Lucid } from "lucid-cardano"; 
+import { Buffer } from 'buffer';
 
 let connectedWallet = null;
 

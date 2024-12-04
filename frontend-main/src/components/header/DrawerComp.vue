@@ -1,9 +1,9 @@
 <template>
     <Drawer v-model:visible="drawerVisibleTemp" header="Connect" position="right" :blockScroll="false"
-        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 23rem" >
+        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
 
         <Message severity="info">
-            Connect your cardano wallet.
+            Connect your Cardano wallet.
         </Message>
 
         <div class="block">
@@ -19,15 +19,17 @@
                 <img src="@/assets/lace.svg" alt="lace" />
                 <span>Lace</span>
             </div>
-
         </div>
+        {{ enabledWallet }}
+
+        <div @click="createTransaction">tx</div>
     </Drawer>
 </template>
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import { signMessage, getAddress, balanceTx, lucidClient, walletClient } from "@/api/wallet";
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 const { drawerVisible, showPanel } = headerAPI();
 
@@ -37,18 +39,20 @@ watch(drawerVisible, (e) => drawerVisibleTemp.value = e);
 
 watch(drawerVisibleTemp, (e) => showPanel(e));
 
-const getWalletName = () => localStorage.getItem("enabled-wallet");
 
-console.log("yes", getWalletName())
+const enabledWallet = ref("kaka");
 
-const walletName =
+window.addEventListener('storage', (event) => {
+    enabledWallet.value = localStorage.getItem("enabled-wallet")
+});
 
-    window.addEventListener("walletEnabledEvent", () => {
-        console.log("EVENT CATCH");
 
-        console.log(getWalletName())
+window.addEventListener("walletEnabledEvent", () => {
+    console.log("EVENT CATCH");
 
-    });
+    console.log(enabledWallet)
+
+});
 
 const selectWallet = async (e) => {
     await walletClient().connect(e);
@@ -102,10 +106,13 @@ const createTransaction = async () => {
     border-radius: 8px;
 }
 
+.block-item.active{
+    border: 1px solid var(--primary-c);
+}
+
 .block-item img {
-    width: 40px;
-    height: 40px;
-    border: 1px solid var(--border-a);
+    width: 35px;
+    height: 35px;
     border-radius: 8px;
 }
 
