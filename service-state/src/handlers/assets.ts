@@ -22,8 +22,6 @@ async function getAssetPrice(job: any) {
         EX: 120,
       });
 
-      console.log(result);
-
       if (result !== "OK") {
         await redisClient.client.set(key, assetPrice, {
           EX: 120,
