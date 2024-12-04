@@ -125,7 +125,15 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                      
+            dest: .      
+    - image: pairfy/service-price
+      context: service-price
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .                              
     - image: pairfy/testing
       context: testing
       docker:
