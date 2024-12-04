@@ -33,7 +33,7 @@
 }
 
 .p-rating-option-active .p-rating-icon{
-  color: var(--orange-a) !important;
+  color: var(--primary-b) !important;
 }
 
 .p-dialog-header {
