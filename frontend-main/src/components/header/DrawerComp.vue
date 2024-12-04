@@ -11,8 +11,8 @@
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
+import { signMessage, getAddress, balanceTx, lucidClient, walletClient } from "@/api/wallet";
 import { ref, watch } from 'vue';
-import { signMessage, getAddress, balanceTx, lucidClient, walletClient } from "@/api/wallet.js";
 
 const { drawerVisible, showPanel } = headerAPI();
 
