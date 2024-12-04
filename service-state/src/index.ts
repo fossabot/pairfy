@@ -97,7 +97,7 @@ const main = async () => {
           repeat: {
             every: 30000,
           },
-          attempts: 999,
+          attempts: 99999,
           backoff: {
             type: "fixed",
             delay: 1000,
@@ -144,6 +144,7 @@ const main = async () => {
       process.on(e, async (err) => {
         logger.error(err);
         await watchAssetPrice.close();
+        await redisClient.client.disconnect();
         process.exit(1);
       })
     );
