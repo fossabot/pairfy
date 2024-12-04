@@ -1,4 +1,4 @@
-import { catcher, logger } from "./utils/index.js";
+import { catcher, logger, sleep } from "./utils/index.js";
 import { Queue, QueueEvents, Worker, WorkerOptions } from "bullmq";
 import { redisClient } from "./db/redis.js";
 import { getAssetPrice } from "./bullmq/assets.js";
@@ -44,8 +44,6 @@ const main = async () => {
       "SIGCONT",
     ];
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
-
     /*
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -67,12 +65,8 @@ const main = async () => {
 
     /////////////////////////////////////////
 
-    const watchAssetPriceQueue = new Queue("watchAssetPrice", {
+    const watchAssetPriceQueue = new Queue("getAssetPrice", {
       connection: { url: process.env.REDIS_HOST },
-    });
-
-    watchAssetPriceQueue.on("waiting", (job: any) => {
-      console.log("waiting", job.id);
     });
 
     /////////////////////////////////////////////////////
@@ -93,12 +87,36 @@ const main = async () => {
     );
 */
     /////////////////////////////////////////////////////
+    (async () => {
+      await watchAssetPriceQueue.add(
+        "ADAUSDT",
+        {
+          symbol: "ADAUSDT",
+        },
+        {
+          repeat: {
+            every: 30000,
+          },
+          attempts: 999,
+          backoff: {
+            type: "fixed",
+            delay: 1000,
+          },
+          removeOnComplete: false,
+          removeOnFail: false,
+          jobId: "ADAUSDT",
+        }
+      );
 
-    const watchAssetPrice = new Worker("watchAssetPrice", getAssetPrice, {
+      logger.info("getAssetPrice added.");
+    })();
+
+    const watchAssetPrice = new Worker("getAssetPrice", getAssetPrice, {
+      removeOnComplete: false,
+      removeOnFail: false,
       autorun: true,
-      // concurrency: 10,
       connection: { url: process.env.REDIS_HOST },
-    } as WorkerOptions);
+    } as any);
 
     ////////////////////////////////////////////////////////
 
@@ -122,26 +140,12 @@ const main = async () => {
       console.log("Queue is drained.");
     });
 
-    ////////////////////////////////////////////////////////
-
-    await watchAssetPriceQueue.add(
-      "ADAUSDT",
-      {
-        symbol: "ADAUSDT",
-      },
-      {
-        repeat: {
-          every: 30000,
-        },
-        attempts: 99,
-        backoff: {
-          type: "fixed",
-          delay: 1000,
-        },
-        removeOnComplete: false,
-        removeOnFail: false,
-        deduplication: { id: "ADAUSDT" },
-      }
+    errorEvents.forEach((e: string) =>
+      process.on(e, async (err) => {
+        logger.error(err);
+        await watchAssetPrice.close();
+        process.exit(1);
+      })
     );
 
     logger.info("ONLINE");

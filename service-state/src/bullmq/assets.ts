@@ -17,12 +17,18 @@ async function getAssetPrice(job: any) {
 
       let key = "price:" + symbol;
 
-      await redisClient.client.set(key, assetPrice, {
-        NX: true,
-        EX: 60,
+      let result = await redisClient.client.set(key, assetPrice, {
+        XX: true,
+        EX: 120,
       });
-      
-      console.log(assetPrice);
+
+      console.log(result);
+
+      if (result !== "OK") {
+        await redisClient.client.set(key, assetPrice, {
+          EX: 120,
+        });
+      }
     } else {
       throw new Error("BINANCE_API");
     }

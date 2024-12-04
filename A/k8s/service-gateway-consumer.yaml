@@ -12,7 +12,7 @@ spec:
       labels:
         role: service-gateway-consumer
     spec:
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: 15
       containers:
         - name: service-gateway-consumer
           image: pairfy/base-consumer
