@@ -132,7 +132,7 @@ const openBuyDialog = () => {
 .buy-legend {
     display: flex;
     font-size: var(--text-size-a);
-    line-height: 1.5rem;
+    line-height: 1.75rem;
 }
 
 .buy-rating {

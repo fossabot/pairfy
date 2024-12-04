@@ -1,7 +1,5 @@
 import { Wallet } from "@cardano-foundation/cardano-connect-with-wallet-core";
-
 import * as CardanoWasm from "@emurgo/cardano-serialization-lib-browser";
-
 import { Lucid } from "lucid-cardano"; 
 
 let connectedWallet = null;
@@ -36,14 +34,14 @@ const connect = async (walletName) => {
   await Wallet.connect(walletName, "testnet", async () => {
     connectedWallet = await window.cardano[walletName].enable();
 
-    localStorage.setItem("pairfy-wallet", walletName);
+    localStorage.setItem("enabled-wallet", walletName);
 
     console.log("CONNECTED " + walletName);
   });
 };
 
 const reconnect = async () => {
-  const walletName = localStorage.getItem("pairfy-wallet");
+  const walletName = localStorage.getItem("enabled-wallet");
 
   if (walletName !== null) {
     await connect(walletName);
@@ -82,7 +80,7 @@ const startWalletService = async () => {
     const isEnabled = await window.cardano[walletName].isEnabled();
 
     if (isEnabled) {
-      localStorage.setItem("pairfy-wallet", walletName);
+      localStorage.setItem("enabled-wallet", walletName);
 
       window.dispatchEvent(walletEnabledEvent);
 
@@ -110,7 +108,7 @@ const stopWalletService = () => {
   });
 
   Wallet.removeEventListener("enabledWallet", (e) => {
-    console.log("enabledw", e);
+    console.log("enabled", e);
   });
 
   Wallet.removeEventListener("accountBalance", (e) => {

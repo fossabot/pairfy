@@ -1,11 +1,26 @@
 <template>
-    <Drawer v-model:visible="drawerVisibleTemp" header="Wallet Setup" position="right" :blockScroll="false"
-        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat.</p>
+    <Drawer v-model:visible="drawerVisibleTemp" header="Connect" position="right" :blockScroll="false"
+        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 23rem" >
 
-        {{ drawerVisible }}
+        <Message severity="info">
+            Connect your cardano wallet.
+        </Message>
+
+        <div class="block">
+            <div class="block-item" @click="selectWallet('nami')" :class="{ active: enabledWallet === 'nami' }">
+                <img src="@/assets/nami.svg" alt="nami" />
+                <span>Nami</span>
+            </div>
+            <div class="block-item" @click="selectWallet('eternl')" :class="{ active: enabledWallet === 'eternl' }">
+                <img src="@/assets/eternl.png" alt="eternl" />
+                <span>Eternl</span>
+            </div>
+            <div class="block-item" @click="selectWallet('lace')" :class="{ active: enabledWallet === 'lace' }">
+                <img src="@/assets/lace.svg" alt="lace" />
+                <span>Lace</span>
+            </div>
+
+        </div>
     </Drawer>
 </template>
 
@@ -16,11 +31,28 @@ import { ref, watch } from 'vue';
 
 const { drawerVisible, showPanel } = headerAPI();
 
-const drawerVisibleTemp = ref(false);
+const drawerVisibleTemp = ref(true);
 
 watch(drawerVisible, (e) => drawerVisibleTemp.value = e);
 
 watch(drawerVisibleTemp, (e) => showPanel(e));
+
+const getWalletName = () => localStorage.getItem("enabled-wallet");
+
+console.log("yes", getWalletName())
+
+const walletName =
+
+    window.addEventListener("walletEnabledEvent", () => {
+        console.log("EVENT CATCH");
+
+        console.log(getWalletName())
+
+    });
+
+const selectWallet = async (e) => {
+    await walletClient().connect(e);
+};
 
 const handleSign = async () => {
     await signMessage()
@@ -55,4 +87,31 @@ const createTransaction = async () => {
 };
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.block {
+    display: flex;
+    flex-direction: column;
+}
+
+.block-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-a);
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.block-item img {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-a);
+    border-radius: 8px;
+}
+
+.block-item span {
+    margin-left: 1rem;
+    font-size: var(--text-size-a);
+    font-weight: 500;
+}
+</style>
