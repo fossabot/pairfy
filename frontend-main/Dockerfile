@@ -10,7 +10,7 @@ RUN npm config set fetch-retry-maxtimeout 290000
 
 RUN npm config set fetch-retry-mintimeout 290000
 
-RUN npm install --verbose
+RUN yarn install
 
 COPY . .
 

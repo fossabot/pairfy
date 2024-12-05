@@ -20,8 +20,9 @@
                 <span>Lace</span>
             </div>
         </div>
-        {{ enabledWallet }}
-        {{ walletBalance }}
+
+        <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" />
+
         <div @click="createTransaction">tx</div>
     </Drawer>
 </template>
@@ -74,7 +75,7 @@ const selectWallet = async (e) => {
     await walletClient().connect(e);
 };
 
-const handleSign = async () => {
+const signIn = async () => {
     await signMessage()
         .then(async (signature) => [signature, await getAddress()])
         .then(([signature, address]) =>
