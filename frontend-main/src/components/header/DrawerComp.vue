@@ -39,7 +39,7 @@ const showSuccess = (content) => {
     toast.add({ position: 'bottom-right', severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: false });
 };
 
-const { drawerVisible, showPanel } = headerAPI();
+const { drawerVisible, showPanel, loginUser } = headerAPI();
 
 const drawerVisibleTemp = ref(true);
 
@@ -76,16 +76,13 @@ const selectWallet = async (e) => {
 };
 
 const signIn = async () => {
-    await signMessage()
-        .then(async (signature) => [signature, await getAddress()])
-        .then(([signature, address]) =>
-            loginUser({
-                signature,
-                address,
-                terms_accepted: true,
-            })
-        )
-        .catch((err) => console.error(err));
+    await signMessage().then(([signature, address]) =>
+        loginUser({
+            signature,
+            address,
+            terms_accepted: true,
+        })
+    ).catch((err) => console.error(err));
 };
 
 

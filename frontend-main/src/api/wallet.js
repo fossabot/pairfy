@@ -58,7 +58,7 @@ const getBalance = async () => {
   if (!enabledWalletAPI) {
     await reconnect()
 
-    return 0;
+    return 0
   }
 
   const balance = await enabledWalletAPI.getBalance()
@@ -83,7 +83,11 @@ const signMessage = async () => {
     await reconnect()
   }
 
-  return await enabledWalletAPI.signData(await getAddress(), getMessage())
+  const address = await getAddress()
+
+  const signature = await enabledWalletAPI.signData(address, getMessage())
+
+  return [signature, address]
 }
 
 /** Starts the service that allows listening to global events when a wallet is connected. */
