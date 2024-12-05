@@ -1,9 +1,9 @@
+import compression from "compression";
+import DB from "./db";
 import * as route from "./routes";
 import { catcher, check, checkpoint } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
 import { app } from "./app";
-import compression from "compression";
-import DB from "./db";
 
 const main = async () => {
   try {
@@ -102,11 +102,10 @@ const main = async () => {
 
     app.get(
       "/api/user/logout",
-
       route.logoutHandler
     );
 
-    app.get("/api/user/healthcheck", (req, res) => {
+    app.get("/api/user/health", (req, res) => {
       res.status(200).send("Test OK");
     });
 

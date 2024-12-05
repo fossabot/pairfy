@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "CRUD service for user accounts.",
   "main": "index.js",
-  "type": "module",
   "keywords": [
     "pairfy",
     "marketplace",

@@ -156,11 +156,11 @@ const openBuyDialog = () => {
 }
 
 .dialog-name {
-    font-weight: 500;
     margin-top: 1rem;
 }
 
 .dialog-sub {
     margin-top: 1rem;
+    font-weight: 500;
 }
 </style>

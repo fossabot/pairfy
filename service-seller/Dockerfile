@@ -16,8 +16,6 @@ COPY . .
 
 RUN npm run build 
 
-RUN rm -rf node_modules
-
-RUN npm install --omit=dev
+EXPOSE 8000
 
 CMD ["npm", "start"]

@@ -2,7 +2,7 @@ FROM node:lts
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
 
 RUN ls
 
@@ -12,6 +12,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 4000
+EXPOSE 8000
 
 CMD ["sh", "-c", "npm run database && npm start"]

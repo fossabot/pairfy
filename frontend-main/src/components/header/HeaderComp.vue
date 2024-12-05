@@ -4,7 +4,9 @@
             <div class="header-col left">
                 <img class="logo" src="@/assets/logo-blue.png" alt="">
             </div>
-            <div class="header-col center"></div>
+            <div class="header-col center">
+                <SearchComp/>
+            </div>
             <div class="header-col right">
                 <OverlayBadge class="header-button" value="1" severity="danger">
                     <i class="pi pi-bell" style="font-size: var(--text-size-c)" />
@@ -21,6 +23,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
+import SearchComp from "@/components/header/SearchComp.vue";
 
 const { showPanel } = headerAPI();
 
