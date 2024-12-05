@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="250" previewIcon="pi-search"
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="225" previewIcon="pi-search" 
                     preview />
             </div>
         </section>
@@ -60,7 +60,6 @@ section {
 
 .media-image {
     justify-content: center;
-   
     display: flex;
     align-items: center;
     width: 100%;
