@@ -166,7 +166,7 @@ onGetProductError(error => {
     z-index: 1;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("https://http2.mlstatic.com/D_NQ_NP_611714-MLA74839334020_032024-OO.jpg");
+    background-image: url("https://http2.mlstatic.com/D_NQ_898353-MLA80842011878_122024-OO.webp");
 }
 
 .container {
