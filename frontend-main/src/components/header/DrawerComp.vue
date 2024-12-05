@@ -23,6 +23,8 @@
 
         <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" />
 
+        {{ getCurrentUser }}
+        
         <div @click="createTransaction">tx</div>
     </Drawer>
 </template>
@@ -39,7 +41,7 @@ const showSuccess = (content) => {
     toast.add({ position: 'bottom-right', severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: false });
 };
 
-const { drawerVisible, showPanel, loginUser } = headerAPI();
+const { drawerVisible, showPanel, loginUser, getCurrentUser } = headerAPI();
 
 const drawerVisibleTemp = ref(true);
 

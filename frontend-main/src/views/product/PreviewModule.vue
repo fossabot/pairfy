@@ -1,17 +1,20 @@
 <template>
     <div class="preview">
+
         <Skeleton v-if="!getProductData" width="100%" height="100%" />
 
-        <div v-if="getProductData">
+        <div v-if="getProductData" class="preview-wrap">
             <div class="preview-top">
                 {{ getProductData.quality }} | +5 sold
             </div>
-
 
             <div class="preview-name">
                 {{ getProductData.name }}
             </div>
 
+            <div class="preview-model">
+                <span>Model: {{ getProductData.model }} </span> <span>SKU: {{ getProductData.sku.split(":")[0] }}</span>
+            </div>
 
             <Divider />
 
@@ -31,7 +34,7 @@
             </div>
 
 
-            
+
             <div class="preview-variants flex ">
                 <span>Color</span>
                 <span>:</span>
@@ -41,7 +44,7 @@
 
 
 
-  
+
             <div class="preview-about">About this product</div>
             <ul class="preview-bullet">
                 <li v-for="item in bulletList" :key="item">{{ item }}</li>
@@ -70,7 +73,10 @@ const bulletList = computed(() => {
 <style lang="css" scoped>
 .preview {
     min-height: 400px;
-    padding: 1rem; 
+}
+
+.preview-wrap {
+    padding: 1rem;
 }
 
 .preview-name {
@@ -98,11 +104,22 @@ const bulletList = computed(() => {
     margin-top: 1rem;
 }
 
-.preview-top {
+.preview-top,
+.preview-model {
     display: flex;
     color: var(--text-b);
     font-size: var(--text-size-a);
 }
+
+.preview-model {
+    margin-top: 1rem;
+}
+
+.preview-model span{
+    margin-right: 1rem;
+
+}
+
 
 .preview-about {
     font-weight: 700;

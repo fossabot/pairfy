@@ -5,14 +5,18 @@
                 <img class="logo" src="@/assets/logo-blue.png" alt="">
             </div>
             <div class="header-col center">
-                <SearchComp/>
+                <SearchComp />
             </div>
             <div class="header-col right">
                 <OverlayBadge class="header-button" value="1" severity="danger">
                     <i class="pi pi-bell" style="font-size: var(--text-size-c)" />
                 </OverlayBadge>
-                <div class="connect-wallet" @click="showPanel(true)">
+                <div v-if="!getCurrentUser" class="connect-wallet" @click="showPanel(true)">
                     Connect Wallet
+                </div>
+
+                <div v-if="getCurrentUser" class="connect-wallet" @click="showPanel(true)">
+                    {{ getCurrentUser.address.slice(0, 15) }}
                 </div>
             </div>
         </div>
@@ -25,7 +29,7 @@ import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 
-const { showPanel } = headerAPI();
+const { showPanel, getCurrentUser } = headerAPI();
 
 
 
@@ -67,7 +71,7 @@ header {
     background: var(--primary-c);
     border-radius: 8px;
     padding: 0.5rem;
-    width: 120px;
+    min-width: 120px;
     font-weight: 600;
     color: var(--text-w);
     font-size: var(--text-size-a);

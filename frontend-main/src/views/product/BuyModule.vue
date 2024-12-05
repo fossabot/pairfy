@@ -1,6 +1,7 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Confirmation" :style="{ width: '25rem' }" :draggable="false">
+        <Dialog v-model:visible="showBuyDialog" modal header="Confirmation" :style="{ width: '25rem' }"
+            :draggable="false">
             <template #header>
 
             </template>
@@ -15,8 +16,8 @@
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -
-                    OLED QHD + 240 Hz
-                    - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
+                OLED QHD + 240 Hz
+                - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
             </div>
 
 
@@ -30,17 +31,10 @@
         <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
         <div v-if="getProductData">
+            <div class="buy-legend brand">
+                {{ getProductData.brand }}
+            </div>
 
-
-            <div class="buy-legend">
-                SKU: {{ getProductData.sku.split(":")[0] }}
-            </div>
-            <div class="buy-legend">
-                Model: {{ getProductData.model }}
-            </div>
-            <div class="buy-legend">
-                Brand: {{ getProductData.brand }}
-            </div>
             <div class="buy-legend">
                 Collateral: {{ getProductData.collateral }} USD
             </div>
@@ -120,19 +114,24 @@ const openBuyDialog = () => {
 .buy-control {
     display: grid;
     gap: 0.5rem;
-    margin-top: 0.5rem; 
+    margin-top: 0.5rem;
 }
 
 .buy-available {
     margin-top: 1rem;
     font-size: var(--text-size-a);
-    color: var(--text-b);
+    font-weight: 600;
 }
 
 .buy-legend {
     display: flex;
     font-size: var(--text-size-a);
     line-height: 1.75rem;
+}
+
+.buy-legend.brand {
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
 .buy-rating {
