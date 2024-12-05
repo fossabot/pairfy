@@ -3,10 +3,10 @@ import { Request, Response } from "express";
 import { createToken } from "../utils/token";
 import { UserToken, userMiddleware } from "../utils/user";
 import { _ } from "../utils/pino";
-import { getUserId } from "../utils/nano";
 import { getPubKeyHash } from "../utils/crypto";
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import DB from "../db";
+import { getUsername } from "../utils/nano";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
@@ -20,9 +20,13 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
   try {
     const address = Cardano.Address.from_hex(params.address);
+
     const address32: string = address.to_bech32();
+
     const pubkeyhash = getPubKeyHash(address);
+
     const signature = params.signature;
+
     const message = "PLEASE SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
 
     const verifySignature = verifyDataSignature(
@@ -42,37 +46,36 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    const userId = getUserId();
-    const username = "server";
+
+    const username = getUsername();
+    
     const country = "server";
 
     const schemeData = `
     INSERT INTO users (
-      id,
+      pubkeyhash,
       username,
       address,
-      pubkeyhash,
       country,
       terms_accepted,
       public_ip,
       schema_v
      ) 
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+     VALUES (?, ?, ?, ?, ?, ?, ?)
      ON DUPLICATE KEY UPDATE
-      username = VALUES(username),
+      pubkeyhash = pubkeyhash,
+      username = username,
       address = VALUES(address),
-      pubkeyhash = VALUES(pubkeyhash),
-      country = VALUES(country),
-      terms_accepted = VALUES(terms_accepted),
+      country = country,
+      terms_accepted = terms_accepted,
       public_ip = VALUES(public_ip),
-      schema_v = VALUES(schema_v);
+      schema_v = schema_v;
      `;
 
     const schemeValue = [
-      userId,
+      pubkeyhash,
       username,
       address32,
-      pubkeyhash,
       country,
       params.terms_accepted,
       "192.168.1.1",
@@ -80,10 +83,9 @@ const loginUserHandler = async (req: Request, res: Response) => {
     ];
 
     const userData: UserToken = {
-      id: userId,
+      pubkeyhash,
       role: "USER",
       address: address32,
-      pubkeyhash,
       country,
       username,
     };

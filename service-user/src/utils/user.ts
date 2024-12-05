@@ -3,10 +3,9 @@ import { _ } from "./pino";
 import jwt from "jsonwebtoken";
 
 interface UserToken {
-  id: string;
+  pubkeyhash: string;
   role: string;
   address: string;
-  pubkeyhash: string;
   country: string;
   username: string;
 }
