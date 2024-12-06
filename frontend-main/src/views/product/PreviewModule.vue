@@ -30,9 +30,10 @@
                 <Tag :value="`- ${getProductData.discount_value}%`" severity="contrast" />
 
                 <Tag :value="`$${getProductData.price}`" severity="secondary"
-                    style="text-decoration: line-through; margin-left: 1rem;" />
-            </div>
+                    style="text-decoration: line-through; margin: 0 1rem;" />
 
+                <Tag :value="`3.032 ₳`" severity="secondary" />
+            </div>
 
 
             <div class="preview-variants flex ">
@@ -41,8 +42,6 @@
                 <label> {{ getProductData.color_name }}</label>
                 <div :style="{ backgroundColor: `#${getProductData.color}` }" />
             </div>
-
-
 
 
             <div class="preview-about">About this product</div>
@@ -115,11 +114,9 @@ const bulletList = computed(() => {
     margin-top: 1rem;
 }
 
-.preview-model span{
+.preview-model span {
     margin-right: 1rem;
-
 }
-
 
 .preview-about {
     font-weight: 700;

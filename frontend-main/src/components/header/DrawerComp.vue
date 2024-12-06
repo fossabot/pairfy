@@ -2,29 +2,46 @@
     <Drawer v-model:visible="drawerVisibleTemp" header="Connect" position="right" :blockScroll="false"
         :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
 
-        <Message severity="info" icon="pi pi-info-circle">
-            Select the wallet to make payments and log in as a user.
-        </Message>
+        <section v-if="!getCurrentUser">
+            <Message severity="info" icon="pi pi-info-circle">
+                Select the wallet to make payments and log in as a user.
+            </Message>
 
-        <div class="block">
-            <div class="block-item" @click="selectWallet('nami')" :class="{ active: enabledWallet === 'nami' }">
-                <img src="@/assets/nami.svg" alt="nami" />
-                <span>Nami</span>
+            <div class="block">
+                <div class="block-item" @click="selectWallet('nami')" :class="{ active: enabledWallet === 'nami' }">
+                    <img src="@/assets/nami.svg" alt="nami" />
+                    <span>Nami</span>
+                </div>
+                <div class="block-item" @click="selectWallet('eternl')" :class="{ active: enabledWallet === 'eternl' }">
+                    <img src="@/assets/eternl.png" alt="eternl" />
+                    <span>Eternl</span>
+                </div>
+                <div class="block-item" @click="selectWallet('lace')" :class="{ active: enabledWallet === 'lace' }">
+                    <img src="@/assets/lace.svg" alt="lace" />
+                    <span>Lace</span>
+                </div>
             </div>
-            <div class="block-item" @click="selectWallet('eternl')" :class="{ active: enabledWallet === 'eternl' }">
-                <img src="@/assets/eternl.png" alt="eternl" />
-                <span>Eternl</span>
-            </div>
-            <div class="block-item" @click="selectWallet('lace')" :class="{ active: enabledWallet === 'lace' }">
-                <img src="@/assets/lace.svg" alt="lace" />
-                <span>Lace</span>
-            </div>
-        </div>
 
-        <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" />
+            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" />
+        </section>
+        <section v-if="getCurrentUser">
+            {{ getCurrentUser }}
+            <div class="user">
+                <Message severity="info" icon="pi pi-info-circle">
+                    Make sure you trade with the correct wallet account.
+                </Message>
 
-        {{ getCurrentUser }}
-        
+                <div class="user-name">
+                    {{ getCurrentUser.username }}
+                </div>
+                <div class="user-name">
+                    {{ getCurrentUser.pubkeyhash.slice(0, 25) }}...
+                </div>
+                <div class="user-name">
+                    {{ getCurrentUser.address.slice(0, 25) }}...
+                </div>
+            </div>
+        </section>
         <div @click="createTransaction">tx</div>
     </Drawer>
 </template>
@@ -145,5 +162,15 @@ onBeforeUnmount(() => {
     margin-left: 1rem;
     font-size: var(--text-size-a);
     font-weight: 500;
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: var(--text-size-a);
+    font-weight: 600;
 }
 </style>

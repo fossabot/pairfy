@@ -31,29 +31,24 @@
         <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
         <div v-if="getProductData">
-            <div class="buy-legend brand">
+            <div class="buy-brand">
                 {{ getProductData.brand }}
             </div>
 
-            <div class="buy-legend">
-                Collateral: {{ getProductData.collateral }} USD
-            </div>
-
-            <div class="buy-legend">
-                Keeping Stock: 15
-            </div>
-
-            <div class="buy-rating">
-                <Rating v-model="productRating" :stars="5" readonly />
-                <span> 4.5 (1250 reviews)</span>
-            </div>
 
             <div class="buy-stock" :class="{ green: 15 > 0, }">
                 {{ getStockLabel(15) }}
             </div>
 
+
+            <div class="buy-rating flex">
+                <Rating v-model="productRating" :stars="5" readonly />
+                <span> 4.5 </span>
+                <span style="color: var(--text-b)">(1250 reviews)</span>
+            </div>
+
             <div class="buy-available">
-                Available (15)
+                Available (15/20)
             </div>
 
             <div class="buy-control">
@@ -114,29 +109,27 @@ const openBuyDialog = () => {
 .buy-control {
     display: grid;
     gap: 0.5rem;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
 }
 
 .buy-available {
-    margin-top: 1rem;
     font-size: var(--text-size-a);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.buy-brand {
     font-weight: 600;
+    font-size: var(--text-size-a);
+    text-transform: capitalize;
 }
 
 .buy-legend {
-    display: flex;
-    font-size: var(--text-size-a);
-    line-height: 1.75rem;
-}
-
-.buy-legend.brand {
-    font-weight: 600;
-    text-transform: capitalize;
+    margin-top: 1rem;
 }
 
 .buy-rating {
     margin-top: 1rem;
-    display: flex;
 }
 
 .buy-rating span {
@@ -146,7 +139,7 @@ const openBuyDialog = () => {
 
 .buy-stock {
     color: var(--red-a);
-    font-weight: 500;
+    font-weight: 600;
     margin-top: 1rem;
 }
 
