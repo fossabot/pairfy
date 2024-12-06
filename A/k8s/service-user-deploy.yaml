@@ -20,11 +20,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name                                       
-            - name: USER_JWT_KEY
+            - name: AGENT_JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: user-token-secret
-                  key: USER_TOKEN_KEY 
+                  name: agent-token-secret
+                  key: AGENT_TOKEN_KEY 
             - name: ADMIN_JWT_KEY
               valueFrom:
                 secretKeyRef:

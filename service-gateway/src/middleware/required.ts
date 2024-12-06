@@ -5,8 +5,11 @@ export const requireAuth = (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.sellerData) {
-    return res.status(401).json({ errors: ['AUTH_ERROR'] });
+
+  const isAgent = (req.sellerData || req.userData);
+
+  if (!isAgent) {
+    return res.status(401).json({ errors: ["AUTH_ERROR"] });
   }
 
   next();

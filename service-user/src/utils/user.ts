@@ -26,7 +26,7 @@ const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
   try {
     const sessionData = jwt.verify(
       req.session.jwt,
-      process.env.USER_JWT_KEY!
+      process.env.AGENT_JWT_KEY!
     ) as UserToken;
 
     if (sessionData.role !== "USER") {

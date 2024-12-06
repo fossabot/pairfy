@@ -1,16 +1,18 @@
+import DB from "../db";
 import { BadRequestError } from "../errors";
 import { comparePassword } from "../utils/password";
 import { Request, Response } from "express";
 import { createToken } from "../utils/token";
 import { SellerToken, sellerMiddleware } from "../utils/seller";
 import { _ } from "../utils/pino";
-import DB from "../db";
 
 const loginSellerMiddlewares: any = [sellerMiddleware];
 
 const loginSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
+
   let params = req.body;
+
   try {
     if (params.sellerData) {
       throw new Error("LOGGED");
@@ -24,7 +26,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (rows.length === 0) {
-      throw new Error("NOT_EXIST");
+      throw new Error("CREDENTIALS");
     }
 
     const SELLER = rows[0];
@@ -34,7 +36,9 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       params.password
     );
 
-    if (!passwordsMatch) {  throw new Error("INVALID_CREDENTIALS") }
+    if (!passwordsMatch) {
+      throw new Error("CREDENTIALS");
+    }
 
     if (SELLER.verified !== 1) {
       throw new Error("UNVERIFIED");
@@ -45,8 +49,10 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       role: "SELLER",
       email: SELLER.email,
       avatar: SELLER.avatar_base + SELLER.avatar_path,
+      address: SELLER.address,
       country: SELLER.country,
       username: SELLER.username,
+      pubkeyhash: SELLER.pubkeyhash,
     };
 
     const token = createToken(sellerData);
@@ -57,13 +63,17 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, data: sellerData });
   } catch (err: any) {
-    await connection.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
 
     _.error(err);
 
     throw new BadRequestError(err.message);
   } finally {
-    connection.release();
+    if (connection) {
+      connection.release();
+    }
   }
 };
 
