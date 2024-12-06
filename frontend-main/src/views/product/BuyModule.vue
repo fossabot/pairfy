@@ -114,8 +114,8 @@ const openBuyDialog = () => {
 }
 
 .buy-available {
-    font-size: var(--text-size-b);
-    font-weight: 500;
+    font-size: var(--text-size-a);
+    font-weight: 400;
     margin-top: 1rem;
 }
 

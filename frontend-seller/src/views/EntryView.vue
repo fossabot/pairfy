@@ -60,8 +60,8 @@
 
                 <div class="email">
                     <IftaLabel>
-                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid variant="filled" placeholder="you@example.com"
-                            style=" font-size: var(--text-size-a)" />
+                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid 
+                            placeholder="" style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -69,8 +69,8 @@
                 <div class="password">
                     <Fluid>
                         <IftaLabel>
-                            <Password v-model="loginForm.password" inputId="password" variant="filled" toggleMask
-                                :feedback="false" inputStyle="font-size: var(--text-size-a);" />
+                            <Password v-model="loginForm.password" inputId="password"  toggleMask
+                                :feedback="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }" />
                             <label for="password">Password</label>
 
                         </IftaLabel>
@@ -125,8 +125,8 @@
                     <Fluid>
                         <IftaLabel>
 
-                            <Password v-model="registerForm.password" inputId="password" variant="filled" toggleMask
-                                :feedback="true" inputStyle="font-size: var(--text-size-a);">
+                            <Password v-model="registerForm.password" inputId="password" toggleMask
+                                :feedback="true" :inputStyle="{ fontSize: 'var(--text-size-a)' }">
 
                                 <template #header>
                                     <div style="font-size: var(--text-size-a);">Pick a password</div>
@@ -151,7 +151,7 @@
 
                 <div class="country">
                     <Select v-model="registerForm.country" :options="countries" filter optionLabel="name"
-                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);' variant="filled">
+                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);' >
                         <template #value="slotProps">
                             <div v-if="slotProps.value" class="country-item">
                                 <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
@@ -591,7 +591,7 @@ function navigateTo(mode) {
 }
 
 .terms {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .terms span {
