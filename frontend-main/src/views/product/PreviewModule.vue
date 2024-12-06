@@ -44,7 +44,7 @@
             </div>
 
 
-            <div class="preview-about">About this product</div>
+            <div class="preview-about">About this item</div>
             <ul class="preview-bullet">
                 <li v-for="item in bulletList" :key="item">{{ item }}</li>
             </ul>
