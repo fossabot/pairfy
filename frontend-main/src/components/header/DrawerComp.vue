@@ -228,7 +228,7 @@ onBeforeUnmount(() => {
 
 .user-info span {
     margin-left: 1rem;
-    font-weight: 600;
-    font-size: var(--text-size-a);
+    font-weight: 500;
+    font-size: var(--text-size-b);
 }
 </style>
