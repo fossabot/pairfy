@@ -83,8 +83,8 @@ section {
 }
 
 .media-item img {
-    width: 54px;
-    height: 54px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
 }
 
