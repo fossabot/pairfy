@@ -37,20 +37,20 @@
 
 
                     <div class="user-row address">
-                        <Message severity="secondary">
-                            {{ getCurrentUser.address }}
+                        <Message severity="info">
+                            {{ getCurrentUser.address.slice(0, 30) }}...
                         </Message>
                     </div>
 
 
                     <div class="user-row pkh">
-                        <Message severity="secondary">
+                        <Message severity="info">
                             {{ getCurrentUser.pubkeyhash }}
                         </Message>
                     </div>
                 </div>
 
-                <Button label="Sign Out" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet"
+                <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
                     variant="outlined" />
             </section>
 
@@ -59,8 +59,8 @@
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
-import { signMessage, getAddress, balanceTx, lucidClient, walletClient, getBalance } from "@/api/wallet";
-import { ref, watch, computed, onBeforeUnmount } from 'vue';
+import { signMessage, balanceTx, walletClient, getBalance } from "@/api/wallet";
+import { ref, watch, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
@@ -69,7 +69,7 @@ const showSuccess = (content) => {
     toast.add({ position: 'bottom-left', severity: 'success', summary: 'Success Message', detail: content, life: 1000, closable: true });
 };
 
-const { drawerVisible, showPanel, loginUser, getCurrentUser } = headerAPI();
+const { drawerVisible, showPanel, loginUser, getCurrentUser, logoutUser } = headerAPI();
 
 const drawerVisibleTemp = ref(false);
 
@@ -194,7 +194,8 @@ onBeforeUnmount(() => {
 
 .user-row::before {
     content: '';
-    font-weight: 600;
+    font-weight: 500;
+    color: var(--primary-c);  
     position: absolute;
     top: -20px;
     left: 0;
@@ -229,6 +230,6 @@ onBeforeUnmount(() => {
 .user-info span {
     margin-left: 1rem;
     font-weight: 500;
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-a);
 }
 </style>

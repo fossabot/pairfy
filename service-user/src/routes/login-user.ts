@@ -40,15 +40,12 @@ const loginUserHandler = async (req: Request, res: Response) => {
       throw new BadRequestError("AUTH_FAILED");
     }
 
-    ///////////////////////////////////////////////////////
-
     connection = await DB.client.getConnection();
-
+    
     await connection.beginTransaction();
 
-
     const username = getUsername();
-    
+
     const country = "server";
 
     const schemeData = `
@@ -65,7 +62,7 @@ const loginUserHandler = async (req: Request, res: Response) => {
      ON DUPLICATE KEY UPDATE
       pubkeyhash = pubkeyhash,
       username = username,
-      address = VALUES(address),
+      address = address,
       country = country,
       terms_accepted = terms_accepted,
       public_ip = VALUES(public_ip),
@@ -82,12 +79,22 @@ const loginUserHandler = async (req: Request, res: Response) => {
       0,
     ];
 
+    await connection.execute(schemeData, schemeValue);
+
+    ///////////////////////////////////7
+    const [rows] = await connection.execute(
+      "SELECT * FROM users WHERE pubkeyhash = ?",
+      [pubkeyhash]
+    );
+
+    const USER = rows[0];
+
     const userData: UserToken = {
-      pubkeyhash,
+      pubkeyhash: USER.pubkeyhash,
       role: "USER",
-      address: address32,
-      country,
-      username,
+      address: USER.address,
+      country: USER.country,
+      username: USER.username,
     };
 
     console.log(schemeValue);
@@ -96,18 +103,16 @@ const loginUserHandler = async (req: Request, res: Response) => {
       jwt: createToken(userData),
     };
 
-    await connection.execute(schemeData, schemeValue);
-
     await connection.commit();
 
     res.status(200).send({ success: true, data: userData });
   } catch (err) {
-    if(connection){
+    if (connection) {
       await connection.rollback();
     }
     _.error(err);
   } finally {
-    if(connection){
+    if (connection) {
       connection.release();
     }
   }

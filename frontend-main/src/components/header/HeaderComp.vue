@@ -8,9 +8,16 @@
                 <SearchComp />
             </div>
             <div class="header-col right">
-                <OverlayBadge class="header-button" value="1" severity="danger">
+                <OverlayBadge class="header-button" value="1" severity="danger" @click="toggle">
                     <i class="pi pi-bell" style="font-size: var(--text-size-c)" />
                 </OverlayBadge>
+
+                <Popover ref="op">
+                    <div class="notifications">
+                        notification list
+                    </div>
+                </Popover>
+
                 <div v-if="!getCurrentUser" class="connect-wallet" @click="showPanel(true)">
                     Connect Wallet
                 </div>
@@ -28,8 +35,21 @@
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
+import { ref } from "vue";
 
 const { showPanel, getCurrentUser } = headerAPI();
+
+const op = ref();
+const members = ref([
+    { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
+    { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
+    { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
+]);
+
+const toggle = (event) => {
+    op.value.toggle(event);
+}
+
 
 
 
@@ -72,7 +92,7 @@ header {
     border-radius: 8px;
     padding: 0.5rem;
     min-width: 120px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--text-w);
     font-size: var(--text-size-a);
     cursor: pointer;
@@ -82,5 +102,10 @@ header {
     margin: 0 2rem;
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.notifications {
+    width: 300px;
 }
 </style>

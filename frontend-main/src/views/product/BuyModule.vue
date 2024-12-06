@@ -100,7 +100,7 @@ const openBuyDialog = () => {
 <style lang="css" scoped>
 .buy {
     border: 1px solid var(--border-a);
-    border-radius: 20px;
+    border-radius: 8px;
     min-height: 100px;
     display: flex;
     flex-direction: column;
