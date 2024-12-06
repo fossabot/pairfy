@@ -75,6 +75,7 @@ header {
     font-weight: 600;
     color: var(--text-w);
     font-size: var(--text-size-a);
+    cursor: pointer;
 }
 
 .header-button {

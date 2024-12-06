@@ -1,55 +1,58 @@
 <template>
     <Drawer v-model:visible="drawerVisibleTemp" header="Connect" position="right" :blockScroll="false"
         :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
+            <section v-if="!getCurrentUser">
+                <Message severity="warn" icon="pi pi-info-circle">
+                    Select the wallet to make payments and log in as a user.
+                </Message>
 
-        <section v-if="!getCurrentUser">
-            <Message severity="warn" icon="pi pi-info-circle">
-                Select the wallet to make payments and log in as a user.
-            </Message>
-
-            <div class="block">
-                <div class="block-item" @click="selectWallet('nami')" :class="{ active: enabledWallet === 'nami' }">
-                    <img src="@/assets/nami.svg" alt="nami" />
-                    <span>Nami</span>
-                </div>
-                <div class="block-item" @click="selectWallet('eternl')" :class="{ active: enabledWallet === 'eternl' }">
-                    <img src="@/assets/eternl.png" alt="eternl" />
-                    <span>Eternl</span>
-                </div>
-                <div class="block-item" @click="selectWallet('lace')" :class="{ active: enabledWallet === 'lace' }">
-                    <img src="@/assets/lace.svg" alt="lace" />
-                    <span>Lace</span>
-                </div>
-            </div>
-
-            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
-        </section>
-        <section v-if="getCurrentUser">
-            <Message severity="warn" icon="pi pi-info-circle">
-                Make sure you trade with the correct wallet account.
-            </Message>
-
-            <div class="user">
-                <div class="user-info">
-                    <img src="@/assets/user.png" alt="">
-                    <span>{{ getCurrentUser.username }}</span>
+                <div class="block">
+                    <div class="block-item" @click="selectWallet('nami')" :class="{ active: enabledWallet === 'nami' }">
+                        <img src="@/assets/nami.svg" alt="nami" />
+                        <span>Nami</span>
+                    </div>
+                    <div class="block-item" @click="selectWallet('eternl')"
+                        :class="{ active: enabledWallet === 'eternl' }">
+                        <img src="@/assets/eternl.png" alt="eternl" />
+                        <span>Eternl</span>
+                    </div>
+                    <div class="block-item" @click="selectWallet('lace')" :class="{ active: enabledWallet === 'lace' }">
+                        <img src="@/assets/lace.svg" alt="lace" />
+                        <span>Lace</span>
+                    </div>
                 </div>
 
+                <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
+            </section>
+            <section v-if="getCurrentUser">
+                <Message severity="warn" icon="pi pi-info-circle">
+                    Make sure you trade with the correct wallet account.
+                </Message>
 
-                <div class="user-row address">
-                    <Message severity="info">
-                        {{ getCurrentUser.address }}
-                    </Message>
+                <div class="user">
+                    <div class="user-info">
+                        <img src="@/assets/user.png" alt="">
+                        <span>{{ getCurrentUser.username }}</span>
+                    </div>
+
+
+                    <div class="user-row address">
+                        <Message severity="secondary">
+                            {{ getCurrentUser.address }}
+                        </Message>
+                    </div>
+
+
+                    <div class="user-row pkh">
+                        <Message severity="secondary">
+                            {{ getCurrentUser.pubkeyhash }}
+                        </Message>
+                    </div>
                 </div>
 
-
-                <div class="user-row pkh">
-                    <Message severity="info">
-                        {{ getCurrentUser.pubkeyhash }}
-                    </Message>
-                </div>
-            </div>
-        </section>
+                <Button label="Sign Out" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet"
+                    variant="outlined" />
+            </section>
 
     </Drawer>
 </template>
@@ -63,7 +66,7 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 const showSuccess = (content) => {
-    toast.add({ position: 'bottom-right', severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: true });
+    toast.add({ position: 'bottom-left', severity: 'success', summary: 'Success Message', detail: content, life: 1000, closable: true });
 };
 
 const { drawerVisible, showPanel, loginUser, getCurrentUser } = headerAPI();
@@ -185,30 +188,30 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-a);
     font-weight: 600;
     word-break: break-all;
-    margin: 1.5rem 0; 
+    margin: 1.5rem 0;
     position: relative;
 }
 
 .user-row::before {
-      content: '';    
-      font-weight: 600;
-      position: absolute;
-      top: -20px;
-      left: 0;
-      padding-left: 0.5rem;
-      background-color: var(--p-message-info-background);
-      width: 120px;
-      height: 30px;
-      clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
-      border-top-left-radius: 5px;
-      z-index: 1;
+    content: '';
+    font-weight: 600;
+    position: absolute;
+    top: -20px;
+    left: 0;
+    padding-left: 0.5rem;
+    background-color: var(--p-message-info-background);
+    width: 120px;
+    height: 30px;
+    clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+    border-top-left-radius: 5px;
+    z-index: 1;
 }
 
-.address::before{
+.address::before {
     content: 'Address';
 }
 
-.pkh::before{
+.pkh::before {
     content: 'PubKeyHash';
 }
 
