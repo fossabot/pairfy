@@ -119,8 +119,8 @@ const bulletList = computed(() => {
 }
 
 .preview-about {
-    font-weight: 700;
-    font-size: var(--text-size-a);
+    font-weight: 600;
+    font-size: var(--text-size-b);
     margin-top: 2rem;
 }
 
