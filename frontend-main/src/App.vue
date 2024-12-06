@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast closeIcon="pi-user" position="bottom-right"/>
+    <Toast closeIcon="pi-user"/>
     <HeaderComp />
     <RouterView />
   </div>

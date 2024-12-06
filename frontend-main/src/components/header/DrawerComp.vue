@@ -25,7 +25,7 @@
             <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
-            <Message severity="info" icon="pi pi-info-circle">
+            <Message severity="warn" icon="pi pi-info-circle">
                 Make sure you trade with the correct wallet account.
             </Message>
 
@@ -36,22 +36,21 @@
                 </div>
 
 
-                <div class="user-row">
+                <div class="user-row address">
                     <Message severity="info">
                         {{ getCurrentUser.address }}
                     </Message>
                 </div>
 
 
-                <div class="user-row">
-                    <Message severity="secondary">
+                <div class="user-row pkh">
+                    <Message severity="info">
                         {{ getCurrentUser.pubkeyhash }}
                     </Message>
                 </div>
             </div>
         </section>
-        <div @click="createTransaction">tx</div>
-        {{ enabledWallet }}
+
     </Drawer>
 </template>
 
@@ -64,12 +63,12 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 const showSuccess = (content) => {
-    toast.add({ position: 'bottom-right', severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: false });
+    toast.add({ position: 'bottom-right', severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: true });
 };
 
 const { drawerVisible, showPanel, loginUser, getCurrentUser } = headerAPI();
 
-const drawerVisibleTemp = ref(true);
+const drawerVisibleTemp = ref(false);
 
 const watchDrawerA = watch(drawerVisible, (e) => drawerVisibleTemp.value = e);
 
@@ -186,7 +185,31 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-a);
     font-weight: 600;
     word-break: break-all;
-    margin: 1rem 0;
+    margin: 1.5rem 0; 
+    position: relative;
+}
+
+.user-row::before {
+      content: '';    
+      font-weight: 600;
+      position: absolute;
+      top: -20px;
+      left: 0;
+      padding-left: 0.5rem;
+      background-color: var(--p-message-info-background);
+      width: 120px;
+      height: 30px;
+      clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
+      border-top-left-radius: 5px;
+      z-index: 1;
+}
+
+.address::before{
+    content: 'Address';
+}
+
+.pkh::before{
+    content: 'PubKeyHash';
 }
 
 .user-info {
