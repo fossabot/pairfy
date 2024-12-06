@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast closeIcon="pi-user" />
+    <Toast closeIcon="pi-user" position="bottom-right"/>
     <HeaderComp />
     <RouterView />
   </div>
@@ -31,9 +31,9 @@ provide('utils', {
   applyDiscount
 });
 
-const { currentSeller, currentUser } = headerAPI();
+const { currentUser } = headerAPI();
 
-const { startWalletService, stopWalletService } = walletClient();
+const { startWalletService } = walletClient();
 
 currentUser()
       .then(() => console.info("USER_LOGGED"))

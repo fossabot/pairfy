@@ -33,7 +33,7 @@
 }
 
 .search-button {
-    width: 36px;
+    padding: 0 0.75rem;
     height: 36px;
     border: none;
     background: var(--primary-c);

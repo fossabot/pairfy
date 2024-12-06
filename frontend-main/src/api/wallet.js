@@ -1,5 +1,5 @@
-import { Wallet } from '@cardano-foundation/cardano-connect-with-wallet-core'
 import * as CardanoWasm from '@emurgo/cardano-serialization-lib-browser'
+import { Wallet } from '@cardano-foundation/cardano-connect-with-wallet-core'
 import { Lucid } from 'lucid-cardano'
 import { Buffer } from 'buffer'
 

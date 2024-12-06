@@ -3,7 +3,7 @@
         :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
 
         <section v-if="!getCurrentUser">
-            <Message severity="info" icon="pi pi-info-circle">
+            <Message severity="warn" icon="pi pi-info-circle">
                 Select the wallet to make payments and log in as a user.
             </Message>
 
@@ -22,27 +22,36 @@
                 </div>
             </div>
 
-            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" />
+            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
-            {{ getCurrentUser }}
-            <div class="user">
-                <Message severity="info" icon="pi pi-info-circle">
-                    Make sure you trade with the correct wallet account.
-                </Message>
+            <Message severity="info" icon="pi pi-info-circle">
+                Make sure you trade with the correct wallet account.
+            </Message>
 
-                <div class="user-name">
-                    {{ getCurrentUser.username }}
+            <div class="user">
+                <div class="user-info">
+                    <img src="@/assets/user.png" alt="">
+                    <span>{{ getCurrentUser.username }}</span>
                 </div>
-                <div class="user-name">
-                    {{ getCurrentUser.pubkeyhash.slice(0, 25) }}...
+
+
+                <div class="user-row">
+                    <Message severity="info">
+                        {{ getCurrentUser.address }}
+                    </Message>
                 </div>
-                <div class="user-name">
-                    {{ getCurrentUser.address.slice(0, 25) }}...
+
+
+                <div class="user-row">
+                    <Message severity="secondary">
+                        {{ getCurrentUser.pubkeyhash }}
+                    </Message>
                 </div>
             </div>
         </section>
         <div @click="createTransaction">tx</div>
+        {{ enabledWallet }}
     </Drawer>
 </template>
 
@@ -68,7 +77,7 @@ const watchDrawerB = watch(drawerVisibleTemp, (e) => showPanel(e));
 
 //////////////////////////////////////////////
 
-const enabledWallet = ref("None");
+const enabledWallet = ref(null);
 
 const updateEnabledWallet = () =>
     enabledWallet.value = localStorage.getItem("enabled-wallet");
@@ -167,10 +176,33 @@ onBeforeUnmount(() => {
 .user {
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--border-a);
+    margin-top: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
 }
 
-.user-name {
+.user-row {
     font-size: var(--text-size-a);
     font-weight: 600;
+    word-break: break-all;
+    margin: 1rem 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.user-info img {
+    border-radius: 50%;
+    width: 2rem;
+}
+
+.user-info span {
+    margin-left: 1rem;
+    font-weight: 600;
+    font-size: var(--text-size-a);
 }
 </style>
