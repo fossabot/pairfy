@@ -210,7 +210,7 @@ onGetProductError(error => {
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding-right: 1rem;
+    padding-right: 1.5rem;
 }
 
 .card-right {
