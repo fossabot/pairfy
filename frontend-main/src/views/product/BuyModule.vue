@@ -6,7 +6,13 @@
 
             </template>
 
-            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units of...</div>
+            <div class="dialog-msg">
+                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
+                    The seller has 1 hour to accept the purchase otherwise you can get your money back.
+                </Message>
+            </div>
+
+            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -
@@ -14,11 +20,10 @@
                 - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
             </div>
 
-            <div class="dialog-msg">
-                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The time limit for sending the transaction is 3 minutes. The seller has 15 minutes to accept the
-                    purchase. Otherwise you can get your money back.
-                </Message>
+
+
+            <div class="dialog-total">
+                Total: {{ computedTotalPrice }} ADA
             </div>
 
             <template #footer>
@@ -65,12 +70,34 @@
 </template>
 
 <script setup>
+import headerAPI from '@/components/header/api';
 import productAPI from '@/views/product/api/index';
-import { ref } from "vue";
+import { ref, computed, inject } from "vue";
+
+const { applyDiscount, convertUSDToADA } = inject('utils');
+
+const { getADAprice } = headerAPI();
 
 const { getProductData } = productAPI();
 
 const selectedQuantity = ref({ name: '1', code: 1 });
+
+const computedTotalPrice = computed(() => {
+    let product = getProductData.value;
+
+    if (product) {
+        let discounted = applyDiscount(product.discount,
+            product.price,
+            product.discount_value
+        );
+
+        let price = convertUSDToADA(discounted, getADAprice.value);
+
+        return price * selectedQuantity.value.code
+    }
+
+    return 0;
+})
 
 const quantityOptions = ref([
     { name: '1', code: 1 },
@@ -118,7 +145,7 @@ const openBuyDialog = () => {
 .buy-available {
     font-size: var(--text-size-a);
     font-weight: 400;
-    margin-top: 1rem;
+    margin-top: 2rem;
     color: var(--text-b);
 }
 
@@ -161,12 +188,16 @@ const openBuyDialog = () => {
     margin-top: 1rem;
 }
 
-.dialog-msg {
-    margin-top: 1rem;
-}
+.dialog-msg {}
 
 .dialog-sub {
     font-weight: 500;
+    margin-top: 1rem;
+}
 
+.dialog-total {
+    margin-top: 1rem;
+    font-weight: 600;
+    font-size: var(--text-size-c);
 }
 </style>

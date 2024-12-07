@@ -49,16 +49,8 @@ import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { ref, watch } from "vue";
-import { useToast } from "primevue/usetoast";
-
 
 const { setProductData, getProductData } = productAPI();
-
-const toast = useToast();
-
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 3000, closable: false });
-};
 
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000, closable: false });
