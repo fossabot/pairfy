@@ -1,3 +1,4 @@
+import { redisClient } from "../db/redis.js";
 import { database } from "../db/client.js";
 
 const getProduct = async (_: any, args: any, context: any) => {
@@ -31,10 +32,30 @@ const getProduct = async (_: any, args: any, context: any) => {
   }
 };
 
-const products = {
-  Query: {
-    getProduct
-  }
+const getAssetPrice = async () => {
+  try {
+    const getPrice = await redisClient.client.get("price:ADAUSDT");
+
+    if (!getPrice) {
+      throw new Error("NO_PRICE");
+    }
+
+    return parseFloat(getPrice);
+  } catch (err: any) {
+    throw new Error(err.message);
+  } 
 };
 
-export { products };
+const products = {
+  Query: {
+    getProduct,
+  },
+};
+
+const assets = {
+  Query: {
+    getAssetPrice,
+  },
+};
+
+export { products, assets };

@@ -37,6 +37,7 @@ input GetProductInput {
 
 type Query {
   getProduct(getProductInput: GetProductInput!): Product!
+  getAssetPrice: Float!
 }
 
 #/////////////////////////////////////////////////

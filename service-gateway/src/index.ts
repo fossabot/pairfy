@@ -88,6 +88,11 @@ const main = async () => {
       throw new Error("REDIS_HOST error");
     }
 
+    if (!process.env.PROJECT_ID) {
+      throw new Error("PROJECT_ID error");
+    }
+    
+
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,

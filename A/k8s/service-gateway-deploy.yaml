@@ -56,7 +56,12 @@ spec:
             - name: DATABASE_USER
               value: marketplace 
             - name: REDIS_HOST
-              value: redis://service-state-redis:6379                                        
+              value: redis://service-state-redis:6379  
+            - name: PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: blockfrost-key
+                  key: key                                                      
             - name: CORS_DOMAINS
               value: "http://localhost:5173,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
           resources:
