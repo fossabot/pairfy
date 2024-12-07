@@ -49,7 +49,7 @@
             </div>
 
             <div class="buy-available">
-                Available (15/20)
+                Available (15 of 20)
             </div>
 
             <div class="buy-control">
