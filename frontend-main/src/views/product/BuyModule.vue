@@ -6,12 +6,6 @@
 
             </template>
 
-            <div class="dialog-msg">
-                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The seller has 1 hour to accept the purchase otherwise you can get your money back.
-                </Message>
-            </div>
-
             <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
 
             <div class="dialog-name">
@@ -25,6 +19,14 @@
             <div class="dialog-total">
                 Total: {{ computedTotalPrice }} ADA
             </div>
+
+
+            <div class="dialog-msg">
+                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
+                    The seller has 1 hour to respond otherwise your money will be refunded.
+                </Message>
+            </div>
+
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
@@ -188,11 +190,12 @@ const openBuyDialog = () => {
     margin-top: 1rem;
 }
 
-.dialog-msg {}
+.dialog-msg {
+    margin-top: 1rem;
+}
 
 .dialog-sub {
     font-weight: 500;
-    margin-top: 1rem;
 }
 
 .dialog-total {
