@@ -52,3 +52,23 @@ export function applyDiscount(active, originalPrice, discountPercent) {
 
   return parseInt(discountedPrice)
 }
+
+ /**
+* Converts USD to Lovelace.
+* @param {number} usdAmount - The amount in USD to convert.
+* @param {number} adaPrice - The price of 1 ADA in USD.
+* @returns {number} The converted Lovelace amount as a number.
+*/
+export function convertUSDToADA(usdAmount, adaPrice){
+ if (usdAmount < 0) {
+   throw new Error("USD amount cannot be negative.");
+ }
+
+ if (adaPrice <= 0) {
+   throw new Error("ADA price must be greater than 0.");
+ }
+
+ const amountInADA = usdAmount / adaPrice;
+
+ return Math.round(amountInADA);
+}

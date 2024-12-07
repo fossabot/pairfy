@@ -13,7 +13,7 @@
             </div>
 
             <div class="preview-model">
-                <span>Model: {{ getProductData.model }} </span> 
+                <span>Model: {{ getProductData.model }} </span>
             </div>
 
             <Divider />
@@ -21,18 +21,23 @@
             <div class="preview-price flex">
                 <div>$</div>
                 <span>
-                    {{ formatCurrency(applyDiscount(getProductData.discount, getProductData.price,
-                        getProductData.discount_value)) }}
+                    {{ formatCurrency(
+                        applyDiscount(getProductData.discount,
+                            getProductData.price,
+                            getProductData.discount_value)
+                    ) }}
                 </span>
             </div>
 
             <div class="preview-discount" v-if="getProductData.discount">
-                <Tag :value="`- ${getProductData.discount_value}%`" style="background: var(--red-a);"/>
+                <Tag :value="`- ${getProductData.discount_value}%`" style="background: var(--red-a);" />
 
                 <Tag :value="`$${getProductData.price}`" severity="secondary"
                     style="text-decoration: line-through; margin: 0 1rem;" />
 
-                <Tag :value="`3.032 ₳`" severity="secondary" />
+                <Tag :value="`${convertUSDToADA(applyDiscount(getProductData.discount,
+                    getProductData.price,
+                    getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
             </div>
 
 
@@ -53,10 +58,13 @@
 </template>
 
 <script setup>
+import headerAPI from '@/components/header/api';
 import productAPI from '@/views/product/api/index';
-import { inject, computed, ref } from 'vue';
+import { inject, computed } from 'vue';
 
-const { formatCurrency, applyDiscount } = inject('utils')
+const { formatCurrency, applyDiscount, convertUSDToADA } = inject('utils');
+
+const { getADAprice } = headerAPI();
 
 const { getProductData } = productAPI();
 
@@ -136,7 +144,7 @@ const bulletList = computed(() => {
 }
 
 .preview-variants {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .preview-variants label {
