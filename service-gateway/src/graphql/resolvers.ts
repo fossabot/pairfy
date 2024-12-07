@@ -1,7 +1,9 @@
-import { getProductId, logger } from "../utils/index.js";
 import { database } from "../db/client.js";
+import { getContractCollateral, getContractPrice } from "../lib/index.js";
+import { UserToken } from "../middleware/agent.js";
+import { pendingTransactionBuilder } from "../contracts/builders/pending.js";
 
-const getOrders = async (_:any, args: any, context: any) => {
+const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
 
   console.log(params);
@@ -31,7 +33,7 @@ const getOrders = async (_:any, args: any, context: any) => {
   }
 };
 
-const getBooks = async (_:any, args: any, context: any) => {
+const getBooks = async (_: any, args: any, context: any) => {
   const params = args.getBooksInput;
 
   const SELLER = context.sellerData;
@@ -118,11 +120,11 @@ const getBooks = async (_:any, args: any, context: any) => {
 
 const products = {
   Query: {
-    getOrders
+    getOrders,
   },
 };
 
-const updateBook = async (_:any, args: any, context: any) => {
+const updateBook = async (_: any, args: any, context: any) => {
   const params = args.updateBookInput;
 
   console.log(params);
@@ -184,4 +186,152 @@ const books = {
   },
 };
 
-export { products, books };
+////////////////////////////////////////////////////////////////
+
+const createOrder = async (_: any, args: any, context: any) => {
+  const params = args.createOrderInput;
+
+  console.log(params);
+
+  console.log(context);
+
+  const productUnits = params.product_units;
+
+  if (productUnits <= 0) {
+    throw new Error("UNITS_ERROR");
+  }
+
+  const USER = context.userData as UserToken;
+
+  let connection = null;
+
+  try {
+    connection = await database.client.getConnection();
+
+    const [row] = await connection.execute(
+      `SELECT
+           p.id AS product_id,
+           p.sku AS product_sku,
+           p.price AS product_price,
+           p.collateral AS product_collateral,
+           p.discount AS product_discount,
+           p.discount AS product_discount_value,
+           s.id AS seller_id,
+           s.pubkeyhash AS seller_pubkeyhash
+       FROM
+           products p
+       INNER JOIN
+           sellers s
+       ON
+           p.seller_id = s.id            
+       WHERE
+           p.id = ?`,
+      [params.product_id]
+    );
+
+    if (!row.length) {
+      throw new Error("NO_PRODUCT");
+    }
+    const RESULT = row[0];
+
+    await connection.beginTransaction();
+
+    const contractPrice: number = await getContractPrice(
+      RESULT.product_discount,
+      RESULT.product_discount_value,
+      RESULT.product_price,
+      productUnits
+    );
+
+    const contractCollateral: number = await getContractCollateral(
+      RESULT.product_collateral,
+      productUnits
+    );
+
+    const now = Date.now();
+
+    const VALID_UNTIL = 3; //tx valid until
+
+    const WATCH_WINDOW = 15; //Observation window limit for the detection of the first transaction
+
+    const PENDING_UNTIL = 30; // 15minutes for the seller to accept;
+
+    const detectUntil = (VALID_UNTIL + WATCH_WINDOW) * 60 * 1000;
+
+    const pendingUntil =
+      (VALID_UNTIL + WATCH_WINDOW + PENDING_UNTIL) * 60 * 1000;
+
+    //////////////////////////////////////////////
+
+    const BUILDER = await pendingTransactionBuilder(
+      USER.address,
+      USER.pubkeyhash,
+      RESULT.seller_pubkeyhash,
+      BigInt(contractPrice),
+      BigInt(contractCollateral)
+    );
+
+    //////////////////////////////////////////////
+
+    const orderData = {
+      id: BUILDER.threadTokenPolicyId,
+      asset: BUILDER.assetName,
+      seller_id: RESULT.seller_id,
+      buyer_pubkeyhash: USER.pubkeyhash,
+      seller_pubkeyhash: RESULT.seller_pubkeyhash,
+      contract_address: BUILDER.stateMachineAddress,
+      contract_price: contractPrice,
+      contract_collateral: contractCollateral,
+      contract_units: productUnits, // add to metadata contract
+      product_id: RESULT.product_id, // add to metadata contract
+      product_sku: RESULT.product_sku, // add to metadata contract
+      product_price: RESULT.product_price, // add to metadata contract
+      product_collateral: RESULT.product_collateral, // add to metadata contract
+      product_discount: RESULT.product_discount, // add to metadata contract
+      product_discount_value: RESULT.product_discount_value, // add to metadata contract
+      detect_until: now + detectUntil,
+      pending_until: now + pendingUntil,
+    };
+
+    const columns = Object.keys(orderData);
+
+    const values = Object.values(orderData);
+
+    const schemeData = `
+      INSERT INTO orders (${columns.join(", ")})
+      VALUES (${columns.map(() => "?").join(", ")})
+    `;
+
+    await connection.execute(schemeData, values);
+
+    await connection.commit();
+
+    const scheme = {
+      success: true,
+      payload: {
+        cbor: BUILDER.cbor,
+      },
+    };
+
+    return scheme;
+
+  } catch (err: any) {
+    if (connection) {
+      await connection.rollback();
+    }
+
+    throw new Error(err.message);
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+};
+
+const orders = {
+  Mutation: {
+    createOrder,
+  },
+};
+
+export { products, books, orders };

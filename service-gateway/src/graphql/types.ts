@@ -81,8 +81,22 @@ input UpdateBookInput {
   disable_purchases: Boolean!
 } 
 
+type CreateOrderPayload {
+  cbor: String!
+}
+
+type CreateOrderResponse {
+  success: Boolean!
+  payload: CreateOrderPayload!
+}
+
+input CreateOrderInput {
+  product_units: Int!
+} 
+
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
+  createOrder(createOrderInput: CreateOrderInput!): CreateOrderResponse!
 }
 
 `;

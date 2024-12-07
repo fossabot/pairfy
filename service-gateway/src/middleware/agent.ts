@@ -71,4 +71,4 @@ const agentMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { agentMiddleware, SellerToken };
+export { agentMiddleware, SellerToken, UserToken };

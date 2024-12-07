@@ -19,16 +19,17 @@ const ACCEPT_RANGE = 15; // env minutes
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
   externalWalletAddress: string,
+  buyerPubKeyHash: string,
   sellerPubKeyHash: string,
-  productPrice: bigint,
-  productCollateral: bigint
+  contractPrice: bigint,
+  contractCollateral: bigint,
 ) {
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
   ////////////////////////////////
-  const minLovelace = productPrice;  //fee 
+  const minLovelace = contractPrice;  //fee 
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -73,8 +74,8 @@ async function pendingTransactionBuilder(
     state: BigInt(0),
     buyer: paymentCredentialOf(externalWalletAddress).hash,
     seller: sellerPubKeyHash,
-    price: productPrice,
-    collateral: productCollateral,
+    price: contractPrice,
+    collateral: contractCollateral,
     accept_range: acceptRange,
   };
 
@@ -97,12 +98,14 @@ async function pendingTransactionBuilder(
 
   ////////////////////////////////////////////
 
+  const assetName = threadTokenPolicyId + tokenName;
+
   const transaction = await lucid
     .newTx()
     .collectFrom([utxo])
     .mintAssets(
       {
-        [threadTokenPolicyId + tokenName]: 1n,
+        [assetName]: 1n,
       },
       mintRedeemer
     )
@@ -113,8 +116,8 @@ async function pendingTransactionBuilder(
         value: stateMachineDatum,
       },
       {
-        [threadTokenPolicyId + tokenName]: 1n,
-        lovelace: productPrice,
+        [assetName]: 1n,
+        lovelace: contractPrice,
       }
     )
     .attach.MintingPolicy(threadTokenScript)
@@ -136,28 +139,32 @@ async function pendingTransactionBuilder(
 
   return {
     threadTokenPolicyId,
+    assetName,
     stateMachineAddress,
     cbor,
   };
 }
+/*
 
 const externalWalletAddress =
   "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
-const productPrice = 50n * 1_000_000n;
+const contractPrice = 50n * 1_000_000n;
 
-const productCollateral = 25n * 1_000_000n;
+const contractCollateral = 25n * 1_000_000n;
 
 const sellerPubKeyHash =
   "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
 
+  
 pendingTransactionBuilder(
   externalWalletAddress,
   sellerPubKeyHash,
-  productPrice,
-  productCollateral,
+  contractPrice,
+  contractCollateral,
 );
 
+*/
 export { pendingTransactionBuilder };
 
 //two signature, collateral, validAfter

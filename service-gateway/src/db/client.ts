@@ -2,6 +2,14 @@ import { createPool, PoolOptions, Pool } from "mysql2/promise";
 
 class DatabaseWrap {
     private _client?: any;
+    
+    get ready() {
+        if (!this._client) {
+            return false
+        } else {
+            return true
+        }
+    }
 
     get client() {
         if (!this._client) {

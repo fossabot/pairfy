@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
+    "@lucid-evolution/lucid": "^0.4.12",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
@@ -23,6 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
     "nanoid": "^5.0.8",
+    "redis": "^4.7.0",
     "tslog": "^4.9.3"
   }
 }

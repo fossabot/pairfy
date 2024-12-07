@@ -5,12 +5,13 @@ import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { catcher, logger } from "./utils/index.js";
+import { catcher, errorEvents, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { typeDefs } from "./graphql/types.js";
-import { books } from "./graphql/resolvers.js";
+import { books, orders } from "./graphql/resolvers.js";
 import { agentMiddleware } from "./middleware/agent.js";
 import { requireAuth } from "./middleware/required.js";
+import { redisClient } from "./db/redis.js";
 
 const app = express();
 
@@ -22,6 +23,7 @@ const resolvers = {
   },
   Mutation: {
     ...books.Mutation,
+    ...orders.Mutation,
   },
 };
 
@@ -82,6 +84,10 @@ const main = async () => {
       throw new Error("DATABASE_NAME error");
     }
 
+    if (!process.env.REDIS_HOST) {
+      throw new Error("REDIS_HOST error");
+    }
+
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,
@@ -99,20 +105,29 @@ const main = async () => {
       optionsSuccessStatus: 204,
     };
 
-    const errorEvents: string[] = [
-      "exit",
-      "SIGINT",
-      "SIGTERM",
-      "SIGQUIT",
-      "uncaughtException",
-      "unhandledRejection",
-      "SIGHUP",
-      "SIGCONT",
-    ];
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
 
-    app.options("*", cors(corsOptions));
+    /////////////////////////////////////////////////////////////////////
+
+    await redisClient
+      .connect({
+        url: process.env.REDIS_HOST,
+        connectTimeout: 100000,
+        keepAlive: 100000,
+      })
+      .then(() => console.log("redisClient connected"))
+      .catch((err: any) => catcher(err));
+
+    const redisCheck = setInterval(async () => {
+      try {
+        await redisClient.client.ping();
+        console.log("Redis Online");
+      } catch (err) {
+        console.error("REDIS_CONNECTION", err);
+        clearInterval(redisCheck);
+      }
+    }, 10_000);
 
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -121,6 +136,10 @@ const main = async () => {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
     });
+
+    /////////////////////////////////////////////////////////////////////
+
+    app.options("*", cors(corsOptions));
 
     app.use(cookieSession(sessionOptions));
 
