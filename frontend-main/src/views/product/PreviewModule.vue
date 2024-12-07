@@ -27,7 +27,7 @@
             </div>
 
             <div class="preview-discount" v-if="getProductData.discount">
-                <Tag :value="`- ${getProductData.discount_value}%`" severity="contrast" />
+                <Tag :value="`- ${getProductData.discount_value}%`" style="background: var(--red-a);"/>
 
                 <Tag :value="`$${getProductData.price}`" severity="secondary"
                     style="text-decoration: line-through; margin: 0 1rem;" />

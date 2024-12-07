@@ -22,14 +22,14 @@ async function pendingTransactionBuilder(
   buyerPubKeyHash: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
-  contractCollateral: bigint,
+  contractCollateral: bigint
 ) {
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
   ////////////////////////////////
-  const minLovelace = contractPrice;  //fee 
+  const minLovelace = contractPrice; //fee
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -144,27 +144,33 @@ async function pendingTransactionBuilder(
     cbor,
   };
 }
-/*
 
-const externalWalletAddress =
-  "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
+function main() {
+  const externalWalletAddress =
+    "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
-const contractPrice = 50n * 1_000_000n;
+  const contractPrice = 50n * 1_000_000n;
 
-const contractCollateral = 25n * 1_000_000n;
+  const contractCollateral = 25n * 1_000_000n;
 
-const sellerPubKeyHash =
-  "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
+  const buyerPubKeyHash =
+    "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
 
-  
-pendingTransactionBuilder(
-  externalWalletAddress,
-  sellerPubKeyHash,
-  contractPrice,
-  contractCollateral,
-);
+  const sellerPubKeyHash =
+    "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
 
-*/
+  pendingTransactionBuilder(
+    externalWalletAddress,
+    buyerPubKeyHash,
+    sellerPubKeyHash,
+    contractPrice,
+    contractCollateral
+  );
+}
+
+
+//main();
+
 export { pendingTransactionBuilder };
 
 //two signature, collateral, validAfter

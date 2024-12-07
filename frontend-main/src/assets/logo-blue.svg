@@ -27,13 +27,13 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="7.1257476"
-     inkscape:cx="54.029419"
+     inkscape:cx="53.748746"
      inkscape:cy="31.294962"
-     inkscape:window-width="1920"
-     inkscape:window-height="1048"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1488"
+     inkscape:window-height="778"
+     inkscape:window-x="312"
+     inkscape:window-y="74"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      units="px"
      width="250px" />
@@ -94,17 +94,5 @@
          inkscape:export-xdpi="96"
          inkscape:export-ydpi="96" />
     </g>
-    <path
-       style="fill:#fabb05;fill-opacity:1;stroke-width:0.0617566"
-       d="M 25.542737,3.5515608 24.733334,4.1183449 A 0.24700211,0.24700211 0 0 1 24.449997,3.7136718 l 0.809413,-0.566784 a 0.24700075,0.24700075 0 1 1 0.283327,0.404673 z"
-       id="path1420" />
-    <path
-       style="fill:#fabb05;fill-opacity:1;stroke-width:0.0617566"
-       d="m 23.176032,2.561047 0.566785,-0.8094073 a 0.24700082,0.24700082 0 1 1 0.404671,0.2833295 L 23.580706,2.8443796 A 0.24700122,0.24700122 0 0 1 23.176032,2.561047 Z"
-       id="path1418" />
-    <path
-       style="fill:#fabb05;fill-opacity:1;stroke-width:0.0617566"
-       d="M 21.584717,1.9136285 21.840488,0.95923785 A 0.24699988,0.24699988 0 1 1 22.317653,1.087093 L 22.061885,2.0414834 A 0.24700014,0.24700014 0 1 1 21.584717,1.9136285 Z"
-       id="path1416" />
   </g>
 </svg>

@@ -1,14 +1,13 @@
 import * as dotenv from 'dotenv';
-import blueprint from "../plutus.json" assert { type: "json" };
 import { Blockfrost, Lucid } from "@lucid-evolution/lucid";
+import { blueprint } from './plutus.js';
 
 dotenv.config();
 
 const provider = new Blockfrost(
   "https://cardano-preprod.blockfrost.io/api/v0",
-  process.env.PROJECT_ID
+ process.env.PROJECT_ID
 );
-
 
 type Validators = {
   threadToken: string;
@@ -17,7 +16,7 @@ type Validators = {
 
 function readValidators(): Validators {
   const threadToken = blueprint.validators.find(
-    (v) => v.title === "marketplace.threadtoken.mint"
+    (v: any) => v.title === "marketplace.threadtoken.mint"
   );
 
   if (!threadToken) {
@@ -25,7 +24,7 @@ function readValidators(): Validators {
   }
 
   const stateMachine = blueprint.validators.find(
-    (v) => v.title === "marketplace.statemachine.spend"
+    (v: any) => v.title === "marketplace.statemachine.spend"
   );
 
   if (!stateMachine) {

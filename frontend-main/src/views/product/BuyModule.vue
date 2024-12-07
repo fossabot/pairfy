@@ -117,6 +117,7 @@ const openBuyDialog = () => {
     font-size: var(--text-size-a);
     font-weight: 400;
     margin-top: 1rem;
+    color: var(--text-b);
 }
 
 .buy-brand {
