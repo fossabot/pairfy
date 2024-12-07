@@ -102,6 +102,10 @@ const setupLucid = async ({ commit }, data) => {
   commit("setupLucid", data);
 };
 
+const setADAprice = async ({ commit }, data) => {
+  commit("setADAprice", data);
+};
+
 export {
   logoutUser,
   currentUser,
@@ -113,4 +117,5 @@ export {
   showPanel,
   logoutSeller,
   loginUser,
+  setADAprice
 };

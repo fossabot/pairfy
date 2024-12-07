@@ -14,4 +14,8 @@ const getLucid = (state) => {
   return state.lucidClient;
 };
 
-export { getCurrentUser, getCurrentSeller, drawerVisible, getLucid };
+const getADAprice = (state) => {
+  return state.ADAprice;
+};
+
+export { getCurrentUser, getCurrentSeller, drawerVisible, getLucid, getADAprice};

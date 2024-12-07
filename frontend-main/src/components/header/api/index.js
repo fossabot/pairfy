@@ -31,6 +31,9 @@ const headerAPI = () => {
   const setupLucid = async (data) =>
     await store.dispatch("header/setupLucid", data);
 
+  const setADAprice = async (data) =>
+    await store.dispatch("header/setADAprice", data);
+
   const startTx = async (data) => await store.dispatch("header/startTx", data);
 
   return {
@@ -44,10 +47,12 @@ const headerAPI = () => {
     startTx,
     setupLucid,
     connectWallet,
+    setADAprice,
     getCurrentSeller: computed(() => store.getters["header/getCurrentSeller"]),
     getCurrentUser: computed(() => store.getters["header/getCurrentUser"]),
     drawerVisible: computed(() => store.getters["header/drawerVisible"]), 
     getLucid: computed(() => store.getters["header/getLucid"]),
+    getADAprice: computed(() => store.getters["header/getADAprice"])
   };
 };
 

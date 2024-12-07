@@ -1,13 +1,19 @@
 <template>
-        <div class="search">
-            <input type="text" class="search-input" placeholder="Search In Cardano">
-            <button class="search-button">
-              <i class="pi pi-search"/>
-            </button>
-        </div>
+    <div class="search" :class="{ focus: isFocus }" :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
+        <input v-model="searchInput" type="text" class="search-input"  placeholder="Search In Cardano"
+            @focus="isFocus = true">
+        <button class="search-button">
+            <i class="pi pi-search" />
+        </button>
+    </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const searchInput = ref("");
+
+const isFocus = ref(false);
 
 </script>
 
@@ -20,16 +26,23 @@
     width: 100%;
     margin: 0 auto;
     border: 1px solid var(--border-a);
+    transition: 0.2s;
+}
+
+.search.focus{
+    background: var(--background-b);
+    border: 1px solid var(--text-a);
 }
 
 .search-input {
     width: 100%;
-    padding: 0.5rem 1rem; 
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
     outline: none;
     font-size: var(--text-size-a);
     font-family: inherit;
+    background: inherit;
 }
 
 .search-button {

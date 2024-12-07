@@ -18,4 +18,8 @@ const connectWallet = (state, data) => {
 const setupLucid = (state, data) => {
   state.lucidClient = data;
 };
-export { currentUser, connectWallet, showPanel, currentSeller, setupLucid };
+
+const setADAprice = (state, data) => {
+  state.ADAprice = data;
+};
+export { currentUser, connectWallet, showPanel, currentSeller, setupLucid, setADAprice };

@@ -1,5 +1,6 @@
 <template>
     <div class="nav">
+        <span>All</span>
         <span>Categories</span>
         <span>Discounts</span>
         <span>Rewards</span>
@@ -22,6 +23,6 @@
 .nav span {
     margin-right: 1rem;
     font-size: var(--text-size-a);
-    color: var(--text-b);
+    cursor: pointer;
 }
 </style>

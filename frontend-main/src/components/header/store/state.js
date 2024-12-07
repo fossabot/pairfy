@@ -4,4 +4,5 @@ export default () => ({
   walletConnected: false,
   walletName: null,
   lucidClient: null,
-});
+  ADAprice: null,
+})

@@ -38,7 +38,7 @@
 
             </div>
             <div class="menu-col right">
-                <div> ADA 1.2 USD</div>
+                <div class="ada-price">₳ {{ getADAprice }} USD</div>
             </div>
         </div>
     </header>
@@ -49,16 +49,38 @@
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
-import NavComp from "@/components/header/NavComp.vue";  
-import { ref } from "vue";
- 
-const { showPanel, getCurrentUser } = headerAPI();
+import NavComp from "@/components/header/NavComp.vue";
+import gql from 'graphql-tag';
+import { useQuery } from '@vue/apollo-composable';
+import { ref, watch } from "vue";
+
+const { showPanel, getCurrentUser, setADAprice, getADAprice } = headerAPI();
 
 const op = ref();
 
 const toggle = (event) => {
     op.value.toggle(event);
 }
+
+const queryOptions = {
+    pollInterval: 60_000,
+    clientId: 'query'
+}
+
+const { result: onGetAssetPriceResult, onError: onGetAssetPriceError } = useQuery(gql`
+      query getUsers {
+        getAssetPrice 
+      }
+`,
+    null,
+    queryOptions
+);
+
+watch(onGetAssetPriceResult, value => setADAprice(value.getAssetPrice));
+
+onGetAssetPriceError(error => {
+    console.log(error)
+})
 
 </script>
 
@@ -80,7 +102,7 @@ header {
 .menu {
     max-width: 1200px;
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 20% 60% 20%;
     width: 100%;
 }
 
@@ -133,5 +155,10 @@ header {
 
 .notifications {
     width: 300px;
+}
+
+.ada-price {
+    font-size: var(--text-size-a);
+    font-weight: 500;
 }
 </style>
