@@ -173,4 +173,4 @@ function main() {
 
 export { pendingTransactionBuilder };
 
-//two signature, collateral, validAfter
+//two signature, collateral, validAfter, paramterice price, collateral, seller, buyer
