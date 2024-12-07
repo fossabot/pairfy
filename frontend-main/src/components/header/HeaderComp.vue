@@ -1,5 +1,6 @@
 <template>
     <header>
+        <DrawerComp />
         <div class="header">
             <div class="header-col left">
                 <img class="logo" src="@/assets/logo-blue.png" alt="">
@@ -27,53 +28,64 @@
                 </div>
             </div>
         </div>
-        <DrawerComp />
+
+
+        <div class="menu">
+            <div class="menu-col left">
+                <NavComp />
+            </div>
+            <div class="menu-col center">
+
+            </div>
+            <div class="menu-col right">
+                <div> ADA 1.2 USD</div>
+            </div>
+        </div>
     </header>
+
 </template>
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
+import NavComp from "@/components/header/NavComp.vue";  
 import { ref } from "vue";
-
+ 
 const { showPanel, getCurrentUser } = headerAPI();
 
 const op = ref();
-const members = ref([
-    { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
-    { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
-    { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
-]);
 
 const toggle = (event) => {
     op.value.toggle(event);
 }
 
-
-
-
 </script>
 
 <style scoped>
 header {
-    height: 64px;
     background: var(--background-a);
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     border-bottom: 1px solid var(--border-a);
 }
 
 .header {
+    padding: 0.5rem
+}
+
+.header,
+.menu {
     max-width: 1200px;
-    width: 80%;
-    height: auto;
     display: grid;
     grid-template-columns: 25% 50% 25%;
     width: 100%;
 }
 
-.header-col {
+.header-col,
+.menu-col {
     text-align: center;
     display: flex;
     align-items: center;
@@ -84,6 +96,20 @@ header {
 }
 
 .header-col.left {
+    justify-content: flex-start;
+}
+
+.menu {
+    padding: 0.5rem;
+}
+
+.menu-col {}
+
+.menu-col.right {
+    justify-content: flex-end;
+}
+
+.menu-col.left {
     justify-content: flex-start;
 }
 
