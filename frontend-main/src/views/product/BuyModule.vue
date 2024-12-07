@@ -6,15 +6,7 @@
 
             </template>
 
-            <div class="dialog-msg">
-                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The time limit for sending the transaction is 3 minutes. The seller has 15 minutes to accept the
-                    purchase. Otherwise you can get your money back.
-                </Message>
-            </div>
-
-
-            <div class="dialog-sub">Are you sure to buy ({{ selectedQuantity.code }}) units of...</div>
+            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units of...</div>
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -
@@ -22,7 +14,12 @@
                 - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
             </div>
 
-
+            <div class="dialog-msg">
+                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
+                    The time limit for sending the transaction is 3 minutes. The seller has 15 minutes to accept the
+                    purchase. Otherwise you can get your money back.
+                </Message>
+            </div>
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
@@ -38,6 +35,9 @@
                 {{ getProductData.brand }}
             </div>
 
+            <div class="buy-sku">
+                <span>SKU: {{ getProductData.sku.split(":")[0] }}</span>
+            </div>
 
             <div class="buy-stock" :class="{ green: 15 > 0, }">
                 {{ getStockLabel(15) }}
@@ -123,9 +123,15 @@ const openBuyDialog = () => {
 }
 
 .buy-brand {
-    font-weight: 600;
+    font-weight: 700;
     font-size: var(--text-size-a);
     text-transform: capitalize;
+}
+
+.buy-sku {
+    color: var(--text-b);
+    margin-top: 1rem;
+    font-size: var(--text-size-a);
 }
 
 .buy-legend {
@@ -155,12 +161,12 @@ const openBuyDialog = () => {
     margin-top: 1rem;
 }
 
-.dialog-msg{
-    
+.dialog-msg {
+    margin-top: 1rem;
 }
 
 .dialog-sub {
     font-weight: 500;
-    margin-top: 1rem;
+
 }
 </style>
