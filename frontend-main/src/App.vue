@@ -9,11 +9,11 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
+import { formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';
 import { provide } from 'vue';
-import { formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { walletClient } from "@/api/wallet";
 
 

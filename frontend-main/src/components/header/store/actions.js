@@ -62,6 +62,8 @@ const logoutSeller = async ({ commit }, params) => {
 
 const logoutUser = async ({ commit }, params) => {
   try {
+    localStorage.removeItem('enabled-wallet');
+
     const response = await axiosAPI.get("/api/user/logout", params);
 
     commit("currentUser", null);

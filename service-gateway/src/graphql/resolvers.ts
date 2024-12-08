@@ -234,6 +234,10 @@ const createOrder = async (_: any, args: any, context: any) => {
     }
     const RESULT = row[0];
 
+    if (!RESULT.seller_pubkeyhash) {
+      throw new Error("NO_SELLER_PKH");
+    }
+
     await connection.beginTransaction();
 
     const contractPrice: number = await getContractPrice(
@@ -314,7 +318,6 @@ const createOrder = async (_: any, args: any, context: any) => {
     };
 
     return scheme;
-
   } catch (err: any) {
     if (connection) {
       await connection.rollback();

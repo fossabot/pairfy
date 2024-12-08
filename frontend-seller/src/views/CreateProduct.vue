@@ -668,13 +668,6 @@ const productEditorCounter = computed(() => {
     }
 })
 
-const formatSKU = (value) => {
-    if (value) {
-        return value.split(":")[0]
-    }
-};
-
-
 onBeforeUnmount(() => {
     if (editor.value) {
         editor.value.destroy();

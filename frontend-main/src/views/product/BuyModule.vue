@@ -30,7 +30,7 @@
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
-                <Button label="Buy" outlined severity="secondary" @click="visible = false" autofocus />
+                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus />
             </template>
         </Dialog>
 
@@ -74,13 +74,26 @@
 <script setup>
 import headerAPI from '@/components/header/api';
 import productAPI from '@/views/product/api/index';
+import gql from 'graphql-tag';
 import { ref, computed, inject } from "vue";
+import { useMutation } from '@vue/apollo-composable';
+import { useToast } from "primevue/usetoast";
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
 const { getADAprice } = headerAPI();
 
 const { getProductData } = productAPI();
+
+const toast = useToast();
+
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 
 const selectedQuantity = ref({ name: '1', code: 1 });
 
@@ -126,6 +139,37 @@ const openBuyDialog = () => {
     showBuyDialog.value = true;
 }
 
+const { mutate: sendMessage, loading: sendMessageLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
+mutation($createOrderVariable: CreateOrderInput!){
+    createOrder(createOrderInput: $createOrderVariable){
+        success
+        payload {
+            cbor
+        }
+    }
+}
+`,
+    {
+        clientId: 'gateway'
+    })
+
+onCreateOrderError(error => {
+    showError(error);
+})
+
+onOrderCreated(result => {
+    console.log(result.data.createOrder);
+    showSuccess("The product has been created.");
+})
+
+const onConfirmedBuy = () => {
+    sendMessage({
+        "createOrderVariable": {
+            "product_id": getProductData.value.id,
+            "product_units": selectedQuantity.value.code,
+        }
+    })
+}
 </script>
 
 <style lang="css" scoped>
@@ -147,7 +191,7 @@ const openBuyDialog = () => {
 .buy-available {
     font-size: var(--text-size-a);
     font-weight: 400;
-    margin-top: 2rem;
+    margin-top: 1rem;
     color: var(--text-b);
 }
 

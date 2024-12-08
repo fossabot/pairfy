@@ -91,6 +91,7 @@ type CreateOrderResponse {
 }
 
 input CreateOrderInput {
+  product_id: String!
   product_units: Int!
 } 
 
