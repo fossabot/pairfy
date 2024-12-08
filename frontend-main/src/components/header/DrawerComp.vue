@@ -24,7 +24,7 @@
             <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
-            <Message severity="warn" icon="pi pi-info-circle">
+            <Message severity="success" icon="pi pi-info-circle">
                 Make sure you trade with the correct wallet account.
             </Message>
 
@@ -37,7 +37,7 @@
 
                 <div class="user-row address">
                     <Message severity="info">
-                        {{ getCurrentUser.address.slice(0, 30) }}...
+                        {{ formatWithDots(getCurrentUser.address, 80) }}
                     </Message>
                 </div>
 
@@ -61,8 +61,10 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import { signMessage, balanceTx, walletClient, getBalance } from "@/api/wallet";
-import { ref, watch, onBeforeUnmount } from 'vue';
+import { ref, watch, onBeforeUnmount, inject } from 'vue';
 import { useToast } from "primevue/usetoast";
+
+const { formatWithDots } = inject('utils');
 
 const toast = useToast();
 
