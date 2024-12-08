@@ -140,6 +140,7 @@ async function pendingTransactionBuilder(
     .addSigner(externalWalletAddress)
     .complete({
       changeAddress: externalWalletAddress,
+      setCollateral: 1_000_000n,
       coinSelection: false,
       localUPLCEval: false,
     });
