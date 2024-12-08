@@ -23,7 +23,7 @@
 
             <div class="dialog-msg">
                 <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The transaction is valid within 5 minutes. The seller has 1 hour to respond otherwise your money will be refunded.
+                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will be refunded.
                 </Message>
             </div>
 

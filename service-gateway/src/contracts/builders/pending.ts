@@ -91,14 +91,26 @@ async function pendingTransactionBuilder(
 
   const DatumType = StateMachineDatum as unknown as DatumType;
 
+  /*
+  const getUTXObyunit = await lucid.utxoByUnit("4243c29b2d04e0ce751286f77fb40fd6749efec0ea45c4ac7e791caf746872656164746f6b656e");
+
+  if (getUTXObyunit.datum) {
+    console.log(getUTXObyunit);
+    const datum = Data.from(getUTXObyunit.datum, StateMachineDatum);
+
+    console.log(datum);
+  }
+
+  */
+
   const stateMachineDatum = Data.to(datumValues, DatumType);
 
   const stateMachineAddress = validatorToAddress(NETWORK, stateMachineScript);
 
   ////////////////////////////////////////////
 
-  const assetName = threadTokenPolicyId + tokenName;
-  
+  const assetUnit = threadTokenPolicyId + tokenName;
+
   const now = Date.now();
 
   const validUntil = now + VALID_UNTIL * 60 * 1000;
@@ -108,7 +120,7 @@ async function pendingTransactionBuilder(
     .collectFrom([utxo])
     .mintAssets(
       {
-        [assetName]: 1n,
+        [assetUnit]: 1n,
       },
       mintRedeemer
     )
@@ -119,7 +131,7 @@ async function pendingTransactionBuilder(
         value: stateMachineDatum,
       },
       {
-        [assetName]: 1n,
+        [assetUnit]: 1n,
         lovelace: contractPrice,
       }
     )
@@ -136,6 +148,8 @@ async function pendingTransactionBuilder(
 
   console.log("ThreadToken: ", threadTokenPolicyId);
 
+  console.log("Unit: ", assetUnit);
+
   console.log("stateMachineAddress: ", stateMachineAddress);
 
   console.log("CBOR---------------------------------------");
@@ -144,7 +158,7 @@ async function pendingTransactionBuilder(
 
   return {
     threadTokenPolicyId,
-    assetName,
+    tokenName,
     stateMachineAddress,
     cbor,
   };
