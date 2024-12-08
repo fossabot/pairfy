@@ -1,6 +1,6 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Confirmation" :style="{ width: '25rem' }"
+        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '25rem' }"
             :draggable="false">
             <template #header>
 

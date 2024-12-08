@@ -1,10 +1,9 @@
-import { redisClient } from "../db/redis.js";
-
 async function getContractPrice(
   discount: boolean,
   discountValue: number,
   productPrice: number,
-  productUnits: number
+  productUnits: number,
+  adaPrice: number
 ) {
   try {
     let response = null;
@@ -13,14 +12,6 @@ async function getContractPrice(
       throw new Error("productUnits negative");
     }
 
-    const getPrice = await redisClient.client.get("price:ADAUSDT");
-
-    if (!getPrice) {
-      throw new Error("NO_PRICE");
-    }
-
-    const ADAUSDT = parseFloat(getPrice);
-
     /////////////////////////////////////////////
 
     if (discount) {
@@ -28,11 +19,11 @@ async function getContractPrice(
 
       const totalPrice = newPrice * productUnits;
 
-      response = convertUSDToLovelace(totalPrice, ADAUSDT);
+      response = convertUSDToLovelace(totalPrice, adaPrice);
     } else {
       const totalPrice = productPrice * productUnits;
 
-      response = convertUSDToLovelace(totalPrice, ADAUSDT);
+      response = convertUSDToLovelace(totalPrice, adaPrice);
     }
 
     return response;
@@ -84,7 +75,8 @@ function convertUSDToLovelace(usdAmount: number, adaPrice: number): number {
 
 async function getContractCollateral(
   productCollateral: number,
-  productUnits: number
+  productUnits: number,
+  adaPrice: number
 ) {
   try {
     if (productCollateral < 0) {
@@ -95,17 +87,9 @@ async function getContractCollateral(
       throw new Error("productUnits negative");
     }
 
-    const getPrice = await redisClient.client.get("price:ADAUSDT");
-
-    if (!getPrice) {
-      throw new Error("NO_PRICE");
-    }
-
-    const ADAUSDT = parseFloat(getPrice);
-
     const total = productCollateral * productUnits;
 
-    return convertUSDToLovelace(total, ADAUSDT);
+    return convertUSDToLovelace(total, adaPrice);
   } catch (err) {
     throw err;
   }

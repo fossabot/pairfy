@@ -2,6 +2,7 @@ import { database } from "../db/client.js";
 import { getContractCollateral, getContractPrice } from "../lib/index.js";
 import { UserToken } from "../middleware/agent.js";
 import { pendingTransactionBuilder } from "../contracts/builders/pending.js";
+import { redisClient } from "../db/redis.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
@@ -240,16 +241,30 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     await connection.beginTransaction();
 
+    ///////////////////////////////////////////////////
+
+    const getADAPrice = await redisClient.client.get("price:ADAUSDT");
+
+    if (!getADAPrice) {
+      throw new Error("ADA_PRICE");
+    }
+
+    const adaPrice = parseFloat(getADAPrice);
+
+    ///////////////////////////////////////////////////
+
     const contractPrice: number = await getContractPrice(
       RESULT.product_discount,
       RESULT.product_discount_value,
       RESULT.product_price,
-      productUnits
+      productUnits,
+      adaPrice
     );
 
     const contractCollateral: number = await getContractCollateral(
       RESULT.product_collateral,
-      productUnits
+      productUnits,
+      adaPrice
     );
 
     const now = Date.now();
@@ -279,10 +294,10 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     const orderData = {
       id: BUILDER.threadTokenPolicyId,
-      asset: BUILDER.assetName,
       seller_id: RESULT.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
       seller_pubkeyhash: RESULT.seller_pubkeyhash,
+      ada_price: adaPrice,  // add to metadata contract
       contract_address: BUILDER.stateMachineAddress,
       contract_price: contractPrice,
       contract_collateral: contractCollateral,
@@ -296,6 +311,8 @@ const createOrder = async (_: any, args: any, context: any) => {
       detect_until: now + detectUntil,
       pending_until: now + pendingUntil,
     };
+
+    console.log(orderData);
 
     const columns = Object.keys(orderData);
 

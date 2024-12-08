@@ -1,12 +1,12 @@
 create table if not exists orders(
   id varchar(100) not null,
-  asset varchar(100) not null,
   finished boolean default false,
   scanning boolean default false,
   status_log varchar(100) default "created",
   seller_id varchar(20) not null,
   buyer_pubkeyhash varchar(100) not null,
   seller_pubkeyhash varchar(100) not null,  
+  ada_price decimal(10, 2) not null,
   contract_address varchar(100) not null,
   contract_state int default 0,
   contract_price int unsigned not null,
