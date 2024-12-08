@@ -284,7 +284,6 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     const BUILDER = await pendingTransactionBuilder(
       USER.address,
-      USER.pubkeyhash,
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
       BigInt(contractCollateral)

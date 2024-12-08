@@ -16,6 +16,7 @@ const NETWORK = "Preprod";
 
 const PENDING_UNTIL = 15; // env minutes
 
+const VALID_UNTIL = 5;
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
   externalWalletAddress: string,
@@ -73,7 +74,7 @@ async function pendingTransactionBuilder(
   };
 
   //////////////////////////////////
- 
+
   const pendingUntil = BigInt(Date.now() + PENDING_UNTIL * 60 * 1000);
   ////////////////////////////////////////////
   const datumValues = {
@@ -97,6 +98,10 @@ async function pendingTransactionBuilder(
   ////////////////////////////////////////////
 
   const assetName = threadTokenPolicyId + tokenName;
+  
+  const now = Date.now();
+
+  const validUntil = now + VALID_UNTIL * 60 * 1000;
 
   const transaction = await lucid
     .newTx()
@@ -119,6 +124,8 @@ async function pendingTransactionBuilder(
       }
     )
     .attach.MintingPolicy(threadTokenScript)
+    .validTo(validUntil)
+    .addSigner(externalWalletAddress)
     .complete({
       changeAddress: externalWalletAddress,
       coinSelection: false,
@@ -166,4 +173,4 @@ main();
 
 export { pendingTransactionBuilder };
 
-//two signature, collateral, validAfter, paramterice price, collateral, seller, buyer
+//two signature, collateral, validto, paramterice price, collateral, seller, buyer
