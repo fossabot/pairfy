@@ -202,7 +202,6 @@ const onConfirmedBuy = () => {
 }
 
 .buy-sku {
-    color: var(--text-b);
     margin-top: 1rem;
     font-size: var(--text-size-a);
 }
