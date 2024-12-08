@@ -1,214 +1,247 @@
-export const blueprint = {
-    "preamble": {
-      "title": "aiken-lang/contracts",
-      "description": "Aiken contracts for project 'aiken-lang/contracts'",
-      "version": "0.0.0",
-      "plutusVersion": "v3",
-      "compiler": {
-        "name": "Aiken",
-        "version": "v1.1.7+e2fb28b"
-      },
-      "license": "Apache-2.0"
+export const blueprint = 
+{
+  "preamble": {
+    "title": "aiken-lang/contracts",
+    "description": "Aiken contracts for project 'aiken-lang/contracts'",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.7+e2fb28b"
     },
-    "validators": [
-      {
-        "title": "marketplace.statemachine.spend",
-        "datum": {
-          "title": "datum_opt",
-          "schema": {
-            "$ref": "#/definitions/marketplace~1StateMachineDatum"
-          }
-        },
-        "redeemer": {
-          "title": "redeemer",
-          "schema": {
-            "$ref": "#/definitions/marketplace~1StateMachineInput"
-          }
-        },
-        "parameters": [
-          {
-            "title": "threadtoken",
-            "schema": {
-              "$ref": "#/definitions/PolicyId"
-            }
-          }
-        ],
-        "compiledCode": "59029d0101003232323232323223225333004323232323253330093370e900118051baa0011323322323232533300f300300115333012301137540100042c2a66601e66e1d200200115333012301137540100042c2c601e6ea801c54ccc034c004c038dd50010992999807180118079baa3013301400113232323232333333222222323232323232533301f301330203754002264646464a666046602e60486ea80044c8c8c94ccc09803454ccc09802c54ccc09800840045280a5014a066ebccdd2a40086605266e952000330294c01012000330293752022660526ea4040cc0a4dd4007998149ba800e33029375001a97ae04bd70180218139baa0023300a32330010013756600a604e6ea8008894ccc0a400452f5c0266054604e60560026600400460580020446050604a6ea800458cc014dd6180098121baa01c23375e600e604a6ea8004c01cc094dd5180198129baa00423027302830280012302630270013024302137540022c660026eb0c008c080dd500c119baf30033021375400202a44646600200200644a6660480022980103d87a8000133225333023300500213374a90001981380125eb804cc010010004c098004c09c0048c088004cc004dd6181018109810981098109810981098109810980e9baa01500722323300100100322533302100114a026644a66604066e3c0080145288998020020009bae30230013024001300d006375a603000a6eb8c060010dd7180c0019bad3018002375a60300026eb4c060c064004c060004c05c004c058004c054004c040dd51809800898011bad3013301037546026002660226024601e6ea8008cc0440192f5c02c6e1d2000300f001300f3010001300b37540022c601a601c006601800460160046016002600c6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
-        "hash": "6db8896e2840808607b167ca9398fa6b8243db8ec4c7cb175eba33ab"
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "marketplace.statemachine.spend",
+      "datum": {
+        "title": "datum_opt",
+        "schema": {
+          "$ref": "#/definitions/marketplace~1StateMachineDatum"
+        }
       },
-      {
-        "title": "marketplace.statemachine.else",
-        "redeemer": {
-          "schema": {}
-        },
-        "parameters": [
-          {
-            "title": "threadtoken",
-            "schema": {
-              "$ref": "#/definitions/PolicyId"
-            }
-          }
-        ],
-        "compiledCode": "59029d0101003232323232323223225333004323232323253330093370e900118051baa0011323322323232533300f300300115333012301137540100042c2a66601e66e1d200200115333012301137540100042c2c601e6ea801c54ccc034c004c038dd50010992999807180118079baa3013301400113232323232333333222222323232323232533301f301330203754002264646464a666046602e60486ea80044c8c8c94ccc09803454ccc09802c54ccc09800840045280a5014a066ebccdd2a40086605266e952000330294c01012000330293752022660526ea4040cc0a4dd4007998149ba800e33029375001a97ae04bd70180218139baa0023300a32330010013756600a604e6ea8008894ccc0a400452f5c0266054604e60560026600400460580020446050604a6ea800458cc014dd6180098121baa01c23375e600e604a6ea8004c01cc094dd5180198129baa00423027302830280012302630270013024302137540022c660026eb0c008c080dd500c119baf30033021375400202a44646600200200644a6660480022980103d87a8000133225333023300500213374a90001981380125eb804cc010010004c098004c09c0048c088004cc004dd6181018109810981098109810981098109810980e9baa01500722323300100100322533302100114a026644a66604066e3c0080145288998020020009bae30230013024001300d006375a603000a6eb8c060010dd7180c0019bad3018002375a60300026eb4c060c064004c060004c05c004c058004c054004c040dd51809800898011bad3013301037546026002660226024601e6ea8008cc0440192f5c02c6e1d2000300f001300f3010001300b37540022c601a601c006601800460160046016002600c6ea800452613656375c002ae6955ceaab9e5573eae815d0aba21",
-        "hash": "6db8896e2840808607b167ca9398fa6b8243db8ec4c7cb175eba33ab"
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/marketplace~1StateMachineInput"
+        }
       },
-      {
-        "title": "marketplace.threadtoken.mint",
-        "redeemer": {
-          "title": "redeemer",
+      "parameters": [
+        {
+          "title": "threadtoken",
           "schema": {
-            "$ref": "#/definitions/marketplace~1ThreadTokenInput"
+            "$ref": "#/definitions/PolicyId"
           }
         },
-        "parameters": [
-          {
-            "title": "token_name",
-            "schema": {
+        {
+          "title": "seller",
+          "schema": {
+            "$ref": "#/definitions/VerificationKeyHash"
+          }
+        },
+        {
+          "title": "buyer",
+          "schema": {
+            "$ref": "#/definitions/VerificationKeyHash"
+          }
+        },
+        {
+          "title": "price",
+          "schema": {
+            "$ref": "#/definitions/Int"
+          }
+        },
+        {
+          "title": "collateral",
+          "schema": {
+            "$ref": "#/definitions/Int"
+          }
+        }
+      ],
+      "compiledCode": "590295010100323232323232322322322322322322533300c323232323253330113370e900118091baa0011323322323232533301730030011533301a301937540100042c2a66602e66e1d20020011533301a301937540100042c2c602e6ea801c54ccc054c004c058dd50010991919299980c1802180c9baa301d301e003132332232323232325333020300c30213754002264646464a6660486020604a6ea80044c8c8c94ccc09c03054ccc09c02c54ccc09c00840045280a5014a066ebccdd2a40086605466e9520003302a4c010120003302a375001897ae04bd70180218141baa0023300e32330010013756600a60506ea8008894ccc0a800452f5c02660566050605800266004004605a0020466052604c6ea800458cc014dd6180098129baa01523375e600e604c6ea8004c01cc098dd5180198131baa00423028302930290012302730280013025302237540022c660026eb0c008c084dd5008919baf30033022375400201c44646600200200644a66604a002298103d87a8000133225333024300500213374a90001981400125eb804cc010010004c09c004c0a00048c08c004cc014dd61803180f1baa00e0163007002375a603c0026eb4c078c07c004c068dd5180e80189919299980d198019bac3004301c375401802c2a6660340042002294052819b8700f0113004375a603a60346ea8c07400c88c8cc00400400c894ccc07800452809991299980e99b8f00200514a22660080080026eb8c080004c0840048c070c074c074c074c074c074c074c074c074004cc064c068c05cdd50011980c80325eb8058dc3a4000602e002602e603000260266ea800458c054c05800cc050008c04c008c04c004c038dd50008a4c26cac6eb4004dd68009bae001375c0026eb80055cd2ab9d5573caae7d5d02ba15745",
+      "hash": "f534a294238f96d4cc2b7d2a22ec302d957667528547f3295f0a80f7"
+    },
+    {
+      "title": "marketplace.statemachine.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "threadtoken",
+          "schema": {
+            "$ref": "#/definitions/PolicyId"
+          }
+        },
+        {
+          "title": "seller",
+          "schema": {
+            "$ref": "#/definitions/VerificationKeyHash"
+          }
+        },
+        {
+          "title": "buyer",
+          "schema": {
+            "$ref": "#/definitions/VerificationKeyHash"
+          }
+        },
+        {
+          "title": "price",
+          "schema": {
+            "$ref": "#/definitions/Int"
+          }
+        },
+        {
+          "title": "collateral",
+          "schema": {
+            "$ref": "#/definitions/Int"
+          }
+        }
+      ],
+      "compiledCode": "590295010100323232323232322322322322322322533300c323232323253330113370e900118091baa0011323322323232533301730030011533301a301937540100042c2a66602e66e1d20020011533301a301937540100042c2c602e6ea801c54ccc054c004c058dd50010991919299980c1802180c9baa301d301e003132332232323232325333020300c30213754002264646464a6660486020604a6ea80044c8c8c94ccc09c03054ccc09c02c54ccc09c00840045280a5014a066ebccdd2a40086605466e9520003302a4c010120003302a375001897ae04bd70180218141baa0023300e32330010013756600a60506ea8008894ccc0a800452f5c02660566050605800266004004605a0020466052604c6ea800458cc014dd6180098129baa01523375e600e604c6ea8004c01cc098dd5180198131baa00423028302930290012302730280013025302237540022c660026eb0c008c084dd5008919baf30033022375400201c44646600200200644a66604a002298103d87a8000133225333024300500213374a90001981400125eb804cc010010004c09c004c0a00048c08c004cc014dd61803180f1baa00e0163007002375a603c0026eb4c078c07c004c068dd5180e80189919299980d198019bac3004301c375401802c2a6660340042002294052819b8700f0113004375a603a60346ea8c07400c88c8cc00400400c894ccc07800452809991299980e99b8f00200514a22660080080026eb8c080004c0840048c070c074c074c074c074c074c074c074c074004cc064c068c05cdd50011980c80325eb8058dc3a4000602e002602e603000260266ea800458c054c05800cc050008c04c008c04c004c038dd50008a4c26cac6eb4004dd68009bae001375c0026eb80055cd2ab9d5573caae7d5d02ba15745",
+      "hash": "f534a294238f96d4cc2b7d2a22ec302d957667528547f3295f0a80f7"
+    },
+    {
+      "title": "marketplace.threadtoken.mint",
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/marketplace~1ThreadTokenInput"
+        }
+      },
+      "parameters": [
+        {
+          "title": "token_name",
+          "schema": {
+            "$ref": "#/definitions/ByteArray"
+          }
+        },
+        {
+          "title": "utxo_ref",
+          "schema": {
+            "$ref": "#/definitions/cardano~1transaction~1OutputReference"
+          }
+        }
+      ],
+      "compiledCode": "5901ac01010032323232323232232225333005323232323253323300b3001300c3754004264646464a66601e600a0022a66602460226ea801c0085854ccc03cc00c00454ccc048c044dd50038010b0b18079baa006132323232533301430170021323253330133009301437540162a666026601260286ea8c8cc004004018894ccc0600045300103d87a80001332253330173375e603860326ea80080504cdd2a40006603600497ae0133004004001301a001301b00115333013300700113371e00402229405854ccc04ccdc3800a4002266e3c0080445281bad3014002375c60240022c602a00264a666020600860226ea800452f5bded8c026eacc054c048dd500099198008009bab3015301630163016301600322533301400114c103d87a80001323332225333015337220140062a66602a66e3c02800c4cdd2a4000660326e980092f5c02980103d87a8000133006006001375c60260026eacc050004c060008c058004dd6180980098079baa006370e90011bae3010300d37540046e1d200016300e300f003300d002300c002300c0013007375400229309b2b1bae0015734aae7555cf2ab9f5740ae855d11",
+      "hash": "d543ccb30468675e4394e4684a894cc96c87d72b44ee55f74ccf795d"
+    },
+    {
+      "title": "marketplace.threadtoken.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "parameters": [
+        {
+          "title": "token_name",
+          "schema": {
+            "$ref": "#/definitions/ByteArray"
+          }
+        },
+        {
+          "title": "utxo_ref",
+          "schema": {
+            "$ref": "#/definitions/cardano~1transaction~1OutputReference"
+          }
+        }
+      ],
+      "compiledCode": "5901ac01010032323232323232232225333005323232323253323300b3001300c3754004264646464a66601e600a0022a66602460226ea801c0085854ccc03cc00c00454ccc048c044dd50038010b0b18079baa006132323232533301430170021323253330133009301437540162a666026601260286ea8c8cc004004018894ccc0600045300103d87a80001332253330173375e603860326ea80080504cdd2a40006603600497ae0133004004001301a001301b00115333013300700113371e00402229405854ccc04ccdc3800a4002266e3c0080445281bad3014002375c60240022c602a00264a666020600860226ea800452f5bded8c026eacc054c048dd500099198008009bab3015301630163016301600322533301400114c103d87a80001323332225333015337220140062a66602a66e3c02800c4cdd2a4000660326e980092f5c02980103d87a8000133006006001375c60260026eacc050004c060008c058004dd6180980098079baa006370e90011bae3010300d37540046e1d200016300e300f003300d002300c002300c0013007375400229309b2b1bae0015734aae7555cf2ab9f5740ae855d11",
+      "hash": "d543ccb30468675e4394e4684a894cc96c87d72b44ee55f74ccf795d"
+    }
+  ],
+  "definitions": {
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "POSIXTime": {
+      "title": "POSIXTime",
+      "dataType": "integer"
+    },
+    "PolicyId": {
+      "title": "PolicyId",
+      "dataType": "bytes"
+    },
+    "VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
+    "cardano/transaction/OutputReference": {
+      "title": "OutputReference",
+      "description": "An `OutputReference` is a unique reference to an output on-chain. The `output_index`\n corresponds to the position in the output list of the transaction (identified by its id)\n that produced that output",
+      "anyOf": [
+        {
+          "title": "OutputReference",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "transaction_id",
               "$ref": "#/definitions/ByteArray"
+            },
+            {
+              "title": "output_index",
+              "$ref": "#/definitions/Int"
             }
-          },
-          {
-            "title": "utxo_ref",
-            "schema": {
-              "$ref": "#/definitions/cardano~1transaction~1OutputReference"
+          ]
+        }
+      ]
+    },
+    "marketplace/StateMachineDatum": {
+      "title": "StateMachineDatum",
+      "anyOf": [
+        {
+          "title": "StateMachineDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "state",
+              "$ref": "#/definitions/Int"
+            },
+            {
+              "title": "pending_until",
+              "$ref": "#/definitions/POSIXTime"
             }
-          }
-        ],
-        "compiledCode": "5901ac01010032323232323232232225333005323232323253323300b3001300c3754004264646464a66601e600a0022a66602460226ea801c0085854ccc03cc00c00454ccc048c044dd50038010b0b18079baa006132323232533301430170021323253330133009301437540162a666026601260286ea8c8cc004004018894ccc0600045300103d87a80001332253330173375e603860326ea80080504cdd2a40006603600497ae0133004004001301a001301b00115333013300700113371e00402229405854ccc04ccdc3800a4002266e3c0080445281bad3014002375c60240022c602a00264a666020600860226ea800452f5bded8c026eacc054c048dd500099198008009bab3015301630163016301600322533301400114c103d87a80001323332225333015337220140062a66602a66e3c02800c4cdd2a4000660326e980092f5c02980103d87a8000133006006001375c60260026eacc050004c060008c058004dd6180980098079baa006370e90011bae3010300d37540046e1d200016300e300f003300d002300c002300c0013007375400229309b2b1bae0015734aae7555cf2ab9f5740ae855d11",
-        "hash": "d543ccb30468675e4394e4684a894cc96c87d72b44ee55f74ccf795d"
-      },
-      {
-        "title": "marketplace.threadtoken.else",
-        "redeemer": {
-          "schema": {}
+          ]
+        }
+      ]
+    },
+    "marketplace/StateMachineInput": {
+      "title": "StateMachineInput",
+      "anyOf": [
+        {
+          "title": "Return",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
         },
-        "parameters": [
-          {
-            "title": "token_name",
-            "schema": {
-              "$ref": "#/definitions/ByteArray"
-            }
-          },
-          {
-            "title": "utxo_ref",
-            "schema": {
-              "$ref": "#/definitions/cardano~1transaction~1OutputReference"
-            }
-          }
-        ],
-        "compiledCode": "5901ac01010032323232323232232225333005323232323253323300b3001300c3754004264646464a66601e600a0022a66602460226ea801c0085854ccc03cc00c00454ccc048c044dd50038010b0b18079baa006132323232533301430170021323253330133009301437540162a666026601260286ea8c8cc004004018894ccc0600045300103d87a80001332253330173375e603860326ea80080504cdd2a40006603600497ae0133004004001301a001301b00115333013300700113371e00402229405854ccc04ccdc3800a4002266e3c0080445281bad3014002375c60240022c602a00264a666020600860226ea800452f5bded8c026eacc054c048dd500099198008009bab3015301630163016301600322533301400114c103d87a80001323332225333015337220140062a66602a66e3c02800c4cdd2a4000660326e980092f5c02980103d87a8000133006006001375c60260026eacc050004c060008c058004dd6180980098079baa006370e90011bae3010300d37540046e1d200016300e300f003300d002300c002300c0013007375400229309b2b1bae0015734aae7555cf2ab9f5740ae855d11",
-        "hash": "d543ccb30468675e4394e4684a894cc96c87d72b44ee55f74ccf795d"
-      }
-    ],
-    "definitions": {
-      "ByteArray": {
-        "dataType": "bytes"
-      },
-      "Int": {
-        "dataType": "integer"
-      },
-      "POSIXTime": {
-        "title": "POSIXTime",
-        "dataType": "integer"
-      },
-      "PolicyId": {
-        "title": "PolicyId",
-        "dataType": "bytes"
-      },
-      "VerificationKeyHash": {
-        "title": "VerificationKeyHash",
-        "dataType": "bytes"
-      },
-      "cardano/transaction/OutputReference": {
-        "title": "OutputReference",
-        "description": "An `OutputReference` is a unique reference to an output on-chain. The `output_index`\n corresponds to the position in the output list of the transaction (identified by its id)\n that produced that output",
-        "anyOf": [
-          {
-            "title": "OutputReference",
-            "dataType": "constructor",
-            "index": 0,
-            "fields": [
-              {
-                "title": "transaction_id",
-                "$ref": "#/definitions/ByteArray"
-              },
-              {
-                "title": "output_index",
-                "$ref": "#/definitions/Int"
-              }
-            ]
-          }
-        ]
-      },
-      "marketplace/StateMachineDatum": {
-        "title": "StateMachineDatum",
-        "anyOf": [
-          {
-            "title": "StateMachineDatum",
-            "dataType": "constructor",
-            "index": 0,
-            "fields": [
-              {
-                "title": "state",
-                "$ref": "#/definitions/Int"
-              },
-              {
-                "title": "buyer",
-                "$ref": "#/definitions/VerificationKeyHash"
-              },
-              {
-                "title": "seller",
-                "$ref": "#/definitions/VerificationKeyHash"
-              },
-              {
-                "title": "price",
-                "$ref": "#/definitions/Int"
-              },
-              {
-                "title": "collateral",
-                "$ref": "#/definitions/Int"
-              },
-              {
-                "title": "accept_range",
-                "$ref": "#/definitions/POSIXTime"
-              }
-            ]
-          }
-        ]
-      },
-      "marketplace/StateMachineInput": {
-        "title": "StateMachineInput",
-        "anyOf": [
-          {
-            "title": "Return",
-            "dataType": "constructor",
-            "index": 0,
-            "fields": []
-          },
-          {
-            "title": "Locking",
-            "dataType": "constructor",
-            "index": 1,
-            "fields": []
-          }
-        ]
-      },
-      "marketplace/ThreadTokenInput": {
-        "title": "ThreadTokenInput",
-        "anyOf": [
-          {
-            "title": "Mint",
-            "dataType": "constructor",
-            "index": 0,
-            "fields": []
-          },
-          {
-            "title": "Burn",
-            "dataType": "constructor",
-            "index": 1,
-            "fields": []
-          }
-        ]
-      }
+        {
+          "title": "Locking",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    },
+    "marketplace/ThreadTokenInput": {
+      "title": "ThreadTokenInput",
+      "anyOf": [
+        {
+          "title": "Mint",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Burn",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
     }
   }
+}

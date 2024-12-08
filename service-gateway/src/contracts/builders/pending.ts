@@ -14,12 +14,11 @@ import { lucid, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
-const ACCEPT_RANGE = 15; // env minutes
+const PENDING_UNTIL = 15; // env minutes
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
   externalWalletAddress: string,
-  buyerPubKeyHash: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
   contractCollateral: bigint
@@ -28,6 +27,7 @@ async function pendingTransactionBuilder(
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
+  const buyerPubKeyHash = paymentCredentialOf(externalWalletAddress).hash;
   ////////////////////////////////
   const minLovelace = contractPrice; //fee
 
@@ -62,30 +62,28 @@ async function pendingTransactionBuilder(
     type: "PlutusV3",
     script: applyParamsToScript(
       applyDoubleCborEncoding(validators.stateMachine),
-      [threadTokenPolicyId]
+      [
+        threadTokenPolicyId,
+        sellerPubKeyHash,
+        buyerPubKeyHash,
+        contractPrice,
+        contractCollateral,
+      ]
     ),
   };
 
   //////////////////////////////////
-  const acceptPOSIX = Date.now() + ACCEPT_RANGE * 60 * 1000;
-  const acceptRange = BigInt(acceptPOSIX);
+ 
+  const pendingUntil = BigInt(Date.now() + PENDING_UNTIL * 60 * 1000);
   ////////////////////////////////////////////
   const datumValues = {
     state: BigInt(0),
-    buyer: paymentCredentialOf(externalWalletAddress).hash,
-    seller: sellerPubKeyHash,
-    price: contractPrice,
-    collateral: contractCollateral,
-    accept_range: acceptRange,
+    pending_until: pendingUntil,
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
-    buyer: Data.Bytes(),
-    seller: Data.Bytes(),
-    price: Data.Integer(),
-    collateral: Data.Integer(),
-    accept_range: Data.Integer(),
+    pending_until: Data.Integer(),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -133,7 +131,7 @@ async function pendingTransactionBuilder(
 
   console.log("stateMachineAddress: ", stateMachineAddress);
 
-  console.log("CBOR------------");
+  console.log("CBOR---------------------------------------");
 
   console.log(cbor);
 
@@ -149,27 +147,22 @@ function main() {
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
-  const contractPrice = 50n * 1_000_000n;
+  const contractPrice = 30n * 1_000_000n;
 
-  const contractCollateral = 25n * 1_000_000n;
-
-  const buyerPubKeyHash =
-    "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
+  const contractCollateral = 10n * 1_000_000n;
 
   const sellerPubKeyHash =
-    "402873136060f656b8082c797aa805ec870a78b59d5202a35d2024bd";
+    "659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65";
 
   pendingTransactionBuilder(
     externalWalletAddress,
-    buyerPubKeyHash,
     sellerPubKeyHash,
     contractPrice,
     contractCollateral
   );
 }
 
-
-//main();
+main();
 
 export { pendingTransactionBuilder };
 

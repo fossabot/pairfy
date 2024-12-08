@@ -40,11 +40,7 @@ type POSIXTime =
 
 pub type StateMachineDatum {
   state: Int,
-  buyer: VerificationKeyHash,
-  seller: VerificationKeyHash,
-  price: Int,
-  collateral: Int,
-  accept_range: POSIXTime
+  pending_until: POSIXTime
 }
 
 pub type StateMachineInput {
@@ -52,7 +48,7 @@ pub type StateMachineInput {
   Locking
 }
 
-validator statemachine(threadtoken: PolicyId) {
+validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int) {
   spend(
     datum_opt: Option<StateMachineDatum>,
     redeemer: StateMachineInput,
@@ -62,28 +58,24 @@ validator statemachine(threadtoken: PolicyId) {
         expect Some(datum) = datum_opt
         
         when (datum, redeemer) is {
-          (StateMachineDatum { state, buyer, seller, price, collateral, accept_range }, Return) -> {
+          (StateMachineDatum { state, pending_until }, Return) -> {
             let must_be_state = state == 0  
 
-            let must_be_signed =
-              list.has(self.extra_signatories, buyer)
-            //One of the transaction inputs belongs to the statemachine.
-            expect Some(sm_input) = 
-              list.find(self.inputs, fn(input) { input.output_reference == own_ref })            
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 1.
-            expect Some(sm_output) = 
-              list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 2.
-            let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
+            let must_be_signed = list.has(self.extra_signatories, buyer)
 
+            //One of the transaction inputs belongs to the statemachine.
+            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref })  
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 1.
+
+            expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 2.
+
+            let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
+            
             //verification of the new datum - 1.
             let new_data: Data = StateMachineDatum {
               state : -1,
-              buyer: buyer,
-              seller : seller,
-              collateral : collateral,
-              price: price,
-              accept_range: accept_range
+              pending_until: pending_until
             }
             //verification of the new datum - 2.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
@@ -96,9 +88,18 @@ validator statemachine(threadtoken: PolicyId) {
             }
           }
           (StateMachineDatum{ state, .. }, Locking) -> {
+            
+            let must_be_signed = list.has(self.extra_signatories, seller)
 
-            state == 0
+            let must_be_state = state == 0
+            
+            let must_be_collateral = collateral == price //WARNING
 
+            and{
+              must_be_signed?,
+              must_be_state?,
+              must_be_collateral?
+            }
           }
         }
   }
@@ -118,7 +119,7 @@ test statemachine_return() {
   let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
-  let accept_range = 3
+  let pending_until = 3
   let price = 50000000
   let collateral = 25000000
   /////////////INPUT/////////////
@@ -143,11 +144,7 @@ test statemachine_return() {
   /////////////INPUT/////////////  
   let new_data: Data = StateMachineDatum {
       state : -1,
-      buyer: buyer_pubkeyhash,
-      seller : seller_pubkeyhash,
-      price: price,
-      collateral : collateral,
-      accept_range: accept_range
+      pending_until: pending_until
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -170,15 +167,12 @@ test statemachine_return() {
 
   let redeemer = Return       //StateMachineInput
 
-  let old_datum =
-    StateMachineDatum {
-      state: 0,
-      buyer: buyer_pubkeyhash,
-      seller: seller_pubkeyhash,
-      collateral: collateral,
-      price: price,
-      accept_range: accept_range
-    }
+
+  let old_datum = StateMachineDatum {
+    state: 0,
+    pending_until: pending_until
+  }
+
 
   let transaction =
     Transaction {
@@ -189,8 +183,8 @@ test statemachine_return() {
       mint: transaction.placeholder.mint,
       certificates: [],
       withdrawals: [],
-      validity_range: interval.after(accept_range),
-      extra_signatories: [old_datum.buyer],
+      validity_range: interval.after(pending_until),
+      extra_signatories: [buyer_pubkeyhash],
       redeemers: [],
       datums: transaction.placeholder.datums,
       id: transaction.placeholder.id,
@@ -200,5 +194,5 @@ test statemachine_return() {
       treasury_donation: transaction.placeholder.treasury_donation
     }
 
-  statemachine.spend(threadtoken, Some(old_datum), redeemer, own_ref, transaction)
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, Some(old_datum), redeemer, own_ref, transaction)
 }
