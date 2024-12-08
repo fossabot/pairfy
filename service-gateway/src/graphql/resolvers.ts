@@ -269,16 +269,30 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     const now = Date.now();
 
-    const VALID_UNTIL = 3; //tx valid until
+    ///////////////////////////////////////////////
 
-    const WATCH_WINDOW = 15; //Observation window limit for the detection of the first transaction
+    const TX_VALID_TIME = 5; //tx valid until
 
-    const PENDING_UNTIL = 30; // 15minutes for the seller to accept;
+    const WATCH_TX_WINDOW = 15; //Observation window limit for the detection of the first transaction
 
-    const detectUntil = (VALID_UNTIL + WATCH_WINDOW) * 60 * 1000;
+    const PENDING_UNTIL = 60; // 15minutes for the seller to accept;
+
+    const SHIPPING_UNTIL = 1440; // 24h to shipping;
+
+    ///////////////////////////////////////////////
+    const validUntil = now + TX_VALID_TIME * 60 * 1000;
+
+    const watchUntil = now + (TX_VALID_TIME + WATCH_TX_WINDOW * 60 * 1000);
 
     const pendingUntil =
-      (VALID_UNTIL + WATCH_WINDOW + PENDING_UNTIL) * 60 * 1000;
+      now + (TX_VALID_TIME + WATCH_TX_WINDOW + PENDING_UNTIL * 60 * 1000);
+
+    const shippingUntil =
+      now +
+      (TX_VALID_TIME +
+        WATCH_TX_WINDOW +
+        PENDING_UNTIL +
+        SHIPPING_UNTIL * 60 * 1000);
 
     //////////////////////////////////////////////
 
@@ -286,7 +300,10 @@ const createOrder = async (_: any, args: any, context: any) => {
       USER.address,
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
-      BigInt(contractCollateral)
+      BigInt(contractCollateral),
+      validUntil,
+      BigInt(pendingUntil),
+      BigInt(shippingUntil)
     );
 
     //////////////////////////////////////////////
@@ -296,7 +313,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       seller_id: RESULT.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
       seller_pubkeyhash: RESULT.seller_pubkeyhash,
-      ada_price: adaPrice,  // add to metadata contract
+      ada_price: adaPrice, // add to metadata contract
       contract_address: BUILDER.stateMachineAddress,
       contract_price: contractPrice,
       contract_collateral: contractCollateral,
@@ -307,8 +324,8 @@ const createOrder = async (_: any, args: any, context: any) => {
       product_collateral: RESULT.product_collateral, // add to metadata contract
       product_discount: RESULT.product_discount, // add to metadata contract
       product_discount_value: RESULT.product_discount_value, // add to metadata contract
-      detect_until: now + detectUntil,
-      pending_until: now + pendingUntil,
+      watch_until: watchUntil,
+      pending_until: pendingUntil,
     };
 
     console.log(orderData);

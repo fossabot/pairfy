@@ -39,8 +39,7 @@ type POSIXTime =
   Int
 
 pub type StateMachineDatum {
-  state: Int,
-  pending_until: POSIXTime
+  state: Int
 }
 
 pub type StateMachineInput {
@@ -48,7 +47,7 @@ pub type StateMachineInput {
   Locking
 }
 
-validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int) {
+validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int, pending_until: POSIXTime) {
   spend(
     datum_opt: Option<StateMachineDatum>,
     redeemer: StateMachineInput,
@@ -58,7 +57,13 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
         expect Some(datum) = datum_opt
         
         when (datum, redeemer) is {
-          (StateMachineDatum { state, pending_until }, Return) -> {
+          (StateMachineDatum { state }, Return) -> {
+
+            let must_be_time = when self.validity_range.lower_bound.bound_type is {
+              interval.Finite(tx_earliest_time) -> pending_until <= tx_earliest_time
+              _ -> False
+              }
+
             let must_be_state = state == 0  
 
             let must_be_signed = list.has(self.extra_signatories, buyer)
@@ -75,19 +80,19 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum - 1.
             let new_data: Data = StateMachineDatum {
               state : -1,
-              pending_until: pending_until
             }
             //verification of the new datum - 2.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
 
             and {
+              must_be_time?,
               must_be_state?,
               must_be_signed?,
               must_be_policy?,
               must_be_datum?
             }
           }
-          (StateMachineDatum{ state, .. }, Locking) -> {
+          (StateMachineDatum{ state }, Locking) -> {
             
             let must_be_signed = list.has(self.extra_signatories, seller)
 
@@ -143,8 +148,7 @@ test statemachine_return() {
     }
   /////////////INPUT/////////////  
   let new_data: Data = StateMachineDatum {
-      state : -1,
-      pending_until: pending_until
+      state : -1
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -170,7 +174,6 @@ test statemachine_return() {
 
   let old_datum = StateMachineDatum {
     state: 0,
-    pending_until: pending_until
   }
 
 
@@ -194,5 +197,5 @@ test statemachine_return() {
       treasury_donation: transaction.placeholder.treasury_donation
     }
 
-  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, Some(old_datum), redeemer, own_ref, transaction)
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, Some(old_datum), redeemer, own_ref, transaction)
 }

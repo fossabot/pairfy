@@ -16,13 +16,15 @@ const NETWORK = "Preprod";
 
 const PENDING_UNTIL = 15; // env minutes
 
-const VALID_UNTIL = 5;
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
   externalWalletAddress: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
-  contractCollateral: bigint
+  contractCollateral: bigint,
+  validUntil: number,
+  pendingUntil: bigint,
+  shippingUntil: bigint
 ) {
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
@@ -69,22 +71,18 @@ async function pendingTransactionBuilder(
         buyerPubKeyHash,
         contractPrice,
         contractCollateral,
+        pendingUntil
       ]
     ),
   };
 
-  //////////////////////////////////
-
-  const pendingUntil = BigInt(Date.now() + PENDING_UNTIL * 60 * 1000);
   ////////////////////////////////////////////
   const datumValues = {
-    state: BigInt(0),
-    pending_until: pendingUntil,
+    state: BigInt(0)
   };
 
   const StateMachineDatum = Data.Object({
-    state: Data.Integer(),
-    pending_until: Data.Integer(),
+    state: Data.Integer()
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -110,10 +108,6 @@ async function pendingTransactionBuilder(
   ////////////////////////////////////////////
 
   const assetUnit = threadTokenPolicyId + tokenName;
-
-  const now = Date.now();
-
-  const validUntil = now + VALID_UNTIL * 60 * 1000;
 
   const transaction = await lucid
     .newTx()
@@ -159,19 +153,44 @@ async function pendingTransactionBuilder(
 
   return {
     threadTokenPolicyId,
-    tokenName,
     stateMachineAddress,
+    tokenName,
     cbor,
   };
 }
 
 function main() {
+  const now = Date.now();
+
+  const TX_VALID_TIME = 5; //tx valid until
+
+  const WATCH_TX_WINDOW = 15; //Observation window limit for the detection of the first transaction
+
+  const PENDING_UNTIL = 60; // 15minutes for the seller to accept;
+
+  const SHIPPING_UNTIL = 1440; // 24h to shipping;
+
+  ///////////////////////////////////////////////
+
+  const validUntil = now + TX_VALID_TIME * 60 * 1000;
+
+  const pendingUntil =
+    now + (TX_VALID_TIME + WATCH_TX_WINDOW + PENDING_UNTIL * 60 * 1000);
+
+  const shippingUntil =
+    now +
+    (TX_VALID_TIME +
+      WATCH_TX_WINDOW +
+      PENDING_UNTIL +
+      SHIPPING_UNTIL * 60 * 1000);
+
+
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
-  const contractPrice = 30n * 1_000_000n;
+  const contractPrice = 30 * 1_000_000;
 
-  const contractCollateral = 10n * 1_000_000n;
+  const contractCollateral = 10 * 1_000_000;
 
   const sellerPubKeyHash =
     "659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65";
@@ -179,12 +198,15 @@ function main() {
   pendingTransactionBuilder(
     externalWalletAddress,
     sellerPubKeyHash,
-    contractPrice,
-    contractCollateral
+    BigInt(contractPrice),
+    BigInt(contractCollateral),
+    validUntil,
+    BigInt(pendingUntil),
+    BigInt(shippingUntil)
   );
 }
 
-main();
+//main();
 
 export { pendingTransactionBuilder };
 

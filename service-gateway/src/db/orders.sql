@@ -18,7 +18,7 @@ create table if not exists orders(
   product_collateral int unsigned not null,
   product_discount boolean not null,
   product_discount_value int unsigned not null,
-  detect_until bigint not null,
+  watch_until bigint not null,
   pending_until bigint not null,
   pending_tx varchar(200) default null,
   pending_block varchar(200) default null,

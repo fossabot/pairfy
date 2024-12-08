@@ -23,7 +23,8 @@
 
             <div class="dialog-msg">
                 <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will be refunded.
+                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
+                    be refunded.
                 </Message>
             </div>
 
@@ -78,8 +79,10 @@ import gql from 'graphql-tag';
 import { ref, computed, inject } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
+import { balanceTx } from "@/api/wallet";
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
+
 
 const { getADAprice } = headerAPI();
 
@@ -157,10 +160,27 @@ onCreateOrderError(error => {
     showError(error);
 })
 
-onOrderCreated(result => {
-    console.log(result.data.createOrder);
-    showSuccess("The product has been created.");
+
+onOrderCreated(async result => {
+    const response = result.data;
+
+    if (response.createOrder.success === true) {
+        try {
+            const txHash = await balanceTx(response.createOrder.payload.cbor);
+
+            showSuccess("Transaction submited");
+
+            console.log(`Transaction submitted with hash: ${txHash}`);
+        } catch (err) {
+            console.error(err);
+
+            showError(err);
+        }
+    }
+
+
 })
+
 
 const onConfirmedBuy = () => {
     sendMessage({
