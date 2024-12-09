@@ -22,27 +22,36 @@ spec:
                   fieldPath: metadata.name
             - name: POD_TIMEOUT
               value: "120000"
-            - name: DATABASE_HOST
+            - name: DATABASE_HOST  
               valueFrom:
                 configMapKeyRef:
                   name: database-config
-                  key: master
+                  key: master  
             - name: DATABASE_PORT
               valueFrom:
                 configMapKeyRef:
                   name: database-config
-                  key: port
+                  key: port                                     
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: db-password
-                  key: password
+                  key: password   
             - name: DATABASE_NAME
-              value: service_state
+              value: service_gateway       
             - name: DATABASE_USER
-              value: marketplace
+              value: marketplace 
             - name: REDIS_HOST
               value: redis://service-state-redis:6379
+            - name: QUERY_LIMIT
+              value: "1000"        
+            - name: QUERY_INTERVAL
+              value: "30000"                       
+            - name: PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: blockfrost-key
+                  key: key               
           resources:
             limits:
               memory: "500Mi"

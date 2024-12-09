@@ -207,7 +207,7 @@ const main = async () => {
       }
     };
 
-    setInterval(runWorker, parseInt(process.env.QUERY_INTERVAL));  ///change to while
+    setInterval(runWorker, parseInt(process.env.QUERY_INTERVAL));  ///change to while continue;
 
     logger.info("ONLINE");
   } catch (err) {
