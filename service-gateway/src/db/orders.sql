@@ -25,8 +25,10 @@ create table if not exists orders(
   pending_datum_hash varchar(200) default null,
   pending_inline_datum varchar(200) default null,
   pending_redeemer varchar(200) default null,
+  updated_at timestamp default current_timestamp,
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,
   primary key(id),
-  index idx_scanning (id,finished,scanning)
+  index idx_scanning (id,finished,scanning),
+  index idx_contract_state (contract_state)
 ) ENGINE=InnoDB;

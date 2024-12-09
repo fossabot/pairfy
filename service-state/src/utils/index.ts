@@ -20,7 +20,7 @@ const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 21);
 
 const workOptions = {
   repeat: {
-    every: 30000,
+    every: 60000,
   },
   attempts: 99999,
   backoff: {

@@ -7,7 +7,7 @@ import {
 } from "./utils/index.js";
 import { Queue, Worker } from "bullmq";
 import { redisClient } from "./db/redis.js";
-import { scanThreadToken } from "./handlers/assets.js";
+import { scanThreadToken } from "./handlers/index.js";
 import { database } from "./db/client.js";
 
 const main = async () => {
@@ -109,8 +109,24 @@ const main = async () => {
       logger.error("FAILED", job.id, err);
     });
 
-    worker.on("completed", (job: any, result) => {
+    worker.on("completed", async (job: any, result) => {
       console.log("COMPLETED", job.id, result);
+
+      const { watch_until } = job.data;
+
+      const now = Date.now();
+
+      if (now > watch_until) {
+        console.log("Expired");
+
+        try {
+          let del = await job.remove();
+
+          console.log(del);
+        } catch (err) {
+          console.log(err);
+        }
+      }
     });
 
     worker.on("error", (err) => {
@@ -141,11 +157,13 @@ const main = async () => {
     let connection: any = null;
 
     while (true) {
+      console.log("Scanning");
+
       try {
         connection = await database.client.getConnection();
 
         const queryScheme = `
-          SELECT id, finished, scanning
+          SELECT id, finished, scanning, watch_until
           FROM orders
           WHERE finished = ?
           AND scanning = ?
@@ -159,7 +177,9 @@ const main = async () => {
           parseInt(process.env.QUERY_LIMIT),
         ]);
 
-        if (!findOrders.length) console.log("EmptyOrders");
+        if (!findOrders.length) {
+          console.log("EmptyOrders");
+        }
 
         for (const order of findOrders) {
           try {
@@ -178,6 +198,7 @@ const main = async () => {
               order.id,
               {
                 threadtoken: order.id,
+                watch_until: order.watch_until,
               },
               {
                 ...workOptions,
