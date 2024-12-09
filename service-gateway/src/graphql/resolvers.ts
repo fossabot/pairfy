@@ -301,7 +301,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
       BigInt(contractCollateral),
-      validUntil,
+      BigInt(validUntil),
       BigInt(pendingUntil),
       BigInt(shippingUntil)
     );
