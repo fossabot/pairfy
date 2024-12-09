@@ -104,7 +104,7 @@ const main = async () => {
       }
     }
 
-    setInterval(healthCheck, 30000);
+    setInterval(healthCheck, 30000);     
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
@@ -207,7 +207,7 @@ const main = async () => {
       }
     };
 
-    setInterval(runWorker, parseInt(process.env.QUERY_INTERVAL));
+    setInterval(runWorker, parseInt(process.env.QUERY_INTERVAL));  ///change to while
 
     logger.info("ONLINE");
   } catch (err) {

@@ -216,7 +216,7 @@ const createOrder = async (_: any, args: any, context: any) => {
            p.price AS product_price,
            p.collateral AS product_collateral,
            p.discount AS product_discount,
-           p.discount AS product_discount_value,
+           p.discount_value AS product_discount_value,
            s.id AS seller_id,
            s.pubkeyhash AS seller_pubkeyhash
        FROM
