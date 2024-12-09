@@ -106,12 +106,11 @@ const main = async () => {
     } as any);
 
     worker.on("failed", (job: any, err) => {
-      logger.info("FAILED", job.id);
-      logger.error(err);
+      logger.error("FAILED", job.id, err);
     });
 
     worker.on("completed", (job: any, result) => {
-      logger.info("COMPLETED", job.id, result);
+      console.log("COMPLETED", job.id, result);
     });
 
     worker.on("error", (err) => {
@@ -119,11 +118,11 @@ const main = async () => {
     });
 
     worker.on("stalled", (job: any) => {
-      logger.info("STALLED", job.id);
+      logger.error("STALLED", job.id);
     });
 
     worker.on("drained", () => {
-      logger.info("DRAINED");
+      logger.error("DRAINED");
     });
 
     errorEvents.forEach((e: string) =>
@@ -160,10 +159,7 @@ const main = async () => {
           parseInt(process.env.QUERY_LIMIT),
         ]);
 
-        if (!findOrders.length) {
-          console.log("EmptyOrders");
-          return;
-        }
+        if (!findOrders.length) console.log("EmptyOrders");
 
         for (const order of findOrders) {
           try {
