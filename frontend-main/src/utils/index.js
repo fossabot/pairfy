@@ -50,7 +50,7 @@ export function applyDiscount(active, originalPrice, discountPercent) {
 
   const discountedPrice = originalPrice - discountAmount
 
-  return parseInt(discountedPrice)
+  return Math.trunc(discountedPrice)
 }
 
  /**

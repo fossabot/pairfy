@@ -821,7 +821,7 @@ const discountResult = computed(() => {
 
     const discountedPrice = productPrice.value - discountAmount;
 
-    return discountedPrice.toFixed(0) + " USD";
+    return Math.trunc(discountedPrice) + " USD";
 })
 
 const reloadPage = () => {
