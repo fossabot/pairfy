@@ -9,26 +9,6 @@ const main = async () => {
       throw new Error("POD_TIMEOUT error");
     }
 
-    if (!process.env.DATABASE_HOST) {
-      throw new Error("DATABASE_HOST error");
-    }
-
-    if (!process.env.DATABASE_PORT) {
-      throw new Error("DATABASE_PORT error");
-    }
-
-    if (!process.env.DATABASE_USER) {
-      throw new Error("DATABASE_USER error");
-    }
-
-    if (!process.env.DATABASE_PASSWORD) {
-      throw new Error("DATABASE_PASSWORD error");
-    }
-
-    if (!process.env.DATABASE_NAME) {
-      throw new Error("DATABASE_NAME error");
-    }
-
     if (!process.env.REDIS_HOST) {
       throw new Error("REDIS_HOST error");
     }
@@ -43,17 +23,6 @@ const main = async () => {
       "SIGHUP",
       "SIGCONT",
     ];
-
-    /*
-    database.connect({
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT) || 3306,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-    });
-*/
- 
 
    /////////////////////////////////////////
 
@@ -77,7 +46,7 @@ const main = async () => {
     
     /////////////////////////////////////////
 
-    const watchAssetPriceQueue = new Queue("test", {
+    const watchAssetPriceQueue = new Queue("getAssetPrice", {
       connection: { url: process.env.REDIS_HOST },
     });
 
@@ -105,7 +74,7 @@ const main = async () => {
 
     logger.info("getAssetPrice added.");
 
-    const watchAssetPrice = new Worker("test", getAssetPrice, {
+    const watchAssetPrice = new Worker("getAssetPrice", getAssetPrice, {
       removeOnComplete: false,
       removeOnFail: false,
       autorun: true,
