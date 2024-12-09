@@ -7,14 +7,17 @@ use aiken/crypto.{VerificationKeyHash}
 use cardano/address.{Address, Script}
 use aiken/interval
 
+type POSIXTime =
+  Int
+
 pub type ThreadTokenInput {
   Mint
   Burn
 }
 
-validator threadtoken(token_name: ByteArray, utxo_ref: OutputReference) {
-   mint(redeemer: ThreadTokenInput, policy_id: PolicyId, tx: Transaction) -> Bool {
-    let Transaction { inputs, mint, .. } = tx
+validator threadtoken(token_name: ByteArray, utxo_ref: OutputReference, _timestamp: POSIXTime) {
+   mint(redeemer: ThreadTokenInput, policy_id: PolicyId, self: Transaction) -> Bool {
+    let Transaction { inputs, mint, .. } = self
 
     expect [Pair(asset_name, amount)] =
       mint
@@ -23,20 +26,22 @@ validator threadtoken(token_name: ByteArray, utxo_ref: OutputReference) {
 
     when redeemer is {
       Mint -> {
-        expect Some(_input) =
-          list.find(inputs, fn(input) { input.output_reference == utxo_ref })
+        expect Some(_input) = list.find(inputs, fn(input) { input.output_reference == utxo_ref })
        
-        amount == 1 && asset_name == token_name
+        let must_be_amount = amount == 1
+
+        let must_be_name = asset_name == token_name
+
+        and {
+            must_be_amount?,
+            must_be_name?
+        }
       }
 
       Burn -> amount == -1 && asset_name == token_name
     }
   }
 }
-
-
-type POSIXTime =
-  Int
 
 pub type StateMachineDatum {
   state: Int

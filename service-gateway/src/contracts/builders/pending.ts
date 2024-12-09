@@ -22,7 +22,7 @@ async function pendingTransactionBuilder(
   sellerPubKeyHash: string,
   contractPrice: bigint,
   contractCollateral: bigint,
-  validUntil: number,
+  validUntil: bigint,
   pendingUntil: bigint,
   shippingUntil: bigint
 ) {
@@ -51,7 +51,7 @@ async function pendingTransactionBuilder(
     type: "PlutusV3",
     script: applyParamsToScript(
       applyDoubleCborEncoding(validators.threadToken),
-      [tokenName, utxoRef]
+      [tokenName, utxoRef, validUntil]
     ),
   };
 
@@ -130,8 +130,8 @@ async function pendingTransactionBuilder(
       }
     )
     .attach.MintingPolicy(threadTokenScript)
-    .validTo(validUntil)
     .addSigner(externalWalletAddress)
+    .validTo(Number(validUntil))
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: 1_000_000n,
@@ -200,7 +200,7 @@ function main() {
     sellerPubKeyHash,
     BigInt(contractPrice),
     BigInt(contractCollateral),
-    validUntil,
+    BigInt(validUntil),
     BigInt(pendingUntil),
     BigInt(shippingUntil)
   );
