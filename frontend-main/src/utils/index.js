@@ -70,5 +70,5 @@ export function convertUSDToADA(usdAmount, adaPrice){
 
  const amountInADA = usdAmount / adaPrice;
 
- return Math.round(amountInADA);
+ return Math.trunc(amountInADA);
 }
