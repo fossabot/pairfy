@@ -10,7 +10,9 @@
                         <div class="timeline-item">
                             <div class="timeline-bar">
                                 <div class="timeline-bar-box">
-                                    1
+                                    <div class="diamond">
+                                        <span>1</span>
+                                    </div>
                                 </div>
                                 <div class="timeline-bar-line" />
                             </div>
@@ -63,7 +65,9 @@
     grid-template-columns: 70% 30%;
 }
 
-.col {}
+.col {
+    padding: 1rem;
+}
 
 .col.left {}
 
@@ -79,13 +83,12 @@
 
 .timeline {
     display: block;
-    width: 100%;
+    width: 90%;
     box-sizing: border-box;
 }
 
 .timeline-item {
     display: flex;
-    border: 1px solid red;
     width: inherit;
 }
 
@@ -100,14 +103,15 @@
 .timeline-bar-box {
     width: inherit;
     height: 50px;
-    background: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .timeline-bar-line {
-    width: 2px;
+    width: 3px;
     height: 100%;
-    background: var(--text-a);
-
+    background: var(--background-b);
 }
 
 .timeline-body {
@@ -128,5 +132,22 @@
     height: 100%;
     padding: 1rem;
     width: inherit;
+}
+
+
+.diamond {
+    width: 20px;
+    height: 20px;
+    background-color: var(--background-b);
+    transform: rotate(45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.diamond span {
+    transform: rotate(-45deg);
+    font-size: var(--text-size-a);
 }
 </style>
