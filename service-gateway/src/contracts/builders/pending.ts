@@ -89,17 +89,6 @@ async function pendingTransactionBuilder(
 
   const DatumType = StateMachineDatum as unknown as DatumType;
 
-  /*
-  const getUTXObyunit = await lucid.utxoByUnit("4243c29b2d04e0ce751286f77fb40fd6749efec0ea45c4ac7e791caf746872656164746f6b656e");
-
-  if (getUTXObyunit.datum) {
-    console.log(getUTXObyunit);
-    const datum = Data.from(getUTXObyunit.datum, StateMachineDatum);
-
-    console.log(datum);
-  }
-
-  */
 
   const stateMachineDatum = Data.to(datumValues, DatumType);
 

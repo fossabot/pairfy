@@ -93,7 +93,10 @@ const main = async () => {
 
     const worker = new Worker("scanThreadToken", scanThreadToken, {
       autorun: true,
-      drainDelay: 1000,
+      drainDelay: 10,
+      settings: {
+        backoffStrategy: () => -1,
+      },
       connection: { url: process.env.REDIS_HOST },
     });
 
@@ -141,7 +144,6 @@ const main = async () => {
     );
 
     /////////////////////////////////////////////////
-
     let connection: any = null;
 
     while (true) {
@@ -170,43 +172,39 @@ const main = async () => {
 
         for (const order of findOrders) {
           try {
-            const exist = await mainQueue.getJob(order.id);
+            await connection.beginTransaction();
 
-            if (!exist) {
-              await connection.beginTransaction();
-
-              const createWork = await mainQueue.upsertJobScheduler(
-                order.id,
-                {
-                  every: 60000,
-                  jobId: order.id,
+            const createWork = await mainQueue.upsertJobScheduler(
+              order.id,
+              {
+                every: 60000,
+                jobId: order.id,
+              },
+              {
+                name: order.id,
+                data: {
+                  threadtoken: order.id,
+                  watch_until: order.watch_until,
                 },
-                {
-                  name: order.id,
-                  data: {
-                    threadtoken: order.id,
-                    watch_until: order.watch_until,
+                opts: {
+                  attempts: 0,
+                  backoff: {
+                    type: "fixed",
+                    delay: 60000,
                   },
-                  opts: {
-                    attempts: 99999,
-                    backoff: {
-                      type: "fixed",
-                      delay: 1000,
-                    },
-                    removeOnComplete: false,
-                    removeOnFail: false,
-                  },
-                }
-              );
-
-              if (!createWork.name) {
-                throw new Error("CREATE_WORK");
+                  removeOnComplete: false,
+                  removeOnFail: false,
+                },
               }
+            );
 
-              await connection.commit();
-
-              console.log("ADDED", createWork.name);
+            if (!createWork.name) {
+              throw new Error("CREATE_WORK");
             }
+
+            await connection.commit();
+
+            console.log("ADDED", createWork.name);
           } catch (err) {
             logger.error(err);
             continue;

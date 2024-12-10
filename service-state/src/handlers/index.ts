@@ -1,7 +1,7 @@
-import { redisClient } from "../db/redis.js";
-import { axiosAPI } from "../axios/index.js";
 import { logger } from "../utils/index.js";
 import { database } from "../db/client.js";
+import { Data, fromText } from "@lucid-evolution/lucid";
+import { lucid, StateMachineDatum } from "../lib/index.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -12,11 +12,31 @@ async function scanThreadToken(job: any) {
 
     const timestamp = Date.now();
 
-    const tx = null;
+    const unit = threadtoken + fromText("threadtoken");
 
     let finished = false;
 
-    if (timestamp > watch_until && !tx) {
+    console.log(unit);
+
+    let utxo = null;
+ 
+    try {
+      const getUtxo = await lucid.utxoByUnit(unit);
+
+      if (getUtxo.datum) {
+        console.log(getUtxo);
+
+        const datum = Data.from(getUtxo.datum, StateMachineDatum);
+
+        console.log(datum);
+      }
+     
+    } catch (err) {
+      console.error(err);
+    }
+
+
+    if (timestamp > watch_until && !utxo) {
       finished = true;
     }
 
@@ -34,7 +54,7 @@ async function scanThreadToken(job: any) {
       finished,
       newState,
       timestamp,
-      threadtoken
+      threadtoken,
     ]);
 
     await connection.commit();
