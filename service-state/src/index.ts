@@ -1,11 +1,5 @@
-import {
-  catcher,
-  errorEvents,
-  logger,
-  sleep,
-  workOptions,
-} from "./utils/index.js";
-import { Queue, Worker } from "bullmq";
+import { catcher, errorEvents, logger, sleep } from "./utils/index.js";
+import { Job, Queue, Worker } from "bullmq";
 import { redisClient } from "./db/redis.js";
 import { scanThreadToken } from "./handlers/index.js";
 import { database } from "./db/client.js";
@@ -98,31 +92,28 @@ const main = async () => {
     });
 
     const worker = new Worker("scanThreadToken", scanThreadToken, {
-      removeOnComplete: false,
-      removeOnFail: false,
       autorun: true,
       drainDelay: 1000,
       connection: { url: process.env.REDIS_HOST },
-    } as any);
+    });
 
     worker.on("failed", (job: any, err) => {
       logger.error("FAILED", job.id, err);
     });
 
-    worker.on("completed", async (job: any, result) => {
-      console.log("COMPLETED", job.id, result);
+    worker.on("completed", async (job: Job, result) => {
+      console.log("COMPLETED", job.id);
 
-      const { watch_until } = job.data;
+      const { threadtoken, finished } = result;
 
-      const { finished, timestamp } = result;
-
-      if (timestamp > watch_until && finished) {
+      if (finished) {
         console.log("Expired");
 
-        await job
-          .remove()
-          .then((res: any) => console.log(res))
-          .catch((err: any) => console.log(err));
+        try {
+          await mainQueue.removeJobScheduler(threadtoken);
+        } catch (err) {
+          logger.error(err);
+        }
       }
     });
 
@@ -184,15 +175,27 @@ const main = async () => {
             if (!exist) {
               await connection.beginTransaction();
 
-              const createWork = await mainQueue.add(
+              const createWork = await mainQueue.upsertJobScheduler(
                 order.id,
                 {
-                  threadtoken: order.id,
-                  watch_until: order.watch_until,
+                  every: 60000,
+                  jobId: order.id,
                 },
                 {
-                  ...workOptions,
-                  jobId: order.id,
+                  name: order.id,
+                  data: {
+                    threadtoken: order.id,
+                    watch_until: order.watch_until,
+                  },
+                  opts: {
+                    attempts: 99999,
+                    backoff: {
+                      type: "fixed",
+                      delay: 1000,
+                    },
+                    removeOnComplete: false,
+                    removeOnFail: false,
+                  },
                 }
               );
 

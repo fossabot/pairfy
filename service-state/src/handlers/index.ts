@@ -40,6 +40,7 @@ async function scanThreadToken(job: any) {
     await connection.commit();
 
     return {
+      threadtoken,
       finished,
       timestamp,
     };

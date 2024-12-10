@@ -18,19 +18,6 @@ const sleep = (timeInMs: number) =>
 
 const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 21);
 
-const workOptions = {
-  repeat: {
-    every: 60000,
-  },
-  attempts: 99999,
-  backoff: {
-    type: "fixed",
-    delay: 1000,
-  },
-  removeOnComplete: false,
-  removeOnFail: false,
-};
-
 const errorEvents: string[] = [
   "exit",
   "SIGINT",
@@ -41,4 +28,4 @@ const errorEvents: string[] = [
   "SIGHUP",
   "SIGCONT",
 ];
-export { logger, catcher, getEventId, sleep, workOptions, errorEvents };
+export { logger, catcher, getEventId, sleep, errorEvents };
