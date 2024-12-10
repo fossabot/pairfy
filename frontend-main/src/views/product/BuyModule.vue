@@ -1,10 +1,17 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '25rem' }"
+        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '22rem' }"
             :draggable="false">
             <template #header>
 
             </template>
+
+            <div class="dialog-msg">
+                <Message size="small" severity="info">
+                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
+                    be refunded.
+                </Message>
+            </div>
 
             <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
 
@@ -14,20 +21,9 @@
                 - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
             </div>
 
-
-
             <div class="dialog-total">
                 Total: {{ computedTotalPrice }} ADA
             </div>
-
-
-            <div class="dialog-msg">
-                <Message size="small" icon="pi pi-exclamation-circle" severity="info">
-                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
-                    be refunded.
-                </Message>
-            </div>
-
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
@@ -253,12 +249,11 @@ const onConfirmedBuy = () => {
     margin-top: 1rem;
 }
 
-.dialog-msg {
-    margin-top: 1rem;
-}
+.dialog-msg {}
 
 .dialog-sub {
     font-weight: 500;
+    margin-top: 1rem;
 }
 
 .dialog-total {

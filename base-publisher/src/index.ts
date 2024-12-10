@@ -95,7 +95,7 @@ const main = async () => {
         logger.error("DB_PING_ERROR", error);
 
         if (connection) {
-          connection.rollback();
+          await connection.rollback();
         }
       } finally {
         if (connection) {

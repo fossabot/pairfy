@@ -1,13 +1,11 @@
 import axios from "axios";
 
-//axios.defaults.withCredentials = true;
-
 const axiosAPI = axios.create({
-  baseURL: "https://api.binance.com",
+  baseURL: "https://cardano-preprod.blockfrost.io/api/v0",
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
-  //  "Access-Control-Allow-Credentials": true,
+    "Project_id": process.env.PROJECT_ID
   },
 });
 

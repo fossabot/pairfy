@@ -100,9 +100,7 @@ const main = async () => {
       connection: { url: process.env.REDIS_HOST },
     });
 
-    worker.on("failed", (job: any, err) => {
-      logger.error("FAILED", job.id, err);
-    });
+    worker.on("failed", (job: any, err) => logger.error("FAILED", job.id, err));
 
     worker.on("completed", async (job: Job, result) => {
       console.log("COMPLETED", job.id);
@@ -110,13 +108,8 @@ const main = async () => {
       const { threadtoken, finished } = result;
 
       if (finished) {
+        await mainQueue.removeJobScheduler(threadtoken);
         console.log("Expired");
-
-        try {
-          await mainQueue.removeJobScheduler(threadtoken);
-        } catch (err) {
-          logger.error(err);
-        }
       }
     });
 
@@ -144,6 +137,7 @@ const main = async () => {
     );
 
     /////////////////////////////////////////////////
+    
     let connection: any = null;
 
     while (true) {
@@ -172,8 +166,6 @@ const main = async () => {
 
         for (const order of findOrders) {
           try {
-            await connection.beginTransaction();
-
             const createWork = await mainQueue.upsertJobScheduler(
               order.id,
               {
@@ -201,8 +193,6 @@ const main = async () => {
             if (!createWork.name) {
               throw new Error("CREATE_WORK");
             }
-
-            await connection.commit();
 
             console.log("ADDED", createWork.name);
           } catch (err) {

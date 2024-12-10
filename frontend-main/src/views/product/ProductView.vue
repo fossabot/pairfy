@@ -24,8 +24,8 @@
                         <PreviewModule />
                     </div>
 
-                    <Divider/>
-                    <DescriptionModule/>
+                    <Divider />
+                    <DescriptionModule />
                 </div>
                 <div class="card-right">
                     <BuyModule />
@@ -33,7 +33,7 @@
             </div>
 
             <div class="footer">
-                
+
             </div>
         </div>
     </div>
@@ -159,6 +159,7 @@ onGetProductError(error => {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url("https://http2.mlstatic.com/D_NQ_898353-MLA80842011878_122024-OO.webp");
+    background: var(--primary-a);
 }
 
 .container {

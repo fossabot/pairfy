@@ -1,61 +1,60 @@
 import { logger } from "../utils/index.js";
 import { database } from "../db/client.js";
-import { Data, fromText } from "@lucid-evolution/lucid";
-import { lucid, StateMachineDatum } from "../lib/index.js";
+import { getUtxo } from "../lib/index.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
-  try {
-    connection = await database.client.getConnection();
 
+  try {
     const { threadtoken, watch_until } = job.data;
 
     const timestamp = Date.now();
 
-    const unit = threadtoken + fromText("threadtoken");
-
     let finished = false;
 
-    console.log(unit);
+    const utxo = await getUtxo(threadtoken);
 
-    let utxo = null;
- 
-    try {
-      const getUtxo = await lucid.utxoByUnit(unit);
-
-      if (getUtxo.datum) {
-        console.log(getUtxo);
-
-        const datum = Data.from(getUtxo.datum, StateMachineDatum);
-
-        console.log(datum);
-      }
-     
-    } catch (err) {
-      console.error(err);
-    }
-
+    console.log(utxo);
 
     if (timestamp > watch_until && !utxo) {
       finished = true;
     }
 
+    connection = await database.client.getConnection();
+
     await connection.beginTransaction();
 
-    const newState = 1;
+    if (utxo) {
+      const updateQuery = `
+        UPDATE orders
+        SET finished = ?,
+            scanned_at = ?,
+            contract_address = ?,
+            contract_state = ?,
+            pending_tx = ?,
+            pending_block = ?
+        WHERE id = ?`;
 
-    const updateQuery = `
-      UPDATE orders
-      SET finished = ?, contract_state = ?, scanned_at = ?
-      WHERE id = ?;
-      `;
+      const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
 
-    await connection.execute(updateQuery, [
-      finished,
-      newState,
-      timestamp,
-      threadtoken,
-    ]);
+      await connection.execute(updateQuery, [
+        finished,
+        timestamp,
+        utxo.address,
+        utxo.data.state,
+        pendingTx,
+        utxo.block_time,
+        threadtoken,
+      ]);
+    } else {
+      const updateQuery = `
+        UPDATE orders
+        SET finished = ?,
+            scanned_at = ?
+        WHERE id = ?`;
+
+      await connection.execute(updateQuery, [finished, timestamp, threadtoken]);
+    }
 
     await connection.commit();
 
@@ -68,7 +67,7 @@ async function scanThreadToken(job: any) {
     logger.error(err);
 
     if (connection) {
-      connection.rollback();
+      await connection.rollback();
     }
 
     throw err;

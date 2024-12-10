@@ -24,5 +24,6 @@
     margin-right: 1rem;
     font-size: var(--text-size-a);
     cursor: pointer;
+    color: var(--text-b);
 }
 </style>
