@@ -46,7 +46,9 @@ spec:
             - name: QUERY_LIMIT
               value: "1000"        
             - name: QUERY_INTERVAL
-              value: "30000"                       
+              value: "30000"       
+            - name: SCAN_RANGE
+              value: "5"                               
             - name: PROJECT_ID
               valueFrom:
                 secretKeyRef:

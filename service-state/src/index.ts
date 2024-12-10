@@ -46,6 +46,10 @@ const main = async () => {
       throw new Error("QUERY_INTERVAL error");
     }
 
+    if (!process.env.SCAN_RANGE) {
+      throw new Error("SCAN_RANGE error");
+    }
+
     /////////////////////////////////////////
 
     await redisClient
@@ -64,7 +68,7 @@ const main = async () => {
       } catch (err) {
         logger.error("Redis Error", err);
       }
-    }, 10_000);
+    }, 30_000);
 
     //////////////////////////////////////////
 
@@ -104,7 +108,6 @@ const main = async () => {
 
     worker.on("completed", async (job: Job, result) => {
       console.log("COMPLETED", job.id);
-
       const { threadtoken, finished } = result;
 
       if (finished) {
@@ -154,11 +157,12 @@ const main = async () => {
           LIMIT ? 
           FOR UPDATE SKIP LOCKED`;
 
-        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+        const scanRange =
+          Date.now() - parseInt(process.env.SCAN_RANGE) * 60 * 1000;
 
         const [findOrders] = await connection.query(queryScheme, [
           false,
-          fiveMinutesAgo,
+          scanRange,
           parseInt(process.env.QUERY_LIMIT),
         ]);
 
