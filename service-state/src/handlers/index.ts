@@ -21,6 +21,8 @@ async function scanThreadToken(job: any) {
     }
 
     connection = await database.client.getConnection();
+    
+    await connection.beginTransaction();
 
     if (code === 200) {
       switch (utxo.data.state) {
