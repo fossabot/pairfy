@@ -1,11 +1,6 @@
+import { logger } from "../utils/index.js";
 import { axiosAPI } from "../axios/index.js";
-import {
-  Blockfrost,
-  Data,
-  fromText,
-  Lucid,
-  UTxO,
-} from "@lucid-evolution/lucid";
+import { Blockfrost, Data, fromText, Lucid } from "@lucid-evolution/lucid";
 
 const StateMachineDatum = Data.Object({
   state: Data.Integer(),
@@ -22,8 +17,16 @@ const provider = new Blockfrost(
 
 const lucid = await Lucid(provider, "Preprod");
 
-async function getUtxo(threadtoken: string) {
-  let result = null;
+interface ResponseType {
+  code: number;
+  utxo: any;
+}
+
+async function getUtxo(threadtoken: string): Promise<ResponseType> {
+  let result = {
+    code: 0,
+    utxo: {},
+  };
 
   try {
     const unit = threadtoken + fromText("threadtoken");
@@ -37,14 +40,24 @@ async function getUtxo(threadtoken: string) {
         const data = Data.from(utxo.datum, StateMachineDatum);
 
         result = {
-          ...utxo,
-          block_time: response.data.block_time,
-          data,
+          code: 200,
+          utxo: {
+            ...utxo,
+            block_time: response.data.block_time,
+            data,
+          },
         };
       }
     }
-  } catch (err) {
-    console.error(err);
+  } catch (err: any) {
+    if (err.message === "Unit not found.") {
+      result = {
+        code: 404,
+        utxo: {},
+      };
+    } else {
+      logger.error(err);
+    }
   } finally {
     return result;
   }

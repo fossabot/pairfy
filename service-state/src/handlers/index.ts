@@ -12,11 +12,11 @@ async function scanThreadToken(job: any) {
 
     let finished = false;
 
-    const utxo = await getUtxo(threadtoken);
+    const { code, utxo } = await getUtxo(threadtoken);
 
-    console.log(utxo);
+    console.log(code, utxo);
 
-    if (timestamp > watch_until && !utxo) {
+    if (timestamp > watch_until && code === 404) {
       finished = true;
     }
 
@@ -24,7 +24,7 @@ async function scanThreadToken(job: any) {
 
     await connection.beginTransaction();
 
-    if (utxo) {
+    if (code === 200) {
       const updateQuery = `
         UPDATE orders
         SET finished = ?,
