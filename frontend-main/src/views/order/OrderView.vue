@@ -7,21 +7,39 @@
             <div class="grid">
                 <div class="col left">
                     <div class="timeline">
-                        <div class="timeline-item">
+                        <div class="timeline-item" v-for="item in timeline" :key="item">
                             <div class="timeline-bar">
                                 <div class="timeline-bar-box">
                                     <div class="diamond">
-                                        <span>1</span>
+                                        <span>{{ item.number }}</span>
                                     </div>
                                 </div>
-                                <div class="timeline-bar-line" />
+                                <div class="timeline-bar-line" :class="{ disabled: !item.line }" />
                             </div>
                             <div class="timeline-body">
-                                <div class="timeline-title">
-                                    Order Created
+                                <div class="timeline-title flex">
+                                    {{ item.title }}
                                 </div>
-                                <div class="timeline-content">
-                                    Confirm
+                                <div class="timeline-subtitle flex">
+                                    {{ item.subtitle }}
+                                </div>
+                                <div class="timeline-content"
+                                    :class="{ box: item.type === 'box', button: item.type === 'button' }">
+
+                                    <template v-if="item.template === 'created'">
+
+                                    </template>
+
+                                    <template v-if="item.template === 'preparation'">
+  
+                                    </template>
+
+                                    <template v-if="item.template === 'received'">
+                                        <Button size="small" style="font-weight: 600;">
+                                            Product Received
+                                        </Button>
+                                    </template>
+
                                 </div>
                             </div>
                         </div>
@@ -39,7 +57,37 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
+const timeline = ref([
+    {
+        number: 1,
+        title: "Order Created",
+        subtitle: "",
+        completed: true,
+        type: "box",
+        template: "created",
+        line: true
+    },
+    {
+        number: 2,
+        title: "Preparation",
+        subtitle: "The seller has been notified to prepare your product.",
+        completed: false,
+        type: "box",
+        template: "preparation",
+        line: true
+    },
+    {
+        number: 3,
+        title: "Received",
+        subtitle: "Please confirm that the exact product was delivered successfully.",
+        completed: false,
+        type: "button",
+        template: "received",
+        line: false
+    }
+])
 </script>
 
 <style lang="css" scoped>
@@ -71,13 +119,12 @@
 
 .col.left {}
 
-.col.right {
-    border-left: 1px solid var(--border-a);
-}
+.col.right {}
 
 .chat {
     width: 100%;
     height: 700px;
+    background: var(--background-b);
 }
 
 
@@ -102,7 +149,7 @@
 
 .timeline-bar-box {
     width: inherit;
-    height: 50px;
+    min-height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,26 +161,37 @@
     background: var(--background-b);
 }
 
+.timeline-bar-line.disabled {
+    background: transparent;
+}
+
 .timeline-body {
     display: flex;
     flex-direction: column;
-    height: 200px;
     width: inherit;
 }
 
 .timeline-title {
-    line-height: 3rem;
+    min-height: 40px;
     font-weight: 700;
+}
+
+.timeline-subtitle {
+    font-size: var(--text-size-a);
+
 }
 
 .timeline-content {
     border: 1px solid var(--border-a);
     border-radius: 12px;
     height: 100%;
-    padding: 1rem;
     width: inherit;
+    margin-top: 0.5rem;
 }
 
+.timeline-content.button {
+    border: 1px solid transparent;
+}
 
 .diamond {
     width: 20px;
@@ -144,10 +202,12 @@
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    border-radius: 4px;
 }
 
 .diamond span {
     transform: rotate(-45deg);
     font-size: var(--text-size-a);
+    font-weight: 600;
 }
 </style>
