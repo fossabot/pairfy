@@ -38,7 +38,7 @@
 
             </div>
             <div class="menu-col right">
-                <div class="ada-price">ADA {{ getADAprice }} USD</div>
+                <div class="ada-price">ADAUSD {{ getADAprice }}</div>
             </div>
         </div>
     </header>
