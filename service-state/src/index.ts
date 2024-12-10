@@ -137,7 +137,7 @@ const main = async () => {
     );
 
     /////////////////////////////////////////////////
-    
+
     let connection: any = null;
 
     while (true) {
@@ -149,14 +149,16 @@ const main = async () => {
         const queryScheme = `
           SELECT id, finished, scanned_at, watch_until
           FROM orders
-          WHERE finished = ? AND scanned_at = ?
+          WHERE finished = ? AND scanned_at < ?
           ORDER BY created_at ASC
           LIMIT ? 
           FOR UPDATE SKIP LOCKED`;
 
+        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
+
         const [findOrders] = await connection.query(queryScheme, [
           false,
-          0,
+          fiveMinutesAgo,
           parseInt(process.env.QUERY_LIMIT),
         ]);
 
