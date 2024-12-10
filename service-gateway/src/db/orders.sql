@@ -1,7 +1,7 @@
 create table if not exists orders(
   id varchar(100) not null,
   finished boolean default false,
-  scanning boolean default false,
+  scanned_at bigint default 0,
   status_log varchar(100) default "created",
   seller_id varchar(20) not null,
   buyer_pubkeyhash varchar(100) not null,
@@ -29,6 +29,7 @@ create table if not exists orders(
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,
   primary key(id),
-  index idx_scanning (id,finished,scanning),
-  index idx_contract_state (contract_state)
+  index idx_finished (finished),
+  index idx_created_at (created_at),
+  index idx_scanned_at (scanned_at)
 ) ENGINE=InnoDB;

@@ -114,18 +114,15 @@ const main = async () => {
 
       const { watch_until } = job.data;
 
-      const now = Date.now();
+      const { finished, timestamp } = result;
 
-      if (now > watch_until) {
+      if (timestamp > watch_until && finished) {
         console.log("Expired");
 
-        try {
-          let del = await job.remove();
-
-          console.log(del);
-        } catch (err) {
-          console.log(err);
-        }
+        await job
+          .remove()
+          .then((res: any) => console.log(res))
+          .catch((err: any) => console.log(err));
       }
     });
 
@@ -163,17 +160,16 @@ const main = async () => {
         connection = await database.client.getConnection();
 
         const queryScheme = `
-          SELECT id, finished, scanning, watch_until
+          SELECT id, finished, scanned_at, watch_until
           FROM orders
-          WHERE finished = ?
-          AND scanning = ?
+          WHERE finished = ? AND scanned_at = ?
           ORDER BY created_at ASC
           LIMIT ? 
           FOR UPDATE SKIP LOCKED`;
 
         const [findOrders] = await connection.query(queryScheme, [
           false,
-          false,
+          0,
           parseInt(process.env.QUERY_LIMIT),
         ]);
 
@@ -183,34 +179,31 @@ const main = async () => {
 
         for (const order of findOrders) {
           try {
-            await connection.beginTransaction();
+            const exist = await mainQueue.getJob(order.id);
 
-            const [updateOrder] = await connection.execute(
-              "UPDATE orders SET scanning = ? WHERE id = ?",
-              [true, order.id]
-            );
+            if (!exist) {
+              await connection.beginTransaction();
 
-            if (updateOrder.affectedRows !== 1) {
-              throw new Error("UPDATE_ORDER");
-            }
+              const createWork = await mainQueue.add(
+                order.id,
+                {
+                  threadtoken: order.id,
+                  watch_until: order.watch_until,
+                },
+                {
+                  ...workOptions,
+                  jobId: order.id,
+                }
+              );
 
-            const createWork = await mainQueue.add(
-              order.id,
-              {
-                threadtoken: order.id,
-                watch_until: order.watch_until,
-              },
-              {
-                ...workOptions,
-                jobId: order.id,
+              if (!createWork.name) {
+                throw new Error("CREATE_WORK");
               }
-            );
 
-            if (!createWork.name) {
-              throw new Error("CREATE_WORK");
+              await connection.commit();
+
+              console.log("ADDED", createWork.name);
             }
-
-            await connection.commit();
           } catch (err) {
             logger.error(err);
             continue;

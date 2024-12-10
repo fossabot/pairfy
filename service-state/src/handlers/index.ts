@@ -10,14 +10,14 @@ async function scanThreadToken(job: any) {
 
     const { threadtoken, watch_until } = job.data;
 
-    console.log(threadtoken, watch_until);
+    const timestamp = Date.now();
 
-    const now = Date.now();
+    const tx = null;
 
-    let isFinished = false;
+    let finished = false;
 
-    if (now > watch_until) {
-      isFinished = true;
+    if (timestamp > watch_until && !tx) {
+      finished = true;
     }
 
     await connection.beginTransaction();
@@ -26,20 +26,23 @@ async function scanThreadToken(job: any) {
 
     const updateQuery = `
       UPDATE orders
-      SET finished = ?, contract_state = ?, updated_at = CURRENT_TIMESTAMP
-      WHERE id = ? AND contract_state != ?;
+      SET finished = ?, contract_state = ?, scanned_at = ?
+      WHERE id = ?;
       `;
 
     await connection.execute(updateQuery, [
-      isFinished,
+      finished,
       newState,
-      threadtoken,
-      newState,
+      timestamp,
+      threadtoken
     ]);
 
     await connection.commit();
 
-    console.log("STATE UPDATED.");
+    return {
+      finished,
+      timestamp,
+    };
   } catch (err) {
     logger.error(err);
 
