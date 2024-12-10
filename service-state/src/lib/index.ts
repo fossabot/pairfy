@@ -1,6 +1,7 @@
 import { logger } from "../utils/index.js";
 import { axiosAPI } from "../axios/index.js";
 import { Blockfrost, Data, fromText, Lucid } from "@lucid-evolution/lucid";
+import { PoolConnection } from "mysql2";
 
 const StateMachineDatum = Data.Object({
   state: Data.Integer(),
@@ -63,4 +64,34 @@ async function getUtxo(threadtoken: string): Promise<ResponseType> {
   }
 }
 
-export { StateMachineDatum, lucid, getUtxo };
+async function handlePending(
+  connection: PoolConnection,
+  threadtoken: string,
+  finished: boolean,
+  timestamp: number,
+  utxo: any
+) {
+  const updateQuery = `
+  UPDATE orders
+  SET finished = ?,
+      scanned_at = ?,
+      contract_address = ?,
+      contract_state = ?,
+      pending_tx = ?,
+      pending_block = ?
+  WHERE id = ?`;
+
+  const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
+
+  await connection.execute(updateQuery, [
+    finished,
+    timestamp,
+    utxo.address,
+    utxo.data.state,
+    pendingTx,
+    utxo.block_time,
+    threadtoken,
+  ]);
+
+}
+export { StateMachineDatum, lucid, getUtxo, handlePending };

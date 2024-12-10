@@ -1,6 +1,6 @@
 import { logger } from "../utils/index.js";
 import { database } from "../db/client.js";
-import { getUtxo } from "../lib/index.js";
+import { getUtxo, handlePending } from "../lib/index.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -22,30 +22,20 @@ async function scanThreadToken(job: any) {
 
     connection = await database.client.getConnection();
 
-    await connection.beginTransaction();
-
     if (code === 200) {
-      const updateQuery = `
-        UPDATE orders
-        SET finished = ?,
-            scanned_at = ?,
-            contract_address = ?,
-            contract_state = ?,
-            pending_tx = ?,
-            pending_block = ?
-        WHERE id = ?`;
-
-      const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
-
-      await connection.execute(updateQuery, [
-        finished,
-        timestamp,
-        utxo.address,
-        utxo.data.state,
-        pendingTx,
-        utxo.block_time,
-        threadtoken,
-      ]);
+      switch (utxo.data.state) {
+        case 0n:
+          await handlePending(
+            connection,
+            threadtoken,
+            finished,
+            timestamp,
+            utxo
+          );
+          break;
+        case 1n:
+          console.log("1");
+      }
     } else {
       const updateQuery = `
         UPDATE orders
