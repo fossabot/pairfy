@@ -301,13 +301,13 @@ const getPaymentStatus = (pending_block) => {
         }
     }
 
-    const now = Math.floor(Date.now() / 1000); // Obtener el timestamp actual en segundos
-    const diff = now - pending_block; // Diferencia en segundos
-    const minutes = Math.floor(diff / 60); // Convertir la diferencia a minutos
+    const now = Math.floor(Date.now() / 1000); 
+    const diff = now - pending_block; 
+    const minutes = Math.floor(diff / 60); 
 
-    console.log(minutes, "a");
+    console.log(minutes, "minutes_pending_block");
 
-    if (minutes < 15) {
+    if (minutes <= 15) {
         return {
             label: "confirming",
             template: "icon",
@@ -317,7 +317,7 @@ const getPaymentStatus = (pending_block) => {
     }
 
 
-    if (minutes > 16) {
+    if (minutes >= 15) {
         return {
             label: "confirmed",
             template: "icon",
@@ -329,7 +329,7 @@ const getPaymentStatus = (pending_block) => {
 }
 
 const getTimestamp = (order) => {
-    console.log("e", order.contract_state)
+    console.log("contract_state", order.contract_state)
     if (order.contract_state === null) {
         return order.watch_until
     }
