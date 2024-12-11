@@ -27,14 +27,29 @@
                                 <div class="timeline-title flex">
                                     {{ item.title }}
                                 </div>
-                                <div class="timeline-subtitle flex">
+                                
+                                <div v-if="item.subtitle.length" class="timeline-subtitle flex">
                                     {{ item.subtitle }}
                                 </div>
+
                                 <div class="timeline-content"
                                     :class="{ box: item.type === 'box', button: item.type === 'button' }">
 
                                     <template v-if="item.template === 'created'">
-
+                                        <div class="created">
+                                            <div class="created-item">
+                                                <span>Fiat Amount</span>
+                                                <span>$3.768 USD</span>
+                                            </div>
+                                            <div class="created-item">
+                                                <span>ADA Amount</span>
+                                                <span>8.000 ADA</span>
+                                            </div>
+                                            <div class="created-item">
+                                                <span>Quantity</span>
+                                                <span>3</span>
+                                            </div>
+                                        </div>
                                     </template>
 
                                     <template v-if="item.template === 'preparation'">
@@ -231,6 +246,22 @@ const timeline = ref([
 .diamond span {
     transform: rotate(-45deg);
     font-size: var(--text-size-a);
+    font-weight: 600;
+}
+
+.created {
+    display: block;
+    padding: 1rem;
+}
+
+.created-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 2rem;
+}
+
+.created-item span {
     font-weight: 600;
 }
 </style>
