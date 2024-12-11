@@ -164,6 +164,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       success: true,
       payload: {
         cbor: BUILDER.cbor,
+        order: BUILDER.threadTokenPolicyId
       },
     };
 

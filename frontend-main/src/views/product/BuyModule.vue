@@ -39,9 +39,6 @@
                 {{ getProductData.brand }}
             </div>
 
-            <div class="buy-sku">
-                <span>SKU: {{ getProductData.sku.split(":")[0] }}</span>
-            </div>
 
             <div class="buy-stock" :class="{ green: 15 > 0, }">
                 {{ getStockLabel(15) }}
@@ -52,6 +49,10 @@
                 <Rating v-model="productRating" :stars="5" readonly />
                 <span> 4.5 </span>
                 <span style="color: var(--text-b)">(1250 reviews)</span>
+            </div>
+
+            <div class="buy-sku">
+                <span>SKU: {{ getProductData.sku.split(":")[0] }}</span>
             </div>
 
             <div class="buy-available">
@@ -76,9 +77,11 @@ import { ref, computed, inject } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
+import { useRouter } from 'vue-router';
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
+const router = useRouter();
 
 const { getADAprice } = headerAPI();
 
@@ -144,6 +147,7 @@ mutation($createOrderVariable: CreateOrderInput!){
         success
         payload {
             cbor
+            order
         }
     }
 }
@@ -162,11 +166,24 @@ onOrderCreated(async result => {
 
     if (response.createOrder.success === true) {
         try {
-            const txHash = await balanceTx(response.createOrder.payload.cbor);
+            const { cbor, order } = response.createOrder.payload;
+            
+            const txHash = await balanceTx(cbor);
 
             showSuccess("Transaction submited");
 
             console.log(`Transaction submitted with hash: ${txHash}`);
+
+            router.push({
+                name: 'order',
+                params: {
+                    id: order
+                },
+                query: {
+                    tx: txHash
+                }
+            })
+
         } catch (err) {
             console.error(err);
 
@@ -191,7 +208,7 @@ const onConfirmedBuy = () => {
 <style lang="css" scoped>
 .buy {
     border: 1px solid var(--border-a);
-    border-radius: 8px;
+    border-radius: 12px; 
     min-height: 100px;
     display: flex;
     flex-direction: column;

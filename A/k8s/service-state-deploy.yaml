@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: service-state
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       role: service-state

@@ -71,10 +71,13 @@ async function handlePending(
   timestamp: number,
   utxo: any
 ) {
+  const statusLog = "Pending";
+
   const updateQuery = `
   UPDATE orders
   SET finished = ?,
       scanned_at = ?,
+      status_log = ?,
       contract_address = ?,
       contract_state = ?,
       pending_tx = ?,
@@ -86,6 +89,7 @@ async function handlePending(
   await connection.execute(updateQuery, [
     finished,
     timestamp,
+    statusLog,
     utxo.address,
     utxo.data.state,
     pendingTx,

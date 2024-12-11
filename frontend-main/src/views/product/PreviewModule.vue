@@ -83,7 +83,7 @@ const bulletList = computed(() => {
 }
 
 .preview-wrap {
-    padding: 1rem;
+ 
 }
 
 .preview-name {

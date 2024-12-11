@@ -41,6 +41,10 @@
                                     <template v-if="item.template === 'created'">
                                         <div class="created">
                                             <div class="created-item">
+                                                <span>Status</span>
+                                                <span>{{ statusLog }}</span>
+                                            </div>
+                                            <div class="created-item">
                                                 <span>Fiat Amount</span>
                                                 <span>${{ formatCurrency(contractFiat) }} USD</span>
                                             </div>
@@ -52,22 +56,32 @@
                                                 <span>Quantity</span>
                                                 <span>{{ contractUnits }}</span>
                                             </div>
+
                                             <div class="created-item">
                                                 <span>Payment</span>
                                                 <span>
-                                                    <div class="payment flex">
+                                                    <div class="payment flex" @click="openExplorer">
                                                         <div class="payment-label"
-                                                            :class="{ unconfirmed: true, confirmed: false }">
-                                                            unconfirmed
+                                                            :style="{ color: orderPayment.color }">
+                                                            {{ orderPayment.label }}
                                                         </div>
-                                                        <div class="payment-loader" />
+
+                                                        <div class="payment-symbol flex"
+                                                            :style="{ color: orderPayment.color }">
+                                                            <div v-if="orderPayment.template === 'loading'"
+                                                                class="payment-loader" :class="{
+                                                                    warn: orderPayment.label === 'confirming',
+                                                                    danger: orderPayment.label === 'unconfirmed'
+                                                                }" />
+
+                                                            <div v-if="orderPayment.template === 'icon'">
+                                                                <i :class="orderPayment.icon" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </span>
                                             </div>
-                                            <div class="created-item">
-                                                <span>Status</span>
-                                                <span>Expired</span>
-                                            </div>
+
                                         </div>
                                     </template>
 
@@ -102,6 +116,7 @@ import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@vue/apollo-composable';
 import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { NETWORK } from '@/api';
 
 const { formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA } = inject('utils');
 
@@ -109,6 +124,7 @@ const route = useRoute()
 
 const router = useRouter()
 
+const txHash = ref(null)
 
 const queryVariablesRef = ref({
     "getOrderVariable": {
@@ -121,11 +137,15 @@ const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
         id
+        status_log
         contract_address
         contract_state
         ada_price
         contract_price
         contract_units 
+        pending_until
+        pending_tx
+        pending_block
         watch_until
     }
 }
@@ -150,11 +170,15 @@ const updateQueryVariables = (id) => {
 
 
 watch(
-    () => route.params.id,
-    (id) => {
-        if (id) {
+    () => route,
+    (route) => {
+        if (route.params.id) {
             queryEnabled.value = true;
-            updateQueryVariables(id)
+            updateQueryVariables(route.params.id)
+        }
+
+        if (route.query.tx) {
+            txHash.value = route.query.tx;
         }
     },
     { immediate: true }
@@ -165,6 +189,12 @@ const orderData = ref(null);
 const targetTimestamp = ref(Date.now());
 
 const contractAdress = ref("N/A");
+
+const statusLog = ref("Created");
+
+const orderPayment = ref(null);
+
+const pendingUntil = ref(null);
 
 const contractFiat = ref(0);
 
@@ -180,13 +210,21 @@ watch(getOrderResult, value => {
 
         contractAdress.value = order.contract_address;
 
+        statusLog.value = order.status_log;
+
+        orderPayment.value = getPaymentStatus(order.pending_block)
+
+        pendingUntil.value = order.pending_until
+
         contractPrice.value = convertLovelaceToADA(order.contract_price);
 
         contractUnits.value = order.contract_units;
 
+        txHash.value = order.pending_tx;
+
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
-        targetTimestamp.value = order.watch_until;
+        targetTimestamp.value = getTimestamp(order);
     }
 }, { immediate: true })
 
@@ -252,6 +290,57 @@ onUnmounted(() => {
     clearInterval(interval);
 });
 
+//////////////////////////////////////////////77
+
+const getPaymentStatus = (pending_block) => {
+    if (!pending_block) {
+        return {
+            label: "unconfirmed",
+            template: "loading",
+            color: "var(--red-a)"
+        }
+    }
+
+    const now = Math.floor(Date.now() / 1000); // Obtener el timestamp actual en segundos
+    const diff = now - pending_block; // Diferencia en segundos
+    const minutes = Math.floor(diff / 60); // Convertir la diferencia a minutos
+
+    console.log(minutes, "a");
+
+    if (minutes < 15) {
+        return {
+            label: "confirming",
+            template: "icon",
+            icon: "pi pi-eye",
+            color: "var(--orange-a)"
+        }
+    }
+
+
+    if (minutes > 16) {
+        return {
+            label: "confirmed",
+            template: "icon",
+            icon: "pi pi-eye",
+            color: "var(--green-a)"
+        }
+    }
+
+}
+
+const getTimestamp = (order) => {
+    console.log("e", order.contract_state)
+    if (order.contract_state === null) {
+        return order.watch_until
+    }
+    if (order.contract_state === 0) {
+        return order.pending_until
+    }
+}
+
+const openExplorer = () => {
+    window.open(`https://${NETWORK}.cexplorer.io/tx/${txHash.value}`, '_blank');
+}
 
 </script>
 
@@ -405,6 +494,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: space-between;
     line-height: 2.25rem;
+    text-transform: capitalize;
 }
 
 .created-item span {
@@ -420,6 +510,7 @@ onUnmounted(() => {
     border-radius: 20px;
     padding-right: 1rem;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .payment-label {
@@ -438,10 +529,14 @@ onUnmounted(() => {
     color: var(--green-a);
 }
 
+.payment-symbol {
+    justify-content: center;
+}
+
 .payment-loader {
     width: 1rem;
     height: 1rem;
-    border: 2px solid var(--red-a);
+    border: 2px solid transparent;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -449,6 +544,17 @@ onUnmounted(() => {
     animation: rotation 1s linear infinite;
     margin-left: 1px;
 }
+
+.payment-loader.warn {
+    border: 2px solid var(--orange-a);
+    border-bottom-color: transparent;
+}
+
+.payment-loader.danger {
+    border: 2px solid var(--red-a);
+    border-bottom-color: transparent;
+}
+
 
 @keyframes rotation {
     0% {

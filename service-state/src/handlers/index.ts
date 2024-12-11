@@ -12,16 +12,19 @@ async function scanThreadToken(job: any) {
 
     let finished = false;
 
+    let statusLog = "Created";
+
     const { code, utxo } = await getUtxo(threadtoken);
 
     console.log(code, utxo);
 
     if (timestamp > watch_until && code === 404) {
-      finished = true;
+      finished = true; 
+      statusLog = "Expired";
     }
 
     connection = await database.client.getConnection();
-    
+
     await connection.beginTransaction();
 
     if (code === 200) {
@@ -42,10 +45,11 @@ async function scanThreadToken(job: any) {
       const updateQuery = `
         UPDATE orders
         SET finished = ?,
-            scanned_at = ?
+            scanned_at = ?,
+            status_log = ?
         WHERE id = ?`;
 
-      await connection.execute(updateQuery, [finished, timestamp, threadtoken]);
+      await connection.execute(updateQuery, [finished, timestamp, statusLog, threadtoken]);
     }
 
     await connection.commit();

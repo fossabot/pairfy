@@ -74,8 +74,8 @@ type Order {
   product_discount_value: Int!
   watch_until: Float!
   pending_until: Float!
-  pending_tx: String!
-  pending_block: String!
+  pending_tx: String
+  pending_block: String
 }
 
 input GetBooksInput {
@@ -111,6 +111,7 @@ input UpdateBookInput {
 
 type CreateOrderPayload {
   cbor: String!
+  order: String!
 }
 
 type CreateOrderResponse {
