@@ -7,7 +7,7 @@
             <div class="grid">
                 <div class="summary" v-if="orderData">
                     <div class="summary-title">
-                        Preparing Your Product, Time Remaining <span>{{ countdownText }}</span>
+                        Preparing Your Product, Time Remaining <span>{{ generalCountdown }}</span>
                     </div>
                     <div class="summary-subtitle flex">
                         Order number
@@ -136,9 +136,14 @@
                                     </template>
 
                                     <template v-if="item.template === 'received'">
-                                        <Button size="small" style="font-weight: 600;">
-                                            Product Received
-                                        </Button>
+                                        <div class="received-control">
+                                            <Button size="small">
+                                                Product Received
+                                            </Button>
+                                            <Button size="small" disabled variant="outlined">
+                                                Return Funds After
+                                            </Button>
+                                        </div>
                                     </template>
 
                                 </div>
@@ -233,7 +238,7 @@ watch(
 
 const orderData = ref(null);
 
-const targetTimestamp = ref(Date.now());
+const globalTimestamp = ref(Date.now());
 
 const contractAdress = ref("N/A");
 
@@ -275,7 +280,7 @@ watch(getOrderResult, value => {
 
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
-        targetTimestamp.value = getTimestamp(order);
+        globalTimestamp.value = getTimestamp(order);
     }
 }, { immediate: true })
 
@@ -301,7 +306,7 @@ const timeline = ref([
     {
         number: 3,
         title: "Received",
-        subtitle: "Please confirm that the exact product was delivered successfully.",
+        subtitle: "Please confirm that the exact product was delivered.",
         completed: false,
         type: "button",
         template: "received",
@@ -314,31 +319,31 @@ const timeline = ref([
 
 
 
-const timeLeft = ref(targetTimestamp.value - Date.now());
+const globalTimeLeft = ref(globalTimestamp.value - Date.now());
 
-const countdownText = computed(() => {
-    if (timeLeft.value <= 0) return "00:00";
+const generalCountdown = computed(() => {
+    if (globalTimeLeft.value <= 0) return "00:00";
 
-    const totalSeconds = Math.floor(timeLeft.value / 1000);
+    const totalSeconds = Math.floor(globalTimeLeft.value / 1000);
     const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
     const seconds = (totalSeconds % 60).toString().padStart(2, '0');
 
     return `${minutes}:${seconds}`;
 });
 
-let interval;
+let globalInterval;
 
-const updateCountdown = () => {
-    timeLeft.value = targetTimestamp.value - Date.now();
+const updateGlobalCountdown = () => {
+    globalTimeLeft.value = globalTimestamp.value - Date.now();
 };
 
 onMounted(() => {
-    updateCountdown();
-    interval = setInterval(updateCountdown, 1000);
+    updateGlobalCountdown();
+    globalInterval = setInterval(updateGlobalCountdown, 1000);
 });
 
 onUnmounted(() => {
-    clearInterval(interval);
+    clearInterval(globalInterval);
 });
 
 //////////////////////////////////////////////77
@@ -632,5 +637,10 @@ const openExplorer = () => {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.received-control button {
+    margin-right: 1rem;
+    font-weight: 600;
 }
 </style>
