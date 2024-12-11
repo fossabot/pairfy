@@ -49,10 +49,13 @@
                 </div>
             </div>
 
+            <Button label="Mint ID" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
+                variant="outlined" />
+
             <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
                 variant="outlined" />
 
-            <div @click="createTransaction">TXXX</div>
+
         </section>
 
     </Drawer>
@@ -167,10 +170,8 @@ onBeforeUnmount(() => {
 .user {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-a);
     margin-top: 1rem;
     border-radius: 8px;
-    padding: 1rem;
 }
 
 .user-row {

@@ -33,7 +33,26 @@
                             <div class="timeline-bar">
                                 <div class="timeline-bar-box">
                                     <div class="diamond">
-                                        <span>{{ item.number }}</span>
+
+                                        <template v-if="item.template === 'created'">
+                                            <span v-if="!pendingBlock">{{ item.number }}</span>
+                                            <span v-else>
+                                                <i class="pi pi-check" />
+                                            </span>
+                                        </template>
+                                        <template v-if="item.template === 'preparation'">
+                                            <span v-if="!lockingBlock">{{ item.number }}</span>
+                                            <span v-else>
+                                                <i class="pi pi-check" />
+                                            </span>
+                                        </template>
+                                        <template v-if="item.template === 'received'">
+                                            <span v-if="!shippingBlock">{{ item.number }}</span>
+                                            <span v-else>
+                                                <i class="pi pi-check" />
+                                            </span>
+                                        </template>
+
                                     </div>
                                 </div>
                                 <div class="timeline-bar-line" :class="{ disabled: !item.line }" />
@@ -97,8 +116,23 @@
                                         </div>
                                     </template>
 
-                                    <template v-if="item.template === 'preparation'">
 
+                                    <template v-if="item.template === 'preparation'">
+                                        <div class="created">
+                                            <div class="created-item">
+                                                <span>Status</span>
+                                                <span>Preparing</span>
+                                            </div>
+
+                                            <div class="created-item">
+                                                <span>Collateral</span>
+                                                <span>{{ contractPrice }} ADA</span>
+                                            </div>
+                                            <div class="created-item">
+                                                <span>Guide</span>
+                                                <span>849CBFX9</span>
+                                            </div>
+                                        </div>
                                     </template>
 
                                     <template v-if="item.template === 'received'">
@@ -154,6 +188,7 @@ query ($getOrderVariable: GetOrderInput!) {
         contract_state
         ada_price
         contract_price
+        contract_collateral
         contract_units 
         pending_until
         pending_tx
@@ -208,6 +243,8 @@ const orderPayment = ref(null);
 
 const pendingUntil = ref(null);
 
+const pendingBlock = ref(null);
+
 const contractFiat = ref(0);
 
 const contractPrice = ref(0);
@@ -231,6 +268,8 @@ watch(getOrderResult, value => {
         contractPrice.value = convertLovelaceToADA(order.contract_price);
 
         contractUnits.value = order.contract_units;
+
+        pendingBlock.value = order.pending_block;
 
         txHash.value = order.pending_tx;
 
@@ -389,7 +428,7 @@ const openExplorer = () => {
 .summary-title {
     font-size: var(--text-size-c);
     font-weight: 700;
-    line-height: 3rem;
+    margin-bottom: 0.5rem;
 }
 
 .summary-title span {
@@ -399,7 +438,7 @@ const openExplorer = () => {
 
 .summary-subtitle {
     font-size: var(--text-size-a);
-    line-height: 2rem;
+    margin-bottom: 0.5rem;
     color: var(--text-b);
 }
 
@@ -507,6 +546,11 @@ const openExplorer = () => {
     font-weight: 600;
 }
 
+.diamond span i {
+    font-size: 10px;
+}
+
+
 .created {
     display: block;
     padding: 1rem;
@@ -521,7 +565,7 @@ const openExplorer = () => {
 }
 
 .created-item span {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .created-item span:nth-child(1) {
@@ -554,6 +598,7 @@ const openExplorer = () => {
 
 .payment-symbol {
     justify-content: center;
+    margin-left: 2px;
 }
 
 .payment-loader {
