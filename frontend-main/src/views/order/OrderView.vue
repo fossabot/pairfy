@@ -52,6 +52,19 @@
                                                 <span>Quantity</span>
                                                 <span>3</span>
                                             </div>
+                                            <div class="created-item">
+                                                <span>Payment</span>
+                                                <span>
+                                                    <div class="payment flex">
+                                                        <div class="payment-label"
+                                                            :class="{ unconfirmed: true, confirmed: false }">
+                                                            unconfirmed
+                                                        </div>
+                                                        <div class="payment-loader" />
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            
                                         </div>
                                     </template>
 
@@ -212,7 +225,7 @@ const timeline = ref([
 .summary-title {
     font-size: var(--text-size-c);
     font-weight: 700;
-
+    line-height: 3rem;
 }
 
 .summary-title span {
@@ -337,5 +350,50 @@ const timeline = ref([
 
 .created-item span:nth-child(1) {
     color: var(--text-b);
+}
+
+.payment {
+    background: var(--background-b);
+    border-radius: 20px;
+    padding-right: 1rem;
+    overflow: hidden;
+}
+
+.payment-label {
+    font-size: var(--text-size-a);
+    font-weight: 600;
+    border-right: 1px solid var(--border-a);
+    padding: 0 1rem;
+    margin-right: 0.5rem;
+}
+
+.payment-label.unconfirmed {
+    color: var(--red-a);
+}
+
+.payment-label.confirmed {
+    color: var(--green-a);
+}
+
+.payment-loader {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--red-a);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    margin-left: 2px;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
