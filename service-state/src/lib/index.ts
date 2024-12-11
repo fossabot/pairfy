@@ -71,7 +71,7 @@ async function handlePending(
   timestamp: number,
   utxo: any
 ) {
-  const statusLog = "Pending";
+  const statusLog = "pending";
 
   const updateQuery = `
   UPDATE orders

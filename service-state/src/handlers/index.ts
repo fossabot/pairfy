@@ -12,7 +12,7 @@ async function scanThreadToken(job: any) {
 
     let finished = false;
 
-    let statusLog = "Created";
+    let statusLog = "created";
 
     const { code, utxo } = await getUtxo(threadtoken);
 
@@ -20,7 +20,7 @@ async function scanThreadToken(job: any) {
 
     if (timestamp > watch_until && code === 404) {
       finished = true; 
-      statusLog = "Expired";
+      statusLog = "expired";
     }
 
     connection = await database.client.getConnection();

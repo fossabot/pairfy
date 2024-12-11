@@ -140,12 +140,14 @@
                                             <Button size="small">
                                                 Product Received
                                             </Button>
-                                            <Button size="small" disabled variant="outlined">
-                                                Return Funds After
+
+                                            <Button size="small" :disabled="disableReturn" variant="outlined">
+                                                Return Funds After {{ pendingCountdown }}
                                             </Button>
+
+                                            {{ disableReturn }}
                                         </div>
                                     </template>
-
                                 </div>
                             </div>
                         </div>
@@ -279,6 +281,8 @@ watch(getOrderResult, value => {
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
         globalTimestamp.value = getTimestamp(order);
+
+        pendingTimestamp.value = order.pending_until;
     }
 }, { immediate: true })
 
@@ -317,7 +321,6 @@ const timeline = ref([
 
 const globalTimestamp = ref(Date.now());
 
-
 const globalTimeLeft = ref(globalTimestamp.value - Date.now());
 
 const globalCountdown = computed(() => {
@@ -338,9 +341,42 @@ const updateGlobalCountdown = () => {
 
 ////////////////////////////////
 
+const pendingTimestamp = ref(Date.now());
+
+const pendingTimeLeft = ref(pendingTimestamp.value - Date.now());
+
+const disableReturn = computed(() => {
+    const isExpired = statusLog.value === 'expired';
+
+    const pendingDeadline = Date.now() < pendingUntil.value;
+
+    return isExpired || pendingDeadline
+});
+
+const pendingCountdown = computed(() => {
+    if (pendingTimeLeft.value <= 0) return "00:00";
+
+    const totalSeconds = Math.floor(pendingTimeLeft.value / 1000);
+    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+
+    return `${minutes}:${seconds}`;
+});
+
+let pendingInterval;
+
+const updatePendingCountdown = () => {
+    pendingTimeLeft.value = pendingTimestamp.value - Date.now();
+};
+
+
+///////////////////////////////
+
 onMounted(() => {
     updateGlobalCountdown();
+    updatePendingCountdown();
     globalInterval = setInterval(updateGlobalCountdown, 1000);
+    pendingInterval = setInterval(updatePendingCountdown, 1000);
 });
 
 onUnmounted(() => {
