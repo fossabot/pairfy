@@ -11,19 +11,12 @@ export function formatWithDots(str, reduce) {
   return start + '...' + end
 }
 
-export function reduceByLength(input, maxLength) {
-  const words = input.split(' ')
-  let result = ''
-
-  for (const word of words) {
-    if ((result + word).length > maxLength) {
-      break
-    }
-
-    result += word + ' '
+export function reduceByLength(input, length) {
+  if (input.length > length) {
+    return input.slice(0, length) + "..."; 
   }
-
-  return result.trim() + '...'
+  
+  return input;
 }
 
 export function formatCurrency(value) {

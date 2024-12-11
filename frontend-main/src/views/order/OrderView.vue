@@ -9,11 +9,23 @@
                     <div class="summary-title">
                         Preparing Your Product, Time Remaining <span>{{ countdownText }}</span>
                     </div>
-                    <div class="summary-subtitle">
-                        Order number <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                    <div class="summary-subtitle flex">
+                        Order number
+                        <div>
+                            <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                        </div>
+                        <button class="flex">
+                            <i class="pi  pi-copy" />
+                        </button>
                     </div>
-                    <div class="summary-subtitle">
-                        Contract Address <span> {{ contractAdress }}</span>
+                    <div class="summary-subtitle flex">
+                        Contract Address
+                        <div>
+                            <span> {{ reduceByLength(contractAdress, 30) }}</span>
+                        </div>
+                        <button class="flex">
+                            <i class="pi  pi-copy" />
+                        </button>
                     </div>
                     <Divider />
                     <div class="timeline">
@@ -46,7 +58,7 @@
                                             </div>
                                             <div class="created-item">
                                                 <span>Fiat Amount</span>
-                                                <span>${{ formatCurrency(contractFiat) }} USD</span>
+                                                <span>{{ formatCurrency(contractFiat) }} USD</span>
                                             </div>
                                             <div class="created-item">
                                                 <span>ADA Amount</span>
@@ -118,7 +130,7 @@ import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { NETWORK } from '@/api';
 
-const { formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA } = inject('utils');
+const { formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
 
 const route = useRoute()
 
@@ -301,9 +313,9 @@ const getPaymentStatus = (pending_block) => {
         }
     }
 
-    const now = Math.floor(Date.now() / 1000); 
-    const diff = now - pending_block; 
-    const minutes = Math.floor(diff / 60); 
+    const now = Math.floor(Date.now() / 1000);
+    const diff = now - pending_block;
+    const minutes = Math.floor(diff / 60);
 
     console.log(minutes, "minutes_pending_block");
 
@@ -388,10 +400,21 @@ const openExplorer = () => {
 .summary-subtitle {
     font-size: var(--text-size-a);
     line-height: 2rem;
+    color: var(--text-b);
 }
 
 .summary-subtitle span {
-    color: var(--text-b);
+    color: var(--text-a);
+    margin-left: 0.5rem;
+}
+
+.summary-subtitle button {
+    background: transparent;
+    border: none;
+}
+
+.summary-subtitle button i {
+    font-size: var(--text-size-a);
 }
 
 .chat {
