@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <Toast closeIcon="pi-user"/>
+    <Toast closeIcon="pi-user" />
     <HeaderComp />
     <RouterView />
   </div>
@@ -9,7 +9,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
-import { formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';
@@ -29,7 +29,9 @@ provide('utils', {
   reduceByLength,
   formatCurrency,
   applyDiscount,
-  convertUSDToADA
+  convertUSDToADA,
+  convertLovelaceToADA,
+  convertLovelaceToUSD
 });
 
 const { currentUser } = headerAPI();
@@ -37,12 +39,12 @@ const { currentUser } = headerAPI();
 const { startWalletService } = walletClient();
 
 currentUser()
-      .then(() => console.info("USER_LOGGED"))
-      .catch((err) => console.error(err));
+  .then(() => console.info("USER_LOGGED"))
+  .catch((err) => console.error(err));
 
 startWalletService()
-      .then(() => console.info("WALLET_SERVICE"))
-      .catch((err) => console.error(err));
+  .then(() => console.info("WALLET_SERVICE"))
+  .catch((err) => console.error(err));
 </script>
 
 

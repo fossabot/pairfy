@@ -58,7 +58,24 @@ type GetBooksResponse {
 type Order {
   id: String!
   finished: Boolean!
+  scanned_at: Float!
+  status_log: String!
+  ada_price: Float!
+  contract_address: String!
   contract_state: Int
+  contract_price: Int!
+  contract_collateral: Int!
+  contract_units: Int!
+  product_id: String!
+  product_sku: String!
+  product_price: Int!
+  product_collateral: Int!
+  product_discount: Boolean!
+  product_discount_value: Int!
+  watch_until: Float!
+  pending_until: Float!
+  pending_tx: String!
+  pending_block: String!
 }
 
 input GetBooksInput {

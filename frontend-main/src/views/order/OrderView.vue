@@ -7,13 +7,13 @@
             <div class="grid">
                 <div class="summary" v-if="orderData">
                     <div class="summary-title">
-                        Preparing Your Product, Time Remaining <span>29:30</span>
+                        Preparing Your Product, Time Remaining <span>{{ countdownText }}</span>
                     </div>
                     <div class="summary-subtitle">
                         Order number <span>{{ formatWithDots(orderData.id, 40) }}</span>
                     </div>
                     <div class="summary-subtitle">
-                        Contract Address <span> addr_test1wpf5esu6m0hx58y6cf8vyxnpn8ggekpx0z7j6kcn54jekgsnt2dvr</span>
+                        Contract Address <span> {{ contractAdress }}</span>
                     </div>
                     <Divider />
                     <div class="timeline">
@@ -42,15 +42,15 @@
                                         <div class="created">
                                             <div class="created-item">
                                                 <span>Fiat Amount</span>
-                                                <span>$3.768 USD</span>
+                                                <span>${{ formatCurrency(contractFiat) }} USD</span>
                                             </div>
                                             <div class="created-item">
                                                 <span>ADA Amount</span>
-                                                <span>8.000 ADA</span>
+                                                <span>{{ contractPrice }} ADA</span>
                                             </div>
                                             <div class="created-item">
                                                 <span>Quantity</span>
-                                                <span>3</span>
+                                                <span>{{ contractUnits }}</span>
                                             </div>
                                             <div class="created-item">
                                                 <span>Payment</span>
@@ -64,7 +64,10 @@
                                                     </div>
                                                 </span>
                                             </div>
-                                            
+                                            <div class="created-item">
+                                                <span>Status</span>
+                                                <span>Expired</span>
+                                            </div>
                                         </div>
                                     </template>
 
@@ -97,10 +100,10 @@
 <script setup>
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@vue/apollo-composable';
-import { ref, watch, computed, inject } from 'vue';
+import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
-const { formatWithDots } = inject('utils');
+const { formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA } = inject('utils');
 
 const route = useRoute()
 
@@ -118,6 +121,12 @@ const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
         id
+        contract_address
+        contract_state
+        ada_price
+        contract_price
+        contract_units 
+        watch_until
     }
 }
 `,
@@ -153,14 +162,33 @@ watch(
 
 const orderData = ref(null);
 
+const targetTimestamp = ref(Date.now());
+
+const contractAdress = ref("N/A");
+
+const contractFiat = ref(0);
+
+const contractPrice = ref(0);
+
+const contractUnits = ref(0);
+
 watch(getOrderResult, value => {
     if (value) {
-        orderData.value = value.getOrder;
+        const order = value.getOrder;
+
+        orderData.value = order;
+
+        contractAdress.value = order.contract_address;
+
+        contractPrice.value = convertLovelaceToADA(order.contract_price);
+
+        contractUnits.value = order.contract_units;
+
+        contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
+
+        targetTimestamp.value = order.watch_until;
     }
 }, { immediate: true })
-
-
-
 
 const timeline = ref([
     {
@@ -191,6 +219,40 @@ const timeline = ref([
         line: false
     }
 ])
+
+
+////////////////////////////////
+
+
+
+const timeLeft = ref(targetTimestamp.value - Date.now());
+
+const countdownText = computed(() => {
+    if (timeLeft.value <= 0) return "00:00";
+
+    const totalSeconds = Math.floor(timeLeft.value / 1000);
+    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+
+    return `${minutes}:${seconds}`;
+});
+
+let interval;
+
+const updateCountdown = () => {
+    timeLeft.value = targetTimestamp.value - Date.now();
+};
+
+onMounted(() => {
+    updateCountdown();
+    interval = setInterval(updateCountdown, 1000);
+});
+
+onUnmounted(() => {
+    clearInterval(interval);
+});
+
+
 </script>
 
 <style lang="css" scoped>
@@ -220,6 +282,7 @@ const timeline = ref([
 .summary {
     display: flex;
     flex-direction: column;
+    width: 80%;
 }
 
 .summary-title {
@@ -250,14 +313,14 @@ const timeline = ref([
 
 
 .timeline {
-    display: block;
-    width: 90%;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
 }
 
 .timeline-item {
     display: flex;
-    width: inherit;
+    width: 100%;
 }
 
 .timeline-bar {
@@ -341,7 +404,7 @@ const timeline = ref([
     display: flex;
     align-items: center;
     justify-content: space-between;
-    line-height: 2rem;
+    line-height: 2.25rem;
 }
 
 .created-item span {
@@ -364,7 +427,7 @@ const timeline = ref([
     font-weight: 600;
     border-right: 1px solid var(--border-a);
     padding: 0 1rem;
-    margin-right: 0.5rem;
+    margin-right: 0.75rem;
 }
 
 .payment-label.unconfirmed {
@@ -384,7 +447,7 @@ const timeline = ref([
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
-    margin-left: 2px;
+    margin-left: 1px;
 }
 
 @keyframes rotation {

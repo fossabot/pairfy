@@ -33,7 +33,7 @@ export function formatCurrency(value) {
       maximumFractionDigits: 0,
     })
 
-    return result 
+    return result
   }
 }
 
@@ -53,22 +53,54 @@ export function applyDiscount(active, originalPrice, discountPercent) {
   return Math.trunc(discountedPrice)
 }
 
- /**
-* Converts USD to Lovelace.
-* @param {number} usdAmount - The amount in USD to convert.
-* @param {number} adaPrice - The price of 1 ADA in USD.
-* @returns {number} The converted Lovelace amount as a number.
-*/
-export function convertUSDToADA(usdAmount, adaPrice){
- if (usdAmount < 0) {
-   throw new Error("USD amount cannot be negative.");
- }
+/**
+ * Converts USD to ADA.
+ * @param {number} usdAmount - The amount in USD to convert.
+ * @param {number} adaPrice - The price of 1 ADA in USD.
+ * @returns {number} The converted ADA amount as a number.
+ */
+export function convertUSDToADA(usdAmount, adaPrice) {
+  if (usdAmount < 0) {
+    throw new Error('USD amount cannot be negative.')
+  }
 
- if (adaPrice <= 0) {
-   throw new Error("ADA price must be greater than 0.");
- }
+  if (adaPrice <= 0) {
+    throw new Error('ADA price must be greater than 0.')
+  }
 
- const amountInADA = usdAmount / adaPrice;
+  const amountInADA = usdAmount / adaPrice
 
- return Math.trunc(amountInADA);
+  return Math.trunc(amountInADA)
+}
+
+export function convertLovelaceToADA(lovelace) {
+  if (lovelace <= 0) {
+    throw new Error('ADA price must be greater than 0.')
+  }
+
+  const amountInADA = lovelace / 1_000_000
+
+  return amountInADA.toFixed(2)
+}
+
+/**
+ * Converts lovelace to USD.
+ * @param {number} lovelace - The amount in lovelace to convert.
+ * @param {number} adaPrice - The price of 1 ADA in USD.
+ * @returns {number} The converted USD amount.
+ */
+export function convertLovelaceToUSD(lovelace, adaPrice) {
+  if (lovelace <= 0) {
+    throw new Error('lovelace amount must be greater than 0.')
+  }
+
+  if (adaPrice <= 0) {
+    throw new Error('ADA price must be greater than 0.')
+  }
+
+  const amountInADA = lovelace / 1_000_000
+
+  const amountInUSD = amountInADA * adaPrice
+
+  return Math.round(amountInUSD)
 }
