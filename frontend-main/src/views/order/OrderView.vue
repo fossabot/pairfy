@@ -142,7 +142,7 @@
                                             </Button>
 
                                             <Button size="small" :disabled="disableReturn" variant="outlined">
-                                                Return Funds After {{ pendingCountdown }}
+                                                Return Funds {{ pendingCountdown }}
                                             </Button>
 
                                             {{ disableReturn }}
@@ -242,7 +242,7 @@ const orderData = ref(null);
 
 const contractAdress = ref("N/A");
 
-const statusLog = ref("Created");
+const statusLog = ref("created");
 
 const orderPayment = ref(null);
 
@@ -640,7 +640,7 @@ const openExplorer = () => {
 
 .payment-symbol {
     justify-content: center;
-    margin-left: 2px;
+    margin-left: 1px;
 }
 
 .payment-loader {
