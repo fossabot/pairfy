@@ -7,7 +7,7 @@
             <div class="grid">
                 <div class="summary" v-if="orderData">
                     <div class="summary-title">
-                        Preparing Your Product, Time Remaining <span>{{ generalCountdown }}</span>
+                        Preparing Your Product, Time Remaining <span>{{ globalCountdown }}</span>
                     </div>
                     <div class="summary-subtitle flex">
                         Order number
@@ -238,8 +238,6 @@ watch(
 
 const orderData = ref(null);
 
-const globalTimestamp = ref(Date.now());
-
 const contractAdress = ref("N/A");
 
 const statusLog = ref("Created");
@@ -317,11 +315,12 @@ const timeline = ref([
 
 ////////////////////////////////
 
+const globalTimestamp = ref(Date.now());
 
 
 const globalTimeLeft = ref(globalTimestamp.value - Date.now());
 
-const generalCountdown = computed(() => {
+const globalCountdown = computed(() => {
     if (globalTimeLeft.value <= 0) return "00:00";
 
     const totalSeconds = Math.floor(globalTimeLeft.value / 1000);
@@ -336,6 +335,8 @@ let globalInterval;
 const updateGlobalCountdown = () => {
     globalTimeLeft.value = globalTimestamp.value - Date.now();
 };
+
+////////////////////////////////
 
 onMounted(() => {
     updateGlobalCountdown();
