@@ -12,153 +12,164 @@
                 </div>
             </div>
             <div class="grid">
-                <div class="summary" v-if="orderData">
-                    <div class="summary-title">
-                        Preparing Your Product, Time Remaining <span>{{ globalCountdown }}</span>
-                    </div>
-                    <div class="summary-subtitle flex">
-                        Order number
-                        <div>
-                            <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                <!--SUMMARY-->
+                <template v-if="currentNav === 0">
+                    <Skeleton v-if="!orderData" width="80%" height="100%" />
+
+                    <div class="summary" v-if="orderData">
+                        <div class="summary-title">
+                            Preparing Your Product, Time Remaining <span>{{ globalCountdown }}</span>
                         </div>
-                        <button class="flex" @click="copyToClipboard(orderData.id)">
-                            <i class="pi  pi-copy" />
-                        </button>
-                    </div>
-                    <div class="summary-subtitle flex">
-                        Contract Address
-                        <div>
-                            <span> {{ reduceByLength(contractAdress, 30) }}</span>
+                        <div class="summary-subtitle flex">
+                            Order number
+                            <div>
+                                <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                            </div>
+                            <button class="flex" @click="copyToClipboard(orderData.id)">
+                                <i class="pi  pi-copy" />
+                            </button>
                         </div>
-                        <button class="flex" @click="copyToClipboard(contractAdress)">
-                            <i class="pi  pi-copy" />
-                        </button>
-                    </div>
-                    <Divider />
-                    <div class="timeline">
-                        <div class="timeline-item" v-for="item in timeline" :key="item">
-                            <div class="timeline-bar">
-                                <div class="timeline-bar-box">
-                                    <div class="diamond">
+                        <div class="summary-subtitle flex">
+                            Contract Address
+                            <div>
+                                <span> {{ reduceByLength(contractAdress, 30) }}</span>
+                            </div>
+                            <button class="flex" @click="copyToClipboard(contractAdress)">
+                                <i class="pi  pi-copy" />
+                            </button>
+                        </div>
+                        <Divider />
+                        <div class="timeline">
+                            <div class="timeline-item" v-for="item in timeline" :key="item">
+                                <div class="timeline-bar">
+                                    <div class="timeline-bar-box">
+                                        <div class="diamond">
+
+                                            <template v-if="item.template === 'created'">
+                                                <span v-if="!pendingBlock">{{ item.number }}</span>
+                                                <span v-else>
+                                                    <i class="pi pi-check" />
+                                                </span>
+                                            </template>
+                                            <template v-if="item.template === 'preparation'">
+                                                <span v-if="!lockingBlock">{{ item.number }}</span>
+                                                <span v-else>
+                                                    <i class="pi pi-check" />
+                                                </span>
+                                            </template>
+                                            <template v-if="item.template === 'received'">
+                                                <span v-if="!shippingBlock">{{ item.number }}</span>
+                                                <span v-else>
+                                                    <i class="pi pi-check" />
+                                                </span>
+                                            </template>
+
+                                        </div>
+                                    </div>
+                                    <div class="timeline-bar-line" :class="{ disabled: !item.line }" />
+                                </div>
+                                <div class="timeline-body">
+                                    <div class="timeline-title flex">
+                                        {{ item.title }}
+                                    </div>
+
+                                    <div v-if="item.subtitle.length" class="timeline-subtitle flex">
+                                        {{ item.subtitle }}
+                                    </div>
+
+                                    <div class="timeline-content"
+                                        :class="{ box: item.type === 'box', button: item.type === 'button' }">
 
                                         <template v-if="item.template === 'created'">
-                                            <span v-if="!pendingBlock">{{ item.number }}</span>
-                                            <span v-else>
-                                                <i class="pi pi-check" />
-                                            </span>
-                                        </template>
-                                        <template v-if="item.template === 'preparation'">
-                                            <span v-if="!lockingBlock">{{ item.number }}</span>
-                                            <span v-else>
-                                                <i class="pi pi-check" />
-                                            </span>
-                                        </template>
-                                        <template v-if="item.template === 'received'">
-                                            <span v-if="!shippingBlock">{{ item.number }}</span>
-                                            <span v-else>
-                                                <i class="pi pi-check" />
-                                            </span>
-                                        </template>
+                                            <div class="created">
+                                                <div class="created-item">
+                                                    <span>Status</span>
+                                                    <span>{{ statusLog }}</span>
+                                                </div>
+                                                <div class="created-item">
+                                                    <span>Fiat Amount</span>
+                                                    <span>{{ formatCurrency(contractFiat) }} USD</span>
+                                                </div>
+                                                <div class="created-item">
+                                                    <span>ADA Amount</span>
+                                                    <span>{{ contractPrice }} ADA</span>
+                                                </div>
+                                                <div class="created-item">
+                                                    <span>Quantity</span>
+                                                    <span>{{ contractUnits }}</span>
+                                                </div>
 
-                                    </div>
-                                </div>
-                                <div class="timeline-bar-line" :class="{ disabled: !item.line }" />
-                            </div>
-                            <div class="timeline-body">
-                                <div class="timeline-title flex">
-                                    {{ item.title }}
-                                </div>
+                                                <div class="created-item">
+                                                    <span>Payment</span>
+                                                    <span>
+                                                        <div class="payment flex" @click="openExplorer">
+                                                            <div class="payment-label"
+                                                                :style="{ color: orderPayment.color }">
+                                                                {{ orderPayment.label }}
+                                                            </div>
 
-                                <div v-if="item.subtitle.length" class="timeline-subtitle flex">
-                                    {{ item.subtitle }}
-                                </div>
+                                                            <div class="payment-symbol flex"
+                                                                :style="{ color: orderPayment.color }">
+                                                                <div v-if="orderPayment.template === 'loading'"
+                                                                    class="payment-loader" :class="{
+                                                                        warn: orderPayment.label === 'confirming',
+                                                                        danger: orderPayment.label === 'unconfirmed'
+                                                                    }" />
 
-                                <div class="timeline-content"
-                                    :class="{ box: item.type === 'box', button: item.type === 'button' }">
-
-                                    <template v-if="item.template === 'created'">
-                                        <div class="created">
-                                            <div class="created-item">
-                                                <span>Status</span>
-                                                <span>{{ statusLog }}</span>
-                                            </div>
-                                            <div class="created-item">
-                                                <span>Fiat Amount</span>
-                                                <span>{{ formatCurrency(contractFiat) }} USD</span>
-                                            </div>
-                                            <div class="created-item">
-                                                <span>ADA Amount</span>
-                                                <span>{{ contractPrice }} ADA</span>
-                                            </div>
-                                            <div class="created-item">
-                                                <span>Quantity</span>
-                                                <span>{{ contractUnits }}</span>
-                                            </div>
-
-                                            <div class="created-item">
-                                                <span>Payment</span>
-                                                <span>
-                                                    <div class="payment flex" @click="openExplorer">
-                                                        <div class="payment-label"
-                                                            :style="{ color: orderPayment.color }">
-                                                            {{ orderPayment.label }}
-                                                        </div>
-
-                                                        <div class="payment-symbol flex"
-                                                            :style="{ color: orderPayment.color }">
-                                                            <div v-if="orderPayment.template === 'loading'"
-                                                                class="payment-loader" :class="{
-                                                                    warn: orderPayment.label === 'confirming',
-                                                                    danger: orderPayment.label === 'unconfirmed'
-                                                                }" />
-
-                                                            <div v-if="orderPayment.template === 'icon'">
-                                                                <i :class="orderPayment.icon" />
+                                                                <div v-if="orderPayment.template === 'icon'">
+                                                                    <i :class="orderPayment.icon" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </span>
+                                                    </span>
+                                                </div>
+
                                             </div>
-
-                                        </div>
-                                    </template>
+                                        </template>
 
 
-                                    <template v-if="item.template === 'preparation'">
-                                        <div class="created">
-                                            <div class="created-item">
-                                                <span>Status</span>
-                                                <span></span>
+                                        <template v-if="item.template === 'preparation'">
+                                            <div class="created">
+                                                <div class="created-item">
+                                                    <span>Status</span>
+                                                    <span></span>
+                                                </div>
+
+                                                <div class="created-item">
+                                                    <span>Collateral</span>
+                                                    <span>{{ contractPrice }} ADA</span>
+                                                </div>
+                                                <div class="created-item">
+                                                    <span>Guide</span>
+                                                    <span></span>
+                                                </div>
                                             </div>
+                                        </template>
 
-                                            <div class="created-item">
-                                                <span>Collateral</span>
-                                                <span>{{ contractPrice }} ADA</span>
+                                        <template v-if="item.template === 'received'">
+                                            <div class="received-control">
+                                                <Button size="small">
+                                                    Product Received
+                                                </Button>
+
+                                                <Button size="small" :disabled="disableReturn" variant="outlined">
+                                                    Return Funds {{ pendingCountdown }}
+                                                </Button>
                                             </div>
-                                            <div class="created-item">
-                                                <span>Guide</span>
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </template>
-
-                                    <template v-if="item.template === 'received'">
-                                        <div class="received-control">
-                                            <Button size="small">
-                                                Product Received
-                                            </Button>
-
-                                            <Button size="small" :disabled="disableReturn" variant="outlined">
-                                                Return Funds {{ pendingCountdown }}
-                                            </Button>
-                                        </div>
-                                    </template>
+                                        </template>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </template>
+                <!--////////////////PRODUCT/////////////////////-->
+                <template v-if="currentNav === 1">
+                    <div>
+                        x
+                    </div>
+                </template>
+                <!--/////////////////////////////////////////-->
                 <div class="col right">
                     <div class="chat">
 
@@ -260,6 +271,10 @@ const orderPayment = ref(null);
 const pendingUntil = ref(null);
 
 const pendingBlock = ref(null);
+
+const lockingBlock = ref(null);
+
+const shippingBlock = ref(null);
 
 const contractFiat = ref(0);
 
