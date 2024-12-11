@@ -10,7 +10,10 @@
                         Preparing Your Product, Time Remaining <span>29:30</span>
                     </div>
                     <div class="summary-subtitle">
-                        Order number <span>{{ orderData.id }}</span>
+                        Order number <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                    </div>
+                    <div class="summary-subtitle">
+                        Contract Address <span> addr_test1wpf5esu6m0hx58y6cf8vyxnpn8ggekpx0z7j6kcn54jekgsnt2dvr</span>
                     </div>
                     <Divider />
                     <div class="timeline">
@@ -81,8 +84,10 @@
 <script setup>
 import gql from 'graphql-tag';
 import { useMutation, useQuery } from '@vue/apollo-composable';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, inject } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+
+const { formatWithDots } = inject('utils');
 
 const route = useRoute()
 
@@ -207,6 +212,7 @@ const timeline = ref([
 .summary-title {
     font-size: var(--text-size-c);
     font-weight: 700;
+
 }
 
 .summary-title span {
@@ -216,6 +222,7 @@ const timeline = ref([
 
 .summary-subtitle {
     font-size: var(--text-size-a);
+    line-height: 2rem;
 }
 
 .summary-subtitle span {
@@ -326,5 +333,9 @@ const timeline = ref([
 
 .created-item span {
     font-weight: 600;
+}
+
+.created-item span:nth-child(1) {
+    color: var(--text-b);
 }
 </style>
