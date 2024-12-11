@@ -5,7 +5,14 @@
 
             </div>
             <div class="grid">
-                <div class="col left">
+                <div class="summary">
+                    <div class="summary-title">
+                        Preparing Your Product, Time Remaining <span>29:30</span>
+                    </div>
+                    <div class="summary-subtitle">
+                        Order number <span>09430493049034</span>
+                    </div>
+                    <Divider />
                     <div class="timeline">
                         <div class="timeline-item" v-for="item in timeline" :key="item">
                             <div class="timeline-bar">
@@ -31,7 +38,7 @@
                                     </template>
 
                                     <template v-if="item.template === 'preparation'">
-  
+
                                     </template>
 
                                     <template v-if="item.template === 'received'">
@@ -111,15 +118,31 @@ const timeline = ref([
 .grid {
     display: grid;
     grid-template-columns: 70% 30%;
+    margin-top: 1rem;
 }
 
-.col {
-    padding: 1rem;
+.summary {
+    display: flex;
+    flex-direction: column;
 }
 
-.col.left {}
+.summary-title {
+    font-size: var(--text-size-c);
+    font-weight: 700;
+}
 
-.col.right {}
+.summary-title span {
+    color: var(--primary-c);
+    font-weight: 700;
+}
+
+.summary-subtitle {
+    font-size: var(--text-size-a);
+}
+
+.summary-subtitle span {
+    color: var(--text-b);
+}
 
 .chat {
     width: 100%;
@@ -140,16 +163,16 @@ const timeline = ref([
 }
 
 .timeline-bar {
-    width: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-right: 1rem;
 }
 
 .timeline-bar-box {
     width: inherit;
-    min-height: 40px;
+    min-height: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,13 +195,13 @@ const timeline = ref([
 }
 
 .timeline-title {
-    min-height: 40px;
+    min-height: 44px;
     font-weight: 700;
 }
 
 .timeline-subtitle {
     font-size: var(--text-size-a);
-
+    min-height: 22px;
 }
 
 .timeline-content {
