@@ -166,6 +166,11 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <div class="product" v-if="orderData">
+
+                        <div class="product-name">
+                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070 - 16GB RAM - 1TB SSD - Black - Open Box
+                        </div>
+                        
                         {{ orderData.product_id }}
                         {{ orderData.product_sku.split(":")[0] }}
                         {{ orderData.product_price }} 
