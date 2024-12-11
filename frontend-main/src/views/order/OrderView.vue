@@ -165,8 +165,11 @@
                 </template>
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
-                    <div>
-                        x
+                    <div class="product" v-if="orderData">
+                        {{ orderData.product_id }}
+                        {{ orderData.product_sku.split(":")[0] }}
+                        {{ orderData.product_price }} 
+                        {{ orderData.product_collateral }} 
                     </div>
                 </template>
                 <!--/////////////////////////////////////////-->
@@ -193,7 +196,7 @@ const route = useRoute();
 
 const router = useRouter();
 
-const currentNav = ref(0);
+const currentNav = ref(1);
 
 const setNav = (e) => {
     currentNav.value = e
@@ -223,6 +226,12 @@ query ($getOrderVariable: GetOrderInput!) {
         pending_tx
         pending_block
         watch_until
+        product_id
+        product_sku
+        product_price
+        product_collateral
+        product_discount
+        product_discount_value
     }
 }
 `,
