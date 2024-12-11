@@ -121,7 +121,7 @@
                                         <div class="created">
                                             <div class="created-item">
                                                 <span>Status</span>
-                                                <span>-</span>
+                                                <span></span>
                                             </div>
 
                                             <div class="created-item">
@@ -130,7 +130,7 @@
                                             </div>
                                             <div class="created-item">
                                                 <span>Guide</span>
-                                                <span>-</span>
+                                                <span></span>
                                             </div>
                                         </div>
                                     </template>
@@ -144,8 +144,6 @@
                                             <Button size="small" :disabled="disableReturn" variant="outlined">
                                                 Return Funds {{ pendingCountdown }}
                                             </Button>
-
-                                            {{ disableReturn }}
                                         </div>
                                     </template>
                                 </div>
@@ -346,11 +344,12 @@ const pendingTimestamp = ref(Date.now());
 const pendingTimeLeft = ref(pendingTimestamp.value - Date.now());
 
 const disableReturn = computed(() => {
-    const isExpired = statusLog.value === 'expired';
 
-    const pendingDeadline = Date.now() < pendingUntil.value;
+    if (statusLog.value === 'expired') {
+        return false
+    }
 
-    return isExpired || pendingDeadline
+    return Date.now() < pendingUntil.value
 });
 
 const pendingCountdown = computed(() => {
