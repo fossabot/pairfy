@@ -1,8 +1,15 @@
 <template>
     <div class="wrap">
         <div class="container">
-            <div class="nav">
-
+            <div class="nav flex">
+                <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="setNav(0)">
+                    <span>Information</span>
+                    <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
+                </div>
+                <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="setNav(1)">
+                    <span>Product</span>
+                    <div class="nav-item-border" :class="{ selected: currentNav === 1 }" />
+                </div>
             </div>
             <div class="grid">
                 <div class="summary" v-if="orderData">
@@ -171,9 +178,15 @@ import { NETWORK } from '@/api';
 
 const { copyToClipboard, formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
 
-const route = useRoute()
+const route = useRoute();
 
-const router = useRouter()
+const router = useRouter();
+
+const currentNav = ref(0);
+
+const setNav = (e) => {
+    currentNav.value = e
+}
 
 const txHash = ref(null)
 
@@ -443,21 +456,52 @@ const openExplorer = () => {
 }
 
 .container {
-
     min-height: 100vh;
     max-width: 1200px;
     width: 100%;
 }
 
 .nav {
-    height: 50px;
     border-bottom: 1px solid var(--border-a);
+    margin-top: 1rem;
+}
+
+.nav-item {
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--text-b);
+    margin-right: 2rem;
+    transition: 0.2s;
+}
+
+.nav-item.selected {
+    color: var(--text-a);
+    font-weight: 600;
+}
+
+.nav-item span {
+    color: inherit;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+.nav-item .nav-item-border {
+    width: 20%;
+    height: 3px;
+    background: transparent;
+}
+
+.nav-item .nav-item-border.selected {
+    background: var(--primary-c);
 }
 
 .grid {
     display: grid;
     grid-template-columns: 70% 30%;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .summary {
@@ -480,11 +524,11 @@ const openExplorer = () => {
 .summary-subtitle {
     font-size: var(--text-size-a);
     margin-bottom: 0.5rem;
-    color: var(--text-b);
+    color: var(--text-a);
 }
 
 .summary-subtitle span {
-    color: var(--text-a);
+    color: var(--text-b);
     margin-left: 0.5rem;
 }
 
