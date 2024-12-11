@@ -9,7 +9,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
-import { convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { queryClient, gatewayClient } from './graphql/index';
@@ -31,7 +31,8 @@ provide('utils', {
   applyDiscount,
   convertUSDToADA,
   convertLovelaceToADA,
-  convertLovelaceToUSD
+  convertLovelaceToUSD,
+  copyToClipboard
 });
 
 const { currentUser } = headerAPI();

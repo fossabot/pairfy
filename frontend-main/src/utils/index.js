@@ -1,4 +1,3 @@
-// utils.js
 export function formatWithDots(str, reduce) {
   const len = str.length
 
@@ -96,4 +95,14 @@ export function convertLovelaceToUSD(lovelace, adaPrice) {
   const amountInUSD = amountInADA * adaPrice
 
   return Math.round(amountInUSD)
+}
+
+
+export async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log("Text copied to clipboard:", text);
+  } catch (err) {
+    console.error("Failed to copy text: ", err);
+  }
 }

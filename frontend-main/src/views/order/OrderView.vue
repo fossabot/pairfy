@@ -14,7 +14,7 @@
                         <div>
                             <span>{{ formatWithDots(orderData.id, 40) }}</span>
                         </div>
-                        <button class="flex">
+                        <button class="flex" @click="copyToClipboard(orderData.id)">
                             <i class="pi  pi-copy" />
                         </button>
                     </div>
@@ -23,7 +23,7 @@
                         <div>
                             <span> {{ reduceByLength(contractAdress, 30) }}</span>
                         </div>
-                        <button class="flex">
+                        <button class="flex" @click="copyToClipboard(contractAdress)">
                             <i class="pi  pi-copy" />
                         </button>
                     </div>
@@ -121,7 +121,7 @@
                                         <div class="created">
                                             <div class="created-item">
                                                 <span>Status</span>
-                                                <span>Preparing</span>
+                                                <span>-</span>
                                             </div>
 
                                             <div class="created-item">
@@ -130,7 +130,7 @@
                                             </div>
                                             <div class="created-item">
                                                 <span>Guide</span>
-                                                <span>849CBFX9</span>
+                                                <span>-</span>
                                             </div>
                                         </div>
                                     </template>
@@ -164,7 +164,7 @@ import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { NETWORK } from '@/api';
 
-const { formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
+const { copyToClipboard, formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
 
 const route = useRoute()
 
