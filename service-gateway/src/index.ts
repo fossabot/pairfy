@@ -20,6 +20,7 @@ const httpServer = http.createServer(app);
 const resolvers = {
   Query: {
     ...books.Query,
+    ...orders.Query
   },
   Mutation: {
     ...books.Mutation,
@@ -161,7 +162,7 @@ const main = async () => {
       expressMiddleware(server, {
         context: async ({ req }) => ({
           sellerData: req.sellerData || null,
-          userData: req.userData || null,
+          userData: req.userData || null
         }),
       })
     );

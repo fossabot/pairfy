@@ -5,12 +5,12 @@
 
             </div>
             <div class="grid">
-                <div class="summary">
+                <div class="summary" v-if="orderData">
                     <div class="summary-title">
                         Preparing Your Product, Time Remaining <span>29:30</span>
                     </div>
                     <div class="summary-subtitle">
-                        Order number <span>09430493049034</span>
+                        Order number <span>{{ orderData.id }}</span>
                     </div>
                     <Divider />
                     <div class="timeline">
@@ -27,7 +27,7 @@
                                 <div class="timeline-title flex">
                                     {{ item.title }}
                                 </div>
-                                
+
                                 <div v-if="item.subtitle.length" class="timeline-subtitle flex">
                                     {{ item.subtitle }}
                                 </div>
@@ -79,7 +79,70 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import gql from 'graphql-tag';
+import { useMutation, useQuery } from '@vue/apollo-composable';
+import { ref, watch, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const route = useRoute()
+
+const router = useRouter()
+
+
+const queryVariablesRef = ref({
+    "getOrderVariable": {
+        "id": null
+    },
+})
+const queryEnabled = ref(false)
+
+const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
+query ($getOrderVariable: GetOrderInput!) {
+    getOrder(getOrderInput: $getOrderVariable) {
+        id
+    }
+}
+`,
+    () => (queryVariablesRef.value)
+    ,
+    () => ({
+        enabled: queryEnabled.value,
+        clientId: 'gateway',
+        pollInterval: 15000
+    })
+);
+
+
+const updateQueryVariables = (id) => {
+    queryVariablesRef.value = {
+        getOrderVariable: {
+            id
+        }
+    }
+}
+
+
+watch(
+    () => route.params.id,
+    (id) => {
+        if (id) {
+            queryEnabled.value = true;
+            updateQueryVariables(id)
+        }
+    },
+    { immediate: true }
+);
+
+const orderData = ref(null);
+
+watch(getOrderResult, value => {
+    if (value) {
+        orderData.value = value.getOrder;
+    }
+}, { immediate: true })
+
+
+
 
 const timeline = ref([
     {

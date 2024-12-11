@@ -54,7 +54,13 @@ type GetBooksResponse {
   cursor: String!
   count: Int!
 }
-  
+
+type Order {
+  id: String!
+  finished: Boolean!
+  contract_state: Int
+}
+
 input GetBooksInput {
   cursor: String!
 }  
@@ -63,12 +69,17 @@ input GetOrdersInput {
   id: String!
 } 
 
+input GetOrderInput {
+  id: String!
+} 
+
 type Query {
+  getOrder(getOrderInput: GetOrderInput!): Order!
   getOrders: String
   getBooks(getBooksInput: GetBooksInput!): GetBooksResponse!
 }
 
-#/////////////////////////////////////////////////
+#///////////////////////////////////////////////// MUTATIONS
 
 type UpdateBookResponse {
   success: Boolean!

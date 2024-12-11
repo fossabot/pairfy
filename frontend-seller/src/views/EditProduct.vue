@@ -419,8 +419,6 @@ query ($getProductVariable: GetProductInput!) {
     () => ({
         enabled: queryEnabled.value,
     })
-
-
 );
 
 const updateQueryVariables = (id) => {
