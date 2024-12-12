@@ -40,7 +40,7 @@
             </div>
 
 
-            <div class="buy-stock" :class="{ green: 15 > 0, }">
+            <div class="buy-stock" :class="{ red: 0, }">
                 {{ getStockLabel(15) }}
             </div>
 
@@ -253,13 +253,12 @@ const onConfirmedBuy = () => {
 }
 
 .buy-stock {
-    color: var(--red-a);
     font-weight: 600;
     margin-top: 1rem;
 }
 
-.buy-stock.green {
-    color: var(--green-a);
+.buy-stock.red {
+ color: var(--red-a);
 }
 
 .dialog-name {
