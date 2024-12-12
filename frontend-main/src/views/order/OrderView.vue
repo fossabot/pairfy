@@ -166,12 +166,20 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <div class="product" v-if="orderData">
+                        <div class="product-name">
+                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
+                            GeForce RTX 4070
+                            - 16GB RAM - 1TB SSD - Black - Open Box
+                        </div>
+
                         <div class="product-card flex">
                             <div class="product-card-image flex">
                                 <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
                             </div>
 
                             <div class="product-card-box flex">
+
+
                                 <li class="flex">
                                     <div>ID</div>
                                     <div>{{ orderData.product_id }}</div>
@@ -198,12 +206,6 @@
                                 </li>
                             </div>
                         </div>
-
-                        <div class="product-name">
-                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070
-                            - 16GB RAM - 1TB SSD - Black - Open Box
-                        </div>
-
                     </div>
                 </template>
                 <!--/////////////////////////////////////////-->
@@ -790,7 +792,7 @@ const openExplorer = () => {
 
 .product-name {
     font-weight: 600;
-    margin-top: 1rem;
+    font-size: var(--text-size-c);
 }
 
 .product-card {
@@ -798,19 +800,19 @@ const openExplorer = () => {
     border-radius: 12px;
     padding: 1rem;
     width: 100%;
+    margin-top: 1rem;
 }
 
 .product-card-image {
     border: 1px solid var(--border-a);
     border-radius: 8px;
     overflow: hidden;
-    padding: 0.5rem;
+    padding: 1rem;
     justify-content: center;
 }
 
 .product-card-image img {
-    width: 60px;
-    height: 60px;
+    width: 100px;
     border-radius: 8px;
 }
 
@@ -822,9 +824,8 @@ const openExplorer = () => {
 
 .product-card-box li {
     list-style: none;
-    font-size: var(--text-size-a);
-    font-weight: 500;
     color: var(--text-b);
+    line-height: 1.75rem;
     justify-content: space-between;
 }
 
