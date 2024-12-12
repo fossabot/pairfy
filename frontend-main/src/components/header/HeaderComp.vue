@@ -38,7 +38,9 @@
 
             </div>
             <div class="menu-col right">
-                <div class="ada-price">₳ {{ getADAprice }} USD</div>
+                <div class="liquidity"> Liquidity 1,000,000 ₳</div>
+                <div class="ada">₳ {{ getADAprice }} USD</div>
+                <div class="network"> {{ NETWORK }}</div>
             </div>
         </div>
     </header>
@@ -53,6 +55,7 @@ import NavComp from "@/components/header/NavComp.vue";
 import gql from 'graphql-tag';
 import { useQuery } from '@vue/apollo-composable';
 import { ref, watch } from "vue";
+import { NETWORK } from "@/api";
 
 const { showPanel, getCurrentUser, setADAprice, getADAprice } = headerAPI();
 
@@ -92,10 +95,15 @@ header {
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid var(--border-a);
+    font-size: var(--text-size-a);
 }
 
 .header {
     padding: 0.5rem 0;
+}
+
+.logo {
+    cursor: pointer;
 }
 
 .header,
@@ -157,8 +165,23 @@ header {
     width: 300px;
 }
 
-.ada-price {
-    font-size: var(--text-size-a);
-    font-weight: 500;
+.ada {
+    color: var(--text-b);
+    padding: 0 0.5rem;
+    margin-left: 1rem;
+    white-space: nowrap;
+}
+
+.network {
+    background: color-mix(in srgb, var(--p-green-50), transparent 5%);
+    color: var(--green-a);
+    padding: 0 0.5rem;
+    margin-left: 1rem;
+    border-radius: 4px;
+}
+
+.liquidity {
+    color: var(--text-b);
+    white-space: nowrap;
 }
 </style>
