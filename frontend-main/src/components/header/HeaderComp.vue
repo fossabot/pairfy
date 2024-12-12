@@ -10,7 +10,9 @@
             </div>
             <div class="header-col right">
                 <OverlayBadge class="header-button" value="1" severity="danger" @click="toggle">
-                    <i class="pi pi-bell" style="font-size: var(--text-size-c)" />
+                    <div class="header-button-user flex">
+                        <img src="@/assets/user.svg" alt="">
+                    </div>
                 </OverlayBadge>
 
                 <Popover ref="op">
@@ -28,7 +30,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="menu">
             <div class="menu-col left">
@@ -133,8 +134,6 @@ header {
     padding: 0.5rem 0;
 }
 
-.menu-col {}
-
 .menu-col.right {
     justify-content: flex-end;
 }
@@ -183,5 +182,11 @@ header {
 .liquidity {
     color: var(--text-b);
     white-space: nowrap;
+}
+
+.header-button-user img {
+    width: 1.5rem;
+    height: 1.5rem;
+    opacity: 0.5;
 }
 </style>

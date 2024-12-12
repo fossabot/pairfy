@@ -38,6 +38,12 @@
   --p-tag-border-radius: 8px !important;
 
   --p-tag-font-weight: initial !important;
+
+  --p-badge-min-width: 1rem !important;
+
+  --p-badge-height:1rem !important;
+
+  --p-overlaybadge-outline-width: 1px !important;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -61,10 +61,6 @@
 .p-overflow-hidden {
   overflow: initial !important;
 }
-.p-badge {
-  min-width: 1rem !important;
-  height: 1rem !important;
-}
 
 .p-drawer-title {
   font-size: var(--text-size-c) !important;
