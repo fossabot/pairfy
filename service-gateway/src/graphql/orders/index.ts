@@ -31,11 +31,12 @@ const createOrder = async (_: any, args: any, context: any) => {
              p.id AS product_id,
              p.name AS product_name,
              p.price AS product_price,
-             p.model AS product_model,
-             p.sku AS product_sku,
-             p.brand AS product_brand,
-             p.bullet_list AS product_bullet_list,
              p.collateral AS product_collateral,
+             p.sku AS product_sku,
+             p.model AS product_model,
+             p.brand AS product_brand,
+             p.features AS product_features,
+             p.bullet_list AS product_bullet_list,
              p.discount AS product_discount,
              p.discount_value AS product_discount_value,
              s.id AS seller_id,
@@ -138,13 +139,18 @@ const createOrder = async (_: any, args: any, context: any) => {
       contract_address: BUILDER.stateMachineAddress,
       contract_price: contractPrice,
       contract_collateral: contractCollateral,
-      contract_units: productUnits, // add to metadata contract
-      product_id: RESULT.product_id, // add to metadata contract
-      product_sku: RESULT.product_sku, // add to metadata contract
-      product_price: RESULT.product_price, // add to metadata contract
-      product_collateral: RESULT.product_collateral, // add to metadata contract
-      product_discount: RESULT.product_discount, // add to metadata contract
-      product_discount_value: RESULT.product_discount_value, // add to metadata contract
+      contract_units: productUnits,
+      product_id: RESULT.product_id,
+      product_name: RESULT.product_name,
+      product_price: RESULT.product_price,
+      product_collateral: RESULT.product_collateral,
+      product_sku: RESULT.product_sku,
+      product_model: RESULT.product_model,
+      product_brand: RESULT.product_brand,
+      product_features: RESULT.product_features,
+      product_bullet_list: RESULT.product_bullet_list,
+      product_discount: RESULT.product_discount,
+      product_discount_value: RESULT.product_discount_value,
       watch_until: watchUntil,
       pending_until: pendingUntil,
     };
@@ -168,7 +174,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       success: true,
       payload: {
         cbor: BUILDER.cbor,
-        order: BUILDER.threadTokenPolicyId
+        order: BUILDER.threadTokenPolicyId,
       },
     };
 
@@ -187,7 +193,6 @@ const createOrder = async (_: any, args: any, context: any) => {
 };
 
 const getOrder = async (_: any, args: any, context: any) => {
-
   const USER = (context.userData as UserToken) || null;
 
   const SELLER = (context.sellerData as SellerToken) || null;
@@ -195,7 +200,6 @@ const getOrder = async (_: any, args: any, context: any) => {
   const params = args.getOrderInput;
 
   console.log(params);
-
 
   let connection = null;
 

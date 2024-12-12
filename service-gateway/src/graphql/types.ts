@@ -67,9 +67,14 @@ type Order {
   contract_collateral: Int!
   contract_units: Int!
   product_id: String!
-  product_sku: String!
+  product_name: String!
   product_price: Int!
   product_collateral: Int!
+  product_sku: String!
+  product_model: String!
+  product_brand: String!
+  product_features: String!
+  product_bullet_list: String!
   product_discount: Boolean!
   product_discount_value: Int!
   watch_until: Float!
