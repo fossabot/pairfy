@@ -814,7 +814,7 @@ const openExplorer = () => {
 
 .product-name {
     font-weight: 500;
-    font-size: var(--text-size-c);
+    font-size: var(--text-size-b);
     margin-left: 1rem;
 }
 
