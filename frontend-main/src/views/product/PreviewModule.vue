@@ -82,13 +82,9 @@ const bulletList = computed(() => {
     min-height: 400px;
 }
 
-.preview-wrap {
- 
-}
-
 .preview-name {
-    font-size: var(--text-size-c);
-    font-weight: 600;
+    font-size: var(--text-size-d);
+    font-weight: 500;
     margin-top: 1rem;
 }
 
@@ -97,7 +93,7 @@ const bulletList = computed(() => {
 }
 
 .preview-price {
-    font-size: var(--text-size-f);
+    font-size: var(--text-size-e);
     margin-top: 1rem;
 }
 
