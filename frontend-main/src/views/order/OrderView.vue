@@ -166,7 +166,7 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
-                    
+
                     <div class="product" v-if="orderData">
                         <div class="product-header flex">
                             <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
@@ -564,7 +564,7 @@ onUnmounted(() => {
 
 .nav {
     border-bottom: 1px solid var(--border-a);
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .nav-item {
@@ -831,13 +831,7 @@ onUnmounted(() => {
 }
 
 
-.product-card {
-    border: 1px solid var(--border-a);
-    border-radius: 12px;
-    padding: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-}
+
 
 
 .product-name {
@@ -879,26 +873,40 @@ onUnmounted(() => {
     font-size: var(--text-size-a);
 }
 
+.product-card {
+    border: 1px solid var(--border-a);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.5rem;
+}
+
 .product-list {
     border: 1px solid var(--border-a);
-    padding: 0 1rem;
+    padding: 1.5rem;
     margin-top: 1rem;
     border-radius: 12px;
 }
 
 .product-list ul {
-    padding: 1rem;
+    padding-left: 1rem;
     color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
     font-size: var(--text-size-a);
+
 }
 
 .product-features {
-    padding: 1rem;
     border: 1px solid var(--border-a);
     margin-top: 1rem;
     border-radius: 12px;
+    padding: 1.5rem;
+}
+
+::v-deep(.product-features ul) {
+    padding-left: 1rem;
 }
 
 ::v-deep(.editor-class) {

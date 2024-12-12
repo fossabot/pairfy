@@ -1,6 +1,6 @@
 <template>
     <div class="body">
-        <div class="mask" />
+      
         <div class="container">
             <div class="card-header">
                 <span @click="backRoute">Back</span>
