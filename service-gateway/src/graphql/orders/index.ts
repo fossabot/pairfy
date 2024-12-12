@@ -29,8 +29,12 @@ const createOrder = async (_: any, args: any, context: any) => {
     const [row] = await connection.execute(
       `SELECT
              p.id AS product_id,
-             p.sku AS product_sku,
+             p.name AS product_name,
              p.price AS product_price,
+             p.model AS product_model,
+             p.sku AS product_sku,
+             p.brand AS product_brand,
+             p.bullet_list AS product_bullet_list,
              p.collateral AS product_collateral,
              p.discount AS product_discount,
              p.discount_value AS product_discount_value,

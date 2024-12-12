@@ -166,18 +166,18 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <div class="product" v-if="orderData">
-                        <div class="product-name">
-                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
-                            GeForce RTX 4070
-                            - 16GB RAM - 1TB SSD - Black - Open Box
+                        <div class="product-top flex">
+                            <img 
+                                src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
+
+                            <div class="product-top-name">
+                                Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
+                                GeForce RTX 4070
+                                - 16GB RAM - 1TB SSD - Black - Open Box
+                            </div>
                         </div>
 
                         <div class="product-card flex">
-
-                            <div class="product-card-image flex">
-                                <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
-                            </div>
-
                             <div class="product-card-box flex">
                                 <li class="flex">
                                     <div>ID</div>
@@ -789,9 +789,10 @@ const openExplorer = () => {
     width: 80%;
 }
 
-.product-name {
+.product-top-name {
     font-weight: 600;
     font-size: var(--text-size-c);
+    margin-left: 1rem;
 }
 
 .product-card {
@@ -799,25 +800,22 @@ const openExplorer = () => {
     border-radius: 12px;
     padding: 1rem;
     width: 100%;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.product-card-image {
-    border: 1px solid var(--border-a);
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 1rem;
-    justify-content: center;
-}
-
-.product-card-image img {
+.product-top img{
     width: 100px;
-    border-radius: 8px;
+    padding: 0.5rem;
+    border: 1px solid var(--border-a);
+    border-radius: 12px;
+    display: flex;
+    object-fit: contain;
+    justify-content: center;
+    align-items: center;
 }
 
 .product-card-box {
     display: block;
-    margin-left: 1rem;
     width: inherit;
 }
 
@@ -826,5 +824,6 @@ const openExplorer = () => {
     color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
+    font-size: var(--text-size-a);
 }
 </style>
