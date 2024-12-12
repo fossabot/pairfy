@@ -38,7 +38,7 @@ const isFocus = ref(false);
     width: 100%;
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     outline: none;
     font-size: var(--text-size-a);
     font-family: inherit;
