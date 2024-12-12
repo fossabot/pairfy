@@ -4,6 +4,14 @@ import { redisClient } from "../../db/redis.js";
 import { SellerToken, UserToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
 
+const TX_VALID_TIME = parseInt(process.env.TX_VALID_TIME as string);
+
+const TX_WATCH_WINDOW = parseInt(process.env.TX_WATCH_WINDOW as string);
+
+const PENDING_UNTIL = parseInt(process.env.PENDING_UNTIL as string);
+
+const SHIPPING_UNTIL = parseInt(process.env.SHIPPING_UNTIL as string);
+
 const createOrder = async (_: any, args: any, context: any) => {
   if (!context.userData) {
     throw new Error("CREDENTIALS");
@@ -16,7 +24,7 @@ const createOrder = async (_: any, args: any, context: any) => {
   const productUnits = params.product_units;
 
   if (productUnits <= 0) {
-    throw new Error("UNITS_ERROR");
+    throw new Error("NO_UNITS");
   }
 
   const USER = context.userData as UserToken;
@@ -55,6 +63,7 @@ const createOrder = async (_: any, args: any, context: any) => {
     if (!row.length) {
       throw new Error("NO_PRODUCT");
     }
+
     const RESULT = row[0];
 
     if (!RESULT.seller_pubkeyhash) {
@@ -71,7 +80,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       throw new Error("ADA_PRICE");
     }
 
-    const adaPrice = parseFloat(getADAPrice);
+    const ADAUSD = parseFloat(getADAPrice);
 
     ///////////////////////////////////////////////////
 
@@ -80,39 +89,28 @@ const createOrder = async (_: any, args: any, context: any) => {
       RESULT.product_discount_value,
       RESULT.product_price,
       productUnits,
-      adaPrice
+      ADAUSD
     );
 
     const contractCollateral: number = await getContractCollateral(
       RESULT.product_collateral,
       productUnits,
-      adaPrice
+      ADAUSD
     );
 
     const now = Date.now();
 
-    ///////////////////////////////////////////////
-
-    const TX_VALID_TIME = 5; //tx valid until
-
-    const WATCH_TX_WINDOW = 15; //Observation window limit for the detection of the first transaction
-
-    const PENDING_UNTIL = 60; // 15minutes for the seller to accept;
-
-    const SHIPPING_UNTIL = 1440; // 24h to shipping;
-
-    ///////////////////////////////////////////////
     const validUntil = now + TX_VALID_TIME * 60 * 1000;
 
-    const watchUntil = now + (TX_VALID_TIME + WATCH_TX_WINDOW * 60 * 1000);
+    const watchUntil = now + (TX_VALID_TIME + TX_WATCH_WINDOW * 60 * 1000);
 
     const pendingUntil =
-      now + (TX_VALID_TIME + WATCH_TX_WINDOW + PENDING_UNTIL * 60 * 1000);
+      now + (TX_VALID_TIME + TX_WATCH_WINDOW + PENDING_UNTIL * 60 * 1000);
 
     const shippingUntil =
       now +
       (TX_VALID_TIME +
-        WATCH_TX_WINDOW +
+        TX_WATCH_WINDOW +
         PENDING_UNTIL +
         SHIPPING_UNTIL * 60 * 1000);
 
@@ -135,7 +133,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       seller_id: RESULT.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
       seller_pubkeyhash: RESULT.seller_pubkeyhash,
-      ada_price: adaPrice, // add to metadata contract
+      ada_price: ADAUSD, // add to metadata contract
       contract_address: BUILDER.stateMachineAddress,
       contract_price: contractPrice,
       contract_collateral: contractCollateral,
@@ -170,15 +168,13 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     await connection.commit();
 
-    const scheme = {
+    return {
       success: true,
       payload: {
         cbor: BUILDER.cbor,
         order: BUILDER.threadTokenPolicyId,
       },
     };
-
-    return scheme;
   } catch (err: any) {
     if (connection) {
       await connection.rollback();

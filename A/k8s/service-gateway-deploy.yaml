@@ -56,7 +56,15 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: blockfrost-key
-                  key: key                                                      
+                  key: key      
+            - name: TX_VALID_TIME
+              value: "5"      
+            - name: TX_WATCH_WINDOW
+              value: "15"      
+            - name: PENDING_UNTIL
+              value: "60"       
+            - name: SHIPPING_UNTIL
+              value: "1440"                                                                                                 
             - name: CORS_DOMAINS
               value: "http://localhost:5173,http://localhost:5174,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
           resources:

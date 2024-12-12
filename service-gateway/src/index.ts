@@ -92,7 +92,22 @@ const main = async () => {
     if (!process.env.PROJECT_ID) {
       throw new Error("PROJECT_ID error");
     }
-    
+
+    if (!process.env.TX_VALID_TIME) {
+      throw new Error("TX_VALID_TIME error");
+    }
+
+    if (!process.env.TX_WATCH_WINDOW) {
+      throw new Error("TX_WATCH_WINDOW error");
+    }
+
+    if (!process.env.PENDING_UNTIL) {
+      throw new Error("PENDING_UNTIL error");
+    }
+
+    if (!process.env.SHIPPING_UNTIL) {
+      throw new Error("SHIPPING_UNTIL error");
+    }
 
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
