@@ -656,7 +656,7 @@ const discountResult = computed(() => {
 
     const discountedPrice = productPrice.value - discountAmount;
 
-    return Math.trunc(discountedPrice) + " USD";
+    return Math.round(discountedPrice) + " USD";
 })
 
 
