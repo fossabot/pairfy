@@ -166,11 +166,10 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <div class="product" v-if="orderData">
-                        <div class="product-top flex">
-                            <img 
-                                src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
+                        <div class="product-header flex">
+                            <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
 
-                            <div class="product-top-name">
+                            <div class="product-name">
                                 Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
                                 GeForce RTX 4070
                                 - 16GB RAM - 1TB SSD - Black - Open Box
@@ -189,7 +188,7 @@
                                 </li>
                                 <li class="flex">
                                     <div>Brand</div>
-                                    <div>Razer</div>
+                                    <div>{{ orderData.product_brand }}</div>
                                 </li>
                                 <li class="flex">
                                     <div>Price</div>
@@ -201,9 +200,16 @@
                                 </li>
                                 <li class="flex">
                                     <div>Model</div>
-                                    <div>Laptop 16</div>
+                                    <div>{{ orderData.product_model }}</div>
                                 </li>
                             </div>
+                        </div>
+                        <div class="product-list">
+                            <ul>
+                                <li v-for="item of orderData.product_bullet_list.split(',')" :key="item">
+                                    {{ item }}
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </template>
@@ -250,23 +256,30 @@ const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
         id
+        finished
+        scanned_at
         status_log
+        ada_price
         contract_address
         contract_state
-        ada_price
         contract_price
         contract_collateral
-        contract_units 
+        contract_units
+        product_id
+        product_name
+        product_price
+        product_collateral
+        product_sku
+        product_model
+        product_brand
+        product_features
+        product_bullet_list
+        product_discount
+        product_discount_value
+        watch_until
         pending_until
         pending_tx
         pending_block
-        watch_until
-        product_id
-        product_sku
-        product_price
-        product_collateral
-        product_discount
-        product_discount_value
     }
 }
 `,
@@ -789,11 +802,6 @@ const openExplorer = () => {
     width: 80%;
 }
 
-.product-top-name {
-    font-weight: 600;
-    font-size: var(--text-size-c);
-    margin-left: 1rem;
-}
 
 .product-card {
     border: 1px solid var(--border-a);
@@ -803,8 +811,24 @@ const openExplorer = () => {
     margin-top: 1rem;
 }
 
-.product-top img{
+
+.product-name {
+    font-weight: 500;
+    font-size: var(--text-size-c);
+    margin-left: 1rem;
+}
+
+.product-header {
+    border: 1px solid var(--border-a);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+
+.product-header img {
     width: 100px;
+    height: 100px;
     padding: 0.5rem;
     border: 1px solid var(--border-a);
     border-radius: 12px;
@@ -821,6 +845,21 @@ const openExplorer = () => {
 
 .product-card-box li {
     list-style: none;
+    color: var(--text-b);
+    line-height: 1.75rem;
+    justify-content: space-between;
+    font-size: var(--text-size-a);
+}
+
+.product-list {
+    border: 1px solid var(--border-a);
+    padding: 0 1rem;
+    margin-top: 1rem;
+    border-radius: 12px;
+}
+
+.product-list ul {
+    padding: 1rem;
     color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
