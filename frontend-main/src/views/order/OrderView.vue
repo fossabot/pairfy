@@ -800,7 +800,7 @@ const openExplorer = () => {
     border-radius: 12px;
     padding: 1rem;
     width: 100%;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .product-top img{
