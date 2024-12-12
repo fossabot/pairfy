@@ -172,7 +172,6 @@ onGetProductError(error => {
     background: var(--background-b);
     font-size: var(--text-size-a);
     color: var(--text-b);
-    border: 1px solid var(--border-a);
     border-radius: 8px;
 }
 
