@@ -48,7 +48,7 @@ function applyDiscount(
 
   const discountedPrice = productPrice - discountAmount;
 
-  return Math.trunc(discountedPrice);
+  return Math.round(discountedPrice);
 }
 
 /**

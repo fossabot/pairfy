@@ -42,7 +42,7 @@ export function applyDiscount(active, originalPrice, discountPercent) {
 
   const discountedPrice = originalPrice - discountAmount
 
-  return Math.trunc(discountedPrice)
+  return Math.round(discountedPrice)
 }
 
 /**
@@ -62,7 +62,7 @@ export function convertUSDToADA(usdAmount, adaPrice) {
 
   const amountInADA = usdAmount / adaPrice
 
-  return Math.trunc(amountInADA)
+  return Math.round(amountInADA)
 }
 
 export function convertLovelaceToADA(lovelace) {

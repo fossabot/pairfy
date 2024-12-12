@@ -35,7 +35,8 @@
                 <Tag :value="`$${getProductData.price}`" severity="secondary"
                     style="text-decoration: line-through; margin: 0 1rem;" />
 
-                <Tag :value="`${convertUSDToADA(applyDiscount(getProductData.discount,
+                <Tag :value="`${convertUSDToADA(
+                    applyDiscount(getProductData.discount,
                     getProductData.price,
                     getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
             </div>
