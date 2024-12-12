@@ -96,7 +96,7 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Quantity</span>
-                                                    <span>{{ contractUnits }}</span>
+                                                    <span>{{ orderData.contract_units }}</span>
                                                 </div>
 
                                                 <div class="created-item">
@@ -359,8 +359,6 @@ const statusLog = ref("created");
 
 const orderPayment = ref(null);
 
-const pendingUntil = ref(null);
-
 const pendingBlock = ref(null);
 
 const lockingBlock = ref(null);
@@ -370,8 +368,6 @@ const shippingBlock = ref(null);
 const contractFiat = ref(0);
 
 const contractPrice = ref(0);
-
-const contractUnits = ref(0);
 
 watch(getOrderResult, value => {
     if (value) {
@@ -383,11 +379,7 @@ watch(getOrderResult, value => {
 
         orderPayment.value = getPaymentStatus(order.pending_block)
 
-        pendingUntil.value = order.pending_until
-
         contractPrice.value = convertLovelaceToADA(order.contract_price);
-
-        contractUnits.value = order.contract_units;
 
         pendingBlock.value = order.pending_block;
 
@@ -405,7 +397,7 @@ watch(getOrderResult, value => {
     }
 }, { immediate: true })
 
-////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 const globalTimestamp = ref(Date.now());
 
@@ -427,7 +419,7 @@ const updateGlobalCountdown = () => {
     globalTimeLeft.value = globalTimestamp.value - Date.now();
 };
 
-////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 const pendingTimestamp = ref(Date.now());
 
@@ -439,7 +431,7 @@ const disableReturn = computed(() => {
         return false
     }
 
-    return Date.now() < pendingUntil.value
+    return Date.now() < orderData.value.pending_until
 });
 
 const pendingCountdown = computed(() => {
@@ -458,7 +450,8 @@ const updatePendingCountdown = () => {
     pendingTimeLeft.value = pendingTimestamp.value - Date.now();
 };
 
-//////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
 const editor = ref(null);
 
 const setupEditor = async () => {
