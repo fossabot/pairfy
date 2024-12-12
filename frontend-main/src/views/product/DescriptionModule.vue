@@ -12,7 +12,7 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import productAPI from '@/views/product/api/index';
 import { Editor, EditorContent } from '@tiptap/vue-3';
-import { onMounted, ref, nextTick, onBeforeUnmount, computed, watch } from 'vue';
+import { onMounted, ref, nextTick, onBeforeUnmount, watch } from 'vue';
 
 
 const { getProductData } = productAPI();
@@ -32,7 +32,7 @@ const setupEditor = async () => {
                     class: 'editor-class',
                 },
             },
-            content: "aa",
+            content: "",
         })
     });
 }

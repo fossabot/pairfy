@@ -2,11 +2,11 @@
     <div class="wrap">
         <div class="container">
             <div class="nav flex">
-                <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="setNav(0)">
+                <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
                     <span>Information</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
-                <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="setNav(1)">
+                <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
                     <span>Product</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 1 }" />
                 </div>
@@ -32,9 +32,9 @@
                         <div class="summary-subtitle flex">
                             Contract Address
                             <div>
-                                <span> {{ reduceByLength(contractAdress, 30) }}</span>
+                                <span> {{ reduceByLength(orderData.contract_address, 30) }}</span>
                             </div>
-                            <button class="flex" @click="copyToClipboard(contractAdress)">
+                            <button class="flex" @click="copyToClipboard(orderData.contract_address)">
                                 <i class="pi  pi-copy" />
                             </button>
                         </div>
@@ -165,6 +165,8 @@
                 </template>
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
+                    <Skeleton v-if="!orderData" width="80%" height="100%" />
+                    
                     <div class="product" v-if="orderData">
                         <div class="product-header flex">
                             <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
@@ -211,6 +213,10 @@
                                 </li>
                             </ul>
                         </div>
+
+                        <div class="product-features">
+                            <editor-content :editor="editor" />
+                        </div>
                     </div>
                 </template>
                 <!--/////////////////////////////////////////-->
@@ -226,10 +232,15 @@
 
 <script setup>
 import gql from 'graphql-tag';
-import { useMutation, useQuery } from '@vue/apollo-composable';
-import { ref, watch, computed, inject, onMounted, onUnmounted } from 'vue';
+import StarterKit from '@tiptap/starter-kit';
+import ListItem from '@tiptap/extension-list-item';
+import TextStyle from '@tiptap/extension-text-style';
+import { ref, watch, computed, inject, onMounted, onUnmounted, onBeforeUnmount, nextTick } from 'vue';
+import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
+import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
+
 
 const { copyToClipboard, formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
 
@@ -239,11 +250,35 @@ const router = useRouter();
 
 const currentNav = ref(1);
 
-const setNav = (e) => {
-    currentNav.value = e
-}
-
-const txHash = ref(null)
+const timeline = ref([
+    {
+        number: 1,
+        title: "Order Created",
+        subtitle: "",
+        completed: true,
+        type: "box",
+        template: "created",
+        line: true
+    },
+    {
+        number: 2,
+        title: "Preparation",
+        subtitle: "The seller has been notified to prepare your product.",
+        completed: false,
+        type: "box",
+        template: "preparation",
+        line: true
+    },
+    {
+        number: 3,
+        title: "Received",
+        subtitle: "Please confirm that the exact product was delivered.",
+        completed: false,
+        type: "button",
+        template: "received",
+        line: false
+    }
+])
 
 const queryVariablesRef = ref({
     "getOrderVariable": {
@@ -301,6 +336,7 @@ const updateQueryVariables = (id) => {
     }
 }
 
+const pendingTx = ref(null);
 
 watch(
     () => route,
@@ -311,15 +347,13 @@ watch(
         }
 
         if (route.query.tx) {
-            txHash.value = route.query.tx;
+            pendingTx.value = route.query.tx;
         }
     },
     { immediate: true }
 );
 
 const orderData = ref(null);
-
-const contractAdress = ref("N/A");
 
 const statusLog = ref("created");
 
@@ -345,8 +379,6 @@ watch(getOrderResult, value => {
 
         orderData.value = order;
 
-        contractAdress.value = order.contract_address;
-
         statusLog.value = order.status_log;
 
         orderPayment.value = getPaymentStatus(order.pending_block)
@@ -359,46 +391,19 @@ watch(getOrderResult, value => {
 
         pendingBlock.value = order.pending_block;
 
-        txHash.value = order.pending_tx;
+        pendingTx.value = order.pending_tx;
 
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
         globalTimestamp.value = getTimestamp(order);
 
         pendingTimestamp.value = order.pending_until;
+
+        if (editor) {
+            editor.value.commands.setContent(JSON.parse(order.product_features));
+        }
     }
 }, { immediate: true })
-
-const timeline = ref([
-    {
-        number: 1,
-        title: "Order Created",
-        subtitle: "",
-        completed: true,
-        type: "box",
-        template: "created",
-        line: true
-    },
-    {
-        number: 2,
-        title: "Preparation",
-        subtitle: "The seller has been notified to prepare your product.",
-        completed: false,
-        type: "box",
-        template: "preparation",
-        line: true
-    },
-    {
-        number: 3,
-        title: "Received",
-        subtitle: "Please confirm that the exact product was delivered.",
-        completed: false,
-        type: "button",
-        template: "received",
-        line: false
-    }
-])
-
 
 ////////////////////////////////
 
@@ -453,21 +458,28 @@ const updatePendingCountdown = () => {
     pendingTimeLeft.value = pendingTimestamp.value - Date.now();
 };
 
+//////////////////////////////////////////////
+const editor = ref(null);
 
-///////////////////////////////
+const setupEditor = async () => {
+    await nextTick(() => {
+        editor.value = new Editor({
+            editable: false,
+            extensions: [
+                StarterKit,
+                TextStyle.configure({ types: [ListItem.name] }),
+            ],
+            editorProps: {
+                attributes: {
+                    class: 'editor-class',
+                },
+            },
+            content: "",
+        })
+    });
+}
 
-onMounted(() => {
-    updateGlobalCountdown();
-    updatePendingCountdown();
-    globalInterval = setInterval(updateGlobalCountdown, 1000);
-    pendingInterval = setInterval(updatePendingCountdown, 1000);
-});
-
-onUnmounted(() => {
-    clearInterval(globalInterval);
-});
-
-//////////////////////////////////////////////77
+//////////////////////////////////////////////
 
 const getPaymentStatus = (pending_block) => {
     if (!pending_block) {
@@ -516,9 +528,26 @@ const getTimestamp = (order) => {
 }
 
 const openExplorer = () => {
-    window.open(`https://${NETWORK}.cexplorer.io/tx/${txHash.value}`, '_blank');
+    window.open(`https://${NETWORK}.cexplorer.io/tx/${pendingTx.value}`, '_blank');
 }
 
+/////////////////////////////////////////////
+
+onMounted(() => {
+    updateGlobalCountdown();
+    updatePendingCountdown();
+    globalInterval = setInterval(updateGlobalCountdown, 1000);
+    pendingInterval = setInterval(updatePendingCountdown, 1000);
+    setupEditor();
+});
+
+onBeforeUnmount(() => {
+    editor.value.destroy()
+})
+
+onUnmounted(() => {
+    clearInterval(globalInterval);
+});
 </script>
 
 <style lang="css" scoped>
@@ -863,5 +892,17 @@ const openExplorer = () => {
     line-height: 1.75rem;
     justify-content: space-between;
     font-size: var(--text-size-a);
+}
+
+.product-features {
+    padding: 1rem;
+    border: 1px solid var(--border-a);
+    margin-top: 1rem;
+    border-radius: 12px;
+}
+
+::v-deep(.editor-class) {
+    line-height: 2rem;
+    color: var(--text-b);
 }
 </style>
