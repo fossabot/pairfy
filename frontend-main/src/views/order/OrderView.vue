@@ -248,7 +248,7 @@ const route = useRoute();
 
 const router = useRouter();
 
-const currentNav = ref(1);
+const currentNav = ref(0);
 
 const timeline = ref([
     {
