@@ -1,5 +1,6 @@
 <template>
-    <div class="wrap">
+    <div class="body">
+        <div class="mask" />
         <div class="container">
             <div class="card-header">
                 <span @click="backRoute">Back</span>
@@ -18,7 +19,7 @@
             </div>
             <div class="card">
                 <div class="card-left">
-                    <div class="card-image-preview">
+                    <div class="card-left-top">
                         <MediaModule />
                         <PreviewModule />
                     </div>
@@ -141,12 +142,22 @@ onGetProductError(error => {
 </script>
 
 <style lang="css" scoped>
-.wrap {
+.body {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.mask {
+    height: 100px;
+    width: inherit;
+    position: relative;
+    z-index: 1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("https://http2.mlstatic.com/D_NQ_924888-MLA81282125475_122024-OO.webp"); 
 }
 
 .container {
@@ -190,18 +201,21 @@ onGetProductError(error => {
     padding-right: 2rem;
 }
 
-.card-right {
-    min-height: 100vh;
-}
-
-.card-image-preview {
+.card-left-top {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
 
+.card-right {
+    min-height: 100vh;
+}
+
+
+
 .footer {
     height: 200px;
     display: flex;
 }
+
 </style>

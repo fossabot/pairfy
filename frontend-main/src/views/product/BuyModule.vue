@@ -168,7 +168,7 @@ onOrderCreated(async result => {
     if (response.createOrder.success === true) {
         try {
             const { cbor, order } = response.createOrder.payload;
-            
+
             const txHash = await balanceTx(cbor);
 
             showSuccess("Transaction submited");
@@ -209,7 +209,7 @@ const onConfirmedBuy = () => {
 <style lang="css" scoped>
 .buy {
     border: 1px solid var(--border-a);
-    border-radius: 12px; 
+    border-radius: 12px;
     min-height: 100px;
     display: flex;
     flex-direction: column;
@@ -238,6 +238,7 @@ const onConfirmedBuy = () => {
 .buy-sku {
     margin-top: 1rem;
     font-size: var(--text-size-a);
+    color: var(--text-b);
 }
 
 .buy-legend {
@@ -259,18 +260,20 @@ const onConfirmedBuy = () => {
 }
 
 .buy-stock.red {
- color: var(--red-a);
+    color: var(--red-a);
 }
 
 .dialog-name {
     margin-top: 1rem;
 }
 
-.dialog-msg {   margin-top: 1rem;}
+.dialog-msg {
+    margin-top: 1rem;
+}
 
 .dialog-sub {
     font-weight: 500;
- 
+
 }
 
 .dialog-total {
