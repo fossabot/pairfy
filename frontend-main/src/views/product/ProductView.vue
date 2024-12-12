@@ -158,8 +158,7 @@ onGetProductError(error => {
     z-index: 1;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("https://http2.mlstatic.com/D_NQ_898353-MLA80842011878_122024-OO.webp");
-    background: var(--primary-a);
+    background-image: url("https://http2.mlstatic.com/D_NQ_924888-MLA81282125475_122024-OO.webp"); 
 }
 
 .container {

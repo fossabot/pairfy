@@ -11,7 +11,7 @@
             <div class="header-col right">
                 <OverlayBadge class="header-button" value="1" severity="danger" @click="toggle">
                     <div class="header-button-user flex">
-                        <img src="@/assets/user.svg" alt="">
+                        <i class="pi pi-bell" />
                     </div>
                 </OverlayBadge>
 
@@ -39,7 +39,7 @@
 
             </div>
             <div class="menu-col right">
-                <div class="liquidity"> Liquidity 1,000,000 ₳</div>
+              
                 <div class="ada">₳ {{ getADAprice }} USD</div>
                 <div class="network"> {{ NETWORK }}</div>
             </div>
@@ -177,11 +177,6 @@ header {
     padding: 0 0.5rem;
     margin-left: 1rem;
     border-radius: 4px;
-}
-
-.liquidity {
-    color: var(--text-b);
-    white-space: nowrap;
 }
 
 .header-button-user img {

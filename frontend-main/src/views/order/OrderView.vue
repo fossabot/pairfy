@@ -166,12 +166,6 @@
                 <!--////////////////PRODUCT/////////////////////-->
                 <template v-if="currentNav === 1">
                     <div class="product" v-if="orderData">
-
-                        <div class="product-name">
-                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070
-                            - 16GB RAM - 1TB SSD - Black - Open Box
-                        </div>
-
                         <div class="product-card flex">
                             <div class="product-card-image flex">
                                 <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
@@ -202,8 +196,12 @@
                                     <div>Model</div>
                                     <div>Laptop 16</div>
                                 </li>
-
                             </div>
+                        </div>
+
+                        <div class="product-name">
+                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070
+                            - 16GB RAM - 1TB SSD - Black - Open Box
                         </div>
 
                     </div>
@@ -791,14 +789,14 @@ const openExplorer = () => {
 }
 
 .product-name {
-    font-weight: 600
+    font-weight: 600;
+    margin-top: 1rem;
 }
 
 .product-card {
     border: 1px solid var(--border-a);
     border-radius: 12px;
     padding: 1rem;
-    margin-top: 1rem;
     width: 100%;
 }
 

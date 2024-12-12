@@ -1,7 +1,7 @@
 <template>
     <div class="search" :class="{ focus: isFocus }" :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
         <input v-model="searchInput" type="text" class="search-input"  placeholder="Search In Cardano"
-            @focus="isFocus = true">
+            @focus="isFocus = true" @blur="isFocus = false">
         <button class="search-button">
             <i class="pi pi-search" />
         </button>

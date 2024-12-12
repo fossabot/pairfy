@@ -6,19 +6,20 @@
 
             </template>
 
-            <div class="dialog-msg">
-                <Message size="small" severity="info">
-                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
-                    be refunded.
-                </Message>
-            </div>
 
-            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
+            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units:</div>
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -
                 OLED QHD + 240 Hz
                 - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
+            </div>
+
+            <div class="dialog-msg">
+                <Message size="small" severity="info">
+                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
+                    be refunded.
+                </Message>
             </div>
 
             <div class="dialog-total">
@@ -265,11 +266,11 @@ const onConfirmedBuy = () => {
     margin-top: 1rem;
 }
 
-.dialog-msg {}
+.dialog-msg {   margin-top: 1rem;}
 
 .dialog-sub {
     font-weight: 500;
-    margin-top: 1rem;
+ 
 }
 
 .dialog-total {

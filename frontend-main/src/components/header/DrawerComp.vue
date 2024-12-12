@@ -24,7 +24,7 @@
             <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
-            <Message severity="success" icon="pi pi-info-circle">
+            <Message severity="secondary" icon="pi pi-info-circle">
                 Make sure you trade with the correct wallet account.
             </Message>
 
