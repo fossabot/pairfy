@@ -133,7 +133,7 @@ const quantityOptions = ref([
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "Product In Stock" : "Out Stock";
+    return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
 const showBuyDialog = ref(false);
