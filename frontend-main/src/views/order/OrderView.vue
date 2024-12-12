@@ -905,5 +905,6 @@ onUnmounted(() => {
 ::v-deep(.editor-class) {
     line-height: 2rem;
     color: var(--text-b);
+    font-size: var(--text-size-a);
 }
 </style>
