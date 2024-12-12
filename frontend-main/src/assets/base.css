@@ -34,6 +34,10 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --p-tag-border-radius: 8px !important;
+
+  --p-tag-font-weight: initial !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -85,7 +89,6 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
-  font-weight: normal;
 }
 
 * {

@@ -102,9 +102,7 @@ const bulletList = computed(() => {
 }
 
 .preview-price div {
-    font-size: 15px;
-    margin-bottom: 12px;
-    margin-right: 6px;
+    margin-right: 0.5rem;
 }
 
 .preview-discount {

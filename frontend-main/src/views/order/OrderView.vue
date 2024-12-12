@@ -168,13 +168,44 @@
                     <div class="product" v-if="orderData">
 
                         <div class="product-name">
-                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070 - 16GB RAM - 1TB SSD - Black - Open Box
+                            Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA GeForce RTX 4070
+                            - 16GB RAM - 1TB SSD - Black - Open Box
                         </div>
-                        
-                        {{ orderData.product_id }}
-                        {{ orderData.product_sku.split(":")[0] }}
-                        {{ orderData.product_price }} 
-                        {{ orderData.product_collateral }} 
+
+                        <div class="product-card flex">
+                            <div class="product-card-image flex">
+                                <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
+                            </div>
+
+                            <div class="product-card-box flex">
+                                <li class="flex">
+                                    <div>ID</div>
+                                    <div>{{ orderData.product_id }}</div>
+                                </li>
+                                <li class="flex">
+                                    <div>SKU</div>
+                                    <div>{{ orderData.product_sku.split(":")[0] }}</div>
+                                </li>
+                                <li class="flex">
+                                    <div>Brand</div>
+                                    <div>Razer</div>
+                                </li>
+                                <li class="flex">
+                                    <div>Price</div>
+                                    <div>{{ formatCurrency(orderData.product_price) }} USD</div>
+                                </li>
+                                <li class="flex">
+                                    <div>Collateral</div>
+                                    <div>{{ orderData.product_collateral }} ADA</div>
+                                </li>
+                                <li class="flex">
+                                    <div>Model</div>
+                                    <div>Laptop 16</div>
+                                </li>
+
+                            </div>
+                        </div>
+
                     </div>
                 </template>
                 <!--/////////////////////////////////////////-->
@@ -751,5 +782,55 @@ const openExplorer = () => {
 .received-control button {
     margin-right: 1rem;
     font-weight: 600;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.product-name {
+    font-weight: 600
+}
+
+.product-card {
+    border: 1px solid var(--border-a);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.product-card-image {
+    border: 1px solid var(--border-a);
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 0.5rem;
+    justify-content: center;
+}
+
+.product-card-image img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+}
+
+.product-card-box {
+    display: block;
+    margin-left: 1rem;
+    width: inherit;
+}
+
+.product-card-box li {
+    list-style: none;
+    font-size: var(--text-size-a);
+    font-weight: 500;
+    color: var(--text-b);
+    justify-content: space-between;
+}
+
+.product-card-box div label {
+    margin-left: auto;
 }
 </style>
