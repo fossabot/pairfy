@@ -1,6 +1,5 @@
 <template>
     <div class="wrap">
-        <div class="mask" />
         <div class="container">
             <div class="card-header">
                 <span @click="backRoute">Back</span>
@@ -148,23 +147,13 @@ onGetProductError(error => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--background-b);
-}
-
-.mask {
-    height: 250px;
-    width: inherit;
-    position: relative;
-    z-index: 1;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-image: url("https://http2.mlstatic.com/D_NQ_924888-MLA81282125475_122024-OO.webp"); 
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: -100px;
+    margin-top: 2rem;
+    position: relative;
     max-width: 1200px;
     width: 80%;
     height: auto;
@@ -184,17 +173,14 @@ onGetProductError(error => {
     font-size: var(--text-size-a);
     color: var(--text-b);
     border: 1px solid var(--border-a);
-    border-bottom: none;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    border-radius: 8px;
 }
 
 .card {
     display: grid;
-    grid-template-columns: 75% 25%;
-    padding: 1.5rem;
+    grid-template-columns: 78% 22%;
+    margin-top: 2rem;
     box-sizing: border-box;
-    border: 1px solid var(--border-a);
 }
 
 .card-left {
@@ -202,7 +188,7 @@ onGetProductError(error => {
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding-right: 3rem;
+    padding-right: 2rem;
 }
 
 .card-right {

@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="200" previewIcon="pi-search" 
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="300" previewIcon="pi-search" 
                     preview />
             </div>
         </section>
