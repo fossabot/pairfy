@@ -173,13 +173,12 @@
                         </div>
 
                         <div class="product-card flex">
+
                             <div class="product-card-image flex">
                                 <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
                             </div>
 
                             <div class="product-card-box flex">
-
-
                                 <li class="flex">
                                     <div>ID</div>
                                     <div>{{ orderData.product_id }}</div>
@@ -827,9 +826,5 @@ const openExplorer = () => {
     color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
-}
-
-.product-card-box div label {
-    margin-left: auto;
 }
 </style>
