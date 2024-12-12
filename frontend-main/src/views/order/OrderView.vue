@@ -585,7 +585,6 @@ const openExplorer = () => {
 .summary-title {
     font-size: var(--text-size-c);
     font-weight: 700;
-    margin-bottom: 0.5rem;
 }
 
 .summary-title span {
@@ -595,7 +594,7 @@ const openExplorer = () => {
 
 .summary-subtitle {
     font-size: var(--text-size-a);
-    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
     color: var(--text-a);
 }
 
