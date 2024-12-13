@@ -10,7 +10,7 @@ import {
   validatorToAddress,
   paymentCredentialOf,
 } from "@lucid-evolution/lucid";
-import { lucid, validators } from "./index.js";
+import { lucid, serializeParams, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
@@ -32,7 +32,7 @@ async function pendingTransactionBuilder(
 
   //////////////////////////////////////////////////
 
-  const minLovelace = contractPrice; 
+  const minLovelace = contractPrice;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -60,30 +60,33 @@ async function pendingTransactionBuilder(
   const mintRedeemer = Data.to(new Constr(0, []));
 
   ///////////////////////////////////////
+  const stateMachineParams = [
+    threadTokenPolicyId,
+    sellerPubKeyHash,
+    buyerPubKeyHash,
+    contractPrice,
+    contractCollateral,
+    pendingUntil,
+  ];
+
+  const serializedParams = serializeParams(stateMachineParams);
 
   const stateMachineScript: SpendingValidator = {
     type: "PlutusV3",
     script: applyParamsToScript(
       applyDoubleCborEncoding(validators.stateMachine),
-      [
-        threadTokenPolicyId,
-        sellerPubKeyHash,
-        buyerPubKeyHash,
-        contractPrice,
-        contractCollateral,
-        pendingUntil
-      ]
+      stateMachineParams
     ),
   };
 
   ////////////////////////////////////////////
 
   const datumValues = {
-    state: BigInt(0)
+    state: BigInt(0),
   };
 
   const StateMachineDatum = Data.Object({
-    state: Data.Integer()
+    state: Data.Integer(),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -130,20 +133,24 @@ async function pendingTransactionBuilder(
 
   const cbor = transaction.toCBOR();
 
+  console.log("--------------------------------------------------------");
+
   console.log("ThreadToken: ", threadTokenPolicyId);
 
   console.log("Unit: ", assetUnit);
 
   console.log("stateMachineAddress: ", stateMachineAddress);
 
-  console.log("CBOR---------------------------------------");
+  console.log("stateMachineParams: ", serializedParams);
+
+  console.log("--------------------------------------------------------");
 
   console.log(cbor);
 
   return {
     threadTokenPolicyId,
     stateMachineAddress,
-    tokenName,
+    serializedParams,
     cbor,
   };
 }
@@ -173,16 +180,15 @@ function main() {
       PENDING_UNTIL +
       SHIPPING_UNTIL * 60 * 1000);
 
-
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
+  const sellerPubKeyHash =
+    "659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65";
+    
   const contractPrice = 30 * 1_000_000;
 
   const contractCollateral = 10 * 1_000_000;
-
-  const sellerPubKeyHash =
-    "659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65";
 
   pendingTransactionBuilder(
     externalWalletAddress,
@@ -195,7 +201,7 @@ function main() {
   );
 }
 
-//main();
+main();
 
 export { pendingTransactionBuilder };
 

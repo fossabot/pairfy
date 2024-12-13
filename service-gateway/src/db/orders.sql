@@ -8,6 +8,7 @@ create table if not exists orders(
   seller_pubkeyhash varchar(100) not null,  
   ada_price decimal(10, 2) not null,
   contract_address varchar(100) not null,
+  contract_params text not null,
   contract_state int default null,
   contract_price int unsigned not null,
   contract_collateral int unsigned not null,
