@@ -6,8 +6,7 @@
 
             </template>
 
-
-            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
+            <div class="dialog-sub">Buy {{ selectedQuantity.code }} units</div>
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -
@@ -53,7 +52,7 @@
             </div>
 
             <div class="buy-sku">
-                <span>SKU: {{ getProductData.sku.split(":")[0] }}</span>
+                <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
             </div>
 
             <div class="buy-available">
