@@ -7,7 +7,7 @@
             </template>
 
 
-            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units:</div>
+            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
 
             <div class="dialog-name">
                 Razer - Blade 16 - 16" Gaming Laptop -

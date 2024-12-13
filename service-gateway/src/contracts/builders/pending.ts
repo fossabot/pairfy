@@ -14,8 +14,6 @@ import { lucid, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
-const PENDING_UNTIL = 15; // env minutes
-
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
   externalWalletAddress: string,
@@ -31,8 +29,10 @@ async function pendingTransactionBuilder(
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
   const buyerPubKeyHash = paymentCredentialOf(externalWalletAddress).hash;
-  ////////////////////////////////
-  const minLovelace = contractPrice; //fee
+
+  //////////////////////////////////////////////////
+
+  const minLovelace = contractPrice; 
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -77,6 +77,7 @@ async function pendingTransactionBuilder(
   };
 
   ////////////////////////////////////////////
+
   const datumValues = {
     state: BigInt(0)
   };
@@ -88,7 +89,6 @@ async function pendingTransactionBuilder(
   type DatumType = Data.Static<typeof StateMachineDatum>;
 
   const DatumType = StateMachineDatum as unknown as DatumType;
-
 
   const stateMachineDatum = Data.to(datumValues, DatumType);
 
