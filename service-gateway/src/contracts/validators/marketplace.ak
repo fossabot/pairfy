@@ -64,34 +64,34 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
         when (datum, redeemer) is {
           (StateMachineDatum { state }, Return) -> {
 
+            let must_be_state = state == 0  
+
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
-              interval.Finite(tx_earliest_time) -> pending_until <= tx_earliest_time
+              interval.Finite(tx_earliest_time) -> tx_earliest_time > pending_until 
               _ -> False
               }
-
-            let must_be_state = state == 0  
 
             let must_be_signed = list.has(self.extra_signatories, buyer)
 
             //One of the transaction inputs belongs to the statemachine.
-            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref })  
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 1.
+            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
 
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
             expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 2.
 
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
             let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
             
-            //verification of the new datum - 1.
+            //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state : -1,
             }
-            //verification of the new datum - 2.
+            //verification of the new datum.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
 
             and {
-              must_be_time?,
               must_be_state?,
+              must_be_time?,
               must_be_signed?,
               must_be_policy?,
               must_be_datum?
@@ -191,7 +191,7 @@ test statemachine_return() {
       mint: transaction.placeholder.mint,
       certificates: [],
       withdrawals: [],
-      validity_range: interval.after(pending_until),
+      validity_range: interval.after(pending_until + 1),
       extra_signatories: [buyer_pubkeyhash],
       redeemers: [],
       datums: transaction.placeholder.datums,
