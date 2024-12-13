@@ -1,13 +1,10 @@
 import * as dotenv from "dotenv";
-import { Blockfrost, Lucid } from "@lucid-evolution/lucid";
+import { Koios, Lucid, Maestro } from "@lucid-evolution/lucid";
 import { blueprint } from "./plutus.js";
 
 dotenv.config();
 
-const provider = new Blockfrost(
-  "https://cardano-preprod.blockfrost.io/api/v0",
-  process.env.PROJECT_ID
-);
+const provider = new Koios("https://preprod.koios.rest/api/v1");
 
 type Validators = {
   threadToken: string;

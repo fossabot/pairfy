@@ -123,7 +123,7 @@ async function pendingTransactionBuilder(
     )
     .attach.MintingPolicy(threadTokenScript)
     .addSigner(externalWalletAddress)
-    .validTo(Number(validUntil))
+    //.validTo(Number(validUntil))
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: 1_000_000n,
@@ -162,7 +162,7 @@ function main() {
 
   const WATCH_TX_WINDOW = 15; //Observation window limit for the detection of the first transaction
 
-  const PENDING_UNTIL = 60; // 15minutes for the seller to accept;
+  const PENDING_UNTIL = 16; // 15minutes for the seller to accept;
 
   const SHIPPING_UNTIL = 1440; // 24h to shipping;
 

@@ -22,7 +22,6 @@ const NETWORK = "Preprod";
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer to return funds after pending_until. */
 async function returnTransactionBuilder(
   externalWalletAddress: string,
-  stateMachineAddress: string,
   serializedParams: string,
   validUntil: bigint
 ) {
@@ -37,14 +36,13 @@ async function returnTransactionBuilder(
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
-  console.log(stateMachineParams);
   //////////////////////////////////////////////////
 
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
-  const collateral = 1_000_000;
+  const collateral = 5_000_000;
 
   const minLovelace = collateral;
 
@@ -52,7 +50,7 @@ async function returnTransactionBuilder(
     (item) => item.assets.lovelace > minLovelace
   );
 
-  const externalWalleUtxo = externalWalletUtxos[findIndex];
+  const externalWalletUtxo = externalWalletUtxos[findIndex];
 
   ///////////////////////////////////////////////////
 
@@ -105,6 +103,10 @@ async function returnTransactionBuilder(
     ),
   };
 
+  const stateMachineAddress = validatorToAddress(NETWORK, stateMachineScript);
+
+  console.log(stateMachineAddress);
+
   ////////////////////////////////////////////
 
   const returnInput = "Return";
@@ -124,8 +126,9 @@ async function returnTransactionBuilder(
 
   const transaction = await lucid
     .newTx()
-    .collectFrom([utxo, externalWalleUtxo], stateMachineRedeemer)
-    .pay.ToContract(
+    .collectFrom([utxo], stateMachineRedeemer)
+    .collectFrom([externalWalletUtxo])
+    .pay.ToAddressWithData(
       stateMachineAddress,
       {
         kind: "inline",
@@ -133,6 +136,7 @@ async function returnTransactionBuilder(
       },
       {
         [threadTokenUnit]: 1n,
+        lovelace: 0n,
       }
     )
     .pay.ToAddress(externalWalletAddress, {
@@ -140,10 +144,10 @@ async function returnTransactionBuilder(
     })
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
-    .validTo(Number(validUntil))
+    .validFrom(Date.now())
     .complete({
       changeAddress: externalWalletAddress,
-      setCollateral: 1_000_000n,
+      setCollateral: 5_000_000n,
       coinSelection: false,
       localUPLCEval: false,
     });
@@ -175,15 +179,13 @@ function main() {
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
-  const stateMachineAddress =
-    "addr_test1wp4qrqj2xc0yyh6gs4vvhcuqpwpnyy5rwe7dshtnmase5ps87s5rx";
-
   const serializedParams =
-    "45bfd02834b096c3b94bba60c53269607c7f012b74bade59a8cdf6cc,659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65,a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141,30000000,10000000,1734062927220";
+    "736c50c15fe708374b1728f5b317004a7d9315df8175935528b3faf3,659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65,a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141,30000000,10000000,1734125149325";
+
+  console.log(deserializeParams(serializedParams));
 
   returnTransactionBuilder(
     externalWalletAddress,
-    stateMachineAddress,
     serializedParams,
     BigInt(validUntil)
   );

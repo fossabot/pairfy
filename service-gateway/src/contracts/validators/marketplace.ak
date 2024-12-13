@@ -65,7 +65,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
           (StateMachineDatum { state }, Return) -> {
 
             let must_be_state = state == 0  
-
+            
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> tx_earliest_time > pending_until 
               _ -> False
@@ -84,7 +84,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
-              state : -1,
+              state: -1,
             }
             //verification of the new datum.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
