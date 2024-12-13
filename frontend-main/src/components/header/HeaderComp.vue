@@ -40,7 +40,7 @@
             </div>
             <div class="menu-col right">
               
-                <div class="ada">₳ {{ getADAprice }} USD</div>
+                <div class="ada"> ADAUSD {{ getADAprice }}</div>
                 <div class="network"> {{ NETWORK }}</div>
             </div>
         </div>
