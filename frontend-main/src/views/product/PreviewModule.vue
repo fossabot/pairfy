@@ -28,13 +28,15 @@
             <div class="preview-discount" v-if="getProductData.discount">
                 <Tag :value="`- ${getProductData.discount_value}%`" style="background: var(--red-a);" />
 
-                <Tag :value="`$${getProductData.price}`" severity="secondary"
-                    style="text-decoration: line-through; margin: 0 1rem;" />
+                <Tag severity="secondary" style="margin: 0 1rem;">
+                    <span>List Price:</span> 
+                    <span style="text-decoration: line-through;">${{ getProductData.price}}</span>
+                </Tag>
 
                 <Tag :value="`${convertUSDToADA(
                     applyDiscount(getProductData.discount,
-                    getProductData.price,
-                    getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
+                        getProductData.price,
+                        getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
             </div>
 
 
@@ -89,7 +91,7 @@ const bulletList = computed(() => {
 }
 
 .preview-price {
-    font-size: var(--text-size-e);
+    font-size: var(--text-size-f);
     margin-top: 1rem;
 }
 
