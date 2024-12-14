@@ -1,8 +1,8 @@
 import { getContractCollateral, getContractPrice } from "../../lib/index.js";
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
-import { redisClient } from "../../db/redis.js";
 import { SellerToken, UserToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
+import { redisClient } from "../../db/redis.js";
 
 const TX_VALID_TIME = parseInt(process.env.TX_VALID_TIME as string);
 

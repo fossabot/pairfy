@@ -1,6 +1,6 @@
 import { database } from "../db/client.js";
 import { getBooks, updateBook } from "./books/index.js";
-import { createOrder, getOrder } from "./orders/index.js";
+import { createOrder, getOrder } from "./orders/createOrder.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
