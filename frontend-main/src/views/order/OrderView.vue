@@ -134,7 +134,7 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span></span>
+                                                    <span>Waiting</span>
                                                 </div>
 
                                                 <div class="created-item">
@@ -143,7 +143,7 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span></span>
+                                                    <span>#</span>
                                                 </div>
                                             </div>
                                         </template>
