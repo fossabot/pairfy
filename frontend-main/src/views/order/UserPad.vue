@@ -51,16 +51,11 @@ onReturnFundsError(error => {
     showError(error)
 })
 
-
-const pendingUntil = computed(() => getOrderData.value.pending_until);
-
-const disableReturn = computed(() => Date.now() < pendingUntil.value);
+const disableReturn = computed(() => pendingCountdown.value !== "00:00");
 
 ///////////////////////////////////////////////////////////////////
 
-const pendingTimestamp = ref(pendingUntil.value);
-
-const pendingTimeLeft = ref(pendingTimestamp.value - Date.now());
+const pendingTimeLeft = ref(Date.now());
 
 const pendingCountdown = computed(() => {
     if (pendingTimeLeft.value <= 0) return "00:00";
@@ -75,7 +70,7 @@ const pendingCountdown = computed(() => {
 let pendingInterval;
 
 const updatePendingCountdown = () => {
-    pendingTimeLeft.value = pendingTimestamp.value - Date.now();
+    pendingTimeLeft.value = getOrderData.value.pending_until - Date.now();
 };
 
 /////////////////////////////////////////////////
