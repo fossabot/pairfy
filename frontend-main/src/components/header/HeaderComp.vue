@@ -100,7 +100,7 @@ header {
 }
 
 .header {
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
 }
 
 .logo {
@@ -131,7 +131,7 @@ header {
 }
 
 .menu {
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
 }
 
 .menu-col.right {

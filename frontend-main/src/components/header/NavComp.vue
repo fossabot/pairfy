@@ -21,9 +21,9 @@
 }
 
 .nav span {
-    margin-right: 1rem;
+    margin-right: 1.5rem;
     font-size: var(--text-size-a);
     cursor: pointer;
-    color: var(--text-b);
+    font-weight: 500;
 }
 </style>
