@@ -135,7 +135,7 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span>Waiting</span>
+                                                    <span>-</span>
                                                 </div>
 
                                                 <div class="created-item">
