@@ -147,15 +147,7 @@
                                         </template>
 
                                         <template v-if="item.template === 'received'">
-                                            <div class="received-control">
-                                                <Button size="small">
-                                                    Product Received
-                                                </Button>
-
-                                                <Button size="small" :disabled="disableReturn" variant="outlined">
-                                                    Return Funds {{ pendingCountdown }}
-                                                </Button>
-                                            </div>
+                                            <UserPad/>
                                         </template>
                                     </div>
                                 </div>
@@ -231,6 +223,8 @@
 </template>
 
 <script setup>
+import orderAPI from "@/views/order/api/index";
+import UserPad from "@/views/order/UserPad.vue";
 import gql from 'graphql-tag';
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
@@ -241,8 +235,9 @@ import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
 
-
 const { copyToClipboard, formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
+
+const { setOrderData } = orderAPI();
 
 const route = useRoute();
 
@@ -375,6 +370,8 @@ watch(getOrderResult, value => {
 
         orderData.value = order;
 
+        setOrderData(order);
+
         statusLog.value = order.status_log;
 
         orderPayment.value = getPaymentStatus(order.pending_block)
@@ -388,8 +385,6 @@ watch(getOrderResult, value => {
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
         globalTimestamp.value = getTimestamp(order);
-
-        pendingTimestamp.value = order.pending_until;
 
         if (editor) {
             editor.value.commands.setContent(JSON.parse(order.product_features));
@@ -421,34 +416,8 @@ const updateGlobalCountdown = () => {
 
 ////////////////////////////////////////////////////////////////
 
-const pendingTimestamp = ref(Date.now());
 
-const pendingTimeLeft = ref(pendingTimestamp.value - Date.now());
 
-const disableReturn = computed(() => {
-
-    if (statusLog.value === 'expired') {
-        return false
-    }
-
-    return Date.now() < orderData.value.pending_until
-});
-
-const pendingCountdown = computed(() => {
-    if (pendingTimeLeft.value <= 0) return "00:00";
-
-    const totalSeconds = Math.floor(pendingTimeLeft.value / 1000);
-    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
-
-    return `${minutes}:${seconds}`;
-});
-
-let pendingInterval;
-
-const updatePendingCountdown = () => {
-    pendingTimeLeft.value = pendingTimestamp.value - Date.now();
-};
 
 ////////////////////////////////////////////////////////////////
 
@@ -528,9 +497,7 @@ const openExplorer = () => {
 
 onMounted(() => {
     updateGlobalCountdown();
-    updatePendingCountdown();
     globalInterval = setInterval(updateGlobalCountdown, 1000);
-    pendingInterval = setInterval(updatePendingCountdown, 1000);
     setupEditor();
 });
 
@@ -813,20 +780,11 @@ onUnmounted(() => {
     }
 }
 
-.received-control button {
-    margin-right: 1rem;
-    font-weight: 600;
-}
-
 .product {
     display: flex;
     flex-direction: column;
     width: 80%;
 }
-
-
-
-
 
 .product-name {
     font-weight: 500;

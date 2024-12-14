@@ -22,7 +22,9 @@ const returnFunds = async (_: any, args: any, context: any) => {
     const [row] = await connection.execute(
       `SELECT
              id,
-             contract_params
+             finished,
+             contract_params,
+             contract_state
        FROM orders          
        WHERE id = ? AND buyer_pubkeyhash = ?`,
       [params.order_id, USER.pubkeyhash]
@@ -33,6 +35,14 @@ const returnFunds = async (_: any, args: any, context: any) => {
     }
 
     const ORDER = row[0];
+
+    if (ORDER.finished) {
+      throw new Error("ORDER_FINISHED");
+    }
+
+    if (ORDER.contract_state !== 0) {
+      throw new Error("STATE_DIFF_ZERO");
+    }
 
     ///////////////////////////////////////////////////
 
@@ -51,7 +61,7 @@ const returnFunds = async (_: any, args: any, context: any) => {
     return {
       success: true,
       payload: {
-        cbor: BUILDER.cbor
+        cbor: BUILDER.cbor,
       },
     };
   } catch (err: any) {
@@ -66,7 +76,5 @@ const returnFunds = async (_: any, args: any, context: any) => {
     }
   }
 };
-
-
 
 export { returnFunds };
