@@ -3,7 +3,7 @@
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
-                    <span>Information</span>
+                    <span>Order</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
@@ -552,7 +552,7 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border {
-    width: 40%;
+    width: 50%;
     height: 3px;
     background: transparent;
     border-radius: 3px;
@@ -586,7 +586,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle {
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-a);
     margin-top: 0.5rem;
     color: var(--text-a);
 }
@@ -827,7 +827,6 @@ onUnmounted(() => {
 
 .product-card-box li {
     list-style: none;
-    color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
     font-size: var(--text-size-a);
