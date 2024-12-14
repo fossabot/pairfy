@@ -178,6 +178,7 @@ header {
     font-weight: 500;
     margin-left: 1rem;
     border-radius: 4px;
+    text-transform: capitalize;
 }
 
 .header-button-user img {
