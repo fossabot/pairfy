@@ -38,10 +38,6 @@
                 {{ getProductData.brand }}
             </div>
 
-            <div class="buy-legend">
-                <span>+5 Sold</span>
-            </div>
-
             <div class="buy-stock" :class="{ red: 0, }">
                 {{ getStockLabel(15) }}
             </div>
@@ -54,6 +50,10 @@
 
             <div class="buy-legend">
                 <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
+            </div>
+
+            <div class="buy-legend">
+                <span>+5 Sold</span>
             </div>
 
             <div class="buy-legend">
