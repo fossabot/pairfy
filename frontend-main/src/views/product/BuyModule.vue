@@ -47,13 +47,13 @@
                 <span> 4.5 </span>
                 <span style="color: var(--text-b)">(1250 reviews)</span>
             </div>
-
+            
             <div class="buy-legend">
-                <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
+                <span>+5 Sold</span>
             </div>
 
             <div class="buy-legend">
-                <span>+5 Sold</span>
+                <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
             </div>
 
             <div class="buy-legend">
