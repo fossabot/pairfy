@@ -577,7 +577,7 @@ onUnmounted(() => {
 .summary-title {
     font-size: var(--text-size-c);
     font-weight: 700;
-    line-height: 2.5rem;
+    line-height: 3rem;
 }
 
 .summary-title span {
