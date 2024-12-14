@@ -43,6 +43,10 @@
                 {{ getStockLabel(15) }}
             </div>
 
+            <div class="buy-legend">
+                <span>+5 Sold</span>
+            </div>
+
 
             <div class="buy-rating flex">
                 <Rating v-model="productRating" :stars="5" readonly />
@@ -50,11 +54,11 @@
                 <span style="color: var(--text-b)">(1250 reviews)</span>
             </div>
 
-            <div class="buy-sku">
+            <div class="buy-legend">
                 <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
             </div>
 
-            <div class="buy-available">
+            <div class="buy-legend">
                 Available (15 of 20)
             </div>
 
@@ -220,7 +224,7 @@ const onConfirmedBuy = () => {
     margin-top: 1rem;
 }
 
-.buy-available {
+.buy-legend {
     font-size: var(--text-size-a);
     font-weight: 400;
     margin-top: 1rem;
@@ -231,16 +235,6 @@ const onConfirmedBuy = () => {
     font-weight: 700;
     font-size: var(--text-size-a);
     text-transform: capitalize;
-}
-
-.buy-sku {
-    margin-top: 1rem;
-    font-size: var(--text-size-a);
-    color: var(--text-b);
-}
-
-.buy-legend {
-    margin-top: 1rem;
 }
 
 .buy-rating {

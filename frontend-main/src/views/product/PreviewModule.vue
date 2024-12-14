@@ -4,10 +4,6 @@
         <Skeleton v-if="!getProductData" width="100%" height="100%" />
 
         <div v-if="getProductData" class="preview-wrap">
-            <div class="preview-top">
-                {{ getProductData.quality }} | +5 sold
-            </div>
-
             <div class="preview-name">
                 {{ getProductData.name }}
             </div>
@@ -86,7 +82,6 @@ const bulletList = computed(() => {
 .preview-name {
     font-size: var(--text-size-d);
     font-weight: 500;
-    margin-top: 1rem;
 }
 
 .preview-rating {

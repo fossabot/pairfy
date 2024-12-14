@@ -128,7 +128,6 @@ watch(
 
 watch(getProductResult, value => {
     if (value) {
-        console.log(value);
         setProductData(value.getProduct)
     }
 })
