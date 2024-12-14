@@ -16,7 +16,8 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="info">
-                   The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller is inactive.
+                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller is
+                    inactive.
                 </Message>
             </div>
 
@@ -47,9 +48,9 @@
                 <span> 4.5 </span>
                 <span style="color: var(--text-b)">(1250 reviews)</span>
             </div>
-            
+
             <div class="buy-legend">
-                <span>+5 Sold</span>
+                <span>5 Sold</span>
             </div>
 
             <div class="buy-legend">
@@ -171,7 +172,7 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Transaction submited");
+            showSuccess("Transaction submitted");
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -207,9 +208,9 @@ const onConfirmedBuy = () => {
 </script>
 
 <style lang="css" scoped>
+
 .buy {
     border: 1px solid var(--border-a);
-    border-radius: 12px;
     min-height: 100px;
     display: flex;
     flex-direction: column;
@@ -270,5 +271,9 @@ const onConfirmedBuy = () => {
     margin-top: 1rem;
     font-weight: 600;
     font-size: var(--text-size-b);
+}
+
+::v-deep(.p-button-label) {
+    font-size: var(--text-size-a) !important;
 }
 </style>
