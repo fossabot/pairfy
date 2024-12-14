@@ -3,7 +3,7 @@
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
-                    <span>Order</span>
+                    <span>Information</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
