@@ -25,8 +25,9 @@
                             <div>
                                 <span>{{ formatWithDots(orderData.id, 40) }}</span>
                             </div>
-                            <button class="flex" @click="copyToClipboard(orderData.id)">
-                                <i class="pi  pi-copy" />
+                            <button class="copy-button flex" @click="copyToClipboard(orderData.id)"
+                                v-tooltip.top="'Copy'">
+                                <i class="pi pi-copy" />
                             </button>
                         </div>
                         <div class="summary-subtitle flex">
@@ -34,8 +35,9 @@
                             <div>
                                 <span> {{ reduceByLength(orderData.contract_address, 30) }}</span>
                             </div>
-                            <button class="flex" @click="copyToClipboard(orderData.contract_address)">
-                                <i class="pi  pi-copy" />
+                            <button class="copy-button flex" @click="copyToClipboard(orderData.contract_address)"
+                                v-tooltip.top="'Copy'">
+                                <i class="pi pi-copy" />
                             </button>
                         </div>
                         <Divider />
@@ -147,7 +149,7 @@
                                         </template>
 
                                         <template v-if="item.template === 'received'">
-                                            <UserPad/>
+                                            <UserPad />
                                         </template>
                                     </div>
                                 </div>
@@ -340,7 +342,7 @@ watch(
             queryEnabled.value = true;
             updateQueryVariables(route.params.id)
         }
-
+        console.log(route)
         if (route.query.tx) {
             pendingTx.value = route.query.tx;
         }
@@ -380,7 +382,7 @@ watch(getOrderResult, value => {
 
         pendingBlock.value = order.pending_block;
 
-        pendingTx.value = order.pending_tx;
+        pendingTx.value = order.pending_tx || pendingTx.value;
 
         contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
 
@@ -550,9 +552,10 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border {
-    width: 20%;
+    width: 40%;
     height: 3px;
     background: transparent;
+    border-radius: 3px;
 }
 
 .nav-item .nav-item-border.selected {
@@ -583,7 +586,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-b);
     margin-top: 0.5rem;
     color: var(--text-a);
 }
@@ -596,10 +599,15 @@ onUnmounted(() => {
 .summary-subtitle button {
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .summary-subtitle button i {
     font-size: var(--text-size-a);
+}
+
+.copy-button:hover {
+    color: var(--primary-c);
 }
 
 .chat {

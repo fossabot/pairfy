@@ -1,6 +1,8 @@
 import { logger } from "../utils/index.js";
 import { database } from "../db/client.js";
-import { getUtxo, handlePending } from "../lib/index.js";
+import { getUtxo } from "../lib/index.js";
+import { handlePending } from "./pending.js";
+import { handleReturn } from "./return.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -19,7 +21,7 @@ async function scanThreadToken(job: any) {
     console.log(code, utxo);
 
     if (timestamp > watch_until && code === 404) {
-      finished = true; 
+      finished = true;
       statusLog = "expired";
     }
 
@@ -38,8 +40,15 @@ async function scanThreadToken(job: any) {
             utxo
           );
           break;
-        case 1n:
-          console.log("1");
+        case -1n:
+          await handleReturn(
+            connection,
+            threadtoken,
+            finished,
+            timestamp,
+            utxo
+          );
+          break;
       }
     } else {
       const updateQuery = `
@@ -49,7 +58,12 @@ async function scanThreadToken(job: any) {
             status_log = ?
         WHERE id = ?`;
 
-      await connection.execute(updateQuery, [finished, timestamp, statusLog, threadtoken]);
+      await connection.execute(updateQuery, [
+        finished,
+        timestamp,
+        statusLog,
+        threadtoken,
+      ]);
     }
 
     await connection.commit();

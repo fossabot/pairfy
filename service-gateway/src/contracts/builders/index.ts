@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-import { Koios, Lucid, Maestro } from "@lucid-evolution/lucid";
+import { Koios, Lucid } from "@lucid-evolution/lucid";
 import { blueprint } from "./plutus.js";
 
 dotenv.config();

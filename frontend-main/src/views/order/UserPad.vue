@@ -4,9 +4,9 @@
             Product Received
         </Button>
 
-        <Button type="button" size="small" :label="returnFundsLabel" :disabled="disableReturn" variant="outlined"
-            @click="onReturnFunds" :loading="returnFundsLoading">
-
+        <Button type="button" size="small" :disabled="disableReturn" variant="outlined" @click="onReturnFunds"
+            :loading="true">
+            Return Funds {{ pendingCountdown }}
         </Button>
     </div>
 </template>
@@ -14,7 +14,7 @@
 <script setup>
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
-import { computed, ref, onMounted, onUnmounted } from "vue";
+import { computed, ref, onMounted, onUnmounted, watch } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
 
@@ -54,7 +54,7 @@ onReturnFundsError(error => {
 
 const pendingUntil = computed(() => getOrderData.value.pending_until);
 
-const disableReturn = computed(() =>  Date.now() < pendingUntil.value);
+const disableReturn = computed(() => Date.now() < pendingUntil.value);
 
 ///////////////////////////////////////////////////////////////////
 
@@ -80,7 +80,6 @@ const updatePendingCountdown = () => {
 
 /////////////////////////////////////////////////
 
-const returnFundsLabel = ref(`Return Funds ${pendingCountdown.value}`)
 
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
@@ -89,7 +88,6 @@ const showSuccess = (content) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
-
 
 
 onMounted(() => {

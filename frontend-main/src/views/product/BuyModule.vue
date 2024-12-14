@@ -16,13 +16,12 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="info">
-                    The transaction is valid for 5 minutes. The seller has 1 hour to respond otherwise your money will
-                    be refunded.
+                   The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller is inactive.
                 </Message>
             </div>
 
             <div class="dialog-total">
-                Total: {{ computedTotalPrice }} ADA
+                Total {{ computedTotalPrice }} ADA
             </div>
 
             <template #footer>
