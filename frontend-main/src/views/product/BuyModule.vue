@@ -277,6 +277,6 @@ const onConfirmedBuy = () => {
 .dialog-total {
     margin-top: 1rem;
     font-weight: 600;
-    font-size: var(--text-size-c);
+    font-size: var(--text-size-b);
 }
 </style>
