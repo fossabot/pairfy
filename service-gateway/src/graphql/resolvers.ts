@@ -2,6 +2,7 @@ import { database } from "../db/client.js";
 import { getBooks, updateBook } from "./books/index.js";
 import { createOrder } from "./orders/createOrder.js";
 import { getOrder } from "./orders/getOrder.js";
+import { returnFunds } from "./orders/returnFunds.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
@@ -60,6 +61,7 @@ const orders = {
   },
   Mutation: {
     createOrder,
+    returnFunds
   },
 };
 

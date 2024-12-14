@@ -123,7 +123,7 @@ async function pendingTransactionBuilder(
     )
     .attach.MintingPolicy(threadTokenScript)
     .addSigner(externalWalletAddress)
-    //.validTo(Number(validUntil))
+    .validTo(Number(validUntil))
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: 1_000_000n,
@@ -201,7 +201,7 @@ function main() {
   );
 }
 
-main();
+//main();
 
 export { pendingTransactionBuilder };
 

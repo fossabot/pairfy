@@ -1,19 +1,14 @@
 import {
   applyParamsToScript,
   applyDoubleCborEncoding,
-  Constr,
-  mintingPolicyToId,
-  MintingPolicy,
   fromText,
   Data,
   SpendingValidator,
   validatorToAddress,
-  paymentCredentialOf,
 } from "@lucid-evolution/lucid";
 import {
   deserializeParams,
   lucid,
-  serializeParams,
   validators,
 } from "./index.js";
 
@@ -145,6 +140,7 @@ async function returnTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
+    .validTo(Number(validUntil))
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: 5_000_000n,
@@ -191,7 +187,7 @@ function main() {
   );
 }
 
-main();
+//main();
 
 export { returnTransactionBuilder };
 

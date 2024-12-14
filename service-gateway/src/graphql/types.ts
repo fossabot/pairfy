@@ -119,9 +119,18 @@ type CreateOrderPayload {
   order: String!
 }
 
+type CborPayload {
+  cbor: String!
+}
+
 type CreateOrderResponse {
   success: Boolean!
   payload: CreateOrderPayload!
+}
+
+type ReturnFundsResponse {
+  success: Boolean!
+  payload: CborPayload!
 }
 
 input CreateOrderInput {
@@ -129,9 +138,14 @@ input CreateOrderInput {
   product_units: Int!
 } 
 
+input ReturnFundsInput {
+  order_id: String!
+} 
+
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
   createOrder(createOrderInput: CreateOrderInput!): CreateOrderResponse!
+  returnFunds(returnFundsInput: ReturnFundsInput!): ReturnFundsResponse!
 }
 
 `;
