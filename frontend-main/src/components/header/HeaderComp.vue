@@ -175,6 +175,7 @@ header {
     background: color-mix(in srgb, var(--p-green-50), transparent 5%);
     color: var(--green-a);
     padding: 0 0.5rem;
+    font-weight: 500;
     margin-left: 1rem;
     border-radius: 4px;
 }
