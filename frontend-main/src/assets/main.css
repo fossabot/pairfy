@@ -18,10 +18,6 @@
   font-size: var(--text-size-a) !important;
 }
 
-.p-button-label {
-  font-size: var(--text-size-a);
-}
-
 .p-rating {
   gap: 1px !important;
 }

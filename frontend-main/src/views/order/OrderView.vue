@@ -18,7 +18,8 @@
 
                     <div class="summary" v-if="orderData">
                         <div class="summary-title">
-                            Preparing Your Product, Time Remaining <span>{{ globalCountdown }}</span>
+                            Preparing Your Product, Time Remaining
+                            <span>{{ globalCountdown }}</span>
                         </div>
                         <div class="summary-subtitle flex">
                             Order number
@@ -488,6 +489,10 @@ const getTimestamp = (order) => {
     }
     if (order.contract_state === 0) {
         return order.pending_until
+    }
+
+    if (order.contract_state === -1) {
+        return Date.now()
     }
 }
 

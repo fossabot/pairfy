@@ -4,17 +4,25 @@
             Product Received
         </Button>
 
-        <Button type="button" size="small" :disabled="disableReturn" variant="outlined" @click="onReturnFunds"
-            :loading="true">
-            Return Funds {{ pendingCountdown }}
+        <Button type="button" size="small" :disabled="disableReturn" @click="onReturnFunds" variant="text">
+
+            <span>Return Funds</span>
+
+            <span v-if="pendingCountdown !== '00:00'">
+                {{ pendingCountdown }}
+            </span>
         </Button>
+
+        <Button type="button" size="small" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
+            :loading="false" />
+
     </div>
 </template>
 
 <script setup>
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
-import { computed, ref, onMounted, onUnmounted, watch } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
