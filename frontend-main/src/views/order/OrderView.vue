@@ -672,7 +672,7 @@ onUnmounted(() => {
 
 .timeline-subtitle {
     font-size: var(--text-size-a);
-    min-height: 22px;
+   margin-bottom: 1rem; 
 }
 
 .timeline-content {
@@ -680,7 +680,6 @@ onUnmounted(() => {
     border-radius: 12px;
     height: 100%;
     width: inherit;
-    margin-top: 0.5rem;
 }
 
 .timeline-content.button {
