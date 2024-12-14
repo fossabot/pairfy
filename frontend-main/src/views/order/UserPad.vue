@@ -17,6 +17,7 @@ import orderAPI from "@/views/order/api/index";
 import { computed, ref, onMounted, onUnmounted, watch } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
+import { balanceTx } from "@/api/wallet";
 
 const toast = useToast();
 
@@ -43,8 +44,28 @@ const onReturnFunds = () => {
     })
 }
 
-onReturnFundsDone(result => {
-    console.log(result.data)
+onReturnFundsDone(async result => {
+    console.log(result.data);
+
+    const response = result.data;
+
+    if (response.returnFunds.success === true) {
+        try {
+            const { cbor } = response.returnFunds.payload;
+
+            const txHash = await balanceTx(cbor);
+
+            showSuccess(`Transaction submitted with hash: ${txHash}`);
+
+            console.log(`Transaction submitted with hash: ${txHash}`);
+
+        } catch (err) {
+            console.error(err);
+
+            showError(err);
+        }
+    }
+
 })
 
 onReturnFundsError(error => {

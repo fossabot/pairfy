@@ -3,7 +3,6 @@ import { PoolConnection } from "mysql2";
 async function handleReturn(
   connection: PoolConnection,
   threadtoken: string,
-  finished: boolean,
   timestamp: number,
   utxo: any
 ) {
@@ -22,7 +21,7 @@ async function handleReturn(
   const returnTx = utxo.txHash + "#" + utxo.outputIndex;
 
   await connection.execute(updateQuery, [
-    finished,
+    true,
     timestamp,
     statusLog,
     utxo.data.state,
