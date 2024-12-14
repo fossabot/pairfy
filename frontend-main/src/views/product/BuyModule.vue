@@ -38,15 +38,13 @@
                 {{ getProductData.brand }}
             </div>
 
-
-            <div class="buy-stock" :class="{ red: 0, }">
-                {{ getStockLabel(15) }}
-            </div>
-
             <div class="buy-legend">
                 <span>+5 Sold</span>
             </div>
 
+            <div class="buy-stock" :class="{ red: 0, }">
+                {{ getStockLabel(15) }}
+            </div>
 
             <div class="buy-rating flex">
                 <Rating v-model="productRating" :stars="5" readonly />
