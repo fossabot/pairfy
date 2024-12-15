@@ -150,7 +150,7 @@ const main = async () => {
         connection = await database.client.getConnection();
 
         const queryScheme = `
-          SELECT id, finished, scanned_at, watch_until
+          SELECT id, finished, scanned_at, seller_id, buyer_pubkeyhash, watch_until
           FROM orders
           WHERE finished = ? AND scanned_at < ?
           ORDER BY created_at ASC
@@ -167,7 +167,7 @@ const main = async () => {
         ]);
 
         if (!findOrders.length) {
-          console.log("EmptyOrders");
+          console.log("EMPTY_ORDERS");
         }
 
         for (const order of findOrders) {
@@ -183,6 +183,8 @@ const main = async () => {
                 data: {
                   threadtoken: order.id,
                   watch_until: order.watch_until,
+                  seller_id: order.seller_id,
+                  buyer_pubkeyhash: order.buyer_pubkeyhash
                 },
                 opts: {
                   attempts: 0,

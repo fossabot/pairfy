@@ -8,46 +8,45 @@ async function scanThreadToken(job: any) {
   let connection = null;
 
   try {
-    const { threadtoken, watch_until } = job.data;
+    const { threadtoken, watch_until, seller_id, buyer_pubkeyhash } = job.data;
+
+    const { code, utxo } = await getUtxo(threadtoken);
+
+    console.log(code);
 
     const timestamp = Date.now();
 
     let finished = false;
 
-    let statusLog = "created";
-
-    const { code, utxo } = await getUtxo(threadtoken);
-
-    console.log(code, utxo);
+    let status = "created";
 
     if (timestamp > watch_until && code === 404) {
       finished = true;
-      statusLog = "expired";
+      status = "expired";
     }
 
     connection = await database.client.getConnection();
+
+    ///////////////////////////////////////////////////////////////
 
     await connection.beginTransaction();
 
     if (code === 200) {
       switch (utxo.data.state) {
+        case null:
+          break;
         case 0n:
           await handlePending(
             connection,
             threadtoken,
-            finished,
             timestamp,
-            utxo
+            utxo,
+            seller_id,
+            buyer_pubkeyhash
           );
           break;
         case -1n:
-          await handleReturn(
-            connection,
-            threadtoken,
-            finished,
-            timestamp,
-            utxo
-          );
+          await handleReturn(connection, threadtoken, timestamp, utxo);
           break;
       }
     } else {
@@ -61,13 +60,14 @@ async function scanThreadToken(job: any) {
       await connection.execute(updateQuery, [
         finished,
         timestamp,
-        statusLog,
+        status,
         threadtoken,
       ]);
     }
 
     await connection.commit();
 
+    ///////////////////////////////////////////////////////////////
     return {
       threadtoken,
       finished,
