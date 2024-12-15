@@ -9,9 +9,10 @@
                 <SearchComp />
             </div>
             <div class="header-col right">
+
                 <OverlayBadge class="header-button" value="1" severity="danger" @click="toggle">
                     <div class="header-button-user flex">
-                        <i class="pi pi-bell" />
+                        <i class="pi pi-user" />
                     </div>
                 </OverlayBadge>
 
@@ -39,7 +40,7 @@
 
             </div>
             <div class="menu-col right">
-              
+
                 <div class="ada"> ADAUSD {{ getADAprice }}</div>
                 <div class="network"> {{ NETWORK }}</div>
             </div>
