@@ -1,78 +1,30 @@
 const typeDefs = `#graphql
 
-type Product {
-    id: String!
-    state: String!
-    state_label: String!
-    moderated: Int!
-    seller_id: String!
-    name: String!
-    price: Int!
-    collateral: Int!
-    sku: String!
-    model: String!
-    brand: String!
-    features: String!
-    category: String!
-    keywords: String!
-    bullet_list: String!
-    paused: Int!
-    color: String!
-    color_name: String!
-    quality: String!
-    country: String!
-    media_url: String!
-    image_path: String!
-    video_path: String!
-    image_set: String!
-    video_set: String!
-    discount: Boolean!
-    discount_value: Int!
-    created_at: String!
-}
-
-input GetProductInput {
+input GetOrdersInput {
   id: String!
 } 
-  
+
 type Query {
-  getProduct(getProductInput: GetProductInput!): Product!
+  getOrders: String
 }
 
-#/////////////////////////////////////////////////
+#///////////////////////////////////////////////// MUTATIONS
 
-type CreateProductResponse {
+type UpdateBookResponse {
   success: Boolean!
 }
 
-input CreateProductInput {
-  name: String!
-  price: Int! 
-  collateral: Int!
-  sku: String!              
-  model: String!
-  brand: String!
-  features: String!
-  category: String!
-  keywords: String!
-  bullet_list: String!
-  paused: Int!
-  color: String!
-  color_name: String!
-  quality: String!
-  image_set: String!
-  video_set: String!
-  discount: Boolean!
-  discount_value: Int!
-}
+input UpdateBookInput {
+  id: String!
+  keeping_stock: Int!
+  ready_stock: Int!
+  disable_purchases: Boolean!
+} 
 
 type Mutation {
-  createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
+  updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
 }
-
-#/////////////////////////////////////////////////
 
 `;
 
-
-export { typeDefs }
+export { typeDefs };

@@ -58,7 +58,7 @@ function executeScripts() {
 
     const SQLS = files.filter((file) => file.endsWith(".sql"));
 
-    SQLS.forEach((file) =>
+    SQLS.forEach((file, index) =>
       fs.readFile(
         path.join(sqlDirectoryPath, file),
         "utf8",
@@ -74,7 +74,9 @@ function executeScripts() {
               process.exit(1);
             } else {
               console.log(`SETUP: ${file} executed successfully.`);
-              return;
+              if (index === SQLS.length - 1) {
+                connection.end();
+              }
             }
           });
         }
