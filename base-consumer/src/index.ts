@@ -1,11 +1,3 @@
-/*
-+---------+-------------------------------------------------+
-| Version |                   Description                   |
-+---------+-------------------------------------------------+
-|   1.0.0 | Idempotent, failsafe, delivery all, manual ack. |
-+---------+-------------------------------------------------+
-*/
-
 import express from "express";
 import {
   AckPolicy,
@@ -71,6 +63,7 @@ const main = async () => {
     );
 
     /////////////////////////////////////////////////////////////////////////
+
     const app = express();
 
     const port = 3000;
@@ -120,12 +113,11 @@ const main = async () => {
     async function healthCheck() {
       let connection = null;
       try {
-        console.time("DB_PING");
         connection = await database.client.getConnection();
         await connection.ping();
-        console.timeEnd("DB_PING");
+        console.log("Database Online");
       } catch (error) {
-        logger.error("DB_PING_ERROR", error);
+        logger.error("Database Error", error);
 
         if (connection) {
           await connection.rollback();
@@ -179,12 +171,6 @@ const main = async () => {
 
     try {
       streamList.forEach(async (stream) => {
-        /*
-        await jetStreamManager.consumers.delete(
-          stream,
-          process.env.DURABLE_NAME!
-        );
-        */
 
         await jetStreamManager.consumers.add(stream, {
           durable_name: process.env.DURABLE_NAME,
@@ -207,10 +193,6 @@ const main = async () => {
           process.env.DURABLE_NAME
         );
 
-        setTimeout(() => {
-          //throw new Error("CRASH");
-        }, 60_000);
-
         while (true) {
           const message = await consumer.next();
 
@@ -223,12 +205,12 @@ const main = async () => {
               await message.nak(30_000);
             }
           } else {
-            console.log(`EMPTY_QUEUE`);
+            console.log(`EMPTY`);
           }
         }
       });
     } catch (err) {
-      disableConnections("IE", err);
+      disableConnections("WORKER", err);
     }
 
     logger.info("ONLINE");

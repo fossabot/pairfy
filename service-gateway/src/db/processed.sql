@@ -1,5 +1,5 @@
 create table if not exists processed(
-  id varchar(50) not null,
+  id varchar(100) not null,
   seq bigint not null,
   type varchar(100) not null,
   processed boolean default false,

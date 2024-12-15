@@ -16,7 +16,7 @@ const catcher = (message?: any, error?: any, bypass?: boolean) => {
 const sleep = (timeInMs: number) =>
   new Promise((resolve) => setTimeout(() => resolve(false), timeInMs));
 
-const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 21);
+const getEventId = customAlphabet("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", 21);
 
 const errorEvents: string[] = [
   "exit",

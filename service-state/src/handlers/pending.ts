@@ -1,4 +1,5 @@
 import { PoolConnection } from "mysql2";
+import { getEventId } from "../utils/index.js";
 
 async function handlePending(
   connection: PoolConnection,
@@ -36,21 +37,23 @@ async function handlePending(
 
   const notifications = [
     {
+      id: getEventId(),
       type: "order",
       title: "Payment Detected",
       owner: buyer_pubkeyhash,
-      data: {
+      data: JSON.stringify({
         threadtoken,
-      },
+      }),
       message: `Payment for order (${threadtoken}) is being processed on the Cardano network.`,
     },
     {
+      id: getEventId(),
       type: "order",
       title: "New Product Purchase",
       owner: seller_id,
-      data: {
+      data: JSON.stringify({
         threadtoken,
-      },
+      }),
       message: `Payment for order (${threadtoken}) is being processed on the Cardano network.`,
     },
   ];
