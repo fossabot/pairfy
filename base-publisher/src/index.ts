@@ -1,11 +1,3 @@
-/*
-+---------+-------------------------------------------------+
-| Version |                   Description                   |
-+---------+-------------------------------------------------+
-|   1.0.0 | Deduplication, failsafe                         |
-+---------+-------------------------------------------------+
-*/
-
 import {
   DiscardPolicy,
   jetstreamManager,
@@ -87,12 +79,13 @@ const main = async () => {
     async function healthCheck() {
       let connection = null;
       try {
-        console.time("DB_PING");
         connection = await database.client.getConnection();
+
         await connection.ping();
-        console.timeEnd("DB_PING");
-      } catch (error) {
-        logger.error("DB_PING_ERROR", error);
+
+        console.log("Database Online");
+      } catch (err) {
+        logger.error("Database Error", err);
 
         if (connection) {
           await connection.rollback();
@@ -174,7 +167,7 @@ const main = async () => {
             );
 
             if (updateEvent.affectedRows !== 1) {
-              throw new Error("UPDATE_EVENT_ERROR");
+              throw new Error("UPDATE_EVENT");
             }
 
             const payload = JSON.stringify(event);
@@ -186,7 +179,7 @@ const main = async () => {
             );
 
             if (!result.seq) {
-              throw new Error("PUBLISH_ERROR");
+              throw new Error("PUBLISHING");
             }
 
             await connection.commit();

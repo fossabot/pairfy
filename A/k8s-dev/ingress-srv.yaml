@@ -63,6 +63,13 @@ spec:
                 name: service-gateway
                 port:
                   number: 4000
+          - path: /api/notification/graphql
+            pathType: Prefix
+            backend:
+              service:
+                name: service-notification
+                port:
+                  number: 4000                  
           - path: /api/query/graphql
             pathType: Prefix
             backend:

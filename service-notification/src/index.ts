@@ -19,7 +19,7 @@ const httpServer = http.createServer(app);
 
 const resolvers = {
   Query: {
-    ...orders.Query
+    ...orders.Query,
   },
   Mutation: {
     ...books.Mutation,
@@ -87,24 +87,12 @@ const main = async () => {
       throw new Error("REDIS_HOST error");
     }
 
-    if (!process.env.PROJECT_ID) {
-      throw new Error("PROJECT_ID error");
+    if (!process.env.MAIL_API_KEY) {
+      throw new Error("MAIL_API_KEY error");
     }
 
-    if (!process.env.TX_VALID_TIME) {
-      throw new Error("TX_VALID_TIME error");
-    }
-
-    if (!process.env.TX_WATCH_WINDOW) {
-      throw new Error("TX_WATCH_WINDOW error");
-    }
-
-    if (!process.env.PENDING_UNTIL) {
-      throw new Error("PENDING_UNTIL error");
-    }
-
-    if (!process.env.SHIPPING_UNTIL) {
-      throw new Error("SHIPPING_UNTIL error");
+    if (!process.env.TELEGRAM_API_KEY) {
+      throw new Error("TELEGRAM_API_KEY error");
     }
 
     const sessionOptions: object = {
@@ -123,7 +111,6 @@ const main = async () => {
       exposedHeaders: ["Set-Cookie", "Cookie"],
       optionsSuccessStatus: 204,
     };
-
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
 
@@ -146,7 +133,9 @@ const main = async () => {
         console.error("REDIS_CONNECTION", err);
         clearInterval(redisCheck);
       }
-    }, 10_000);
+    }, 60_000);
+
+    ////////////////////////////////////////////////////////////////////
 
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -169,13 +158,13 @@ const main = async () => {
     await server.start();
 
     app.use(
-      "/api/gateway/graphql",
+      "/api/notification/graphql",
       cors<cors.CorsRequest>(corsOptions),
       express.json(),
       expressMiddleware(server, {
         context: async ({ req }) => ({
           sellerData: req.sellerData || null,
-          userData: req.userData || null
+          userData: req.userData || null,
         }),
       })
     );
