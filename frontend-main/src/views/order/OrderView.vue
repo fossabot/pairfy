@@ -525,7 +525,7 @@ onUnmounted(() => {
 
 .container {
     min-height: 100vh;
-    max-width: 1200px;
+    max-width: 1300px;
     width: 100%;
 }
 
@@ -593,11 +593,11 @@ onUnmounted(() => {
 .summary-subtitle {
     font-size: var(--text-size-a);
     margin-top: 0.5rem;
-    color: var(--text-a);
+    color: var(--text-b);
 }
 
 .summary-subtitle span {
-    color: var(--text-b);
+    color: var(--text-a);
     margin-left: 0.5rem;
 }
 
