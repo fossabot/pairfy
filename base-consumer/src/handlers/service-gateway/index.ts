@@ -20,7 +20,7 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
       return Promise.resolve(true);
     }
 
-    const payload = JSON.parse(event.payload);
+    const payload = JSON.parse(event.data);
 
     //Transaction Start
     await connection.beginTransaction();
@@ -43,8 +43,8 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     );
 
     await connection.execute(
-      "INSERT INTO processed (id, seq, event_type, processed) VALUES (?, ?, ?, ?)",
-      [event.id, seq, event.event_type, true]
+      "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
+      [event.id, seq, event.type, true]
     );
 
     await connection.commit();
@@ -77,7 +77,7 @@ export const processEvent = (message: any) => {
 
   const event = JSON.parse(messageDecoded);
 
-  console.log(message.seq, event.id, event.event_type);
+  console.log(message.seq, event.id, event.type);
 
-  return handlers[event.event_type](event, message.seq);
+  return handlers[event.type](event, message.seq);
 };

@@ -158,15 +158,17 @@ const createProduct = async (_: any, args: any, context: any) => {
     const eventSchema = `
         INSERT INTO events (
         id,
-        event_type,
-        payload,
+        source,
+        type,
+        data,
         agent_id,
-        event_version
-        ) VALUES (?, ?, ?, ?, ?)
+        spec_version
+        ) VALUES (?, ?, ?, ?, ?, ?)
         `;
 
     const eventValue = [
       eventId,
+      "service-product",
       "CreateProduct",
       JSON.stringify(productData),
       SELLER.id,

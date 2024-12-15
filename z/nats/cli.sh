@@ -8,7 +8,7 @@ nats stream ls
 
 nats stream delete product #delete stream
 
-nats consumer ls mystream
+nats consumer ls product
 
 nats consumer info product service-gateway-consumer
 

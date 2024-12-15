@@ -71,7 +71,6 @@ function executeScripts() {
           connection.query(sqlScript, (err, results) => {
             if (err) {
               console.error(`SETUP: Error executing ${file}:`, err);
-              process.exit(1);
             } else {
               console.log(`SETUP: ${file} executed successfully.`);
               if (index === SQLS.length - 1) {

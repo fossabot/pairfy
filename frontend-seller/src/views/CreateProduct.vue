@@ -30,7 +30,7 @@
                     <div class="left-column-item">
                         <div class="formulary">
                             <InputText v-model="productName" type="text" placeholder="Product Name"
-                                v-keyfilter='/^[a-zA-Z0-9("-.)/+$ ]+$/' :invalid="formErrors.name" />
+                                v-keyfilter='/^[a-zA-Z0-9("-–.”)/+$ ]+$/' :invalid="formErrors.name" />
 
                             <InputGroup>
                                 <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
