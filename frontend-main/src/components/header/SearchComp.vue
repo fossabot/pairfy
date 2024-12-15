@@ -43,6 +43,7 @@ const isFocus = ref(false);
     font-size: var(--text-size-a);
     font-family: inherit;
     background: inherit;
+    font-weight: 500;
 }
 
 .search-button {

@@ -150,20 +150,21 @@ onGetProductError(error => {
 }
 
 .mask {
-    height: 100px;
+    height: 150px; 
     width: inherit;
     position: relative;
     z-index: 1;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("https://http2.mlstatic.com/D_NQ_924888-MLA81282125475_122024-OO.webp"); 
+    background-image: url("https://http2.mlstatic.com/D_NQ_770663-MLA81006988862_122024-OO.webp"); 
+    background-position-y: 15%;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    max-width: 1200px;
+    max-width: 1300px;
     width: 80%;
     height: auto;
     position: relative;
@@ -186,7 +187,7 @@ onGetProductError(error => {
 
 .card {
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 80% 20%; 
     margin-top: 2rem;
     box-sizing: border-box;
 }

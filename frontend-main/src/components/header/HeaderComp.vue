@@ -110,7 +110,7 @@ header {
 
 .header,
 .menu {
-    max-width: 1200px;
+    max-width: 1300px;
     display: grid;
     grid-template-columns: 20% 60% 20%;
     width: 100%;
