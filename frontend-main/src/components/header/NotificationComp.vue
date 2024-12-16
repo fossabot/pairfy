@@ -224,6 +224,7 @@ function setupAudio() {
 
 .button {
     color: var(--text-w);
+    cursor: pointer;
 }
 
 .drop-pad {
