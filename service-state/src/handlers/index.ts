@@ -46,7 +46,14 @@ async function scanThreadToken(job: any) {
           );
           break;
         case -1n:
-          await handleReturn(connection, threadtoken, timestamp, utxo);
+          await handleReturn(
+            connection,
+            threadtoken,
+            timestamp,
+            utxo,
+            seller_id,
+            buyer_pubkeyhash
+          );
           break;
       }
     } else {

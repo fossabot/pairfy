@@ -1,10 +1,13 @@
 import { PoolConnection } from "mysql2";
+import { getEventId } from "../utils/index.js";
 
 async function handleReturn(
   connection: PoolConnection,
   threadtoken: string,
   timestamp: number,
-  utxo: any
+  utxo: any,
+  seller_id: string,
+  buyer_pubkeyhash: string
 ) {
   const statusLog = "returned";
 
@@ -28,6 +31,51 @@ async function handleReturn(
     returnTx,
     utxo.block_time,
     threadtoken,
+  ]);
+
+  /////////////////////////////////////////////////////////////////////
+
+  const notifications = [
+    {
+      id: getEventId(),
+      type: "order",
+      title: "Payment Returned",
+      owner: buyer_pubkeyhash,
+      data: JSON.stringify({
+        threadtoken,
+      }),
+      message: `The payment for the order (${threadtoken}) is being returned to your wallet.`,
+    },
+    {
+      id: getEventId(),
+      type: "order",
+      title: "Payment Returned",
+      owner: seller_id,
+      data: JSON.stringify({
+        threadtoken,
+      }),
+      message: `The buyer has cancelled the order (${threadtoken}) due to lack of interest.`,
+    },
+  ];
+
+  const eventSchema = `
+    INSERT IGNORE INTO events (
+    id,
+    source,
+    type,
+    data,
+    spec_version
+    ) VALUES (?, ?, ?, ?, ?)
+  `;
+
+  const eventId = threadtoken + statusLog;
+
+  await connection.execute(eventSchema, [
+    eventId,
+    "gateway",
+    "CreateNotification",
+    JSON.stringify(notifications),
+    0,
   ]);
 }
 
