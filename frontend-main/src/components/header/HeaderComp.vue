@@ -10,17 +10,7 @@
             </div>
             <div class="header-col right">
 
-                <OverlayBadge class="header-button" value="1" severity="danger" @click="toggle">
-                    <div class="header-button-user flex">
-                        <i class="pi pi-user" />
-                    </div>
-                </OverlayBadge>
-
-                <Popover ref="op">
-                    <div class="notifications">
-                        notification list
-                    </div>
-                </Popover>
+                <NotificationComp />
 
                 <div v-if="!getCurrentUser" class="connect-wallet" @click="showPanel(true)">
                     Connect Wallet
@@ -40,7 +30,6 @@
 
             </div>
             <div class="menu-col right">
-
                 <div class="ada"> ADAUSD {{ getADAprice }}</div>
                 <div class="network"> {{ NETWORK }}</div>
             </div>
@@ -50,22 +39,18 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
-import gql from 'graphql-tag';
+import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
-import { ref, watch } from "vue";
+import { watch } from "vue";
 import { NETWORK } from "@/api";
 
+
 const { showPanel, getCurrentUser, setADAprice, getADAprice } = headerAPI();
-
-const op = ref();
-
-const toggle = (event) => {
-    op.value.toggle(event);
-}
 
 const queryOptions = {
     pollInterval: 60_000,
@@ -73,7 +58,7 @@ const queryOptions = {
 }
 
 const { result: onGetAssetPriceResult, onError: onGetAssetPriceError } = useQuery(gql`
-      query getUsers {
+      query getAssetPrice {
         getAssetPrice 
       }
 `,
@@ -154,17 +139,6 @@ header {
     cursor: pointer;
 }
 
-.header-button {
-    margin: 0 2rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.notifications {
-    width: 300px;
-}
-
 .ada {
     color: var(--text-b);
     padding: 0 0.5rem;
@@ -182,9 +156,4 @@ header {
     text-transform: capitalize;
 }
 
-.header-button-user img {
-    width: 1.5rem;
-    height: 1.5rem;
-    opacity: 0.5;
-}
 </style>

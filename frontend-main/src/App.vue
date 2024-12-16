@@ -12,7 +12,7 @@ import HeaderComp from '@/components/header/HeaderComp.vue';
 import { copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
-import { queryClient, gatewayClient } from './graphql/index';
+import { queryClient, gatewayClient, notificationClient } from './graphql/index';
 import { provide } from 'vue';
 import { walletClient } from "@/api/wallet";
 
@@ -20,7 +20,8 @@ import { walletClient } from "@/api/wallet";
 provide(ApolloClients, {
   default: queryClient,
   query: queryClient,
-  gateway: gatewayClient
+  gateway: gatewayClient,
+  notification: notificationClient
 })
 
 

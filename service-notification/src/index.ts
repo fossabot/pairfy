@@ -8,10 +8,10 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { catcher, errorEvents, logger } from "./utils/index.js";
 import { database } from "./db/client.js";
 import { typeDefs } from "./graphql/types.js";
-import { books, orders } from "./graphql/resolvers.js";
 import { agentMiddleware } from "./middleware/agent.js";
 import { requireAuth } from "./middleware/required.js";
 import { redisClient } from "./db/redis.js";
+import { notifications } from "./graphql/resolvers.js";
 
 const app = express();
 
@@ -19,10 +19,10 @@ const httpServer = http.createServer(app);
 
 const resolvers = {
   Query: {
-    ...orders.Query,
+    ...notifications.Query,
   },
   Mutation: {
-    ...books.Mutation,
+    ...notifications.Mutation,
   },
 };
 

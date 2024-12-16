@@ -1,28 +1,32 @@
 const typeDefs = `#graphql
 
-input GetOrdersInput {
+type Notification {
   id: String!
-} 
-
-type Query {
-  getOrders: String
+  type: String!
+  title: String!
+  owner: String!
+  seen: Boolean!
+  data: String!
+  message: String!
+  created_at: String!
 }
 
-#///////////////////////////////////////////////// MUTATIONS
+type Query {
+  getNotifications: [Notification]
+}
 
-type UpdateBookResponse {
+#------------------------------------------------------------ MUTATIONS
+
+type UpdateNotificationResponse {
   success: Boolean!
 }
 
-input UpdateBookInput {
+input UpdateNotificationInput {
   id: String!
-  keeping_stock: Int!
-  ready_stock: Int!
-  disable_purchases: Boolean!
 } 
 
 type Mutation {
-  updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
+  updateNotification(updateNotificationInput: UpdateNotificationInput!): UpdateNotificationResponse!
 }
 
 `;
