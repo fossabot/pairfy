@@ -16,8 +16,7 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="info">
-                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller is
-                    inactive.
+                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays.
                 </Message>
             </div>
 

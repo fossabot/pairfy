@@ -26,7 +26,7 @@ const getNotifications = async (_: any, args: any, context: any) => {
     const [notifications] = await connection.execute(query, [owner, false]);
 
     console.log(notifications);
-    
+
     return notifications || [];
   } catch (err: any) {
     if (connection) {
@@ -57,6 +57,8 @@ const updateNotification = async (_: any, args: any, context: any) => {
   try {
     connection = await database.client.getConnection();
 
+    ///////////////////////////////////////////////////////////
+
     await connection.beginTransaction();
 
     const query = `
@@ -75,13 +77,15 @@ const updateNotification = async (_: any, args: any, context: any) => {
       owner = SELLER.id;
     }
 
-    const [result] = await connection.execute(query, [true, params.id, owner]);
+    const [result] = await connection.execute(query, [true, params.notification_id, owner]);
 
     if (result.affectedRows !== 1) {
       throw new Error("INTERNAL_ERROR");
     }
 
     await connection.commit();
+
+    ///////////////////////////////////////////////////////////
 
     return { success: true };
   } catch (err: any) {

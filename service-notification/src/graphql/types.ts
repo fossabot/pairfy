@@ -22,7 +22,7 @@ type UpdateNotificationResponse {
 }
 
 input UpdateNotificationInput {
-  id: String!
+  notification_id: String!
 } 
 
 type Mutation {
