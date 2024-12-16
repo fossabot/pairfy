@@ -90,11 +90,6 @@ function setupAudio() {
     return { playNotification };
 }
 
-
-
-
-
-
 </script>
 
 <style lang="css" scoped>
@@ -107,5 +102,9 @@ function setupAudio() {
 
 .notifications {
     width: 300px;
+}
+
+.notification-button {
+    color: var(--text-w);
 }
 </style>

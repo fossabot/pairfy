@@ -35,7 +35,7 @@
 
   --section-gap: 160px;
 
-  --p-tag-border-radius: 8px !important;
+  --p-tag-border-radius: 0px !important;
 
   --p-tag-font-weight: initial !important;
 
@@ -43,7 +43,7 @@
 
   --p-badge-height:1rem !important;
 
-  --p-overlaybadge-outline-width: 1px !important;
+  --p-overlaybadge-outline-width: 0px !important;
 }
 
 @media (prefers-color-scheme: dark) {

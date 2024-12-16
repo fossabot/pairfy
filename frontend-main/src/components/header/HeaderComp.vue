@@ -3,7 +3,7 @@
         <DrawerComp />
         <div class="header">
             <div class="header-col left">
-                <img class="logo" src="@/assets/logo-blue.png" alt="">
+                <div class="brand"></div>
             </div>
             <div class="header-col center">
                 <SearchComp />
@@ -21,19 +21,20 @@
                 </div>
             </div>
         </div>
+        <section class="flex">
+            <div class="menu">
+                <div class="menu-col left">
+                    <NavComp />
+                </div>
+                <div class="menu-col center">
 
-        <div class="menu">
-            <div class="menu-col left">
-                <NavComp />
+                </div>
+                <div class="menu-col right">
+                    <div class="ada"> ADAUSD {{ getADAprice }}</div>
+                    <div class="network"> {{ NETWORK }}</div>
+                </div>
             </div>
-            <div class="menu-col center">
-
-            </div>
-            <div class="menu-col right">
-                <div class="ada"> ADAUSD {{ getADAprice }}</div>
-                <div class="network"> {{ NETWORK }}</div>
-            </div>
-        </div>
+        </section>
     </header>
 
 </template>
@@ -76,21 +77,34 @@ onGetAssetPriceError(error => {
 
 <style scoped>
 header {
-    background: var(--background-a);
+    background: linear-gradient(92.41deg, var(--primary-a), var(--primary-c));
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     border-bottom: 1px solid var(--border-a);
     font-size: var(--text-size-a);
+}
+
+section {
+    width: inherit;
+    justify-content: center;
+    background: var(--primary-c);
 }
 
 .header {
     padding: 0.5rem 0;
 }
 
-.logo {
+.brand {
     cursor: pointer;
+    min-height: 20px;
+    width: 79px;
+    background-image: url('../../assets/logo-white.png');
+    background-repeat: repeat-x;
+    background-position: 0px 0px;
+
 }
 
 .header,
@@ -118,6 +132,7 @@ header {
 
 .menu {
     padding: 0.75rem 0;
+    color: var(--text-w);
 }
 
 .menu-col.right {
@@ -140,20 +155,16 @@ header {
 }
 
 .ada {
-    color: var(--text-b);
     padding: 0 0.5rem;
     margin-left: 1rem;
     white-space: nowrap;
 }
 
 .network {
-    background: color-mix(in srgb, var(--p-green-50), transparent 5%);
-    color: var(--green-a);
+    color: var(--text-w);
     padding: 0 0.5rem;
     font-weight: 500;
     margin-left: 1rem;
-    border-radius: 4px;
     text-transform: capitalize;
 }
-
 </style>

@@ -144,7 +144,7 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span>#</span>
+                                                    <span>-</span>
                                                 </div>
                                             </div>
                                         </template>
@@ -531,7 +531,7 @@ onUnmounted(() => {
 
 .nav {
     border-bottom: 1px solid var(--border-a);
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .nav-item {
@@ -672,7 +672,7 @@ onUnmounted(() => {
 
 .timeline-subtitle {
     font-size: var(--text-size-a);
-   margin-bottom: 1rem; 
+    margin-bottom: 1rem;
 }
 
 .timeline-content {

@@ -1,6 +1,7 @@
 <template>
-    <div class="search" :class="{ focus: isFocus }" :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
-        <input v-model="searchInput" type="text" class="search-input"  placeholder="Search In Cardano"
+    <div class="search" :class="{ focus: isFocus }"
+        :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
+        <input v-model="searchInput" type="text" class="search-input" placeholder="Search Cardano"
             @focus="isFocus = true" @blur="isFocus = false">
         <button class="search-button">
             <i class="pi pi-search" />
@@ -26,12 +27,14 @@ const isFocus = ref(false);
     width: 100%;
     margin: 0 auto;
     border: 1px solid var(--border-a);
-    transition: 0.2s;
+
 }
 
-.search.focus{
+.search.focus {
     background: var(--background-b);
     border: 1px solid var(--text-a);
+    outline: 2px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), transparent 5%);
+    outline-offset: 1px;
 }
 
 .search-input {
