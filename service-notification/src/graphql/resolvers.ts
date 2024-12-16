@@ -11,7 +11,12 @@ const getNotifications = async (_: any, args: any, context: any) => {
   try {
     connection = await database.client.getConnection();
 
-    const query = "SELECT * FROM notifications WHERE owner = ? AND seen = ?";
+    const query = `
+     SELECT *
+     FROM notifications
+     WHERE owner = ?
+     ORDER BY created_at ASC LIMIT ?
+     `;
 
     let owner = null;
 
@@ -23,7 +28,7 @@ const getNotifications = async (_: any, args: any, context: any) => {
       owner = SELLER.id;
     }
 
-    const [notifications] = await connection.execute(query, [owner, false]);
+    const [notifications] = await connection.query(query, [owner, 50]);
 
     console.log(notifications);
 

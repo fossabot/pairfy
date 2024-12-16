@@ -7,29 +7,63 @@
             </div>
         </OverlayBadge>
         <Popover ref="op">
-            <div class="drop">
-                <div class="drop-item" v-for="item in notificationArray" :key="item">
-                    <OverlayBadge value="" severity="danger">
-                        <div class="drop-image" @click="onHandleClick(item)">
-                            <i class="pi pi-shopping-cart" />
-                        </div>
-                    </OverlayBadge>
-                    <div class="drop-box" @click="onHandleClick(item)">
-                        <div class="drop-title">
-                            {{ item.title }}
+            <section>
+                <div class="nav">
+                    <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
+                        New
+                    </div>
+                    <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
+                        All
+                    </div>
+                </div>
 
-                            <span>{{ getTimeAgo(item.created_at) }}</span>
-                        </div>
-                        <div class="drop-message" @click="onHandleClick(item)">
-                            {{ item.message }}
-                        </div>
+                <div class="drop" v-if="currentNav === 0">
+                    <div class="empty-legend" v-if="!unseen.length"> <span>No news</span></div>
+                    <div class="drop-item" v-for="item in unseen" :key="item">
+                        <OverlayBadge value="" severity="danger">
+                            <div class="drop-image" @click="onHandleClick(item)">
+                                <i class="pi pi-shopping-cart" />
+                            </div>
+                        </OverlayBadge>
+                        <div class="drop-box" @click="onHandleClick(item)">
+                            <div class="drop-title">
+                                {{ item.title }}
 
-                        <div class="drop-pad">
-                            <span>Mark as read</span>
+                                <span>{{ getTimeAgo(item.created_at) }}</span>
+                            </div>
+                            <div class="drop-message" @click="onHandleClick(item)">
+                                {{ item.message }}
+                            </div>
+
+                            <div class="drop-pad" @click="handleSeen(item.id)">
+                                <span>Mark as read</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="drop" v-if="currentNav === 1">
+                    <div class="empty-legend" v-if="!seen.length"> <span>No news</span></div>
+                    <div class="drop-item" v-for="item in seen" :key="item">
+
+                        <OverlayBadge value="" severity="secondary">
+                            <div class="drop-image" @click="onHandleClick(item)">
+                                <i class="pi pi-shopping-cart" />
+                            </div>
+                        </OverlayBadge>
+                        <div class="drop-box" @click="onHandleClick(item)">
+                            <div class="drop-title">
+                                {{ item.title }}
+
+                                <span>{{ getTimeAgo(item.created_at) }}</span>
+                            </div>
+                            <div class="drop-message" @click="onHandleClick(item)">
+                                {{ item.message }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Popover>
     </div>
 </template>
@@ -37,8 +71,8 @@
 <script setup>
 import gql from 'graphql-tag';
 import notificationSound from '@/assets/notification.mp3';
-import { ref, watch, computed, onMounted, nextTick } from 'vue';
-import { useQuery } from '@vue/apollo-composable';
+import { ref, watch, reactive, computed, onMounted, nextTick } from 'vue';
+import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
 import { format } from 'timeago.js';
 
@@ -49,16 +83,29 @@ const op = ref(true);
 const toggle = (event) => {
     op.value.toggle(event);
 }
+
+const currentNav = ref(1);
+
 const { playNotification } = setupAudio();
+
+//////////////////////////////////////////////////////////////////////////////
 
 const queryOptions = {
     pollInterval: 60000,
     clientId: 'notification'
 }
 
-const notificationList = ref(new Set());
+const unseenSet = reactive({
+    value: new Set()
+});
 
-const notificationArray = computed(() => Array.from(notificationList.value));
+const seenSet = reactive({
+    value: new Set()
+});
+
+const unseen = computed(() => Array.from(unseenSet.value));
+
+const seen = computed(() => Array.from(seenSet.value));
 
 const { result: onGetNotification, onError: onGetNotificationsError } = useQuery(gql`
       query getNotifications {
@@ -79,11 +126,22 @@ const { result: onGetNotification, onError: onGetNotificationsError } = useQuery
 );
 
 watch(onGetNotification, value => {
-    value.getNotifications.forEach((element) => {
-        if (!notificationList.value.has(element.id)) {
-            notificationList.value.add(element);
-            playNotification();
+    const items = value.getNotifications;
+
+    items.forEach((element, index) => {
+        if (!element.seen) {
+            if (!unseenSet.value.has(element)) {
+                unseenSet.value.add(element)
+                if (index === items.length - 1) {
+                    playNotification()
+                }
+            }
+        } else {
+            if (!seenSet.value.has(element)) {
+                seenSet.value.add(element)
+            }
         }
+
     })
 });
 
@@ -93,6 +151,25 @@ onGetNotificationsError(error => {
 
 //////////////////////////////////////////////////////////////////////////////
 
+const { mutate: updateNotification } = useMutation(gql`
+      mutation updateNotification ($updateNotificationVariable: UpdateNotificationInput!) {
+        updateNotification (updateNotificationInput: $updateNotificationVariable) {
+          success
+        }
+      }
+    `, {
+    clientId: 'notification'
+})
+
+const handleSeen = (id) => {
+    updateNotification({
+        "updateNotificationVariable": {
+            notification_id: id
+        }
+    })
+}
+
+//////////////////////////////////////////////////////////////////////////////
 const getTimeAgo = (createdAt) => format(createdAt, 'en_US')
 
 
@@ -123,6 +200,7 @@ const onHandleClick = (notification) => {
     }
 }
 
+
 onMounted(async () => {
 
     await nextTick();
@@ -130,7 +208,9 @@ onMounted(async () => {
     const div = document.getElementById('notifications');
 
     if (div) {
-        div.click();
+        if (unseen.length) {
+            div.click();
+        }
     }
 })
 
@@ -162,6 +242,10 @@ function setupAudio() {
 </script>
 
 <style lang="css" scoped>
+section {
+    min-height: 300px;
+}
+
 .notification {
     margin: 0 2rem;
     display: flex;
@@ -181,6 +265,7 @@ function setupAudio() {
     border-bottom: 1px solid var(--border-a);
     display: flex;
     padding: 1rem 0;
+    transition: 0.2s;
 }
 
 .drop-image {
@@ -237,6 +322,28 @@ function setupAudio() {
     font-size: var(--text-size-a);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
-   
+}
+
+.nav {
+    display: flex;
+}
+
+.nav-item {
+    padding: 0.5rem 1rem;
+    font-size: var(--text-size-a);
+    border-bottom: 2px solid var(--border-a);
+    cursor: pointer;
+}
+
+.nav-item.selected {
+    border-bottom: 2px solid var(--primary-c);
+}
+
+.empty-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: var(--text-b);
 }
 </style>
