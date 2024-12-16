@@ -3,7 +3,7 @@
         <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
             <div class="button flex">
                 <i class="pi pi-bars" />
-                <audio src="@/assets/notification.mp3" muted="false" preload="auto"></audio>
+                <audio src="@/assets/notification.mp3" muted="false" preload="auto"/>
             </div>
         </OverlayBadge>
         <Popover ref="op">
@@ -220,9 +220,9 @@ function setupAudio() {
 
     audio.muted = false;
 
-    audio.volume = 0.9;
-
     audio.value.load();
+
+    audio.value.volume = 0.4;
 
     const playNotification = () => {
         audio.value
