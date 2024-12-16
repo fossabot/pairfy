@@ -799,8 +799,8 @@ onUnmounted(() => {
 }
 
 .product-name {
-    font-weight: 500;
-    font-size: var(--text-size-b);
+    font-weight: 600;
+    font-size: var(--text-size-c);
     margin-left: 1rem;
 }
 
@@ -854,7 +854,6 @@ onUnmounted(() => {
 
 .product-list ul {
     padding-left: 1rem;
-    color: var(--text-b);
     line-height: 1.75rem;
     justify-content: space-between;
     font-size: var(--text-size-a);

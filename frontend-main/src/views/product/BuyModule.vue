@@ -248,7 +248,6 @@ const onConfirmedBuy = () => {
 .buy-stock {
     font-weight: 600;
     margin-top: 1rem;
-    color: var(--green-a);
 }
 
 .buy-stock.red {
