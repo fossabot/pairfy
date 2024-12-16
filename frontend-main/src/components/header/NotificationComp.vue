@@ -1,27 +1,31 @@
 <template>
     <div class="notification">
-        <OverlayBadge value="1" severity="danger" @click="toggle">
-            <div class="notification-button flex">
+        <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
+            <div class="button flex">
                 <i class="pi pi-bars" />
                 <audio src="@/assets/notification.mp3" muted="false" preload="auto"></audio>
             </div>
         </OverlayBadge>
         <Popover ref="op">
-
-
             <div class="drop">
-                <div class="drop-item" v-for="item in notificationArray" :key="item" @click="onHandleClick(item)">
+                <div class="drop-item" v-for="item in notificationArray" :key="item">
                     <OverlayBadge value="" severity="danger">
-                        <div class="drop-image">
+                        <div class="drop-image" @click="onHandleClick(item)">
                             <i class="pi pi-shopping-cart" />
                         </div>
                     </OverlayBadge>
-                    <div class="drop-box">
+                    <div class="drop-box" @click="onHandleClick(item)">
                         <div class="drop-title">
                             {{ item.title }}
+
+                            <span>{{ getTimeAgo(item.created_at) }}</span>
                         </div>
-                        <div class="drop-message">
+                        <div class="drop-message" @click="onHandleClick(item)">
                             {{ item.message }}
+                        </div>
+
+                        <div class="drop-pad">
+                            <span>Mark as read</span>
                         </div>
                     </div>
                 </div>
@@ -33,9 +37,10 @@
 <script setup>
 import gql from 'graphql-tag';
 import notificationSound from '@/assets/notification.mp3';
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted, nextTick } from 'vue';
 import { useQuery } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
+import { format } from 'timeago.js';
 
 const router = useRouter();
 
@@ -76,7 +81,7 @@ const { result: onGetNotification, onError: onGetNotificationsError } = useQuery
 watch(onGetNotification, value => {
     value.getNotifications.forEach((element) => {
         if (!notificationList.value.has(element.id)) {
-            notificationList.value.add(element)
+            notificationList.value.add(element);
             playNotification();
         }
     })
@@ -87,6 +92,9 @@ onGetNotificationsError(error => {
 })
 
 //////////////////////////////////////////////////////////////////////////////
+
+const getTimeAgo = (createdAt) => format(createdAt, 'en_US')
+
 
 const onHandleClick = (notification) => {
     if (!notification) {
@@ -115,6 +123,17 @@ const onHandleClick = (notification) => {
     }
 }
 
+onMounted(async () => {
+
+    await nextTick();
+
+    const div = document.getElementById('notifications');
+
+    if (div) {
+        div.click();
+    }
+})
+
 //////////////////////////////////////////////////////////////////////////////
 
 function setupAudio() {
@@ -122,7 +141,7 @@ function setupAudio() {
 
     audio.muted = false;
 
-    audio.volume = 1.0;
+    audio.volume = 0.9;
 
     audio.value.load();
 
@@ -147,10 +166,9 @@ function setupAudio() {
     margin: 0 2rem;
     display: flex;
     align-items: center;
-    cursor: pointer;
 }
 
-.notification-button i {
+.button i {
     font-size: var(--text-size-c);
 }
 
@@ -163,7 +181,6 @@ function setupAudio() {
     border-bottom: 1px solid var(--border-a);
     display: flex;
     padding: 1rem 0;
-    cursor: pointer;
 }
 
 .drop-image {
@@ -174,6 +191,7 @@ function setupAudio() {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .drop-image i {
@@ -189,15 +207,35 @@ function setupAudio() {
     font-weight: 700;
     text-align: start;
     font-size: var(--text-size-a);
+    cursor: pointer;
+}
+
+.drop-title span {
+    font-weight: 400;
+    margin-left: 0.5rem;
 }
 
 .drop-message {
     text-align: left;
     margin-top: 0.25rem;
     font-size: var(--text-size-a);
+    cursor: pointer;
 }
 
-.notification-button {
+.button {
     color: var(--text-w);
+}
+
+.drop-pad {
+    margin-top: 0.5rem;
+    cursor: default;
+}
+
+.drop-pad span {
+    background: var(--background-b);
+    font-size: var(--text-size-a);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+   
 }
 </style>
