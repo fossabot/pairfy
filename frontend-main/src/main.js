@@ -61,8 +61,10 @@ import { MyPreset } from './assets/theme';
 
 const app = createApp(App)
 
+app.use(router);
+
 app.use(stores);
-app.use(router)
+
 
 app.use(PrimeVue, {
     ripple: true,

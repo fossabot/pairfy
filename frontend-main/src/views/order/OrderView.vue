@@ -24,7 +24,7 @@
                         <div class="summary-subtitle flex">
                             Order number
                             <div>
-                                <span>{{ formatWithDots(orderData.id, 40) }}</span>
+                                <span>{{ reduceByLength(orderData.id, 20) }}</span>
                             </div>
                             <button class="copy-button flex" @click="copyToClipboard(orderData.id)"
                                 v-tooltip.top="'Copy'">
@@ -34,7 +34,7 @@
                         <div class="summary-subtitle flex">
                             Contract Address
                             <div>
-                                <span> {{ reduceByLength(orderData.contract_address, 30) }}</span>
+                                <span> {{ reduceByLength(orderData.contract_address, 20) }}</span>
                             </div>
                             <button class="copy-button flex" @click="copyToClipboard(orderData.contract_address)"
                                 v-tooltip.top="'Copy'">
