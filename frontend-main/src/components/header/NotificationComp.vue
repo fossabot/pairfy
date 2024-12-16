@@ -25,8 +25,8 @@
                                 <i class="pi pi-shopping-cart" />
                             </div>
                         </OverlayBadge>
-                        <div class="drop-box" @click="onHandleClick(item)">
-                            <div class="drop-title">
+                        <div class="drop-box">
+                            <div class="drop-title" @click="onHandleClick(item)">
                                 {{ item.title }}
 
                                 <span>{{ getTimeAgo(item.created_at) }}</span>
@@ -51,8 +51,8 @@
                                 <i class="pi pi-shopping-cart" />
                             </div>
                         </OverlayBadge>
-                        <div class="drop-box" @click="onHandleClick(item)">
-                            <div class="drop-title">
+                        <div class="drop-box">
+                            <div class="drop-title" @click="onHandleClick(item)">
                                 {{ item.title }}
 
                                 <span>{{ getTimeAgo(item.created_at) }}</span>
@@ -168,6 +168,8 @@ const handleSeen = (id) => {
             notification_id: id
         }
     })
+
+    showBox()
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -311,7 +313,7 @@ section {
 
 .drop-pad {
     margin-top: 0.5rem;
-    cursor: default;
+    cursor: pointer;
 }
 
 .drop-pad span {
