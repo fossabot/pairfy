@@ -4,7 +4,7 @@ import { Data, fromText, Kupmios, Lucid } from "@lucid-evolution/lucid";
 
 const provider = new Kupmios(
   process.env.KUPO_KEY as string,
-  process.env.OGMIOS_KEY as string,
+  process.env.OGMIOS_KEY as string
 );
 
 const lucid = await Lucid(provider, "Preprod");
@@ -33,11 +33,16 @@ async function getUtxo(threadtoken: string): Promise<ResponseType> {
 
     const utxo = await lucid.utxoByUnit(unit);
 
-    if (utxo.datum) {
+    if (!utxo) {
+      result = {
+        code: 404,
+        utxo: {},
+      };
+    } else {
       let query: any = await axiosAPI.get(`/txs/${utxo.txHash}`);
 
       if (query.status === 200) {
-        const data = Data.from(utxo.datum, StateMachineDatum);
+        const data = Data.from(utxo.datum!, StateMachineDatum);
 
         const payload = {
           ...utxo,
@@ -52,14 +57,7 @@ async function getUtxo(threadtoken: string): Promise<ResponseType> {
       }
     }
   } catch (err: any) {
-    if (err.message === "Error: Unit not found") {
-      result = {
-        code: 404,
-        utxo: {},
-      };
-    } else {
-      logger.error(err);
-    }
+    logger.error(err);
   } finally {
     return result;
   }
