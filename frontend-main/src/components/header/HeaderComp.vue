@@ -90,7 +90,6 @@ header {
 section {
     width: inherit;
     justify-content: center;
-    background: var(--primary-c);
 }
 
 .header {
