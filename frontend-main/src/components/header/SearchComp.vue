@@ -3,7 +3,7 @@
         :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search Cardano"
             @focus="isFocus = true" @blur="isFocus = false">
-        <button class="search-button">
+        <button class="search-button" :class="{ focus: isFocus }">
             <i class="pi pi-search" />
         </button>
     </div>
@@ -23,10 +23,11 @@ const isFocus = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: 4px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--primary-c);
+    overflow: hidden;
 
 }
 
@@ -41,7 +42,6 @@ const isFocus = ref(false);
     width: 100%;
     padding: 0.5rem 1rem;
     border: none;
-    border-radius: 8px;
     outline: none;
     font-size: var(--text-size-a);
     font-family: inherit;
@@ -53,10 +53,14 @@ const isFocus = ref(false);
     padding: 0 0.75rem;
     height: 36px;
     border: none;
-    background: transparent;
-    border-radius: 8px;
+    background: var(--primary-b);
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
     color: var(--text-a);
+}
+
+.search-button.focus {
+    outline-offset: -1px;
 }
 
 .search-button:hover {
