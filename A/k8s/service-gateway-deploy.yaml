@@ -56,7 +56,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: blockfrost-key
-                  key: key      
+                  key: key 
+            - name: KUPO_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: kupo-key
+                  key: key 
+            - name: OGMIOS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ogmios-key
+                  key: key                                        
             - name: TX_VALID_TIME
               value: "5"      
             - name: TX_WATCH_WINDOW

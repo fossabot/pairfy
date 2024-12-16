@@ -89,10 +89,6 @@ const main = async () => {
       throw new Error("REDIS_HOST error");
     }
 
-    if (!process.env.PROJECT_ID) {
-      throw new Error("PROJECT_ID error");
-    }
-
     if (!process.env.TX_VALID_TIME) {
       throw new Error("TX_VALID_TIME error");
     }
@@ -109,6 +105,18 @@ const main = async () => {
       throw new Error("SHIPPING_UNTIL error");
     }
 
+    if (!process.env.PROJECT_ID) {
+      throw new Error("PROJECT_ID error");
+    }
+
+    if (!process.env.KUPO_KEY) {
+      throw new Error("KUPO_KEY error");
+    }
+    
+    if (!process.env.OGMIOS_KEY) {
+      throw new Error("OGMIOS_KEY error");
+    }
+    
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,

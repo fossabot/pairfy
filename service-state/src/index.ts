@@ -34,10 +34,6 @@ const main = async () => {
       throw new Error("REDIS_HOST error");
     }
 
-    if (!process.env.PROJECT_ID) {
-      throw new Error("PROJECT_ID error");
-    }
-
     if (!process.env.QUERY_LIMIT) {
       throw new Error("QUERY_LIMIT error");
     }
@@ -50,6 +46,17 @@ const main = async () => {
       throw new Error("SCAN_RANGE error");
     }
 
+    if (!process.env.PROJECT_ID) {
+      throw new Error("PROJECT_ID error");
+    }
+
+    if (!process.env.KUPO_KEY) {
+      throw new Error("KUPO_KEY error");
+    }
+
+    if (!process.env.OGMIOS_KEY) {
+      throw new Error("OGMIOS_KEY error");
+    }
     /////////////////////////////////////////
 
     await redisClient

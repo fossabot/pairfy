@@ -71,7 +71,7 @@
 <script setup>
 import gql from 'graphql-tag';
 import notificationSound from '@/assets/notification.mp3';
-import { ref, watch, reactive, computed, onMounted, nextTick } from 'vue';
+import { ref, watch, reactive, computed } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
 import { format } from 'timeago.js';
@@ -84,7 +84,7 @@ const toggle = (event) => {
     op.value.toggle(event);
 }
 
-const currentNav = ref(1);
+const currentNav = ref(0);
 
 const { playNotification } = setupAudio();
 
@@ -134,6 +134,7 @@ watch(onGetNotification, value => {
                 unseenSet.value.add(element)
                 if (index === items.length - 1) {
                     playNotification()
+                    showBox()
                 }
             }
         } else {
@@ -170,6 +171,15 @@ const handleSeen = (id) => {
 }
 
 //////////////////////////////////////////////////////////////////////////////
+
+const showBox = () => {
+    const div = document.getElementById('notifications');
+
+    if (div) {
+        div.click();
+    }
+}
+
 const getTimeAgo = (createdAt) => format(createdAt, 'en_US')
 
 
@@ -200,19 +210,6 @@ const onHandleClick = (notification) => {
     }
 }
 
-
-onMounted(async () => {
-
-    await nextTick();
-
-    const div = document.getElementById('notifications');
-
-    if (div) {
-        if (unseen.length) {
-            div.click();
-        }
-    }
-})
 
 //////////////////////////////////////////////////////////////////////////////
 

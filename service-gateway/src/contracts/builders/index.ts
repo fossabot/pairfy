@@ -1,10 +1,13 @@
 import * as dotenv from "dotenv";
-import { Koios, Lucid } from "@lucid-evolution/lucid";
+import { Kupmios, Lucid } from "@lucid-evolution/lucid";
 import { blueprint } from "./plutus.js";
 
 dotenv.config();
 
-const provider = new Koios("https://preprod.koios.rest/api/v1");
+const provider = new Kupmios(
+  process.env.KUPO_KEY as string,
+  process.env.OGMIOS_KEY as string,
+);
 
 type Validators = {
   threadToken: string;
