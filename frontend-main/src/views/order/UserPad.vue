@@ -63,7 +63,7 @@ onReturnFundsDone(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`);
+            showSuccess(`Transaction submitted with hash: ${txHash}`, 20000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -105,8 +105,8 @@ const updatePendingCountdown = () => {
 /////////////////////////////////////////////////
 
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+const showSuccess = (content, time) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
 };
 
 const showError = (content) => {

@@ -40,6 +40,10 @@ const returnFunds = async (_: any, args: any, context: any) => {
       throw new Error("ORDER_FINISHED");
     }
 
+    if (ORDER.contract_state === -1) {
+      throw new Error("ALREADY_RETURNED");
+    }
+
     if (ORDER.contract_state !== 0) {
       throw new Error("STATE_DIFF_ZERO");
     }
