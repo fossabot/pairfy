@@ -8,7 +8,7 @@ async function scanThreadToken(job: any) {
   let connection = null;
 
   try {
-    const { threadtoken, watch_until, seller_id, buyer_pubkeyhash } = job.data;
+    const { threadtoken, watch_until, seller_id, buyer_pubkeyhash, buyer_address, seller_address } = job.data;
 
     const { code, utxo } = await getUtxo(threadtoken);
 
@@ -42,7 +42,9 @@ async function scanThreadToken(job: any) {
             timestamp,
             utxo,
             seller_id,
-            buyer_pubkeyhash
+            buyer_pubkeyhash,
+            buyer_address,
+            seller_address
           );
           break;
         case -1n:
@@ -52,7 +54,9 @@ async function scanThreadToken(job: any) {
             timestamp,
             utxo,
             seller_id,
-            buyer_pubkeyhash
+            buyer_pubkeyhash,
+            buyer_address,
+            seller_address
           );
           break;
       }

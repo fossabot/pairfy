@@ -97,12 +97,13 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     const schemeData = `
       UPDATE sellers
-      SET pubkeyhash = ?
+      SET pubkeyhash = ?, address = ?
       WHERE id = ?
    `;
     const [result] = await connection.execute(schemeData, [
       pubkeyhash,
-      SELLER.id,
+      address32,
+      SELLER.id
     ]);
 
     if (result.affectedRows !== 1) {

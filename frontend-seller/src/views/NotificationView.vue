@@ -166,9 +166,9 @@ const onSelect = (row) => {
     const notification = row.data;
 
     if (notification.type === 'order') {
-        const { threadtoken } = JSON.parse(notification.data);
+        const { threadtoken, seller_address } = JSON.parse(notification.data);
 
-        window.open(`http://localhost:5174/order/${threadtoken}/?mode=seller`, '_blank');
+        window.open(`http://localhost:5174/order/${threadtoken}/?mode=seller&address=${seller_address}`, '_blank');
 
     }
 }

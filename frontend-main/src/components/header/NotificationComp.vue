@@ -313,7 +313,7 @@ section {
 
 .drop-pad {
     margin-top: 0.5rem;
-    cursor: pointer;
+    cursor: default;
 }
 
 .drop-pad span {

@@ -37,12 +37,16 @@ provide('utils', {
   copyToClipboard
 });
 
-const { currentUser } = headerAPI();
+const { currentUser, currentSeller } = headerAPI();
 
 const { startWalletService } = walletClient();
 
 currentUser()
   .then(() => console.info("USER_LOGGED"))
+  .catch((err) => console.error(err));
+
+currentSeller()
+  .then(() => console.info("SELLER_LOGGED"))
   .catch((err) => console.error(err));
 
 startWalletService()

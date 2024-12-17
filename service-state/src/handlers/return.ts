@@ -7,7 +7,9 @@ async function handleReturn(
   timestamp: number,
   utxo: any,
   seller_id: string,
-  buyer_pubkeyhash: string
+  buyer_pubkeyhash: string,
+  buyer_address: string,
+  seller_address: string
 ) {
   const statusLog = "returned";
 
@@ -43,8 +45,9 @@ async function handleReturn(
       owner: buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken,
+        buyer_address
       }),
-      message: `The payment for the order (${threadtoken}) is being returned to your wallet.`,
+      message: `The payment for the order (${threadtoken}) is being returned to your wallet. / Account / ${buyer_address}`,
     },
     {
       id: getEventId(),
@@ -53,8 +56,9 @@ async function handleReturn(
       owner: seller_id,
       data: JSON.stringify({
         threadtoken,
+        seller_address
       }),
-      message: `The buyer has cancelled the order (${threadtoken}) due to lack of interest.`,
+      message: `The buyer has cancelled the order (${threadtoken}) due to lack of interest. / Account / ${seller_address}`,
     },
   ];
 

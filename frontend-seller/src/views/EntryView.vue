@@ -249,7 +249,7 @@ import dashboardAPI from '@/views/api/index';
 import { ref, watch, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
-import { signMessage, balanceTx, walletClient, getBalance } from "@/api/wallet";
+import { signMessage, walletClient } from "@/api/wallet";
 
 const toast = useToast();
 
@@ -701,8 +701,8 @@ onBeforeUnmount(() => {
 .wallets {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-    grid-auto-rows: 20px;
-    gap: 5px;
+    grid-auto-rows: 40px;
+    gap: 0.5rem;
 }
 
 .wallets-item {

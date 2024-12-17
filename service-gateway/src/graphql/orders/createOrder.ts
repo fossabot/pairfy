@@ -48,7 +48,8 @@ const createOrder = async (_: any, args: any, context: any) => {
              p.discount AS product_discount,
              p.discount_value AS product_discount_value,
              s.id AS seller_id,
-             s.pubkeyhash AS seller_pubkeyhash
+             s.pubkeyhash AS seller_pubkeyhash,
+             s.address AS seller_address
          FROM
              products p
          INNER JOIN
@@ -133,6 +134,8 @@ const createOrder = async (_: any, args: any, context: any) => {
       seller_id: RESULT.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
       seller_pubkeyhash: RESULT.seller_pubkeyhash,
+      buyer_address: USER.address,
+      seller_address: RESULT.seller_address,
       ada_price: ADAUSD, // add to metadata contract
       contract_address: BUILDER.stateMachineAddress,
       contract_params: BUILDER.serializedParams,

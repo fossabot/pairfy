@@ -72,20 +72,24 @@ const getBalance = async () => {
   return adaBalance.toString()
 }
 
-const getMessage = () => {
-  const message = 'PLEASE SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE'
+const getMessage = (mode) => {
+  let message = 'PLEASE SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE'
+
+  if (mode === 'seller') {
+    message = 'SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE'
+  }
 
   return Buffer.from(message, 'utf8').toString('hex')
 }
 
-const signMessage = async () => {
+const signMessage = async (mode) => {
   if (!enabledWalletAPI) {
     await reconnect()
   }
 
   const address = await getAddress()
 
-  const signature = await enabledWalletAPI.signData(address, getMessage())
+  const signature = await enabledWalletAPI.signData(address, getMessage(mode))
 
   return [signature, address]
 }

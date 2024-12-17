@@ -157,7 +157,14 @@ const main = async () => {
         connection = await database.client.getConnection();
 
         const queryScheme = `
-          SELECT id, finished, scanned_at, seller_id, buyer_pubkeyhash, watch_until
+          SELECT id,
+                 finished,
+                 scanned_at,
+                 seller_id,
+                 buyer_pubkeyhash,
+                 buyer_address,
+                 seller_address,
+                 watch_until
           FROM orders
           WHERE finished = ? AND scanned_at < ?
           ORDER BY created_at ASC
@@ -191,7 +198,9 @@ const main = async () => {
                   threadtoken: order.id,
                   watch_until: order.watch_until,
                   seller_id: order.seller_id,
-                  buyer_pubkeyhash: order.buyer_pubkeyhash
+                  buyer_pubkeyhash: order.buyer_pubkeyhash,
+                  buyer_address: order.buyer_address,
+                  seller_address: order.seller_address
                 },
                 opts: {
                   attempts: 0,

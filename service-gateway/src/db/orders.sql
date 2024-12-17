@@ -6,6 +6,8 @@ create table if not exists orders(
   seller_id varchar(20) not null,
   buyer_pubkeyhash varchar(100) not null,
   seller_pubkeyhash varchar(100) not null,  
+  buyer_address varchar(200) not null,
+  seller_address varchar(200) not null,  
   ada_price decimal(10, 2) not null,
   contract_address varchar(100) not null,
   contract_params text not null,
