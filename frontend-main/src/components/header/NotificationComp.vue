@@ -6,7 +6,7 @@
                 <audio src="@/assets/notification.mp3" muted="false" preload="auto"/>
             </div>
         </OverlayBadge>
-        <Popover ref="op">
+        <Popover ref="overlay">
             <section>
                 <div class="nav">
                     <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
@@ -78,10 +78,10 @@ import { format } from 'timeago.js';
 
 const router = useRouter();
 
-const op = ref(true);
+const overlay = ref(true);
 
 const toggle = (event) => {
-    op.value.toggle(event);
+    overlay.value.toggle(event);
 }
 
 const currentNav = ref(0);

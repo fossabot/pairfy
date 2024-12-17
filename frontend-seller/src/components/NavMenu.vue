@@ -31,6 +31,14 @@
           </RouterLink>
         </li>
 
+
+        <li :class="{ actived: currentRoute === 'notifications' }">
+          <RouterLink to="/notifications">
+            <i class="pi pi-bell"/>
+            <span>Notifications</span>
+          </RouterLink>
+        </li>
+
       </ul>
     </nav>
 

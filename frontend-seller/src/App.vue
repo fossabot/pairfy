@@ -17,7 +17,7 @@ import { RouterView } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { provide } from 'vue';
 import { ApolloClients } from '@vue/apollo-composable';
-import { productClient, gatewayClient } from './graphql/index';
+import { productClient, gatewayClient, notificationClient } from './graphql/index';
 import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
 import { walletClient } from "@/api/wallet";
 
@@ -25,6 +25,7 @@ provide(ApolloClients, {
   default: productClient,
   product: productClient,
   gateway: gatewayClient,
+  notification: notificationClient
 })
 
 provide('utils', {

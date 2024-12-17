@@ -560,7 +560,7 @@ onErrorProductCreated(error => {
 })
 
 onProductCreated(result => {
-    showSuccess("The product has been created");
+    showSuccess("The product has been created.");
 })
 
 const formErrors = ref({

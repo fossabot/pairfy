@@ -62,3 +62,7 @@ a {
 .p-message-text {
   font-size: var(--text-size-a) !important;
 }
+
+.p-inputtext{
+  font-size: var(--text-size-a) !important;
+}
