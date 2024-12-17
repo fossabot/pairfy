@@ -60,8 +60,8 @@
 
                 <div class="email">
                     <IftaLabel>
-                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid placeholder=""
-                            style=" font-size: var(--text-size-a)" />
+                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid
+                            :invalid="loginFormErrors.email" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -70,7 +70,7 @@
                     <Fluid>
                         <IftaLabel>
                             <Password v-model="loginForm.password" inputId="password" toggleMask :feedback="false"
-                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" />
+                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="loginFormErrors.password" />
                             <label for="password">Password</label>
 
                         </IftaLabel>
@@ -83,13 +83,16 @@
                 </div>
 
                 <div class="wallets">
-                    <div class="wallets-item selected" @click="selectWallet('lace')">
-                        <img src="@/assets/lace.svg" alt="" >
+                    <div class="wallets-item" :class="{ selected: enabledWallet === 'lace' }"
+                        @click="selectWallet('lace')">
+                        <img src="@/assets/lace.svg" alt="">
                     </div>
-                    <div class="wallets-item" @click="selectWallet('eternl')">
-                        <img src="@/assets/eternl.png" alt="" >
+                    <div class="wallets-item" :class="{ selected: enabledWallet === 'eternl' }"
+                        @click="selectWallet('eternl')">
+                        <img src="@/assets/eternl.png" alt="">
                     </div>
-                    <div class="wallets-item" @click="selectWallet('nami')">
+                    <div class="wallets-item" :class="{ selected: enabledWallet === 'nami' }"
+                        @click="selectWallet('nami')">
                         <img src="@/assets/nami.svg" alt="">
                     </div>
                 </div>
@@ -243,7 +246,7 @@
 
 <script setup>
 import dashboardAPI from '@/views/api/index';
-import { ref, watch } from 'vue';
+import { ref, watch, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { signMessage, balanceTx, walletClient, getBalance } from "@/api/wallet";
@@ -253,8 +256,13 @@ const toast = useToast();
 const { loginUser, createUser } = dashboardAPI();
 
 const loginForm = ref({
-    email: "",
-    password: ""
+    email: null,
+    password: null
+});
+
+const loginFormErrors = ref({
+    email: false,
+    password: false,
 });
 
 const countries = ref([
@@ -318,14 +326,45 @@ const closeRegister = () => {
     navigateTo('login');
 };
 
-const selectedWallet = ref(null);
+////////////////////////////////////////////////////////////////
 
-const selectWallet = async (e) => {
-    await walletClient().connect(e);
-    selectedWallet.value = e
-};
+const enabledWallet = ref(null);
+
+const updateEnabledWallet = () =>
+    enabledWallet.value = localStorage.getItem("enabled-wallet");
+
+updateEnabledWallet();
+
+window.addEventListener("walletEnabledEvent", () => updateEnabledWallet());
+
+window.addEventListener('storage', () => updateEnabledWallet());
+
+const watchEnabledWallet = setInterval(() => updateEnabledWallet(), 1000);
+
+//////////////////////////////////////////////////////////////
+
+const selectWallet = async (e) => await walletClient().connect(e);
+
 
 const doLogin = async () => {
+    if (!loginForm.value.email) {
+        loginFormErrors.value.email = true
+    }
+
+    if (!loginForm.value.password) {
+        loginFormErrors.value.password = true
+    }
+
+    if (Object.values(loginForm.value).includes(null)) {
+        showError('Required Fields');
+        return;
+    }
+
+    if (!enabledWallet.value) {
+        showError('Selected A Wallet');
+        return;
+    }
+
     await signMessage().then(async ([signature, address]) => {
         const scheme = {
             signature,
@@ -346,9 +385,7 @@ const doLogin = async () => {
             showError(response.errors.map(item => item.message))
         }
 
-
-
-    }).catch((err) => console.error(err));
+    }).catch((err) => showError(err));
 };
 
 const doRegister = async () => {
@@ -371,7 +408,11 @@ function navigateTo(mode) {
     })
 }
 
-
+onBeforeUnmount(() => {
+    clearInterval(watchEnabledWallet)
+    window.removeEventListener("walletEnabledEvent", () => updateEnabledWallet());
+    window.removeEventListener("storage", () => updateEnabledWallet());
+});
 
 </script>
 
@@ -671,6 +712,8 @@ function navigateTo(mode) {
     padding: 1rem;
     border: 1px solid var(--border-a);
     cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
 }
 
 .wallets-item img {
