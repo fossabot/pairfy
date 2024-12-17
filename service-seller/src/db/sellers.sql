@@ -18,5 +18,7 @@ create table if not exists sellers(
   created_at timestamp default current_timestamp,
   schema_v int unsigned not null,
   primary key(id),
-  unique(email, pubkeyhash, username)
+  unique(email),
+  unique(pubkeyhash),
+  unique(username)
 ) ENGINE=InnoDB;

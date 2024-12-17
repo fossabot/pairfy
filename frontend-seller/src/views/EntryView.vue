@@ -34,24 +34,24 @@
                     <li>
                         <img src="@/assets/eternl.png" alt="">
                     </li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+                    <li />
+                    <li />
+                    <li />
                     <li>
                         <img src="@/assets/vespr.png" alt="">
                     </li>
                     <li>
                         <img src="@/assets/daedalus.svg" alt="">
                     </li>
-                    <li></li>
+                    <li />
                     <li> <img src="@/assets/nami.svg" alt=""></li>
-                    <li></li>
+                    <li />
                 </ul>
             </div>
         </div>
 
         <div class="entry-right">
-            <!--LOGIN-->
+            <!--////////////////////////////////////////////LOGIN////////////////////////////////////////////-->
             <div v-if="currentMode === 'login'" class="form">
                 <div class="title">
                     <span>Welcome back!</span>
@@ -60,8 +60,8 @@
 
                 <div class="email">
                     <IftaLabel>
-                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid 
-                            placeholder="" style=" font-size: var(--text-size-a)" />
+                        <InputText id="email" v-model="loginForm.email" type="email" autofocus fluid placeholder=""
+                            style=" font-size: var(--text-size-a)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -69,8 +69,8 @@
                 <div class="password">
                     <Fluid>
                         <IftaLabel>
-                            <Password v-model="loginForm.password" inputId="password"  toggleMask
-                                :feedback="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }" />
+                            <Password v-model="loginForm.password" inputId="password" toggleMask :feedback="false"
+                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" />
                             <label for="password">Password</label>
 
                         </IftaLabel>
@@ -82,22 +82,33 @@
                     <span @click="navigateTo('recovery')">Forgot password?</span>
                 </div>
 
-                <div class="control">
-                    <Button label="Login" fluid style=" font-size: var(--text-size-a);" @click="doLogin" />
+                <div class="wallets">
+                    <div class="wallets-item selected">
+                        <img src="@/assets/lace.svg" alt="">
+                    </div>
+                    <div class="wallets-item">
+                        <img src="@/assets/eternl.png" alt="">
+                    </div>
+                    <div class="wallets-item">
+                        <img src="@/assets/nami.svg" alt="">
+                    </div>
                 </div>
 
-                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
-                </Divider>
+                <div class="control">
+                    <Button label="Login" fluid @click="doLogin" />
+                </div>
+
+                <Divider layout="horizontal" fluid style="margin-top: 2rem; "><b>or</b></Divider>
 
                 <div class="bottom">
                     Don't you have an account? <span @click="navigateTo('register')">Sign Up</span>
                 </div>
             </div>
-            <!--LOGIN-->
+            <!--////////////////////////////////////////////LOGIN////////////////////////////////////////////-->
 
 
 
-            <!--REGISTER-->
+            <!--////////////////////////////////////////////REGISTER////////////////////////////////////////////-->
             <div v-if="currentMode === 'register'" class="form">
                 <div class="title">
                     <span>New Account.</span>
@@ -125,8 +136,8 @@
                     <Fluid>
                         <IftaLabel>
 
-                            <Password v-model="registerForm.password" inputId="password" toggleMask
-                                :feedback="true" :inputStyle="{ fontSize: 'var(--text-size-a)' }">
+                            <Password v-model="registerForm.password" inputId="password" toggleMask :feedback="true"
+                                :inputStyle="{ fontSize: 'var(--text-size-a)' }">
 
                                 <template #header>
                                     <div style="font-size: var(--text-size-a);">Pick a password</div>
@@ -151,7 +162,7 @@
 
                 <div class="country">
                     <Select v-model="registerForm.country" :options="countries" filter optionLabel="name"
-                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);' >
+                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);'>
                         <template #value="slotProps">
                             <div v-if="slotProps.value" class="country-item">
                                 <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
@@ -196,9 +207,9 @@
                     Do you have an account? <span @click="navigateTo('login')">Sign In</span>
                 </div>
             </div>
-            <!--REGISTER-->
-            <!--RECOVER-->
-            <div v-if="currentMode === 'recovery'" class="form">
+            <!--////////////////////////////////////////////REGISTER////////////////////////////////////////////-->
+            <!--////////////////////////////////////////////RECOVER////////////////////////////////////////////-->
+            <div class="form" v-if="currentMode === 'recovery'">
                 <div class="title">
                     <span>Restore Your Account.</span>
                     <span>Receive a recovery email.</span>
@@ -225,7 +236,7 @@
                 </div>
             </div>
 
-
+            <!--////////////////////////////////////////////RECOVER////////////////////////////////////////////-->
         </div>
     </div>
 </template>
@@ -624,5 +635,29 @@ function navigateTo(mode) {
 
 .country-item div {
     margin-left: 0.5rem;
+}
+
+.wallets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+    grid-auto-rows: 20px;
+    gap: 5px;
+}
+
+.wallets-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid var(--border-a);
+}
+
+.wallets-item img {
+    height: 20px;
+    width: 20px;
+}
+
+.wallets-item.selected {
+    border: 1px solid var(--primary-c);
 }
 </style>
