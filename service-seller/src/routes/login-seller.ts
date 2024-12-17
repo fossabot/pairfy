@@ -85,7 +85,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       role: "SELLER",
       email: SELLER.email,
       avatar: SELLER.avatar_base + SELLER.avatar_path,
-      address: SELLER.address,
+      address: address32,
       country: SELLER.country,
       username: SELLER.username,
       pubkeyhash,

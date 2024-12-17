@@ -19,6 +19,7 @@ import { provide } from 'vue';
 import { ApolloClients } from '@vue/apollo-composable';
 import { productClient, gatewayClient } from './graphql/index';
 import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
+import { walletClient } from "@/api/wallet";
 
 provide(ApolloClients, {
   default: productClient,
@@ -36,16 +37,17 @@ const toast = useToast();
 
 const { getUserData, getUser } = dashboardAPI();
 
-const showSuccess = (content) => {
-  toast.add({ severity: 'secondary', summary: '', detail: content, life: 3000, closable: false });
-};
-
+const { startWalletService } = walletClient();
 
 const showError = (content) => {
   toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
 getUser().then(() => console.log('👋 Welcome')).catch(() => showError('AUTH_ERROR'))
+
+startWalletService()
+  .then(() => console.info("WALLET_SERVICE"))
+  .catch((err) => console.error(err));
 
 </script>
 

@@ -83,13 +83,13 @@
                 </div>
 
                 <div class="wallets">
-                    <div class="wallets-item selected">
-                        <img src="@/assets/lace.svg" alt="">
+                    <div class="wallets-item selected" @click="selectWallet('lace')">
+                        <img src="@/assets/lace.svg" alt="" >
                     </div>
-                    <div class="wallets-item">
-                        <img src="@/assets/eternl.png" alt="">
+                    <div class="wallets-item" @click="selectWallet('eternl')">
+                        <img src="@/assets/eternl.png" alt="" >
                     </div>
-                    <div class="wallets-item">
+                    <div class="wallets-item" @click="selectWallet('nami')">
                         <img src="@/assets/nami.svg" alt="">
                     </div>
                 </div>
@@ -246,6 +246,7 @@ import dashboardAPI from '@/views/api/index';
 import { ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
+import { signMessage, balanceTx, walletClient, getBalance } from "@/api/wallet";
 
 const toast = useToast();
 
@@ -317,19 +318,38 @@ const closeRegister = () => {
     navigateTo('login');
 };
 
-const doLogin = async () => {
-    const { ok, response } = await loginUser(loginForm.value);
+const selectedWallet = ref(null);
 
-    if (ok) {
-        router.push({
-            name: 'home',
-            query: {
-            },
-        })
-    } else {
-        showError(response.errors.map(item => item.message))
-    }
-}
+const selectWallet = async (e) => {
+    await walletClient().connect(e);
+    selectedWallet.value = e
+};
+
+const doLogin = async () => {
+    await signMessage().then(async ([signature, address]) => {
+        const scheme = {
+            signature,
+            address,
+            terms_accepted: true,
+            ...loginForm.value
+        };
+
+        const { ok, response } = await loginUser(scheme);
+
+        if (ok) {
+            router.push({
+                name: 'home',
+                query: {
+                },
+            })
+        } else {
+            showError(response.errors.map(item => item.message))
+        }
+
+
+
+    }).catch((err) => console.error(err));
+};
 
 const doRegister = async () => {
     const { ok, response } = await createUser(registerForm.value);
@@ -650,6 +670,7 @@ function navigateTo(mode) {
     justify-content: center;
     padding: 1rem;
     border: 1px solid var(--border-a);
+    cursor: pointer;
 }
 
 .wallets-item img {
