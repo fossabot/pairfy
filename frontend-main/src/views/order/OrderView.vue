@@ -4,7 +4,7 @@
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
-                    <span>Information</span>
+                    <span>Summary</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
@@ -582,8 +582,8 @@ onUnmounted(() => {
 }
 
 .summary-title {
-    font-size: var(--text-size-c);
-    font-weight: 700;
+    font-size: var(--text-size-3);
+    font-weight: 600;
     line-height: 3rem;
 }
 
@@ -593,7 +593,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     line-height: 2rem;
     color: var(--text-b);
 }
@@ -610,7 +610,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle button i {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .copy-button:hover {
@@ -669,11 +669,12 @@ onUnmounted(() => {
 
 .timeline-title {
     min-height: 44px;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: var(--text-size-2);
 }
 
 .timeline-subtitle {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     margin-bottom: 1rem;
 }
 
@@ -702,7 +703,7 @@ onUnmounted(() => {
 
 .diamond span {
     transform: rotate(-45deg);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 600;
 }
 
@@ -726,6 +727,7 @@ onUnmounted(() => {
 
 .created-item span {
     font-weight: 500;
+    font-size: var(--text-size-2);
 }
 
 .created-item span:nth-child(1) {
@@ -741,7 +743,7 @@ onUnmounted(() => {
 }
 
 .payment-label {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 600;
     border-right: 1px solid var(--border-a);
     padding: 0 1rem;
@@ -802,7 +804,7 @@ onUnmounted(() => {
 
 .product-name {
     font-weight: 600;
-    font-size: var(--text-size-c);
+    font-size: var(--text-size-3);
     margin-left: 1rem;
 }
 
@@ -835,7 +837,7 @@ onUnmounted(() => {
     list-style: none;
     line-height: 1.75rem;
     justify-content: space-between;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .product-card {
@@ -856,10 +858,12 @@ onUnmounted(() => {
 
 .product-list ul {
     padding-left: 1rem;
-    line-height: 1.75rem;
     justify-content: space-between;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
+}
 
+.product-list li{
+    line-height: 1.75rem;
 }
 
 .product-features {
@@ -875,7 +879,6 @@ onUnmounted(() => {
 
 ::v-deep(.editor-class) {
     line-height: 2rem;
-    color: var(--text-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-0);
 }
 </style>
