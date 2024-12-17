@@ -13,7 +13,7 @@
                         New
                     </div>
                     <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
-                        All
+                        Seen
                     </div>
                 </div>
 
@@ -256,7 +256,7 @@ section {
 }
 
 .drop {
-    width: 300px;
+    width: 350px;
     word-break: break-all;
 }
 
