@@ -39,31 +39,68 @@
                 </template>
 
                 <template #header>
-                    {{ notificationList }}
+
                 </template>
 
 
-                <Column header="Image">
+                <Column header="Icon" style="max-width: 2rem">
                     <template #body="slotProps">
-                        x
+                        <div class="datatable-image">
+                            <OverlayBadge value="" severity="danger">
+                                <i class="pi pi-cart-plus" v-if="slotProps.data.type === 'order'" />
+                            </OverlayBadge>
+                        </div>
                     </template>
                 </Column>
 
-                <Column field="id" header="ID" sortable style="max-width: 8rem">
+                <Column field="type" header="Type" sortable style="max-width: 2rem; ">
                     <template #sorticon="{ sortOrder }">
                         <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                         <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
                         <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
                     </template>
                     <template #body="slotProps">
-                        {{ slotProps.data.id }}
+                        {{ slotProps.data.type }}
                     </template>
                 </Column>
 
-                <Column :exportable="false" style="min-width: 4rem">
+                <Column field="title" header="Title" sortable style="max-width: 4rem">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                    <template #body="slotProps">
+                        {{ slotProps.data.title }}
+                    </template>
+                </Column>
+
+                <Column field="message" header="Message" sortable style="max-width: 12rem; word-break: break-all;">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                    <template #body="slotProps">
+                        {{ slotProps.data.message }}
+                    </template>
+                </Column>
+
+                <Column field="created_at" header="Date" sortable style="max-width: 2rem">
+                    <template #body="slotProps">
+                        {{ convertDate(slotProps.data.created_at) }}
+                    </template>
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column :exportable="false" style="max-width: 2rem">
                     <template #body="slotProps">
                         <div class="datatable-control">
-                            <Button icon="pi pi-trash" outlined size="small" rounded
+                            <Button icon="pi pi-arrow-up-right" outlined size="small" rounded
                                 @click="beforeDeleteProduct(slotProps.data)" />
                         </div>
                     </template>
@@ -76,9 +113,14 @@
 
 <script setup>
 import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 import { useQuery } from '@vue/apollo-composable';
-import { ref, watch } from 'vue';
+import { onBeforeUnmount, ref, watch } from 'vue';
 import { FilterMatchMode } from '@primevue/core/api';
+import { useRouter } from 'vue-router';
+import { HOST } from '@/api';
+
+const router = useRouter();
 
 const filters = ref({
     'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -114,12 +156,21 @@ const { result: onGetNotification, onError: onGetNotificationsError } = useQuery
     queryOptions
 );
 
-watch(onGetNotification, value => {
-    notificationList.value = value.getNotifications;
-});
+const watchNotifications = watch(onGetNotification, value => {
+    notificationList.value = value?.getNotifications;
+}, { immediate: true });
 
-const onSelect = () => {
+const onSelect = (row) => {
+    console.log(row);
 
+    const notification = row.data;
+
+    if (notification.type === 'order') {
+        const { threadtoken } = JSON.parse(notification.data);
+
+        window.open(`${HOST}/order/${threadtoken}`, '_blank');
+
+    }
 }
 
 const notificationCount = ref(0);
@@ -128,6 +179,15 @@ const goBack = () => {
     router.go(-1)
 }
 
+const convertDate = (timestamp) => {
+    const date = dayjs(parseInt(timestamp));
+
+    return date.format('YYYY-MM-DD');
+}
+
+onBeforeUnmount(() => {
+    watchNotifications()
+})
 
 </script>
 
@@ -145,5 +205,28 @@ main {
     border-radius: 1rem;
     padding: 1.5rem;
     margin-top: 1rem;
+}
+
+.datatable-image {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--background-b);
+    border-radius: 8px;
+}
+
+.datatable-image i {
+    font-size: 20px;
+}
+
+.datatable-control {
+    display: flex;
+    justify-content: center;
+}
+
+.arrow {
+    font-size: 12px;
 }
 </style>
