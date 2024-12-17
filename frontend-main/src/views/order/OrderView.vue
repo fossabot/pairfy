@@ -1,35 +1,6 @@
 <template>
     <div class="wrap">
-        <Dialog v-model:visible="showSellerLogin" modal header="Sign In" :style="{ width: '25rem' }" :draggable="false">
-            <template #header>
-
-            </template>
-
-            <div class="dialog-sub">Buy units</div>
-
-            <div class="dialog-name">
-                Razer - Blade 16 - 16" Gaming Laptop -
-                OLED QHD + 240 Hz
-                - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
-            </div>
-
-            <div class="dialog-msg">
-                <Message size="small" severity="info">
-                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays.
-                </Message>
-            </div>
-
-            <div class="dialog-total">
-                Total ADA
-            </div>
-
-            <template #footer>
-                <Button label="Cancel" text severity="secondary" @click="showSellerLogin = false" autofocus />
-                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus />
-            </template>
-        </Dialog>
-
-
+        <SellerLogin />
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
@@ -258,6 +229,7 @@
 <script setup>
 import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
+import SellerLogin from "@/views/order/SellerLogin.vue";
 import gql from 'graphql-tag';
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
@@ -277,12 +249,6 @@ const route = useRoute();
 const router = useRouter();
 
 const currentNav = ref(0);
-
-const showSellerLogin = ref(false);
-
-const openSellerDialog = () => {
-    showSellerLogin.value = true;
-}
 
 const timeline = ref([
     {
@@ -382,10 +348,6 @@ watch(
 
         if (query.tx) {
             pendingTx.value = query.tx;
-        }
-
-        if (query.mode === 'seller') {
-            openSellerDialog()
         }
     },
     { immediate: true }
