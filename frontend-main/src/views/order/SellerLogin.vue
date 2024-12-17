@@ -100,7 +100,7 @@ const showSellerDialog = (e) => {
 }
 
 const watchCurrentSeller = watch(() => getCurrentSeller, (data) => {
-    if (data) {
+    if (data.value?.id) {
         showSellerDialog(false)
     }
 }, { immediate: true })

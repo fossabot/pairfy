@@ -151,7 +151,8 @@
                                         </template>
 
                                         <template v-if="item.template === 'received'">
-                                            <UserPad />
+                                            <UserPad v-if="getCurrentUser" />
+                                            <SellerPad v-if="getCurrentSeller" />
                                         </template>
                                     </div>
                                 </div>
@@ -227,10 +228,12 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
 import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
+import SellerPad from "@/views/order/SellerPad.vue";
 import SellerLogin from "@/views/order/SellerLogin.vue";
-import gql from 'graphql-tag';
+import headerAPI from "@/components/header/api";
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
@@ -240,7 +243,9 @@ import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
 
-const { copyToClipboard, formatCurrency, convertLovelaceToUSD, formatWithDots, convertLovelaceToADA, reduceByLength } = inject('utils');
+const { copyToClipboard, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
+
+const { getCurrentSeller, getCurrentUser } = headerAPI();  
 
 const { setOrderData } = orderAPI();
 
@@ -862,7 +867,7 @@ onUnmounted(() => {
     font-size: var(--text-size-1);
 }
 
-.product-list li{
+.product-list li {
     line-height: 1.75rem;
 }
 
