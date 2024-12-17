@@ -33,7 +33,6 @@
 }
 
 .p-dialog-header {
-  padding: 0.5rem 1rem !important;
   border-bottom: 1px solid var(--border-a);
 }
 
@@ -76,4 +75,8 @@
 
 .p-drawer-title{
   font-size: var(--text-size-c) !important;
+}
+
+.p-inputtext{
+  font-size: var(--text-size-1) !important;
 }

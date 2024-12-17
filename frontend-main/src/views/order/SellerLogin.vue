@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="sellerDialog" modal header="Login First" :style="{ width: '60vw', height: '90vh' }"
+    <Dialog v-model:visible="sellerDialog" modal header="Please Login" :style="{ width: '60vw', height: '90vh' }"
         :draggable="false">
         <template #header>
 
@@ -98,11 +98,21 @@ const sellerDialog = ref(false);
 const showSellerDialog = (e) => {
     sellerDialog.value = e;
 }
-watch(
+
+const watchCurrentSeller = watch(() => getCurrentSeller, (data) => {
+    if (data) {
+        showSellerDialog(false)
+    }
+}, { immediate: true })
+
+
+const watchCurrentRoute = watch(
     () => route,
     ({ params, query }) => {
         if (query.mode === 'seller') {
-            showSellerDialog(true)
+            if (!getCurrentSeller.value) {
+                showSellerDialog(true)
+            }
         }
 
         if (query.address) {
@@ -163,6 +173,7 @@ const doLogin = async () => {
         if (ok) {
             showSellerDialog(false)
             showSuccess("Seller Logged")
+            location.reload()
         } else {
             showError(response.errors.map(item => item.message))
         }
@@ -178,6 +189,8 @@ const showError = (content) => {
 };
 
 onBeforeUnmount(() => {
+    watchCurrentSeller()
+    watchCurrentRoute()
     clearInterval(watchEnabledWallet)
     window.removeEventListener("walletEnabledEvent", () => updateEnabledWallet());
     window.removeEventListener("storage", () => updateEnabledWallet());

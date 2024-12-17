@@ -41,11 +41,13 @@
 
   --p-badge-min-width: 1rem !important;
 
-  --p-badge-height:1rem !important;
+  --p-badge-height: 1rem !important;
 
   --p-overlaybadge-outline-width: 0px !important;
 
   --p-dialog-title-font-weight: 700 !important;
+
+  --p-dialog-header-padding: 0.5rem 1.5rem !important; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -94,7 +96,7 @@
 
   --red-a: #f43f5e;
   --green-a: #10b981;
-  --orange-a: #FF7733;
+  --orange-a: #ff7733;
 }
 
 *,
@@ -110,7 +112,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: text; 
+  user-select: text;
 }
 
 body {
@@ -130,5 +132,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-
