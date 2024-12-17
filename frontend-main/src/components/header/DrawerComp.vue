@@ -165,7 +165,7 @@ onBeforeUnmount(() => {
 
 .block-item span {
     margin-left: 1rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 500;
 }
 
@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
 }
 
 .user-row {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 600;
     word-break: break-all;
     margin: 1.5rem 0;
@@ -222,6 +222,6 @@ onBeforeUnmount(() => {
 .user-info span {
     margin-left: 1rem;
     font-weight: 500;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 </style>

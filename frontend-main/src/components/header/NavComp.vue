@@ -22,7 +22,7 @@
 
 .nav span {
     margin-right: 1.5rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     cursor: pointer;
     font-weight: 500;
 }

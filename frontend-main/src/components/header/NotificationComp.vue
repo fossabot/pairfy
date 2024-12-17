@@ -252,7 +252,7 @@ section {
 }
 
 .button i {
-    font-size: var(--text-size-c);
+    font-size: var(--text-size-3);
 }
 
 .drop {
@@ -290,7 +290,7 @@ section {
 .drop-title {
     font-weight: 700;
     text-align: start;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     cursor: pointer;
 }
 
@@ -302,7 +302,7 @@ section {
 .drop-message {
     text-align: left;
     margin-top: 0.25rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     cursor: pointer;
 }
 
@@ -318,7 +318,7 @@ section {
 
 .drop-pad span {
     background: var(--background-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
 }
@@ -329,7 +329,7 @@ section {
 
 .nav-item {
     padding: 0.5rem 1rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     border-bottom: 2px solid var(--border-a);
     cursor: pointer;
 }

@@ -84,7 +84,7 @@ header {
     align-items: center;
     width: 100%;
     border-bottom: 1px solid var(--border-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 section {
@@ -149,7 +149,7 @@ section {
     min-width: 120px;
     font-weight: 500;
     color: var(--text-w);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     cursor: pointer;
 }
 

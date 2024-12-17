@@ -43,7 +43,7 @@ const isFocus = ref(false);
     padding: 0.5rem 1rem;
     border: none;
     outline: none;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-family: inherit;
     background: inherit;
     font-weight: 500;
