@@ -44,6 +44,8 @@
   --p-badge-height:1rem !important;
 
   --p-overlaybadge-outline-width: 0px !important;
+
+  --p-dialog-title-font-weight: 700 !important;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -13,12 +13,12 @@
                         New
                     </div>
                     <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
-                        Seen
+                       All
                     </div>
                 </div>
 
                 <div class="drop" v-if="currentNav === 0">
-                    <div class="empty-legend" v-if="!unseen.length"> <span>No news</span></div>
+                    <div class="empty-legend" v-if="!unseen.length"> <span>No notifications</span></div>
                     <div class="drop-item" v-for="item in unseen" :key="item">
                         <OverlayBadge value="" severity="danger">
                             <div class="drop-image" @click="onHandleClick(item)">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="drop" v-if="currentNav === 1">
-                    <div class="empty-legend" v-if="!seen.length"> <span>No news</span></div>
+                    <div class="empty-legend" v-if="!seen.length"> <span>No notifications</span></div>
                     <div class="drop-item" v-for="item in seen" :key="item">
 
                         <OverlayBadge value="" severity="secondary">
@@ -242,7 +242,7 @@ function setupAudio() {
 
 <style lang="css" scoped>
 section {
-    min-height: 300px;
+   
 }
 
 .notification {
@@ -256,7 +256,7 @@ section {
 }
 
 .drop {
-    width: 350px;
+    width: 325px;
     word-break: break-all;
 }
 
