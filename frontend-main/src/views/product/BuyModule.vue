@@ -171,7 +171,7 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Transaction submitted");
+            showSuccess("Transaction submitted.");
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 

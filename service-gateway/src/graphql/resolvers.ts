@@ -2,6 +2,7 @@ import { database } from "../db/client.js";
 import { getBooks, updateBook } from "./books/index.js";
 import { createOrder } from "./orders/createOrder.js";
 import { getOrder } from "./orders/getOrder.js";
+import { lockingFunds } from "./orders/lockingFunds.js";
 import { returnFunds } from "./orders/returnFunds.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
@@ -61,7 +62,8 @@ const orders = {
   },
   Mutation: {
     createOrder,
-    returnFunds
+    returnFunds,
+    lockingFunds
   },
 };
 

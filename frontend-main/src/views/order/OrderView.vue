@@ -18,7 +18,7 @@
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
                     <div class="summary" v-if="orderData">
-                       
+
                         <div class="summary-title flex">
                             <div v-if="getCurrentUser">
                                 {{ summaryTitle.buyer }}
@@ -157,7 +157,7 @@
 
                                                 <div class="created-item">
                                                     <span>Collateral</span>
-                                                    <span>{{ contractPrice }} ADA</span>
+                                                    <span>{{ contractCollateral }} ADA</span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
@@ -405,6 +405,8 @@ const contractFiat = ref(0);
 
 const contractPrice = ref(0);
 
+const contractCollateral = ref(0);
+
 const isFinished = ref(false);
 
 watch(getOrderResult, value => {
@@ -422,6 +424,8 @@ watch(getOrderResult, value => {
         orderPayment.value = getPaymentStatus(order.pending_block)
 
         contractPrice.value = convertLovelaceToADA(order.contract_price);
+        
+        contractCollateral.value = convertLovelaceToADA(order.contract_collateral);
 
         pendingBlock.value = order.pending_block;
 

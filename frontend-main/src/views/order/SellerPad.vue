@@ -1,6 +1,6 @@
 <template>
     <div class="pad">
-        <Button size="small" :disabled="disableAccept">
+        <Button size="small" :disabled="disableAccept" @click="onLockingFunds">
             Accept Order
 
             <span v-if="pendingCountdown !== '00:00'">
@@ -43,13 +43,6 @@ const { mutate: returnFunds, loading: returnFundsLoading, onDone: onReturnFundsD
     clientId: 'gateway'
 })
 
-const onReturnFunds = () => {
-    returnFunds({
-        "returnFundsVariable": {
-            order_id: getOrderData.value.id
-        }
-    })
-}
 
 onReturnFundsDone(async result => {
     console.log(result.data);
@@ -79,9 +72,71 @@ onReturnFundsError(error => {
     showError(error)
 })
 
+const onReturnFunds = () => {
+    returnFunds({
+        "returnFundsVariable": {
+            order_id: getOrderData.value.id
+        }
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+const { mutate: lockingFunds, loading: lockingFundsLoading, onDone: onLockingFundsDone, onError: onLockingFundsError } = useMutation(gql`
+      mutation($lockingFundsVariable: LockingFundsInput!) {
+        lockingFunds(lockingFundsInput: $lockingFundsVariable) {
+          success
+          payload {
+            cbor
+          }
+        }
+      }
+`, {
+    clientId: 'gateway'
+})
+
+
+onLockingFundsDone(async result => {
+    console.log(result.data);
+
+    const response = result.data;
+
+    if (response.lockingFunds.success === true) {
+        try {
+            const { cbor } = response.lockingFunds.payload;
+
+            const txHash = await balanceTx(cbor);
+
+            showSuccess(`Transaction submitted with hash: ${txHash}`, 20000);
+
+            console.log(`Transaction submitted with hash: ${txHash}`);
+
+        } catch (err) {
+            console.error(err);
+
+            showError(err);
+        }
+    }
+
+})
+
+onLockingFundsError(error => {
+    showError(error)
+})
+
+const onLockingFunds = () => {
+    lockingFunds({
+        "lockingFundsVariable": {
+            order_id: getOrderData.value.id
+        }
+    })
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
 const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
-const disableAccept = computed(() => getOrderData.contract_state !== 0 || pendingCountdown.value === "00:00")
+const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value.contract_state !== 0)
 ///////////////////////////////////////////////////////////////////
 
 const pendingTimeLeft = ref(Date.now());

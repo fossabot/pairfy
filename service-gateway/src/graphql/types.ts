@@ -133,6 +133,11 @@ type ReturnFundsResponse {
   payload: CborPayload!
 }
 
+type LockingFundsResponse {
+  success: Boolean!
+  payload: CborPayload!
+}
+
 input CreateOrderInput {
   product_id: String!
   product_units: Int!
@@ -142,10 +147,15 @@ input ReturnFundsInput {
   order_id: String!
 } 
 
+input LockingFundsInput {
+  order_id: String!
+} 
+
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
   createOrder(createOrderInput: CreateOrderInput!): CreateOrderResponse!
   returnFunds(returnFundsInput: ReturnFundsInput!): ReturnFundsResponse!
+  lockingFunds(lockingFundsInput: LockingFundsInput!): LockingFundsResponse!
 }
 
 `;

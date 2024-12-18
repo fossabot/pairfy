@@ -181,11 +181,11 @@ function main() {
       SHIPPING_UNTIL * 60 * 1000);
 
   const externalWalletAddress =
-    "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
+    "addr_test1qp6xhlulkdnm7wa3kf07yj389weg34329jk34tfwx75pw0urvzxsjpchzgnhfmvz35ap356vg3a2c2af34zl4va7cfzqtyf6jn";
 
   const sellerPubKeyHash =
-    "659fa0cf862b8460989af5f1200118a910ca04ae31b65aaa767d2b65";
-    
+    "a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141";
+
   const contractPrice = 30 * 1_000_000;
 
   const contractCollateral = 10 * 1_000_000;

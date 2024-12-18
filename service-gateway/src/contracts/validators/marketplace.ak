@@ -99,16 +99,41 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
           }
           (StateMachineDatum{ state }, Locking) -> {
             
+            let must_be_state = state == 0
+
+            let must_be_time = when self.validity_range.lower_bound.bound_type is {
+              interval.Finite(tx_earliest_time) -> tx_earliest_time < pending_until 
+              _ -> False
+              }
+
             let must_be_signed = list.has(self.extra_signatories, seller)
 
-            let must_be_state = state == 0
+            //One of the transaction inputs belongs to the statemachine.
+            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
+
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
+
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
+
+            let must_be_value = assets.lovelace_of(sm_output.value) == price + collateral
             
-            let must_be_collateral = collateral == price //WARNING
+            //verification of the new datum.
+            let new_data: Data = StateMachineDatum {
+              state: 1,
+            }
+
+            //verification of the new datum.
+            let must_be_datum = InlineDatum(new_data) == sm_output.datum
 
             and{
-              must_be_signed?,
               must_be_state?,
-              must_be_collateral?
+              must_be_time?,
+              must_be_signed?,
+              must_be_policy?,
+              must_be_value?,
+              must_be_datum?
             }
           }
         }
@@ -116,7 +141,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
 }
 
 
-
+//////////////////////////////////////////////RETURN
 
 test statemachine_return() {
   let own_ref =
@@ -142,7 +167,7 @@ test statemachine_return() {
           stake_credential: None,
         },
         value: assets.add(
-          assets.from_lovelace(25_000_000),
+          assets.from_lovelace(50_000_000),
           threadtoken,
           token_name,
           1,
@@ -165,7 +190,7 @@ test statemachine_return() {
         stake_credential: None,
       },
       value: assets.add(
-        assets.from_lovelace(25_000_000),
+        assets.from_lovelace(50_000_000),
         threadtoken,
         token_name,
         1,
@@ -181,7 +206,6 @@ test statemachine_return() {
     state: 0,
   }
 
-
   let transaction =
     Transaction {
       inputs: [input_utxo],
@@ -193,6 +217,95 @@ test statemachine_return() {
       withdrawals: [],
       validity_range: interval.after(pending_until + 1),
       extra_signatories: [buyer_pubkeyhash],
+      redeemers: [],
+      datums: transaction.placeholder.datums,
+      id: transaction.placeholder.id,
+      votes: transaction.placeholder.votes,
+      proposal_procedures: transaction.placeholder.proposal_procedures,
+      current_treasury_amount: transaction.placeholder.current_treasury_amount,
+      treasury_donation: transaction.placeholder.treasury_donation
+    }
+
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, Some(old_datum), redeemer, own_ref, transaction)
+}
+
+//////////////////////////////////////////////LOCKING
+
+test statemachine_locking() {
+  let own_ref =
+    OutputReference {
+      transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
+      output_index: 0,
+    }
+  let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
+  let token_name = #"02"
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
+  let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
+  let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let pending_until = 3
+  let price = 50_000_000
+  let collateral = 25_000_000
+  
+  /////////////INPUT/////////////
+
+  let old_datum = StateMachineDatum {
+    state: 0,
+  }
+
+  let input_utxo =
+    Input {
+      output_reference: own_ref,
+      output: Output {
+        address: Address {
+          payment_credential: Script(own_script_hash),
+          stake_credential: None,
+        },
+        value: assets.add(
+          assets.from_lovelace(price),
+          threadtoken,
+          token_name,
+          1,
+        ),
+        datum: NoDatum,
+        reference_script: None,
+      },
+    }
+  /////////////INPUT/////////////  
+  let new_data: Data = StateMachineDatum {
+      state : 1
+  }  
+
+  let new_datum = InlineDatum(new_data)
+
+  let output =
+    Output {
+      address: Address {
+        payment_credential: Script(own_script_hash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(price + collateral),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: new_datum,
+      reference_script: None,
+    }
+
+  let redeemer = Locking      //StateMachineInput
+
+  let transaction =
+    Transaction {
+      inputs: [input_utxo],
+      reference_inputs: [],
+      outputs: [output],
+      fee: transaction.placeholder.fee,
+      mint: transaction.placeholder.mint,
+      certificates: [],
+      withdrawals: [],
+      validity_range: interval.after(pending_until - 1),
+      extra_signatories: [seller_pubkeyhash],
       redeemers: [],
       datums: transaction.placeholder.datums,
       id: transaction.placeholder.id,

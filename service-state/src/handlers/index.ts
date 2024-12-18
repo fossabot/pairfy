@@ -3,12 +3,20 @@ import { database } from "../db/client.js";
 import { getUtxo } from "../lib/index.js";
 import { handlePending } from "./pending.js";
 import { handleReturn } from "./return.js";
+import { handleLocking } from "./locking.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
 
   try {
-    const { threadtoken, watch_until, seller_id, buyer_pubkeyhash, buyer_address, seller_address } = job.data;
+    const {
+      threadtoken,
+      watch_until,
+      seller_id,
+      buyer_pubkeyhash,
+      buyer_address,
+      seller_address,
+    } = job.data;
 
     const { code, utxo } = await getUtxo(threadtoken);
 
@@ -49,6 +57,18 @@ async function scanThreadToken(job: any) {
           break;
         case -1n:
           await handleReturn(
+            connection,
+            threadtoken,
+            timestamp,
+            utxo,
+            seller_id,
+            buyer_pubkeyhash,
+            buyer_address,
+            seller_address
+          );
+          break;
+        case 1n:
+          await handleLocking(
             connection,
             threadtoken,
             timestamp,

@@ -32,6 +32,8 @@ create table if not exists orders(
   pending_block varchar(200) default null,
   return_tx varchar(200) default null,
   return_block varchar(200) default null,
+  locking_tx varchar(200) default null,
+  locking_block varchar(200) default null,
   updated_at timestamp default current_timestamp,
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,
