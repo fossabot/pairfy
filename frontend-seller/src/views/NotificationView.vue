@@ -38,10 +38,6 @@
                     </div>
                 </template>
 
-                <template #header>
-
-                </template>
-
 
                 <Column header="Icon" style="max-width: 2rem">
                     <template #body="slotProps">
@@ -203,8 +199,8 @@ main {
     flex-direction: column;
     border: 1px solid var(--border-a);
     border-radius: 1rem;
-    padding: 1.5rem;
     margin-top: 1rem;
+    overflow: hidden;
 }
 
 .datatable-image {
