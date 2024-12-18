@@ -100,10 +100,11 @@ section {
     cursor: pointer;
     min-height: 20px;
     width: 79px;
-    background-image: url('../../assets/logo-white.png');
+    background-image: url('../../assets/logo-white-p.png');  
     background-repeat: repeat-x;
     background-position: 0px 0px;
-
+    width: 63px;
+    min-height: 24px;
 }
 
 .header,

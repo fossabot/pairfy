@@ -8,7 +8,7 @@
             </span>
         </Button>
 
-        <Button type="button" size="small" :disabled="disableReturn" @click="onReturnFunds" variant="text">
+        <Button type="button" size="small" :disabled="disableDispatched" @click="onReturnFunds" variant="text">
             <span>Dispatched</span>
         </Button>
 
@@ -79,7 +79,7 @@ onReturnFundsError(error => {
     showError(error)
 })
 
-const disableReturn = computed(() => pendingCountdown.value !== "00:00");
+const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
 ///////////////////////////////////////////////////////////////////
 
