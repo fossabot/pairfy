@@ -18,6 +18,7 @@
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
                     <div class="summary" v-if="orderData">
+                       
                         <div class="summary-title flex">
                             <div v-if="getCurrentUser">
                                 {{ summaryTitle.buyer }}
@@ -26,6 +27,7 @@
                                 {{ summaryTitle.seller }}
                             </div>
                             <span>{{ globalCountdown }}</span>
+                            <FinishedICon />
                         </div>
                         <div class="summary-subtitle flex">
                             Order number
@@ -101,7 +103,8 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span :class="{ returned: statusLog === 'returned' }">{{ statusLog }}</span>
+                                                    <span :class="{ returned: statusLog === 'returned' }">{{ statusLog
+                                                        }}</span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Fiat Amount</span>
@@ -246,6 +249,7 @@ import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
 import SellerPad from "@/views/order/SellerPad.vue";
 import SellerLogin from "@/views/order/SellerLogin.vue";
+import FinishedICon from "@/views/order/FinishedIcon.vue";
 import headerAPI from "@/components/header/api";
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
@@ -621,6 +625,7 @@ onUnmounted(() => {
     font-size: var(--text-size-3);
     font-weight: 600;
     line-height: 3rem;
+    position: relative;
 }
 
 .summary-title span {

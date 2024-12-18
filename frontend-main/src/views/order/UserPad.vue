@@ -1,6 +1,6 @@
 <template>
     <div class="pad">
-        <Button size="small">
+        <Button size="small" :disabled="disableReceived">
             Product Received
         </Button>
 
@@ -80,7 +80,9 @@ onReturnFundsError(error => {
     showError(error)
 })
 
-const disableReturn = computed(() => pendingCountdown.value !== "00:00");
+const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value.finished);
+
+const disableReceived = computed(() => getOrderData.value.finished || getOrderData.value.contract_state !== 2);
 
 ///////////////////////////////////////////////////////////////////
 

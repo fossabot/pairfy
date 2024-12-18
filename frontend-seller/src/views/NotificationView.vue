@@ -64,7 +64,7 @@
                     </template>
                 </Column>
 
-                <Column field="title" header="Title" sortable style="max-width: 4rem">
+                <Column field="title" header="Title" sortable style="max-width: 2rem">
                     <template #sorticon="{ sortOrder }">
                         <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                         <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -75,7 +75,7 @@
                     </template>
                 </Column>
 
-                <Column field="message" header="Message" sortable style="max-width: 12rem; word-break: break-all;">
+                <Column field="message" header="Message" sortable style="max-width: 8rem; word-break: break-all;">
                     <template #sorticon="{ sortOrder }">
                         <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                         <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -182,7 +182,7 @@ const goBack = () => {
 const convertDate = (timestamp) => {
     const date = dayjs(parseInt(timestamp));
 
-    return date.format('YYYY-MM-DD');
+    return date.format('YYYY-MM-DD:mm:ss');
 }
 
 onBeforeUnmount(() => {

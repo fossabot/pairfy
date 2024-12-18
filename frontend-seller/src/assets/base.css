@@ -59,6 +59,11 @@
   --text-size-g: 2.488rem;
   --text-size-h: 2.986rem;
 
+  --text-size-0: 12px;
+  --text-size-1: 14px;
+  --text-size-2: 16px;
+  --text-size-3: 20px;
+
   --border-a: #e2e8f0;
 }
 
@@ -96,7 +101,7 @@ body {
   font-variation-settings:
     "wdth" 100;
   font-style: normal;
-  font-size: var(--text-size-b);
+  font-size: var(--text-size-1); 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
