@@ -14,7 +14,7 @@ import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
 import { queryClient, gatewayClient, notificationClient } from './graphql/index';
-import { provide } from 'vue';
+import { onBeforeUnmount, provide } from 'vue';
 
 
 
@@ -39,7 +39,7 @@ provide('utils', {
 
 const { currentUser, currentSeller } = headerAPI();
 
-const { startWalletService } = walletClient();
+const { startWalletService, stopWalletService } = walletClient();
 
 currentUser()
   .then(() => console.info("USER_LOGGED"))
@@ -52,6 +52,10 @@ currentSeller()
 startWalletService()
   .then(() => console.info("WALLET_SERVICE"))
   .catch((err) => console.error(err));
+
+  onBeforeUnmount(()=>{
+    stopWalletService()
+  })
 </script>
 
 

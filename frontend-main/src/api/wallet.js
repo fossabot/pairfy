@@ -96,6 +96,7 @@ const signMessage = async (mode) => {
 
 /** Starts the service that allows listening to global events when a wallet is connected. */
 const startWalletService = async () => {
+  
   Wallet.startInjectWalletListener()
 
   Wallet.addEventListener('enabledWallet', async (walletName) => {
