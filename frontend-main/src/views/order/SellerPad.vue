@@ -1,6 +1,6 @@
 <template>
     <div class="pad">
-        <Button size="small" :disabled="getOrderData.contract_state !== 0">
+        <Button size="small" :disabled="disableAccept">
             Accept Order
 
             <span v-if="pendingCountdown !== '00:00'">
@@ -81,6 +81,7 @@ onReturnFundsError(error => {
 
 const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
+const disableAccept = computed(() => getOrderData.contract_state !== 0 || pendingCountdown.value === "00:00")
 ///////////////////////////////////////////////////////////////////
 
 const pendingTimeLeft = ref(Date.now());
