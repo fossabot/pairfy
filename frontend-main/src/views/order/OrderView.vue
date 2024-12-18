@@ -269,7 +269,7 @@ const router = useRouter();
 const currentNav = ref(0);
 
 const summaryTitle = ref({
-    buyer: "a",
+    buyer: "Preparing your product, Time Remaining ",
     seller: "Prepare the product, Time Remaining "
 })
 
@@ -278,7 +278,7 @@ const timeline = ref([
         number: 1,
         title: "Order Created",
         subtitle: {
-            buyer: "a",
+            buyer: "",
             seller: `Please verify the payment and click the "Accept Order" button.`
         },
         completed: true,
@@ -300,10 +300,10 @@ const timeline = ref([
     },
     {
         number: 3,
-        title: "Received",
+        title: "Finished",
         subtitle: {
             buyer: "Please confirm that the exact product was delivered.",
-            seller: ""
+            seller: "Accept the order or dispatch the product."
         },
         completed: false,
         type: "button",
