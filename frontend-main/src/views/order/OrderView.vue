@@ -67,7 +67,7 @@
                                                 </span>
                                             </template>
                                             <template v-if="item.template === 'received'">
-                                                <span v-if="!shippingBlock">{{ item.number }}</span>
+                                                <span v-if="!isFinished">{{ item.number }}</span>
                                                 <span v-else>
                                                     <i class="pi pi-check" />
                                                 </span>
@@ -101,7 +101,7 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span>{{ statusLog }}</span>
+                                                    <span :class="{ returned: statusLog === 'returned' }">{{ statusLog }}</span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Fiat Amount</span>
@@ -401,6 +401,8 @@ const contractFiat = ref(0);
 
 const contractPrice = ref(0);
 
+const isFinished = ref(false);
+
 watch(getOrderResult, value => {
     if (value) {
         const order = value.getOrder;
@@ -408,6 +410,8 @@ watch(getOrderResult, value => {
         orderData.value = order;
 
         setOrderData(order);
+
+        isFinished.value = order.finished;
 
         statusLog.value = order.status_log;
 
@@ -765,6 +769,10 @@ onUnmounted(() => {
 
 .created-item span:nth-child(1) {
     color: var(--text-b);
+}
+
+.returned {
+    color: var(--red-a);
 }
 
 .payment {

@@ -1,10 +1,10 @@
 <template>
     <div class="pad">
-        <Button size="small">
+        <Button size="small" :disabled="getOrderData.contract_state !== 0">
             Accept Order
 
             <span v-if="pendingCountdown !== '00:00'">
-                {{ pendingCountdown }} 
+                {{ pendingCountdown }}
             </span>
         </Button>
 
