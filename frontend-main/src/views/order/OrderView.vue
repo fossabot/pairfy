@@ -18,8 +18,13 @@
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
                     <div class="summary" v-if="orderData">
-                        <div class="summary-title">
-                            Preparing Your Product, Time Remaining
+                        <div class="summary-title flex">
+                            <div v-if="getCurrentUser">
+                                {{ summaryTitle.buyer }}
+                            </div>
+                            <div v-if="getCurrentSeller">
+                                {{ summaryTitle.seller }}
+                            </div>
                             <span>{{ globalCountdown }}</span>
                         </div>
                         <div class="summary-subtitle flex">
@@ -77,8 +82,16 @@
                                         {{ item.title }}
                                     </div>
 
-                                    <div v-if="item.subtitle.length" class="timeline-subtitle flex">
-                                        {{ item.subtitle }}
+                                    <div v-if="item.subtitle" class="timeline-subtitle flex">
+
+                                        <span v-if="getCurrentUser">
+                                            {{ item.subtitle.buyer }}
+                                        </span>
+
+                                        <span v-if="getCurrentSeller">
+                                            {{ item.subtitle.seller }}
+                                        </span>
+
                                     </div>
 
                                     <div class="timeline-content"
@@ -245,7 +258,7 @@ import { NETWORK } from '@/api';
 
 const { copyToClipboard, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
 
-const { getCurrentSeller, getCurrentUser } = headerAPI();  
+const { getCurrentSeller, getCurrentUser } = headerAPI();
 
 const { setOrderData } = orderAPI();
 
@@ -255,11 +268,19 @@ const router = useRouter();
 
 const currentNav = ref(0);
 
+const summaryTitle = ref({
+    buyer: "a",
+    seller: "Prepare the product, Time Remaining "
+})
+
 const timeline = ref([
     {
         number: 1,
         title: "Order Created",
-        subtitle: "",
+        subtitle: {
+            buyer: "a",
+            seller: `Please verify the payment and click the "Accept Order" button.`
+        },
         completed: true,
         type: "box",
         template: "created",
@@ -268,7 +289,10 @@ const timeline = ref([
     {
         number: 2,
         title: "Preparation",
-        subtitle: "The seller has been notified to prepare your product.",
+        subtitle: {
+            buyer: "The seller has been notified to prepare your product.",
+            seller: `Dispatch the package and press the "Dispatched" button.`
+        },
         completed: false,
         type: "box",
         template: "preparation",
@@ -277,7 +301,10 @@ const timeline = ref([
     {
         number: 3,
         title: "Received",
-        subtitle: "Please confirm that the exact product was delivered.",
+        subtitle: {
+            buyer: "Please confirm that the exact product was delivered.",
+            seller: ""
+        },
         completed: false,
         type: "button",
         template: "received",
@@ -595,6 +622,7 @@ onUnmounted(() => {
 .summary-title span {
     color: var(--primary-c);
     font-weight: 700;
+    margin-left: 0.5rem
 }
 
 .summary-subtitle {

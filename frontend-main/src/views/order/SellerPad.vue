@@ -1,7 +1,7 @@
 <template>
     <div class="pad">
         <Button size="small">
-            Accept 
+            Accept Order
 
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }} 
@@ -9,10 +9,7 @@
         </Button>
 
         <Button type="button" size="small" :disabled="disableReturn" @click="onReturnFunds" variant="text">
-
-            <span>Return Funds</span>
-
-
+            <span>Dispatched</span>
         </Button>
 
         <Button type="button" size="small" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
