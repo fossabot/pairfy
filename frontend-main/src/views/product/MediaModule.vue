@@ -9,7 +9,7 @@
             </div>
             <div class="media-nav">
                 <div class="media-item" :class="{ selected: selectedImageIndex === index }"
-                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)">
+                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)" @mouseover="selectImage(index)">
                     <img :src="item" alt="item">
                 </div>
             </div>
@@ -56,6 +56,7 @@ section {
 
 .media-nav {
     display: flex;
+    margin-top: 2rem;
 }
 
 .media-image {
@@ -70,8 +71,8 @@ section {
 .media-item {
     border: 1px solid var(--border-a);
     border-radius: 8px;
-    width: 56px;
-    height: 56px;
+    width: 80px;
+    height: 80px;
     margin-right: 1rem;
     overflow: hidden;
     cursor: pointer;
@@ -85,8 +86,8 @@ section {
 }
 
 .media-item img {
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
 }
 
