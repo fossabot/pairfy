@@ -8,15 +8,30 @@
 
             <div class="dialog-sub">Buy ({{ selectedQuantity }}) units</div>
 
+            <div class="dialog-values">
+                Total Fiat = {{ computedTotalFiat }} USD
+            </div>
+
+
+            <div class="dialog-values">
+                ADA Price = {{ getADAprice }} USD
+            </div>
+
+
+            <div class="dialog-values">
+                Total ADA = {{ computedTotalPrice }} ADA
+            </div>
+
+
             <div class="dialog-msg">
                 <Message size="small" severity="info" icon="pi pi-info-circle">
-                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays.
+                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays
+                    preparing your
+                    order.
                 </Message>
             </div>
 
-            <div class="dialog-total">
-                Total {{ computedTotalPrice }} ADA
-            </div>
+
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
@@ -113,12 +128,27 @@ const computedTotalPrice = computed(() => {
 
         let price = convertUSDToADA(discounted, getADAprice.value);
 
-        return price * selectedQuantity.value
+        return Math.round(price * selectedQuantity.value)
     }
 
     return 0;
 })
 
+const computedTotalFiat = computed(() => {
+    let product = getProductData.value;
+
+    if (product) {
+        let discounted = applyDiscount(product.discount,
+            product.price,
+            product.discount_value
+        );
+
+
+        return Math.round(discounted * selectedQuantity.value)
+    }
+
+    return 0;
+})
 
 const productRating = ref(4);
 
@@ -252,10 +282,9 @@ const onConfirmedBuy = () => {
 
 }
 
-.dialog-total {
+.dialog-values {
     margin-top: 1rem;
     font-weight: 600;
     font-size: var(--text-size-2);
 }
-
 </style>
