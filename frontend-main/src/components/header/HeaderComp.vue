@@ -83,7 +83,7 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid var(--border-a);
+    border-bottom: 1px solid var(--border-b);
     font-size: var(--text-size-1);
 }
 

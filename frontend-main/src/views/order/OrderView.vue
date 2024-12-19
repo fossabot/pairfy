@@ -4,7 +4,7 @@
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
-                    <span>Summary</span>
+                    <span>Information</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
@@ -53,7 +53,7 @@
                                 <i class="pi pi-copy" />
                             </button>
                         </div>
-                        <Divider />
+                        <Divider class="divider" :unstyled="true" />
                         <div class="timeline">
                             <div class="timeline-item" v-for="item in timeline" :key="item">
                                 <div class="timeline-bar">
@@ -595,9 +595,18 @@ onUnmounted(() => {
 </script>
 
 <style lang="css" scoped>
+.divider {
+    border-color: var(--border-b);
+    background: var(--border-b);
+    margin: 1rem 0; 
+    height: 1px;
+}
+
 .wrap {
     display: flex;
     justify-content: center;
+    background: var(--background-c);
+    color: var(--text-w);
 }
 
 .container {
@@ -607,7 +616,7 @@ onUnmounted(() => {
 }
 
 .nav {
-    border-bottom: 1px solid var(--border-a);
+    border-bottom: 1px solid var(--border-b);
     margin-top: 2rem;
 }
 
@@ -623,7 +632,7 @@ onUnmounted(() => {
 }
 
 .nav-item.selected {
-    color: var(--text-a);
+    color: var(--text-w);
     font-weight: 600;
 }
 
@@ -641,7 +650,7 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border.selected {
-    background: var(--primary-c);
+    background: var(--primary-b);
 }
 
 .grid {
@@ -664,7 +673,7 @@ onUnmounted(() => {
 }
 
 .summary-title span {
-    color: var(--primary-c);
+    color: var(--primary-b);
     font-weight: 700;
     margin-left: 0.5rem
 }
@@ -676,7 +685,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle span {
-    color: var(--text-a);
+    color: var(--text-w);
     margin-left: 0.5rem;
 }
 
@@ -688,6 +697,7 @@ onUnmounted(() => {
 
 .summary-subtitle button i {
     font-size: var(--text-size-1);
+    color: var(--text-w);
 }
 
 .copy-button:hover {
@@ -697,7 +707,7 @@ onUnmounted(() => {
 .chat {
     width: 100%;
     height: 700px;
-    background: var(--background-b);
+    background: var(--background-c);
 }
 
 
@@ -747,7 +757,7 @@ onUnmounted(() => {
 .timeline-title {
     min-height: 44px;
     font-weight: 600;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
 }
 
 .timeline-subtitle {
@@ -756,7 +766,7 @@ onUnmounted(() => {
 }
 
 .timeline-content {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     border-radius: 12px;
     height: 100%;
     width: inherit;
@@ -782,6 +792,7 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
+    color: var(--text-a);
 }
 
 .diamond span i {
@@ -816,17 +827,18 @@ onUnmounted(() => {
 }
 
 .payment {
-    background: var(--background-b);
+    background: inherit;
     border-radius: 20px;
     padding-right: 1rem;
     overflow: hidden;
     cursor: pointer;
+    border: 1px solid var(--border-b);
 }
 
 .payment-label {
     font-size: var(--text-size-1);
     font-weight: 600;
-    border-right: 1px solid var(--border-a);
+    border-right: 1px solid var(--border-b);
     padding: 0 1rem;
     margin-right: 0.75rem;
 }
@@ -890,7 +902,7 @@ onUnmounted(() => {
 }
 
 .product-header {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     padding: 1rem;
     border-radius: 12px;
     margin-top: 1rem;
@@ -901,7 +913,7 @@ onUnmounted(() => {
     width: 100px;
     height: 100px;
     padding: 0.5rem;
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     border-radius: 12px;
     display: flex;
     object-fit: contain;
@@ -928,7 +940,7 @@ onUnmounted(() => {
 }
 
 .product-card {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     border-radius: 12px;
     padding: 1rem;
     width: 100%;
@@ -937,7 +949,7 @@ onUnmounted(() => {
 }
 
 .product-list {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     padding: 1.5rem;
     margin-top: 1rem;
     border-radius: 12px;
@@ -954,7 +966,7 @@ onUnmounted(() => {
 }
 
 .product-features {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     margin-top: 1rem;
     border-radius: 12px;
     padding: 1.5rem;
