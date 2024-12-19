@@ -48,6 +48,12 @@
   --p-dialog-title-font-weight: 700 !important;
 
   --p-dialog-header-padding: 0.5rem 1.5rem !important; 
+
+  --p-dialog-content-padding: 1rem 1.5rem !important;
+
+  --p-dialog-footer-padding: 1rem 1.5rem !important;
+
+  --p-divider-horizontal-margin: 1rem 0 !important;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -11,6 +11,10 @@
                     <span>Product</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 1 }" />
                 </div>
+                <div class="nav-item" :class="{ selected: currentNav === 2 }" @click="currentNav = 2">
+                    <span>Txs</span>
+                    <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
+                </div>
             </div>
             <div class="grid">
                 <!--SUMMARY-->
@@ -62,7 +66,7 @@
                                                     <i class="pi pi-check" />
                                                 </span>
                                             </template>
-                                            <template v-if="item.template === 'preparation'">
+                                            <template v-if="item.template === 'shipping'">
                                                 <span v-if="!lockingBlock">{{ item.number }}</span>
                                                 <span v-else>
                                                     <i class="pi pi-check" />
@@ -115,6 +119,10 @@
                                                     <span>{{ contractPrice }} ADA</span>
                                                 </div>
                                                 <div class="created-item">
+                                                    <span>ADA Price</span>
+                                                    <span>{{ orderData.ada_price }} ADA</span>
+                                                </div>
+                                                <div class="created-item">
                                                     <span>Quantity</span>
                                                     <span>{{ orderData.contract_units }}</span>
                                                 </div>
@@ -148,11 +156,11 @@
                                         </template>
 
 
-                                        <template v-if="item.template === 'preparation'">
+                                        <template v-if="item.template === 'shipping'">
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span></span>
+                                                    <span>{{ shippingStatus }}</span>
                                                 </div>
 
                                                 <div class="created-item">
@@ -161,7 +169,7 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span></span>
+                                                    <span>{{ trackingGuide }}</span>
                                                 </div>
                                             </div>
                                         </template>
@@ -282,7 +290,7 @@ const timeline = ref([
         number: 1,
         title: "Order Created",
         subtitle: {
-            buyer: "",
+            buyer: "The seller has been notified to prepare your package.",
             seller: `Please verify the payment and click the "Accept Order" button.`
         },
         completed: true,
@@ -292,14 +300,14 @@ const timeline = ref([
     },
     {
         number: 2,
-        title: "Preparation",
+        title: "Shipping",
         subtitle: {
-            buyer: "The seller has been notified to prepare your product.",
+            buyer: "Use the tracking number to check your shipment.",
             seller: `Dispatch the package and press the "Dispatched" button.`
         },
         completed: false,
         type: "box",
-        template: "preparation",
+        template: "shipping",
         line: true
     },
     {
@@ -409,6 +417,17 @@ const contractCollateral = ref(0);
 
 const isFinished = ref(false);
 
+const shippingStatus = computed(() => {
+    const state = orderData.value?.contract_state;
+    
+    if (state === 0) {
+        return "Pending"
+    }
+    return "-"
+});
+
+const trackingGuide = ref("-");
+
 watch(getOrderResult, value => {
     if (value) {
         const order = value.getOrder;
@@ -424,7 +443,7 @@ watch(getOrderResult, value => {
         orderPayment.value = getPaymentStatus(order.pending_block)
 
         contractPrice.value = convertLovelaceToADA(order.contract_price);
-        
+
         contractCollateral.value = convertLovelaceToADA(order.contract_collateral);
 
         pendingBlock.value = order.pending_block;

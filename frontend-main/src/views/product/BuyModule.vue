@@ -6,16 +6,10 @@
 
             </template>
 
-            <div class="dialog-sub">Buy {{ selectedQuantity.code }} units</div>
-
-            <div class="dialog-name">
-                Razer - Blade 16 - 16" Gaming Laptop -
-                OLED QHD + 240 Hz
-                - Intel i9 -14900HX - NVIDIA GeForce RTX 4080 - 32 GB RAM - 1 TB SSD - Black
-            </div>
+            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
 
             <div class="dialog-msg">
-                <Message size="small" severity="info">
+                <Message size="small" severity="info" icon="pi pi-info-circle">
                     The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays.
                 </Message>
             </div>
@@ -253,9 +247,6 @@ const onConfirmedBuy = () => {
     color: var(--red-a);
 }
 
-.dialog-name {
-    margin-top: 1rem;
-}
 
 .dialog-msg {
     margin-top: 1rem;

@@ -222,7 +222,7 @@ function setupAudio() {
 
     audio.value.load();
 
-    audio.value.volume = 0.1;
+    audio.value.volume = 0.4;
 
     const playNotification = () => {
         audio.value
