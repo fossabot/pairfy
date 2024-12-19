@@ -63,7 +63,7 @@ onReturnFundsDone(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`, 60000);
+            showSuccess(`Transaction submitted with hash: ${txHash}`, 120000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
