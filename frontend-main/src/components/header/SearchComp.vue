@@ -40,7 +40,7 @@ const isFocus = ref(false);
 
 .search-input {
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
     border: none;
     outline: none;
     font-size: var(--text-size-1);
@@ -51,7 +51,7 @@ const isFocus = ref(false);
 
 .search-button {
     padding: 0 0.75rem;
-    height: 36px;
+    height: 43px;
     border: none;
     background: var(--primary-b);
     border-radius: 0 4px 4px 0;
