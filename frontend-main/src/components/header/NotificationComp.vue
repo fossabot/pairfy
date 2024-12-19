@@ -22,7 +22,7 @@
                     <div class="drop-item" v-for="item in unseen" :key="item">
                         <OverlayBadge value="" severity="danger">
                             <div class="drop-image" @click="onHandleClick(item)">
-                                <i class="pi pi-shopping-cart" />
+                                <i class="pi pi-bell" />
                             </div>
                         </OverlayBadge>
                         <div class="drop-box">
@@ -252,7 +252,7 @@ function setupAudio() {
 }
 
 .drop {
-    width: 325px;
+    width: 350px;
     word-break: break-all;
 }
 
@@ -264,8 +264,8 @@ function setupAudio() {
 }
 
 .drop-image {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: var(--background-b);
     display: flex;
     justify-content: center;
