@@ -100,7 +100,7 @@ section {
     cursor: pointer;
     min-height: 20px;
     width: 79px;
-    background-image: url('../../assets/logo-white.png');  
+    background-image: url('../../assets/logo-white.png');
     background-repeat: repeat-x;
     background-position: 0px 0px;
     width: 200px;
@@ -133,6 +133,8 @@ section {
 
 .menu {
     color: var(--text-w);
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 
 .menu-col.right {
