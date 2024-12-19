@@ -3,15 +3,15 @@
         <Skeleton v-if="!getProductData" width="100%" height="100%" />
 
         <section v-if="getProductData">
+            <div class="media-image">
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="375" previewIcon="pi-search" 
+                    preview />
+            </div>
             <div class="media-nav">
                 <div class="media-item" :class="{ selected: selectedImageIndex === index }"
                     v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)">
                     <img :src="item" alt="item">
                 </div>
-            </div>
-            <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="375" previewIcon="pi-search" 
-                    preview />
             </div>
         </section>
 
@@ -51,11 +51,11 @@ const selectImage = (index) => {
 <style lang="css" scoped>
 section {
     display: flex;
+    flex-direction: column;
 }
 
 .media-nav {
     display: flex;
-    flex-direction: column;
 }
 
 .media-image {
@@ -63,6 +63,8 @@ section {
     display: flex;
     align-items: center;
     width: 100%;
+    min-height: 375px;
+    max-height: 375px;
 }
 
 .media-item {
@@ -70,7 +72,7 @@ section {
     border-radius: 8px;
     width: 56px;
     height: 56px;
-    margin-bottom: 1rem;
+    margin-right: 1rem;
     overflow: hidden;
     cursor: pointer;
     display: flex;

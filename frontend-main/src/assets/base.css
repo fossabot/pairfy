@@ -47,7 +47,7 @@
 
   --p-dialog-title-font-weight: 700 !important;
 
-  --p-dialog-header-padding: 0.5rem 1.5rem !important; 
+  --p-dialog-header-padding: 0.5rem 1.5rem !important;
 
   --p-dialog-content-padding: 1rem 1.5rem !important;
 
@@ -78,6 +78,8 @@
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;
+  
+  --black-a: #181a20;
 
   --text-a: #0f1111;
   --text-b: #64748b;

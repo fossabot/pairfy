@@ -6,7 +6,7 @@
 
             </template>
 
-            <div class="dialog-sub">Buy ({{ selectedQuantity.code }}) units</div>
+            <div class="dialog-sub">Buy ({{ selectedQuantity }}) units</div>
 
             <div class="dialog-msg">
                 <Message size="small" severity="info" icon="pi pi-info-circle">
@@ -55,10 +55,18 @@
             </div>
 
             <div class="buy-control">
-                <Select v-model="selectedQuantity" :options="quantityOptions" optionLabel="name" placeholder="Units"
-                    variant="filled" size="small" />
+                <InputNumber v-model="selectedQuantity" inputId="horizontal-buttons" showButtons
+                    buttonLayout="horizontal" :step="1" fluid :format="false" :min="1" :max="10">
+                    <template #incrementbuttonicon>
+                        <span class="pi pi-plus" />
+                    </template>
+                    <template #decrementbuttonicon>
+                        <span class="pi pi-minus" />
+                    </template>
+                </InputNumber>
+
                 <Button label="Buy Now" fluid @click="openBuyDialog()" />
-                <Button label="Add to Cart" fluid outlined />
+                <Button label="Add To Cart" fluid outlined />
             </div>
         </div>
     </div>
@@ -92,7 +100,7 @@ const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
 
-const selectedQuantity = ref({ name: '1', code: 1 });
+const selectedQuantity = ref(1);
 
 const computedTotalPrice = computed(() => {
     let product = getProductData.value;
@@ -105,24 +113,12 @@ const computedTotalPrice = computed(() => {
 
         let price = convertUSDToADA(discounted, getADAprice.value);
 
-        return price * selectedQuantity.value.code
+        return price * selectedQuantity.value
     }
 
     return 0;
 })
 
-const quantityOptions = ref([
-    { name: '1', code: 1 },
-    { name: '2', code: 2 },
-    { name: '3', code: 3 },
-    { name: '4', code: 4 },
-    { name: '5', code: 5 },
-    { name: '6', code: 6 },
-    { name: '7', code: 7 },
-    { name: '8', code: 8 },
-    { name: '9', code: 9 },
-    { name: '10', code: 10 }
-]);
 
 const productRating = ref(4);
 
@@ -194,14 +190,13 @@ const onConfirmedBuy = () => {
     sendMessage({
         "createOrderVariable": {
             "product_id": getProductData.value.id,
-            "product_units": selectedQuantity.value.code,
+            "product_units": selectedQuantity.value,
         }
     })
 }
 </script>
 
 <style lang="css" scoped>
-
 .buy {
     border: 1px solid var(--border-a);
     min-height: 100px;
@@ -241,6 +236,7 @@ const onConfirmedBuy = () => {
 .buy-stock {
     font-weight: 600;
     margin-top: 1rem;
+    color: var(--green-a);
 }
 
 .buy-stock.red {

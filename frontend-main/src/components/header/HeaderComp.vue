@@ -77,7 +77,7 @@ onGetAssetPriceError(error => {
 
 <style scoped>
 header {
-    background: linear-gradient(92.41deg, var(--primary-a), var(--primary-c));
+    background: var(--black-a);
     display: flex;
     flex-direction: column;
     justify-content: center;
