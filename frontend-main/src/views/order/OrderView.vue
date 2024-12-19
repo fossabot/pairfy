@@ -24,13 +24,20 @@
                     <div class="summary" v-if="orderData">
 
                         <div class="summary-title flex">
-                            <div v-if="getCurrentUser">
-                                {{ summaryTitle.buyer }}
+                            <template v-if="!isFinished">
+                                <div v-if="getCurrentUser">
+                                    {{ summaryTitle.buyer }}
+                                </div>
+                                <div v-if="getCurrentSeller">
+                                    {{ summaryTitle.seller }}
+                                </div>
+                                <span>{{ globalCountdown }}</span>
+                            </template>
+
+                            <div v-if="isFinished">
+                                {{ summaryTitle.finished }}
                             </div>
-                            <div v-if="getCurrentSeller">
-                                {{ summaryTitle.seller }}
-                            </div>
-                            <span>{{ globalCountdown }}</span>
+
                             <FinishedICon />
                         </div>
                         <div class="summary-subtitle flex">
@@ -282,7 +289,9 @@ const currentNav = ref(0);
 
 const summaryTitle = ref({
     buyer: "Preparing your product, Time Remaining ",
-    seller: "Prepare the product, Time Remaining "
+    seller: "Prepare the product, Time Remaining ",
+    finished: "Order Finished",
+    completed: "Order Completed",
 })
 
 const timeline = ref([
@@ -598,7 +607,7 @@ onUnmounted(() => {
 .divider {
     border-color: var(--border-b);
     background: var(--border-b);
-    margin: 1rem 0; 
+    margin: 1rem 0;
     height: 1px;
 }
 
@@ -732,7 +741,7 @@ onUnmounted(() => {
 
 .timeline-bar-box {
     width: inherit;
-    min-height: 44px;
+    min-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -755,9 +764,9 @@ onUnmounted(() => {
 }
 
 .timeline-title {
-    min-height: 44px;
+    min-height: 50px;
     font-weight: 600;
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-2);
 }
 
 .timeline-subtitle {

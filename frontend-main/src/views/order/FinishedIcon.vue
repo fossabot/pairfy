@@ -8,8 +8,8 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
 import orderAPI from '@/views/order/api/index';
+import { computed } from 'vue';
 
 
 const { getOrderData } = orderAPI();
