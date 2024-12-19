@@ -12,7 +12,7 @@
             <span class="prefix">
               0.000.
             </span>
-            <div>100 ADA</div>
+            <div>100 ADA Liquidity</div>
           </div>
         </div>
       </div>
