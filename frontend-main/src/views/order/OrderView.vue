@@ -950,7 +950,7 @@ onUnmounted(() => {
 }
 
 .product-list li {
-    line-height: 1.75rem;
+    line-height: 2.25rem;
 }
 
 .product-features {
@@ -965,7 +965,7 @@ onUnmounted(() => {
 }
 
 ::v-deep(.editor-class) {
-    line-height: 2rem;
+    line-height: 2.25rem;
     font-size: var(--text-size-0);
 }
 </style>
