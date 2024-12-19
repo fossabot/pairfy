@@ -3,7 +3,7 @@
         <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
             <div class="button flex">
                 <i class="pi pi-bars" />
-                <audio src="@/assets/notification.mp3" muted="false" preload="auto"/>
+                <audio src="@/assets/notification.mp3" muted="false" preload="auto" />
             </div>
         </OverlayBadge>
         <Popover ref="overlay">
@@ -13,7 +13,7 @@
                         New
                     </div>
                     <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
-                       All
+                        All
                     </div>
                 </div>
 
@@ -91,7 +91,7 @@ const { playNotification } = setupAudio();
 //////////////////////////////////////////////////////////////////////////////
 
 const queryOptions = {
-    pollInterval: 60000,
+    pollInterval: 30000,
     clientId: 'notification'
 }
 
@@ -133,8 +133,10 @@ watch(onGetNotification, value => {
             if (!unseenSet.value.has(element)) {
                 unseenSet.value.add(element)
                 if (index === items.length - 1) {
-                    playNotification()
-                    showBox()
+                    setTimeout(() => {
+                        playNotification()
+                        showBox()
+                    }, 10000)
                 }
             }
         } else {
@@ -222,7 +224,7 @@ function setupAudio() {
 
     audio.value.load();
 
-    audio.value.volume = 0.4;
+    audio.value.volume = 0.3;
 
     const playNotification = () => {
         audio.value
@@ -241,9 +243,6 @@ function setupAudio() {
 </script>
 
 <style lang="css" scoped>
-section {
-   
-}
 
 .notification {
     margin: 0 2rem;
