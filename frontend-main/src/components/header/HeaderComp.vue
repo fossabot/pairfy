@@ -110,10 +110,10 @@ section {
 
 .header,
 .menu {
-    max-width: 1300px;
     display: grid;
     grid-template-columns: 20% 60% 20%;
     width: 100%;
+    padding: 1rem 2rem;
 }
 
 .header-col,
@@ -132,7 +132,6 @@ section {
 }
 
 .menu {
-    padding: 0.75rem 0;
     color: var(--text-w);
 }
 

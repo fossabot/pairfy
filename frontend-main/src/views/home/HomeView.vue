@@ -1,18 +1,27 @@
 <template>
   <main>
-    <div class="banner">
-      <div class="banner-body">
-        <div class="title">Next Black Day</div>
-        <div class="counter">
-          <span class="prefix">
-            0.000.
-          </span>
-          <div>100 ADA</div>
+    <div class="panel">
+      x
+    </div>
+
+    <div class="body">
+      <div class="banner">
+        <div class="banner-body">
+          <div class="title">Next Cardano Black Day</div>
+          <div class="counter">
+            <span class="prefix">
+              0.000.
+            </span>
+            <div>100 ADA</div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="grid">
 
+      <div class="grid">
+        <div class="grid-body">
+
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -25,10 +34,14 @@
 main {
   background: var(--black-a);
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 20vw 1fr;
+
+  width: 100%;
 }
 
 .banner {
-  height: 400px;
+  min-height: 300px;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -36,7 +49,10 @@ main {
 }
 
 .banner-body {
-  display: block;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .counter {
@@ -50,14 +66,22 @@ main {
   font-weight: 700;
 }
 
-.prefix{
+.prefix {
   color: var(--text-b);
 }
 
 .grid {
+  padding: 1rem;
+}
+
+.grid-body {
+  background: var(--background-a);
   border-top-left-radius: 24px;
   border-top-right-radius: 24px;
   height: 100vh;
-  background: var(--background-a);
+}
+
+.panel {
+  border-right: 1px solid var(--border-b);
 }
 </style>
