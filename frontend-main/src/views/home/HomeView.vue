@@ -57,7 +57,7 @@ main {
 
 .counter {
   font-size: var(--text-size-6);
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
 }
 
