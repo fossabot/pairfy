@@ -133,10 +133,8 @@ watch(onGetNotification, value => {
             if (!unseenSet.value.has(element)) {
                 unseenSet.value.add(element)
                 if (index === items.length - 1) {
-                    setTimeout(() => {
-                        playNotification()
-                        showBox()
-                    }, 10000)
+                    playNotification()
+                    showBox()
                 }
             }
         } else {
@@ -243,7 +241,6 @@ function setupAudio() {
 </script>
 
 <style lang="css" scoped>
-
 .notification {
     margin: 0 2rem;
     display: flex;
