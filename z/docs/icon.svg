@@ -2,62 +2,45 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="120"
-   height="50"
-   viewBox="0 0 120 50"
+   width="40.0px"
+   height="40.0px"
+   viewBox="0 0 40.0 40.0"
    version="1.1"
    id="SVGRoot"
-   sodipodi:docname="logo-white.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
-   inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/debian/bitmap.png"
    inkscape:export-xdpi="121.6"
    inkscape:export-ydpi="121.6"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview137"
+     id="namedview28864"
      pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
-     showgrid="false"
-     inkscape:zoom="7.1087104"
-     inkscape:cx="49.376044"
-     inkscape:cy="29.259878"
-     inkscape:window-width="1488"
-     inkscape:window-height="778"
-     inkscape:window-x="342"
-     inkscape:window-y="240"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer1"
-     inkscape:pageshadow="2"
-     showguides="false" />
+     showgrid="true"
+     inkscape:zoom="11.313709"
+     inkscape:cx="-2.8284271"
+     inkscape:cy="21.38998"
+     inkscape:window-width="1920"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid28927" />
+  </sodipodi:namedview>
   <defs
-     id="defs132">
-    <rect
-       x="11.236365"
-       y="7.2846913"
-       width="69.72084"
-       height="10.069939"
-       id="rect3" />
-    <rect
-       x="12.94258"
-       y="23.094154"
-       width="88.413605"
-       height="18.186064"
-       id="rect1" />
-    <rect
-       x="-1.4777668"
-       y="42.333267"
-       width="127.8846"
-       height="23.821753"
-       id="rect3454" />
+     id="defs28859">
     <clipPath
        id="b983e3c625">
       <path
@@ -72,48 +55,22 @@
          clip-rule="nonzero"
          id="path1147" />
     </clipPath>
-    <clipPath
-       id="b983e3c625-3">
-      <path
-         d="m 142,147.30078 h 115 v 72.75 H 142 Z m 0,0"
-         clip-rule="nonzero"
-         id="path1144-6" />
-    </clipPath>
-    <clipPath
-       id="0e8c13dd3a-7">
-      <path
-         d="m 70.261719,116.35938 h 89.156251 v 70.49999 H 70.261719 Z m 0,0"
-         clip-rule="nonzero"
-         id="path1147-5" />
-    </clipPath>
   </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1"
-     style="display:inline">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.8478px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.744293px;fill:#f9f9f9;stroke:#ff9a00;stroke-width:0.0744293;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
-       x="-0.041157071"
-       y="31.281778"
-       id="text2"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
-       inkscape:export-xdpi="121.6"
-       inkscape:export-ydpi="121.6"><tspan
-         sodipodi:role="line"
-         id="tspan2"
-         x="-0.041157071"
-         y="31.281778"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.8478px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Bold';word-spacing:0px;fill:#f9f9f9;fill-opacity:1;stroke:#ffffff;stroke-width:0.0744293;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
-         dx="0 0 0">ada<tspan
-   style="fill:#fabb05;fill-opacity:1"
-   id="tspan40017">us</tspan>d</tspan></text>
+     id="layer1">
+    <rect
+       style="fill:#0046be;stroke:#ffffff;stroke-width:0.1;stroke-linejoin:round;paint-order:stroke fill markers;fill-opacity:1"
+       id="rect29051"
+       width="40"
+       height="40"
+       x="0"
+       y="0" />
     <g
-       id="g35956"
-       transform="matrix(1.1088845,0,0,1.1088845,62.837984,1.2091405)">
+       id="g35956">
       <g
-         clip-path="url(#b983e3c625-3)"
+         clip-path="url(#b983e3c625)"
          id="g1154"
          style="display:inline;fill:#f9f9f9"
          transform="matrix(0.16466809,0,0,0.16466809,-11.663411,-12.668243)"
@@ -133,7 +90,7 @@
            inkscape:export-ydpi="121.6" />
       </g>
       <g
-         clip-path="url(#0e8c13dd3a-7)"
+         clip-path="url(#0e8c13dd3a)"
          id="g1158"
          style="display:inline;fill:#f9f9f9"
          transform="matrix(0.14219731,0,0,0.14219731,-7.0760274,-6.8147163)"
@@ -178,35 +135,5 @@
          inkscape:export-xdpi="121.6"
          inkscape:export-ydpi="121.6" />
     </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Layer 2"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Layer 3"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="limit"
-     style="display:none">
-    <rect
-       style="display:inline;opacity:0.557195;fill:#ff5e00;fill-opacity:1;stroke:#0069f5;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
-       id="rect1592-1"
-       width="15"
-       height="14.999998"
-       x="1.8808064e-06"
-       y="14.999999" />
-    <rect
-       style="display:inline;opacity:0.557195;fill:#ff0000;stroke:#0069f5;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
-       id="rect1592"
-       width="120"
-       height="14.999998"
-       x="1.8808064e-06"
-       y="6.7562792e-07" />
   </g>
 </svg>
