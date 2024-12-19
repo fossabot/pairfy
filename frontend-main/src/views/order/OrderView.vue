@@ -12,7 +12,7 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 1 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 2 }" @click="currentNav = 2">
-                    <span>Txs</span>
+                    <span>Transactions</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
             </div>
@@ -419,9 +419,21 @@ const isFinished = ref(false);
 
 const shippingStatus = computed(() => {
     const state = orderData.value?.contract_state;
-    
+
     if (state === 0) {
-        return "Pending"
+        return "pending"
+    }
+
+    if (state === 1) {
+        return "preparing"
+    }
+
+    if (state === 2) {
+        return "dispatched"
+    }
+
+    if (state === 3) {
+        return "delivered"
     }
     return "-"
 });
@@ -872,7 +884,7 @@ onUnmounted(() => {
 }
 
 .product-name {
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-size-3);
     margin-left: 1rem;
 }
@@ -906,7 +918,13 @@ onUnmounted(() => {
     list-style: none;
     line-height: 1.75rem;
     justify-content: space-between;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-2);
+    font-weight: 500;
+    line-height: 2.25rem;
+}
+
+.product-card-box li div:nth-child(1) {
+    color: var(--text-b);
 }
 
 .product-card {
