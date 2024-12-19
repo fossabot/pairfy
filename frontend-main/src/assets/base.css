@@ -82,7 +82,7 @@
   --black-a: #181a20;
 
   --text-a: #0f1111;
-  --text-b: #64748b;
+  --text-b: #848E9C;
   --text-c: var(--p-surface-400);
   --text-w: #ffffff;
 
@@ -99,6 +99,11 @@
   --text-size-1: 14px;
   --text-size-2: 16px;
   --text-size-3: 20px;
+  --text-size-4: 24px;
+  --text-size-5: 28px;
+  --text-size-6: 40px;
+  --text-size-7: 56px;
+
 
   --border-a: #e2e8f0;
 
