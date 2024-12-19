@@ -123,7 +123,7 @@ const computedTotalPrice = computed(() => {
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "In Stock" : "Out Stock";
+    return readyStock > 0 ? "Product In Stock" : "Out Stock";
 }
 
 const showBuyDialog = ref(false);
@@ -236,7 +236,6 @@ const onConfirmedBuy = () => {
 .buy-stock {
     font-weight: 600;
     margin-top: 1rem;
-    color: var(--green-a);
 }
 
 .buy-stock.red {
