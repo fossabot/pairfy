@@ -41,7 +41,7 @@ main {
 }
 
 .banner {
-  min-height: 300px;
+  min-height: 275px;
   justify-content: center;
   display: flex;
   align-items: center;
