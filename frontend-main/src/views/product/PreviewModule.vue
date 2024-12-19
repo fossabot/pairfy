@@ -4,6 +4,10 @@
         <Skeleton v-if="!getProductData" width="100%" height="100%" />
 
         <div v-if="getProductData" class="preview-wrap">
+            <div class="preview-top">
+                <span>+5 Sold</span>
+            </div>
+
             <div class="preview-name">
                 {{ getProductData.name }}
             </div>
@@ -82,8 +86,9 @@ const bulletList = computed(() => {
 }
 
 .preview-name {
-    font-size: var(--text-size-d);
+    font-size: var(--text-size-4);
     font-weight: 500;
+    margin-top: 1rem
 }
 
 .preview-rating {
@@ -91,12 +96,13 @@ const bulletList = computed(() => {
 }
 
 .preview-price {
-    font-size: var(--text-size-f);
+    font-size: var(--text-size-5);
     margin-top: 1rem;
+    font-weight: 500;
 }
 
 .preview-price div {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
 }
 
 .preview-discount {
@@ -107,7 +113,7 @@ const bulletList = computed(() => {
 .preview-model {
     display: flex;
     color: var(--text-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .preview-model {
@@ -120,12 +126,12 @@ const bulletList = computed(() => {
 
 .preview-about {
     font-weight: 600;
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-2);
     margin-top: 2rem;
 }
 
 .preview-bullet {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     padding-left: 1rem;
 }
 

@@ -212,7 +212,7 @@ const onConfirmedBuy = () => {
 }
 
 .buy-legend {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 400;
     margin-top: 1rem;
     color: var(--text-b);
@@ -220,7 +220,7 @@ const onConfirmedBuy = () => {
 
 .buy-brand {
     font-weight: 700;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     text-transform: capitalize;
 }
 
@@ -230,7 +230,7 @@ const onConfirmedBuy = () => {
 
 .buy-rating span {
     margin-left: 0.5rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .buy-stock {
@@ -255,10 +255,7 @@ const onConfirmedBuy = () => {
 .dialog-total {
     margin-top: 1rem;
     font-weight: 600;
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-2);
 }
 
-::v-deep(.p-button-label) {
-    font-size: var(--text-size-a) !important;
-}
 </style>

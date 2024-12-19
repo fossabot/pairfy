@@ -54,6 +54,8 @@
   --p-dialog-footer-padding: 1rem 1.5rem !important;
 
   --p-divider-horizontal-margin: 1rem 0 !important;
+
+ --p-tag-font-size: var(--text-size-1) !important;
 }
 
 @media (prefers-color-scheme: dark) {
