@@ -13,9 +13,17 @@ const NETWORK = "Preprod";
 /**Generates a CBOR transaction to be signed and sent in the browser by the seller to take the order before pending_until. */
 async function lockingTransactionBuilder(
   externalWalletAddress: string,
-  serializedParams: string,
-  validUntil: bigint
+  serializedParams: string
 ) {
+  //////////////////////////////////////////////////
+
+  const now = Date.now();
+
+  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
+
+  const validToMs = BigInt(now + txValidTime);
+
+  //////////////////////////////////////////////////
   /**
    *
    *  @type {string} threadTokenPolicyId 0
@@ -24,6 +32,7 @@ async function lockingTransactionBuilder(
    *  @type {number} contractPrice 3
    *  @type {number} contractCollateral 4
    *  @type {number} pendingUntil 5
+   *  @type {number} shippingUntil 6
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
@@ -33,9 +42,12 @@ async function lockingTransactionBuilder(
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
-  const lucidCollateral = 5_000_000;
+  const txCollateral = 5_000_000n;
 
-  const minLovelace = BigInt(stateMachineParams[4]);
+  const productCollateral = BigInt(stateMachineParams[4]);
+
+  const minLovelace =
+    productCollateral < txCollateral ? txCollateral : productCollateral;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -90,6 +102,7 @@ async function lockingTransactionBuilder(
         BigInt(stateMachineParams[3]),
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
+        BigInt(stateMachineParams[6]),
       ]
     ),
   };
@@ -105,6 +118,7 @@ async function lockingTransactionBuilder(
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
     Data.Literal("Locking"),
+    Data.Literal("Shipping"),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
@@ -115,7 +129,8 @@ async function lockingTransactionBuilder(
 
   ///////////////////////////////////////////
 
-  const lovelaceToSM = BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
+  const lovelaceToSM =
+    BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
 
   console.log(lovelaceToSM);
 
@@ -137,49 +152,44 @@ async function lockingTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
-    .validTo(Number(validUntil))
+    .validTo(Number(validToMs))
     .complete({
       changeAddress: externalWalletAddress,
-      setCollateral: BigInt(lucidCollateral),
+      setCollateral: txCollateral,
       coinSelection: false,
       localUPLCEval: false,
     });
 
   const cbor = transaction.toCBOR();
 
-  console.log("CBOR---------------------------------------");
-
-  console.log("Unit: ", threadTokenUnit);
-
-  console.log("stateMachineAddress: ", stateMachineAddress);
-
-  console.log("CBOR---------------------------------------");
-
-  console.log(cbor);
-
   return {
+    threadTokenUnit,
+    stateMachineAddress,
     cbor,
   };
 }
 
-function main() {
-  const now = Date.now();
-
-  const TX_VALID_TIME = 5;
-
-  const validUntil = now + TX_VALID_TIME * 60 * 1000;
-
+async function main() {
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
   const serializedParams =
     "0a09d13dacc36caa75855765930e3f93f840f7e07ea72b05fe31ece2,a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141,746bff9fb367bf3bb1b25fe24a272bb288d62a2cad1aad2e37a8173f,30000000,10000000,1734559401711";
 
-  lockingTransactionBuilder(
+  const BUILDER = await lockingTransactionBuilder(
     externalWalletAddress,
-    serializedParams,
-    BigInt(validUntil)
+    serializedParams
   );
+
+  console.log("CBOR---------------------------------------");
+
+  console.log("Unit: ", BUILDER.threadTokenUnit);
+
+  console.log("stateMachineAddress: ", BUILDER.stateMachineAddress);
+
+  console.log("CBOR---------------------------------------");
+
+  console.log(BUILDER.cbor);
 }
 
 //main();

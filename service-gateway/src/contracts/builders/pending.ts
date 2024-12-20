@@ -19,11 +19,34 @@ async function pendingTransactionBuilder(
   externalWalletAddress: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
-  contractCollateral: bigint,
-  validUntil: bigint,
-  pendingUntil: bigint,
-  shippingUntil: bigint
+  contractCollateral: bigint
 ) {
+  //////////////////////////////////////////////////
+
+  const now = Date.now();
+
+  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
+
+  const txWatchWindow = parseInt(process.env.TX_WATCH_WINDOW as string);
+
+  const pendingRange = parseInt(process.env.PENDING_RANGE as string);
+
+  const shippingRange = parseInt(process.env.SHIPPING_RANGE as string);
+
+  //////////////////////////////////////////////////
+
+  const validToMs = BigInt(now + txValidTime);
+
+  const watchUntil = BigInt(now + txValidTime + txWatchWindow);
+
+  const pendingUntil = BigInt(now + txValidTime + txWatchWindow + pendingRange);
+
+  const shippingUntil = BigInt(
+    now + txValidTime + txWatchWindow + pendingRange + shippingRange
+  );
+
+  //////////////////////////////////////////////////
+
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
@@ -32,7 +55,10 @@ async function pendingTransactionBuilder(
 
   //////////////////////////////////////////////////
 
-  const minLovelace = contractPrice;
+  const txCollateral = 5_000_000n;
+
+  const minLovelace =
+    contractPrice < txCollateral ? txCollateral : contractPrice;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -51,7 +77,7 @@ async function pendingTransactionBuilder(
     type: "PlutusV3",
     script: applyParamsToScript(
       applyDoubleCborEncoding(validators.threadToken),
-      [tokenName, utxoRef, validUntil]
+      [tokenName, utxoRef, validToMs]
     ),
   };
 
@@ -60,6 +86,7 @@ async function pendingTransactionBuilder(
   const mintRedeemer = Data.to(new Constr(0, []));
 
   ///////////////////////////////////////
+
   const stateMachineParams = [
     threadTokenPolicyId,
     sellerPubKeyHash,
@@ -67,6 +94,7 @@ async function pendingTransactionBuilder(
     contractPrice,
     contractCollateral,
     pendingUntil,
+    shippingUntil,
   ];
 
   const serializedParams = serializeParams(stateMachineParams);
@@ -123,63 +151,29 @@ async function pendingTransactionBuilder(
     )
     .attach.MintingPolicy(threadTokenScript)
     .addSigner(externalWalletAddress)
-    .validTo(Number(validUntil))
+    .validTo(Number(validToMs))
     .complete({
       changeAddress: externalWalletAddress,
-      setCollateral: 1_000_000n,
+      setCollateral: txCollateral,
       coinSelection: false,
       localUPLCEval: false,
     });
 
   const cbor = transaction.toCBOR();
 
-  console.log("--------------------------------------------------------");
-
-  console.log("ThreadToken: ", threadTokenPolicyId);
-
-  console.log("Unit: ", assetUnit);
-
-  console.log("stateMachineAddress: ", stateMachineAddress);
-
-  console.log("stateMachineParams: ", serializedParams);
-
-  console.log("--------------------------------------------------------");
-
-  console.log(cbor);
-
   return {
     threadTokenPolicyId,
     stateMachineAddress,
     serializedParams,
+    assetUnit,
     cbor,
+    watchUntil,
+    pendingUntil,
+    shippingUntil,
   };
 }
 
-function main() {
-  const now = Date.now();
-
-  const TX_VALID_TIME = 5; //tx valid until
-
-  const WATCH_TX_WINDOW = 15; //Observation window limit for the detection of the first transaction
-
-  const PENDING_UNTIL = 16; // 15minutes for the seller to accept;
-
-  const SHIPPING_UNTIL = 1440; // 24h to shipping;
-
-  ///////////////////////////////////////////////
-
-  const validUntil = now + TX_VALID_TIME * 60 * 1000;
-
-  const pendingUntil =
-    now + (TX_VALID_TIME + WATCH_TX_WINDOW + PENDING_UNTIL * 60 * 1000);
-
-  const shippingUntil =
-    now +
-    (TX_VALID_TIME +
-      WATCH_TX_WINDOW +
-      PENDING_UNTIL +
-      SHIPPING_UNTIL * 60 * 1000);
-
+async function main() {
   const externalWalletAddress =
     "addr_test1qp6xhlulkdnm7wa3kf07yj389weg34329jk34tfwx75pw0urvzxsjpchzgnhfmvz35ap356vg3a2c2af34zl4va7cfzqtyf6jn";
 
@@ -190,15 +184,26 @@ function main() {
 
   const contractCollateral = 10 * 1_000_000;
 
-  pendingTransactionBuilder(
+  const BUILDER = await pendingTransactionBuilder(
     externalWalletAddress,
     sellerPubKeyHash,
     BigInt(contractPrice),
-    BigInt(contractCollateral),
-    BigInt(validUntil),
-    BigInt(pendingUntil),
-    BigInt(shippingUntil)
+    BigInt(contractCollateral)
   );
+
+  console.log("--------------------------------------------------------");
+
+  console.log("ThreadToken: ", BUILDER.threadTokenPolicyId);
+
+  console.log("Unit: ", BUILDER.assetUnit);
+
+  console.log("stateMachineAddress: ", BUILDER.stateMachineAddress);
+
+  console.log("stateMachineParams: ", BUILDER.serializedParams);
+
+  console.log("--------------------------------------------------------");
+
+  console.log(BUILDER.cbor);
 }
 
 //main();

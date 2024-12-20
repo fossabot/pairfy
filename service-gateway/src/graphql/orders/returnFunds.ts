@@ -2,8 +2,6 @@ import { returnTransactionBuilder } from "../../contracts/builders/return.js";
 import { UserToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
 
-const TX_VALID_TIME = parseInt(process.env.TX_VALID_TIME as string);
-
 const returnFunds = async (_: any, args: any, context: any) => {
   if (!context.userData) {
     throw new Error("CREDENTIALS");
@@ -48,18 +46,12 @@ const returnFunds = async (_: any, args: any, context: any) => {
       throw new Error("STATE_DIFF_ZERO");
     }
 
-    ///////////////////////////////////////////////////
-
-    const now = Date.now();
-
-    const validUntil = now + TX_VALID_TIME * 60 * 1000;
 
     //////////////////////////////////////////////
 
     const BUILDER = await returnTransactionBuilder(
       USER.address,
-      ORDER.contract_params,
-      BigInt(validUntil)
+      ORDER.contract_params
     );
 
     return {

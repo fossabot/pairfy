@@ -2,8 +2,6 @@ import { lockingTransactionBuilder } from "../../contracts/builders/locking.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
 
-const TX_VALID_TIME = parseInt(process.env.TX_VALID_TIME as string);
-
 const lockingFunds = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {
     throw new Error("CREDENTIALS");
@@ -48,18 +46,11 @@ const lockingFunds = async (_: any, args: any, context: any) => {
       throw new Error("STATE_DIFF_ZERO");
     }
 
-    ///////////////////////////////////////////////////
-
-    const now = Date.now();
-
-    const validUntil = now + TX_VALID_TIME * 60 * 1000;
-
     //////////////////////////////////////////////
 
     const BUILDER = await lockingTransactionBuilder(
       SELLER.address,
-      ORDER.contract_params,
-      BigInt(validUntil)
+      ORDER.contract_params
     );
 
     return {

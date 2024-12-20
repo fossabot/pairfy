@@ -50,9 +50,10 @@ pub type StateMachineDatum {
 pub type StateMachineInput {
   Return
   Locking
+  Shipping
 }
 
-validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int, pending_until: POSIXTime) {
+validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int, pending_until: POSIXTime, shipping_until: POSIXTime) {
   spend(
     datum_opt: Option<StateMachineDatum>,
     redeemer: StateMachineInput,
@@ -136,6 +137,18 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
               must_be_datum?
             }
           }
+
+          (StateMachineDatum{ state }, Shipping) -> {
+            
+            let must_be_state = state == 1
+            
+            let must_be_time = shipping_until == shipping_until //WARNING
+            
+            and {
+              must_be_state?,
+              must_be_time?
+            }
+          }
         }
   }
 }
@@ -155,6 +168,7 @@ test statemachine_return() {
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
   let pending_until = 3
+  let shipping_until = 6
   let price = 50000000
   let collateral = 25000000
   /////////////INPUT/////////////
@@ -226,7 +240,7 @@ test statemachine_return() {
       treasury_donation: transaction.placeholder.treasury_donation
     }
 
-  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, Some(old_datum), redeemer, own_ref, transaction)
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
 //////////////////////////////////////////////LOCKING
@@ -243,6 +257,7 @@ test statemachine_locking() {
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
   let pending_until = 3
+  let shipping_until = 6
   let price = 50_000_000
   let collateral = 25_000_000
   
@@ -315,5 +330,5 @@ test statemachine_locking() {
       treasury_donation: transaction.placeholder.treasury_donation
     }
 
-  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, Some(old_datum), redeemer, own_ref, transaction)
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, Some(old_datum), redeemer, own_ref, transaction)
 }

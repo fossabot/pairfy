@@ -97,12 +97,12 @@ const main = async () => {
       throw new Error("TX_WATCH_WINDOW error");
     }
 
-    if (!process.env.PENDING_UNTIL) {
-      throw new Error("PENDING_UNTIL error");
+    if (!process.env.PENDING_RANGE) {
+      throw new Error("PENDING_RANGE error");
     }
 
-    if (!process.env.SHIPPING_UNTIL) {
-      throw new Error("SHIPPING_UNTIL error");
+    if (!process.env.SHIPPING_RANGE) {
+      throw new Error("SHIPPING_RANGE error");
     }
 
     if (!process.env.PROJECT_ID) {

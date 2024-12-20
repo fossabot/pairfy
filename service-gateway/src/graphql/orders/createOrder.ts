@@ -4,14 +4,6 @@ import { UserToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
 import { redisClient } from "../../db/redis.js";
 
-const TX_VALID_TIME = parseInt(process.env.TX_VALID_TIME as string);
-
-const TX_WATCH_WINDOW = parseInt(process.env.TX_WATCH_WINDOW as string);
-
-const PENDING_UNTIL = parseInt(process.env.PENDING_UNTIL as string);
-
-const SHIPPING_UNTIL = parseInt(process.env.SHIPPING_UNTIL as string);
-
 const createOrder = async (_: any, args: any, context: any) => {
   if (!context.userData) {
     throw new Error("CREDENTIALS");
@@ -99,21 +91,6 @@ const createOrder = async (_: any, args: any, context: any) => {
       ADAUSD
     );
 
-    const now = Date.now();
-
-    const validUntil = now + TX_VALID_TIME * 60 * 1000;
-
-    const watchUntil = now + (TX_VALID_TIME + TX_WATCH_WINDOW * 60 * 1000);
-
-    const pendingUntil =
-      now + (TX_VALID_TIME + TX_WATCH_WINDOW + PENDING_UNTIL * 60 * 1000);
-
-    const shippingUntil =
-      now +
-      (TX_VALID_TIME +
-        TX_WATCH_WINDOW +
-        PENDING_UNTIL +
-        SHIPPING_UNTIL * 60 * 1000);
 
     //////////////////////////////////////////////
 
@@ -121,10 +98,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       USER.address,
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
-      BigInt(contractCollateral),
-      BigInt(validUntil),
-      BigInt(pendingUntil),
-      BigInt(shippingUntil)
+      BigInt(contractCollateral)
     );
 
     //////////////////////////////////////////////
@@ -153,8 +127,9 @@ const createOrder = async (_: any, args: any, context: any) => {
       product_bullet_list: RESULT.product_bullet_list,
       product_discount: RESULT.product_discount,
       product_discount_value: RESULT.product_discount_value,
-      watch_until: watchUntil,
-      pending_until: pendingUntil,
+      watch_until: BUILDER.watchUntil,
+      pending_until: BUILDER.pendingUntil,
+      shipping_until: BUILDER.shippingUntil
     };
 
     console.log(orderData);

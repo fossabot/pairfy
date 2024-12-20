@@ -79,8 +79,11 @@ type Order {
   product_discount_value: Int!
   watch_until: Float!
   pending_until: Float!
+  shipping_until: Float!
   pending_tx: String
   pending_block: String
+  shipping_tx: String
+  shipping_block: String
 }
 
 input GetBooksInput {

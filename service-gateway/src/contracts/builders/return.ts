@@ -6,20 +6,24 @@ import {
   SpendingValidator,
   validatorToAddress,
 } from "@lucid-evolution/lucid";
-import {
-  deserializeParams,
-  lucid,
-  validators,
-} from "./index.js";
+import { deserializeParams, lucid, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer to return funds after pending_until. */
 async function returnTransactionBuilder(
   externalWalletAddress: string,
-  serializedParams: string,
-  validUntil: bigint
+  serializedParams: string
 ) {
+  //////////////////////////////////////////////////
+
+  const now = Date.now();
+
+  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
+
+  const validToMs = BigInt(now + txValidTime);
+
+  //////////////////////////////////////////////////
   /**
    *
    *  @type {string} threadTokenPolicyId 0
@@ -28,6 +32,7 @@ async function returnTransactionBuilder(
    *  @type {number} contractPrice 3
    *  @type {number} contractCollateral 4
    *  @type {number} pendingUntil 5
+   *  @type {number} shippingUntil 6
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
@@ -37,9 +42,9 @@ async function returnTransactionBuilder(
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
-  const collateral = 5_000_000;
+  const txCollateral = 5_000_000n;
 
-  const minLovelace = collateral;
+  const minLovelace = txCollateral;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -94,6 +99,7 @@ async function returnTransactionBuilder(
         BigInt(stateMachineParams[3]),
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
+        BigInt(stateMachineParams[6]),
       ]
     ),
   };
@@ -109,6 +115,7 @@ async function returnTransactionBuilder(
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
     Data.Literal("Locking"),
+    Data.Literal("Shipping"),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
@@ -140,38 +147,24 @@ async function returnTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
-    .validTo(Number(validUntil))
+    .validTo(Number(validToMs))
     .complete({
       changeAddress: externalWalletAddress,
-      setCollateral: 5_000_000n,
+      setCollateral: txCollateral,
       coinSelection: false,
       localUPLCEval: false,
     });
 
   const cbor = transaction.toCBOR();
 
-  console.log("CBOR---------------------------------------");
-
-  console.log("Unit: ", threadTokenUnit);
-
-  console.log("stateMachineAddress: ", stateMachineAddress);
-
-  console.log("CBOR---------------------------------------");
-
-  console.log(cbor);
-
   return {
+    threadTokenUnit,
+    stateMachineAddress,
     cbor,
   };
 }
 
-function main() {
-  const now = Date.now();
-
-  const TX_VALID_TIME = 5;
-
-  const validUntil = now + TX_VALID_TIME * 60 * 1000;
-
+async function main() {
   const externalWalletAddress =
     "addr_test1qz3rnekzh0t2nueyn4j6lmufc28pgu0dqlzjnmqxsjxvzs24qtjuxnphyqxz46t40nudnm3kxu8hkau2mq6nw7svg7jswruwy3";
 
@@ -180,11 +173,20 @@ function main() {
 
   console.log(deserializeParams(serializedParams));
 
-  returnTransactionBuilder(
+  const BUILDER = await returnTransactionBuilder(
     externalWalletAddress,
-    serializedParams,
-    BigInt(validUntil)
+    serializedParams
   );
+
+  console.log("CBOR---------------------------------------");
+
+  console.log("Unit: ", BUILDER.threadTokenUnit);
+
+  console.log("stateMachineAddress: ", BUILDER.stateMachineAddress);
+
+  console.log("CBOR---------------------------------------");
+
+  console.log(BUILDER.cbor);
 }
 
 //main();
