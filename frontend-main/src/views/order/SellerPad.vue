@@ -1,8 +1,7 @@
 <template>
     <div class="pad">
-        <Button size="small" :disabled="disableAccept" @click="onLockingFunds">
+        <Button size="small" v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds">
             Accept Order
-
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }}
             </span>
@@ -135,6 +134,8 @@ const onLockingFunds = () => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
+
+const currentState = computed(() => getOrderData.value.contract_state || undefined);
 
 const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value.contract_state !== 0)
 ///////////////////////////////////////////////////////////////////

@@ -326,7 +326,7 @@ const timeline = ref([
         title: "Finished",
         subtitle: {
             buyer: "Please confirm that the exact product was delivered.",
-            seller: "Accept the order or dispatch the product."
+            seller: "Accept the order and dispatch the product."
         },
         completed: false,
         type: "button",
@@ -368,6 +368,7 @@ query ($getOrderVariable: GetOrderInput!) {
         product_discount_value
         watch_until
         pending_until
+        shipping_until
         pending_tx
         pending_block
     }
@@ -575,12 +576,17 @@ const getTimestamp = (order) => {
     if (order.contract_state === null) {
         return order.watch_until
     }
+
     if (order.contract_state === 0) {
         return order.pending_until
     }
 
     if (order.contract_state === -1) {
         return Date.now()
+    }
+
+    if (order.contract_state === 1) {
+        return order.shipping_until
     }
 }
 
