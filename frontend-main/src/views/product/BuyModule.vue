@@ -81,7 +81,6 @@
                 </InputNumber>
 
                 <Button label="Buy Now" fluid @click="openBuyDialog()" />
-                <Button label="Add To Cart" fluid outlined />
             </div>
         </div>
     </div>
@@ -191,7 +190,7 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Transaction submitted.");
+            showSuccess(`Transaction submitted with hash: ${txHash}`);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -241,6 +240,10 @@ const onConfirmedBuy = () => {
     margin-top: 1rem;
 }
 
+.buy-control button {
+    margin-top: 1rem;
+}
+
 .buy-legend {
     font-size: var(--text-size-1);
     font-weight: 400;
@@ -287,6 +290,4 @@ const onConfirmedBuy = () => {
     font-weight: 600;
     font-size: var(--text-size-2);
 }
-
-
 </style>
