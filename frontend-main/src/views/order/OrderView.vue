@@ -500,7 +500,7 @@ const globalCountdown = computed(() => {
     const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
     const seconds = (totalSeconds % 60).toString().padStart(2, '0');
 
-    return `${minutes}:${seconds}`;
+    return formatTime(`${minutes}:${seconds}`);
 });
 
 let globalInterval;
@@ -508,6 +508,22 @@ let globalInterval;
 const updateGlobalCountdown = () => {
     globalTimeLeft.value = globalTimestamp.value - Date.now();
 };
+
+
+
+function formatTime(input) {
+  let [minutes, seconds] = input.split(":").map(Number);
+
+  const hours = Math.floor(minutes / 60);
+  minutes = minutes % 60;
+
+  minutes += Math.floor(seconds / 60);
+  seconds = seconds % 60;
+
+  minutes = Math.min(minutes, 99);
+
+  return `${hours}h : ${minutes}m : ${seconds}s`;
+}
 
 ////////////////////////////////////////////////////////////////
 

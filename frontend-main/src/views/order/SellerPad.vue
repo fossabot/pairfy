@@ -1,5 +1,6 @@
 <template>
     <div class="pad">
+
         <Button size="small" v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds">
             Accept Order
             <span v-if="pendingCountdown !== '00:00'">
@@ -106,7 +107,7 @@ onLockingFundsDone(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`, 120000);
+            showSuccess(`Transaction submitted with hash: ${txHash}. The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -135,7 +136,7 @@ const onLockingFunds = () => {
 ///////////////////////////////////////////////////////////////////////////////////////////
 const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
-const currentState = computed(() => getOrderData.value.contract_state || undefined);
+const currentState = computed(() => getOrderData.value?.contract_state);
 
 const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value.contract_state !== 0)
 ///////////////////////////////////////////////////////////////////

@@ -236,11 +236,7 @@ const onConfirmedBuy = () => {
 
 .buy-control {
     display: grid;
-    gap: 0.5rem;
-    margin-top: 1rem;
-}
-
-.buy-control button {
+    gap: 1rem;
     margin-top: 1rem;
 }
 
