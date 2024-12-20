@@ -4,12 +4,21 @@
             Product Received
         </Button>
 
-        <Button type="button" size="small" :disabled="disableReturn" @click="onReturnFunds" variant="text">
-
+        <Button v-if="!currentState || currentState === 0" type="button" size="small" :disabled="disableReturn"
+            @click="onReturnFunds" variant="text">
             <span>Return Funds</span>
 
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }}
+            </span>
+        </Button>
+
+        <Button v-if="currentState === 1" type="button" size="small" :disabled="disableCancel" @click="onReturnFunds"
+            variant="text">
+            <span>Cancel Order</span>
+
+            <span v-if="shippingCountdown !== '00:00'">
+                {{ shippingCountdown }}
             </span>
         </Button>
 
@@ -80,7 +89,12 @@ onReturnFundsError(error => {
     showError(error)
 })
 
+
+const currentState = computed(() => getOrderData.value.contract_state || undefined)
+
 const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value.finished);
+
+const disableCancel = computed(() => shippingCountdown.value !== "00:00" || getOrderData.value.finished);
 
 const disableReceived = computed(() => getOrderData.value.finished || getOrderData.value.contract_state !== 2);
 
@@ -104,9 +118,28 @@ const updatePendingCountdown = () => {
     pendingTimeLeft.value = getOrderData.value.pending_until - Date.now();
 };
 
+///////////////////////////////////////////////////////////////////
+
+const shippingTimeLeft = ref(Date.now());
+
+const shippingCountdown = computed(() => {
+    if (shippingTimeLeft.value <= 0) return "00:00";
+
+    const totalSeconds = Math.floor(shippingTimeLeft.value / 1000);
+    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
+
+    return `${minutes}:${seconds}`;
+});
+
+let shippingInterval;
+
+const updateShippingCountdown = () => {
+    shippingTimeLeft.value = getOrderData.value.shipping_until - Date.now();
+};
+
+
 /////////////////////////////////////////////////
-
-
 const showSuccess = (content, time) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
 };
@@ -118,11 +151,14 @@ const showError = (content) => {
 
 onMounted(() => {
     updatePendingCountdown();
+    updateShippingCountdown();
     pendingInterval = setInterval(updatePendingCountdown, 1000);
+    shippingInterval = setInterval(updateShippingCountdown, 1000);
 });
 
 onUnmounted(() => {
     clearInterval(pendingInterval);
+    clearInterval(shippingInterval);
 });
 
 </script>

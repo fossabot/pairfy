@@ -437,15 +437,15 @@ const shippingStatus = computed(() => {
     }
 
     if (state === 1) {
-        return "preparing"
+        return "preparing the package"
     }
 
     if (state === 2) {
-        return "dispatched"
+        return "the package has been sent"
     }
 
     if (state === 3) {
-        return "delivered"
+        return "the package has been received"
     }
     return "-"
 });
