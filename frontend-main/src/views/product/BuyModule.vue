@@ -287,4 +287,6 @@ const onConfirmedBuy = () => {
     font-weight: 600;
     font-size: var(--text-size-2);
 }
+
+
 </style>

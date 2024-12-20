@@ -36,12 +36,11 @@ main {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 20vw 1fr;
-
   width: 100%;
 }
 
 .banner {
-  min-height: 275px;
+  min-height: 250px; 
   justify-content: center;
   display: flex;
   align-items: center;
@@ -55,15 +54,15 @@ main {
   align-items: center;
 }
 
-.counter {
+.title {
   font-size: var(--text-size-6);
-  font-weight: 600;
-  display: flex;
+  font-weight: 700;
 }
 
-.title {
-  font-size: var(--text-size-7);
-  font-weight: 700;
+.counter {
+  font-size: var(--text-size-5);
+  font-weight: 600;
+  display: flex;
 }
 
 .prefix {

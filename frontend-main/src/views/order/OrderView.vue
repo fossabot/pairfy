@@ -47,7 +47,11 @@
                             </div>
                             <button class="copy-button flex" @click="copyToClipboard(orderData.id)"
                                 v-tooltip.top="'Copy'">
-                                <i class="pi pi-copy" />
+                                <i class="pi pi-clone" />
+                            </button>
+                            <button class="copy-button flex" @click="openExplorer"
+                                v-tooltip.top="'Explorer'">
+                                <i class="pi pi-globe" />
                             </button>
                         </div>
                         <div class="summary-subtitle flex">
@@ -57,7 +61,7 @@
                             </div>
                             <button class="copy-button flex" @click="copyToClipboard(orderData.contract_address)"
                                 v-tooltip.top="'Copy'">
-                                <i class="pi pi-copy" />
+                                <i class="pi pi-clone" />
                             </button>
                         </div>
                         <Divider class="divider" :unstyled="true" />

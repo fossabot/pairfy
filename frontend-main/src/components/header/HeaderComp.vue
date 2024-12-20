@@ -146,12 +146,12 @@ section {
 }
 
 .connect-wallet {
-    background: var(--primary-c);
+    background: var(--primary-b);
     border-radius: 8px;
     padding: 0.5rem;
     min-width: 120px;
     font-weight: 500;
-    color: var(--text-w);
+    color: var(--text-a);
     font-size: var(--text-size-1);
     cursor: pointer;
 }

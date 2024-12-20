@@ -1,5 +1,5 @@
-import Lara from '@primevue/themes/lara';
-import { definePreset } from '@primevue/themes';
+import Lara from "@primevue/themes/lara";
+import { definePreset } from "@primevue/themes";
 
 export const MyPreset = definePreset(Lara, {
     primitive: {
@@ -25,17 +25,17 @@ export const MyPreset = definePreset(Lara, {
             950: "#022c22"
         },
         green: {
-            50: "#ecfdf5",
-            100: "#d1fae5",
-            200: "#a7f3d0",
-            300: "#6ee7b7",
-            400: "#34d399",
-            500: "#10b981",
-            600: "#059669",
-            700: "#047857",
-            800: "#065f46",
-            900: "#064e3b",
-            950: "#022c22"
+            50: "#f0fdf4",
+            100: "#dcfce7",
+            200: "#bbf7d0",
+            300: "#86efac",
+            400: "#4ade80",
+            500: "#22c55e",
+            600: "#16a34a",
+            700: "#15803d",
+            800: "#166534",
+            900: "#14532d",
+            950: "#052e16"
         },
         lime: {
             50: "#f7fee7",
@@ -310,17 +310,17 @@ export const MyPreset = definePreset(Lara, {
         iconSize: "1rem",
         anchorGutter: "2px",
         primary: {
-            50: "#f3f7ff",
-            100: "#c4daff",
-            200: "#95bdff",
-            300: "#66a0ff",
-            400: "#3783ff",
-            500: "#0866ff",
-            600: "#0757d9",
-            700: "#0647b3",
-            800: "#04388c",
-            900: "#032966",
-            950: "#021a40"
+            50: "#fffcf3",
+            100: "#feefc3",
+            200: "#fde294",
+            300: "#fcd564",
+            400: "#fbc835",
+            500: "#fabb05",
+            600: "#d59f04",
+            700: "#af8304",
+            800: "#8a6703",
+            900: "#644b02",
+            950: "#3f2f01"
         },
         formField: {
             paddingX: "0.75rem",
@@ -663,3 +663,4 @@ export const MyPreset = definePreset(Lara, {
         }
     }
 });
+

@@ -56,6 +56,8 @@
   --p-divider-horizontal-margin: 1rem 0 !important;
 
  --p-tag-font-size: var(--text-size-1) !important;
+ 
+ --p-button-primary-color: var(--text-a) !important;
 }
 
 @media (prefers-color-scheme: dark) {

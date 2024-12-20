@@ -55,7 +55,7 @@ import Ripple from 'primevue/ripple';
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
 import ToastService from 'primevue/toastservice';
-import { MyPreset } from './assets/theme';
+import { MyPreset } from './assets/mytheme';
 
 
 
