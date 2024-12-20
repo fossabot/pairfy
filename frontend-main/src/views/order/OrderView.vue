@@ -49,8 +49,7 @@
                                 v-tooltip.top="'Copy'">
                                 <i class="pi pi-clone" />
                             </button>
-                            <button class="copy-button flex" @click="openExplorer"
-                                v-tooltip.top="'Explorer'">
+                            <button class="copy-button flex" @click="openExplorer" v-tooltip.top="'Explorer'">
                                 <i class="pi pi-globe" />
                             </button>
                         </div>
@@ -253,9 +252,7 @@
                 </template>
                 <!--/////////////////////////////////////////-->
                 <div class="col right">
-                    <div class="chat">
-
-                    </div>
+                    <ChatComp />
                 </div>
             </div>
         </div>
@@ -273,6 +270,7 @@ import headerAPI from "@/components/header/api";
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
+import ChatComp from "@/views/order/ChatComp.vue"; 
 import { ref, watch, computed, inject, onMounted, onUnmounted, onBeforeUnmount, nextTick } from 'vue';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
@@ -715,12 +713,6 @@ onUnmounted(() => {
 
 .copy-button:hover {
     color: var(--primary-c);
-}
-
-.chat {
-    width: 100%;
-    height: 700px;
-    background: var(--background-c);
 }
 
 
