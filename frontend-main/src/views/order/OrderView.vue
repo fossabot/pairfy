@@ -172,7 +172,10 @@
                                                     <span>Status</span>
                                                     <span>{{ shippingStatus }}</span>
                                                 </div>
-
+                                                <div class="created-item">
+                                                    <span>Delivery date</span>
+                                                    <span>11-12-24</span>
+                                                </div>
                                                 <div class="created-item">
                                                     <span>Collateral</span>
                                                     <span>{{ contractCollateral }} ADA</span>
