@@ -14,7 +14,7 @@ const NETWORK = "Preprod";
 async function shippingTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string,
-  metadata: string
+  metadata: any
 ) {
   //////////////////////////////////////////////////
 
@@ -151,7 +151,7 @@ async function shippingTransactionBuilder(
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
     .validTo(Number(validToMs))
-    .attachMetadata(1, { msg: metadata })
+    .attachMetadata(300, metadata)
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: txCollateral,

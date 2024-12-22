@@ -4,7 +4,7 @@ import { createOrder } from "./orders/createOrder.js";
 import { getOrder } from "./orders/getOrder.js";
 import { lockingFunds } from "./orders/lockingFunds.js";
 import { returnFunds } from "./orders/returnFunds.js";
-import { dispatchProduct } from "./orders/dispatchProduct.js";
+import { dispatchProduct } from "./orders/dispatched.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;

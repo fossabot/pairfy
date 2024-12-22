@@ -1,10 +1,9 @@
-const crypto = require("crypto");
-const openpgp = require("openpgp");
-const argon2 = require("argon2");
-require("dotenv").config();
+import crypto from "crypto";
+import * as openpgp from "openpgp";
+import argon2 from "argon2";
 
 // Function to derive a key from passphrase using Argon2
-async function deriveKey(passphrase, salt) {
+async function generateArgonKey(passphrase: string, salt: Buffer) {
   // Argon2 key derivation with latest api
   const key = await argon2.hash(passphrase, {
     type: argon2.argon2id, // argon2id is recommended for most use cases
@@ -19,12 +18,15 @@ async function deriveKey(passphrase, salt) {
 }
 
 // AES-256 Encryption (Base64 output only)
-async function encryptWithAES(text, passphrase) {
+async function encryptWithAES(
+  text: string,
+  passphrase: string
+): Promise<string> {
   const salt = crypto.randomBytes(16); // Generate random salt
   const iv = crypto.randomBytes(16); // Generate random IV
 
   // Derive the encryption key using Argon2
-  const key = await deriveKey(passphrase, salt);
+  const key = await generateArgonKey(passphrase, salt);
 
   // Encrypt the plaintext
   const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
@@ -36,7 +38,7 @@ async function encryptWithAES(text, passphrase) {
   return `${salt.toString("base64")}:${iv.toString("base64")}:${encrypted}`;
 }
 
-async function decryptWithAES(encryptedData, passphrase) {
+async function decryptWithAES(encryptedData: string, passphrase: string) {
   const [saltBase64, ivBase64, encryptedText] = encryptedData.split(":");
 
   // Convert salt and IV from Base64 to Buffer
@@ -44,7 +46,7 @@ async function decryptWithAES(encryptedData, passphrase) {
   const iv = Buffer.from(ivBase64, "base64");
 
   // Derive the key using the same passphrase and salt
-  const key = await deriveKey(passphrase, salt);
+  const key = await generateArgonKey(passphrase, salt);
 
   // Decrypt the ciphertext
   const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
@@ -54,47 +56,13 @@ async function decryptWithAES(encryptedData, passphrase) {
   return decrypted;
 }
 
-//////////////////////////////////
-
-/**
- * Generates an RSA key pair (private and public keys).
- * @param {string} name - Name for the key metadata.
- * @param {string} email - Email for the key metadata.
- * @param {string} passphrase - Passphrase to secure the private key.
- * @returns {Promise<{ privateKey: string, publicKey: string }>}
- * - The private and public keys in armored format.
- */
-async function generateRSAKeyPair(RSAmetadata, passphrase) {
-  try {
-    // Generate private key
-    const { privateKey } = await openpgp.generateKey({
-      type: "rsa",
-      rsaBits: 4096,
-      userIDs: [RSAmetadata],
-      passphrase,
-    });
-
-    const unlockedPrivateKey = await openpgp.decryptKey({
-      privateKey: await openpgp.readPrivateKey({ armoredKey: privateKey }),
-      passphrase,
-    });
-
-    const publicKey = unlockedPrivateKey.toPublic().armor();
-
-    return { privateKey, publicKey };
-  } catch (error) {
-    console.error("Key pair generation failed:", error);
-    throw error;
-  }
-}
-
 /**
  * Encrypts a text message using RSA and OpenPGP.
  * @param {string} message - The plaintext message to encrypt.
  * @param {string} publicKey - The recipient's public key (armored format).
  * @returns {Promise<string>} - The encrypted message in armored format.
  */
-async function encryptWithRSA(message, publicKey) {
+async function encryptWithRSA(message: string, publicKey: string) {
   try {
     const encrypted = await openpgp.encrypt({
       message: await openpgp.createMessage({ text: message }),
@@ -114,7 +82,11 @@ async function encryptWithRSA(message, publicKey) {
  * @param {string} passphrase - Passphrase to unlock the private key.
  * @returns {Promise<string>} - The decrypted plaintext message.
  */
-async function decryptWithRSA(encryptedMessage, privateKey, passphrase) {
+async function decryptWithRSA(
+  encryptedMessage: any,
+  privateKey: string,
+  passphrase: string
+) {
   try {
     const decryptedPrivateKey = await openpgp.decryptKey({
       privateKey: await openpgp.readPrivateKey({ armoredKey: privateKey }),
@@ -133,55 +105,46 @@ async function decryptWithRSA(encryptedMessage, privateKey, passphrase) {
   }
 }
 
-async function encryptMetadata(publicKey, metadata) {
+/**
+ * @description takes a plaintext and encrypts it using AES-RSA-PGP
+ * @param metadata
+ * @returns
+ */
+async function encryptMetadata(metadata: string): Promise<string> {
   const AESencrypted = await encryptWithAES(
     metadata,
-    process.env.AES_PASSPHRASE
+    decodeBase64(process.env.AES_PASSPHRASE as string)
   );
 
-  const RSAencrypted = await encryptWithRSA(AESencrypted, publicKey);
+  const RSAencrypted = await encryptWithRSA(
+    AESencrypted,
+    decodeBase64(process.env.RSA_PUBLIC_KEY as string)
+  );
 
   return RSAencrypted;
 }
 
-async function decryptMetadata(RSAencrypted, privateKey) {
+/**
+ * @description decrypts AES-RSA-PGP
+ * @param metadata
+ * @returns
+ */
+async function decryptMetadata(RSAencrypted: any) {
   const RSAdecrypted = await decryptWithRSA(
     RSAencrypted,
-    privateKey,
-    process.env.RSA_PASSPHRASE
+    decodeBase64(process.env.RSA_PRIVATE_KEY as string),
+    decodeBase64(process.env.RSA_PASSPHRASE as string)
   );
 
   const AESdecrypted = await decryptWithAES(
     RSAdecrypted,
-    process.env.AES_PASSPHRASE
+    decodeBase64(process.env.AES_PASSPHRASE as string)
   );
 
-  return AESdecrypted
+  return AESdecrypted;
 }
 
-async function generateRSAkeys(RSAmetadata) {
-  try {
-    const { privateKey, publicKey } = await generateRSAKeyPair(
-      RSAmetadata,
-      process.env.RSA_PASSPHRASE
-    );
-
-    console.log("BASE64_PRIVATE_KEY\n", Buffer.from(privateKey).toString('base64'))
-    
-    console.log("BASE64_PUBLIC_KEY\n", Buffer.from(publicKey).toString('base64'))
-
-  } catch (error) {
-    console.error("Error in RSA workflow:", error);
-  }
+function decodeBase64(input: string): string {
+  return Buffer.from(input, "base64").toString("utf-8");
 }
-
-const RSAmetadata = {
-  name: "User",
-  email: "user@example.com",
-  version: "1.0",
-};
-
-generateRSAkeys(RSAmetadata);
-
-
-
+export { encryptMetadata, decryptMetadata };

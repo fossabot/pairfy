@@ -116,7 +116,23 @@ const main = async () => {
     if (!process.env.OGMIOS_KEY) {
       throw new Error("OGMIOS_KEY error");
     }
-    
+
+    if (!process.env.RSA_PRIVATE_KEY) {
+      throw new Error("RSA_PRIVATE_KEY error");
+    }
+
+    if (!process.env.RSA_PUBLIC_KEY) {
+      throw new Error("RSA_PUBLIC_KEY error");
+    }
+
+    if (!process.env.AES_PASSPHRASE) {
+      throw new Error("AES_PASSPHRASE error");
+    }
+
+    if (!process.env.RSA_PASSPHRASE) {
+      throw new Error("RSA_PASSPHRASE error");
+    }
+
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,
