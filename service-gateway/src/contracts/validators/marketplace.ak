@@ -142,11 +142,39 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             
             let must_be_state = state == 1
             
-            let must_be_time = shipping_until == shipping_until //WARNING
+            let must_be_time = when self.validity_range.lower_bound.bound_type is {
+              interval.Finite(tx_earliest_time) -> tx_earliest_time < shipping_until 
+              _ -> False
+              }
+            
+            let must_be_signed = list.has(self.extra_signatories, seller)
+
+            //One of the transaction inputs belongs to the statemachine.
+            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
+
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
+
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
+
+            let must_be_value = assets.lovelace_of(sm_output.value) == price + collateral            
+            
+            //verification of the new datum.
+            let new_data: Data = StateMachineDatum {
+                          state: 2,
+                        }
+            
+            //verification of the new datum.
+            let must_be_datum = InlineDatum(new_data) == sm_output.datum
             
             and {
               must_be_state?,
-              must_be_time?
+              must_be_time?,
+              must_be_signed?,
+              must_be_policy?,
+              must_be_value?,
+              must_be_datum?
             }
           }
         }

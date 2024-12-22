@@ -96,7 +96,6 @@ const signMessage = async (mode) => {
 
 /** Starts the service that allows listening to global events when a wallet is connected. */
 const startWalletService = async () => {
-  
   Wallet.startInjectWalletListener()
 
   Wallet.addEventListener('enabledWallet', async (walletName) => {
@@ -151,14 +150,18 @@ const walletClient = () => {
   }
 }
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 
 const balanceTx = async (unbalancedTx) => {
   const utx = CardanoWasm.Transaction.from_hex(unbalancedTx)
 
-  console.log(utx)
+  console.log(
+    '/////////////////////////////////////////////////////////////////////////////////////////',
+  )
 
-  const tx = CardanoWasm.Transaction.new(utx.body(), utx.witness_set())
+  console.log('OLD BODY', utx.to_json())
+
+  const tx = CardanoWasm.Transaction.new(utx.body(), utx.witness_set(), utx.auxiliary_data())
 
   let txVkeyWitnesses = await enabledWalletAPI.signTx(
     Buffer.from(tx.to_bytes(), 'utf8').toString('hex'),
@@ -173,7 +176,11 @@ const balanceTx = async (unbalancedTx) => {
 
   newTransactionWitnessSet.set_vkeys(txVkeyWitnesses.vkeys())
 
-  const signedTx = CardanoWasm.Transaction.new(tx.body(), newTransactionWitnessSet)
+  const signedTx = CardanoWasm.Transaction.new(tx.body(), newTransactionWitnessSet, tx.auxiliary_data())
+
+  console.log(
+    '/////////////////////////////////////////////////////////////////////////////////////////',
+  )
 
   console.log('NEWBODY', signedTx.to_json())
 

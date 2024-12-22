@@ -39,14 +39,18 @@ async function getUtxo(threadtoken: string): Promise<ResponseType> {
         utxo: {},
       };
     } else {
-      let query: any = await axiosAPI.get(`/txs/${utxo.txHash}`);
+      let txInfo: any = await axiosAPI.get(`/txs/${utxo.txHash}`);
 
-      if (query.status === 200) {
+      if (txInfo.status === 200) {
         const data = Data.from(utxo.datum!, StateMachineDatum);
+
+        const metadata = await axiosAPI.get(`/txs/${utxo.txHash}/metadata`);
+
+        console.log(metadata.data);
 
         const payload = {
           ...utxo,
-          block_time: query.data.block_time,
+          block_time: txInfo.data.block_time,
           data,
         };
 

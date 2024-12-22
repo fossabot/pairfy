@@ -8,11 +8,11 @@
             </span>
         </Button>
 
-        <Button type="button" size="small" :disabled="disableDispatched" @click="onReturnFunds" variant="text">
-            <span>Dispatched</span>
+        <Button type="button" label="Dispatched" size="small" :disabled="disableDispatched" @click="onDispatchProduct" variant="text" :loading="dispatchProductLoading">
+         
         </Button>
 
-        <Button type="button" size="small" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
+        <Button type="button" size="small" label="Appeal" :disabled="true" variant="text"
             :loading="false" />
 
     </div>
@@ -30,9 +30,9 @@ const toast = useToast();
 
 const { getOrderData } = orderAPI();
 
-const { mutate: returnFunds, loading: returnFundsLoading, onDone: onReturnFundsDone, onError: onReturnFundsError } = useMutation(gql`
-      mutation($returnFundsVariable: ReturnFundsInput!) {
-        returnFunds(returnFundsInput: $returnFundsVariable) {
+const { mutate: dispatchProduct, loading: dispatchProductLoading, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
+      mutation($dispatchProductVariable: DispatchProductInput!) {
+        dispatchProduct(dispatchProductInput: $dispatchProductVariable) {
           success
           payload {
             cbor
@@ -44,18 +44,20 @@ const { mutate: returnFunds, loading: returnFundsLoading, onDone: onReturnFundsD
 })
 
 
-onReturnFundsDone(async result => {
+onDispatchProductDone(async result => {
     console.log(result.data);
 
     const response = result.data;
 
-    if (response.returnFunds.success === true) {
+    if (response.dispatchProduct.success === true) {
         try {
-            const { cbor } = response.returnFunds.payload;
+            const { cbor } = response.dispatchProduct.payload;
+
+            showSuccess(`Preparing Transaction`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`, 20000);
+            showSuccess(`Transaction submitted with hash: ${txHash}. The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -68,13 +70,13 @@ onReturnFundsDone(async result => {
 
 })
 
-onReturnFundsError(error => {
+onDispatchProductError(error => {
     showError(error)
 })
 
-const onReturnFunds = () => {
-    returnFunds({
-        "returnFundsVariable": {
+const onDispatchProduct = () => {
+    dispatchProduct({
+        "dispatchProductVariable": {
             order_id: getOrderData.value.id
         }
     })
@@ -104,6 +106,8 @@ onLockingFundsDone(async result => {
     if (response.lockingFunds.success === true) {
         try {
             const { cbor } = response.lockingFunds.payload;
+
+            showSuccess(`Processing Transaction`, 100000);
 
             const txHash = await balanceTx(cbor);
 
