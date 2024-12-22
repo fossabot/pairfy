@@ -64,13 +64,13 @@ async function decryptWithAES(encryptedData, passphrase) {
  * @returns {Promise<{ privateKey: string, publicKey: string }>}
  * - The private and public keys in armored format.
  */
-async function generateRSAKeyPair(name, email, version, passphrase) {
+async function generateRSAKeyPair(RSAmetadata, passphrase) {
   try {
     // Generate private key
     const { privateKey } = await openpgp.generateKey({
       type: "rsa",
       rsaBits: 4096,
-      userIDs: [{ name, email, version }],
+      userIDs: [RSAmetadata],
       passphrase,
     });
 
@@ -133,36 +133,59 @@ async function decryptWithRSA(encryptedMessage, privateKey, passphrase) {
   }
 }
 
-(async () => {
+async function encryptMetadata(publicKey, metadata) {
+  const AESencrypted = await encryptWithAES(
+    metadata,
+    process.env.AES_PASSPHRASE
+  );
+
+  const RSAencrypted = await encryptWithRSA(AESencrypted, publicKey);
+
+  return RSAencrypted;
+}
+
+async function decryptMetadata(RSAencrypted, privateKey) {
+  const RSAdecrypted = await decryptWithRSA(
+    RSAencrypted,
+    privateKey,
+    process.env.RSA_PASSPHRASE
+  );
+
+  const AESdecrypted = await decryptWithAES(
+    RSAdecrypted,
+    process.env.AES_PASSPHRASE
+  );
+
+  return AESdecrypted
+}
+
+async function generateRSAkeys(RSAmetadata) {
   try {
-    const name = "User";
-    const email = "user@example.com";
-    const version = "1.0";
-    const passphrase = process.env.RSA_PASSPHRASE;
-
     const { privateKey, publicKey } = await generateRSAKeyPair(
-      name,
-      email,
-      version,
-      passphrase
+      RSAmetadata,
+      process.env.RSA_PASSPHRASE
     );
 
-    const message = "This is a secure message.";
+    console.log("PRIVATE_KEY\n", privateKey);
 
-    const AESencrypted = await encryptWithAES(message, process.env.AES_PASSPHRASE);
+    console.log("PUBLIC_KEY\n", publicKey);
 
-    const RSAencrypted = await encryptWithRSA(AESencrypted, publicKey);
+    console.log("BASE64_PRIVATE_KEY\n", Buffer.from(privateKey).toString('base64'))
+    
+    console.log("BASE64_PUBLIC_KEY\n", Buffer.from(publicKey).toString('base64'))
 
-    const RSAdecrypted = await decryptWithRSA(
-      RSAencrypted,
-      privateKey,
-      passphrase
-    );
-
-    const AESdecrypted = await decryptWithAES(RSAdecrypted, process.env.AES_PASSPHRASE);
-
-    console.log(AESdecrypted);
   } catch (error) {
     console.error("Error in RSA workflow:", error);
   }
-})();
+}
+
+const RSAmetadata = {
+  name: "User",
+  email: "user@example.com",
+  version: "1.0",
+};
+
+generateRSAkeys(RSAmetadata);
+
+
+
