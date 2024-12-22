@@ -50,11 +50,18 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
 
     //////////////////////////////////////////////
     const shippingData = {
-          guide: "asdasd",
-    }
+      order_id: params.order_id,
+      guide: params.guide,
+      date: params.date,
+      website: params.website,
+      notes: params.notes,
+      version: "1.0"
+    };
 
-    const encrypted = await encryptMetadata("koke-kuku-kote");
+    const encrypted = await encryptMetadata(JSON.stringify(shippingData));
 
+    console.log(encrypted);
+    
     const metadata = {
       data: encrypted,
     };

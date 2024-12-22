@@ -1,6 +1,6 @@
 <template>
     <div class="pad">
-
+     
         <Button size="small" v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds">
             Accept Order
             <span v-if="pendingCountdown !== '00:00'">
@@ -8,12 +8,9 @@
             </span>
         </Button>
 
-        <Button type="button" label="Dispatched" size="small" :disabled="disableDispatched" @click="onDispatchProduct" variant="text" :loading="dispatchProductLoading">
-         
-        </Button>
+        <DispatchForm />
 
-        <Button type="button" size="small" label="Appeal" :disabled="true" variant="text"
-            :loading="false" />
+        <Button type="button" size="small" label="Appeal" :disabled="true" variant="text" :loading="false" />
 
     </div>
 </template>
@@ -21,6 +18,7 @@
 <script setup>
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
+import DispatchForm from '@/views/order/DispatchForm.vue';
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
@@ -29,60 +27,6 @@ import { balanceTx } from "@/api/wallet";
 const toast = useToast();
 
 const { getOrderData } = orderAPI();
-
-const { mutate: dispatchProduct, loading: dispatchProductLoading, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
-      mutation($dispatchProductVariable: DispatchProductInput!) {
-        dispatchProduct(dispatchProductInput: $dispatchProductVariable) {
-          success
-          payload {
-            cbor
-          }
-        }
-      }
-`, {
-    clientId: 'gateway'
-})
-
-
-onDispatchProductDone(async result => {
-    console.log(result.data);
-
-    const response = result.data;
-
-    if (response.dispatchProduct.success === true) {
-        try {
-            const { cbor } = response.dispatchProduct.payload;
-
-            showSuccess(`Preparing Transaction`, 100000);
-
-            const txHash = await balanceTx(cbor);
-
-            showSuccess(`Transaction submitted with hash: ${txHash}. The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
-
-            console.log(`Transaction submitted with hash: ${txHash}`);
-
-        } catch (err) {
-            console.error(err);
-
-            showError(err);
-        }
-    }
-
-})
-
-onDispatchProductError(error => {
-    showError(error)
-})
-
-const onDispatchProduct = () => {
-    dispatchProduct({
-        "dispatchProductVariable": {
-            order_id: getOrderData.value.id
-        }
-    })
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////
 
 const { mutate: lockingFunds, loading: lockingFundsLoading, onDone: onLockingFundsDone, onError: onLockingFundsError } = useMutation(gql`
       mutation($lockingFundsVariable: LockingFundsInput!) {
@@ -111,7 +55,7 @@ onLockingFundsDone(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}. The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess(`Transaction submitted with hash: ${txHash} The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -138,7 +82,6 @@ const onLockingFunds = () => {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
 const currentState = computed(() => getOrderData.value?.contract_state);
 

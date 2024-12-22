@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="sellerDialog" modal header="Please Login" :style="{ width: '60vw', height: '90vh' }"
+    <Dialog v-model:visible="loginDialog" modal header="Please Login" :style="{ width: '60vw', height: '90vh' }"
         :draggable="false">
         <template #header>
 
@@ -93,15 +93,15 @@ const loginFormErrors = ref({
 
 const sellerAddress = ref(null);
 
-const sellerDialog = ref(false);
+const loginDialog = ref(false);
 
-const showSellerDialog = (e) => {
-    sellerDialog.value = e;
+const showloginDialog = (e) => {
+    loginDialog.value = e;
 }
 
 const watchCurrentSeller = watch(() => getCurrentSeller, (data) => {
     if (data.value?.id) {
-        showSellerDialog(false)
+        showloginDialog(false)
     }
 }, { immediate: true })
 
@@ -111,7 +111,7 @@ const watchCurrentRoute = watch(
     ({ params, query }) => {
         if (query.mode === 'seller') {
             if (!getCurrentSeller.value) {
-                showSellerDialog(true)
+                showloginDialog(true)
             }
         }
 
@@ -171,7 +171,7 @@ const doLogin = async () => {
         const { ok, response } = res;
 
         if (ok) {
-            showSellerDialog(false)
+            showloginDialog(false)
             showSuccess("Seller Logged")
             location.reload()
         } else {

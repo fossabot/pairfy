@@ -49,6 +49,7 @@ import Skeleton from 'primevue/skeleton';
 import Rating from 'primevue/rating';
 import Drawer from 'primevue/drawer';
 import Popover from 'primevue/popover';
+import DatePicker from 'primevue/datepicker';
 
 import Tooltip from 'primevue/tooltip';
 import Ripple from 'primevue/ripple';
@@ -116,6 +117,7 @@ app.component('Skeleton', Skeleton);
 app.component('Rating', Rating);
 app.component('Drawer', Drawer);
 app.component('Popover', Popover);
+app.component('DatePicker', DatePicker);
 
 
 

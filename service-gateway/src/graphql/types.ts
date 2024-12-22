@@ -161,6 +161,10 @@ input LockingFundsInput {
 
 input DispatchProductInput {
   order_id: String!
+  guide: String!
+  date: String!
+  website: String!
+  notes: String!
 } 
 
 type Mutation {

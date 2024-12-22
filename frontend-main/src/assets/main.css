@@ -50,10 +50,6 @@
   font-size: var(--text-size-b) !important;
 }
 
-.p-overflow-hidden {
-  overflow: initial !important;
-}
-
 .p-drawer-title {
   font-size: var(--text-size-c) !important;
 }
@@ -74,7 +70,7 @@
   font-size: var(--text-size-c) !important;
 }
 
-.p-inputtext{
+.p-inputtext, .p-textarea{
   font-size: var(--text-size-1) !important;
 }
 
