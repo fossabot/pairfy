@@ -25,8 +25,11 @@
                     <span>Transactions</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
-
-                <span :style="{ color: getOrderLoading ? 'red' : 'green' }">{{ getOrderLoading }}</span>
+                <div class="nav-scanner flex">
+                    Scanning
+                    <span v-if="!getOrderLoading" class="loader"></span>
+                    <span v-if="getOrderLoading" class="loader" :class="{ actived: getOrderLoading }"></span>
+                </div>
             </div>
             <div class="grid">
                 <!--SUMMARY-->
@@ -201,7 +204,8 @@
                                                         <div class="flex" @click="openWebsite(shippingData.website)">
                                                             <i class="pi pi-globe" />
                                                         </div>
-                                                        <div style="padding-right: initial;"> {{ shippingData.guide }}
+                                                        <div style="padding-right: initial; cursor: initial;"> {{
+                                                            shippingData.guide }}
                                                         </div>
                                                     </span>
                                                 </div>
@@ -373,7 +377,9 @@ const queryVariablesRef = ref({
 })
 const queryEnabled = ref(false)
 
-const { result: getOrderResult, loading: getOrderLoading, onError: onGetOrderError } = useQuery(gql`
+const getOrderLoading = ref(false);
+
+const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
         order {
@@ -417,7 +423,7 @@ query ($getOrderVariable: GetOrderInput!) {
     () => ({
         enabled: queryEnabled.value,
         clientId: 'gateway',
-        pollInterval: 15000
+        pollInterval: 30000
     })
 );
 
@@ -506,6 +512,8 @@ const shippingStatus = computed(() => {
 
 const unwatchOrder = watch(getOrderResult, value => {
     if (value) {
+        getOrderLoading.value = true;
+
         const ORDER = value.getOrder.order;
 
         const SHIPPING = JSON.parse(value.getOrder.shipping)
@@ -539,6 +547,8 @@ const unwatchOrder = watch(getOrderResult, value => {
         if (editor) {
             editor.value.commands.setContent(JSON.parse(ORDER.product_features));
         }
+
+        setTimeout(() => getOrderLoading.value = false, 1000);
     }
 }, { immediate: true })
 
@@ -694,7 +704,10 @@ onUnmounted(() => {
 </script>
 
 <style lang="css" scoped>
-.notes {}
+.notes {
+    overflow: hidden;
+    word-break: break-word;
+}
 
 .divider {
     border-color: var(--border-b);
@@ -753,6 +766,7 @@ onUnmounted(() => {
 .nav-item .nav-item-border.selected {
     background: var(--primary-b);
 }
+
 
 .grid {
     display: grid;
@@ -921,8 +935,8 @@ onUnmounted(() => {
     height: 36px;
     justify-content: center;
     border-radius: 20px;
-    cursor: pointer;
     padding: 0 0.5rem;
+    cursor: pointer;
 }
 
 .returned {
@@ -1082,5 +1096,37 @@ onUnmounted(() => {
 ::v-deep(.editor-class) {
     line-height: 2.25rem;
     font-size: var(--text-size-0);
+}
+
+.nav-scanner {
+    margin-left: auto;
+    font-size: var(--text-size-1);
+}
+
+.loader {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+    border: 2px solid var(--text-b);
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader.actived {
+    border: 2px solid var(--green-a);
+    border-bottom-color: transparent;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>
