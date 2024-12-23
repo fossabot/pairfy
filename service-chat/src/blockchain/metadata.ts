@@ -110,25 +110,18 @@ async function decryptWithRSA(
  * @param metadata
  * @returns
  */
-async function encryptMetadata(
-  metadata: string,
-  version: string
-): Promise<string> {
-  if (version === "1.0") {
-    const AESencrypted = await encryptWithAES(
-      metadata,
-      decodeBase64(process.env.AES_PASSPHRASE as string)
-    );
+async function encryptMetadata(metadata: string): Promise<string> {
+  const AESencrypted = await encryptWithAES(
+    metadata,
+    decodeBase64(process.env.AES_PASSPHRASE as string)
+  );
 
-    const RSAencrypted = await encryptWithRSA(
-      AESencrypted,
-      decodeBase64(process.env.RSA_PUBLIC_KEY as string)
-    );
+  const RSAencrypted = await encryptWithRSA(
+    AESencrypted,
+    decodeBase64(process.env.RSA_PUBLIC_KEY as string)
+  );
 
-    return Buffer.from(RSAencrypted).toString("base64");
-  }
-
-  return "";
+  return Buffer.from(RSAencrypted).toString("base64");
 }
 
 /**
@@ -189,7 +182,7 @@ function unwrapMetadata(metadataArray: string) {
   return {
     valid: true,
     label: label,
-    version: json_metadata.version,
+    version: json_metadata.v,
     metadata: decoded,
   };
 }

@@ -49,19 +49,21 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
     }
 
     //////////////////////////////////////////////
+    const PGPVersion = "1.0";
+
     const shippingData = {
       order_id: params.order_id,
       guide: params.guide,
       date: params.date,
       website: params.website,
       notes: params.notes,
-      v: "1.0",
+      version: PGPVersion,
     };
 
-    const encrypted = await encryptMetadata(JSON.stringify(shippingData));
+    const encrypted = await encryptMetadata(JSON.stringify(shippingData), PGPVersion);
 
     const metadata = {
-      v: "1.0",
+      version: PGPVersion,
       msg: chunkMetadata(encrypted, 64),
     };
 
