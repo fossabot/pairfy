@@ -198,10 +198,12 @@
                                                 <div class="created-item">
                                                     <span>Guide</span>
                                                     <span v-if="shippingData" class="guide flex">
-                                                        <div class="flex" @click="showNotesDialog(true)" v-tooltip.top="'Notes'">
+                                                        <div class="flex" @click="showNotesDialog(true)"
+                                                            v-tooltip.top="'Notes'">
                                                             <i class="pi pi-inbox" />
                                                         </div>
-                                                        <div class="flex" @click="openWebsite(shippingData.website)" v-tooltip.top="'Website'">
+                                                        <div class="flex" @click="openWebsite(shippingData.website)"
+                                                            v-tooltip.top="'Website'">
                                                             <i class="pi pi-globe" />
                                                         </div>
                                                         <div style="padding-right: initial; cursor: initial;"> {{
@@ -304,7 +306,7 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
-
+import { Buffer } from 'buffer'
 
 const { copyToClipboard, convertDate, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
 
@@ -516,14 +518,12 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         const ORDER = value.getOrder.order;
 
-        const SHIPPING = JSON.parse(value.getOrder.shipping)
-
-        shippingData.value = SHIPPING
-
         orderData.value = ORDER;
 
-        if (SHIPPING) {
-            deliveryDate.value = convertDate(SHIPPING.date, 0);
+        shippingData.value = JSON.parse(Buffer.from(value.getOrder.shipping, 'base64').toString("utf-8"))
+
+        if (shippingData.value) {
+            deliveryDate.value = convertDate(shippingData.value.date, 0);
         }
 
         setOrderData(ORDER);
@@ -573,8 +573,6 @@ let globalInterval;
 const updateGlobalCountdown = () => {
     globalTimeLeft.value = globalTimestamp.value - Date.now();
 };
-
-
 
 function formatTime(input) {
     let [minutes, seconds] = input.split(":").map(Number);

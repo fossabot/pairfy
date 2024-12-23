@@ -148,10 +148,10 @@ async function decryptMetadata(input: string | null) {
       decodeBase64(process.env.AES_PASSPHRASE as string)
     );
 
-    return AESdecrypted;
+    return Buffer.from(AESdecrypted).toString("base64");
   }
 
-  return null
+  return null;
 }
 
 function decodeBase64(input: string): string {
