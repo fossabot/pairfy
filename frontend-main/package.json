@@ -29,6 +29,7 @@
     "dayjs": "^1.11.13",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
+    "graphql-ws": "^5.16.0",
     "lucid-cardano": "^0.10.11",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.4",

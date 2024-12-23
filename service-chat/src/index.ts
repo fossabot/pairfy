@@ -49,6 +49,18 @@ const main = async () => {
       Mutation: {
         ...messages.Mutation,
       },
+      Subscription: {
+        newMessages: {
+          subscribe: async function* () {
+            let id = 0;
+
+            while (true) {
+              await new Promise((resolve) => setTimeout(resolve, 5000));
+              yield { newMessages: { id: id++, content: `Message ${id}` } };
+            }
+          },
+        },
+      },
     };
 
     const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -59,7 +71,7 @@ const main = async () => {
 
     const wsServer = new WebSocketServer({
       server: httpServer,
-      path: "/api/chat/subscriptions",
+      path: "/api/chat/graphql",
     });
 
     const serverCleanup = useServer({ schema }, wsServer);
@@ -119,7 +131,7 @@ const main = async () => {
         keepAlive: 100000,
       })
       .then(() => console.log("redisClient connected"))
-      .then(()=> redisChecker(redisClient))
+      .then(() => redisChecker(redisClient))
       .catch((err: any) => catcher(err));
 
     /////////////////////////////////////////////////////////////////////

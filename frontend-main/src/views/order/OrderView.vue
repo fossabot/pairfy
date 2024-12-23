@@ -520,10 +520,12 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         orderData.value = ORDER;
 
-        shippingData.value = JSON.parse(Buffer.from(value.getOrder.shipping, 'base64').toString("utf-8"))
+        const SHIPPING = value.getOrder.shipping;
 
-        if (shippingData.value) {
-            deliveryDate.value = convertDate(shippingData.value.date, 0);
+        if (SHIPPING) {
+            shippingData.value = JSON.parse(Buffer.from(SHIPPING, 'base64').toString("utf-8"))
+
+            deliveryDate.value = convertDate(SHIPPING.date, 0);
         }
 
         setOrderData(ORDER);

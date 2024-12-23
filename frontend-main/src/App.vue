@@ -13,7 +13,7 @@ import { convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToAD
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
-import { queryClient, gatewayClient, notificationClient } from './graphql/index';
+import { queryClient, gatewayClient, notificationClient, chatClient } from './graphql/index';
 import { onBeforeUnmount, provide } from 'vue';
 
 
@@ -22,7 +22,8 @@ provide(ApolloClients, {
   default: queryClient,
   query: queryClient,
   gateway: gatewayClient,
-  notification: notificationClient
+  notification: notificationClient,
+  chat: chatClient
 })
 
 

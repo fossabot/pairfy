@@ -22,6 +22,17 @@ type Mutation {
   updateMessage(updateMessageInput: UpdateMessageInput!): UpdateMessageResponse!
 }
 
+#///////////////////////////////////////////////// SUBSCRIPTIONS
+ 
+type Message {
+    id: ID!
+    content: String!
+  }
+
+type Subscription {
+    newMessages: Message!
+}
+
 `;
 
 export { typeDefs };
