@@ -1,7 +1,7 @@
 import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
 
-async function handlePending(
+async function handleShipping(
   connection: PoolConnection,
   threadtoken: string,
   timestamp: number,
@@ -11,27 +11,27 @@ async function handlePending(
   buyer_address: string,
   seller_address: string
 ) {
-  const statusLog = "pending";
+  const statusLog = "shipping";
 
   const updateQuery = `
     UPDATE orders
     SET scanned_at = ?,
         status_log = ?,
-        contract_address = ?,
         contract_state = ?,
-        pending_tx = ?,
-        pending_block = ?
+        shipping_tx = ?,
+        shipping_block = ?,
+        shipping_metadata = ?
     WHERE id = ?`;
 
-  const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
+  const shippingTx = utxo.txHash + "#" + utxo.outputIndex;
 
   await connection.execute(updateQuery, [
     timestamp,
     statusLog,
-    utxo.address,
     utxo.data.state,
-    pendingTx,
+    shippingTx,
     utxo.block_time,
+    utxo.metadata,
     threadtoken,
   ]);
 
@@ -41,24 +41,24 @@ async function handlePending(
     {
       id: getEventId(),
       type: "order",
-      title: "Payment Detected ✅",
+      title: "Product Shipped 📦",
       owner: buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken,
         buyer_address
       }),
-      message: `Payment for order (${threadtoken}) is being processed on the Cardano network. / Account / ${buyer_address}`,
+      message: `The seller has shipped your package from order (${threadtoken}) / Account / ${buyer_address}`,
     },
     {
       id: getEventId(),
       type: "order",
-      title: "New Purchase Order 🎉",
+      title: "Product Shipped 📦",
       owner: seller_id,
       data: JSON.stringify({
         threadtoken,
         seller_address
       }),
-      message: `Payment for order (${threadtoken}) is being processed on the Cardano network. / Account / ${seller_address}`,
+      message: `You have shipped the package of order (${threadtoken}) / Account / ${seller_address}`,
     },
   ];
 
@@ -83,4 +83,4 @@ async function handlePending(
   ]);
 }
 
-export { handlePending };
+export { handleShipping };

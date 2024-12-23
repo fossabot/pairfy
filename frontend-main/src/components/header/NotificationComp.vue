@@ -300,6 +300,7 @@ function setupAudio() {
     margin-top: 0.25rem;
     font-size: var(--text-size-1);
     cursor: pointer;
+    word-break: break-word;
 }
 
 .button {

@@ -4,6 +4,7 @@ import { getUtxo } from "../lib/index.js";
 import { handlePending } from "./pending.js";
 import { handleReturn } from "./return.js";
 import { handleLocking } from "./locking.js";
+import { handleShipping } from "./shipping.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -21,6 +22,8 @@ async function scanThreadToken(job: any) {
     const { code, utxo } = await getUtxo(threadtoken);
 
     console.log(code);
+
+    console.log(utxo);
 
     const timestamp = Date.now();
 
@@ -79,6 +82,18 @@ async function scanThreadToken(job: any) {
             seller_address
           );
           break;
+        case 2n:
+          await handleShipping(
+            connection,
+            threadtoken,
+            timestamp,
+            utxo,
+            seller_id,
+            buyer_pubkeyhash,
+            buyer_address,
+            seller_address
+            );
+          break;          
       }
     } else {
       const updateQuery = `

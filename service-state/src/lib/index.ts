@@ -25,9 +25,6 @@ async function getTxInfo(utxo: UTxO): Promise<GetTxInfoResponse> {
       blockFrostAPI.get(`/txs/${utxo.txHash}/metadata`),
     ]);
 
-    console.log(R1.data);
-    console.log(R2.data);
-
     if (R1.status === 200 && R2.status === 200) {
       const txInfo = R1.data as TransactionSchema;
       const txMetadata = R2.data as MetadataArray;
@@ -51,7 +48,7 @@ async function getTxInfo(utxo: UTxO): Promise<GetTxInfoResponse> {
 //////////////////////////////////////////////
 
 async function getUtxo(threadtoken: string): Promise<UtxoResponse> {
-  let result = {
+  let response = {
     code: 0,
     utxo: {},
   };
@@ -62,29 +59,27 @@ async function getUtxo(threadtoken: string): Promise<UtxoResponse> {
     );
 
     if (!getUtxo) {
-      result = {
+      response = {
         code: 404,
         utxo: {},
       };
     } else {
-      let txInfo: any = await getTxInfo(getUtxo);
+      let txInfo: GetTxInfoResponse = await getTxInfo(getUtxo);
 
-      const response = {
-        ...getUtxo,
-        block_time: txInfo.block_time,
-        metadata: txInfo.metadata,
-        data: Data.from(getUtxo.datum!, StateMachineDatum),
-      };
-
-      result = {
+      response = {
         code: 200,
-        utxo: response,
+        utxo: {
+          ...getUtxo,
+          block_time: txInfo.block_time,
+          metadata: JSON.stringify(txInfo.metadata),
+          data: Data.from(getUtxo.datum!, StateMachineDatum),
+        },
       };
     }
   } catch (err: any) {
     logger.error(err);
   } finally {
-    return result;
+    return response;
   }
 }
 
