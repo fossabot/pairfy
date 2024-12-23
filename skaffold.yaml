@@ -61,15 +61,15 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .              
-    - image: pairfy/service-session
-      context: service-session
+            dest: .       
+    - image: pairfy/service-chat
+      context: service-chat
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .            
+            dest: .                                 
     - image: pairfy/service-query
       context: service-query
       docker:

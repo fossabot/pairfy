@@ -1,45 +1,19 @@
 import express from "express";
-import http from "http";
 import cors from "cors";
 import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { catcher, errorEvents, logger } from "./utils/index.js";
-import { database } from "./db/client.js";
+import { catcher, errorEvents, logger, redisChecker } from "./utils/index.js";
 import { typeDefs } from "./graphql/types.js";
 import { agentMiddleware } from "./middleware/agent.js";
 import { requireAuth } from "./middleware/required.js";
 import { redisClient } from "./db/redis.js";
 import { messages } from "./graphql/resolvers.js";
-
-const app = express();
-
-const httpServer = http.createServer(app);
-
-const resolvers = {
-  Query: {
-    ...messages.Query
-  },
-  Mutation: {
-    ...messages.Mutation,
-  },
-};
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  formatError: (error) => {
-    logger.error(error);
-
-    return {
-      message: error.message,
-      details: error.message,
-      code: "INTERNAL_SERVER_ERROR",
-    };
-  },
-});
+import { createServer } from "http";
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import { WebSocketServer } from "ws";
+import { useServer } from "graphql-ws/lib/use/ws";
 
 const main = async () => {
   try {
@@ -66,6 +40,56 @@ const main = async () => {
     if (!process.env.REDIS_HOST) {
       throw new Error("REDIS_HOST error");
     }
+    ///////////////////////////////////////////////////////////////
+
+    const resolvers = {
+      Query: {
+        ...messages.Query,
+      },
+      Mutation: {
+        ...messages.Mutation,
+      },
+    };
+
+    const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+    const app = express();
+
+    const httpServer = createServer(app);
+
+    const wsServer = new WebSocketServer({
+      server: httpServer,
+      path: "/api/chat/subscriptions",
+    });
+
+    const serverCleanup = useServer({ schema }, wsServer);
+
+    const server = new ApolloServer({
+      schema,
+      plugins: [
+        ApolloServerPluginDrainHttpServer({ httpServer }),
+        {
+          async serverWillStart() {
+            return {
+              async drainServer() {
+                await serverCleanup.dispose();
+              },
+            };
+          },
+        },
+      ],
+      formatError: (error) => {
+        logger.error(error);
+
+        return {
+          message: error.message,
+          details: error.message,
+          code: "INTERNAL_SERVER_ERROR",
+        };
+      },
+    });
+
+    /////////////////////////////////////////////////////////////////
 
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
@@ -84,7 +108,6 @@ const main = async () => {
       optionsSuccessStatus: 204,
     };
 
-
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
 
     ////////////////////////////////////////////////////////////////////
@@ -96,18 +119,8 @@ const main = async () => {
         keepAlive: 100000,
       })
       .then(() => console.log("redisClient connected"))
+      .then(()=> redisChecker(redisClient))
       .catch((err: any) => catcher(err));
-
-    const redisCheck = setInterval(async () => {
-      try {
-        await redisClient.client.ping();
-        console.log("Redis Online");
-      } catch (err) {
-        logger.error("REDIS", err);
-        clearInterval(redisCheck);
-      }
-    }, 60_000);
-
 
     /////////////////////////////////////////////////////////////////////
 
@@ -128,7 +141,7 @@ const main = async () => {
       expressMiddleware(server, {
         context: async ({ req }) => ({
           sellerData: req.sellerData || null,
-          userData: req.userData || null
+          userData: req.userData || null,
         }),
       })
     );
