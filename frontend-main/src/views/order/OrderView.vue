@@ -1,5 +1,15 @@
 <template>
-    <div class="wrap">
+    <div class="body">
+        <Dialog v-model:visible="notesDialog" modal header="Notes" :style="{ width: '20vw', height: '50vh' }"
+            :draggable="false">
+            <template #header>
+
+            </template>
+            <div class="notes">
+                {{ shippingData.notes }}
+            </div>
+        </Dialog>
+
         <SellerLogin />
         <div class="container">
             <div class="nav flex">
@@ -182,15 +192,15 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span class="guide flex">
-
-                                                        <div class="flex" @click="openWebsite(shippingData.website)">
+                                                    <span v-if="shippingData" class="guide flex">
+                                                        <div class="flex" @click="showNotesDialog(true)">
                                                             <i class="pi pi-inbox" />
                                                         </div>
                                                         <div class="flex" @click="openWebsite(shippingData.website)">
                                                             <i class="pi pi-globe" />
                                                         </div>
-                                                       <div style="padding-right: initial;"> {{ shippingData.guide }}</div>
+                                                        <div style="padding-right: initial;"> {{ shippingData.guide }}
+                                                        </div>
                                                     </span>
                                                 </div>
                                             </div>
@@ -301,6 +311,12 @@ const route = useRoute();
 const router = useRouter();
 
 const currentNav = ref(0);
+
+const notesDialog = ref(false);
+
+const showNotesDialog = (e) => {
+    notesDialog.value = e
+}
 
 const summaryTitle = ref({
     buyer: "Preparing your product, Time Remaining ",
@@ -463,8 +479,6 @@ const shippingData = ref(null);
 
 const deliveryDate = ref('-');
 
-const trackingGuide = ref('-');
-
 const isFinished = ref(false);
 
 const shippingStatus = computed(() => {
@@ -488,7 +502,7 @@ const shippingStatus = computed(() => {
     return "-"
 });
 
-watch(getOrderResult, value => {
+const unwatchOrder = watch(getOrderResult, value => {
     if (value) {
         const ORDER = value.getOrder.order;
 
@@ -667,6 +681,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     editor.value.destroy()
+    unwatchOrder()
 })
 
 onUnmounted(() => {
@@ -675,6 +690,8 @@ onUnmounted(() => {
 </script>
 
 <style lang="css" scoped>
+.notes {}
+
 .divider {
     border-color: var(--border-b);
     background: var(--border-b);
@@ -682,7 +699,7 @@ onUnmounted(() => {
     height: 1px;
 }
 
-.wrap {
+.body {
     display: flex;
     justify-content: center;
     background: var(--background-c);
