@@ -198,10 +198,10 @@
                                                 <div class="created-item">
                                                     <span>Guide</span>
                                                     <span v-if="shippingData" class="guide flex">
-                                                        <div class="flex" @click="showNotesDialog(true)">
+                                                        <div class="flex" @click="showNotesDialog(true)" v-tooltip.top="'Notes'">
                                                             <i class="pi pi-inbox" />
                                                         </div>
-                                                        <div class="flex" @click="openWebsite(shippingData.website)">
+                                                        <div class="flex" @click="openWebsite(shippingData.website)" v-tooltip.top="'Website'">
                                                             <i class="pi pi-globe" />
                                                         </div>
                                                         <div style="padding-right: initial; cursor: initial;"> {{
