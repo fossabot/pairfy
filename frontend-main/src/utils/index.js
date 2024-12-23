@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export function formatWithDots(str, reduce) {
   const len = str.length
 
@@ -12,10 +14,10 @@ export function formatWithDots(str, reduce) {
 
 export function reduceByLength(input, length) {
   if (input.length > length) {
-    return input.slice(0, length) + "..."; 
+    return input.slice(0, length) + '...'
   }
-  
-  return input;
+
+  return input
 }
 
 export function formatCurrency(value) {
@@ -97,12 +99,27 @@ export function convertLovelaceToUSD(lovelace, adaPrice) {
   return Math.round(amountInUSD)
 }
 
-
 export async function copyToClipboard(text) {
   try {
-    await navigator.clipboard.writeText(text);
-    console.log("Text copied to clipboard:", text);
+    await navigator.clipboard.writeText(text)
+    console.log('Text copied to clipboard:', text)
   } catch (err) {
-    console.error("Failed to copy text: ", err);
+    console.error('Failed to copy text: ', err)
   }
+}
+
+export const convertDate = (timestamp, type) => {
+  let format = 'YYYY-MM-DD'
+
+  if (type === 1) {
+    format = 'YYYY-MM-DD mm:ss'
+  }
+
+  if (type === 2) {
+    format = 'YYYY-MM-DD / hh:mm:ss'
+  }
+
+  const date = dayjs(parseInt(timestamp))
+
+  return date.format(format)
 }

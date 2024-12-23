@@ -71,13 +71,13 @@
                                         <div class="diamond">
 
                                             <template v-if="item.template === 'created'">
-                                                <span v-if="!pendingBlock">{{ item.number }}</span>
+                                                <span v-if="!createdStep">{{ item.number }}</span>
                                                 <span v-else>
                                                     <i class="pi pi-check" />
                                                 </span>
                                             </template>
                                             <template v-if="item.template === 'shipping'">
-                                                <span v-if="!lockingBlock">{{ item.number }}</span>
+                                                <span v-if="!shippingStep">{{ item.number }}</span>
                                                 <span v-else>
                                                     <i class="pi pi-check" />
                                                 </span>
@@ -174,7 +174,7 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Delivery date</span>
-                                                    <span>-</span>
+                                                    <span>{{ deliveryDate }}</span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Collateral</span>
@@ -182,7 +182,16 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span>{{ trackingGuide }}</span>
+                                                    <span class="guide flex">
+
+                                                        <div class="flex" @click="openWebsite(shippingData.website)">
+                                                            <i class="pi pi-inbox" />
+                                                        </div>
+                                                        <div class="flex" @click="openWebsite(shippingData.website)">
+                                                            <i class="pi pi-globe" />
+                                                        </div>
+                                                       <div style="padding-right: initial;"> {{ shippingData.guide }}</div>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </template>
@@ -273,14 +282,15 @@ import headerAPI from "@/components/header/api";
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
-import ChatComp from "@/views/order/ChatComp.vue"; 
+import ChatComp from "@/views/order/ChatComp.vue";
 import { ref, watch, computed, inject, onMounted, onUnmounted, onBeforeUnmount, nextTick } from 'vue';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
 
-const { copyToClipboard, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
+
+const { copyToClipboard, convertDate, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
 
 const { getCurrentSeller, getCurrentUser } = headerAPI();
 
@@ -375,6 +385,8 @@ query ($getOrderVariable: GetOrderInput!) {
             shipping_until
             pending_tx
             pending_block
+            shipping_tx
+            shipping_block
         }
         
         shipping
@@ -423,17 +435,35 @@ const statusLog = ref("created");
 
 const orderPayment = ref(null);
 
-const pendingBlock = ref(null);
+const createdStep = computed(() => {
+    if (orderData.value?.pending_block) {
+        return true
+    }
 
-const lockingBlock = ref(null);
+    return false
+});
 
-const shippingBlock = ref(null);
+
+const shippingStep = computed(() => {
+    if (orderData.value?.shipping_block) {
+        return true
+    }
+
+    return false
+});
+
 
 const contractFiat = ref(0);
 
 const contractPrice = ref(0);
 
 const contractCollateral = ref(0);
+
+const shippingData = ref(null);
+
+const deliveryDate = ref('-');
+
+const trackingGuide = ref('-');
 
 const isFinished = ref(false);
 
@@ -449,7 +479,7 @@ const shippingStatus = computed(() => {
     }
 
     if (state === 2) {
-        return "the package has been sent"
+        return "the package has been dispatched"
     }
 
     if (state === 3) {
@@ -458,36 +488,38 @@ const shippingStatus = computed(() => {
     return "-"
 });
 
-const trackingGuide = ref("-");
-
 watch(getOrderResult, value => {
     if (value) {
-        const order = value.getOrder.order;
+        const ORDER = value.getOrder.order;
 
-        orderData.value = order;
+        const SHIPPING = JSON.parse(value.getOrder.shipping)
 
-        setOrderData(order);
+        shippingData.value = SHIPPING
 
-        isFinished.value = order.finished;
+        orderData.value = ORDER;
 
-        statusLog.value = order.status_log;
+        deliveryDate.value = convertDate(SHIPPING.date, 0);
 
-        orderPayment.value = getPaymentStatus(order.pending_block)
+        setOrderData(ORDER);
 
-        contractPrice.value = convertLovelaceToADA(order.contract_price);
+        isFinished.value = ORDER.finished;
 
-        contractCollateral.value = convertLovelaceToADA(order.contract_collateral);
+        statusLog.value = ORDER.status_log;
 
-        pendingBlock.value = order.pending_block;
+        orderPayment.value = getPaymentStatus(ORDER.pending_block)
 
-        pendingTx.value = order.pending_tx || pendingTx.value;
+        contractPrice.value = convertLovelaceToADA(ORDER.contract_price);
 
-        contractFiat.value = convertLovelaceToUSD(order.contract_price, order.ada_price)
+        contractCollateral.value = convertLovelaceToADA(ORDER.contract_collateral);
 
-        globalTimestamp.value = getTimestamp(order);
+        pendingTx.value = ORDER.pending_tx || pendingTx.value;
+
+        contractFiat.value = convertLovelaceToUSD(ORDER.contract_price, ORDER.ada_price)
+
+        globalTimestamp.value = getTimestamp(ORDER);
 
         if (editor) {
-            editor.value.commands.setContent(JSON.parse(order.product_features));
+            editor.value.commands.setContent(JSON.parse(ORDER.product_features));
         }
     }
 }, { immediate: true })
@@ -517,17 +549,17 @@ const updateGlobalCountdown = () => {
 
 
 function formatTime(input) {
-  let [minutes, seconds] = input.split(":").map(Number);
+    let [minutes, seconds] = input.split(":").map(Number);
 
-  const hours = Math.floor(minutes / 60);
-  minutes = minutes % 60;
+    const hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
 
-  minutes += Math.floor(seconds / 60);
-  seconds = seconds % 60;
+    minutes += Math.floor(seconds / 60);
+    seconds = seconds % 60;
 
-  minutes = Math.min(minutes, 99);
+    minutes = Math.min(minutes, 99);
 
-  return `${hours}h : ${minutes}m : ${seconds}s`;
+    return `${hours}h : ${minutes}m : ${seconds}s`;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -596,7 +628,6 @@ const getPaymentStatus = (pending_block) => {
 }
 
 const getTimestamp = (order) => {
-    console.log("contract_state", order.contract_state)
     if (order.contract_state === null) {
         return order.watch_until
     }
@@ -612,10 +643,18 @@ const getTimestamp = (order) => {
     if (order.contract_state === 1) {
         return order.shipping_until
     }
+
+    if (order.contract_state === 2) {
+        return shippingData.value?.date
+    }
 }
 
 const openExplorer = () => {
     window.open(`https://${NETWORK}.cexplorer.io/tx/${pendingTx.value}`, '_blank');
+}
+
+const openWebsite = (website) => {
+    window.open(website, '_blank');
 }
 
 /////////////////////////////////////////////
@@ -857,6 +896,14 @@ onUnmounted(() => {
     color: var(--text-b);
 }
 
+.guide div {
+    height: 36px;
+    justify-content: center;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 0 0.5rem;
+}
+
 .returned {
     color: var(--red-a);
 }
@@ -867,7 +914,7 @@ onUnmounted(() => {
     padding-right: 1rem;
     overflow: hidden;
     cursor: pointer;
-    border: 1px solid var(--border-b);
+    outline: 1px solid var(--border-b);
 }
 
 .payment-label {

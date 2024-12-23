@@ -129,19 +129,29 @@ async function encryptMetadata(metadata: string): Promise<string> {
  * @param metadata
  * @returns
  */
-async function decryptMetadata(RSAencrypted: any) {
-  const RSAdecrypted = await decryptWithRSA(
-    RSAencrypted,
-    decodeBase64(process.env.RSA_PRIVATE_KEY as string),
-    decodeBase64(process.env.RSA_PASSPHRASE as string)
-  );
+async function decryptMetadata(input: string | null) {
+  if (!input) return null;
 
-  const AESdecrypted = await decryptWithAES(
-    RSAdecrypted,
-    decodeBase64(process.env.AES_PASSPHRASE as string)
-  );
+  const { valid, label, version, metadata } = unwrapMetadata(input);
 
-  return AESdecrypted;
+  if (!valid) return null;
+
+  if (version === "1.0") {
+    const RSAdecrypted = await decryptWithRSA(
+      metadata,
+      decodeBase64(process.env.RSA_PRIVATE_KEY as string),
+      decodeBase64(process.env.RSA_PASSPHRASE as string)
+    );
+
+    const AESdecrypted = await decryptWithAES(
+      RSAdecrypted,
+      decodeBase64(process.env.AES_PASSPHRASE as string)
+    );
+
+    return AESdecrypted;
+  }
+
+  return null
 }
 
 function decodeBase64(input: string): string {
@@ -158,6 +168,23 @@ function chunkMetadata(str: string, size: number): string[] {
   }
 
   return chunks;
+}
+
+function unwrapMetadata(metadataArray: string) {
+  const parsed = JSON.parse(metadataArray);
+
+  const { label, json_metadata } = parsed[0];
+
+  const chuncks = json_metadata.msg.join("");
+
+  const decoded = Buffer.from(chuncks, "base64").toString("utf-8");
+
+  return {
+    valid: true,
+    label: label,
+    version: json_metadata.v,
+    metadata: decoded,
+  };
 }
 
 export { encryptMetadata, decryptMetadata, chunkMetadata };

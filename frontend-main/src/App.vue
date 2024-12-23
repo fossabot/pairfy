@@ -9,7 +9,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
-import { copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
@@ -34,7 +34,8 @@ provide('utils', {
   convertUSDToADA,
   convertLovelaceToADA,
   convertLovelaceToUSD,
-  copyToClipboard
+  copyToClipboard,
+  convertDate
 });
 
 const { currentUser, currentSeller } = headerAPI();
@@ -53,9 +54,9 @@ startWalletService()
   .then(() => console.info("WALLET_SERVICE"))
   .catch((err) => console.error(err));
 
-  onBeforeUnmount(()=>{
-    stopWalletService()
-  })
+onBeforeUnmount(() => {
+  stopWalletService()
+})
 </script>
 
 

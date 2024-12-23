@@ -55,9 +55,11 @@
 
   --p-divider-horizontal-margin: 1rem 0 !important;
 
- --p-tag-font-size: var(--text-size-1) !important;
- 
- --p-button-primary-color: var(--text-a) !important;
+  --p-tag-font-size: var(--text-size-1) !important;
+
+  --p-button-primary-color: var(--text-a) !important;
+
+  --p-icon-size: var(--text-size-2) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,11 +85,11 @@
   --background-a: #ffffff;
   --background-b: #f2f4f7;
   --background-c: #181a20;
-  
+
   --black-a: #181a20;
 
   --text-a: #0f1111;
-  --text-b: #848E9C;
+  --text-b: #848e9c;
   --text-c: var(--p-surface-400);
   --text-w: #ffffff;
 
@@ -109,9 +111,8 @@
   --text-size-6: 40px;
   --text-size-7: 56px;
 
-
   --border-a: #e2e8f0;
-  --border-b: #2B3139; 
+  --border-b: #2b3139;
 
   --red-a: #f43f5e;
   --green-a: #10b981;

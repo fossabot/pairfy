@@ -22,9 +22,11 @@ const getOrder = async (_: any, args: any, context: any) => {
 
       const { shipping_metadata } = row[0];
 
+      const shippingMetadata = await decryptMetadata(shipping_metadata);
+
       return {
         order: row[0],
-        shipping: null,
+        shipping: shippingMetadata,
         address: null,
       };
     }
