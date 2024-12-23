@@ -121,7 +121,7 @@ async function encryptMetadata(metadata: string): Promise<string> {
     decodeBase64(process.env.RSA_PUBLIC_KEY as string)
   );
 
-  return RSAencrypted;
+  return Buffer.from(RSAencrypted).toString("base64");
 }
 
 /**

@@ -24,10 +24,9 @@
 
 
             <div class="dialog-msg">
-                <Message size="small" severity="info" icon="pi pi-info-circle">
-                    The transaction is valid for 5 minutes. Funds will be released in 60 minutes if the seller delays
-                    preparing your
-                    order.
+                <Message size="small" severity="warn" icon="pi pi-info-circle">
+                    The transaction is valid for 5 minutes and funds will be released in 60 minutes if the seller delays
+                    preparing your order.
                 </Message>
             </div>
 
@@ -152,7 +151,7 @@ const computedTotalFiat = computed(() => {
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "Product In Stock" : "Out Stock";
+    return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
 const showBuyDialog = ref(false);
@@ -241,10 +240,10 @@ const onConfirmedBuy = () => {
 }
 
 .buy-legend {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     font-weight: 400;
     margin-top: 1rem;
-    color: var(--text-b);
+  
 }
 
 .buy-brand {

@@ -1,6 +1,6 @@
 <template>
     <Dialog v-model:visible="dispatchDialog" modal header="Dispatched Form" :style="{ width: '60vw', height: '90vh' }"
-        :draggable="false" :blockScroll="true">
+        :draggable="false" :blockScroll="true" :dismissableMask="true">
         <template #header>
 
         </template>
@@ -73,6 +73,8 @@ import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
 import { reactive } from "vue";
 
+const toast = useToast();
+
 const { getOrderData } = orderAPI();
 
 const dispatchForm = reactive({
@@ -89,7 +91,7 @@ const dispatchFormErrors = reactive({
     notes: false,
 });
 
-const dispatchDialog = ref(true);
+const dispatchDialog = ref(false);
 
 const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
 
@@ -116,7 +118,7 @@ onDispatchProductDone(async result => {
         try {
             const { cbor } = response.dispatchProduct.payload;
 
-            showSuccess(`Preparing Transaction`, 100000);
+            showSuccess(`Preparing the transaction to the network the process takes a few minutes.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
@@ -155,6 +157,13 @@ const onDispatchProduct = () => {
     })
 }
 
+const showSuccess = (content, time) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 
 </script>
 

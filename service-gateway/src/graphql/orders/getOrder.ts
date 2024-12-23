@@ -8,8 +8,6 @@ const getOrder = async (_: any, args: any, context: any) => {
   
     const params = args.getOrderInput;
   
-    console.log(params);
-  
     let connection = null;
   
     try {

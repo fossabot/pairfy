@@ -55,16 +55,16 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
       date: params.date,
       website: params.website,
       notes: params.notes,
-      version: "1.0"
+      version: "1.0",
     };
 
     const encrypted = await encryptMetadata(JSON.stringify(shippingData));
 
-    console.log(encrypted);
-    
     const metadata = {
       data: encrypted,
     };
+
+    console.log(metadata);
 
     const BUILDER = await shippingTransactionBuilder(
       SELLER.address,
