@@ -1114,7 +1114,7 @@ onUnmounted(() => {
 }
 
 .loader.actived {
-    border: 2px solid var(--green-a);
+    border: 2px solid var(--primary-b);
     border-bottom-color: transparent;
 }
 
