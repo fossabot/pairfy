@@ -151,7 +151,7 @@ async function shippingTransactionBuilder(
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
     .validTo(Number(validToMs))
-    .attachMetadata(300, metadata)
+    .attachMetadata(1, metadata)
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: txCollateral,

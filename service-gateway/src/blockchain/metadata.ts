@@ -147,4 +147,17 @@ async function decryptMetadata(RSAencrypted: any) {
 function decodeBase64(input: string): string {
   return Buffer.from(input, "base64").toString("utf-8");
 }
-export { encryptMetadata, decryptMetadata };
+
+function chunkMetadata(str: string, size: number): string[] {
+  if (!str || size <= 0) return [];
+
+  const chunks: string[] = [];
+
+  for (let i = 0; i < str.length; i += size) {
+    chunks.push(str.slice(i, i + size));
+  }
+
+  return chunks;
+}
+
+export { encryptMetadata, decryptMetadata, chunkMetadata };

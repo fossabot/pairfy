@@ -1,7 +1,8 @@
 import { shippingTransactionBuilder } from "../../contracts/builders/shipping.js";
+import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
-import { decryptMetadata, encryptMetadata } from "../../blockchain/metadata.js";
+
 
 const dispatchProduct = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {
@@ -61,11 +62,9 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
     const encrypted = await encryptMetadata(JSON.stringify(shippingData));
 
     const metadata = {
-      data: encrypted,
+      msg: chunkMetadata(encrypted, 64),
     };
-
-    console.log(metadata);
-
+    
     const BUILDER = await shippingTransactionBuilder(
       SELLER.address,
       ORDER.contract_params,
