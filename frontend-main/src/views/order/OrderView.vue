@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <Dialog v-model:visible="notesDialog" modal header="Notes" :style="{ width: '20vw', height: '50vh' }"
-            :draggable="false">
+            :draggable="false" dismissableMask>
             <template #header>
 
             </template>
@@ -25,6 +25,8 @@
                     <span>Transactions</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
+
+                <span :style="{ color: getOrderLoading ? 'red' : 'green' }">{{ getOrderLoading }}</span>
             </div>
             <div class="grid">
                 <!--SUMMARY-->
@@ -371,7 +373,7 @@ const queryVariablesRef = ref({
 })
 const queryEnabled = ref(false)
 
-const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
+const { result: getOrderResult, loading: getOrderLoading, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
         order {
@@ -512,7 +514,9 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         orderData.value = ORDER;
 
-        deliveryDate.value = convertDate(SHIPPING.date, 0);
+        if (SHIPPING) {
+            deliveryDate.value = convertDate(SHIPPING.date, 0);
+        }
 
         setOrderData(ORDER);
 

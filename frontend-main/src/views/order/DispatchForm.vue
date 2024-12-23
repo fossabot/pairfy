@@ -22,7 +22,7 @@
                 <div class="row">
                     <IftaLabel>
                         <DatePicker v-model="dispatchForm.date" inputId="date" showIcon iconDisplay="input"
-                            variant="filled" fluid />
+                            variant="filled" fluid :minDate="new Date()" />
                         <label for="date">Delivery Date</label>
                     </IftaLabel>
                 </div>
@@ -51,16 +51,14 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Submit" fluid @click="onDispatchProduct" />
+                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="dispatchProductLoading" />
                 </div>
             </div>
         </div>
     </Dialog>
 
     <Button type="button" label="Dispatched" size="small" :disabled="disableDispatched" @click="dispatchDialog = true"
-        variant="text" :loading="dispatchProductLoading">
-
-    </Button>
+        variant="text" />
 </template>
 
 <script setup>
@@ -126,6 +124,8 @@ onDispatchProductDone(async result => {
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
+
+            dispatchDialog.value = false
         } catch (err) {
             console.error(err);
 
