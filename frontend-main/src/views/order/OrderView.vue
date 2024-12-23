@@ -1107,7 +1107,7 @@ onUnmounted(() => {
     width: 1rem;
     height: 1rem;
     margin-left: 0.5rem;
-    border: 2px solid var(--text-b);
+    border: 2px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
