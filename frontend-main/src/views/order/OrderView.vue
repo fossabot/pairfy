@@ -348,32 +348,37 @@ const queryEnabled = ref(false)
 const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
-        id
-        finished
-        scanned_at
-        status_log
-        ada_price
-        contract_address
-        contract_state
-        contract_price
-        contract_collateral
-        contract_units
-        product_id
-        product_name
-        product_price
-        product_collateral
-        product_sku
-        product_model
-        product_brand
-        product_features
-        product_bullet_list
-        product_discount
-        product_discount_value
-        watch_until
-        pending_until
-        shipping_until
-        pending_tx
-        pending_block
+        order {
+            id
+            finished
+            scanned_at
+            status_log
+            ada_price
+            contract_address
+            contract_state
+            contract_price
+            contract_collateral
+            contract_units
+            product_id
+            product_name
+            product_price
+            product_collateral
+            product_sku
+            product_model
+            product_brand
+            product_features
+            product_bullet_list
+            product_discount
+            product_discount_value
+            watch_until
+            pending_until
+            shipping_until
+            pending_tx
+            pending_block
+        }
+        
+        shipping
+        address
     }
 }
 `,
@@ -457,7 +462,7 @@ const trackingGuide = ref("-");
 
 watch(getOrderResult, value => {
     if (value) {
-        const order = value.getOrder;
+        const order = value.getOrder.order;
 
         orderData.value = order;
 

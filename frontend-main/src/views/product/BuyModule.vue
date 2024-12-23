@@ -34,7 +34,7 @@
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
-                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus />
+                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus :loading="createOrderLoading"/>
             </template>
         </Dialog>
 
@@ -160,7 +160,7 @@ const openBuyDialog = () => {
     showBuyDialog.value = true;
 }
 
-const { mutate: sendMessage, loading: sendMessageLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
+const { mutate: createOrder, loading: createOrderLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
 mutation($createOrderVariable: CreateOrderInput!){
     createOrder(createOrderInput: $createOrderVariable){
         success
@@ -215,7 +215,7 @@ onOrderCreated(async result => {
 
 
 const onConfirmedBuy = () => {
-    sendMessage({
+    createOrder({
         "createOrderVariable": {
             "product_id": getProductData.value.id,
             "product_units": selectedQuantity.value,

@@ -84,6 +84,13 @@ type Order {
   pending_block: String
   shipping_tx: String
   shipping_block: String
+  shipping_metadata: String
+}
+
+type getOrderResponse {
+  order: Order!
+  shipping: String
+  address: String
 }
 
 input GetBooksInput {
@@ -99,7 +106,7 @@ input GetOrderInput {
 } 
 
 type Query {
-  getOrder(getOrderInput: GetOrderInput!): Order!
+  getOrder(getOrderInput: GetOrderInput!): getOrderResponse!
   getOrders: String
   getBooks(getBooksInput: GetBooksInput!): GetBooksResponse!
 }

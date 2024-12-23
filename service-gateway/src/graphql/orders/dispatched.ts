@@ -3,7 +3,6 @@ import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
 
-
 const dispatchProduct = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {
     throw new Error("CREDENTIALS");
@@ -56,15 +55,16 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
       date: params.date,
       website: params.website,
       notes: params.notes,
-      version: "1.0",
+      v: "1.0",
     };
 
     const encrypted = await encryptMetadata(JSON.stringify(shippingData));
 
     const metadata = {
+      v: "1.0",
       msg: chunkMetadata(encrypted, 64),
     };
-    
+
     const BUILDER = await shippingTransactionBuilder(
       SELLER.address,
       ORDER.contract_params,
