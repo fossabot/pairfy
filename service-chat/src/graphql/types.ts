@@ -28,6 +28,8 @@ type Message {
     id: ID!
     agent: String!
     content: String!
+    seen: Boolean!
+    created_at: String!
   }
 
 type Subscription {

@@ -56,6 +56,8 @@ const main = async () => {
 
             const agents = ["buyer", "seller", "mediator"];
 
+            const seen = [false, true];
+
             while (true) {
               await new Promise((resolve) => setTimeout(resolve, 10000));
               yield {
@@ -63,6 +65,8 @@ const main = async () => {
                   id: id++,
                   agent: agents[Math.floor(Math.random() * agents.length)],
                   content: `Message ${id}`,
+                  seen: seen[Math.floor(Math.random() * seen.length)],
+                  created_at: Date.now(),
                 },
               };
             }

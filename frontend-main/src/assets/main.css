@@ -77,3 +77,7 @@
 .p-button-label {
   font-size: var(--text-size-1);
 }
+
+.p-tooltip {
+  font-size: var(--text-size-0);
+}
