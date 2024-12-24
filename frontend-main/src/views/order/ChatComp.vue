@@ -108,23 +108,19 @@ function handleVisibilityChange() {
     }
 };
 
-const insertNewline = () => {
-    const textarea = document.getElementById('chatInput');
-    const cursorPos = textarea.selectionStart;
-    chatInput.value =
-        chatInput.value.slice(0, cursorPos) +
-        '\n' +
-        chatInput.value.slice(cursorPos);
-
-    setTimeout(() => {
-        textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
-    });
-};
-
 const handleEnter = (event) => {
     if (event.key === 'Enter' && event.shiftKey) {
         event.preventDefault();
-        insertNewline();
+        const textarea = document.getElementById('chatInput');
+        const cursorPos = textarea.selectionStart;
+        chatInput.value =
+            chatInput.value.slice(0, cursorPos) +
+            '\n' +
+            chatInput.value.slice(cursorPos);
+
+        setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
+        });
     } else if (event.key === 'Enter') {
         event.preventDefault();
         console.log(chatInput.value);
