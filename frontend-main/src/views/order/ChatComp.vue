@@ -21,11 +21,13 @@ import gql from 'graphql-tag'
 import BuyerMessage from '@/views/order/BuyerMessage.vue'
 import SellerMessage from '@/views/order/SellerMessage.vue'
 import { useSubscription } from "@vue/apollo-composable"
-import { watch, ref, onBeforeUnmount, inject, nextTick } from "vue"
+import { watch, ref, onBeforeUnmount, inject, nextTick, onMounted, onUnmounted } from "vue"
 
 const { setupAudio } = inject('utils');
 
 const { playNotification } = setupAudio();
+
+const userViewing = ref(true);
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
@@ -61,7 +63,11 @@ const unwatchChat = watch(
         messages.value.push(data.newMessages);
 
         scrollToBottom();
-        //playNotification()
+
+        if (!userViewing.value) {
+            playNotification()
+        }
+
     },
     {
         lazy: false
@@ -79,6 +85,21 @@ function scrollToBottom() {
     })
 }
 
+function handleVisibilityChange() {
+    if (document.hidden) {
+        userViewing.value = false;
+    } else {
+        userViewing.value = true;
+    }
+};
+
+onMounted(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+});
+
+onUnmounted(() => {
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+});
 
 onBeforeUnmount(() => {
     unwatchChat()
