@@ -588,6 +588,7 @@ function formatTime(input) {
 }
 
 ////////////////////////////////////////////////////////////////
+
 const scanning = ref(false); 
 
 let scanInterval;
