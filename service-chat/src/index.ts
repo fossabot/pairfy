@@ -54,9 +54,17 @@ const main = async () => {
           subscribe: async function* () {
             let id = 0;
 
+            const agents = ["buyer", "seller", "mediator"];
+
             while (true) {
-              await new Promise((resolve) => setTimeout(resolve, 5000));
-              yield { newMessages: { id: id++, content: `Message ${id}` } };
+              await new Promise((resolve) => setTimeout(resolve, 10000));
+              yield {
+                newMessages: {
+                  id: id++,
+                  agent: agents[Math.floor(Math.random() * agents.length)],
+                  content: `Message ${id}`,
+                },
+              };
             }
           },
         },

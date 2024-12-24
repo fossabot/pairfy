@@ -26,6 +26,7 @@ type Mutation {
  
 type Message {
     id: ID!
+    agent: String!
     content: String!
   }
 
