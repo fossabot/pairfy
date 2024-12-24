@@ -41,7 +41,9 @@ const { playNotification } = setupAudio();
 
 const userViewing = ref(true);
 
-const chatInput = ref(null)
+const chatInput = ref(null);
+
+const inputFocus = ref(false);
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
@@ -129,6 +131,7 @@ onBeforeUnmount(() => {
     border: 2px solid var(--border-b);
     border-radius: 20px;
     overflow: hidden;
+    transition: 0.2s;
 }
 
 .content {
@@ -197,6 +200,11 @@ onBeforeUnmount(() => {
     background: color-mix(in srgb, black, transparent 95%);
     overflow: hidden;
     width: inherit;
+    transition: 0.2s;
+}
+
+.footer-input:focus-within {
+    border: 1px solid var(--primary-b);
 }
 
 .footer-input input {
@@ -205,6 +213,7 @@ onBeforeUnmount(() => {
     outline: none;
     border: none;
     color: inherit;
+    width: inherit;
 }
 
 .footer-input input::placeholder {
