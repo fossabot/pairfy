@@ -26,7 +26,7 @@ const isFocus = ref(false);
     border-radius: 4px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid var(--black-a);
+    border: 1px solid var(--background-c);
     overflow: hidden;
 
 }

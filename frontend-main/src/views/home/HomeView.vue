@@ -32,7 +32,7 @@
 
 <style lang="css" scoped>
 main {
-  background: var(--black-a);
+  background: var(--background-c);
   min-height: 100vh;
   display: grid;
   grid-template-columns: 20vw 1fr;

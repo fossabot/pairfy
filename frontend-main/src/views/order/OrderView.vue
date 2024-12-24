@@ -26,7 +26,7 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
                 <div class="nav-scanner flex">
-                    Scanning Network
+                    Network
                     <span v-if="!scanning" class="loader stopped" />
                     <span v-if="scanning" class="loader actived" />
                 </div>
@@ -484,7 +484,7 @@ const contractCollateral = ref(0);
 
 const shippingData = ref(null);
 
-const deliveryDate = ref('-');
+const deliveryDate = ref('');
 
 const isFinished = ref(false);
 
@@ -1105,7 +1105,7 @@ onUnmounted(() => {
 
 .nav-scanner {
     margin-left: auto;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     color: var(--text-b);
 }
 
