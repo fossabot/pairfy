@@ -10,9 +10,21 @@
             </div>
         </div>
         <div class="footer">
+            <div class="footer-top flex">
+                <button class="flex">
+                    <i class="pi pi-image" />
+                </button>
+            </div>
 
+            <div class="footer-bottom flex">
+                <div class="footer-input">
+                    <input type="text" v-model="chatInput" placeholder="Chat with the other party">
+                </div>
+                <div class="footer-send flex">
+                    <i class="pi pi-send" />
+                </div>
+            </div>
         </div>
-
     </div>
 </template>
 
@@ -28,6 +40,8 @@ const { setupAudio } = inject('utils');
 const { playNotification } = setupAudio();
 
 const userViewing = ref(true);
+
+const chatInput = ref(null)
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
@@ -110,10 +124,11 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .chat {
     width: 100%;
-    height: 700px;
+    min-height: 700px;
     background: var(--background-c);
     border: 2px solid var(--border-b);
     border-radius: 20px;
+    overflow: hidden;
 }
 
 .content {
@@ -153,7 +168,55 @@ onBeforeUnmount(() => {
 }
 
 .footer {
-    height: 100px;
     border-top: 1px solid var(--border-b);
+    width: inherit;
+}
+
+.footer-top {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 0;
+}
+
+.footer-top button {
+    background: transparent;
+    border: none;
+    color: var(--text-w);
+    justify-content: center;
+}
+
+.footer-bottom {
+    width: inherit;
+    padding: 1rem;
+}
+
+.footer-input {
+    border: 1px solid var(--border-b);
+    border-radius: 8px;
+    background: color-mix(in srgb, black, transparent 95%);
+    overflow: hidden;
+    width: inherit;
+}
+
+.footer-input input {
+    padding: 0.75rem;
+    background: inherit;
+    outline: none;
+    border: none;
+    color: inherit;
+}
+
+.footer-send {
+    justify-content: center;
+    width: 60px;
+    height: inherit;
+    cursor: pointer;
+}
+
+.footer-send i {
+    color: var(--text-w);
+    font-size: var(--text-size-3);
+    transform: rotate(45deg);
+
 }
 </style>
