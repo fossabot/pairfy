@@ -66,6 +66,7 @@ const unwatchChat = watch(
 
         if (!userViewing.value) {
             playNotification()
+            document.title = `${document.title} | 1 Message`;
         }
 
     },
