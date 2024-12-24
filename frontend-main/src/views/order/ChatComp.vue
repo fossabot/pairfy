@@ -17,10 +17,10 @@
             </div>
 
             <div class="footer-bottom flex">
-                <div class="footer-input">
-                    <input type="text" v-model="chatInput" placeholder="Chat with the other party">
-                </div>
-                <div class="footer-send flex">
+                <Textarea class="chat-input" id="chatInput" unstyled rows="1" cols="30" v-model="chatInput" autoResize
+                    @keydown="handleEnter" />
+
+                <div class="chat-send flex">
                     <i class="pi pi-send" />
                 </div>
             </div>
@@ -41,9 +41,7 @@ const { playNotification } = setupAudio();
 
 const userViewing = ref(true);
 
-const chatInput = ref(null);
-
-const inputFocus = ref(false);
+const chatInput = ref("");
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
@@ -107,6 +105,30 @@ function handleVisibilityChange() {
         userViewing.value = false;
     } else {
         userViewing.value = true;
+    }
+};
+
+const insertNewline = () => {
+    const textarea = document.getElementById('chatInput');
+    const cursorPos = textarea.selectionStart;
+    chatInput.value =
+        chatInput.value.slice(0, cursorPos) +
+        '\n' +
+        chatInput.value.slice(cursorPos);
+
+    setTimeout(() => {
+        textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
+    });
+};
+
+const handleEnter = (event) => {
+    if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        insertNewline();
+    } else if (event.key === 'Enter') {
+        event.preventDefault();
+        console.log(chatInput.value);
+        chatInput.value = ""
     }
 };
 
@@ -194,40 +216,37 @@ onBeforeUnmount(() => {
     padding: 1rem;
 }
 
-.footer-input {
+.chat-input {
+    padding: 0.75rem;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: var(--text-size-1);
+    transition: 0.2s;
+    max-height: 100px;
     border: 1px solid var(--border-b);
     border-radius: 8px;
-    background: color-mix(in srgb, black, transparent 95%);
-    overflow: hidden;
+    background: color-mix(in srgb, black, transparent 90%);
+    resize: none;
     width: inherit;
-    transition: 0.2s;
 }
 
-.footer-input:focus-within {
+.chat-input:focus-within {
     border: 1px solid var(--primary-b);
 }
 
-.footer-input input {
-    padding: 0.75rem;
-    background: inherit;
-    outline: none;
-    border: none;
-    color: inherit;
-    width: inherit;
-}
-
-.footer-input input::placeholder {
+.chat-input textarea::placeholder {
     color: var(--text-b);
 }
 
-.footer-send {
+.chat-send {
     justify-content: center;
     width: 60px;
     height: inherit;
     cursor: pointer;
 }
 
-.footer-send i {
+.chat-send i {
     color: var(--text-w);
     font-size: var(--text-size-3);
     transform: rotate(45deg);
