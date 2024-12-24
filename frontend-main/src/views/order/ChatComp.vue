@@ -1,17 +1,18 @@
 <template>
     <div class="chat">
-        x
+        {{ messages }}
     </div>
 </template>
 
 <script setup>
 import gql from 'graphql-tag'
 import { useSubscription } from "@vue/apollo-composable"
-import { watch } from "vue"
+import { watch, ref, onBeforeUnmount } from "vue"
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
          newMessages {
+          id
           content
         }
       }
@@ -29,16 +30,23 @@ onError((error, context) => {
     console.error(error, context)
 })
 
-watch(
+const messages = ref([])
+
+const unwatchChat = watch(
     result,
     data => {
-        console.log("New message received:", data.newMessages)
+        console.log("New message received:", data.newMessages);
+
+        messages.value.push(data.newMessages)
     },
     {
         lazy: true // Don't immediately execute handler
     }
 )
 
+onBeforeUnmount(() => {
+    unwatchChat()
+})
 </script>
 
 <style lang="css" scoped>
