@@ -206,6 +206,10 @@ onBeforeUnmount(() => {
     color: inherit;
 }
 
+.footer-input input::placeholder {
+    color: var(--text-b);
+}
+
 .footer-send {
     justify-content: center;
     width: 60px;
