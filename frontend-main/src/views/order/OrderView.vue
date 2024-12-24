@@ -26,9 +26,9 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
                 <div class="nav-scanner flex">
-                    Scanning
-                    <span v-if="!getOrderLoading" class="loader"></span>
-                    <span v-if="getOrderLoading" class="loader" :class="{ actived: getOrderLoading }"></span>
+                    Scanning Network
+                    <span v-if="!scanning" class="loader stopped" />
+                    <span v-if="scanning" class="loader actived" />
                 </div>
             </div>
             <div class="grid">
@@ -379,8 +379,6 @@ const queryVariablesRef = ref({
 })
 const queryEnabled = ref(false)
 
-const getOrderLoading = ref(false);
-
 const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
 query ($getOrderVariable: GetOrderInput!) {
     getOrder(getOrderInput: $getOrderVariable) {
@@ -420,8 +418,7 @@ query ($getOrderVariable: GetOrderInput!) {
     }
 }
 `,
-    () => (queryVariablesRef.value)
-    ,
+    () => (queryVariablesRef.value),
     () => ({
         enabled: queryEnabled.value,
         clientId: 'gateway',
@@ -514,7 +511,6 @@ const shippingStatus = computed(() => {
 
 const unwatchOrder = watch(getOrderResult, value => {
     if (value) {
-        getOrderLoading.value = true;
 
         const ORDER = value.getOrder.order;
 
@@ -550,9 +546,10 @@ const unwatchOrder = watch(getOrderResult, value => {
             editor.value.commands.setContent(JSON.parse(ORDER.product_features));
         }
 
-        setTimeout(() => getOrderLoading.value = false, 1000);
+        scanning.value = true;
     }
 }, { immediate: true })
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -591,9 +588,14 @@ function formatTime(input) {
 }
 
 ////////////////////////////////////////////////////////////////
+const scanning = ref(false);
 
+let scanInterval;
 
-
+const updateScanning = () => {
+    scanning.value = true;
+    setTimeout(() => scanning.value = false, 3000)
+};
 
 ////////////////////////////////////////////////////////////////
 
@@ -690,6 +692,7 @@ const openWebsite = (website) => {
 onMounted(() => {
     updateGlobalCountdown();
     globalInterval = setInterval(updateGlobalCountdown, 1000);
+    scanInterval = setInterval(updateScanning, 30000)
     setupEditor();
 });
 
@@ -700,6 +703,7 @@ onBeforeUnmount(() => {
 
 onUnmounted(() => {
     clearInterval(globalInterval);
+    clearInterval(scanInterval);
 });
 </script>
 
@@ -1100,25 +1104,34 @@ onUnmounted(() => {
 
 .nav-scanner {
     margin-left: auto;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
+    color: var(--text-b);
 }
 
 .loader {
     width: 1rem;
     height: 1rem;
     margin-left: 0.5rem;
-    border: 2px solid #ffffff;
+    border: 1px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
-    animation: rotation 1s linear infinite;
+    animation: rotation 10s linear infinite;
 }
 
 .loader.actived {
-    border: 2px solid var(--primary-b);
+    animation: rotation 1s linear infinite;
+    border: 1px dashed var(--primary-b);
     border-bottom-color: transparent;
 }
+
+.loader.stopped {
+    border: 1px dashed var(--text-b);
+    opacity: 0.5;
+
+}
+
 
 @keyframes rotation {
     0% {

@@ -133,7 +133,7 @@ export function setupAudio() {
 
   audio.value.load()
 
-  audio.value.volume = 0.3
+  audio.value.volume = 0.2
 
   const playNotification = () => {
     audio.value
