@@ -546,7 +546,7 @@ const unwatchOrder = watch(getOrderResult, value => {
             editor.value.commands.setContent(JSON.parse(ORDER.product_features));
         }
 
-        scanning.value = true;
+        updateScanning()
     }
 }, { immediate: true })
 
@@ -588,13 +588,13 @@ function formatTime(input) {
 }
 
 ////////////////////////////////////////////////////////////////
-const scanning = ref(false);
+const scanning = ref(false); 
 
 let scanInterval;
 
 const updateScanning = () => {
     scanning.value = true;
-    setTimeout(() => scanning.value = false, 3000)
+    setTimeout(() => scanning.value = false, 5000)
 };
 
 ////////////////////////////////////////////////////////////////
@@ -1122,16 +1122,16 @@ onUnmounted(() => {
 
 .loader.actived {
     animation: rotation 1s linear infinite;
-    border: 1px dashed var(--primary-b);
+    border: 1px solid var(--primary-b);
     border-bottom-color: transparent;
 }
 
 .loader.stopped {
-    border: 1px dashed var(--text-b);
+    border: 1px solid var(--text-b);
+    border-bottom-color: transparent;
     opacity: 0.5;
 
 }
-
 
 @keyframes rotation {
     0% {
