@@ -18,7 +18,7 @@
 
             <div class="footer-bottom flex">
                 <Textarea class="chat-input" id="chatInput" unstyled rows="1" cols="30" v-model="chatInput" autoResize
-                    @keydown="handleEnter" />
+                    @keydown="handleEnter" placeholder="Chat with the other party..." />
 
                 <div class="chat-send flex">
                     <i class="pi pi-send" />
