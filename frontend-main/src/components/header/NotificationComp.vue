@@ -70,11 +70,12 @@
 
 <script setup>
 import gql from 'graphql-tag';
-import notificationSound from '@/assets/notification.mp3';
-import { ref, watch, reactive, computed } from 'vue';
+import { ref, watch, reactive, computed, inject } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
 import { format } from 'timeago.js';
+
+const { setupAudio } = inject('utils');
 
 const router = useRouter();
 
@@ -215,28 +216,7 @@ const onHandleClick = (notification) => {
 
 //////////////////////////////////////////////////////////////////////////////
 
-function setupAudio() {
-    const audio = ref(new Audio(notificationSound));
 
-    audio.muted = false;
-
-    audio.value.load();
-
-    audio.value.volume = 0.3;
-
-    const playNotification = () => {
-        audio.value
-            .play()
-            .then(() => {
-                console.log("Notification");
-            })
-            .catch((error) => {
-                console.error("Unable to play sound:", error);
-            });
-    };
-
-    return { playNotification };
-}
 
 </script>
 

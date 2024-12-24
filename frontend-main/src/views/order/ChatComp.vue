@@ -7,7 +7,11 @@
 <script setup>
 import gql from 'graphql-tag'
 import { useSubscription } from "@vue/apollo-composable"
-import { watch, ref, onBeforeUnmount } from "vue"
+import { watch, ref, onBeforeUnmount, inject } from "vue"
+
+const { setupAudio } = inject('utils');
+
+const { playNotification } = setupAudio();
 
 const { result, onError } = useSubscription(gql`
       subscription newMessages{
@@ -38,9 +42,11 @@ const unwatchChat = watch(
         console.log("New message received:", data.newMessages);
 
         messages.value.push(data.newMessages)
+
+        //playNotification()
     },
     {
-        lazy: true // Don't immediately execute handler
+        lazy: true 
     }
 )
 

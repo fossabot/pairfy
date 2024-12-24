@@ -1,4 +1,6 @@
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
+import notificationSound from '@/assets/notification.mp3';
+import { ref } from 'vue';
 
 export function formatWithDots(str, reduce) {
   const len = str.length
@@ -122,4 +124,27 @@ export const convertDate = (timestamp, type) => {
   const date = dayjs(parseInt(timestamp))
 
   return date.format(format)
+}
+
+export function setupAudio() {
+  const audio = ref(new Audio(notificationSound))
+
+  audio.muted = false
+
+  audio.value.load()
+
+  audio.value.volume = 0.3
+
+  const playNotification = () => {
+    audio.value
+      .play()
+      .then(() => {
+        console.log('Notification')
+      })
+      .catch((error) => {
+        console.error('Unable to play sound:', error)
+      })
+  }
+
+  return { playNotification }
 }

@@ -9,7 +9,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
-import { convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { setupAudio, convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
@@ -36,7 +36,8 @@ provide('utils', {
   convertLovelaceToADA,
   convertLovelaceToUSD,
   copyToClipboard,
-  convertDate
+  convertDate,
+  setupAudio
 });
 
 const { currentUser, currentSeller } = headerAPI();
