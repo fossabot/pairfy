@@ -183,6 +183,7 @@ onBeforeUnmount(() => {
     border: none;
     color: var(--text-w);
     justify-content: center;
+    cursor: pointer;
 }
 
 .footer-bottom {
