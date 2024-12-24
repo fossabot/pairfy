@@ -154,6 +154,6 @@ onBeforeUnmount(() => {
 
 .footer {
     height: 100px;
-    background: rgba(255, 0, 0, 0.062);
+    border-top: 1px solid var(--border-b);
 }
 </style>

@@ -1113,7 +1113,7 @@ onUnmounted(() => {
     width: 1rem;
     height: 1rem;
     margin-left: 0.5rem;
-    border: 1px solid #ffffff;
+    border: 2px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
     display: inline-block;
@@ -1123,12 +1123,12 @@ onUnmounted(() => {
 
 .loader.actived {
     animation: rotation 1s linear infinite;
-    border: 1px solid var(--primary-b);
+    border: 2px solid var(--primary-b);
     border-bottom-color: transparent;
 }
 
 .loader.stopped {
-    border: 1px solid var(--text-b);
+    border: 2px solid var(--text-b);
     border-bottom-color: transparent;
     opacity: 0.5;
 

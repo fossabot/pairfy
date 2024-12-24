@@ -1,8 +1,7 @@
 <template>
     <div class="message">
-        <div class="bubble" v-tooltip="date">
-            {{ props.data.content }}
-           
+        <div class="bubble" v-tooltip.right="date">
+            {{ props.data.content }}          
         </div>
     </div>
 </template>

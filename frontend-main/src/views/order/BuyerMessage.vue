@@ -1,6 +1,6 @@
 <template>
     <div class="message">
-        <div class="bubble" v-tooltip="date">
+        <div class="bubble" v-tooltip.left="date">
             {{ props.data.content }}
             <span class="marker" :class="{ seen: props.data.seen }">✔</span>
         </div>
