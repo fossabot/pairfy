@@ -168,6 +168,11 @@ const showError = (content) => {
 </script>
 
 <style lang="css" scoped>
+button {
+    margin-right: 1rem;
+    font-weight: 600;
+}
+
 .card {
     display: flex;
     justify-content: center;
