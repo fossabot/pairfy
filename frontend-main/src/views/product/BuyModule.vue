@@ -1,5 +1,7 @@
 <template>
-    <div class="buy">
+    <Skeleton v-if="!getProductData" width="100%" height="500px" />
+
+    <div  v-if="getProductData" class="card">
         <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '23rem' }"
             :draggable="false" dismissableMask>
             <template #header>
@@ -25,7 +27,9 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="warn" icon="pi pi-info-circle">
-                    The funds will be released in 60 minutes if the seller delays your order. Protected purchase guarantees 100% of the order price.
+                    The funds will be released in 60 minutes if the seller delays your order. Protected purchase
+                    guarantees 100% of
+                    the order price.
                 </Message>
             </div>
 
@@ -36,41 +40,38 @@
             </template>
         </Dialog>
 
-
-        <Skeleton v-if="!getProductData" width="100%" height="500px" />
-
-        <div v-if="getProductData">
-            <div class="buy-brand">
+        
+            <div class="card-brand">
                 {{ getProductData.brand }}
             </div>
 
-            <div class="buy-stock" :class="{ red: 0, }">
+            <div class="card-stock" :class="{ red: 0, }">
                 {{ getStockLabel(15) }}
             </div>
 
-            <div class="buy-rating flex">
+            <div class="card-rating flex">
                 <Rating v-model="productRating" :stars="5" readonly />
                 <span> 4.5 </span>
                 <span style="color: var(--text-b)">(1250 reviews)</span>
             </div>
 
-            <div class="buy-legend">
+            <div class="card-legend">
                 <span>5 Sold</span>
             </div>
 
-            <div class="buy-legend">
+            <div class="card-legend">
                 <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
             </div>
 
-            <div class="buy-protected" :class="{ red: 0, }">
+            <div class="card-protected" :class="{ red: 0, }">
                 Protected Purchase
             </div>
 
-            <div class="buy-legend">
+            <div class="card-legend">
                 Available (15 of 20)
             </div>
 
-            <div class="buy-control">
+            <div class="card-control">
                 <InputNumber v-model="selectedQuantity" inputId="horizontal-buttons" showButtons
                     buttonLayout="horizontal" :step="1" fluid :format="false" :min="1" :max="10">
                     <template #incrementbuttonicon>
@@ -83,7 +84,7 @@
 
                 <Button label="Buy Now" fluid @click="openBuyDialog()" />
             </div>
-        </div>
+        
     </div>
 </template>
 
@@ -227,7 +228,7 @@ const onConfirmedBuy = () => {
 </script>
 
 <style lang="css" scoped>
-.buy {
+.card {
     border: 1px solid var(--border-a);
     min-height: 100px;
     display: flex;
@@ -235,45 +236,45 @@ const onConfirmedBuy = () => {
     padding: 1rem;
 }
 
-.buy-control {
+.card-control {
     display: grid;
     gap: 1rem;
     margin-top: 1rem;
 }
 
-.buy-legend {
+.card-legend {
     font-size: var(--text-size-1);
     font-weight: 400;
     margin-top: 1rem;
 
 }
 
-.buy-brand {
+.card-brand {
     font-weight: 700;
     font-size: var(--text-size-1);
     text-transform: capitalize;
 }
 
-.buy-rating {
+.card-rating {
     margin-top: 1rem;
 }
 
-.buy-rating span {
+.card-rating span {
     margin-left: 0.5rem;
     font-size: var(--text-size-1);
 }
 
-.buy-stock,
-.buy-protected {
+.card-stock,
+.card-protected {
     font-weight: 600;
     margin-top: 1rem;
 }
 
-.buy-stock.red {
+.card-stock.red {
     color: var(--red-a);
 }
 
-.buy-protected {
+.card-protected {
     color: var(--green-a);
 }
 
