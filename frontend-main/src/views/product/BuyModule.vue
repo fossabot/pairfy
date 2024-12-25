@@ -25,13 +25,7 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="warn" icon="pi pi-info-circle">
-                    The funds will be released in 60 minutes if the seller delays your order.
-                </Message>
-            </div>
-
-            <div class="dialog-msg">
-                <Message size="small" severity="success" icon="pi pi-info-circle">
-                    Protected purchase guarantees 100% of the order price.
+                    The funds will be released in 60 minutes if the seller delays your order. Protected purchase guarantees 100% of the order price.
                 </Message>
             </div>
 

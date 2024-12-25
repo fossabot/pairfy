@@ -25,12 +25,8 @@
 .p-rating-icon {
   width: 0.75rem !important;
   height: 0.75rem !important;
-  color: rgba(100, 116, 139, 0.5) !important;
 }
 
-.p-rating-option-active .p-rating-icon {
-  color: var(--primary-b) !important;
-}
 
 .p-dialog-header {
   border-bottom: 1px solid var(--border-a);

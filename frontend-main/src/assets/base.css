@@ -60,6 +60,11 @@
   --p-button-primary-color: var(--text-a) !important;
 
   --p-icon-size: var(--text-size-2) !important;
+
+  --p-rating-icon-active-color: var(--primary-b) !important;
+  
+ --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
+
 }
 
 @media (prefers-color-scheme: dark) {
