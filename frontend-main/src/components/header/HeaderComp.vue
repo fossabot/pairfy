@@ -30,7 +30,7 @@
 
                 </div>
                 <div class="menu-col right">
-                    <div class="ada"> ADAUSD {{ getADAprice }}</div>
+                    <div class="ada"> ₳ {{ getADAprice }}</div>
                     <div class="network"> {{ NETWORK }}</div>
                 </div>
             </div>
