@@ -26,7 +26,7 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
                 <div class="nav-scanner flex">
-                    Network
+                    Scanning
                     <span v-if="!scanning" class="loader stopped" />
                     <span v-if="scanning" class="loader actived" />
                 </div>
@@ -729,7 +729,7 @@ onUnmounted(() => {
 }
 
 .container {
-    min-height: 100vh;
+    min-height: 150vh;
     max-width: 1400px;
     width: 100%;
 }
@@ -923,7 +923,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    line-height: 2.25rem;
+    line-height: 2.5rem;
     text-transform: capitalize;
 }
 
