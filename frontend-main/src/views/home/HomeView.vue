@@ -7,12 +7,12 @@
     <div class="body">
       <div class="banner">
         <div class="banner-body">
-          <div class="title">Next Cardano Black Day</div>
+          <div class="title">Buy and sell physical products</div>
           <div class="counter">
             <span class="prefix">
               000
             </span>
-            <div>2053 ADA Liquidity</div>
+            <div>2053 ADA  liquidity</div>
           </div>
         </div>
       </div>
@@ -64,11 +64,12 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-transform: capitalize;
 }
 
 .title {
   font-size: var(--text-size-6);
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-w);
 }
 
@@ -76,7 +77,7 @@ main {
   font-size: var(--text-size-5);
   font-weight: 600;
   display: flex;
-  color: var(--primary-b)
+  color: var(--primary-b);
 }
 
 .prefix {
