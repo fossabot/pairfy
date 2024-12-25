@@ -149,13 +149,12 @@ onGetProductError(error => {
 }
 
 .mask {
-    height: 150px; 
+    height: 150px;
     width: inherit;
     position: relative;
     z-index: 1;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("https://http2.mlstatic.com/D_NQ_770663-MLA81006988862_122024-OO.webp"); 
     background-position-y: 15%;
 }
 
@@ -163,8 +162,8 @@ onGetProductError(error => {
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    max-width: 1300px;
-    width: 80%;
+    max-width: 1400px;
+    width: 100%;
     height: auto;
     position: relative;
     z-index: 10;
@@ -186,7 +185,7 @@ onGetProductError(error => {
 
 .card {
     display: grid;
-    grid-template-columns: 80% 20%; 
+    grid-template-columns: 80% 20%;
     margin-top: 2rem;
     box-sizing: border-box;
 }
@@ -196,7 +195,7 @@ onGetProductError(error => {
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding-right: 3rem;
+    padding-right: 4rem;
 }
 
 .card-left-top {
@@ -215,5 +214,4 @@ onGetProductError(error => {
     height: 200px;
     display: flex;
 }
-
 </style>

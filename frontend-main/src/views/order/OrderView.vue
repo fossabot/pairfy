@@ -14,7 +14,7 @@
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
-                    <span>Information</span>
+                    <span>Summary</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 0 }" />
                 </div>
                 <div class="nav-item" :class="{ selected: currentNav === 1 }" @click="currentNav = 1">
@@ -730,7 +730,7 @@ onUnmounted(() => {
 
 .container {
     min-height: 100vh;
-    max-width: 1300px;
+    max-width: 1400px;
     width: 100%;
 }
 
@@ -775,7 +775,7 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 72% 28%;
     margin-top: 1rem;
 }
 
@@ -800,7 +800,7 @@ onUnmounted(() => {
 
 .summary-subtitle {
     font-size: var(--text-size-1);
-    line-height: 2rem;
+    line-height: 2.5rem;
     color: var(--text-b);
 }
 

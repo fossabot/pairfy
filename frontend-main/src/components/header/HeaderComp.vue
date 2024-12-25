@@ -93,7 +93,7 @@ section {
 }
 
 .header {
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 }
 
 .brand {
@@ -112,8 +112,8 @@ section {
 .menu {
     display: grid;
     grid-template-columns: 20% 60% 20%;
+    max-width: 1600px;
     width: 100%;
-    padding: 1rem 2rem;
 }
 
 .header-col,
@@ -133,8 +133,7 @@ section {
 
 .menu {
     color: var(--text-w);
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding: 0.75rem 0;
 }
 
 .menu-col.right {

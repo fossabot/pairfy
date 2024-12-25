@@ -240,7 +240,7 @@ const onConfirmedBuy = () => {
 }
 
 .buy-legend {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     font-weight: 400;
     margin-top: 1rem;
   

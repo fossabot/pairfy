@@ -127,7 +127,7 @@ const bulletList = computed(() => {
 .preview-about {
     font-weight: 600;
     font-size: var(--text-size-2);
-    margin-top: 2rem;
+    line-height: 4rem;
 }
 
 .preview-bullet {
@@ -136,8 +136,7 @@ const bulletList = computed(() => {
 }
 
 .preview-bullet li {
-    line-height: 1.5rem;
-    margin-top: 8px;
+    line-height: 2rem;
     padding-left: 10px;
 }
 

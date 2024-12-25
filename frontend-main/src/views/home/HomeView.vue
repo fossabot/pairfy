@@ -1,7 +1,7 @@
 <template>
   <main>
     <div class="panel">
-      x
+
     </div>
 
     <div class="body">
@@ -10,16 +10,29 @@
           <div class="title">Next Cardano Black Day</div>
           <div class="counter">
             <span class="prefix">
-              0.000.
+              000
             </span>
-            <div>100 ADA Liquidity</div>
+            <div>2053 ADA Liquidity</div>
           </div>
         </div>
       </div>
 
-      <div class="grid">
-        <div class="grid-body">
-
+      <div class="bottom">
+        <div class="grid">
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
+          <div class="grid-item"></div>
         </div>
       </div>
     </div>
@@ -35,16 +48,15 @@ main {
   background: var(--background-c);
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 20vw 1fr;
+  /**grid-template-columns: 16vw 1fr;*/
   width: 100%;
 }
 
 .banner {
-  min-height: 250px; 
+  min-height: 250px;
   justify-content: center;
   display: flex;
   align-items: center;
-  color: var(--text-w);
 }
 
 .banner-body {
@@ -57,30 +69,61 @@ main {
 .title {
   font-size: var(--text-size-6);
   font-weight: 700;
+  color: var(--text-w);
 }
 
 .counter {
   font-size: var(--text-size-5);
   font-weight: 600;
   display: flex;
+  color: var(--primary-b)
 }
 
 .prefix {
   color: var(--text-b);
 }
 
-.grid {
-  padding: 1rem;
+.bottom {
+  display: flex;
+  justify-content: center;
 }
 
-.grid-body {
+.grid {
+  max-width: 1600px;
+  width: 100%;
+  background: var(--background-b);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  min-height: 100vh;
+  display: grid;
+  gap: 1.5rem;
+  padding: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 400px;
+}
+
+.grid-item {
   background: var(--background-a);
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  height: 100vh;
+  border-radius: 8px;
+  box-shadow: 0 2px 24px rgba(24, 32, 82, .05);
 }
 
 .panel {
-  border-right: 1px solid var(--border-b);
+  border-right: 1px solid var(--border-a);
+  display: none;
+}
+
+
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
 }
 </style>

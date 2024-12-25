@@ -4,7 +4,7 @@
 
         <section v-if="getProductData">
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="375" previewIcon="pi-search" 
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="400" previewIcon="pi-search" 
                     preview />
             </div>
             <div class="media-nav">
@@ -64,8 +64,8 @@ section {
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: 375px;
-    max-height: 375px;
+    min-height: 400px;
+    max-height: 400px;
 }
 
 .media-item {
