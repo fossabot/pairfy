@@ -1,7 +1,7 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '22rem' }"
-            :draggable="false">
+        <Dialog v-model:visible="showBuyDialog" modal header="Purchase" :style="{ width: '23rem' }"
+            :draggable="false" dismissableMask>
             <template #header>
 
             </template>
@@ -25,8 +25,7 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="warn" icon="pi pi-info-circle">
-                    The transaction is valid for 5 minutes and funds will be released in 60 minutes if the seller delays
-                    preparing your order.
+                    The transaction is valid for 5 minutes. The funds will be released in 60 minutes if the seller delays your order.
                 </Message>
             </div>
 
@@ -34,7 +33,8 @@
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
-                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus :loading="createOrderLoading"/>
+                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus
+                    :loading="createOrderLoading" />
             </template>
         </Dialog>
 
@@ -62,6 +62,10 @@
 
             <div class="buy-legend">
                 <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
+            </div>
+
+            <div class="buy-protected" :class="{ red: 0, }">
+                Protected Purchase
             </div>
 
             <div class="buy-legend">
@@ -243,7 +247,7 @@ const onConfirmedBuy = () => {
     font-size: var(--text-size-1);
     font-weight: 400;
     margin-top: 1rem;
-  
+
 }
 
 .buy-brand {
@@ -261,7 +265,8 @@ const onConfirmedBuy = () => {
     font-size: var(--text-size-1);
 }
 
-.buy-stock {
+.buy-stock,
+.buy-protected {
     font-weight: 600;
     margin-top: 1rem;
 }
@@ -270,6 +275,9 @@ const onConfirmedBuy = () => {
     color: var(--red-a);
 }
 
+.buy-protected {
+    color: var(--green-a);
+}
 
 .dialog-msg {
     margin-top: 1rem;
