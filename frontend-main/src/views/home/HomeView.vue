@@ -7,12 +7,12 @@
     <div class="body">
       <div class="banner">
         <div class="banner-body">
-          <div class="title">Buy and sell physical products</div>
+          <div class="title">Cardano Native Product Marketplace</div>
           <div class="counter">
             <span class="prefix">
-              000
+              0,00
             </span>
-            <div>2053 ADA  liquidity</div>
+            <div>2,053 ADA for the next black day</div>
           </div>
         </div>
       </div>
@@ -53,7 +53,7 @@ main {
 }
 
 .banner {
-  min-height: 250px;
+  min-height: 300px;
   justify-content: center;
   display: flex;
   align-items: center;
@@ -93,8 +93,8 @@ main {
   max-width: 1600px;
   width: 100%;
   background: var(--background-b);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   min-height: 100vh;
   display: grid;
   gap: 1.5rem;
