@@ -79,8 +79,8 @@ const unwatchChat = watch(
         scrollToBottom();
 
         if (!userViewing.value) {
-            playNotification()
-            document.title = `${document.title} | 1 Message`;
+            //playNotification()
+            document.title = `${document.title} | New Message`;
         }
 
     },

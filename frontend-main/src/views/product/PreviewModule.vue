@@ -112,7 +112,7 @@ const bulletList = computed(() => {
 .preview-top,
 .preview-model {
     display: flex;
-    color: var(--text-b);
+   
     font-size: var(--text-size-1);
 }
 
