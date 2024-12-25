@@ -1,6 +1,6 @@
 <template>
     <div class="buy">
-        <Dialog v-model:visible="showBuyDialog" modal header="Purchase" :style="{ width: '23rem' }"
+        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '23rem' }"
             :draggable="false" dismissableMask>
             <template #header>
 
@@ -25,11 +25,15 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="warn" icon="pi pi-info-circle">
-                    The transaction is valid for 5 minutes. The funds will be released in 60 minutes if the seller delays your order.
+                    The funds will be released in 60 minutes if the seller delays your order.
                 </Message>
             </div>
 
-
+            <div class="dialog-msg">
+                <Message size="small" severity="success" icon="pi pi-info-circle">
+                    Protected purchase guarantees 100% of the order price.
+                </Message>
+            </div>
 
             <template #footer>
                 <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
