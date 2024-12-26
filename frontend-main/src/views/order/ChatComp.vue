@@ -4,9 +4,9 @@
 
             <template v-if="getCurrentUser">
                 <div class="avatar flex">
-                    <img src="@/assets/user.png" alt="">
+                    <img :src="createAvatarURL(getOrderData.order)" alt="">
                 </div>
-                <div class="name"> SellerName</div>
+                <div class="name"> {{ getOrderData.order.seller_username }}</div>
             </template>
             <template v-if="getCurrentSeller">
                 <div class="avatar flex">
@@ -221,6 +221,13 @@ function handleVisibilityChange() {
     }
 };
 
+function createAvatarURL(order) {
+    if (!order) {
+        return;
+    }
+
+    return order.seller_avatar_base + order.seller_avatar_path
+};
 
 onMounted(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
