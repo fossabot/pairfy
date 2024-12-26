@@ -71,4 +71,37 @@ const agentMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-export { agentMiddleware, SellerToken, UserToken };
+interface AGENTS {
+  sellerData: SellerToken | null;
+  userData: UserToken | null;
+}
+
+function verifyToken(authToken: string): AGENTS | null {
+  let response = {
+    sellerData: null,
+    userData: null,
+  };
+
+  try {
+    const sessionData = jwt.verify(
+      authToken,
+      process.env.AGENT_JWT_KEY!
+    ) as any;
+
+    if (sessionData.role === "SELLER") {
+      response.sellerData = sessionData;
+    }
+
+    if (sessionData.role === "USER") {
+      response.userData = sessionData;
+    }
+  } catch (err) {
+    logger.error(err);
+    return null
+
+  } finally {
+    return response;
+  }
+}
+
+export { agentMiddleware, SellerToken, UserToken, verifyToken };

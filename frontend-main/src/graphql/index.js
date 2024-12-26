@@ -4,7 +4,7 @@ import { HttpLink, split } from '@apollo/client/core'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { createClient } from 'graphql-ws'
 import { domain, HOST } from '../api'
-import headerAPI from '@/components/header/api'
+import { ref, inject, computed } from 'vue'
 
 const cache = new InMemoryCache()
 
@@ -56,20 +56,25 @@ const notificationClient = new ApolloClient({
 })
 
 ////////////////////////////////////////////WEBSOCKET
-const { getCurrentSeller } = headerAPI();
-
 
 const httpLink = new HttpLink({
   uri: HOST + '/api/chat/graphql',
-  credentials: 'include', 
+  credentials: 'include',
 })
 
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `ws://${domain}/api/chat/graphql`,
+    credentials: 'include',
     connectionParams: {
-      token: "sss",  
+      authToken: sessionStorage.getItem('authToken'),
     },
+    on: {
+      connected: () => console.log('WebSocket connected'),
+      closed: (event) => console.log('WebSocket closed', event),
+      error: (error) => console.error('WebSocket error', error),
+    },
+    lazy: true,
   }),
 )
 

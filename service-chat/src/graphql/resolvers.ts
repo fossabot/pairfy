@@ -81,7 +81,7 @@ const createMessage = async (_: any, args: any, context: any) => {
 
     console.log(channel);
 
-    await context.pubSub.publish(channel, { newMessages: message });
+    await context.pubSub.publish(channel, message);
 
     return {
       success: true,

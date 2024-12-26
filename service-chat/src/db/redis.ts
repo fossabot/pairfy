@@ -31,5 +31,7 @@ class RedisWrapper {
 
 const redisClient = new RedisWrapper();
 
+const pubSubClient = new RedisWrapper();
 
-export { RedisWrapper, redisClient };
+
+export { RedisWrapper, redisClient, pubSubClient };

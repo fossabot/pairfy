@@ -10,35 +10,11 @@
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
 import { setupAudio, convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { queryClient, gatewayClient, notificationClient, chatClient } from './graphql/index.js';
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
-import { queryClient, gatewayClient, notificationClient, chatClient } from './graphql/index';
 import { onBeforeUnmount, provide } from 'vue';
-
-
-
-provide(ApolloClients, {
-  default: queryClient,
-  query: queryClient,
-  gateway: gatewayClient,
-  notification: notificationClient,
-  chat: chatClient
-})
-
-
-provide('utils', {
-  formatWithDots,
-  reduceByLength,
-  formatCurrency,
-  applyDiscount,
-  convertUSDToADA,
-  convertLovelaceToADA,
-  convertLovelaceToUSD,
-  copyToClipboard,
-  convertDate,
-  setupAudio
-});
 
 const { currentUser, currentSeller } = headerAPI();
 
@@ -56,8 +32,30 @@ startWalletService()
   .then(() => console.info("WALLET_SERVICE"))
   .catch((err) => console.error(err));
 
+provide(ApolloClients, {
+  default: queryClient,
+  query: queryClient,
+  gateway: gatewayClient,
+  notification: notificationClient,
+  chat: chatClient
+})
+
+provide('utils', {
+  formatWithDots,
+  reduceByLength,
+  formatCurrency,
+  applyDiscount,
+  convertUSDToADA,
+  convertLovelaceToADA,
+  convertLovelaceToUSD,
+  copyToClipboard,
+  convertDate,
+  setupAudio
+});
+
 onBeforeUnmount(() => {
   stopWalletService()
+  sessionStorage.removeItem('authToken')
 })
 </script>
 
@@ -72,4 +70,5 @@ onBeforeUnmount(() => {
   flex: 1;
   height: 100%;
 }
+
 </style>

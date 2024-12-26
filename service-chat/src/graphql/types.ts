@@ -6,7 +6,7 @@ type Message {
     role: String!
     content: String!
     seen: Boolean!
-    created_at: String!
+    created_at: Float!
 }
 
 input GetMessagesInput {

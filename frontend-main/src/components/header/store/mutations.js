@@ -1,25 +1,27 @@
 const currentSeller = (state, data) => {
-  state.sellerData = data;
-};
+  state.sellerData = data
+  sessionStorage.setItem('authToken', data.token)
+}
 
 const currentUser = (state, data) => {
-  state.userData = data;
-};
+  state.userData = data
+  sessionStorage.setItem('authToken', data.token)
+}
 
 const showPanel = (state, data) => {
-  state.drawerVisible = data;
-};
+  state.drawerVisible = data
+}
 
 const connectWallet = (state, data) => {
-  state.walletConnected = data.value;
-  state.walletName = data.name;
-};
+  state.walletConnected = data.value
+  state.walletName = data.name
+}
 
 const setupLucid = (state, data) => {
-  state.lucidClient = data;
-};
+  state.lucidClient = data
+}
 
 const setADAprice = (state, data) => {
-  state.ADAprice = data;
-};
-export { currentUser, connectWallet, showPanel, currentSeller, setupLucid, setADAprice };
+  state.ADAprice = data
+}
+export { currentUser, connectWallet, showPanel, currentSeller, setupLucid, setADAprice }
