@@ -2,7 +2,6 @@ import crypto from "crypto";
 import { SellerToken, UserToken } from "@/middleware/agent.js";
 import { getMessageId } from "../utils/index.js";
 
-
 const getMessages = async (_: any, args: any, context: any) => {
   try {
     const params = args.getMessagesInput;
@@ -82,7 +81,7 @@ const createMessage = async (_: any, args: any, context: any) => {
 
     console.log(channel);
 
-    //await context.pubSub.publish(channel, { newMessages: message });
+    await context.pubSub.publish(channel, { newMessages: message });
 
     return {
       success: true,

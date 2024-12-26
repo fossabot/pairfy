@@ -6,7 +6,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { catcher, errorEvents, logger, redisChecker } from "./utils/index.js";
 import { typeDefs } from "./graphql/types.js";
-import { agentMiddleware } from "./middleware/agent.js";
+import { agentMiddleware, SellerToken, UserToken } from "./middleware/agent.js";
 import { requireAuth } from "./middleware/required.js";
 import { redisClient } from "./db/redis.js";
 import { messages } from "./graphql/resolvers.js";
@@ -15,7 +15,6 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { RedisPubSub } from "graphql-redis-subscriptions";
-
 
 const main = async () => {
   try {
@@ -44,6 +43,23 @@ const main = async () => {
     }
     ///////////////////////////////////////////////////////////////
 
+    await redisClient
+      .connect({
+        url: process.env.REDIS_HOST,
+        connectTimeout: 100000,
+        keepAlive: 100000,
+        retryStrategy: (times: any) => Math.min(times * 50, 2000),
+      })
+      .then(() => redisChecker(redisClient))
+      .catch((err: any) => catcher(err));
+
+    const pubSub = new RedisPubSub({
+      publisher: redisClient.client,
+      subscriber: redisClient.client,
+    });
+
+    ///////////////////////////////////////////////////////////////
+
     const resolvers = {
       Query: {
         ...messages.Query,
@@ -54,12 +70,22 @@ const main = async () => {
       Subscription: {
         newMessages: {
           subscribe: (_: any, args: any, context: any) => {
-  
-            const channel = `chat:order:${args.order_id}`;
+            const USER = context.userData as UserToken;
 
-            return context.pubSub.asyncIterator(channel)
-          }
-            
+            const SELLER = context.sellerData as SellerToken;
+
+            let channel = "";
+
+            if (USER) {
+              channel = `chat:${args.order_id}:${USER.pubkeyhash}`;
+            }
+
+            if (SELLER) {
+              channel = `chat:${args.order_id}:${SELLER.id}`;
+            }
+
+            return context.pubSub.asyncIterator(channel);
+          },
         },
       },
     };
@@ -75,7 +101,21 @@ const main = async () => {
       path: "/api/chat/graphql",
     });
 
-    const serverCleanup = useServer({ schema }, wsServer);
+    const serverCleanup = useServer(
+      {
+        schema,
+        context: async (ctx, msg, args) => {
+          const token = ctx.connectionParams?.token;
+          
+          console.log(token);
+          return {
+            pubSub,
+          };
+        },
+      },
+
+      wsServer
+    );
 
     const server = new ApolloServer({
       schema,
@@ -123,24 +163,6 @@ const main = async () => {
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
 
-    ////////////////////////////////////////////////////////////////////
-
-    await redisClient
-      .connect({
-        url: process.env.REDIS_HOST,
-        connectTimeout: 100000,
-        keepAlive: 100000,
-        retryStrategy: (times: any) => Math.min(times * 50, 2000),
-      })
-      .then(() => console.log("redisClient connected"))
-      .then(() => redisChecker(redisClient))
-      .catch((err: any) => catcher(err));
-
-    const pubSub = new RedisPubSub({
-      publisher: redisClient.client,
-      subscriber: redisClient.client,
-    });
-
     /////////////////////////////////////////////////////////////////////
 
     app.options("*", cors(corsOptions));
@@ -162,7 +184,6 @@ const main = async () => {
           sellerData: req.sellerData,
           userData: req.userData,
           redisClient: redisClient.client,
-          pubSub: pubSub,
         }),
       })
     );

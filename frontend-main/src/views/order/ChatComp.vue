@@ -108,7 +108,7 @@ const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscrip
     }),
     {
         clientId: "chat",
-        enabled: false
+        enabled: true
     }
 
 )
