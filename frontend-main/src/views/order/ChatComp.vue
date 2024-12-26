@@ -97,6 +97,7 @@ const { result: onGetMessagesResult } = useQuery(gql`
 
 
 watch(onGetMessagesResult, value => {
+    messageList.value = [];
     messageList.value.push(...value.getMessages);
     scrollToBottom();
 })
