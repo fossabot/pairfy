@@ -1,7 +1,19 @@
 <template>
     <div class="chat">
-        <div class="header">
+        <div class="header flex">
 
+            <template v-if="getCurrentUser">
+                <div class="avatar flex">
+                    <img src="@/assets/user.png" alt="">
+                </div>
+                <div class="name"> SellerName</div>
+            </template>
+            <template v-if="getCurrentSeller">
+                <div class="avatar flex">
+                    <img src="@/assets/user.png" alt="">
+                </div>
+                <div class="name">{{ getOrderData.order.buyer_username }}</div>
+            </template>
         </div>
         <div class="content" id="scrollable">
             <div class="message" v-for="(item, index) in messageList" :key="index" :id="`m-${index}`">
@@ -20,7 +32,7 @@
                 <Textarea class="chat-input" id="chatInput" unstyled rows="1" cols="30" v-model="chatInput" autoResize
                     @keydown="handleEnter" placeholder="Chat with the other party..." />
 
-                <div class="chat-send flex">
+                <div class="chat-send flex" @click="sendMessage">
                     <i class="pi pi-send" />
                 </div>
             </div>
@@ -79,7 +91,8 @@ const { result: onGetMessagesResult } = useQuery(gql`
     `,
     getMessagesVariables,
     {
-        clientId: 'chat'
+        clientId: 'chat',
+        pollInterval: 60000
     })
 
 
@@ -128,7 +141,7 @@ const unwatchChat = watch(
         scrollToBottom();
 
         if (!userViewing.value) {
-            //playNotification()
+            playNotification()
             document.title = `${document.title} | New Message`;
         }
 
@@ -232,6 +245,28 @@ onBeforeUnmount(() => {
     transition: 0.2s;
 }
 
+.header {
+    height: 100px;
+    border-bottom: 1px solid var(--border-b);
+    padding: 1rem;
+}
+
+.avatar {
+    background: #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 40px;
+    height: 40px;
+    object-fit: scale-down;
+}
+
+.name {
+    margin-left: 1rem;
+}
+
 .content {
     display: flex;
     flex-direction: column;
@@ -263,10 +298,6 @@ onBeforeUnmount(() => {
     border-radius: 10px;
 }
 
-.header {
-    height: 100px;
-    border-bottom: 1px solid var(--border-b);
-}
 
 .footer {
     border-top: 1px solid var(--border-b);
@@ -326,6 +357,5 @@ onBeforeUnmount(() => {
     color: var(--text-w);
     font-size: var(--text-size-3);
     transform: rotate(45deg);
-
 }
 </style>

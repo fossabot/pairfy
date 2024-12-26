@@ -110,6 +110,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       seller_pubkeyhash: RESULT.seller_pubkeyhash,
       buyer_address: USER.address,
       seller_address: RESULT.seller_address,
+      buyer_username: USER.username,
       ada_price: ADAUSD, // add to metadata contract
       contract_address: BUILDER.stateMachineAddress,
       contract_params: BUILDER.serializedParams,

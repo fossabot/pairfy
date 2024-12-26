@@ -387,6 +387,7 @@ query ($getOrderVariable: GetOrderInput!) {
             finished
             scanned_at
             status_log
+            buyer_username
             ada_price
             contract_address
             contract_state

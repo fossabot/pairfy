@@ -15,38 +15,50 @@ const getOrder = async (_: any, args: any, context: any) => {
     connection = await database.client.getConnection();
 
     if (USER) {
-      const [row] = await connection.execute(
+      const [orders] = await connection.execute(
         "SELECT * FROM orders WHERE id = ? AND buyer_pubkeyhash = ?",
         [params.id, USER.pubkeyhash]
       );
 
-      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = row[0];
+      if (!orders.length) {
+        throw new Error("NO_ORDER");
+      }
+
+      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = orders[0];
+
+      const session = `${id}:${buyer_pubkeyhash}:${seller_id}`;
 
       const shippingMetadata = await decryptMetadata(shipping_metadata);
 
       return {
-        order: row[0],
+        order: orders[0],
         shipping: shippingMetadata,
         address: null,
-        session: `${id}:${buyer_pubkeyhash}:${seller_id}`,
+        session,
       };
     }
 
     if (SELLER) {
-      const [row] = await connection.execute(
+      const [orders] = await connection.execute(
         "SELECT * FROM orders WHERE id = ? AND seller_id = ?",
         [params.id, SELLER.id]
       );
 
-      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = row[0];
+      if (!orders.length) {
+        throw new Error("NO_ORDER");
+      }
+
+      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = orders[0];
+
+      const session = `${id}:${buyer_pubkeyhash}:${seller_id}`;
 
       const shippingMetadata = await decryptMetadata(shipping_metadata);
 
       return {
-        order: row[0],
+        order: orders[0],
         shipping: shippingMetadata,
         address: null,
-        session: `${id}:${buyer_pubkeyhash}:${seller_id}`,
+        session,
       };
     }
   } catch (err: any) {

@@ -60,6 +60,7 @@ type Order {
   finished: Boolean!
   scanned_at: Float!
   status_log: String!
+  buyer_username: String!
   ada_price: Float!
   contract_address: String!
   contract_state: Int

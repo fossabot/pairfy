@@ -1,20 +1,8 @@
 <template>
   <main>
-    <div class="panel">
-
-    </div>
-
     <div class="body">
       <div class="banner">
-        <div class="banner-body">
-          <div class="title">Cardano Native Product Marketplace</div>
-          <div class="counter">
-            <span class="prefix">
-              0,00
-            </span>
-            <div>2,053 ADA for the next black day</div>
-          </div>
-        </div>
+
       </div>
 
       <div class="bottom">
@@ -45,10 +33,9 @@
 
 <style lang="css" scoped>
 main {
-  background: var(--background-c);
+  background: var(--background-b);
   min-height: 100vh;
   display: grid;
-  /**grid-template-columns: 16vw 1fr;*/
   width: 100%;
 }
 
@@ -57,42 +44,19 @@ main {
   justify-content: center;
   display: flex;
   align-items: center;
-}
-
-.banner-body {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-transform: capitalize;
-}
-
-.title {
-  font-size: var(--text-size-6);
-  font-weight: 600;
-  color: var(--text-w);
-}
-
-.counter {
-  font-size: var(--text-size-5);
-  font-weight: 600;
-  display: flex;
-  color: var(--primary-b);
-}
-
-.prefix {
-  color: var(--text-b);
+  background-image: url('@/assets/banner.webp');
 }
 
 .bottom {
   display: flex;
   justify-content: center;
+  background: rgb(201, 1, 0);
+  background: linear-gradient(180deg, #9a0000 0%, rgba(0, 0, 0, 0) 30%);
 }
 
 .grid {
   max-width: 1600px;
   width: 100%;
-  background: var(--background-b);
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   min-height: 100vh;
@@ -109,21 +73,14 @@ main {
   box-shadow: 0 2px 24px rgba(24, 32, 82, .05);
 }
 
-.panel {
-  border-right: 1px solid var(--border-a);
-  display: none;
-}
-
-
-
 @media (min-width: 768px) {
-  .grid-container {
+  .grid{
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }
 
 @media (min-width: 1200px) {
-  .grid-container {
+  .grid{
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
