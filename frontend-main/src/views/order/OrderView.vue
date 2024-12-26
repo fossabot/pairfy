@@ -415,6 +415,7 @@ query ($getOrderVariable: GetOrderInput!) {
         
         shipping
         address
+        session
     }
 }
 `,
@@ -511,7 +512,8 @@ const shippingStatus = computed(() => {
 
 const unwatchOrder = watch(getOrderResult, value => {
     if (value) {
-
+        setOrderData(value.getOrder);
+        
         const ORDER = value.getOrder.order;
 
         orderData.value = ORDER;
@@ -524,7 +526,6 @@ const unwatchOrder = watch(getOrderResult, value => {
             deliveryDate.value = convertDate(SHIPPING.date, 0);
         }
 
-        setOrderData(ORDER);
 
         isFinished.value = ORDER.finished;
 

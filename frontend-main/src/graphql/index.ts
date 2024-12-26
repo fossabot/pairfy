@@ -58,6 +58,7 @@ const notificationClient = new ApolloClient({
 
 const httpLink = new HttpLink({
   uri: HOST + '/api/chat/graphql',
+  credentials: 'include', 
 })
 
 const wsLink = new GraphQLWsLink(

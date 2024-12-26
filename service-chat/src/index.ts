@@ -14,6 +14,8 @@ import { createServer } from "http";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
+import { RedisPubSub } from "graphql-redis-subscriptions";
+
 
 const main = async () => {
   try {
@@ -51,26 +53,13 @@ const main = async () => {
       },
       Subscription: {
         newMessages: {
-          subscribe: async function* () {
-            let id = 0;
+          subscribe: (_: any, args: any, context: any) => {
+  
+            const channel = `chat:order:${args.order_id}`;
 
-            const agents = ["buyer", "seller", "mediator"];
-
-            const seen = [false, true];
-
-            while (true) {
-              await new Promise((resolve) => setTimeout(resolve, 10000));
-              yield {
-                newMessages: {
-                  id: id++,
-                  agent: agents[Math.floor(Math.random() * agents.length)],
-                  content: `Message ${id}`,
-                  seen: seen[Math.floor(Math.random() * seen.length)],
-                  created_at: Date.now(),
-                },
-              };
-            }
-          },
+            return context.pubSub.asyncIterator(channel)
+          }
+            
         },
       },
     };
@@ -141,10 +130,16 @@ const main = async () => {
         url: process.env.REDIS_HOST,
         connectTimeout: 100000,
         keepAlive: 100000,
+        retryStrategy: (times: any) => Math.min(times * 50, 2000),
       })
       .then(() => console.log("redisClient connected"))
       .then(() => redisChecker(redisClient))
       .catch((err: any) => catcher(err));
+
+    const pubSub = new RedisPubSub({
+      publisher: redisClient.client,
+      subscriber: redisClient.client,
+    });
 
     /////////////////////////////////////////////////////////////////////
 
@@ -164,8 +159,10 @@ const main = async () => {
       express.json(),
       expressMiddleware(server, {
         context: async ({ req }) => ({
-          sellerData: req.sellerData || null,
-          userData: req.userData || null,
+          sellerData: req.sellerData,
+          userData: req.userData,
+          redisClient: redisClient.client,
+          pubSub: pubSub,
         }),
       })
     );

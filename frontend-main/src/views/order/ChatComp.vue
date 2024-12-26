@@ -5,8 +5,8 @@
         </div>
         <div class="content" id="scrollable">
             <div class="message" v-for="(item, index) in messages" :key="index" :id="`m-${index}`">
-                <BuyerMessage v-if="item.agent === 'buyer'" :data="item" />
-                <SellerMessage v-if="item.agent === 'seller'" :data="item" />
+                <MyMessage v-if="currentAgent === item.agent" :data="item" />
+                <PartyMessage v-if="currentAgent !== item.agent" :data="item" />
             </div>
         </div>
         <div class="footer">
@@ -30,10 +30,20 @@
 
 <script setup>
 import gql from 'graphql-tag'
-import BuyerMessage from '@/views/order/BuyerMessage.vue'
-import SellerMessage from '@/views/order/SellerMessage.vue'
-import { useSubscription } from "@vue/apollo-composable"
-import { watch, ref, onBeforeUnmount, inject, nextTick, onMounted, onUnmounted } from "vue"
+import orderAPI from '@/views/order/api/index'
+import MyMessage from '@/views/order/MyMessage.vue'
+import PartyMessage from '@/views/order/PartyMessage.vue'
+import { useSubscription, useMutation, useQuery } from "@vue/apollo-composable"
+import { computed, watch, ref, onBeforeUnmount, inject, nextTick, onMounted, onUnmounted } from "vue"
+import headerAPI from '@/components/header/api'
+
+const { getCurrentSeller, getCurrentUser } = headerAPI();
+
+const currentAgent = computed(() => {
+    return getCurrentSeller.value?.id || getCurrentUser.value?.pubkeyhash
+})
+
+const { getOrderData } = orderAPI();
 
 const { setupAudio } = inject('utils');
 
@@ -43,11 +53,49 @@ const userViewing = ref(true);
 
 const chatInput = ref("");
 
-const { result, onError } = useSubscription(gql`
-      subscription newMessages{
-         newMessages {
+const messages = ref([])
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const getMessagesVariables = ref({
+    "getMessagesVariables": {
+        session: "1907728b2d0dc51df7cef8001246803d1eb9c36e3411e62343d823a7:746bff9fb367bf3bb1b25fe24a272bb288d62a2cad1aad2e37a8173f:687609784237305307",
+    }
+
+})
+
+const { result: onGetMessagesResult } = useQuery(gql`
+      query getMessages($getMessagesVariables: GetMessagesInput!) {
+        getMessages(getMessagesInput: $getMessagesVariables) {
           id
           agent
+          role
+          content
+          seen
+          created_at
+        }
+      }
+    `,
+    getMessagesVariables,
+    {
+        clientId: 'chat'
+    })
+
+
+watch(onGetMessagesResult, value => {
+    console.log(value)
+    messages.value = value.getMessages;
+})
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscription(gql`
+      subscription newMessages($orderId:  ID!){
+         newMessages(order_id: $orderId) {
+          id
+          agent
+          role
           content
           seen
           created_at
@@ -55,22 +103,23 @@ const { result, onError } = useSubscription(gql`
       }
     `,
 
-    null,
+    () => ({
+        orderId: "1907728b2d0dc51df7cef8001246803d1eb9c36e3411e62343d823a7"
+    }),
     {
-        clientId: "chat"
+        clientId: "chat",
+        enabled: false
     }
 
 )
 
 
-onError((error, context) => {
+onNewMessagesError((error, context) => {
     console.error(error, context)
 })
 
-const messages = ref([])
-
 const unwatchChat = watch(
-    result,
+    onNewMessagesResult,
     data => {
         console.log("New message received:", data.newMessages);
 
@@ -88,6 +137,56 @@ const unwatchChat = watch(
         lazy: false
     }
 )
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const { mutate: createMessage, onDone: onCreateMessageDone } = useMutation(gql`
+  mutation createMessage ($createMessageVariable: CreateMessageInput!) {
+    createMessage(createMessageInput: $createMessageVariable) {
+      success
+    }
+  }
+`,
+    {
+        clientId: "chat"
+    })
+
+
+onCreateMessageDone(() => {
+    console.log(chatInput.value);
+    chatInput.value = ""
+})
+
+const sendMessage = () => {
+    createMessage({
+        "createMessageVariable": {
+            session: getOrderData.value?.session,
+            content: chatInput.value
+        }
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+const handleEnter = (event) => {
+    if (event.key === 'Enter' && event.shiftKey) {
+        event.preventDefault();
+        const textarea = document.getElementById('chatInput');
+        const cursorPos = textarea.selectionStart;
+        chatInput.value =
+            chatInput.value.slice(0, cursorPos) +
+            '\n' +
+            chatInput.value.slice(cursorPos);
+
+        setTimeout(() => {
+            textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
+        });
+    } else if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage()
+    }
+};
 
 function scrollToBottom() {
     nextTick(() => {
@@ -108,25 +207,6 @@ function handleVisibilityChange() {
     }
 };
 
-const handleEnter = (event) => {
-    if (event.key === 'Enter' && event.shiftKey) {
-        event.preventDefault();
-        const textarea = document.getElementById('chatInput');
-        const cursorPos = textarea.selectionStart;
-        chatInput.value =
-            chatInput.value.slice(0, cursorPos) +
-            '\n' +
-            chatInput.value.slice(cursorPos);
-
-        setTimeout(() => {
-            textarea.selectionStart = textarea.selectionEnd = cursorPos + 1;
-        });
-    } else if (event.key === 'Enter') {
-        event.preventDefault();
-        console.log(chatInput.value);
-        chatInput.value = ""
-    }
-};
 
 onMounted(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);

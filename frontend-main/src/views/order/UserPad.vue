@@ -56,7 +56,7 @@ const { mutate: returnFunds, loading: returnFundsLoading, onDone: onReturnFundsD
 const onReturnFunds = () => {
     returnFunds({
         "returnFundsVariable": {
-            order_id: getOrderData.value.id
+            order_id: getOrderData.value.order.id
         }
     })
 }
@@ -90,13 +90,13 @@ onReturnFundsError(error => {
 })
 
 
-const currentState = computed(() => getOrderData.value.contract_state || undefined)
+const currentState = computed(() => getOrderData.value?.order?.contract_state || undefined)
 
-const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value.finished);
+const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
 
-const disableCancel = computed(() => shippingCountdown.value !== "00:00" || getOrderData.value.finished);
+const disableCancel = computed(() => shippingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
 
-const disableReceived = computed(() => getOrderData.value.finished || getOrderData.value.contract_state !== 2);
+const disableReceived = computed(() => getOrderData.value?.order?.finished || getOrderData.value?.order?.contract_state !== 2);
 
 ///////////////////////////////////////////////////////////////////
 
@@ -115,7 +115,7 @@ const pendingCountdown = computed(() => {
 let pendingInterval;
 
 const updatePendingCountdown = () => {
-    pendingTimeLeft.value = getOrderData.value.pending_until - Date.now();
+    pendingTimeLeft.value = getOrderData.value?.order?.pending_until - Date.now();
 };
 
 ///////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@ const shippingCountdown = computed(() => {
 let shippingInterval;
 
 const updateShippingCountdown = () => {
-    shippingTimeLeft.value = getOrderData.value.shipping_until - Date.now();
+    shippingTimeLeft.value = getOrderData.value?.order?.shipping_until - Date.now();
 };
 
 

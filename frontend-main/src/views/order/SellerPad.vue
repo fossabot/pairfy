@@ -1,6 +1,5 @@
 <template>
     <div class="pad">
-     
         <Button size="small" v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds">
             Accept Order
             <span v-if="pendingCountdown !== '00:00'">
@@ -11,7 +10,6 @@
         <DispatchForm />
 
         <Button type="button" size="small" label="Appeal" :disabled="true" variant="text" :loading="false" />
-
     </div>
 </template>
 
@@ -75,7 +73,7 @@ onLockingFundsError(error => {
 const onLockingFunds = () => {
     lockingFunds({
         "lockingFundsVariable": {
-            order_id: getOrderData.value.id
+            order_id: getOrderData.value.order.id
         }
     })
 }
@@ -83,9 +81,9 @@ const onLockingFunds = () => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-const currentState = computed(() => getOrderData.value?.contract_state);
+const currentState = computed(() => getOrderData.value?.order?.contract_state);
 
-const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value.contract_state !== 0)
+const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value?.order?.contract_state !== 0)
 ///////////////////////////////////////////////////////////////////
 
 const pendingTimeLeft = ref(Date.now());
@@ -103,7 +101,7 @@ const pendingCountdown = computed(() => {
 let pendingInterval;
 
 const updatePendingCountdown = () => {
-    pendingTimeLeft.value = getOrderData.value.pending_until - Date.now();
+    pendingTimeLeft.value = getOrderData.value?.order?.pending_until - Date.now();
 };
 
 /////////////////////////////////////////////////

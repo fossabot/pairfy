@@ -91,6 +91,7 @@ type getOrderResponse {
   order: Order!
   shipping: String
   address: String
+  session: String!
 }
 
 input GetBooksInput {

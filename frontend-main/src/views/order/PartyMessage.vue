@@ -1,8 +1,7 @@
 <template>
     <div class="message">
-        <div class="bubble" v-tooltip.left="date">
-            {{ props.data.content }}
-            <span class="marker" :class="{ seen: props.data.seen }">✔</span>
+        <div class="bubble" v-tooltip.right="date">
+            {{ props.data.content }}          
         </div>
     </div>
 </template>
@@ -10,11 +9,13 @@
 <script setup>
 import { inject, computed } from 'vue';
 
+const props = defineProps(['data'])
+
 const { convertDate } = inject('utils');
 
 const date = computed(() => convertDate(props.data.created_at, 2))
 
-const props = defineProps(['data'])
+
 
 
 </script>
@@ -22,7 +23,7 @@ const props = defineProps(['data'])
 <style lang="css" scoped>
 .message {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
@@ -30,8 +31,8 @@ const props = defineProps(['data'])
 .bubble {
     padding: 1rem;
     border-radius: 12px;
-    border-bottom-right-radius: 0px;
-    background: color-mix(in srgb, var(--p-yellow-500), transparent 90%);
+    border-bottom-left-radius: 0px;
+    background: color-mix(in srgb, black, transparent 80%);
     position: relative;
     box-sizing: border-box;
 }

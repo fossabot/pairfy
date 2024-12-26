@@ -16,8 +16,8 @@ const { getOrderData } = orderAPI();
 
 const color = computed(() => {
 
-    if (getOrderData.value.finished) {
-        if (getOrderData.value.contract_state === -1) {
+    if (getOrderData.value.order.finished) {
+        if (getOrderData.value?.order?.contract_state === -1) {
             return 'red'
         }
     }

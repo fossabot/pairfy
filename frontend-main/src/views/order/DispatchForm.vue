@@ -91,7 +91,7 @@ const dispatchFormErrors = reactive({
 
 const dispatchDialog = ref(false);
 
-const disableDispatched = computed(() => getOrderData.value.contract_state !== 1);
+const disableDispatched = computed(() => getOrderData.value?.order?.contract_state !== 1);
 
 const { mutate: dispatchProduct, loading: dispatchProductLoading, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
       mutation($dispatchProductVariable: DispatchProductInput!) {
@@ -145,7 +145,7 @@ const onDispatchProduct = () => {
     const deliveryDate = new Date(dispatchForm.date).getTime().toString();
 
     const scheme = {
-        order_id: getOrderData.value.id,
+        order_id: getOrderData.value.order.id,
         guide: dispatchForm.guide,
         date: deliveryDate,
         website: dispatchForm.website,

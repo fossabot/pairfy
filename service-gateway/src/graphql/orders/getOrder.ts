@@ -20,14 +20,15 @@ const getOrder = async (_: any, args: any, context: any) => {
         [params.id, USER.pubkeyhash]
       );
 
-      const { shipping_metadata } = row[0];
+      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = row[0];
 
       const shippingMetadata = await decryptMetadata(shipping_metadata);
-      
+
       return {
         order: row[0],
         shipping: shippingMetadata,
         address: null,
+        session: `${id}:${buyer_pubkeyhash}:${seller_id}`,
       };
     }
 
@@ -37,14 +38,15 @@ const getOrder = async (_: any, args: any, context: any) => {
         [params.id, SELLER.id]
       );
 
-      const { shipping_metadata } = row[0];
+      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = row[0];
 
       const shippingMetadata = await decryptMetadata(shipping_metadata);
-      
+
       return {
         order: row[0],
         shipping: shippingMetadata,
         address: null,
+        session: `${id}:${buyer_pubkeyhash}:${seller_id}`,
       };
     }
   } catch (err: any) {
