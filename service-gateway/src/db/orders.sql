@@ -3,7 +3,7 @@ create table if not exists orders(
   finished boolean default false,
   scanned_at bigint default 0,
   status_log varchar(100) default "created",
-  seller_id varchar(20) not null,
+  seller_id varchar(100) not null,
   buyer_pubkeyhash varchar(100) not null,
   seller_pubkeyhash varchar(100) not null,  
   buyer_address varchar(200) not null,
@@ -45,5 +45,6 @@ create table if not exists orders(
   primary key(id),
   index idx_finished (finished),
   index idx_created_at (created_at),
-  index idx_scanned_at (scanned_at)
+  index idx_scanned_at (scanned_at),
+  FOREIGN KEY (seller_id) REFERENCES sellers(id)
 ) ENGINE=InnoDB;

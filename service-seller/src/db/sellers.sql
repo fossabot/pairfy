@@ -1,5 +1,5 @@
 create table if not exists sellers(
-  id varchar(20) not null,
+  id varchar(100) not null,
   pubkeyhash varchar(200) default null,
   address varchar(200) default null,
   username varchar(50) not null,

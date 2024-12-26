@@ -412,6 +412,11 @@ query ($getOrderVariable: GetOrderInput!) {
             pending_block
             shipping_tx
             shipping_block
+            seller_username
+            seller_verified
+            seller_trade_terms
+            seller_avatar_base
+            seller_avatar_path
         }
         
         shipping
