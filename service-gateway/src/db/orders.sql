@@ -46,5 +46,7 @@ create table if not exists orders(
   index idx_finished (finished),
   index idx_created_at (created_at),
   index idx_scanned_at (scanned_at),
+  index idx_by_seller (id,seller_id),
+  index idx_by_buyer (id,buyer_pubkeyhash),
   FOREIGN KEY (seller_id) REFERENCES sellers(id)
 ) ENGINE=InnoDB;

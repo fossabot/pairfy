@@ -86,11 +86,11 @@ type Order {
   shipping_tx: String
   shipping_block: String
   shipping_metadata: String
-  seller_username: String!
-  seller_verified: Boolean!
-  seller_trade_terms: String!
-  seller_avatar_base: String!
-  seller_avatar_path: String!
+  seller_username: String
+  seller_verified: Boolean
+  seller_trade_terms: String
+  seller_avatar_base: String
+  seller_avatar_path: String
 }
 
 type getOrderResponse {
