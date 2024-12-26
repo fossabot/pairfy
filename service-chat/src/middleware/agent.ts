@@ -71,15 +71,17 @@ const agentMiddleware = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-interface AGENTS {
-  sellerData: SellerToken | null;
+interface AGENT {
+  role: string;
   userData: UserToken | null;
+  sellerData: SellerToken | null;
 }
 
-function verifyToken(authToken: string): AGENTS | null {
+function verifyToken(authToken: string): AGENT | null {
   let response = {
-    sellerData: null,
+    role: "",
     userData: null,
+    sellerData: null
   };
 
   try {
@@ -89,19 +91,19 @@ function verifyToken(authToken: string): AGENTS | null {
     ) as any;
 
     if (sessionData.role === "SELLER") {
+      response.role = "SELLER";
       response.sellerData = sessionData;
     }
 
     if (sessionData.role === "USER") {
+      response.role = "USER";
       response.userData = sessionData;
     }
+    return response;
   } catch (err) {
     logger.error(err);
-    return null
-
-  } finally {
-    return response;
+    return null;
   }
 }
 
-export { agentMiddleware, SellerToken, UserToken, verifyToken };
+export { agentMiddleware, SellerToken, UserToken, verifyToken, AGENT };

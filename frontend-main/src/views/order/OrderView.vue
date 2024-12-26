@@ -282,7 +282,7 @@
                 </template>
                 <!--/////////////////////////////////////////-->
                 <div class="col right">
-                    <ChatComp />
+                    <ChatComp v-if="orderData"/>
                 </div>
             </div>
         </div>

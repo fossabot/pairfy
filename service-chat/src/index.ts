@@ -15,13 +15,7 @@ import { makeExecutableSchema } from "@graphql-tools/schema";
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
 import { RedisPubSub } from "graphql-redis-subscriptions";
-import {
-  agentMiddleware,
-  SellerToken,
-  UserToken,
-  verifyToken,
-} from "./middleware/agent.js";
-
+import { agentMiddleware, verifyToken } from "./middleware/agent.js";
 
 const main = async () => {
   try {
@@ -48,6 +42,7 @@ const main = async () => {
     if (!process.env.REDIS_HOST) {
       throw new Error("REDIS_HOST error");
     }
+
     ///////////////////////////////////////////////////////////////
 
     await redisClient
@@ -81,30 +76,7 @@ const main = async () => {
         ...messages.Mutation,
       },
       Subscription: {
-        newMessages: {
-          subscribe: (_: any, args: any, context: any) => {
-            try {
-              const USER = context.AGENTS.userData as UserToken;
-
-              const SELLER = context.AGENTS.sellerData as SellerToken;
-
-              let channel = "";
-
-              if (USER) {
-                channel = `chat:${args.order_id}:${USER.pubkeyhash}`;
-              }
-
-              if (SELLER) {
-                channel = `chat:${args.order_id}:${SELLER.id}`;
-              }
-
-              return context.pubsub.asyncIterator(channel);
-            } catch (error) {
-              console.error("Subscription error", error);
-              throw new Error("Subscription error");
-            }
-          },
-        },
+        ...messages.Subscription,
       },
     };
 
@@ -122,7 +94,7 @@ const main = async () => {
     const serverCleanup = useServer(
       {
         schema,
-        context: async (ctx, msg, args) => {
+        onConnect: async (ctx) => {
           const authToken = ctx.connectionParams?.authToken;
 
           if (!authToken) {
@@ -132,23 +104,25 @@ const main = async () => {
           if (typeof authToken !== "string") {
             throw new Error("Unauthorized");
           }
+        },
+        context: async (ctx, msg, args) => {
+          const agentData = verifyToken(ctx.connectionParams?.authToken as string);
 
-          const AGENTS = verifyToken(authToken);
-
-          if (!AGENTS) {
+          if (!agentData) {
             throw new Error("Unauthorized");
           }
 
-          logger.info("ChatConnection", AGENTS);
+          logger.info("ChatConnection", agentData);
 
           return {
-            authToken,
             pubsub,
-            AGENTS,
+            agentData,
           };
         },
+        onDisconnect(ctx, code, reason) {
+          console.log("Disconnected!");
+        },
       },
-
       wsServer
     );
 

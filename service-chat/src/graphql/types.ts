@@ -44,7 +44,7 @@ type Mutation {
 #///////////////////////////////////////////////// SUBSCRIPTIONS
  
 type Subscription {
-    newMessages(order_id: ID!): Message!
+    newMessages(session: ID!): Message!
 }
 
 `;

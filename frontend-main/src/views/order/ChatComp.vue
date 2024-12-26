@@ -60,7 +60,7 @@ const messageList = ref([]);
 
 const getMessagesVariables = ref({
     "getMessagesVariables": {
-        session: "1907728b2d0dc51df7cef8001246803d1eb9c36e3411e62343d823a7:746bff9fb367bf3bb1b25fe24a272bb288d62a2cad1aad2e37a8173f:687609784237305307",
+        session: getOrderData.value.session,
     }
 
 })
@@ -91,8 +91,8 @@ watch(onGetMessagesResult, value => {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscription(gql`
-      subscription newMessages($orderId:  ID!){
-         newMessages(order_id: $orderId) {
+      subscription newMessages($session: ID!){
+         newMessages(session: $session) {
           id
           agent
           role
@@ -104,7 +104,7 @@ const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscrip
     `,
 
     () => ({
-        orderId: "1907728b2d0dc51df7cef8001246803d1eb9c36e3411e62343d823a7"
+        session: getOrderData.value.session
     }),
     {
         clientId: "chat",
@@ -161,7 +161,7 @@ onCreateMessageDone(() => {
 const sendMessage = () => {
     createMessage({
         "createMessageVariable": {
-            session: getOrderData.value?.session,
+            session: getOrderData.value.session,
             content: chatInput.value
         }
     })
