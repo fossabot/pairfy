@@ -253,14 +253,15 @@ onBeforeUnmount(() => {
 }
 
 .avatar {
-    background: #ffffff;
-    border-radius: 50%;
+    background: var(--background-a);
+    border-radius: 12px;
     overflow: hidden;
+    border: 1px solid transparent;
 }
 
 .avatar img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     object-fit: scale-down;
 }
 

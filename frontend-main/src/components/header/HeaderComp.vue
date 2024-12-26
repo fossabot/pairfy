@@ -30,7 +30,8 @@
 
                 </div>
                 <div class="menu-col right">
-                    <div class="ada"> ₳ {{ getADAprice }}</div>
+                    <div class="ADA"> ₳ 0,002,321 Blackday</div>
+                    <div class="ADA"> ₳ {{ getADAprice }}</div>
                     <div class="network"> {{ NETWORK }}</div>
                 </div>
             </div>
@@ -155,7 +156,7 @@ section {
     cursor: pointer;
 }
 
-.ada {
+.ADA {
     padding: 0 0.5rem;
     margin-left: 1rem;
     white-space: nowrap;
