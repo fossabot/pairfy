@@ -34,13 +34,13 @@ const errorEvents: string[] = [
   "SIGCONT",
 ];
 
-function redisChecker(redis: any, tag: string) {
+function redisChecker(redis: any) {
   let interval: NodeJS.Timeout;
 
   const pingPong = async () => {
     try {
       await redis.client.ping();
-      console.log("Redis Online-" + tag);
+      console.log("Redis Online");
     } catch (err) {
       logger.error("REDIS", err);
       clearInterval(interval);

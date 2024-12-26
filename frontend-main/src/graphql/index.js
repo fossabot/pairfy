@@ -70,7 +70,7 @@ const wsLink = new GraphQLWsLink(
       authToken: sessionStorage.getItem('authToken'),
     },
     on: {
-      connected: () => console.log('WebSocket connected'),
+      connected: () => console.log('WEBSOCKET'),
       closed: (event) => console.log('WebSocket closed', event),
       error: (error) => console.error('WebSocket error', error),
     },

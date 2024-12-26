@@ -4,7 +4,7 @@
 
         </div>
         <div class="content" id="scrollable">
-            <div class="message" v-for="(item, index) in messages" :key="index" :id="`m-${index}`">
+            <div class="message" v-for="(item, index) in messageList" :key="index" :id="`m-${index}`">
                 <MyMessage v-if="currentAgent === item.agent" :data="item" />
                 <PartyMessage v-if="currentAgent !== item.agent" :data="item" />
             </div>
@@ -53,7 +53,7 @@ const userViewing = ref(true);
 
 const chatInput = ref("");
 
-const messages = ref([])
+const messageList = ref([]);
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +84,8 @@ const { result: onGetMessagesResult } = useQuery(gql`
 
 
 watch(onGetMessagesResult, value => {
-    console.log(value)
-    messages.value = value.getMessages;
+    messageList.value.push(...value.getMessages);
+    scrollToBottom();
 })
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ const unwatchChat = watch(
     data => {
         console.log("New message received:", data.newMessages);
 
-        messages.value.push(data.newMessages);
+        messageList.value.push(data.newMessages);
 
         scrollToBottom();
 
@@ -134,7 +134,7 @@ const unwatchChat = watch(
 
     },
     {
-        lazy: false
+        lazy: true
     }
 )
 
@@ -190,7 +190,7 @@ const handleEnter = (event) => {
 
 function scrollToBottom() {
     nextTick(() => {
-        const element = document.getElementById(`m-${messages.value.length - 1}`);
+        const element = document.getElementById(`m-${messageList.value.length - 1}`);
 
         if (element) {
             element.scrollIntoView({ behavior: "smooth", block: "end" });

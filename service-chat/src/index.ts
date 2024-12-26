@@ -1,11 +1,12 @@
 import express from "express";
+import Redis from "ioredis";
 import cors from "cors";
 import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { catcher, errorEvents, logger, redisChecker } from "./utils/index.js";
-import { pubSubClient, redisClient } from "./db/redis.js";
+import { redisClient } from "./db/redis.js";
 import { typeDefs } from "./graphql/types.js";
 import { requireAuth } from "./middleware/required.js";
 import { messages } from "./graphql/resolvers.js";
@@ -20,6 +21,7 @@ import {
   UserToken,
   verifyToken,
 } from "./middleware/agent.js";
+
 
 const main = async () => {
   try {
@@ -48,26 +50,25 @@ const main = async () => {
     }
     ///////////////////////////////////////////////////////////////
 
-    const defaultRedisOptions = {
-      url: process.env.REDIS_HOST,
+    await redisClient
+      .connect({
+        url: process.env.REDIS_HOST,
+        connectTimeout: 100000,
+        keepAlive: 100000,
+        retryStrategy: (times: any) => Math.min(times * 50, 2000),
+      })
+      .then(() => redisChecker(redisClient))
+      .catch((err: any) => catcher(err));
+
+    const pubsubOptions = {
       connectTimeout: 100000,
       keepAlive: 100000,
       retryStrategy: (times: any) => Math.min(times * 50, 2000),
     };
 
-    await redisClient
-      .connect(defaultRedisOptions)
-      .then(() => redisChecker(redisClient, "1"))
-      .catch((err: any) => catcher(err));
-
-    await pubSubClient
-      .connect(defaultRedisOptions)
-      .then(() => redisChecker(pubSubClient, "2"))
-      .catch((err: any) => catcher(err));
-
-    const pubSub = new RedisPubSub({
-      publisher: redisClient.client,
-      subscriber: pubSubClient.client,
+    const pubsub = new RedisPubSub({
+      publisher: new Redis(process.env.REDIS_HOST, pubsubOptions),
+      subscriber: new Redis(process.env.REDIS_HOST, pubsubOptions),
     });
 
     ///////////////////////////////////////////////////////////////
@@ -82,21 +83,26 @@ const main = async () => {
       Subscription: {
         newMessages: {
           subscribe: (_: any, args: any, context: any) => {
-            const USER = context.AGENTS.userData as UserToken;
+            try {
+              const USER = context.AGENTS.userData as UserToken;
 
-            const SELLER = context.AGENTS.sellerData as SellerToken;
+              const SELLER = context.AGENTS.sellerData as SellerToken;
 
-            let channel = "";
+              let channel = "";
 
-            if (USER) {
-              channel = `chat:${args.order_id}:${USER.pubkeyhash}`;
+              if (USER) {
+                channel = `chat:${args.order_id}:${USER.pubkeyhash}`;
+              }
+
+              if (SELLER) {
+                channel = `chat:${args.order_id}:${SELLER.id}`;
+              }
+
+              return context.pubsub.asyncIterator(channel);
+            } catch (error) {
+              console.error("Subscription error", error);
+              throw new Error("Subscription error");
             }
-
-            if (SELLER) {
-              channel = `chat:${args.order_id}:${SELLER.id}`;
-            }
-
-            return context.pubSub.asyncIterator(channel);
           },
         },
       },
@@ -137,7 +143,7 @@ const main = async () => {
 
           return {
             authToken,
-            pubSub,
+            pubsub,
             AGENTS,
           };
         },
@@ -213,7 +219,7 @@ const main = async () => {
           sellerData: req.sellerData,
           userData: req.userData,
           redisClient: redisClient.client,
-          pubSub,
+          pubsub,
         }),
       })
     );

@@ -636,8 +636,6 @@ const getPaymentStatus = (pending_block) => {
     const diff = now - pending_block;
     const minutes = Math.floor(diff / 60);
 
-    console.log(minutes, "minutes_pending_block");
-
     if (minutes <= 15) {
         return {
             label: "confirming",
