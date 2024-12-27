@@ -30,7 +30,6 @@
 
                 </div>
                 <div class="menu-col right">
-                    <div class="ADA"> ₳ 0.002.321 Blackday Liquidity</div>
                     <div class="ADA"> ₳ {{ getADAprice }} USD</div>
                     <div class="network"> {{ NETWORK }}</div>
                 </div>
