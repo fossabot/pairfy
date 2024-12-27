@@ -30,8 +30,8 @@
 
                 </div>
                 <div class="menu-col right">
-                    <div class="ADA"> ₳ 0,002,321 Blackday</div>
-                    <div class="ADA"> ₳ {{ getADAprice }}</div>
+                    <div class="ADA"> ₳ 0.002.321 Blackday Liquidity</div>
+                    <div class="ADA"> ₳ {{ getADAprice }} USD</div>
                     <div class="network"> {{ NETWORK }}</div>
                 </div>
             </div>
@@ -55,7 +55,7 @@ import { NETWORK } from "@/api";
 const { showPanel, getCurrentUser, setADAprice, getADAprice } = headerAPI();
 
 const queryOptions = {
-    pollInterval: 60_000,
+    pollInterval: 60000,
     clientId: 'query'
 }
 

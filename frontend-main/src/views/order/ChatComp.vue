@@ -1,7 +1,6 @@
 <template>
     <div class="chat">
         <div class="header flex">
-
             <template v-if="getCurrentUser">
                 <div class="avatar flex">
                     <img :src="createAvatarURL(getOrderData.order)" alt="">
@@ -12,7 +11,13 @@
                 <div class="avatar flex">
                     <img src="@/assets/user.png" alt="">
                 </div>
-                <div class="name">{{ getOrderData.order.buyer_username }}</div>
+                <div class="name">
+                    <span>{{ getOrderData.order.buyer_username }}</span>
+                    <div class="last">
+                        Last seen 4m ago
+                    </div>
+                </div>
+
             </template>
         </div>
         <div class="content" id="scrollable">
@@ -67,6 +72,7 @@ const chatInput = ref("");
 
 const messageList = ref([]);
 
+const lastSeen = ref(null);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,12 +86,16 @@ const getMessagesVariables = ref({
 const { result: onGetMessagesResult } = useQuery(gql`
       query getMessages($getMessagesVariables: GetMessagesInput!) {
         getMessages(getMessagesInput: $getMessagesVariables) {
-          id
-          agent
-          role
-          content
-          seen
-          created_at
+           messages { 
+            id
+            agent
+            role
+            content
+            seen
+            created_at
+           }
+    
+           seen
         }
       }
     `,
@@ -98,7 +108,11 @@ const { result: onGetMessagesResult } = useQuery(gql`
 
 watch(onGetMessagesResult, value => {
     messageList.value = [];
-    messageList.value.push(...value.getMessages);
+
+    messageList.value.push(...value.getMessages.messages);
+
+    messageList.value = updateUnseenMessages(messageList.value, value.getMessages.seen);
+
     scrollToBottom();
 })
 
@@ -229,6 +243,21 @@ function createAvatarURL(order) {
     return order.seller_avatar_base + order.seller_avatar_path
 };
 
+function updateUnseenMessages(messages, seen) {
+    const seenList = new Set(Object.keys(JSON.parse(seen)));
+
+    const processed = messages.map(item => {
+        if (!item.seen && seenList.has(item.id)) {
+            return { ...item, seen: true };
+        }
+        return item;
+    });
+
+    return processed
+
+};
+
+
 onMounted(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
 });
@@ -274,6 +303,12 @@ onBeforeUnmount(() => {
 
 .name {
     margin-left: 1rem;
+    display: block;
+}
+
+.last {
+    font-size: var(--text-size-0);
+    color: var(--text-b);
 }
 
 .content {

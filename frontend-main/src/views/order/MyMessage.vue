@@ -39,17 +39,17 @@ const props = defineProps(['data'])
 .marker {
     font-size: var(--text-size-0);
     position: absolute;
-    bottom: 8px;
-    right: 8px;
+    bottom: 6px;
+    right: 6px;
     width: 4px;
     height: 4px;
     background: var(--text-b);
-    opacity: 0.5;
+    opacity: 0;
     border-radius: 3px;
 }
 
 .marker.seen {
+    opacity: 0.5;
     background: var(--primary-c);
-    opacity: 1;
 }
 </style>

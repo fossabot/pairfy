@@ -9,12 +9,17 @@ type Message {
     created_at: Float!
 }
 
+type GetMessagesResponse {
+  messages: [Message!]
+  seen: String!
+}
+
 input GetMessagesInput {
   session: String!
 } 
 
 type Query {
-  getMessages(getMessagesInput: GetMessagesInput!): [Message!]
+  getMessages(getMessagesInput: GetMessagesInput!): GetMessagesResponse!
 }
 
 #///////////////////////////////////////////////// MUTATIONS
