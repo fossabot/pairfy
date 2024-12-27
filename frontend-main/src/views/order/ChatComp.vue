@@ -4,8 +4,13 @@
             <template v-if="getCurrentUser">
                 <div class="avatar flex">
                     <img :src="createAvatarURL(getOrderData.order)" alt="">
+                </div>          
+                <div class="name">
+                    <span>{{ getOrderData.order.seller_username }}</span>
+                    <div class="last">
+                        {{ lastSeen }}
+                    </div>
                 </div>
-                <div class="name"> {{ getOrderData.order.seller_username }}</div>
             </template>
             <template v-if="getCurrentSeller">
                 <div class="avatar flex">
@@ -14,7 +19,7 @@
                 <div class="name">
                     <span>{{ getOrderData.order.buyer_username }}</span>
                     <div class="last">
-                        Last seen 4m ago
+                        {{ lastSeen }}
                     </div>
                 </div>
 
@@ -50,9 +55,12 @@ import gql from 'graphql-tag'
 import orderAPI from '@/views/order/api/index'
 import MyMessage from '@/views/order/MyMessage.vue'
 import PartyMessage from '@/views/order/PartyMessage.vue'
+import headerAPI from '@/components/header/api'
 import { useSubscription, useMutation, useQuery } from "@vue/apollo-composable"
 import { computed, watch, ref, onBeforeUnmount, inject, nextTick, onMounted, onUnmounted } from "vue"
-import headerAPI from '@/components/header/api'
+import { format } from 'timeago.js';
+
+const { setupAudio } = inject('utils');
 
 const { getCurrentSeller, getCurrentUser } = headerAPI();
 
@@ -62,8 +70,6 @@ const currentAgent = computed(() => {
 
 const { getOrderData } = orderAPI();
 
-const { setupAudio } = inject('utils');
-
 const { playNotification } = setupAudio();
 
 const userViewing = ref(true);
@@ -72,7 +78,15 @@ const chatInput = ref("");
 
 const messageList = ref([]);
 
-const lastSeen = ref(null);
+const lastSeen = computed(() => {
+    const msg = messageList.value.filter(msg => msg.seen && msg.agent === currentAgent.value).at(-1);
+
+    if (msg) {
+        return "Last seen " + format(msg.created_at);
+    }
+});
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,7 +116,9 @@ const { result: onGetMessagesResult } = useQuery(gql`
     getMessagesVariables,
     {
         clientId: 'chat',
-        pollInterval: 60000
+        pollInterval: 60000,
+        enabled: true,
+        lazy: true
     })
 
 
