@@ -84,7 +84,6 @@
             <Button label="Buy Now" fluid @click="openBuyDialog()"/>
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
-
     </div>
 </template>
 
@@ -253,7 +252,7 @@ const onConfirmedBuy = () => {
 }
 
 .card-legend i {
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
 }
 
 .card-rating {
