@@ -285,7 +285,7 @@ function calculateArrivalDay(durationInSeconds) {
 .card-legend {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: capitalize;
     display: flex;
     align-items: center;
