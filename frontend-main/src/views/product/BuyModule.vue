@@ -2,13 +2,13 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div v-if="getProductData" class="card">
-        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '23rem' }"
+        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '22rem' }"
             :draggable="false" dismissableMask>
             <template #header>
 
             </template>
 
-            <div class="dialog-sub">Buy ({{ selectedQuantity }}) units</div>
+            <div class="dialog-sub">Buy {{ selectedQuantity }} units</div>
 
             <div class="dialog-values">
                 Total Fiat = {{ computedTotalFiat }} USD
@@ -26,10 +26,9 @@
 
 
             <div class="dialog-msg">
-                <Message size="small" severity="warn" icon="pi pi-info-circle">
-                    The funds will be released in 60 minutes if the seller delays your order. Protected purchase
-                    guarantees 100% of
-                    the order price.
+                <Message size="small" severity="warn">
+                    The funds will be released in 60~ minutes if the seller delays the order -
+                    Protected purchase covers the funds at 100%. 
                 </Message>
             </div>
 
@@ -71,7 +70,7 @@
         </div>
 
         <div class="card-legend">
-            Available (15/20)
+            Available (15)
         </div>
 
         <div class="card-control">

@@ -116,7 +116,7 @@ const main = async () => {
           mode: mode,
           units: "metric",
           departure_time: preparationTime.toString(),
-          language: 'en',
+          language: "en",
           key: process.env.MATRIX_API_KEY as string,
         });
 
@@ -135,8 +135,6 @@ const main = async () => {
         if (status === "OK") {
           const element = rows[0].elements[0];
 
-          console.log(element);
-
           const response = {
             success: true,
             payload: {
@@ -148,7 +146,7 @@ const main = async () => {
           res.status(200).send(response);
         }
       } catch (err: any) {
-        console.error(err);
+        logger.error(err);
 
         res.status(404).send({ success: false });
       }
