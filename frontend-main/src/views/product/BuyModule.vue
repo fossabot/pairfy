@@ -63,18 +63,18 @@
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
 
-        <div class="card-within gray mini">
+        <div class="card-within gray">
             <span> Buying within the next</span>
 
             <span class="green">{{ withinRange }}</span>
         </div>
 
-        <div class="card-legend gray mini" >
+        <div class="card-legend green" >
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
         </div>
 
-        <div class="card-legend gray mini" >
+        <div class="card-legend gray" >
             <span> Available (15)</span>
         </div>
 
@@ -295,9 +295,6 @@ function calculateArrivalDay(durationInSeconds) {
     margin-left: 0.5rem;
 }
 
-.mini{
-    font-size: var(--text-size-0);
-}
 
 .card-rating {
     margin-bottom: 1rem;
