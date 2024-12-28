@@ -81,7 +81,8 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="openBuyDialog()" />
+            <Button label="Buy Now" fluid @click="openBuyDialog()"/>
+            <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
 
     </div>
