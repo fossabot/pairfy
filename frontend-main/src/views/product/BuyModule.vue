@@ -69,7 +69,7 @@
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
 
-        <div class="within gray">
+        <div class="card-within gray">
             <span style="font-size: var(--text-size-0);"> Buying within the next</span>
 
             <span class="green">{{ withinRange }}</span>
@@ -321,7 +321,7 @@ function calculateArrivalDay(durationInSeconds) {
     font-size: var(--text-size-2);
 }
 
-.within {
+.card-within {
     font-size: var(--text-size-0);
     margin-bottom: 1rem;
 }
