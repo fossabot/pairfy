@@ -28,7 +28,7 @@
             <div class="dialog-msg">
                 <Message size="small" severity="warn">
                     The funds will be released in 60~ minutes if the seller delays the order -
-                    Protected purchase covers the funds at 100%. 
+                    Protected purchase covers the funds at 100%.
                 </Message>
             </div>
 
@@ -55,18 +55,18 @@
         </div>
 
 
-        <div class="card-legend">
+        <div class="card-legend green">
             Protected Purchase
             <i class="pi pi-bolt" />
         </div>
 
         <div class="card-legend green">
             Free shipping
-            <i class="pi pi-truck"/>  
+            <i class="pi pi-truck" />
         </div>
 
-        <div class="card-legend green">
-            <span>  Arrives on Friday - Buying within the next 11h 24min</span>
+        <div class="card-legend gray">
+            <span> Arrives on {{ arrivalDate }} - Buying within the next <span class="green">{{ withinRange }}</span></span>
         </div>
 
         <div class="card-legend">
@@ -93,12 +93,14 @@
 <script setup>
 import headerAPI from '@/components/header/api';
 import productAPI from '@/views/product/api/index';
+import dayjs from 'dayjs';
 import gql from 'graphql-tag';
 import { ref, computed, inject } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
 import { useRouter } from 'vue-router';
+
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
@@ -227,6 +229,37 @@ const onConfirmedBuy = () => {
         }
     })
 }
+
+const arrivalDate = computed(() => calculateArrivalDay(45320));
+
+const withinRange = computed(() => calculateRemainingTimeOfDay());
+
+const calculateRemainingTimeOfDay = () => {
+
+    const now = dayjs();
+
+    const midnight = dayjs().endOf('day');
+
+    const duration = midnight.diff(now);
+
+    const hours = Math.floor(duration / (1000 * 60 * 60));
+
+    const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+
+
+    return `${hours}h ${minutes}min`;
+};
+
+
+function calculateArrivalDay(durationInSeconds) {
+
+    const arrivalDate = dayjs().add(durationInSeconds, 'second');
+
+    const arrivalDay = arrivalDate.format('dddd DD');
+
+    return arrivalDay;
+};
+
 </script>
 
 <style lang="css" scoped>
@@ -265,14 +298,6 @@ const onConfirmedBuy = () => {
 .card-rating span {
     margin-left: 0.5rem;
     font-size: var(--text-size-1);
-}
-
-.red {
-    color: var(--red-a);
-}
-
-.green {
-    color: var(--green-a);
 }
 
 .dialog-msg {

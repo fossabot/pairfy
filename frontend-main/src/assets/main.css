@@ -10,6 +10,22 @@
   align-items: center;
 }
 
+.red {
+  color: var(--red-a);
+}
+
+.green {
+  color: var(--green-a);
+}
+
+.gray{
+  color: var(--text-b);
+}
+
+.blue{ 
+  color: var(--primary-b);
+}
+
 .p-select-sm .p-select-label {
   font-size: var(--text-size-a) !important;
 }
