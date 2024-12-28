@@ -50,6 +50,6 @@ const props = defineProps(['data'])
 
 .marker.seen {
     opacity: 0.5;
-    background: var(--primary-c);
+    background: var(--primary-b);
 }
 </style>
