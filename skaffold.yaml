@@ -29,7 +29,15 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
-            dest: .                        
+            dest: .     
+    - image: pairfy/service-matrix
+      context: service-matrix
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .                                
     - image: pairfy/service-product
       context: service-product
       docker:

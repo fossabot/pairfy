@@ -9,10 +9,9 @@ const logger = new Logger({
 
 const catcher = async (message?: any, error?: any, bypass?: boolean) => {
   logger.error(`EXIT=>${message}-${error}`);
+;
 
- 
-
-  return bypass ||  process.exit(0);
+  return bypass || process.exit(0);
 };
 
 const generateId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);
