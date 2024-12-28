@@ -4,7 +4,7 @@
             <template v-if="getCurrentUser">
                 <div class="avatar flex">
                     <img :src="createAvatarURL(getOrderData.order)" alt="">
-                </div>          
+                </div>
                 <div class="name">
                     <span>{{ getOrderData.order.seller_username }}</span>
                     <div class="last">
@@ -393,7 +393,7 @@ onBeforeUnmount(() => {
     max-height: 100px;
     border: 1px solid var(--border-b);
     border-radius: 8px;
-    background: color-mix(in srgb, black, transparent 90%);
+    background: color-mix(in srgb, black, transparent 80%);
     resize: none;
     width: inherit;
 }
