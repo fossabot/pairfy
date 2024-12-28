@@ -56,7 +56,7 @@
         </div>
 
 
-        <div class="card-legend green">
+        <div class="card-legend">
             Protected Purchase
             <i class="pi pi-bolt" />
         </div>
