@@ -63,7 +63,11 @@
 
         <div class="card-legend green">
             Free shipping
-            <i class="pi pi-truck" />
+            <i class="pi pi-truck"/>  
+        </div>
+
+        <div class="card-legend green">
+            <span>  Arrives on Friday - Buying within the next 11h 24min</span>
         </div>
 
         <div class="card-legend">
@@ -81,7 +85,7 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="openBuyDialog()"/>
+            <Button label="Buy Now" fluid @click="openBuyDialog()" />
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
     </div>
