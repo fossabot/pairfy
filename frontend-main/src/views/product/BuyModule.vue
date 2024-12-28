@@ -71,7 +71,7 @@
 
         <div class="card-legend gray mini" >
             <span>protected purchase</span>
-            <i class="pi pi-bolt" />
+            <i class="pi pi-bolt green" />
         </div>
 
         <div class="card-legend gray mini" >
