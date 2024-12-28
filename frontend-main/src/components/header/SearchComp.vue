@@ -54,7 +54,7 @@ const isFocus = ref(false);
     height: 40px; 
     border: none;
     background: var(--primary-b);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 3px 3px 0;
     cursor: pointer;
     color: var(--text-a);
 }

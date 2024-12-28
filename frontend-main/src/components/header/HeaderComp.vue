@@ -9,7 +9,6 @@
                 <SearchComp />
             </div>
             <div class="header-col right">
-
                 <NotificationComp />
 
                 <div v-if="!getCurrentUser" class="connect-wallet" @click="showPanel(true)">
@@ -47,7 +46,7 @@ import SearchComp from "@/components/header/SearchComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
-import { watch } from "vue";
+import { onBeforeUnmount, watch, ref } from "vue";
 import { NETWORK } from "@/api";
 
 
@@ -67,10 +66,15 @@ const { result: onGetAssetPriceResult, onError: onGetAssetPriceError } = useQuer
     queryOptions
 );
 
-watch(onGetAssetPriceResult, value => setADAprice(value.getAssetPrice));
+const watchAssetPrice = watch(onGetAssetPriceResult, value => setADAprice(value.getAssetPrice));
 
 onGetAssetPriceError(error => {
     console.log(error)
+})
+
+
+onBeforeUnmount(() => {
+    watchAssetPrice()
 })
 
 </script>
@@ -168,4 +172,5 @@ section {
     margin-left: 1rem;
     text-transform: capitalize;
 }
+
 </style>
