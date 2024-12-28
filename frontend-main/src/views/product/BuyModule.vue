@@ -66,7 +66,11 @@
         </div>
 
         <div class="card-legend gray">
-            <span> Arrives on {{ arrivalDate }} - Buying within the next <span class="green">{{ withinRange }}</span></span>
+            <span> Arrives on 
+                {{ arrivalDate }}
+                - Buying within the next
+                <span class="green">{{ withinRange }}</span>
+            </span>
         </div>
 
         <div class="card-legend">
