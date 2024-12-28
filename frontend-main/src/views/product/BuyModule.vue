@@ -65,12 +65,15 @@
             <i class="pi pi-truck" />
         </div>
 
-        <div class="card-legend gray">
-            <span> Arrives on 
-                {{ arrivalDate }}
-                - Buying within the next
-                <span class="green">{{ withinRange }}</span>
-            </span>
+        <div class="card-legend">
+            <span> Arrives on {{ arrivalDate }}</span>
+        </div>
+
+        <div class="within gray">
+            <span style="font-size: var(--text-size-0);"> Buying within the next</span>
+
+            <span class="green">{{ withinRange }}</span>
+
         </div>
 
         <div class="card-legend">
@@ -251,7 +254,7 @@ const calculateRemainingTimeOfDay = () => {
     const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
 
 
-    return `${hours}h ${minutes}min`;
+    return ` ${hours}h ${minutes}min`;
 };
 
 
@@ -316,5 +319,10 @@ function calculateArrivalDay(durationInSeconds) {
     margin-top: 1rem;
     font-weight: 600;
     font-size: var(--text-size-2);
+}
+
+.within {
+    font-size: var(--text-size-0);
+    margin-bottom: 1rem;
 }
 </style>
