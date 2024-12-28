@@ -54,12 +54,6 @@
             <span style="color: var(--text-b)">(1250 reviews)</span>
         </div>
 
-
-        <div class="card-legend green">
-            Protected Purchase
-            <i class="pi pi-bolt" />
-        </div>
-
         <div class="card-legend green">
             Free shipping
             <i class="pi pi-truck" />
@@ -76,8 +70,13 @@
 
         </div>
 
-        <div class="card-legend">
-            Available (15)
+        <div class="card-legend gray" >
+            <span style="font-size: var(--text-size-0);">protected purchase</span>
+            <i class="pi pi-bolt" />
+        </div>
+
+        <div class="card-legend gray" >
+            <span style="font-size: var(--text-size-0);"> Available (15)</span>
         </div>
 
         <div class="card-control">
@@ -282,7 +281,6 @@ function calculateArrivalDay(durationInSeconds) {
 .card-control {
     display: grid;
     gap: 1rem;
-    margin-top: 1rem;
 }
 
 .card-legend {
