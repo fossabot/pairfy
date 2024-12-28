@@ -31,7 +31,7 @@ const main = async () => {
     const corsOrigin = process.env.CORS_DOMAINS as string;
 
     const corsOptions = {
-      origin: corsOrigin?.split(",") || "*",
+      origin: corsOrigin.split(",") || "*",
       methods: ["GET", "POST"],
       credentials: true,
       maxAge: 86400,
@@ -90,9 +90,9 @@ const main = async () => {
 
         console.log(params);
 
-        const origin = "Bogotá, Cundinamarca";
+        const origin = "Bogotá, Cundinamarca, CO";
 
-        const mode = "driving";
+        const mode = "transit";
 
         const destination = params.destination;
 
@@ -128,22 +128,24 @@ const main = async () => {
           throw new Error("INTERNAL_ERROR");
         }
 
-        console.log(`${city},${region},${country}`);
-
         const { rows, status } = getDuration.data;
 
         if (status === "OK") {
           const element = rows[0].elements[0];
 
-          const response = {
-            success: true,
-            payload: {
-              distance: element.distance.text,
-              duration: element.duration.value,
-            },
-          };
+          console.log(element);
 
-          res.status(200).send(response);
+          if (element.status === "OK") {
+            const response = {
+              success: true,
+              payload: {
+                distance: element.distance.text,
+                duration: element.duration.value,
+              },
+            };
+
+            res.status(200).send(response);
+          }
         }
       } catch (err: any) {
         logger.error(err);
