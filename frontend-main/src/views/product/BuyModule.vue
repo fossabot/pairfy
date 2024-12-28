@@ -74,7 +74,7 @@
             <i class="pi pi-bolt green" />
         </div>
 
-        <div class="card-legend gray" >
+        <div class="card-legend" >
             <span> Available (15)</span>
         </div>
 
