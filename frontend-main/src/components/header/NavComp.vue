@@ -1,12 +1,13 @@
 <template>
     <div class="nav">
-        <span>All</span>
+        <span>Home</span> 
         <span>Categories</span>
         <span>Discounts</span>
         <span>Rewards</span>
         <span>Sell</span>
         <span>Help</span>
         <span>Support</span>
+        <span>Documentation</span>
     </div>
 </template>
 

@@ -53,10 +53,9 @@ const isFocus = ref(false);
     padding: 0 0.75rem;
     height: 40px; 
     border: none;
-    background: var(--primary-b);
+    background: var(--primary-c);
     border-radius: 0 3px 3px 0;
     cursor: pointer;
-    color: var(--text-a);
 }
 
 .search-button.focus {
@@ -64,7 +63,7 @@ const isFocus = ref(false);
 }
 
 .search-button:hover {
-    background: var(--primary-a);
+    background: var(--primary-b);
 }
 
 .search-icon {

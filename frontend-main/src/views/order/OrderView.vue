@@ -26,7 +26,6 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
                 <div class="nav-scanner flex">
-                    Scanning
                     <span v-if="!scanning" class="loader stopped" />
                     <span v-if="scanning" class="loader actived" />
                 </div>
@@ -774,7 +773,7 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border.selected {
-    background: var(--primary-b);
+    background: var(--primary-c);
 }
 
 
@@ -798,7 +797,7 @@ onUnmounted(() => {
 }
 
 .summary-title span {
-    color: var(--primary-b);
+    color: var(--primary-c);
     font-weight: 700;
     margin-left: 0.5rem
 }
@@ -1128,7 +1127,7 @@ onUnmounted(() => {
 
 .loader.actived {
     animation: rotation 1s linear infinite;
-    border: 2px solid var(--primary-b);
+    border: 2px solid var(--primary-c);
     border-bottom-color: transparent;
 }
 

@@ -87,13 +87,13 @@ header {
     justify-content: center;
     align-items: center;
     width: 100%;
-    border-bottom: 1px solid var(--border-b);
     font-size: var(--text-size-1);
 }
 
 section {
     width: inherit;
     justify-content: center;
+    background: var(--background-d);
 }
 
 .header {
@@ -149,12 +149,11 @@ section {
 }
 
 .connect-wallet {
-    background: var(--primary-b);
+    background: var(--primary-c);
     border-radius: 8px;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     min-width: 120px;
-    font-weight: 500;
-    color: var(--text-a);
+    font-weight: 600;
     font-size: var(--text-size-1);
     cursor: pointer;
 }

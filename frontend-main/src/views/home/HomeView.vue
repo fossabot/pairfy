@@ -44,14 +44,14 @@ main {
   justify-content: center;
   display: flex;
   align-items: center;
-  background-image: url('@/assets/banner.webp');
+  background: url('@/assets/banner.webp');
+  background-size: cover;
 }
 
 .bottom {
   display: flex;
   justify-content: center;
-  background: rgb(201, 1, 0);
-  background: linear-gradient(180deg, #9a0000 0%, rgba(0, 0, 0, 0) 30%);
+  background: linear-gradient(180deg, #ededed 0%, rgba(0, 0, 0, 0) 30%);
 }
 
 .grid {
@@ -74,13 +74,13 @@ main {
 }
 
 @media (min-width: 768px) {
-  .grid{
+  .grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }
 
 @media (min-width: 1200px) {
-  .grid{
+  .grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
