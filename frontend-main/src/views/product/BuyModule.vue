@@ -1,7 +1,7 @@
 <template>
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
-    <div  v-if="getProductData" class="card">
+    <div v-if="getProductData" class="card">
         <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '23rem' }"
             :draggable="false" dismissableMask>
             <template #header>
@@ -40,51 +40,50 @@
             </template>
         </Dialog>
 
-        
-            <div class="card-brand">
-                {{ getProductData.brand }}
-            </div>
 
-            <div class="card-stock" :class="{ red: 0, }">
-                {{ getStockLabel(15) }}
-            </div>
+        <div class="card-legend">
+            {{ getProductData.brand }}
+        </div>
 
-            <div class="card-rating flex">
-                <Rating v-model="productRating" :stars="5" readonly />
-                <span> 4.5 </span>
-                <span style="color: var(--text-b)">(1250 reviews)</span>
-            </div>
+        <div class="card-legend" :class="{ red: 0, }">
+            {{ getStockLabel(15) }}
+        </div>
 
-            <div class="card-legend">
-                <span>5 Sold</span>
-            </div>
+        <div class="card-rating flex">
+            <Rating v-model="productRating" :stars="5" readonly />
+            <span> 4.5 </span>
+            <span style="color: var(--text-b)">(1250 reviews)</span>
+        </div>
 
-            <div class="card-legend">
-                <span>SKU {{ getProductData.sku.split(":")[0] }}</span>
-            </div>
 
-            <div class="card-protected" :class="{ red: 0, }">
-                Protected Purchase
-            </div>
+        <div class="card-legend green">
+            Protected Purchase
+            <i class="pi pi-bolt" />
+        </div>
 
-            <div class="card-legend">
-                Available (15 of 20)
-            </div>
+        <div class="card-legend green">
+            Free shipping
+            <i class="pi pi-truck" />
+        </div>
 
-            <div class="card-control">
-                <InputNumber v-model="selectedQuantity" inputId="horizontal-buttons" showButtons
-                    buttonLayout="horizontal" :step="1" fluid :format="false" :min="1" :max="10">
-                    <template #incrementbuttonicon>
-                        <span class="pi pi-plus" />
-                    </template>
-                    <template #decrementbuttonicon>
-                        <span class="pi pi-minus" />
-                    </template>
-                </InputNumber>
+        <div class="card-legend">
+            Available (15/20)
+        </div>
 
-                <Button label="Buy Now" fluid @click="openBuyDialog()" />
-            </div>
-        
+        <div class="card-control">
+            <InputNumber v-model="selectedQuantity" inputId="horizontal-buttons" showButtons buttonLayout="horizontal"
+                :step="1" fluid :format="false" :min="1" :max="10">
+                <template #incrementbuttonicon>
+                    <span class="pi pi-plus" />
+                </template>
+                <template #decrementbuttonicon>
+                    <span class="pi pi-minus" />
+                </template>
+            </InputNumber>
+
+            <Button label="Buy Now" fluid @click="openBuyDialog()" />
+        </div>
+
     </div>
 </template>
 
@@ -234,6 +233,7 @@ const onConfirmedBuy = () => {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    border-radius: 8px;
 }
 
 .card-control {
@@ -244,19 +244,19 @@ const onConfirmedBuy = () => {
 
 .card-legend {
     font-size: var(--text-size-1);
-    font-weight: 400;
-    margin-top: 1rem;
-
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
 }
 
-.card-brand {
-    font-weight: 700;
-    font-size: var(--text-size-1);
-    text-transform: capitalize;
+.card-legend i {
+    margin-left: 0.25rem;
 }
 
 .card-rating {
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .card-rating span {
@@ -264,17 +264,11 @@ const onConfirmedBuy = () => {
     font-size: var(--text-size-1);
 }
 
-.card-stock,
-.card-protected {
-    font-weight: 600;
-    margin-top: 1rem;
-}
-
-.card-stock.red {
+.red {
     color: var(--red-a);
 }
 
-.card-protected {
+.green {
     color: var(--green-a);
 }
 
@@ -284,7 +278,6 @@ const onConfirmedBuy = () => {
 
 .dialog-sub {
     font-weight: 500;
-
 }
 
 .dialog-values {
