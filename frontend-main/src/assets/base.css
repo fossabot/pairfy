@@ -85,7 +85,6 @@
   --primary-a: #0046be;
   --primary-b:  #0866ff; 
   --primary-c: #f7a600;
-  --primary-d: color-mix(in srgb,var(--primary-c),transparent 60%);
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;

@@ -53,7 +53,7 @@ const isFocus = ref(false);
     padding: 0 0.75rem;
     height: 40px; 
     border: none;
-    background: var(--primary-d);
+    background: color-mix(in srgb,var(--primary-c),transparent 60%);
     border-radius: 0 3px 3px 0;
     cursor: pointer;
 }
