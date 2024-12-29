@@ -72,7 +72,7 @@
         <div class="card-within gray">
             <span> Buying within the next</span>
 
-            <span>{{ withinRange }}</span>
+            <span style="color: initial;">{{ withinRange }}</span>
         </div>
 
         <div class="card-legend">
