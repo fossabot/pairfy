@@ -59,6 +59,11 @@
             <i class="pi pi-truck" />
         </div>
 
+        <div class="card-legend green">
+            <span>protected purchase</span>
+            <i class="pi pi-bolt green" />
+        </div>
+        
         <div class="card-legend">
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
@@ -69,12 +74,8 @@
             <span class="green">{{ withinRange }}</span>
         </div>
 
-        <div class="card-legend green" >
-            <span>protected purchase</span>
-            <i class="pi pi-bolt green" />
-        </div>
 
-        <div class="card-legend" >
+        <div class="card-legend">
             <span> Available (15)</span>
         </div>
 
@@ -113,7 +114,11 @@ const router = useRouter();
 
 const { getADAprice } = headerAPI();
 
-const { getProductData } = productAPI();
+const { getProductData, getArrivalDate, getArrivalData } = productAPI();
+
+getArrivalDate({
+    "destination": "181.132.19.47"
+})
 
 const toast = useToast();
 
@@ -235,7 +240,7 @@ const onConfirmedBuy = () => {
     })
 }
 
-const arrivalDate = computed(() => calculateArrivalDay(45320));
+const arrivalDate = computed(() => calculateArrivalDay(getArrivalData.value?.duration));
 
 const withinRange = computed(() => calculateRemainingTimeOfDay());
 
