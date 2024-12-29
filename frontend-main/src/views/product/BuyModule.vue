@@ -11,12 +11,12 @@
             <div class="dialog-sub">Buy {{ selectedQuantity }} units</div>
 
             <div class="dialog-values">
-                Total Fiat = {{ computedTotalFiat }} USD
+                Total Fiat Price = {{ computedTotalFiat }} USD
             </div>
 
 
             <div class="dialog-values">
-                ADA Price = {{ getADAprice }} USD
+                Current ADA Price = {{ getADAprice }} USD
             </div>
 
 
