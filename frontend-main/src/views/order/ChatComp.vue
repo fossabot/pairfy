@@ -290,9 +290,8 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .chat {
     width: 100%;
-    min-height: 700px;
-    background: var(--background-c);
-    border: 2px solid var(--border-b);
+    min-height: 700px;  
+    border: 2px solid var(--border-a);
     border-radius: 20px;
     overflow: hidden;
     transition: 0.2s;
@@ -300,7 +299,7 @@ onBeforeUnmount(() => {
 
 .header {
     height: 100px;
-    border-bottom: 1px solid var(--border-b);
+    border-bottom: 1px solid var(--border-a);
     padding: 1rem;
 }
 
@@ -338,6 +337,7 @@ onBeforeUnmount(() => {
     box-sizing: border-box;
     scroll-behavior: smooth;
     padding: 1rem;
+    background: var(--background-a);
 }
 
 .content::-webkit-scrollbar {
@@ -361,7 +361,7 @@ onBeforeUnmount(() => {
 
 
 .footer {
-    border-top: 1px solid var(--border-b);
+    border-top: 1px solid var(--border-a);
     width: inherit;
 }
 
@@ -374,7 +374,6 @@ onBeforeUnmount(() => {
 .footer-top button {
     background: transparent;
     border: none;
-    color: var(--text-w);
     justify-content: center;
     cursor: pointer;
 }
@@ -392,9 +391,8 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
     transition: 0.2s;
     max-height: 100px;
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--primary-b);
     border-radius: 8px;
-    background: color-mix(in srgb, black, transparent 80%);
     resize: none;
     width: inherit;
 }
@@ -415,7 +413,6 @@ onBeforeUnmount(() => {
 }
 
 .chat-send i {
-    color: var(--text-w);
     font-size: var(--text-size-3);
     transform: rotate(45deg);
 }

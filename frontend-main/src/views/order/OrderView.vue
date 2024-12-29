@@ -719,8 +719,8 @@ onUnmounted(() => {
 }
 
 .divider {
-    border-color: var(--border-b);
-    background: var(--border-b);
+    border-color: var(--border-a);
+    background: var(--border-a);
     margin: 1rem 0;
     height: 1px;
 }
@@ -728,8 +728,8 @@ onUnmounted(() => {
 .body {
     display: flex;
     justify-content: center;
-    background: var(--background-c);
-    color: var(--text-w);
+    background: var(--background-a);
+    border-top: 1px solid var(--border-a);
 }
 
 .container {
@@ -739,7 +739,7 @@ onUnmounted(() => {
 }
 
 .nav {
-    border-bottom: 1px solid var(--border-b);
+    border-bottom: 1px solid var(--border-a);
     margin-top: 2rem;
 }
 
@@ -755,7 +755,7 @@ onUnmounted(() => {
 }
 
 .nav-item.selected {
-    color: var(--text-w);
+    color: var(--text-a);
     font-weight: 600;
 }
 
@@ -773,7 +773,7 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border.selected {
-    background: var(--primary-c);
+    background: var(--primary-b);
 }
 
 
@@ -797,7 +797,7 @@ onUnmounted(() => {
 }
 
 .summary-title span {
-    color: var(--primary-c);
+    color: var(--primary-b);
     font-weight: 700;
     margin-left: 0.5rem
 }
@@ -809,7 +809,7 @@ onUnmounted(() => {
 }
 
 .summary-subtitle span {
-    color: var(--text-w);
+    color: var(--text-a);
     margin-left: 0.5rem;
 }
 
@@ -821,7 +821,7 @@ onUnmounted(() => {
 
 .summary-subtitle button i {
     font-size: var(--text-size-1);
-    color: var(--text-w);
+    color: var(--text-a);
 }
 
 .copy-button:hover {
@@ -884,7 +884,7 @@ onUnmounted(() => {
 }
 
 .timeline-content {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     border-radius: 12px;
     height: 100%;
     width: inherit;
@@ -897,7 +897,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background-color: var(--background-b);
+    background: var(--background-b);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
@@ -910,7 +910,6 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
-    color: var(--text-a);
 }
 
 .diamond span i {
@@ -958,13 +957,13 @@ onUnmounted(() => {
     padding-right: 1rem;
     overflow: hidden;
     cursor: pointer;
-    outline: 1px solid var(--border-b);
+    outline: 1px solid var(--border-a);
 }
 
 .payment-label {
     font-size: var(--text-size-1);
     font-weight: 600;
-    border-right: 1px solid var(--border-b);
+    border-right: 1px solid var(--border-a);
     padding: 0 1rem;
     margin-right: 0.75rem;
 }
@@ -1028,7 +1027,7 @@ onUnmounted(() => {
 }
 
 .product-header {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     padding: 1rem;
     border-radius: 12px;
     margin-top: 1rem;
@@ -1039,7 +1038,7 @@ onUnmounted(() => {
     width: 100px;
     height: 100px;
     padding: 0.5rem;
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     border-radius: 12px;
     display: flex;
     object-fit: contain;
@@ -1066,7 +1065,7 @@ onUnmounted(() => {
 }
 
 .product-card {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     border-radius: 12px;
     padding: 1rem;
     width: 100%;
@@ -1075,7 +1074,7 @@ onUnmounted(() => {
 }
 
 .product-list {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     padding: 1.5rem;
     margin-top: 1rem;
     border-radius: 12px;
@@ -1092,7 +1091,7 @@ onUnmounted(() => {
 }
 
 .product-features {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--border-a);
     margin-top: 1rem;
     border-radius: 12px;
     padding: 1.5rem;

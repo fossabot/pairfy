@@ -33,7 +33,7 @@ const date = computed(() => convertDate(props.data.created_at, 2))
     border-radius: 12px;
     border-bottom-left-radius: 0px;
     background: color-mix(in srgb, black, transparent 80%);
-    background: var(--background-d);
+    background: var(--background-b);
     position: relative;
     box-sizing: border-box;
 }

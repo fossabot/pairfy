@@ -2,7 +2,7 @@
     <div class="message">
         <div class="bubble" v-tooltip.left="date">
             {{ props.data.content }}
-            <span class="marker" :class="{ seen: props.data.seen  }"></span>
+            <span class="marker" :class="{ seen: props.data.seen }"></span>
         </div>
     </div>
 </template>
@@ -31,9 +31,10 @@ const props = defineProps(['data'])
     padding: 1rem;
     border-radius: 12px;
     border-bottom-right-radius: 0px;
-    background: color-mix(in srgb, var(--p-yellow-500), transparent 90%);
+    background: var(--primary-b);
     position: relative;
     box-sizing: border-box;
+    color: var(--text-w);
 }
 
 .marker {
@@ -50,6 +51,6 @@ const props = defineProps(['data'])
 
 .marker.seen {
     opacity: 0.5;
-    background: var(--primary-b);
+    background: #ffffff;
 }
 </style>
