@@ -257,7 +257,7 @@ const calculateRemainingTimeOfDay = () => {
     const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
 
 
-    return `${hours}h ${minutes}min`;
+    return `${hours} h ${minutes} min`;
 };
 
 
@@ -330,6 +330,6 @@ function calculateArrivalDay(durationInSeconds) {
 }
 
 .card-within span:nth-child(2) {
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
 }
 </style>
