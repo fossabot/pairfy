@@ -16,6 +16,8 @@
                 <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
                     rel="noopener noreferrer">Documentation</a>
             </span>
+            <span>Electronics</span>
+            <span>Best Sellers</span> 
         </div>
         <div class="ADA"> ₳ {{ getADAprice }} USD</div>
     </div>
