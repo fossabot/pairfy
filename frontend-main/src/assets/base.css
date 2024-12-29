@@ -118,6 +118,8 @@
   --border-a: #e2e8f0;
   --border-b: #2b3139;
 
+  --shadow-a: 0 2px 24px rgba(24, 32, 82, .05);
+
   --red-a: #ff385c;
   --green-a: #10b981;
   --orange-a: #ff7733;

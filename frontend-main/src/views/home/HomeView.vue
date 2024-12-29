@@ -70,8 +70,8 @@ main {
 
 .grid-item {
   background: var(--background-a);
-  border-radius: 8px;
-  box-shadow: 0 2px 24px rgba(24, 32, 82, .05);
+  border-radius: 12px;
+  box-shadow: var(--shadow-a);
 }
 
 @media (min-width: 768px) {
