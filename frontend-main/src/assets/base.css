@@ -61,10 +61,13 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--primary-c) !important;
-  
- --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
+  --p-rating-icon-active-color: var(--yellow-a) !important;
 
+  --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
+
+  --p-button-padding-y: 0.625rem !important;
+
+  --p-tag-font-size: var(--text-size-1) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,12 +86,11 @@
 
 :root {
   --primary-a: #0046be;
-  --primary-b:  #0866ff; 
-  --primary-c: #f7a600;
+  --primary-b: #ff385c;
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;
-  --background-c: #161C24;
+  --background-c: #161c24;
   --background-d: #263241;
 
   --text-a: #0f1111;
@@ -116,9 +118,10 @@
   --border-a: #e2e8f0;
   --border-b: #2b3139;
 
-  --red-a: #f43f5e;
+  --red-a: #ff385c;
   --green-a: #10b981;
   --orange-a: #ff7733;
+  --yellow-a: #f7a600;
 }
 
 *,

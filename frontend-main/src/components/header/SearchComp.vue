@@ -23,10 +23,10 @@ const isFocus = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: 20px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid var(--background-c);
+    border: 1px solid var(--text-a);
     overflow: hidden;
 
 }
@@ -47,6 +47,10 @@ const isFocus = ref(false);
     font-family: inherit;
     background: inherit;
     font-weight: 500;
+}
+
+.search-input::placeholder{
+    color: var(--text-b);
 }
 
 .search-button {

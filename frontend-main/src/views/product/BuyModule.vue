@@ -27,7 +27,7 @@
 
             <div class="dialog-msg">
                 <Message size="small" severity="warn">
-                    The funds will be released in 60~ minutes if the seller delays the order -
+                    The funds will be released in 60 minutes if the seller delays the order.
                     Protected purchase covers the funds at 100%.
                 </Message>
             </div>
@@ -59,7 +59,7 @@
             <i class="pi pi-truck" />
         </div>
 
-        <div class="card-legend green">
+        <div class="card-legend">
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
         </div>
@@ -90,7 +90,7 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="openBuyDialog()" />
+            <Button label="Buy Now" fluid @click="openBuyDialog()" style="color: var(--text-w);" />
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
     </div>

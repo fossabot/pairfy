@@ -47,7 +47,7 @@ import DescriptionModule from '@/views/product/DescriptionModule.vue';
 import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
-import { ref, watch } from "vue";
+import { onBeforeUnmount, ref, watch } from "vue";
 
 const { setProductData, getProductData } = productAPI();
 
@@ -125,7 +125,7 @@ watch(
     { immediate: true }
 );
 
-watch(getProductResult, value => {
+const unwatchGetProduct = watch(getProductResult, value => {
     if (value) {
         setProductData(value.getProduct)
     }
@@ -135,7 +135,7 @@ onGetProductError(error => {
     showError(error);
 })
 
-
+onBeforeUnmount(() => unwatchGetProduct())
 
 </script>
 
@@ -146,6 +146,7 @@ onGetProductError(error => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid var(--border-a);
 }
 
 .mask {

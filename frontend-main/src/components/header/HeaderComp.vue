@@ -22,16 +22,7 @@
         </div>
         <section class="flex">
             <div class="menu">
-                <div class="menu-col left">
-                    <NavComp />
-                </div>
-                <div class="menu-col center">
-
-                </div>
-                <div class="menu-col right">
-                    <div class="ADA"> ₳ {{ getADAprice }} USD</div>
-                    <div class="network"> {{ NETWORK }}</div>
-                </div>
+                <NavComp />
             </div>
         </section>
     </header>
@@ -47,10 +38,10 @@ import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
-import { NETWORK } from "@/api";
 
 
-const { showPanel, getCurrentUser, setADAprice, getADAprice } = headerAPI();
+
+const { showPanel, getCurrentUser, setADAprice } = headerAPI();
 
 const queryOptions = {
     pollInterval: 60000,
@@ -81,23 +72,22 @@ onBeforeUnmount(() => {
 
 <style scoped>
 header {
-    background: var(--background-c);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     font-size: var(--text-size-1);
+    color: var(--text-w);
 }
 
 section {
     width: inherit;
     justify-content: center;
-    background: var(--background-d);
 }
 
 .header {
-    padding: 1rem 0;
+    padding: 0.75rem 0;
 }
 
 .brand {
@@ -112,16 +102,14 @@ section {
     background-repeat: no-repeat;
 }
 
-.header,
-.menu {
+.header {
     display: grid;
     grid-template-columns: 20% 60% 20%;
     max-width: 1600px;
     width: 100%;
 }
 
-.header-col,
-.menu-col {
+.header-col{
     text-align: center;
     display: flex;
     align-items: center;
@@ -136,26 +124,21 @@ section {
 }
 
 .menu {
-    color: var(--text-w);
+    color: var(--text-a);
     padding: 0.75rem 0;
-}
-
-.menu-col.right {
-    justify-content: flex-end;
-}
-
-.menu-col.left {
-    justify-content: flex-start;
+    max-width: 1600px;
+    width: 100%;
 }
 
 .connect-wallet {
-    background: var(--primary-c);
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
+    background: var(--primary-b);
+    border-radius: 20px;
+    padding: 0.6rem 1rem;
     min-width: 120px;
     font-weight: 600;
     font-size: var(--text-size-1);
     cursor: pointer;
+    color: inherit;
 }
 
 .ADA {
@@ -165,11 +148,9 @@ section {
 }
 
 .network {
-    color: var(--text-w);
     padding: 0 0.5rem;
     font-weight: 500;
     margin-left: 1rem;
     text-transform: capitalize;
 }
-
 </style>

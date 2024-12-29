@@ -2,8 +2,7 @@
     <div class="notification">
         <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
             <div class="button flex">
-                <i class="pi pi-bars" />
-                <audio src="@/assets/notification.mp3" muted="false" preload="auto" />
+                <i class="pi pi-bell" />
             </div>
         </OverlayBadge>
         <Popover ref="overlay">
@@ -284,7 +283,7 @@ const onHandleClick = (notification) => {
 }
 
 .button {
-    color: var(--text-w);
+    color: var(--text-a);
     cursor: pointer;
 }
 
