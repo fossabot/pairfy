@@ -64,6 +64,7 @@
             <i class="pi pi-bolt green" />
         </div>
         
+        
         <div class="card-legend">
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
