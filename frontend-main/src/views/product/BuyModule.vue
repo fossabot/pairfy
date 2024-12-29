@@ -72,11 +72,11 @@
         <div class="card-within gray">
             <span> Buying within the next</span>
 
-            <span class="green" style="color: initial;">{{ withinRange }}</span>
+            <span>{{ withinRange }}</span>
         </div>
 
         <div class="card-legend">
-            <span> Available (15)</span>
+            <span>15 Available</span>
         </div>
 
         <div class="card-control">
@@ -290,7 +290,7 @@ function calculateArrivalDay(durationInSeconds) {
 .card-legend {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: capitalize;
     display: flex;
     align-items: center;
