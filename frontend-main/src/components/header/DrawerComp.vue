@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem;" :disabled="!enabledWallet" />
+            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem; color: var(--text-w);" :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
             <Message severity="secondary" icon="pi pi-info-circle">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <Button label="Mint ID" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
+            <Button label="Mint ID" fluid @click="logoutUser" style="margin-top: 1rem; " :disabled="!enabledWallet"
                 variant="outlined" />
 
             <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"

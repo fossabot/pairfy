@@ -33,8 +33,8 @@
             </div>
 
             <template #footer>
-                <Button label="Cancel" text severity="secondary" @click="showBuyDialog = false" autofocus />
-                <Button label="Buy" outlined severity="secondary" @click="onConfirmedBuy" autofocus
+                <Button label="Cancel" text outlined @click="showBuyDialog = false" autofocus style="color: var(--text-a);" />
+                <Button label="Buy"  @click="onConfirmedBuy" autofocus style="color: var(--text-w);"
                     :loading="createOrderLoading" />
             </template>
         </Dialog>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="card-legend">
-            <span>15 Available</span>
+            <span>Available (15)</span>
         </div>
 
         <div class="card-control">

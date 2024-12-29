@@ -88,7 +88,7 @@
 
 .p-button-label {
   font-size: var(--text-size-1);
-  color: var(--text-w);
+  color: inherit;
 }
 
 .p-tooltip {
