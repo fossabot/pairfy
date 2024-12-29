@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="7.1087104"
-     inkscape:cx="47.969319"
-     inkscape:cy="23.632978"
+     inkscape:zoom="10.053235"
+     inkscape:cx="56.996581"
+     inkscape:cy="18.203096"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="1920"
@@ -96,7 +96,7 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.8478px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.744293px;fill:#ff385c;fill-opacity:1;stroke:#ff9a00;stroke-width:0.0744293;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
        x="41.958847"
-       y="31.281778"
+       y="32.081856"
        id="text2"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
@@ -104,8 +104,10 @@
          sodipodi:role="line"
          id="tspan2"
          x="41.958847"
-         y="31.281778"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:19.8478px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.0744293;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers">blackdays</tspan></text>
+         y="32.081856"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:19.8478px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.0744293;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers">b<tspan
+   style="font-size:21.3333px"
+   id="tspan3029">lackdays</tspan></tspan></text>
     <g
        clip-path="url(#b983e3c625-3)"
        id="g1154"
