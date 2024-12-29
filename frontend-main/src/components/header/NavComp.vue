@@ -12,7 +12,10 @@
             <span>Earn Rewards</span>
             <span>Sell Products</span>
             <span>Help Center</span>
-            <span>Documentation</span>
+            <span>
+                <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
+                    rel="noopener noreferrer">Documentation</a>
+            </span>
         </div>
         <div class="ADA"> ₳ {{ getADAprice }} USD</div>
     </div>
