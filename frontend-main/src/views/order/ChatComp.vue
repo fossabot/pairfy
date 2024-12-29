@@ -337,7 +337,6 @@ onBeforeUnmount(() => {
     box-sizing: border-box;
     scroll-behavior: smooth;
     padding: 1rem;
-    background: var(--background-a);
 }
 
 .content::-webkit-scrollbar {
