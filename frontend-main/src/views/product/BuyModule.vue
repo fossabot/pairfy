@@ -63,8 +63,8 @@
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
         </div>
-        
-        
+
+
         <div class="card-legend">
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
@@ -72,9 +72,8 @@
         <div class="card-within gray">
             <span> Buying within the next</span>
 
-            <span class="green">{{ withinRange }}</span>
+            <span class="green" style="color: initial;">{{ withinRange }}</span>
         </div>
-
 
         <div class="card-legend">
             <span> Available (15)</span>
@@ -258,7 +257,7 @@ const calculateRemainingTimeOfDay = () => {
     const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
 
 
-    return ` ${hours}h ${minutes}min`;
+    return `${hours}h ${minutes}min`;
 };
 
 
@@ -328,5 +327,9 @@ function calculateArrivalDay(durationInSeconds) {
 .card-within {
     font-size: var(--text-size-0);
     margin-bottom: 1rem;
+}
+
+.card-within span:nth-child(2) {
+    margin-left: 0.5rem;
 }
 </style>
