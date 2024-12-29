@@ -177,7 +177,7 @@ onGetProductError(error => {
     padding: 1rem;
     display: flex;
     align-items: center;
-    background: color-mix(in srgb,var(--primary-c),transparent 90%);
+    background: var(--background-b);
     font-size: var(--text-size-a);
     border-radius: 8px;
 }
