@@ -72,7 +72,7 @@
         <div class="card-within gray">
             <span> Buying within the next</span>
 
-            <span style="color: initial;">{{ withinRange }}</span>
+            <span class="green">{{ withinRange }}</span>
         </div>
 
         <div class="card-legend">
@@ -168,7 +168,7 @@ const computedTotalFiat = computed(() => {
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "Product In Stock" : "Out Stock";
+    return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
 const showBuyDialog = ref(false);
