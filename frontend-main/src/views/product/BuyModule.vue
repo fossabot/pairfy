@@ -112,7 +112,7 @@ const { applyDiscount, convertUSDToADA } = inject('utils');
 
 const router = useRouter();
 
-const { showPanel, getADAprice, getCurrentUser } = headerAPI();
+const { togglePanel, toggleDestinations, getADAprice, getCurrentUser } = headerAPI();
 
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
 
@@ -173,14 +173,22 @@ const getStockLabel = (readyStock) => {
 
 const showBuyDialog = ref(false);
 
+const getDestinationType = () => {
+    return localStorage.getItem('destinationType')
+}
+
 const onBuyProduct = () => {
     if (!getCurrentUser.value) {
-        showPanel(true)
-    } else {
-        showBuyDialog.value = true;
+        return togglePanel(true)
+
     }
 
 
+    if (!getDestinationType()) {
+        return toggleDestinations(true)
+    }
+
+    showBuyDialog.value = true;
 }
 
 const { mutate: createOrder, loading: createOrderLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`

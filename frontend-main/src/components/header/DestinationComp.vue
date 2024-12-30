@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="dialog" modal header="Destinations" :style="{ width: '44vw', height: '80vh' }"
+    <Dialog v-model:visible="destinationsVisible" modal header="Destinations" :style="{ width: '44vw', height: '80vh' }"
         :draggable="false">
         <template #header>
 
@@ -70,11 +70,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import headerAPI from "@/components/header/api/index";
+import { ref, watch, onBeforeUnmount } from 'vue';
 
-const dialog = ref(true);
 
+const { destinationsVisible, toggleDestinations } = headerAPI();
 
+const destinationsVisibleTemp = ref(false);
+
+const watchDialogA = watch(destinationsVisible, (e) => destinationsVisibleTemp.value = e);
+
+const watchDialogB = watch(destinationsVisible, (e) => toggleDestinations(e));
+
+onBeforeUnmount(() => {
+    watchDialogA()
+    watchDialogB()
+});
 
 </script>
 

@@ -70,13 +70,13 @@ const { formatWithDots } = inject('utils');
 
 const toast = useToast();
 
-const { drawerVisible, showPanel, loginUser, getCurrentUser, logoutUser } = headerAPI();
+const { panelVisible, togglePanel, loginUser, getCurrentUser, logoutUser } = headerAPI();
 
 const drawerVisibleTemp = ref(false);
 
-const watchDrawerA = watch(drawerVisible, (e) => drawerVisibleTemp.value = e);
+const watchDrawerA = watch(panelVisible, (e) => drawerVisibleTemp.value = e);
 
-const watchDrawerB = watch(drawerVisibleTemp, (e) => showPanel(e));
+const watchDrawerB = watch(drawerVisibleTemp, (e) => togglePanel(e));
 
 //////////////////////////////////////////////
 

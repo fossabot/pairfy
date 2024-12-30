@@ -6,8 +6,12 @@ const getCurrentUser = (state) => {
   return state.userData;
 };
 
-const drawerVisible = (state) => {
-  return state.drawerVisible;
+const panelVisible = (state) => {
+  return state.panelVisible;
+};
+
+const destinationsVisible = (state) => {
+  return state.destinationsVisible;
 };
 
 const getLucid = (state) => {
@@ -18,4 +22,4 @@ const getADAprice = (state) => {
   return state.ADAprice;
 };
 
-export { getCurrentUser, getCurrentSeller, drawerVisible, getLucid, getADAprice};
+export { getCurrentUser, getCurrentSeller, panelVisible, destinationsVisible, getLucid, getADAprice};

@@ -14,11 +14,11 @@
 
                 <CartComp />
 
-                <div class="connect-wallet" v-if="!getCurrentUser" @click="showPanel(true)">
+                <div class="connect-wallet" v-if="!getCurrentUser" @click="togglePanel(true)">
                     Connect Wallet
                 </div>
 
-                <div class="connect-wallet" v-if="getCurrentUser"  @click="showPanel(true)">
+                <div class="connect-wallet" v-if="getCurrentUser"  @click="togglePanel(true)">
                     {{ getCurrentUser.address.slice(0, 15) }}
                 </div>
             </div>
@@ -44,7 +44,7 @@ import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch } from "vue";
 
-const { showPanel, getCurrentUser, setADAprice } = headerAPI();
+const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 const queryOptions = {
     pollInterval: 60000,

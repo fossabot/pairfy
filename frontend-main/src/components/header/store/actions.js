@@ -86,8 +86,12 @@ const logoutUser = async ({ commit }, params) => {
   }
 }
 
-const showPanel = async ({ commit }, params) => {
-  commit('showPanel', params)
+const togglePanel = async ({ commit }, params) => {
+  commit('togglePanel', params)
+}
+
+const toggleDestinations = async ({ commit }, params) => {
+  commit('toggleDestinations', params)
 }
 
 const connectWallet = async ({ commit }, params) => {
@@ -125,7 +129,8 @@ export {
   startTx,
   currentSeller,
   loginSeller,
-  showPanel,
+  togglePanel,
+  toggleDestinations,
   logoutSeller,
   loginUser,
   setADAprice,
