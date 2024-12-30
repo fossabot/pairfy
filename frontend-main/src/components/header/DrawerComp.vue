@@ -190,7 +190,7 @@ onBeforeUnmount(() => {
 .user-item .title {
     color: var(--text-a);
     font-weight: 500;
-    line-height: 2rem;
+    margin-bottom: 0.25rem;
 }
 
 .user-header {
