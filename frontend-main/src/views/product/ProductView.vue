@@ -18,11 +18,7 @@
             </div>
             <div class="card">
                 <div class="card-left">
-                    <div class="card-left-top">
-                        <MediaModule />
-                        <PreviewModule />
-                    </div>
-
+                    <ProductCard/>
                     <Divider />
                     <DescriptionModule />
                 </div>
@@ -41,9 +37,8 @@
 <script setup>
 import gql from 'graphql-tag';
 import productAPI from '@/views/product/api/index';
-import MediaModule from './MediaModule.vue';
-import PreviewModule from './PreviewModule.vue';
 import DescriptionModule from '@/views/product/DescriptionModule.vue';
+import ProductCard from '@/views/product/ProductCard.vue';
 import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
@@ -197,11 +192,6 @@ onBeforeUnmount(() => unwatchGetProduct())
     padding-right: 4rem;
 }
 
-.card-left-top {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
 
 .card-right {
     min-height: 100vh;
