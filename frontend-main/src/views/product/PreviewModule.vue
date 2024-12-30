@@ -33,7 +33,7 @@
                 <Tag :value="`- ${getProductData.discount_value}%`" style="background: var(--red-a);" />
 
                 <Tag severity="secondary" style="margin: 0 1rem;">
-                    <span>List Price:</span> 
+                    <span>List Price</span> 
                     <span style="text-decoration: line-through;">${{ getProductData.price}}</span>
                 </Tag>
 
