@@ -26,9 +26,9 @@
 
 
             <div class="dialog-msg">
-                <Message size="small" severity="warn">
-                    The funds will be released in 60 minutes if the seller delays the order.
-                    Protected purchase covers the funds at 100%.
+                <Message size="small" severity="secondary">
+                    The funds will be released in 60 minutes if the seller delays the order and
+                    protected purchase covers the funds at 100%.
                 </Message>
             </div>
 
