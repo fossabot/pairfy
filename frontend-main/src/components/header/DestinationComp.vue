@@ -29,7 +29,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            It is temporarily stored encrypted then end-to-end decrypted for shipping using with AES256
+                            Temporarily stored encrypted then end-to-end decrypted for shipping using with AES256
                             4096
                             ARGON2 / RSA / PGP.
                         </Message>
@@ -50,7 +50,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            It is stored in the metadata of a burnable Cardano native asset then end-to-end decrypted  for
+                            Stored in the metadata of a burnable Cardano native asset then end-to-end decrypted  for
                             shipping using AES256 4096 ARGON2 / RSA / PGP.
                         </Message>
 

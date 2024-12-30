@@ -168,8 +168,6 @@ onBeforeUnmount(() => unwatchGetProduct())
     height: auto;
     position: relative;
     z-index: 10;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
     overflow: hidden;
     background: var(--background-a);
 }
@@ -179,8 +177,9 @@ onBeforeUnmount(() => unwatchGetProduct())
     display: flex;
     align-items: center;
     background: var(--background-b);
+    background: color-mix(in srgb,var(--yellow-a),transparent 90%);
     font-size: var(--text-size-a);
-    border-radius: 8px;
+
 }
 
 .card {

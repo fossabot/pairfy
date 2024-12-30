@@ -325,7 +325,7 @@ function calculateArrivalDay(durationInSeconds) {
 }
 
 .card-within {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     margin-bottom: 1rem;
 }
 
