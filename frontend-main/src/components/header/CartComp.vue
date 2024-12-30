@@ -14,9 +14,10 @@
     color: var(--text-a);
     display: flex;
     flex-direction: column;
-    font-size: var(--text-size-0);
     font-weight: 600;
     margin: auto;
+    justify-content: center;
+    font-size: var(--text-size-0);
 }
 
 .button span{

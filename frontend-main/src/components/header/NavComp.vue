@@ -25,8 +25,6 @@
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
-import { NETWORK } from "@/api";
-
 const { getADAprice } = headerAPI();
 </script>
 
@@ -54,4 +52,10 @@ const { getADAprice } = headerAPI();
 .row {
     justify-content: space-between;
 }
+
+.ADA {
+    white-space: nowrap;
+    font-weight: 500; 
+}
+
 </style>

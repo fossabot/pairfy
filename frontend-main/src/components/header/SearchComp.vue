@@ -1,7 +1,7 @@
 <template>
     <div class="search" :class="{ focus: isFocus }"
         :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
-        <input v-model="searchInput" type="text" class="search-input" placeholder="Search Cardano"
+        <input v-model="searchInput" type="text" class="search-input" placeholder="Search community products"
             @focus="isFocus = true" @blur="isFocus = false">
         <button class="search-button" :class="{ focus: isFocus }">
             <i class="pi pi-search" />
@@ -51,6 +51,7 @@ const isFocus = ref(false);
 
 .search-input::placeholder{
     color: var(--text-b);
+    opacity: 0.5;
 }
 
 .search-button {

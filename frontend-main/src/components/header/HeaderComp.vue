@@ -144,16 +144,4 @@ section {
     color: inherit;
 }
 
-.ADA {
-    padding: 0 0.5rem;
-    margin-left: 1rem;
-    white-space: nowrap;
-}
-
-.network {
-    padding: 0 0.5rem;
-    font-weight: 500;
-    margin-left: 1rem;
-    text-transform: capitalize;
-}
 </style>
