@@ -19,7 +19,7 @@
             <span>Electronics</span>
             <span>Best Sellers</span> 
         </div>
-        <div class="ADA"> ₳ {{ getADAprice }} USD</div>
+        <div class="ADA"> ADA ${{ getADAprice }}</div>
     </div>
 </template>
 
