@@ -3,7 +3,7 @@
         <DrawerComp />
         <div class="header">
             <div class="header-col left">
-                <div class="brand"></div>
+                <div class="brand"/>
             </div>
             <div class="header-col center">
                 <SearchComp />
@@ -11,11 +11,13 @@
             <div class="header-col right">
                 <NotificationComp />
 
-                <div v-if="!getCurrentUser" class="connect-wallet" @click="showPanel(true)">
+                <CartComp />
+
+                <div class="connect-wallet" v-if="!getCurrentUser" @click="showPanel(true)">
                     Connect Wallet
                 </div>
 
-                <div v-if="getCurrentUser" class="connect-wallet" @click="showPanel(true)">
+                <div class="connect-wallet" v-if="getCurrentUser"  @click="showPanel(true)">
                     {{ getCurrentUser.address.slice(0, 15) }}
                 </div>
             </div>
@@ -34,6 +36,7 @@ import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
+import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
@@ -109,7 +112,7 @@ section {
     width: 100%;
 }
 
-.header-col{
+.header-col {
     text-align: center;
     display: flex;
     align-items: center;

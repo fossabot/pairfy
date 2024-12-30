@@ -2,7 +2,7 @@
     <div class="notification">
         <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
             <div class="button flex">
-                <i class="pi pi-bell" />
+                <i class="pi pi-bars" />
             </div>
         </OverlayBadge>
         <Popover ref="overlay">
@@ -221,14 +221,11 @@ const onHandleClick = (notification) => {
 
 <style lang="css" scoped>
 .notification {
-    margin: 0 2rem;
+    margin: 0 auto;
     display: flex;
     align-items: center;
 }
 
-.button i {
-    font-size: var(--text-size-3);
-}
 
 .drop {
     width: 350px;
@@ -285,6 +282,10 @@ const onHandleClick = (notification) => {
 .button {
     color: var(--text-a);
     cursor: pointer;
+}
+
+.button i {
+    font-size: var(--text-size-3);
 }
 
 .drop-pad {
