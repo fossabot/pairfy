@@ -60,7 +60,7 @@
             <i class="pi pi-truck" />
         </div>
 
-        <div class="card-legend green">
+        <div class="card-legend">
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
         </div>
