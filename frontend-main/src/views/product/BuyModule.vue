@@ -75,7 +75,7 @@
             <span style="color: initial;">{{ withinRange }}</span>
         </div>
 
-        <div class="card-legend">
+        <div class="card-legend" style="font-weight: initial;">
             <span>Available (15)</span>
         </div>
 
