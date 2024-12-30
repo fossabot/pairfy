@@ -1,6 +1,7 @@
 <template>
     <header>
         <DrawerComp />
+        <DestinationComp /> 
         <div class="header">
             <div class="header-col left">
                 <div class="brand"/>
@@ -34,15 +35,14 @@
 <script setup>
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
+import DestinationComp from './DestinationComp.vue';
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
-import { onBeforeUnmount, watch, ref } from "vue";
-
-
+import { onBeforeUnmount, watch } from "vue";
 
 const { showPanel, getCurrentUser, setADAprice } = headerAPI();
 
