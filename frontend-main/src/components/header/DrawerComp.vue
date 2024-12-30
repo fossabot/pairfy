@@ -3,7 +3,7 @@
         :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
 
         <section v-if="!getCurrentUser">
-            <Message severity="warn" icon="pi pi-info-circle">
+            <Message severity="secondary" icon="pi pi-info-circle">
                 Select the Cardano wallet to make payments and login as a user.
             </Message>
 
@@ -31,23 +31,21 @@
             </Message>
 
             <div class="user">
-                <div class="user-info">
+                <div class="user-header">
                     <img src="@/assets/user.png" alt="">
                     <span>{{ getCurrentUser.username }}</span>
                 </div>
 
 
-                <div class="user-row address">
-                    <Message severity="info">
-                        {{ formatWithDots(getCurrentUser.address, 80) }}
-                    </Message>
+                <div class="user-item">
+                    <span class="title">address</span>
+                    <span> {{ formatWithDots(getCurrentUser.address, 80) }}</span>
                 </div>
 
 
-                <div class="user-row pkh">
-                    <Message severity="info">
-                        {{ getCurrentUser.pubkeyhash }}
-                    </Message>
+                <div class="user-item">
+                    <span class="title">PubKeyHash</span>
+                    <span>{{ getCurrentUser.pubkeyhash }}</span>
                 </div>
             </div>
 
@@ -57,7 +55,6 @@
             <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
                 variant="outlined" />
 
-            <div @click="createTransaction">txxx</div>
         </section>
 
     </Drawer>
@@ -156,7 +153,7 @@ onBeforeUnmount(() => {
 }
 
 .block-item.active {
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--border-b);
 }
 
 .block-item img {
@@ -175,53 +172,39 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    border: 1px solid var(--border-a);
 }
 
-.user-row {
+.user-item {
     font-size: var(--text-size-1);
-    font-weight: 600;
+   
     word-break: break-all;
-    margin: 1.5rem 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-top: 1px solid var(--border-a);
 }
 
-.user-row::before {
-    content: '';
+.user-item .title {
+    color: var(--text-a);
     font-weight: 500;
-    color: var(--primary-c);
-    position: absolute;
-    top: -20px;
-    left: 0;
-    padding-left: 0.5rem;
-    background-color: var(--p-message-info-background);
-    width: 120px;
-    height: 30px;
-    clip-path: polygon(0 0, 80% 0, 100% 100%, 0% 100%);
-    border-top-left-radius: 5px;
-    z-index: 1;
+    line-height: 2rem;
 }
 
-.address::before {
-    content: 'Address';
-}
-
-.pkh::before {
-    content: 'PubKeyHash';
-}
-
-.user-info {
+.user-header {
     display: flex;
     align-items: center;
-    margin-bottom: 2rem;
+    padding: 1rem;
 }
 
-.user-info img {
+.user-header img {
     border-radius: 12px;
     width: 2rem;
 }
 
-.user-info span {
+.user-header span {
     margin-left: 1rem;
     font-weight: 500;
     font-size: var(--text-size-1);

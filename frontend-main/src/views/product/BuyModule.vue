@@ -33,15 +33,16 @@
             </div>
 
             <template #footer>
-                <Button label="Cancel" text outlined @click="showBuyDialog = false" autofocus style="color: var(--text-a);" />
-                <Button label="Buy"  @click="onConfirmedBuy" autofocus style="color: var(--text-w);"
+                <Button label="Cancel" text outlined @click="showBuyDialog = false" autofocus
+                    style="color: var(--text-a);" />
+                <Button label="Buy" @click="onConfirmedBuy" autofocus style="color: var(--text-w);"
                     :loading="createOrderLoading" />
             </template>
         </Dialog>
 
 
         <div class="card-legend">
-          <span style="font-weight: 700;">{{ getProductData.brand }}</span>
+            <span style="font-weight: 700;">{{ getProductData.brand }}</span>
         </div>
 
         <div class="card-legend" :class="{ red: 0, }">
@@ -90,15 +91,15 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="openBuyDialog()" style="color: var(--text-w);" />
+            <Button label="Buy Now" fluid @click="onBuyProduct()" style="color: var(--text-w);" />
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
     </div>
 </template>
 
 <script setup>
-import headerAPI from '@/components/header/api';
 import productAPI from '@/views/product/api/index';
+import headerAPI from "@/components/header/api/index";
 import dayjs from 'dayjs';
 import gql from 'graphql-tag';
 import { ref, computed, inject } from "vue";
@@ -107,12 +108,11 @@ import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
 import { useRouter } from 'vue-router';
 
-
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
 const router = useRouter();
 
-const { getADAprice } = headerAPI();
+const { showPanel, getADAprice, getCurrentUser } = headerAPI();
 
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
 
@@ -173,8 +173,14 @@ const getStockLabel = (readyStock) => {
 
 const showBuyDialog = ref(false);
 
-const openBuyDialog = () => {
-    showBuyDialog.value = true;
+const onBuyProduct = () => {
+    if (!getCurrentUser.value) {
+        showPanel(true)
+    } else {
+        showBuyDialog.value = true;
+    }
+
+
 }
 
 const { mutate: createOrder, loading: createOrderLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`

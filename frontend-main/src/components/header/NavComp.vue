@@ -25,7 +25,10 @@
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
+
 const { getADAprice } = headerAPI();
+
+
 </script>
 
 <style lang="css" scoped>
