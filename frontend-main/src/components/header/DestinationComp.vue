@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="dialog" modal header="Destinations" :style="{ width: '45vw', height: '80vh' }"
+    <Dialog v-model:visible="dialog" modal header="Destinations" :style="{ width: '44vw', height: '80vh' }"
         :draggable="false">
         <template #header>
 
@@ -10,7 +10,7 @@
             </div>
 
             <div class="header">
-                <Message severity="secondary" icon="pi pi-info-circle" style="margin-top: 1rem;">
+                <Message severity="secondary" icon="pi pi-question-circle">
                     Read about our upcoming implementation of midnight technology with digital identity.
                     <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank" rel="noopener noreferrer"> Read Documentation</a>
                 </Message>
@@ -142,6 +142,6 @@ a {
 }
 
 .header {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 </style>
