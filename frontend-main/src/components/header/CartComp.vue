@@ -1,7 +1,6 @@
 <template>
     <div class="button">
         <span class="cart">0</span>
-        <span>Items</span>
     </div>
 </template>
 
@@ -28,5 +27,11 @@
     background: var(--text-a);
     border-radius: 20px;
     color: var(--text-w);
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    padding: 0 1rem;
 }
 </style>
