@@ -19,7 +19,7 @@
             <div class="grid">
                 <div class="grid-item">
                     <div class="subtitle">
-                        At the time of purchase
+                        Manually
                     </div>
 
                     <div class="text">
@@ -29,7 +29,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            It is temporarily stored encrypted then decrypted end-to-end for shipping using with AES256
+                            It is temporarily stored encrypted then end-to-end decrypted for shipping using with AES256
                             4096
                             ARGON2 / RSA / PGP.
                         </Message>
@@ -50,7 +50,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            It is stored in the metadata of a burnable Cardano native asset then decrypted end-to-end for
+                            It is stored in the metadata of a burnable Cardano native asset then end-to-end decrypted  for
                             shipping using AES256 4096 ARGON2 / RSA / PGP.
                         </Message>
 
@@ -109,24 +109,20 @@ a {
     padding: 1.5rem;
     text-align: center;
     height: inherit;
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--border-a);
     border-radius: 12px;
     transition: 0.2s;
     box-shadow: var(--shadow-a);
     display: flex;
     flex-direction: column;
+    text-align: start;
+    cursor: pointer;
 }
 
 .grid-item:hover {
     border: 1px solid var(--primary-b);
 }
 
-.text,
-.subtitle {
-    color: var(--primary-b);
-    text-align: start;
-    font-weight: 500;
-}
 
 .text {
     margin-top: 1rem;
@@ -135,6 +131,7 @@ a {
 .subtitle {
     font-size: var(--text-size-4);
     font-weight: 600;
+    color: var(--primary-b);
 }
 
 .content {
