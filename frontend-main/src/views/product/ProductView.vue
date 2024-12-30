@@ -177,7 +177,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     display: flex;
     align-items: center;
     background: var(--background-b);
-    background: color-mix(in srgb,var(--yellow-a),transparent 90%);
+    background: linear-gradient(96.76deg,#ffefcd 4.59%,color-mix(in srgb,var(--yellow-a),transparent 90%));
     font-size: var(--text-size-a);
 
 }
