@@ -12,12 +12,15 @@
             <div class="header">
                 <Message severity="secondary" icon="pi pi-question-circle">
                     Read about our upcoming implementation of midnight technology with digital identity.
-                    <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank" rel="noopener noreferrer"> Read Documentation</a>
+                    <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
+                        rel="noopener noreferrer"> Read
+                        Documentation</a>
                 </Message>
             </div>
 
             <div class="grid">
-                <div class="grid-item">
+                <div class="grid-item" :class="{ selected: currentSelection === 'manually' }"
+                    @click="setDestinationType('manually')">
                     <div class="subtitle">
                         Manually
                     </div>
@@ -50,7 +53,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            Stored in the metadata of a burnable Cardano native asset then end-to-end decrypted  for
+                            Stored in the metadata of a burnable Cardano native asset then end-to-end decrypted for
                             shipping using AES256 4096 ARGON2 / RSA / PGP.
                         </Message>
 
@@ -64,23 +67,49 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <template #footer>
+            <Button label="Cancel" text outlined style="color: var(--text-a);" />
+
+            <Button label="Burn" severity="contrast" />
+
+            <Button label="Done" style="color: var(--text-w);" @click="applyChanges" />
+        </template>
     </Dialog>
 </template>
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
-import { ref, watch, onBeforeUnmount } from 'vue';
+import { ref, watch, onBeforeUnmount, onMounted } from 'vue';
 
 
 const { destinationsVisible, toggleDestinations } = headerAPI();
 
-const destinationsVisibleTemp = ref(false);
+const destinationsVisibleTemp = ref(true);
 
 const watchDialogA = watch(destinationsVisible, (e) => destinationsVisibleTemp.value = e);
 
 const watchDialogB = watch(destinationsVisible, (e) => toggleDestinations(e));
+
+const currentSelection = ref(null);
+
+const setDestinationType = (e) => {
+    currentSelection.value = e;
+    localStorage.setItem('destinationType', e);
+}
+
+const getDestinationType = () => {
+    currentSelection.value = localStorage.getItem('destinationType');
+}
+
+const applyChanges = () => {
+    toggleDestinations(false)
+}
+
+onMounted(() => {
+    getDestinationType()
+    console.log(currentSelection.value)
+})
 
 onBeforeUnmount(() => {
     watchDialogA()
@@ -93,6 +122,10 @@ onBeforeUnmount(() => {
 a {
     text-decoration: initial !important;
     font-weight: bold;
+}
+
+button {
+    margin-left: 1rem;
 }
 
 .destination {
@@ -131,6 +164,10 @@ a {
 }
 
 .grid-item:hover {
+    border: 1px solid var(--primary-b);
+}
+
+.grid-item.selected {
     border: 1px solid var(--primary-b);
 }
 

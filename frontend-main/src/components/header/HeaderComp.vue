@@ -35,7 +35,7 @@
 <script setup>
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
-import DestinationComp from './DestinationComp.vue';
+import DestinationComp from '@/components/header/DestinationComp.vue';
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
