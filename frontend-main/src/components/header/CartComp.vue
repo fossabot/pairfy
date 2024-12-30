@@ -16,7 +16,11 @@
     flex-direction: column;
     font-size: var(--text-size-0);
     font-weight: 600;
-    margin: 0 auto;
+    margin: auto;
+}
+
+.button span{
+    line-height: initial;
 }
 
 .cart {
