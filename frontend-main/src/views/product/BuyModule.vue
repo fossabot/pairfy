@@ -2,8 +2,8 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div v-if="getProductData" class="card">
-        <Dialog v-model:visible="toggleDialog" modal header="Purchase" :style="{ width: '22rem' }" :draggable="false"
-            dismissableMask>
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '23rem', height: '50rem' }"
+               :draggable="false"  dismissableMask>
             <template #header>
 
             </template>
@@ -28,6 +28,11 @@
             <div class="dialog-msg">
                 <Message size="small" severity="secondary" icon="pi pi-exclamation-circle">
                     Protected purchase covers the funds at 100%.
+                </Message>
+            </div>
+
+            <div class="dialog-msg">
+                <Message size="small" severity="secondary" icon="pi pi-exclamation-circle">
                     The funds will be released in 60 minutes if the seller delays the order.
                 </Message>
             </div>

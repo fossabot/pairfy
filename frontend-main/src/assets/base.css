@@ -68,6 +68,8 @@
   --p-button-padding-y: 0.625rem !important;
 
   --p-tag-font-size: var(--text-size-1) !important;
+
+  --p-button-border-radius: 20px !important;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,7 +1,5 @@
 <template>
     <div class="media">
-        <Skeleton v-if="!getProductData" width="100%" height="100%" />
-
         <section v-if="getProductData">
             <div class="media-image">
                 <Image :src="productImageList[selectedImageIndex]" alt="Image" width="400" previewIcon="pi-search" 
@@ -19,8 +17,8 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
 import productAPI from '@/views/product/api/index';
+import { computed, ref } from 'vue';
 
 const { getProductData } = productAPI();
 

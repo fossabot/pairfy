@@ -1,8 +1,5 @@
 <template>
     <div class="preview">
-
-        <Skeleton v-if="!getProductData" width="100%" height="100%" />
-
         <div v-if="getProductData" class="preview-wrap">
             <div class="preview-top">
                 <span>+5 Sold</span>

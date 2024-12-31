@@ -193,6 +193,7 @@ onBeforeUnmount(() => unwatchGetProduct())
 
 .card-right {
     min-height: 100vh;
+    padding: 0 1rem;
 }
 
 .footer {
