@@ -26,7 +26,6 @@
             <div class="preview-discount" v-if="getProductData.discount">
                
                 <Tag severity="secondary">
-                    <span>List</span> 
                     <span style="text-decoration: line-through;">${{ getProductData.price}}</span>
                 </Tag>
 
