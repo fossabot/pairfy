@@ -158,7 +158,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     display: flex;
     flex-direction: column;
     margin-top: 2rem;
-    max-width: 1400px;
+    max-width: 1500px;
     width: 100%;
     height: auto;
     position: relative;
@@ -189,7 +189,6 @@ onBeforeUnmount(() => unwatchGetProduct())
     grid-template-rows: auto auto auto 1fr;
     grid-template-columns: 1fr;
     gap: 1rem;
-    padding-right: 4rem;
 }
 
 
