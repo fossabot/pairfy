@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="10.053235"
-     inkscape:cx="68.584888"
-     inkscape:cy="17.805214"
-     inkscape:window-width="1489"
-     inkscape:window-height="778"
-     inkscape:window-x="4007"
-     inkscape:window-y="216"
+     inkscape:zoom="5.0266175"
+     inkscape:cx="113.69475"
+     inkscape:cy="23.972383"
+     inkscape:window-width="1825"
+     inkscape:window-height="1011"
+     inkscape:window-x="38"
+     inkscape:window-y="6"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
@@ -94,7 +94,7 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.8478px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.744293px;fill:#ff385c;fill-opacity:1;stroke:#ff9a00;stroke-width:0.0744293;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.8478px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.744293px;fill:#000000;fill-opacity:1;stroke:#ff9a00;stroke-width:0.0744293;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke fill markers"
        x="41.958847"
        y="32.081856"
        id="text2"
@@ -105,11 +105,11 @@
          id="tspan2"
          x="41.958847"
          y="32.081856"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.3333px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#ff385c;fill-opacity:1;stroke:#ffffff;stroke-width:0.0744293;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers">blackdays</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.3333px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:0.0744293;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers">blackdays</tspan></text>
     <g
        clip-path="url(#b983e3c625-3)"
        id="g1154"
-       style="display:inline;fill:#ff385c;fill-opacity:1"
+       style="display:inline;fill:#000000;fill-opacity:1"
        transform="matrix(0.19919782,0,0,0.19919782,-17.563842,-15.096537)"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
@@ -120,26 +120,26 @@
          fill-opacity="1"
          fill-rule="nonzero"
          id="path1152"
-         style="fill:#ff385c;fill-opacity:1"
+         style="fill:#000000;fill-opacity:1"
          sodipodi:nodetypes="ccsccccccsscscsscccsccscccccccccccccccscccsccsssccsccssscccccccccscscscscscccsccsscccccccscccccccssccscscscccccccccccccccsccccccsccccccccssccccscssscccccsssccccccscccscccssccccccsccccccccsccccscccsccsccsssccccccccccccscscscccccscccccccsssccscccsscccccsssccscccsccccccss"
          inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path1152.png"
          inkscape:export-xdpi="121.6"
          inkscape:export-ydpi="121.6" />
     </g>
     <path
-       style="fill:#ff385c;stroke-width:0.172015;fill-opacity:1"
+       style="fill:#000000;stroke-width:0.172015;fill-opacity:1"
        d="M 15.421215,24.104215 C 14.603473,22.29537 14.557109,21.059682 14.586001,19.690953 14.614894,18.281237 14.16873,17.161795 12.776484,16.744525 7.562276,15.184292 4.865806,15.508837 0.057448,12 c 0,0 0,2.894018 3.259551,4.66322 2.343033,1.26458 6.600406,1.815565 8.346091,2.175049 0.974304,0.208972 1.171852,0.905096 1.386198,1.757107 0.481106,1.890823 1.032764,3.109038 2.371927,3.508839"
        id="path33289" />
     <path
-       style="fill:#ff385c;fill-opacity:1;stroke-width:0.17201"
+       style="fill:#f7a600;fill-opacity:1;stroke-width:0.17201"
        d="m 12.931551,23.066308 c -1.130808,-0.174031 -3.549646,-0.191502 -3.549646,-0.191502 1.437258,0.689103 4.972218,2.287214 3.549646,0.191502 z"
        id="path33287" />
     <path
-       style="fill:#ff385c;fill-opacity:1;stroke-width:0.172015"
+       style="fill:#f7a600;fill-opacity:1;stroke-width:0.172015"
        d="m 12.886681,22.433787 c 0.03494,-0.933316 -0.939364,-1.118768 -1.89015,-1.182603 -0.568457,-0.03494 -1.137583,-0.06988 -1.456082,-0.09273 C 8.20599,21.065724 6.85473,20.874227 6.85473,20.874227 c 0,0 0.168656,0.835214 1.641534,1.159758 1.467504,0.324542 4.390417,0.399799 4.390417,0.399799 z"
        id="path33285" />
     <path
-       style="fill:#ff385c;fill-opacity:1;stroke-width:0.172015"
+       style="fill:#f7a600;fill-opacity:1;stroke-width:0.172015"
        d="m 12.271861,20.792924 c 0,0 0.07525,-1.119441 -1.038138,-1.264578 C 10.12033,19.383208 8.229507,19.157438 6.234535,18.733448 4.238892,18.31013 3.763835,18.10183 3.763835,18.10183 c 0,0 0.0289,1.188652 2.777774,1.832363 2.743506,0.638337 5.730252,0.858731 5.730252,0.858731 z"
        id="path1156" />
     <path
@@ -148,7 +148,7 @@
        fill-opacity="1"
        fill-rule="nonzero"
        id="path1160"
-       style="display:inline;fill:#ff385c;fill-opacity:1;stroke-width:0.199197"
+       style="display:inline;fill:#000000;fill-opacity:1;stroke-width:0.199197"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6" />
@@ -158,7 +158,7 @@
        fill-opacity="1"
        fill-rule="nonzero"
        id="path1162"
-       style="display:inline;fill:#ff385c;fill-opacity:1;stroke-width:0.199197"
+       style="display:inline;fill:#000000;fill-opacity:1;stroke-width:0.199197"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6" />

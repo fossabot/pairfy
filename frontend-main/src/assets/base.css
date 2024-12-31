@@ -118,7 +118,7 @@
   --border-a: #e2e8f0;
   --border-b: #2b3139;
 
-  --shadow-a: 0 2px 24px rgba(24, 32, 82, .05);
+  --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
 
   --red-a: #ff385c;
   --green-a: #10b981;
@@ -151,8 +151,8 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family: "Open Sans", serif;    
-  font-family: "IBM Plex Sans", serif;   
+  font-family: 'IBM Plex Sans', serif;
+  font-family: 'Open Sans', serif;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;
@@ -162,7 +162,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a{
+a {
   color: inherit;
-  text-decoration: none; 
+  text-decoration: none;
 }
