@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <Button label="Sign In" fluid @click="signIn" style="margin-top: 1rem; color: var(--text-w);"
+            <Button label="Sign In" fluid @click="onLogin" style="margin-top: 1rem; color: var(--text-w);"
                 :disabled="!enabledWallet" />
         </section>
         <section v-if="getCurrentUser">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <Button label="Add Destinations" fluid @click="logoutUser" style="margin-top: 1rem; "
+            <Button label="Destinations" fluid @click="onDestinations" style="margin-top: 1rem; "
                 :disabled="!enabledWallet" variant="outlined" />
 
             <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
@@ -70,7 +70,7 @@ const { formatWithDots } = inject('utils');
 
 const toast = useToast();
 
-const { panelVisible, togglePanel, loginUser, getCurrentUser, logoutUser } = headerAPI();
+const { panelVisible, togglePanel, toggleDestinations, loginUser, getCurrentUser, logoutUser } = headerAPI();
 
 const drawerVisibleTemp = ref(false);
 
@@ -103,7 +103,7 @@ const selectWallet = async (e) => {
     await walletClient().connect(e);
 };
 
-const signIn = async () => {
+const onLogin = async () => {
     await signMessage().then(([signature, address]) =>
         loginUser({
             signature,
@@ -111,9 +111,17 @@ const signIn = async () => {
             terms_accepted: true,
         })
     )
-    .then(() => togglePanel(false))
-    .catch((err) => console.error(err));
+        .then(() => togglePanel(false))
+        .catch((err) => console.error(err));
 };
+
+
+const onDestinations = () => {
+    togglePanel(false)
+    toggleDestinations(true)
+}
+
+
 
 
 const createTransaction = async () => {

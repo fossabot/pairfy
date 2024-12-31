@@ -1,6 +1,6 @@
 <template>
     <Dialog v-model:visible="destinationsVisibleTemp" modal header="Configuration"
-        :style="{ width: '42vw', height: '90vh' }" :draggable="false">
+        :style="{ width: '44vw', height: '90vh' }" :draggable="false">
         <template #header>
 
         </template>
