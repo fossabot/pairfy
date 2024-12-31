@@ -2,40 +2,97 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '55rem', height: '55rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '50rem', height: '50rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
-                <div class="dialog-sub">Buy {{ selectedQuantity }} units</div>
+                <div class="grid">
+                    <div class="grid-item left">
+                        <div class="dialog-row">
+                            <div class="dialog-title flex">
+                                Shipping address
+                            </div>
 
-                <div class="dialog-values">
-                    Total Fiat Price = {{ computedTotalFiat }} USD
+                            <div class="dialog-input">
+                                <IftaLabel>
+                                    <InputText id="username" v-model="orderForm.address" fluid placeholder=""/>
+
+                                    <label for="username">Address</label>
+                                </IftaLabel>
+                            </div>
+
+                            <div class="dialog-input">
+                                <IftaLabel>
+                                    <InputText id="usernamex" v-model="orderForm.receiver" fluid />
+                                    <label for="usernamex">Receiver Name</label>
+                                </IftaLabel>
+                            </div>
+
+                            <div class="dialog-input">
+                                <IftaLabel>
+                                    <InputText id="postal" v-model="orderForm.postal" fluid />
+                                    <label for="postal">ZIP/Postal</label>
+                                </IftaLabel>
+                            </div>
+                        </div>
+
+                        <Divider />
+
+                        <div class="dialog-row">
+                            <div class="dialog-title flex">
+                                Payment method
+                            </div>
+
+                            <div class="payments">
+                                <div class="payment-item selected"></div>
+                                <div class="payment-item"></div>
+                                <div class="payment-item"></div>
+                                <div class="payment-item"></div>
+                                <div class="payment-item"></div>
+                            </div>
+                        </div>                  
+                    </div>
+
+                    <div class="grid-item right">
+                        <div class="dialog-title flex">
+                            Order summary
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Total fiat price</span>
+
+                            <span>{{ computedTotalFiat }} USD</span>
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Exchange rate</span>
+
+                            <span>{{ getADAprice }} USD</span>
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Product units</span>
+
+                            <span>{{ selectedQuantity }}</span>
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Total asset</span>
+                            <span>{{ computedTotalPrice }} ADA</span>
+                        </div>
+
+                        <div class="dialog-control">
+                            <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
+                                :loading="createOrderLoading" fluid />
+                        </div>
+                    </div>
                 </div>
-
-
-                <div class="dialog-values">
-                    Current ADA Price = {{ getADAprice }} USD
-                </div>
-
-
-                <div class="dialog-values">
-                    Total ADA = {{ computedTotalPrice }} ADA
-                </div>
-
-
                 <div class="dialog-msg">
                     <Message severity="secondary" icon="pi pi-exclamation-circle">
-                        Protected purchase covers the funds at 100%. The funds will be released in 60 minutes if the seller delays the order.
+                        Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
                     </Message>
                 </div>
             </div>
-
-            <template #footer>
-                <Button label="Cancel" text outlined @click="toggleDialog = false" style="color: var(--text-a);" />
-
-                <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
-                    :loading="createOrderLoading" />
-            </template>
         </Dialog>
 
 
@@ -47,22 +104,21 @@
             {{ getStockLabel(15) }}
         </div>
 
-        <div class="card-rating flex">
-            <Rating v-model="productRating" :stars="5" readonly />
-            <span> 4.5 </span>
-            <span style="color: var(--text-b)">(1250 reviews)</span>
-        </div>
-
         <div class="card-legend green">
             Free shipping
             <i class="pi pi-truck" />
         </div>
 
-        <div class="card-legend">
+        <div class="card-legend green">
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
         </div>
 
+        <div class="card-rating flex">
+            <Rating v-model="productRating" :stars="5" readonly />
+            <span> 4.5 </span>
+            <span style="color: var(--text-b)">(1250 reviews)</span>
+        </div>
 
         <div class="card-legend">
             <span> Arrives on {{ arrivalDate }}</span>
@@ -110,6 +166,8 @@ const { applyDiscount, convertUSDToADA } = inject('utils');
 
 const router = useRouter();
 
+const toast = useToast();
+
 const { togglePanel, toggleDestinations, getADAprice, getCurrentUser } = headerAPI();
 
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
@@ -118,15 +176,11 @@ getArrivalDate({
     "destination": "181.132.19.47"
 })
 
-const toast = useToast();
-
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
+const orderForm = ref({
+    address: null,
+    receiver: null,
+    postal: null
+});
 
 const selectedQuantity = ref(1);
 
@@ -280,6 +334,16 @@ function calculateArrivalDay(durationInSeconds) {
     return arrivalDay;
 };
 
+
+
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
+
 </script>
 
 <style lang="css" scoped>
@@ -302,7 +366,6 @@ function calculateArrivalDay(durationInSeconds) {
 .card-legend {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
-    font-weight: 500;
     text-transform: capitalize;
     display: flex;
     align-items: center;
@@ -322,18 +385,14 @@ function calculateArrivalDay(durationInSeconds) {
     font-size: var(--text-size-1);
 }
 
-.dialog-msg {
+.dialog-values {
     margin-top: 1rem;
-}
-
-.dialog-sub {
-    font-weight: 500;
 }
 
 .dialog-values {
-    margin-top: 1rem;
-    font-weight: 600;
-    font-size: var(--text-size-2);
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: var(--text-size-1);
 }
 
 .card-within {
@@ -343,5 +402,67 @@ function calculateArrivalDay(durationInSeconds) {
 
 .card-within span:nth-child(2) {
     margin-left: 0.25rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 1rem;
+    width: 100%;
+    color: var(--text-a);
+}
+
+.grid-item {
+    text-align: center;
+    border-radius: 12px;
+}
+
+.grid-item.left {}
+
+.grid-item.right {
+    padding: 1rem;
+    border: 1px solid var(--border-a);
+}
+
+.dialog-title {
+    font-weight: 600;
+    line-height: 2rem;
+}
+
+.dialog-control {
+    margin-top: 1rem;
+}
+
+.dialog-input {
+    margin-top: 1rem;
+}
+
+.dialog-row {
+    margin-bottom: 1rem;
+}
+
+.payments {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, 58px);
+    margin-top: 1rem;
+}
+
+.payment-item {
+    width: 58px;
+    height: 58px;
+    border: 1px solid var(--border-a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.payment-item.selected {
+    border: 1px solid var(--primary-b);
+}
+
+.dialog-msg {
+    margin-top: 1rem;
 }
 </style>

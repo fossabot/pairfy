@@ -55,7 +55,7 @@
 
   --p-divider-horizontal-margin: 1rem 0 !important;
 
-  --p-tag-font-size: var(--text-size-1) !important;
+  --p-tag-font-size: var(--text-size-2) !important;
 
   --p-button-primary-color: var(--text-a) !important;
 
@@ -67,9 +67,9 @@
 
   --p-button-padding-y: 0.625rem !important;
 
-  --p-tag-font-size: var(--text-size-1) !important;
+  --p-dialog-color: var(--text-a) !important;
 
-  --p-button-border-radius: 20px !important;
+  --p-tag-primary-background: var(--primary-b) !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,7 +88,7 @@
 
 :root {
   --primary-a: #0046be;
-  --primary-b: #ff385c;
+  --primary-b: var(--red-a);
 
   --background-a: #ffffff;
   --background-b: #f2f4f7;
@@ -96,7 +96,7 @@
   --background-d: #263241;
 
   --text-a: #000000;
-  --text-b: #6a6a6a;
+  --text-b: var(--p-surface-600);
   --text-w: #ffffff;
 
   --text-size-a: 0.833rem;
@@ -155,6 +155,7 @@ body {
   line-height: 1.6;
   font-family: 'Open Sans', serif;
   font-family: 'IBM Plex Sans', serif;
+  font-family: "Inter", serif;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;
