@@ -95,3 +95,7 @@
 .p-tooltip {
   font-size: var(--text-size-0);
 }
+
+.p-overflow-hidden{
+  padding-right: 0px !important;
+}

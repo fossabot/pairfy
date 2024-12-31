@@ -2,8 +2,8 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div v-if="getProductData" class="card">
-        <Dialog v-model:visible="showBuyDialog" modal header="Purchase" :style="{ width: '22rem' }"
-            :draggable="false" dismissableMask>
+        <Dialog v-model:visible="toggleDialog" modal header="Purchase" :style="{ width: '22rem' }" :draggable="false"
+            dismissableMask>
             <template #header>
 
             </template>
@@ -33,7 +33,7 @@
             </div>
 
             <template #footer>
-                <Button label="Cancel" text outlined @click="showBuyDialog = false" autofocus
+                <Button label="Cancel" text outlined @click="toggleDialog = false" autofocus
                     style="color: var(--text-a);" />
                 <Button label="Buy" @click="onConfirmedBuy" autofocus style="color: var(--text-w);"
                     :loading="createOrderLoading" />
@@ -171,7 +171,7 @@ const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
-const showBuyDialog = ref(false);
+const toggleDialog = ref(false);
 
 const getDestinationType = () => {
     return localStorage.getItem('destinationType')
@@ -182,11 +182,13 @@ const onBuyProduct = () => {
         return togglePanel(true)
     }
 
+    console.log(getDestinationType());
+    
     if (!getDestinationType()) {
         return toggleDestinations(true)
     }
 
-    showBuyDialog.value = true;
+    toggleDialog.value = true;
 }
 
 const { mutate: createOrder, loading: createOrderLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`

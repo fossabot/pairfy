@@ -18,8 +18,7 @@
             </div>
 
             <div class="grid">
-                <div class="grid-item" :class="{ selected: currentSelection === 'manually' }"
-                    @click="setManually">
+                <div class="grid-item" :class="{ selected: currentSelection === 'manually' }" @click="setManually">
                     <div class="subtitle">
                         Manually
                     </div>
@@ -93,7 +92,7 @@ const destinationsVisibleTemp = ref(false);
 
 const watchDialogA = watch(destinationsVisible, (e) => destinationsVisibleTemp.value = e);
 
-const watchDialogB = watch(destinationsVisible, (e) => toggleDestinations(e));
+const watchDialogB = watch(destinationsVisibleTemp, (e) => toggleDestinations(e));
 
 const switch1 = ref(false);
 
@@ -124,14 +123,14 @@ const setManually = () => {
 const setupDestination = () => {
     const value = localStorage.getItem('destinationType');
 
-    currentSelection.value = value;
-
     if (value === 'manually') {
         switch1.value = true
+        currentSelection.value = value;
     }
 
     if (value === 'minted') {
         switch2.value = true
+        currentSelection.value = value;
     }
 }
 
@@ -139,14 +138,17 @@ const applyChanges = () => {
     toggleDestinations(false)
 }
 
+let watchInterval;
+
 onMounted(() => {
     setupDestination()
-    console.log(currentSelection.value)
+    watchInterval = setInterval(() => setupDestination(), 100)
 })
 
 onBeforeUnmount(() => {
     watchDialogA()
     watchDialogB()
+    clearInterval(watchInterval)
 });
 
 </script>

@@ -110,7 +110,9 @@ const signIn = async () => {
             address,
             terms_accepted: true,
         })
-    ).catch((err) => console.error(err));
+    )
+    .then(() => togglePanel(false))
+    .catch((err) => console.error(err));
 };
 
 
@@ -178,7 +180,7 @@ onBeforeUnmount(() => {
 
 .user-item {
     font-size: var(--text-size-1);
-   
+
     word-break: break-all;
     position: relative;
     display: flex;
