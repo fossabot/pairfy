@@ -1,6 +1,6 @@
 <template>
-    <Dialog v-model:visible="destinationsVisibleTemp" modal header="Configuration" :style="{ width: '42vw', height: '86vh' }"
-        :draggable="false">
+    <Dialog v-model:visible="destinationsVisibleTemp" modal header="Configuration"
+        :style="{ width: '42vw', height: '90vh' }" :draggable="false">
         <template #header>
 
         </template>
@@ -8,7 +8,6 @@
             <div class="title">
                 How do you prefer destinations to be treated?
             </div>
-
             <div class="header">
                 <Message severity="secondary" icon="pi pi-question-circle">
                     Read about our upcoming implementation of midnight technology with digital identity.
@@ -20,9 +19,13 @@
 
             <div class="grid">
                 <div class="grid-item" :class="{ selected: currentSelection === 'manually' }"
-                    @click="setDestinationType('manually')">
+                    @click="setManually">
                     <div class="subtitle">
                         Manually
+                    </div>
+
+                    <div class="switch">
+                        <ToggleSwitch v-model="switch1" />
                     </div>
 
                     <div class="text">
@@ -47,6 +50,10 @@
                         Minted once
                     </div>
 
+                    <div class="switch">
+                        <ToggleSwitch v-model="switch2" />
+                    </div>
+
                     <div class="text">
                         The physical destination where the product must be delivered is tokenized only once.
                     </div>
@@ -69,9 +76,7 @@
             </div>
         </div>
         <template #footer>
-            <Button label="Reset" text outlined style="color: var(--text-a);" />
-
-            <Button label="Burn" severity="contrast" :disabled="true" />
+            <Button label="Burn" text severity="contrast" :disabled="true" />
 
             <Button label="Done" style="color: var(--text-w);" @click="applyChanges" />
         </template>
@@ -90,15 +95,44 @@ const watchDialogA = watch(destinationsVisible, (e) => destinationsVisibleTemp.v
 
 const watchDialogB = watch(destinationsVisible, (e) => toggleDestinations(e));
 
+const switch1 = ref(false);
+
+const switch2 = ref(false);
+
 const currentSelection = ref(null);
 
-const setDestinationType = (e) => {
-    currentSelection.value = e;
-    localStorage.setItem('destinationType', e);
+const resetManually = () => {
+    localStorage.removeItem('destinationType');
+    currentSelection.value = null;
+    switch1.value = false;
 }
 
-const getDestinationType = () => {
-    currentSelection.value = localStorage.getItem('destinationType');
+const setManually = () => {
+    const value = localStorage.getItem('destinationType');
+
+    if (value === 'manually') {
+        resetManually()
+    } else {
+        localStorage.setItem('destinationType', 'manually');
+        currentSelection.value = 'manually';
+        switch1.value = true;
+        switch2.value = false;
+    }
+
+}
+
+const setupDestination = () => {
+    const value = localStorage.getItem('destinationType');
+
+    currentSelection.value = value;
+
+    if (value === 'manually') {
+        switch1.value = true
+    }
+
+    if (value === 'minted') {
+        switch2.value = true
+    }
 }
 
 const applyChanges = () => {
@@ -106,7 +140,7 @@ const applyChanges = () => {
 }
 
 onMounted(() => {
-    getDestinationType()
+    setupDestination()
     console.log(currentSelection.value)
 })
 
@@ -187,5 +221,9 @@ button {
 
 .header {
     margin-top: 2rem;
+}
+
+.switch {
+    margin-top: 1rem;
 }
 </style>

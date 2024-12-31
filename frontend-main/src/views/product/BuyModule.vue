@@ -182,8 +182,6 @@ const onBuyProduct = () => {
         return togglePanel(true)
     }
 
-  
-
     if (!getDestinationType()) {
         return toggleDestinations(true)
     }
