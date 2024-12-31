@@ -1,6 +1,6 @@
 <template>
     <Drawer v-model:visible="drawerVisibleTemp" header="Connect" position="right" :blockScroll="false"
-        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 23rem">
+        :showCloseIcon="true" :dismissable="true" @hide="drawerVisibleTemp = false" style="width: 22rem">
 
         <section v-if="!getCurrentUser">
             <Message severity="secondary" icon="pi pi-info-circle">

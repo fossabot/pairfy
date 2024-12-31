@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div v-if="getProductData" class="card">
-        <Dialog v-model:visible="showBuyDialog" modal header="Transaction" :style="{ width: '22rem' }"
+        <Dialog v-model:visible="showBuyDialog" modal header="Purchase" :style="{ width: '22rem' }"
             :draggable="false" dismissableMask>
             <template #header>
 
@@ -180,9 +180,9 @@ const getDestinationType = () => {
 const onBuyProduct = () => {
     if (!getCurrentUser.value) {
         return togglePanel(true)
-
     }
-    console.log(getDestinationType())
+
+  
 
     if (!getDestinationType()) {
         return toggleDestinations(true)

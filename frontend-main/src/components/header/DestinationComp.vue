@@ -71,7 +71,7 @@
         <template #footer>
             <Button label="Reset" text outlined style="color: var(--text-a);" />
 
-            <Button label="Burn" severity="contrast" />
+            <Button label="Burn" severity="contrast" :disabled="true" />
 
             <Button label="Done" style="color: var(--text-w);" @click="applyChanges" />
         </template>
@@ -82,10 +82,9 @@
 import headerAPI from "@/components/header/api/index";
 import { ref, watch, onBeforeUnmount, onMounted } from 'vue';
 
-
 const { destinationsVisible, toggleDestinations } = headerAPI();
 
-const destinationsVisibleTemp = ref(true);
+const destinationsVisibleTemp = ref(false);
 
 const watchDialogA = watch(destinationsVisible, (e) => destinationsVisibleTemp.value = e);
 
@@ -132,7 +131,7 @@ button {
     justify-content: center;
     display: flex;
     flex-direction: column;
-    padding: 0 2rem;
+    padding: 0 1rem;
 }
 
 .title {

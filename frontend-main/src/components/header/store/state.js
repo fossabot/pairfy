@@ -2,7 +2,7 @@ export default () => ({
   userData: null,
   sellerData: null,
   panelVisible: false,
-  destinationsVisible: true,
+  destinationsVisible: false,
   walletConnected: false,
   walletName: null,
   lucidClient: null,
