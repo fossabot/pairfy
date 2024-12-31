@@ -296,7 +296,9 @@ function calculateArrivalDay(durationInSeconds) {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    border-radius: 8px;
+    border-radius: 12px;
+    width: 285px;
+    margin-left: auto;
 }
 
 .card-control {

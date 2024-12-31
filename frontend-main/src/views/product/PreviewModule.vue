@@ -1,9 +1,6 @@
 <template>
     <div class="preview">
         <div v-if="getProductData" class="preview-wrap">
-            <div class="preview-top">
-                <span>+5 Sold</span>
-            </div>
 
             <div class="preview-name">
                 {{ getProductData.name }}
@@ -86,7 +83,6 @@ const bulletList = computed(() => {
 .preview-name {
     font-size: var(--text-size-4);
     font-weight: 500;
-    margin-top: 1rem
 }
 
 .preview-rating {
@@ -106,13 +102,9 @@ const bulletList = computed(() => {
     margin-top: 1rem;
 }
 
-.preview-top,
 .preview-model {
     display: flex;
     font-size: var(--text-size-1);
-}
-
-.preview-model {
     margin-top: 1rem;
 }
 
