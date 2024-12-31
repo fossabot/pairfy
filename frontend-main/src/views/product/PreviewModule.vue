@@ -83,7 +83,7 @@ const bulletList = computed(() => {
 <style lang="css" scoped>
 .preview {
     min-height: 400px;
-    padding-right: 3rem;
+    padding-right: 4rem;
 }
 
 .preview-name {
