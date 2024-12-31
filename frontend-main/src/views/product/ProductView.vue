@@ -171,8 +171,8 @@ onBeforeUnmount(() => unwatchGetProduct())
     padding: 1rem;
     display: flex;
     align-items: center;
-    background: var(--background-b);
     background: linear-gradient(96.76deg, color-mix(in srgb,var(--yellow-a), transparent 80%), color-mix(in srgb,var(--yellow-a), transparent 90%)); 
+    background: var(--background-b);
     font-size: var(--text-size-1);
 
 }
@@ -193,7 +193,6 @@ onBeforeUnmount(() => unwatchGetProduct())
 
 .card-right {
     min-height: 100vh;
-    padding: 0 1rem;
 }
 
 .footer {
