@@ -459,7 +459,7 @@ const showError = (content) => {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--text-a);
 }
 
 .dialog-msg {
