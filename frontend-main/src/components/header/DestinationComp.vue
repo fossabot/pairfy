@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="destinationsVisible" modal header="Destinations" :style="{ width: '44vw', height: '80vh' }"
+    <Dialog v-model:visible="destinationsVisibleTemp" modal header="Configuration" :style="{ width: '42vw', height: '86vh' }"
         :draggable="false">
         <template #header>
 
@@ -69,7 +69,7 @@
             </div>
         </div>
         <template #footer>
-            <Button label="Cancel" text outlined style="color: var(--text-a);" />
+            <Button label="Reset" text outlined style="color: var(--text-a);" />
 
             <Button label="Burn" severity="contrast" />
 
@@ -146,7 +146,7 @@ button {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     gap: 4rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
 }
 
 .grid-item {
