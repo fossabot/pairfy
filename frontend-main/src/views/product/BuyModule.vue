@@ -1,46 +1,39 @@
 <template>
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
-    <div v-if="getProductData" class="card">
+    <div class="card" v-if="getProductData">
         <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '55rem', height: '55rem' }"
-               :draggable="false"  dismissableMask>
-            <template #header>
+            :draggable="false" dismissableMask>
 
-            </template>
+            <div class="dialog">
+                <div class="dialog-sub">Buy {{ selectedQuantity }} units</div>
 
-            <div class="dialog-sub">Buy {{ selectedQuantity }} units</div>
-
-            <div class="dialog-values">
-                Total Fiat Price = {{ computedTotalFiat }} USD
-            </div>
+                <div class="dialog-values">
+                    Total Fiat Price = {{ computedTotalFiat }} USD
+                </div>
 
 
-            <div class="dialog-values">
-                Current ADA Price = {{ getADAprice }} USD
-            </div>
+                <div class="dialog-values">
+                    Current ADA Price = {{ getADAprice }} USD
+                </div>
 
 
-            <div class="dialog-values">
-                Total ADA = {{ computedTotalPrice }} ADA
-            </div>
+                <div class="dialog-values">
+                    Total ADA = {{ computedTotalPrice }} ADA
+                </div>
 
 
-            <div class="dialog-msg">
-                <Message size="small" severity="secondary" icon="pi pi-exclamation-circle">
-                    Protected purchase covers the funds at 100%.
-                </Message>
-            </div>
-
-            <div class="dialog-msg">
-                <Message size="small" severity="secondary" icon="pi pi-exclamation-circle">
-                    The funds will be released in 60 minutes if the seller delays the order.
-                </Message>
+                <div class="dialog-msg">
+                    <Message severity="secondary" icon="pi pi-exclamation-circle">
+                        Protected purchase covers the funds at 100%. The funds will be released in 60 minutes if the seller delays the order.
+                    </Message>
+                </div>
             </div>
 
             <template #footer>
-                <Button label="Cancel" text outlined @click="toggleDialog = false" autofocus
-                    style="color: var(--text-a);" />
-                <Button label="Buy" @click="onConfirmedBuy" autofocus style="color: var(--text-w);"
+                <Button label="Cancel" text outlined @click="toggleDialog = false" style="color: var(--text-a);" />
+
+                <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
                     :loading="createOrderLoading" />
             </template>
         </Dialog>
@@ -103,10 +96,10 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 import productAPI from '@/views/product/api/index';
 import headerAPI from "@/components/header/api/index";
-import dayjs from 'dayjs';
-import gql from 'graphql-tag';
 import { ref, computed, inject } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
@@ -176,7 +169,7 @@ const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
-const toggleDialog = ref(false);
+const toggleDialog = ref(true);
 
 const getDestinationType = () => {
     return localStorage.getItem('destinationType')
