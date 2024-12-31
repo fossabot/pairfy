@@ -16,7 +16,7 @@ import PreviewModule from './PreviewModule.vue';
 section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap:1rem;
+    gap: 0rem;
 }
 
 

@@ -191,12 +191,9 @@ onBeforeUnmount(() => unwatchGetProduct())
     gap: 1rem;
 }
 
-
 .card-right {
     min-height: 100vh;
 }
-
-
 
 .footer {
     height: 200px;
