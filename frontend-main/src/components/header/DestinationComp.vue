@@ -34,7 +34,7 @@
 
                     <div class="content">
                         <Message severity="secondary" icon="pi pi-lock">
-                            Stored encrypted then end-to-end decrypted for shipping using with AES256
+                            End-to-end stored encrypted then  decrypted for shipping using AES256
                             4096
                             ARGON2 / RSA / PGP.
                         </Message>
