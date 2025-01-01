@@ -10,12 +10,12 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Shipping address
+                                1. Shipping address
                             </div>
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="username" v-model="orderForm.address" fluid placeholder=""/>
+                                    <InputText id="username" v-model="orderForm.address" fluid placeholder="" />
 
                                     <label for="username">Address</label>
                                 </IftaLabel>
@@ -40,44 +40,47 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Payment method
+                                2. Payment method
                             </div>
 
                             <div class="payments">
-                                <div class="payment-item selected"></div>
+                                <div class="payment-item selected">
+                                    <img src="@/assets/cardano.png" alt="">
+                                    <span>ADA</span>
+                                </div>
                                 <div class="payment-item"></div>
                                 <div class="payment-item"></div>
                                 <div class="payment-item"></div>
                                 <div class="payment-item"></div>
                             </div>
-                        </div>                  
+                        </div>
                     </div>
 
                     <div class="grid-item right">
                         <div class="dialog-title flex">
-                            Order summary
+                            Order Summary
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total fiat price</span>
+                            <span>Total fiat price:</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange rate</span>
+                            <span>Exchange rate:</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Product units</span>
+                            <span>Product units:</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total asset</span>
+                            <span>Total asset:</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
@@ -392,7 +395,7 @@ const showError = (content) => {
 .dialog-values {
     justify-content: space-between;
     font-weight: 400;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
 }
 
 .card-within {
@@ -444,22 +447,37 @@ const showError = (content) => {
 .payments {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 58px);
+    grid-template-columns: repeat(auto-fit, 80px);
     margin-top: 1rem;
 }
 
 .payment-item {
-    width: 58px;
-    height: 58px;
+    width: 70px;
+    height: 70px; 
     border: 1px solid var(--border-a);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid var(--border-a);
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-item img{
+    width: 30px;
+    height: 30px;
+}
+
+.payment-item span{
+  font-size: var(--text-size-0);
+  font-weight: 500;
+  color: var(--text-b);
 }
 
 .payment-item.selected {
-    border: 1px solid var(--text-a);
+    border: 2px solid var(--primary-b);
 }
 
 .dialog-msg {
