@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '50rem', height: '50rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '80rem', height: '80rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
@@ -36,6 +36,17 @@
                             </div>
                         </div>
 
+                        <div class="dialog-msg">
+                            <Message severity="secondary" icon="pi pi-exclamation-circle">
+                                Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
+                                <b>
+                                    <a href="https://www.lace.io/bugbountyprogram" target="_blank"
+                                        rel="noopener noreferrer">
+                                        Read more about 1M USD Lace wallet challenge with PGP encryptation.
+                                    </a>
+                                </b>
+                            </Message>
+                        </div>
                         <Divider />
 
                         <div class="dialog-row">
@@ -85,21 +96,12 @@
                         </div>
 
                         <div class="dialog-control">
-                            <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
+                            <Button label="PAY" @click="onConfirmedBuy" style="color: var(--text-w);"
                                 :loading="createOrderLoading" fluid />
                         </div>
                     </div>
                 </div>
-                <div class="dialog-msg">
-                    <Message severity="secondary" icon="pi pi-exclamation-circle">
-                        Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
-                        <b>
-                            <a href="https://www.lace.io/bugbountyprogram" target="_blank" rel="noopener noreferrer">
-                                Read more about 1M USD Lace wallet challenge with PGP encryptation.
-                            </a>
-                        </b>
-                    </Message>
-                </div>
+
             </div>
         </Dialog>
 
@@ -394,9 +396,14 @@ const showError = (content) => {
     font-weight: 700;
 }
 
-.reviews{
+.reviews {
     font-size: var(--text-size-0);
     margin-left: 0.5rem;
+}
+
+.dialog {
+    width: 800px;
+    justify-self: center;
 }
 
 .dialog-values {
@@ -417,8 +424,8 @@ const showError = (content) => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 1rem;
+    grid-template-columns: 1fr 270px;
+    gap: 2rem;
     width: 100%;
     color: var(--text-a);
 }
@@ -426,8 +433,6 @@ const showError = (content) => {
 .grid-item {
     text-align: center;
 }
-
-.grid-item.left {}
 
 .grid-item.right {
     padding: 1rem;

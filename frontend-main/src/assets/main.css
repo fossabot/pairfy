@@ -96,4 +96,9 @@
   padding-right: 15px !important;
 }
 
+.p-overlay-mask{
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
 
