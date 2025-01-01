@@ -90,7 +90,7 @@ const bulletList = computed(() => {
 }
 
 .preview-price {
-    font-size: var(--text-size-6);
+    font-size: var(--text-size-5);
     margin-top: 1rem;
 }
 
