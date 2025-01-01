@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                1 Shipping address
+                                1. Shipping address
                             </div>
 
                             <div class="dialog-input">
@@ -51,13 +51,12 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                2 Payment method
+                                2. Payment method
                             </div>
 
                             <div class="payments">
                                 <div class="payment-item selected">
                                     <img src="@/assets/cardano.png" alt="">
-                                    <span>ADA</span>
                                 </div>
                                 <div class="payment-item"></div>
                                 <div class="payment-item"></div>
@@ -402,7 +401,7 @@ const showError = (content) => {
 }
 
 .dialog {
-    width: 800px;
+    width: 70%;
     justify-self: center;
 }
 
@@ -475,8 +474,6 @@ const showError = (content) => {
     border-radius: 12px;
     cursor: pointer;
     border: 2px solid var(--border-a);
-    display: flex;
-    flex-direction: column;
 }
 
 .payment-item img {
