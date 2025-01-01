@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '80rem', height: '80rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '55rem', height: '55rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                1. Shipping address
+                                Shipping address
                             </div>
 
                             <div class="dialog-input">
@@ -51,7 +51,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                2. Payment method
+                                Payment method
                             </div>
 
                             <div class="payments">
@@ -400,10 +400,6 @@ const showError = (content) => {
     margin-left: 0.5rem;
 }
 
-.dialog {
-    width: 70%;
-    justify-self: center;
-}
 
 .dialog-values {
     justify-content: space-between;
@@ -423,7 +419,7 @@ const showError = (content) => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 270px;
+    grid-template-columns: 1fr 300px;
     gap: 2rem;
     width: 100%;
     color: var(--text-a);
