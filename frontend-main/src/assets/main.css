@@ -34,13 +34,10 @@
   font-size: var(--text-size-a) !important;
 }
 
-.p-rating {
-  gap: 1px !important;
-}
 
 .p-rating-icon {
-  width: 0.75rem !important;
-  height: 0.75rem !important;
+  width: 12px !important;
+  height: 20px !important;
 }
 
 

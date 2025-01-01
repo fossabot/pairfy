@@ -61,17 +61,21 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--yellow-a) !important;
+  --p-rating-icon-active-color: var(--text-a) !important;
 
   --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
 
   --p-button-padding-y: 0.625rem !important;
 
-  --p-dialog-color: var(--text-a) !important;
+  --p-dialog-color: var(--text-b) !important;
 
   --p-tag-primary-background: var(--primary-b) !important;
 
   --p-dialog-border-radius: 12px !important;
+
+  --p-button-border-radius: 20px !important;
+
+  --p-rating-gap: 2px !important;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -97,7 +101,7 @@
   --background-c: #161c24;
   --background-d: #263241;
 
-  --text-a: #000000;
+  --text-a: #0f1111;
   --text-b: var(--p-surface-600);
   --text-w: #ffffff;
 

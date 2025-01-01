@@ -124,8 +124,8 @@
 
         <div class="card-rating flex">
             <Rating v-model="productRating" :stars="5" readonly />
-            <span> 4.5 </span>
-            <span style="color: var(--text-b)">(1250 reviews)</span>
+            <span>4.5</span>
+            <div class="reviews">250 reviews</div>
         </div>
 
         <div class="card-legend">
@@ -390,7 +390,13 @@ const showError = (content) => {
 
 .card-rating span {
     margin-left: 0.5rem;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
+    font-weight: 700;
+}
+
+.reviews{
+    font-size: var(--text-size-0);
+    margin-left: 0.5rem;
 }
 
 .dialog-values {
@@ -458,7 +464,6 @@ const showError = (content) => {
 .payment-item {
     width: 70px;
     height: 70px;
-    border: 1px solid var(--border-a);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -481,7 +486,7 @@ const showError = (content) => {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--text-a);
+    border: 1px solid var(--blue-a);
 }
 
 .dialog-msg {
