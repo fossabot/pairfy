@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                1. Shipping address
+                                1 Shipping address
                             </div>
 
                             <div class="dialog-input">
@@ -40,7 +40,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                2. Payment method
+                                2 Payment method
                             </div>
 
                             <div class="payments">
@@ -62,25 +62,25 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total fiat price:</span>
+                            <span>Total Fiat Price</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange rate:</span>
+                            <span>Exchange Rate</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Product units:</span>
+                            <span>Product Units</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total asset:</span>
+                            <span>Total Asset</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
@@ -93,6 +93,11 @@
                 <div class="dialog-msg">
                     <Message severity="secondary" icon="pi pi-exclamation-circle">
                         Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
+                        <b>
+                            <a href="https://www.lace.io/bugbountyprogram" target="_blank" rel="noopener noreferrer">
+                                Read more about 1M USD Lace wallet challenge with PGP encryptation.
+                            </a>
+                        </b>
                     </Message>
                 </div>
             </div>
@@ -389,13 +394,10 @@ const showError = (content) => {
 }
 
 .dialog-values {
-    margin-top: 1rem;
-}
-
-.dialog-values {
     justify-content: space-between;
     font-weight: 400;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
+    margin-top: 1rem;
 }
 
 .card-within {
@@ -417,7 +419,6 @@ const showError = (content) => {
 
 .grid-item {
     text-align: center;
-    border-radius: 12px;
 }
 
 .grid-item.left {}
@@ -425,11 +426,13 @@ const showError = (content) => {
 .grid-item.right {
     padding: 1rem;
     border: 1px solid var(--border-a);
+    border-radius: 8px;
 }
 
 .dialog-title {
     font-weight: 600;
     line-height: 2rem;
+    font-size: var(--text-size-2);
 }
 
 .dialog-control {
@@ -447,13 +450,14 @@ const showError = (content) => {
 .payments {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 80px);
+    grid-template-columns: repeat(auto-fit, 70px);
     margin-top: 1rem;
+    width: 100%;
 }
 
 .payment-item {
     width: 70px;
-    height: 70px; 
+    height: 70px;
     border: 1px solid var(--border-a);
     display: flex;
     justify-content: center;
@@ -465,19 +469,19 @@ const showError = (content) => {
     flex-direction: column;
 }
 
-.payment-item img{
+.payment-item img {
     width: 30px;
     height: 30px;
 }
 
-.payment-item span{
-  font-size: var(--text-size-0);
-  font-weight: 500;
-  color: var(--text-b);
+.payment-item span {
+    font-size: var(--text-size-0);
+    font-weight: 600;
+    color: var(--text-b);
 }
 
 .payment-item.selected {
-    border: 2px solid var(--primary-b);
+    border: 1px solid var(--text-a);
 }
 
 .dialog-msg {
