@@ -486,7 +486,7 @@ const showError = (content) => {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--blue-a);
+    border: 2px solid var(--primary-b);
 }
 
 .dialog-msg {
