@@ -447,7 +447,7 @@ const showError = (content) => {
 .dialog-title {
     font-weight: 600;
     line-height: 2rem;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
 }
 
 .dialog-control {
