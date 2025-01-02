@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Shipping address
+                                Shipping Address
                             </div>
 
                             <div class="dialog-input">
@@ -51,7 +51,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Payment method
+                                Payment Method
                             </div>
 
                             <div class="payments">
@@ -72,25 +72,25 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Fiat Price</span>
+                            <span>Total Fiat Price:</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange Rate</span>
+                            <span>Exchange Rate:</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Product Units</span>
+                            <span>Product Units:</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Asset</span>
+                            <span>Total Asset:</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
@@ -113,6 +113,12 @@
             {{ getStockLabel(15) }}
         </div>
 
+        <div class="card-rating flex">
+            <Rating v-model="productRating" :stars="5" readonly />
+            <span>4.5</span>
+            <div class="reviews">250 reviews</div>
+        </div>
+        
         <div class="card-legend green">
             Free shipping
             <i class="pi pi-truck" />
@@ -121,12 +127,6 @@
         <div class="card-legend green">
             <span>protected purchase</span>
             <i class="pi pi-bolt green" />
-        </div>
-
-        <div class="card-rating flex">
-            <Rating v-model="productRating" :stars="5" readonly />
-            <span>4.5</span>
-            <div class="reviews">250 reviews</div>
         </div>
 
         <div class="card-legend">
@@ -456,20 +456,20 @@ const showError = (content) => {
 .payments {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 50px);
+    grid-template-columns: repeat(auto-fit, 60px);
     margin-top: 1rem;
     width: 100%;
 }
 
 .payment-item {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 12px;
     cursor: pointer;
-    border: 2px solid var(--border-a);
+    border: 1px solid var(--border-a);
 }
 
 .payment-item img {
