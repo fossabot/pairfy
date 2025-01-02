@@ -69,18 +69,7 @@
                                     <span>USDA</span>
                                 </div>
                             </div>
-                        </div>
-
-                        <Divider />
-
-                        <div class="dialog-row">
-                            <div class="dialog-title flex">
-                                Delivery Date
-                            </div>
-
-
-
-                        </div>
+                        </div>                 
                     </div>
 
                     <div class="grid-item right">
@@ -448,8 +437,7 @@ const showError = (content) => {
 
 .grid-item.right {
     padding: 1rem;
-    border: 1px solid var(--border-a);
-    border-radius: 8px;
+    border-left: 1px dashed var(--border-a);
 }
 
 .dialog {
