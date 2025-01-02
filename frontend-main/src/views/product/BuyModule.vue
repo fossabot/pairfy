@@ -456,14 +456,14 @@ const showError = (content) => {
 .payments {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 70px);
+    grid-template-columns: repeat(auto-fit, 50px);
     margin-top: 1rem;
     width: 100%;
 }
 
 .payment-item {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
