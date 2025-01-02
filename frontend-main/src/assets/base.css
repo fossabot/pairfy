@@ -76,6 +76,8 @@
   --p-button-border-radius: 20px !important;
 
   --p-rating-gap: 2px !important;
+
+  --p-message-text-font-weight: 400 !important;
 }
 
 @media (prefers-color-scheme: dark) {

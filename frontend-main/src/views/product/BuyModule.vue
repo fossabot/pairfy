@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '55rem', height: '55rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '58rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
@@ -70,14 +70,22 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <Divider />
 
+                        <div class="dialog-row">
+                            <div class="dialog-title flex">
+                                Delivery Date
+                            </div>
+
+
+
+                        </div>
                     </div>
 
                     <div class="grid-item right">
                         <div class="dialog-title flex">
-                            Order Summary
+                            Total
                         </div>
 
                         <div class="dialog-values flex">
@@ -444,6 +452,10 @@ const showError = (content) => {
     border-radius: 8px;
 }
 
+.dialog {
+    padding: 0.5rem;
+}
+
 .dialog-title {
     font-weight: 600;
     line-height: 2rem;
@@ -491,8 +503,8 @@ const showError = (content) => {
 }
 
 .payment-item.disabled {
-   pointer-events: none;
-   opacity: 0.5;
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .dialog-msg {
