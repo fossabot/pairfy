@@ -70,6 +70,9 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <Divider />
+
                     </div>
 
                     <div class="grid-item right">
@@ -481,7 +484,6 @@ const showError = (content) => {
 
 .payment-item span {
     font-size: var(--text-size-1);
-    font-weight: 500;
 }
 
 .payment-item.selected {
