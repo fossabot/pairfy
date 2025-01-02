@@ -56,12 +56,18 @@
 
                             <div class="payments">
                                 <div class="payment-item selected">
-                                    <img src="@/assets/cardano.png" alt="">
+                                    <span>ADA</span>
                                 </div>
-                                <div class="payment-item"></div>
-                                <div class="payment-item"></div>
-                                <div class="payment-item"></div>
-                                <div class="payment-item"></div>
+                                <div class="payment-item disabled">
+                                    <span>IUSD</span>
+                                </div>
+                                <div class="payment-item disabled">
+
+                                    <span>USDM</span>
+                                </div>
+                                <div class="payment-item disabled">
+                                    <span>USDA</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,7 +124,7 @@
             <span>4.5</span>
             <div class="reviews">250 reviews</div>
         </div>
-        
+
         <div class="card-legend green">
             Free shipping
             <i class="pi pi-truck" />
@@ -456,35 +462,35 @@ const showError = (content) => {
 .payments {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, 60px);
+    grid-template-columns: repeat(auto-fit, 120px);
     margin-top: 1rem;
     width: 100%;
 }
 
 .payment-item {
-    width: 60px;
-    height: 60px;
+    width: 120px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 12px;
+    border-radius: 4px;
     cursor: pointer;
     border: 1px solid var(--border-a);
-}
-
-.payment-item img {
-    width: 30px;
-    height: 30px;
+    font-weight: 500;
 }
 
 .payment-item span {
-    font-size: var(--text-size-0);
-    font-weight: 600;
-    color: var(--text-b);
+    font-size: var(--text-size-1);
+    font-weight: 500;
 }
 
 .payment-item.selected {
-    border: 2px solid var(--primary-b);
+    border: 1px solid var(--primary-b);
+}
+
+.payment-item.disabled {
+   pointer-events: none;
+   opacity: 0.5;
 }
 
 .dialog-msg {
