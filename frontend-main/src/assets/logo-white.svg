@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="7.1087106"
-     inkscape:cx="37.137537"
-     inkscape:cy="27.853152"
+     inkscape:zoom="10.053235"
+     inkscape:cx="51.824115"
+     inkscape:cy="15.318452"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="0"
@@ -102,18 +102,18 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.6724px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.737717px;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.0991165;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       x="0.48387277"
-       y="31.941935"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.795px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.742315px;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.0997343;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="0.47899634"
+       y="32.039463"
        id="text2"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"><tspan
          sodipodi:role="line"
          id="tspan2"
-         x="0.48387277"
-         y="31.941935"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.1448px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.0991165;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">adazone</tspan></text>
+         x="0.47899634"
+         y="32.039463"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.2766px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold';word-spacing:0px;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.0997343;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill">adazone</tspan></text>
     <g
        clip-path="url(#b983e3c625-3-1)"
        id="g1154"
@@ -133,27 +133,6 @@
          inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path1152.png"
          inkscape:export-xdpi="121.6"
          inkscape:export-ydpi="121.6" />
-    </g>
-    <g
-       id="g34807"
-       transform="translate(-110.64643,3.961265)"
-       style="fill:#0866ff;fill-opacity:1;stroke:none;stroke-opacity:1">
-      <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
-         d="m 108.88098,28.233592 c -0.94548,-2.091382 -0.99909,-3.52008 -0.96568,-5.102601 0.0334,-1.629909 -0.48244,-2.924204 -2.09216,-3.40665 -6.028657,-1.803937 -9.146302,-1.4287 -14.705711,-5.485606 0,0 0,3.346055 3.768683,5.3916 2.709006,1.462104 7.631378,2.099152 9.649738,2.514785 1.12648,0.241614 1.35488,1.04647 1.60271,2.031562 0.55625,2.186164 1.19408,3.594661 2.74242,4.05691"
-         id="path33289" />
-      <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198877;stroke:none;stroke-opacity:1"
-         d="m 106.00243,27.033567 c -1.30744,-0.201215 -4.10408,-0.221415 -4.10408,-0.221415 1.66175,0.796739 5.74885,2.64447 4.10408,0.221415 z"
-         id="path33287" />
-      <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
-         d="m 105.95055,26.302247 c 0.0403,-1.079097 -1.08609,-1.293516 -2.18538,-1.367322 -0.65724,-0.0404 -1.31526,-0.08079 -1.68352,-0.107214 -1.5429,-0.107214 -3.105221,-0.328621 -3.105221,-0.328621 0,0 0.194999,0.965671 1.897941,1.340907 1.69673,0.375235 5.07618,0.462247 5.07618,0.462247 z"
-         id="path33285" />
-      <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
-         d="m 105.2397,24.405086 c 0,0 0.087,-1.294294 -1.20029,-1.462101 -1.2873,-0.167807 -3.47346,-0.428842 -5.780051,-0.919058 -2.307357,-0.489439 -2.856616,-0.730275 -2.856616,-0.730275 0,0 0.03342,1.374316 3.21165,2.118573 3.172047,0.738043 6.625307,0.992861 6.625307,0.992861 z"
-         id="path1156" />
     </g>
     <path
        fill="#ffffff"
@@ -177,25 +156,25 @@
        inkscape:export-ydpi="121.6" />
     <g
        id="g34801"
-       transform="translate(-31.96431,5.167282)"
+       transform="matrix(1.1428571,0,0,1.1428571,-48.130637,1.4054657)"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/g34801.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"
        style="fill:#0866ff;fill-opacity:1;stroke:none;stroke-opacity:1">
       <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
+         style="display:inline;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.198883;stroke-opacity:1"
          d="m 113.16431,27.027575 c 0.94548,-2.091382 0.99909,-3.52008 0.96568,-5.102601 -0.0334,-1.629909 0.48244,-2.924204 2.09216,-3.40665 6.02865,-1.803937 9.1463,-1.4287 14.70571,-5.485606 0,0 0,3.346055 -3.76868,5.3916 -2.70901,1.462104 -7.63138,2.099152 -9.64974,2.514785 -1.12648,0.241614 -1.35488,1.04647 -1.60271,2.031562 -0.55625,2.186164 -1.19408,3.594661 -2.74242,4.05691"
          id="path33289-7" />
       <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198877;stroke:none;stroke-opacity:1"
+         style="display:inline;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.198877;stroke-opacity:1"
          d="m 116.04286,25.82755 c 1.30744,-0.201215 4.10408,-0.221415 4.10408,-0.221415 -1.66175,0.796739 -5.74885,2.64447 -4.10408,0.221415 z"
          id="path33287-0" />
       <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
+         style="display:inline;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.198883;stroke-opacity:1"
          d="m 116.09474,25.09623 c -0.0403,-1.079097 1.08609,-1.293516 2.18538,-1.367322 0.65724,-0.0404 1.31526,-0.08079 1.68352,-0.107214 1.5429,-0.107214 3.10522,-0.328621 3.10522,-0.328621 0,0 -0.195,0.965671 -1.89794,1.340907 -1.69673,0.375235 -5.07618,0.462247 -5.07618,0.462247 z"
          id="path33285-9" />
       <path
-         style="display:inline;fill:#0866ff;fill-opacity:1;stroke-width:0.198883;stroke:none;stroke-opacity:1"
+         style="display:inline;fill:#0866ff;fill-opacity:1;stroke:none;stroke-width:0.198883;stroke-opacity:1"
          d="m 116.80559,23.199069 c 0,0 -0.087,-1.294294 1.20029,-1.462101 1.2873,-0.167807 3.47346,-0.428842 5.78005,-0.919058 2.30735,-0.489439 2.85661,-0.730275 2.85661,-0.730275 0,0 -0.0334,1.374316 -3.21165,2.118573 -3.17204,0.738043 -6.6253,0.992861 -6.6253,0.992861 z"
          id="path1156-3" />
     </g>
