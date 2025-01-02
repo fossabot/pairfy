@@ -428,7 +428,7 @@ const showError = (content) => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 280px;
     gap: 2rem;
     width: 100%;
     color: var(--text-a);
