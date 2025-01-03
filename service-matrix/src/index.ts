@@ -3,7 +3,6 @@ import pkg from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import axios from "axios";
 import { catcher, logger } from "./utils/index.js";
 import { geoAPI, matrixAPI } from "./api/index.js";
 import { URLSearchParams } from "url";
