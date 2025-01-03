@@ -149,7 +149,7 @@ onBeforeUnmount(() => {
 }
 
 .flag {
-    width: 2rem;
+    width: 1.5rem;
     margin-right: 1rem;
 }
 
