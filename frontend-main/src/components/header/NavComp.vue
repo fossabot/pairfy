@@ -1,7 +1,7 @@
 <template>
         <div class="nav flex">
             <div class="categories flex">
-                <div class="button flex"><i class="pi pi-bars" /></div>
+                <div class="categories-button flex"><i class="pi pi-bars" /></div>
                 <span>All Categories</span>
                 <div class="arrow flex">
                     <i class="pi pi-angle-down" />
@@ -49,8 +49,12 @@ const { getADAprice } = headerAPI();
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-
 }
+
+.categories-button{
+    margin-right: 0.5rem;
+}
+
 .ADA {
     white-space: nowrap;
     font-weight: 500;
