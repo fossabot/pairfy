@@ -89,9 +89,9 @@ const defaultCountry = { name: 'United States', code: 'US' }
 
 const selectedCountry = ref(defaultCountry);
 
-const selectedCity = ref('-');
+const selectedCity = ref(null);
 
-const selectedPostal = ref('-');
+const selectedPostal = ref(null);
 
 const watchLocation = watch(getLocationData, (data) => {
     if (data) {

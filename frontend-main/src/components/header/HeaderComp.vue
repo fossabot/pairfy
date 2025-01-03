@@ -45,19 +45,44 @@ import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
-import { onBeforeUnmount, watch } from "vue";
-import { useRoute } from 'vue-router'
+import { onBeforeUnmount, watch, ref } from "vue";
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 
+const router = useRouter()
+
+
 const watchRoute = watch(
     () => route.params.country,
-    async (newCountry, oldCountry) => {
-        console.log(newCountry, oldCountry);
+    (n, o) => {
+        console.log(n, o)
 
-        if (!oldCountry) return;
+        if (n === undefined && o === undefined) return;
 
-        location.reload();
+        if (n) {
+            let savedRoute = localStorage.getItem('location');
+
+            if (savedRoute) {
+                let parsed = JSON.parse(savedRoute);
+
+                console.log(parsed.country)
+
+                if (parsed.country.toLowerCase() !== n) {
+                    return router.push({
+                        name: 'home',
+                        params: { country: parsed.country.toLowerCase() }
+                    });
+                }
+            }
+        }
+
+        if (typeof n === 'string' && typeof o === 'string') {
+            if (n !== o) {
+                return location.reload()
+            }
+        }
+
     },
     {
         immediate: true
@@ -90,6 +115,7 @@ onGetAssetPriceError(error => {
 onBeforeUnmount(() => {
     watchAssetPrice()
     watchRoute()
+    watchLocation()
 })
 
 </script>
