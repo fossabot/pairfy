@@ -66,8 +66,6 @@ const watchRoute = watch(
             if (savedRoute) {
                 let parsed = JSON.parse(savedRoute);
 
-                console.log(parsed.country)
-
                 if (parsed.country.toLowerCase() !== n) {
                     return router.push({
                         name: 'home',
