@@ -479,7 +479,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
     border: 1px solid var(--border-a);
     font-weight: 500;
