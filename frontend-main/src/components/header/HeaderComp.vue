@@ -101,7 +101,7 @@ section {
     background-image: url('../../assets/logo-white.png');
     background-repeat: repeat-x;
     background-position: 0px 0px;
-    width: 150px;
+    width: 187px;
     min-height: 33px;
     background-repeat: no-repeat;
 }

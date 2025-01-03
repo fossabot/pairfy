@@ -43,7 +43,7 @@
 
 .box span:nth-child(2){
     font-size: var(--text-size-0);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 </style>
