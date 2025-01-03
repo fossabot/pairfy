@@ -20,7 +20,9 @@
     color: var(--text-a);
     white-space: nowrap;
     text-align: start;
+    margin: 0 auto;
 }
+
 .icon {
     width: 30px;
     height: inherit;
