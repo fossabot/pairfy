@@ -39,12 +39,11 @@
                         <div class="dialog-msg">
                             <Message severity="secondary" icon="pi pi-exclamation-circle">
                                 Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
-                                <b>
-                                    <a href="https://www.lace.io/bugbountyprogram" target="_blank"
-                                        rel="noopener noreferrer">
-                                        Read more about 1M USD Lace wallet challenge with PGP encryptation.
-                                    </a>
-                                </b>
+
+                                <a href="https://www.lace.io/bugbountyprogram" target="_blank"
+                                    rel="noopener noreferrer">
+                                    Read more about 1M USD Lace wallet challenge with PGP encryptation.
+                                </a>
                             </Message>
                         </div>
                         <Divider />
@@ -69,7 +68,7 @@
                                     <span>USDA</span>
                                 </div>
                             </div>
-                        </div>                 
+                        </div>
                     </div>
 
                     <div class="grid-item right">
@@ -362,6 +361,10 @@ const showError = (content) => {
 </script>
 
 <style lang="css" scoped>
+a {
+    font-weight: 500 !important;
+}
+
 .card {
     border: 1px solid var(--border-a);
     min-height: 100px;
@@ -487,7 +490,7 @@ const showError = (content) => {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--text-b); 
+    border: 1px solid var(--text-b);
 }
 
 .payment-item.disabled {
