@@ -24,9 +24,9 @@
 }
 
 .cart {
-    background: var(--background-b);
+    background: var(--text-a);
     border-radius: 20px;
-    color: var(--text-a);
+    color: var(--text-w);
     height: 20px;
     display: flex;
     justify-content: center;

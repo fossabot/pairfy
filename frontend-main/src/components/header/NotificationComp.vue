@@ -2,7 +2,7 @@
     <div class="notification">
         <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
             <div class="button flex">
-                <i class="pi pi-bars" />
+                <i class="pi pi-bell" />
             </div>
         </OverlayBadge>
         <Popover ref="overlay">
