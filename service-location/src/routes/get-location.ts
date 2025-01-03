@@ -5,7 +5,7 @@ const getLocation = async (req: Request, res: Response) => {
   try {
     console.log(req.publicAddress, req.ip);
 
-    const getLocation = await geoAPI.get(`181.132.19.47?token=f76c9e2af54296`);
+    const getLocation = await geoAPI.get(`178.238.11.6?token=f76c9e2af54296`);
 
     if (getLocation.status !== 200) {
       throw new Error("INTERNAL_ERROR");

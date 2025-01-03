@@ -1,74 +1,77 @@
 <template>
-    <div class="location flex">
-        <Dialog v-model:visible="visible" modal :style="{ width: '25rem' }" :draggable="false">
-            <template #header>
-                <span class="dialog-header">
-                    <i class="pi pi-map-marker" />
-                    Deliver to
-                </span>
-            </template>
-            <div class="body">
-                <Message severity="secondary">
-                    Cardano community currently there is only logistics for the USA and CO.
-                    The other countries will be added progressively.
-                </Message>
+    <Dialog v-model:visible="visible" modal :style="{ width: '25rem' }" :draggable="false" :closable="false">
+        <template #header>
+            <span class="dialog-header flex">
+                Deliver to
+                <i class="pi pi-map-marker" />
+            </span>
+        </template>
+        <div class="body">
+            <Message severity="secondary">
+                Cardano community currently there is only logistics for the USA and CO.
+                The other countries will be added progressively.
+            </Message>
 
-                <div class="dialog-row">
-                    <IftaLabel>
-                        <Select v-model="selectedCountry" :options="countriesOptions" filter optionLabel="name" fluid
-                            id="dd-city" scrollHeight="30rem">
-                            <template #value="slotProps">
-                                <div v-if="slotProps.value" class="item flex">
-                                    <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
-                                        :class="`flag flag-${slotProps.value.code.toLowerCase()}`" />
-                                    <div>{{ slotProps.value.name }}</div>
-                                </div>
-                                <span v-else>
-                                    {{ slotProps.placeholder }}
-                                </span>
-                            </template>
-                            <template #option="slotProps">
-                                <div class="flex">
-                                    <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
-                                        :class="`flag flag-${slotProps.option.code.toLowerCase()}`" />
-                                    <div>{{ slotProps.option.name }}</div>
-                                </div>
-                            </template>
-                        </Select>
-                        <label for="dd-city">Country</label>
-                    </IftaLabel>
-                </div>
-
-                <div class="dialog-row">
-                    <IftaLabel>
-                        <InputText id="city" v-model="selectedCity" fluid v-keyfilter="/^[a-zA-Z0-9 ]*$/" />
-                        <label for="city">City</label>
-                    </IftaLabel>
-                </div>
-
-                <div class="dialog-row">
-                    <IftaLabel>
-                        <InputNumber v-model="selectedPostal" inputId="price_input" mode="decimal" locale="en-US"
-                            :useGrouping="false" fluid />
-                        <label for="price_input">ZIP/Postal</label>
-                    </IftaLabel>
-                </div>
-
-
+            <div class="dialog-row">
+                <IftaLabel>
+                    <Select v-model="selectedCountry" :options="countriesOptions" filter optionLabel="name" fluid
+                        id="dd-city" scrollHeight="30rem" @change="onCountrychange">
+                        <template #value="slotProps">
+                            <div v-if="slotProps.value" class="item flex">
+                                <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
+                                    :class="`flag flag-${slotProps.value.code.toLowerCase()}`" />
+                                <div>{{ slotProps.value.name }}</div>
+                            </div>
+                            <span v-else>
+                                {{ slotProps.placeholder }}
+                            </span>
+                        </template>
+                        <template #option="slotProps">
+                            <div class="flex">
+                                <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
+                                    :class="`flag flag-${slotProps.option.code.toLowerCase()}`" />
+                                <div>{{ slotProps.option.name }}</div>
+                            </div>
+                        </template>
+                    </Select>
+                    <label for="dd-city">Country</label>
+                </IftaLabel>
             </div>
-            <div class="dialog-footer flex">
-                <Button type="button" label="Cancel" severity="secondary" @click="visible = false" />
-                <Button type="button" label="Save" @click="visible = false" style="color: var(--text-w)" />
+
+            <div class="dialog-row">
+                <IftaLabel>
+                    <InputText id="city" v-model="selectedCity" fluid v-keyfilter="/^[a-zA-Z0-9 ]*$/" />
+                    <label for="city">City</label>
+                </IftaLabel>
             </div>
-        </Dialog>
+
+            <div class="dialog-row">
+                <IftaLabel>
+                    <InputText id="postal" v-model="selectedPostal" fluid v-keyfilter="/^[a-zA-Z0-9- ]*$/" />
+                    <label for="postal">ZIP/Postal</label>
+                </IftaLabel>
+            </div>
 
 
+        </div>
+        <div class="dialog-footer flex">
+
+            <Button type="button" label="Save" :disabled="disableSave" @click="visible = false"
+                style="color: var(--text-w)" />
+        </div>
+    </Dialog>
+
+
+    <div class="location flex" @click="visible = false">
         <div class="icon flex">
             <i class="pi pi-map-marker" />
         </div>
         <div class="box">
-            <span>Deliver to</span>
-            <span>Bogota 530001</span>
+            <span class="flex">Deliver to
+                <img :alt="selectedCountry.code" src="@/assets/flag_placeholder.png"
+                    :class="`flag flag-${selectedCountry.code.toLowerCase()} flag-mini`" />
+            </span>
+            <span>{{ getLocationData?.country }} {{ getLocationData?.postal }}</span>
         </div>
     </div>
 </template>
@@ -76,7 +79,7 @@
 <script setup>
 import headerAPI from '@/components/header/api/index';
 import countries from '@/assets/country.json';
-import { onBeforeUnmount, ref, watch, } from 'vue';
+import { onBeforeUnmount, ref, watch, computed } from 'vue';
 
 const { getLocationData } = headerAPI();
 
@@ -107,6 +110,19 @@ const countriesOptions = ref([
     { name: 'Colombia', code: 'CO' },
 ]);
 
+const disableSave = computed(() => {
+    if (selectedCountry.value.code === 'US' || selectedCountry.value.code === 'CO') {
+        return false
+    }
+
+    return true
+})
+
+const onCountrychange = () => {
+    selectedCity.value = null
+    selectedPostal.value = null
+}
+
 onBeforeUnmount(() => {
     watchLocation()
 })
@@ -135,6 +151,10 @@ onBeforeUnmount(() => {
     flex-direction: column;
 }
 
+.box span img {
+    margin-left: 0.5rem;
+}
+
 .box span:nth-child(1) {
     font-size: var(--text-size-0);
 }
@@ -153,6 +173,10 @@ onBeforeUnmount(() => {
     margin-right: 1rem;
 }
 
+.flag-mini {
+    width: 1rem;
+}
+
 .dialog-row {
     margin-top: 1rem;
 }
@@ -167,5 +191,10 @@ onBeforeUnmount(() => {
 
 .dialog-header {
     font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+.dialog-header i {
+    margin-left: 0.5rem;
 }
 </style>
