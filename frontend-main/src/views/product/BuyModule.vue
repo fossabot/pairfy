@@ -10,7 +10,24 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Shipping Address
+                                 Shipping address
+                            </div>
+
+                            <div class="dialog-country flex">
+                                <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
+                                    :class="`flag flag-${getLocationData?.country.toLowerCase()}`" />
+
+                                <span>{{ getLocationData?.name }}, {{ getLocationData?.country }}</span>
+
+                            </div>
+
+
+                            <div class="dialog-input">
+                                <IftaLabel>
+                                    <InputText id="username" v-model="orderForm.address" fluid placeholder="" />
+
+                                    <label for="username">City</label>
+                                </IftaLabel>
                             </div>
 
                             <div class="dialog-input">
@@ -36,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="dialog-msg">
+                        <div class="dialog-message">
                             <Message severity="secondary">
                                 Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
 
@@ -50,7 +67,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Payment Method
+                                Payment method
                             </div>
 
                             <div class="payments">
@@ -182,7 +199,7 @@ const router = useRouter();
 
 const toast = useToast();
 
-const { togglePanel, getADAprice, getCurrentUser } = headerAPI();
+const { togglePanel, getADAprice, getCurrentUser, getLocationData } = headerAPI();
 
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
 
@@ -434,7 +451,7 @@ a {
 
 .grid-item.right {
     padding: 1rem;
-    border-left: 1px dashed var(--border-a);
+    border-left: 2px dashed var(--border-a);
 }
 
 .dialog {
@@ -492,7 +509,18 @@ a {
     opacity: 0.5;
 }
 
-.dialog-msg {
+.dialog-message {
     margin-top: 1rem;
+}
+
+.dialog-country {
+    line-height: 4rem;
+}
+
+.dialog-country span {
+    font-weight: 500;
+    font-size: var(--text-size-3);
+    margin-left: 1rem;
+    color: var(--text-b);
 }
 </style>

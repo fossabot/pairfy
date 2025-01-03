@@ -8,17 +8,17 @@
         </template>
         <div class="body">
             <Message severity="secondary">
-                Cardano Community. Currently there is only logistics for the USA and CO.
+                Hello Cardano Community, currently there is only logistics for the USA and CO.
                 The other countries will be added progressively.
             </Message>
 
             <div class="dialog-row">
                 <IftaLabel>
                     <Select v-model="selectedCountry" :options="countriesOptions" filter optionLabel="name" fluid
-                        id="dd-city" scrollHeight="30rem" @change="onCountrychange">
+                        id="country" scrollHeight="30rem" @change="onCountrychange">
                         <template #value="slotProps">
                             <div v-if="slotProps.value" class="item flex">
-                                <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
+                                <img :alt="slotProps.value.code" src="@/assets/flag_placeholder.png"
                                     :class="`flag flag-${slotProps.value.code.toLowerCase()}`" />
                                 <div>{{ slotProps.value.name }}</div>
                             </div>
@@ -34,7 +34,7 @@
                             </div>
                         </template>
                     </Select>
-                    <label for="dd-city">Country</label>
+                    <label for="country">Country</label>
                 </IftaLabel>
             </div>
 
@@ -81,7 +81,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const { getLocationData, setLocation } = headerAPI();
+const { getLocationData } = headerAPI();
 
 const dialogVisible = ref(false);
 
@@ -132,14 +132,20 @@ const onSaveLocation = () => {
 
     dialogVisible.value = false
 
-    router.push({
-        name: currentRoute.name,
-        params: {
-            ...currentRoute.params,
-            country: selectedCountry.value.code.toLowerCase()
-        },
-        query: currentRoute.query
-    });
+    console.log(scheme.country, currentRoute.params.country)
+
+    if (scheme.country === currentRoute.params.country) {
+        location.reload()
+    } else {
+        router.push({
+            name: currentRoute.name,
+            params: {
+                ...currentRoute.params,
+                country: selectedCountry.value.code.toLowerCase()
+            },
+            query: currentRoute.query
+        });
+    }
 }
 
 const setupLocation = () => {
