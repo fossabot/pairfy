@@ -1,6 +1,5 @@
 <template>
-    <div class="row flex">
-        <div class="nav">
+        <div class="nav flex">
             <div class="categories flex">
                 <div class="button flex"><i class="pi pi-bars" /></div>
                 <span>All Categories</span>
@@ -17,10 +16,12 @@
                     rel="noopener noreferrer">Documentation</a>
             </span>
             <span>Electronics</span>
-            <span>Best Sellers</span> 
+            <span>Best Sellers</span>
+            <span>Home</span>
+            <span>NFT</span>
+            <span>{{ getADAprice }} ADA</span>
         </div>
-        <div class="ADA"> ADA {{ getADAprice }}</div>
-    </div>
+   
 </template>
 
 <script setup>
@@ -33,15 +34,15 @@ const { getADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .nav {
-    display: flex;
-    align-items: center;
+    justify-content: space-between;
+    width: inherit;
 }
 
 .nav span {
-    margin: 0 2rem;
+ 
     font-size: var(--text-size-1);
     cursor: pointer;
-    font-weight: 400; 
+    font-weight: 400;
 }
 
 .categories {
@@ -51,14 +52,8 @@ const { getADAprice } = headerAPI();
     border-radius: 20px;
 
 }
-
-.row {
-    justify-content: space-between;
-}
-
 .ADA {
     white-space: nowrap;
-    font-weight: 500; 
+    font-weight: 500;
 }
-
 </style>

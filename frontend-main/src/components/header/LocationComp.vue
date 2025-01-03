@@ -55,7 +55,6 @@
 
         </div>
         <div class="dialog-footer flex">
-
             <Button type="button" label="Save" :disabled="disableSave" @click="visible = false"
                 style="color: var(--text-w)" />
         </div>
