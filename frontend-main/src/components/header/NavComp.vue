@@ -17,7 +17,7 @@
             </span>
             <span>Electronics</span>
             <span>Best Sellers</span>
-            <span>Home</span>
+            <span>Garden</span>
             <span>NFT</span>
             <span>{{ getADAprice }} ADA</span>
         </div>

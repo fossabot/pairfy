@@ -8,7 +8,7 @@
         </template>
         <div class="body">
             <Message severity="secondary">
-                Cardano community currently there is only logistics for the USA and CO.
+                Cardano Community. Currently there is only logistics for the USA and CO.
                 The other countries will be added progressively.
             </Message>
 
@@ -100,8 +100,6 @@ const watchLocation = watch(getLocationData, (data) => {
         selectedCity.value = data.city
 
         selectedPostal.value = data.postal
-
-        console.log("eeeeeeeee", getLocationData)
     }
 },
 { immediate: true }
@@ -126,7 +124,7 @@ const onCountrychange = () => {
 }
 
 const onSaveLocation = () => {
-    let scheme = { city: selectedCity.value, region: '-', country: selectedCountry.value.code, postal: selectedPostal.value, name: selectedCountry.value.name }
+    let scheme = { city: selectedCity.value, region: null, country: selectedCountry.value.code, postal: selectedPostal.value, name: selectedCountry.value.name }
 
     localStorage.setItem('location', JSON.stringify(scheme))
 
@@ -136,8 +134,6 @@ const onSaveLocation = () => {
         name: 'home',
         params: { country: selectedCountry.value.code.toLowerCase() }
     });
-
-    
 }
 
 const setupLocation = () => {
