@@ -37,8 +37,10 @@ const headerAPI = () => {
   const setADAprice = async (data) =>
     await store.dispatch("header/setADAprice", data);
 
-  const startTx = async (data) => await store.dispatch("header/startTx", data);
+  const getLocation = async (data) =>
+    await store.dispatch("header/getLocation", data);
 
+  
   return {
     currentSeller,
     togglePanel,
@@ -46,9 +48,9 @@ const headerAPI = () => {
     currentUser,
     logoutUser,
     loginSeller,
+    getLocation,
     logoutSeller,
     loginUser,
-    startTx,
     setupLucid,
     connectWallet,
     setADAprice,
@@ -57,7 +59,8 @@ const headerAPI = () => {
     panelVisible: computed(() => store.getters["header/panelVisible"]), 
     destinationsVisible: computed(() => store.getters["header/destinationsVisible"]),
     getLucid: computed(() => store.getters["header/getLucid"]),
-    getADAprice: computed(() => store.getters["header/getADAprice"])
+    getADAprice: computed(() => store.getters["header/getADAprice"]),
+    getLocationData: computed(() => store.getters["header/getLocationData"])
   };
 };
 

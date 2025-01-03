@@ -16,7 +16,7 @@ import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
 import { onBeforeUnmount, provide } from 'vue';
 
-const { currentUser, currentSeller } = headerAPI();
+const { currentUser, currentSeller, getLocation } = headerAPI();
 
 const { startWalletService, stopWalletService } = walletClient();
 
@@ -31,6 +31,10 @@ currentSeller()
 startWalletService()
   .then(() => console.info("WALLET_SERVICE"))
   .catch((err) => console.error(err));
+
+getLocation()
+.then(() => console.info("LOCATION"))
+.catch((err) => console.error(err));
 
 provide(ApolloClients, {
   default: queryClient,
@@ -70,5 +74,4 @@ onBeforeUnmount(() => {
   flex: 1;
   height: 100%;
 }
-
 </style>

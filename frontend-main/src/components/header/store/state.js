@@ -7,4 +7,5 @@ export default () => ({
   walletName: null,
   lucidClient: null,
   ADAprice: null,
+  locationData: null
 })

@@ -13,12 +13,13 @@ const getLocation = async (req: Request, res: Response) => {
 
     console.log(getLocation.data);
 
-    const { city, region, country } = getLocation.data;
+    const { city, region, country, postal } = getLocation.data;
 
     const payload = {
       city,
       region,
       country,
+      postal
     };
 
     res

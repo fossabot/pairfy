@@ -32,6 +32,18 @@ const currentUser = async ({ commit }) => {
   }
 }
 
+const getLocation = async ({ commit }, params) => {
+  try {
+    const response = await axiosAPI.post('/api/location/get-location', params)
+
+    commit('getLocation', response.data.payload)
+
+    return { ok: true, response: response.data }
+  } catch (error) {
+    throw { ok: false, response: error.response.data }
+  }
+}
+
 const loginSeller = async ({ commit }, params) => {
   try {
     const response = await axiosAPI.post('/api/seller/login-seller', params)
@@ -99,19 +111,6 @@ const connectWallet = async ({ commit }, params) => {
   commit('connectWallet', params)
 }
 
-const startTx = async (_, params) => {
-  try {
-    const response = await axiosAPI.post('/api/gate/start-tx', params)
-
-    console.log(response)
-
-    //commit("createProduct", response.data.payload);
-
-    return { ok: true, response: response.data }
-  } catch (error) {
-    throw { ok: false, response: error.response.data }
-  }
-}
 
 const setupLucid = async ({ commit }, data) => {
   commit('setupLucid', data)
@@ -126,7 +125,7 @@ export {
   currentUser,
   connectWallet,
   setupLucid,
-  startTx,
+  getLocation,
   currentSeller,
   loginSeller,
   togglePanel,

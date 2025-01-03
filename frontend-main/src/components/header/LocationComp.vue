@@ -12,9 +12,10 @@
                     Cardano community currently there is only logistics for the USA and CO.
                     The other countries will be added progressively.
                 </Message>
+
                 <div class="dialog-row">
                     <IftaLabel>
-                        <Select v-model="selectedCountry" :options="countries" filter optionLabel="name" fluid
+                        <Select v-model="selectedCountry" :options="countriesOptions" filter optionLabel="name" fluid
                             id="dd-city" scrollHeight="30rem">
                             <template #value="slotProps">
                                 <div v-if="slotProps.value" class="item flex">
@@ -40,14 +41,14 @@
 
                 <div class="dialog-row">
                     <IftaLabel>
-                        <InputText id="city" v-model="city" fluid v-keyfilter="/^[a-zA-Z0-9 ]*$/"/>
+                        <InputText id="city" v-model="selectedCity" fluid v-keyfilter="/^[a-zA-Z0-9 ]*$/" />
                         <label for="city">City</label>
                     </IftaLabel>
                 </div>
 
                 <div class="dialog-row">
                     <IftaLabel>
-                        <InputNumber v-model="value" inputId="price_input" mode="decimal" locale="en-US"
+                        <InputNumber v-model="selectedPostal" inputId="price_input" mode="decimal" locale="en-US"
                             :useGrouping="false" fluid />
                         <label for="price_input">ZIP/Postal</label>
                     </IftaLabel>
@@ -73,20 +74,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import headerAPI from '@/components/header/api/index';
+import countries from '@/assets/country.json';
+import { onBeforeUnmount, ref, watch, } from 'vue';
+
+const { getLocationData } = headerAPI();
+
+const countryData = ref(countries)
 
 const visible = ref(true);
 
-const value = ref(1);
+const defaultCountry = { name: 'United States', code: 'US' }
 
-const city = ref(null);
+const selectedCountry = ref(defaultCountry);
 
-const selectedCountry = ref({ name: 'United States', code: 'US' });
+const selectedCity = ref(null);
 
-const countries = ref([
+const selectedPostal = ref(null);
+
+const watchLocation = watch(getLocationData, (data) => {
+    if (data) {
+        selectedCountry.value = { name: countryData.value[data.country], code: data.country }
+
+        selectedCity.value = data.city
+
+        selectedPostal.value = data.postal
+    }
+})
+
+const countriesOptions = ref([
     { name: 'United States', code: 'US' },
     { name: 'Colombia', code: 'CO' },
 ]);
+
+onBeforeUnmount(() => {
+    watchLocation()
+})
 </script>
 
 <style lang="css" scoped>
@@ -142,10 +165,7 @@ const countries = ref([
     margin-left: 1rem;
 }
 
-.dialog-header{
+.dialog-header {
     font-weight: 600;
 }
-
-
-
 </style>
