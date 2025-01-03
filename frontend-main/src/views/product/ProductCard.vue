@@ -20,7 +20,7 @@ const { getProductData } = productAPI();
 <style lang="css" scoped>
 section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0rem;
+    grid-template-columns: 600px 1fr;
+    gap: 1rem;
 }
 </style>
