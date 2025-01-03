@@ -41,7 +41,7 @@ const { getADAprice } = headerAPI();
     margin: 0 2rem;
     font-size: var(--text-size-1);
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 400; 
 }
 
 .categories {
