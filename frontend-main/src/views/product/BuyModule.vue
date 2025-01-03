@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="dialog-msg">
-                            <Message severity="secondary" icon="pi pi-exclamation-circle">
+                            <Message severity="secondary">
                                 Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
 
                                 <a href="https://www.lace.io/bugbountyprogram" target="_blank"

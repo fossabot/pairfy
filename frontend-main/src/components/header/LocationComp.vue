@@ -1,17 +1,92 @@
 <template>
     <div class="location flex">
+        <Dialog v-model:visible="visible" modal :style="{ width: '25rem' }" :draggable="false">
+            <template #header>
+                <span class="dialog-header">
+                    <i class="pi pi-map-marker" />
+                    Deliver to
+                </span>
+            </template>
+            <div class="body">
+                <Message severity="secondary">
+                    Cardano community currently there is only logistics for the USA and CO.
+                    The other countries will be added progressively.
+                </Message>
+                <div class="dialog-row">
+                    <IftaLabel>
+                        <Select v-model="selectedCountry" :options="countries" filter optionLabel="name" fluid
+                            id="dd-city" scrollHeight="30rem">
+                            <template #value="slotProps">
+                                <div v-if="slotProps.value" class="item flex">
+                                    <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
+                                        :class="`flag flag-${slotProps.value.code.toLowerCase()}`" />
+                                    <div>{{ slotProps.value.name }}</div>
+                                </div>
+                                <span v-else>
+                                    {{ slotProps.placeholder }}
+                                </span>
+                            </template>
+                            <template #option="slotProps">
+                                <div class="flex">
+                                    <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
+                                        :class="`flag flag-${slotProps.option.code.toLowerCase()}`" />
+                                    <div>{{ slotProps.option.name }}</div>
+                                </div>
+                            </template>
+                        </Select>
+                        <label for="dd-city">Country</label>
+                    </IftaLabel>
+                </div>
+
+                <div class="dialog-row">
+                    <IftaLabel>
+                        <InputText id="city" v-model="city" fluid v-keyfilter="/^[a-zA-Z0-9 ]*$/"/>
+                        <label for="city">City</label>
+                    </IftaLabel>
+                </div>
+
+                <div class="dialog-row">
+                    <IftaLabel>
+                        <InputNumber v-model="value" inputId="price_input" mode="decimal" locale="en-US"
+                            :useGrouping="false" fluid />
+                        <label for="price_input">ZIP/Postal</label>
+                    </IftaLabel>
+                </div>
+
+
+            </div>
+            <div class="dialog-footer flex">
+                <Button type="button" label="Cancel" severity="secondary" @click="visible = false" />
+                <Button type="button" label="Save" @click="visible = false" style="color: var(--text-w)" />
+            </div>
+        </Dialog>
+
+
         <div class="icon flex">
-            <i class="pi pi-map-marker"/>
+            <i class="pi pi-map-marker" />
         </div>
         <div class="box">
-               <span>Deliver to</span>
-               <span>Bogota 530001</span>
+            <span>Deliver to</span>
+            <span>Bogota 530001</span>
         </div>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 
+const visible = ref(true);
+
+const value = ref(1);
+
+const city = ref(null);
+
+const selectedCountry = ref({ name: 'United States', code: 'US' });
+
+const countries = ref([
+    { name: 'United States', code: 'US' },
+    { name: 'Colombia', code: 'CO' },
+]);
 </script>
 
 <style lang="css" scoped>
@@ -32,18 +107,45 @@
     font-size: var(--text-size-3);
 }
 
-.box{
+.box {
     display: flex;
     flex-direction: column;
 }
 
-.box span:nth-child(1){
+.box span:nth-child(1) {
     font-size: var(--text-size-0);
 }
 
-.box span:nth-child(2){
+.box span:nth-child(2) {
     font-size: var(--text-size-0);
     font-weight: 500;
 }
+
+.body {
+    height: 500px;
+}
+
+.flag {
+    width: 2rem;
+    margin-right: 1rem;
+}
+
+.dialog-row {
+    margin-top: 1rem;
+}
+
+.dialog-footer {
+    justify-content: flex-end;
+}
+
+.dialog-footer button {
+    margin-left: 1rem;
+}
+
+.dialog-header{
+    font-weight: 600;
+}
+
+
 
 </style>
