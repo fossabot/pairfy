@@ -21,7 +21,6 @@
             <span>NFT</span>
             <span>{{ getADAprice }} ADA</span>
         </div>
-   
 </template>
 
 <script setup>
