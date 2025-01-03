@@ -122,10 +122,6 @@ const togglePanel = async ({ commit }, params) => {
   commit('togglePanel', params)
 }
 
-const toggleDestinations = async ({ commit }, params) => {
-  commit('toggleDestinations', params)
-}
-
 const connectWallet = async ({ commit }, params) => {
   console.log(params)
   commit('connectWallet', params)
@@ -148,7 +144,6 @@ export {
   currentSeller,
   loginSeller,
   togglePanel,
-  toggleDestinations,
   logoutSeller,
   loginUser,
   setADAprice,

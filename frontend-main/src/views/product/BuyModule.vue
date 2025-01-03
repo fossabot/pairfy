@@ -182,7 +182,7 @@ const router = useRouter();
 
 const toast = useToast();
 
-const { togglePanel, toggleDestinations, getADAprice, getCurrentUser } = headerAPI();
+const { togglePanel, getADAprice, getCurrentUser } = headerAPI();
 
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
 
@@ -239,17 +239,11 @@ const getStockLabel = (readyStock) => {
 
 const toggleDialog = ref(true);
 
-const getDestinationType = () => {
-    return localStorage.getItem('destinationType')
-}
+
 
 const onBuyProduct = () => {
     if (!getCurrentUser.value) {
         return togglePanel(true)
-    }
-
-    if (!getDestinationType()) {
-        return toggleDestinations(true)
     }
 
     toggleDialog.value = true;

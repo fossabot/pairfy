@@ -16,10 +16,6 @@ const togglePanel = (state, data) => {
   state.panelVisible = data
 }
 
-const toggleDestinations = (state, data) => {
-  state.destinationsVisible = data
-}
-
 const connectWallet = (state, data) => {
   state.walletConnected = data.value
   state.walletName = data.name
@@ -32,4 +28,4 @@ const setupLucid = (state, data) => {
 const setADAprice = (state, data) => {
   state.ADAprice = data
 }
-export { setLocation, currentUser, connectWallet, togglePanel, toggleDestinations, currentSeller, setupLucid, setADAprice }
+export { setLocation, currentUser, connectWallet, togglePanel, currentSeller, setupLucid, setADAprice }
