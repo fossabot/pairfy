@@ -8,7 +8,7 @@ const currentUser = (state, data) => {
   sessionStorage.setItem('authToken', data.token)
 }
 
-const getLocation = (state, data) => {
+const setLocation = (state, data) => {
   state.locationData = data
 }
 
@@ -32,4 +32,4 @@ const setupLucid = (state, data) => {
 const setADAprice = (state, data) => {
   state.ADAprice = data
 }
-export { getLocation, currentUser, connectWallet, togglePanel, toggleDestinations, currentSeller, setupLucid, setADAprice }
+export { setLocation, currentUser, connectWallet, togglePanel, toggleDestinations, currentSeller, setupLucid, setADAprice }

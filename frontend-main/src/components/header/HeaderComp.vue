@@ -1,17 +1,17 @@
 <template>
     <header>
         <DrawerComp />
-        <DestinationComp /> 
+        <DestinationComp />
         <div class="header">
             <div class="header-col left">
-                <div class="brand"/>
-                <LocationComp/>
+                <div class="brand" />
+                <LocationComp />
             </div>
             <div class="header-col center">
                 <SearchComp />
             </div>
             <div class="header-col right">
-             
+
                 <NotificationComp />
 
                 <CartComp />
@@ -20,7 +20,7 @@
                     Connect Wallet
                 </div>
 
-                <div class="connect-wallet" v-if="getCurrentUser"  @click="togglePanel(true)">
+                <div class="connect-wallet" v-if="getCurrentUser" @click="togglePanel(true)">
                     {{ getCurrentUser.address.slice(0, 15) }}
                 </div>
             </div>
@@ -46,6 +46,23 @@ import NavComp from "@/components/header/NavComp.vue";
 import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch } from "vue";
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const watchRoute = watch(
+    () => route.params.country,
+    async (newCountry, oldCountry) => {
+        console.log(newCountry, oldCountry);
+
+        if (!oldCountry) return;
+
+        location.reload();
+    },
+    {
+        immediate: true
+    }
+)
 
 const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
@@ -72,6 +89,7 @@ onGetAssetPriceError(error => {
 
 onBeforeUnmount(() => {
     watchAssetPrice()
+    watchRoute()
 })
 
 </script>
@@ -146,5 +164,4 @@ section {
     cursor: pointer;
     color: inherit;
 }
-
 </style>

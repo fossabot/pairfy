@@ -6,18 +6,25 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/us',
+    },
+    {
+      path: '/:country',
       name: 'home',
       component: HomeView,
+      props: true
     },
     {
-      path: '/product/:id',
+      path: '/:country/product/:id',
       name: 'product',
       component: () => import('../views/product/ProductView.vue'),
+      props: true,
     },
     {
-      path: '/order/:id',
+      path: '/:country/order/:id',
       name: 'order',
       component: () => import('../views/order/OrderView.vue'),
+      props: true,
     },
   ],
 })

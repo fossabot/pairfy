@@ -33,8 +33,8 @@ startWalletService()
   .catch((err) => console.error(err));
 
 getLocation()
-.then(() => console.info("LOCATION"))
-.catch((err) => console.error(err));
+  .then(() => console.info("LOCATION"))
+  .catch((err) => console.error(err));
 
 provide(ApolloClients, {
   default: queryClient,

@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="visible" modal :style="{ width: '25rem' }" :draggable="false" :closable="false">
+    <Dialog v-model:visible="dialogVisible" modal :style="{ width: '25rem' }" :draggable="false" :closable="false">
         <template #header>
             <span class="dialog-header flex">
                 Deliver to
@@ -55,54 +55,57 @@
 
         </div>
         <div class="dialog-footer flex">
-            <Button type="button" label="Save" :disabled="disableSave" @click="visible = false"
+            <Button type="button" label="Save" :disabled="disableSave" @click="onSaveLocation"
                 style="color: var(--text-w)" />
         </div>
     </Dialog>
 
-
-    <div class="location flex" @click="visible = false">
+    <div class="location flex" @click="dialogVisible = true">
         <div class="icon flex">
             <i class="pi pi-map-marker" />
         </div>
         <div class="box">
             <span class="flex">Deliver to
-                <img :alt="selectedCountry.code" src="@/assets/flag_placeholder.png"
-                    :class="`flag flag-${selectedCountry.code.toLowerCase()} flag-mini`" />
+                <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
+                    :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
-            <span>{{ getLocationData?.country }} {{ getLocationData?.postal }}</span>
+            <span>{{ getLocationData?.name }}</span>
         </div>
     </div>
 </template>
 
 <script setup>
 import headerAPI from '@/components/header/api/index';
-import countries from '@/assets/country.json';
-import { onBeforeUnmount, ref, watch, computed } from 'vue';
+import { onBeforeUnmount, ref, watch, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 
-const { getLocationData } = headerAPI();
+const router = useRouter()
 
-const countryData = ref(countries)
+const { getLocationData, setLocation } = headerAPI();
 
-const visible = ref(true);
+const dialogVisible = ref(false);
 
 const defaultCountry = { name: 'United States', code: 'US' }
 
 const selectedCountry = ref(defaultCountry);
 
-const selectedCity = ref(null);
+const selectedCity = ref('-');
 
-const selectedPostal = ref(null);
+const selectedPostal = ref('-');
 
 const watchLocation = watch(getLocationData, (data) => {
     if (data) {
-        selectedCountry.value = { name: countryData.value[data.country], code: data.country }
+        selectedCountry.value = { name: data.name, code: data.country }
 
         selectedCity.value = data.city
 
         selectedPostal.value = data.postal
+
+        console.log("eeeeeeeee", getLocationData)
     }
-})
+},
+{ immediate: true }
+)
 
 const countriesOptions = ref([
     { name: 'United States', code: 'US' },
@@ -122,6 +125,33 @@ const onCountrychange = () => {
     selectedPostal.value = null
 }
 
+const onSaveLocation = () => {
+    let scheme = { city: selectedCity.value, region: '-', country: selectedCountry.value.code, postal: selectedPostal.value, name: selectedCountry.value.name }
+
+    localStorage.setItem('location', JSON.stringify(scheme))
+
+    dialogVisible.value = false
+
+    router.push({
+        name: 'home',
+        params: { country: selectedCountry.value.code.toLowerCase() }
+    });
+
+    
+}
+
+const setupLocation = () => {
+    let result = localStorage.getItem('location');
+
+    if (!result) {
+        dialogVisible.value = true
+    }
+}
+
+onMounted(() => {
+    setupLocation()
+})
+
 onBeforeUnmount(() => {
     watchLocation()
 })
@@ -134,6 +164,7 @@ onBeforeUnmount(() => {
     white-space: nowrap;
     text-align: start;
     margin: 0 auto;
+    cursor: pointer;
 }
 
 .icon {
@@ -160,7 +191,7 @@ onBeforeUnmount(() => {
 
 .box span:nth-child(2) {
     font-size: var(--text-size-0);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .body {

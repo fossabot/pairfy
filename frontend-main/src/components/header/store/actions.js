@@ -1,4 +1,8 @@
+import countries from '@/assets/country.json'
 import axiosAPI from '@/api/axios'
+import { ref } from 'vue'
+
+const countryData = ref(countries)
 
 const currentSeller = async ({ commit }) => {
   try {
@@ -34,9 +38,22 @@ const currentUser = async ({ commit }) => {
 
 const getLocation = async ({ commit }, params) => {
   try {
+    const currentLocation = localStorage.getItem('location')
+
+    if (currentLocation) {
+      return commit('setLocation', JSON.parse(currentLocation))
+    }
+
     const response = await axiosAPI.post('/api/location/get-location', params)
 
-    commit('getLocation', response.data.payload)
+    const scheme = {
+      ...response.data.payload,
+      name: countryData.value[response.data.payload.country],
+    }
+
+    console.log(scheme)
+
+    commit('setLocation', scheme)
 
     return { ok: true, response: response.data }
   } catch (error) {
@@ -44,6 +61,9 @@ const getLocation = async ({ commit }, params) => {
   }
 }
 
+const setLocation = async ({ commit }, params) => {
+  commit('setLocation', scheme)
+}
 const loginSeller = async ({ commit }, params) => {
   try {
     const response = await axiosAPI.post('/api/seller/login-seller', params)
@@ -111,7 +131,6 @@ const connectWallet = async ({ commit }, params) => {
   commit('connectWallet', params)
 }
 
-
 const setupLucid = async ({ commit }, data) => {
   commit('setupLucid', data)
 }
@@ -133,4 +152,5 @@ export {
   logoutSeller,
   loginUser,
   setADAprice,
+  setLocation,
 }

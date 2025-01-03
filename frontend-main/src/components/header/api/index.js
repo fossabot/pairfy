@@ -40,10 +40,13 @@ const headerAPI = () => {
   const getLocation = async (data) =>
     await store.dispatch("header/getLocation", data);
 
+  const setLocation = async (data) =>
+    await store.dispatch("header/setLocation", data);
   
   return {
     currentSeller,
     togglePanel,
+    setLocation,
     toggleDestinations,
     currentUser,
     logoutUser,
