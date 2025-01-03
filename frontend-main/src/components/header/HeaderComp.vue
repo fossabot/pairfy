@@ -5,6 +5,7 @@
         <div class="header">
             <div class="header-col left">
                 <div class="brand"/>
+                <LocationComp/>
             </div>
             <div class="header-col center">
                 <SearchComp />
@@ -36,6 +37,7 @@
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
 import DestinationComp from '@/components/header/DestinationComp.vue';
+import LocationComp from '@/components/header/LocationComp.vue';
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
@@ -96,11 +98,10 @@ section {
 .brand {
     cursor: pointer;
     min-height: 20px;
-    width: 79px;
     background-image: url('../../assets/logo-white.png');
     background-repeat: repeat-x;
     background-position: 0px 0px;
-    width: 220px;
+    width: 150px;
     min-height: 33px;
     background-repeat: no-repeat;
 }
@@ -136,6 +137,7 @@ section {
 .connect-wallet {
     background: var(--primary-b);
     border-radius: 20px;
+    height: 42px;
     padding: 0.6rem 1rem;
     min-width: 120px;
     font-weight: 600;
