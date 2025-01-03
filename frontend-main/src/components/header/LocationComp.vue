@@ -37,6 +37,10 @@
     flex-direction: column;
 }
 
+.box span{
+    line-height: 1rem;
+}
+
 .box span:nth-child(1){
     font-size: var(--text-size-0);
 }
