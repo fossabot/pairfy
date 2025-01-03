@@ -49,8 +49,7 @@
                 </div>
             </div>
 
-            <Button label="Destinations" fluid @click="onDestinations" style="margin-top: 1rem; "
-                :disabled="!enabledWallet" variant="outlined" />
+
 
             <Button label="Sign Out" fluid @click="logoutUser" style="margin-top: 1rem;" :disabled="!enabledWallet"
                 variant="outlined" />
@@ -70,7 +69,7 @@ const { formatWithDots } = inject('utils');
 
 const toast = useToast();
 
-const { panelVisible, togglePanel, toggleDestinations, loginUser, getCurrentUser, logoutUser } = headerAPI();
+const { panelVisible, togglePanel, loginUser, getCurrentUser, logoutUser } = headerAPI();
 
 const drawerVisibleTemp = ref(false);
 
@@ -114,14 +113,6 @@ const onLogin = async () => {
         .then(() => togglePanel(false))
         .catch((err) => console.error(err));
 };
-
-
-const onDestinations = () => {
-    togglePanel(false)
-    toggleDestinations(true)
-}
-
-
 
 
 const createTransaction = async () => {

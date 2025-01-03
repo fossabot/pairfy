@@ -1,7 +1,6 @@
 <template>
     <header>
         <DrawerComp />
-        <DestinationComp />
         <div class="header">
             <div class="header-col left">
                 <div class="brand" />
@@ -37,7 +36,6 @@
 <script setup>
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
-import DestinationComp from '@/components/header/DestinationComp.vue';
 import LocationComp from '@/components/header/LocationComp.vue';
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
