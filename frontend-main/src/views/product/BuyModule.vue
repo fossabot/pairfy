@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '60rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '56rem', height: '60rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
