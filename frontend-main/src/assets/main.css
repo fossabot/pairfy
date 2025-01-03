@@ -101,4 +101,8 @@
   -webkit-backdrop-filter: blur(1px);
 }
 
-
+.p-overlaybadge {
+  position: relative;
+  align-items: center;
+  display: flex;
+}

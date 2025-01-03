@@ -1,10 +1,11 @@
 <template>
     <div class="notification">
-        <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
-            <div class="button flex">
-                <i class="pi pi-bell" />
-            </div>
-        </OverlayBadge>
+        <div class="button flex">
+            <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
+                <i class="pi pi-bars" />
+            </OverlayBadge>
+        </div>
+
         <Popover ref="overlay">
             <section>
                 <div class="nav">
@@ -282,6 +283,9 @@ const onHandleClick = (notification) => {
 .button {
     color: var(--text-a);
     cursor: pointer;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
 }
 
 .button i {

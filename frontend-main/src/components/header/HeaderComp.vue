@@ -12,9 +12,9 @@
             </div>
             <div class="header-col right">
              
-                <CartComp />
-
                 <NotificationComp />
+
+                <CartComp />
 
                 <div class="connect-wallet" v-if="!getCurrentUser" @click="togglePanel(true)">
                     Connect Wallet

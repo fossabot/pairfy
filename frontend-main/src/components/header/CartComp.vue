@@ -17,6 +17,8 @@
     margin: auto;
     justify-content: center;
     font-size: var(--text-size-0);
+    width: 42px;
+    height: 42px;
 }
 
 .button span {
