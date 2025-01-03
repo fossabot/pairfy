@@ -102,7 +102,7 @@ const watchLocation = watch(getLocationData, (data) => {
         selectedPostal.value = data.postal
     }
 },
-{ immediate: true }
+    { immediate: true }
 )
 
 const countriesOptions = ref([
@@ -124,6 +124,8 @@ const onCountrychange = () => {
 }
 
 const onSaveLocation = () => {
+    let currentRoute = router.currentRoute.value;
+
     let scheme = { city: selectedCity.value, region: null, country: selectedCountry.value.code, postal: selectedPostal.value, name: selectedCountry.value.name }
 
     localStorage.setItem('location', JSON.stringify(scheme))
@@ -131,8 +133,12 @@ const onSaveLocation = () => {
     dialogVisible.value = false
 
     router.push({
-        name: 'home',
-        params: { country: selectedCountry.value.code.toLowerCase() }
+        name: currentRoute.name,
+        params: {
+            ...currentRoute.params,
+            country: selectedCountry.value.code.toLowerCase()
+        },
+        query: currentRoute.query
     });
 }
 

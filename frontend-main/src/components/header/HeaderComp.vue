@@ -56,7 +56,6 @@ const router = useRouter()
 const watchRoute = watch(
     () => route.params.country,
     (n, o) => {
-        console.log(n, o)
 
         if (n === undefined && o === undefined) return;
 
