@@ -136,7 +136,7 @@ section {
 }
 
 .connect-wallet {
-    background: var(--primary-b);
+    background: var(--text-a);
     border-radius: 20px;
     height: 42px;
     padding: 0.6rem 1rem;
