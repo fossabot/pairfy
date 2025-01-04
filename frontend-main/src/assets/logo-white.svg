@@ -28,12 +28,12 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="5.6568543"
-     inkscape:cx="57.71759"
+     inkscape:cx="57.629202"
      inkscape:cy="31.731417"
-     inkscape:window-width="1779"
-     inkscape:window-height="867"
-     inkscape:window-x="61"
-     inkscape:window-y="100"
+     inkscape:window-width="2110"
+     inkscape:window-height="933"
+     inkscape:window-x="545"
+     inkscape:window-y="16"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
@@ -152,6 +152,15 @@
          inkscape:export-xdpi="121.6"
          inkscape:export-ydpi="121.6" />
     </g>
+    <rect
+       style="fill:#0866ff;stroke:#0866ff;stroke-width:0.22229;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+       id="rect1078"
+       width="39.77771"
+       height="39.77771"
+       x="-52.924637"
+       y="2.6885724"
+       rx="2"
+       ry="2" />
   </g>
   <g
      inkscape:groupmode="layer"
