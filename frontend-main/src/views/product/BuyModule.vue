@@ -132,7 +132,7 @@
                         <Divider />
 
                         <div class="dialog-values flex">
-                            <span>Total Asset:</span>
+                            <span>Total Asset</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
