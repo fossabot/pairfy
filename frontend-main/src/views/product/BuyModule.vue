@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Price Insurance</span>
+                            <span>Fund Insurance</span>
 
                             <span>100%</span>
                         </div>
