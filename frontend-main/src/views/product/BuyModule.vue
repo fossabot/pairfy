@@ -24,7 +24,8 @@
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="city" v-model="orderForm.city" fluid placeholder=""
-                                        :invalid="orderFormErrors.city" />
+                                        :invalid="orderFormErrors.city" autofocus
+                                        v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
                                     <label for="city">City</label>
                                 </IftaLabel>
@@ -33,7 +34,8 @@
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="address" v-model="orderForm.address" fluid placeholder=""
-                                        :invalid="orderFormErrors.address" />
+                                        :invalid="orderFormErrors.address"
+                                        v-keyfilter="{ pattern: /^[A-Za-z0-9.,'@+&/()°#\-\s]{1,150}$/, validateOnly: true }" />
 
                                     <label for="address">Address</label>
                                 </IftaLabel>
@@ -42,7 +44,8 @@
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="name" v-model="orderForm.receiver" fluid
-                                        :invalid="orderFormErrors.receiver" />
+                                        :invalid="orderFormErrors.receiver"
+                                        v-keyfilter="{ pattern: /^[A-Za-z0-9 ]{1,100}$/, validateOnly: true }" />
                                     <label for="name">Receiver Name</label>
                                 </IftaLabel>
                             </div>
@@ -50,11 +53,19 @@
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="postal" v-model="orderForm.postal" fluid
-                                        :invalid="orderFormErrors.postal" />
+                                        :invalid="orderFormErrors.postal"
+                                        v-keyfilter="{ pattern: /^[A-Za-z0-9.,'@+&/(~)°#\-\s]{1,50}$/, validateOnly: true }" />
                                     <label for="postal">ZIP/Postal</label>
                                 </IftaLabel>
                             </div>
 
+                            <div class="dialog-input">
+                                <IftaLabel>
+                                    <InputText id="indications" v-model="orderForm.other" fluid
+                                        v-keyfilter="{ pattern: /^[A-Za-z0-9 ]{1,100}$/, validateOnly: true }" />
+                                    <label for="name">Other Indications / Contact ( optional )</label>
+                                </IftaLabel>
+                            </div>
 
                             <div class="dialog-message">
                                 <Message severity="secondary">
@@ -137,7 +148,7 @@
                         </div>
 
                         <div class="dialog-control">
-                            <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
+                            <Button label="Buy" @click="onBuyHandle" style="color: var(--text-w);"
                                 :loading="createOrderLoading" fluid />
                         </div>
                     </div>
@@ -218,6 +229,7 @@ import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
 import { useRouter } from 'vue-router';
+import { Buffer } from 'buffer'
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
@@ -237,7 +249,8 @@ const orderForm = ref({
     city: getLocationData.value?.city || null,
     address: null,
     receiver: null,
-    postal: getLocationData.value?.postal || null
+    postal: getLocationData.value?.postal || null,
+    other: null
 });
 
 
@@ -246,7 +259,31 @@ const orderFormErrors = ref({
     address: false,
     receiver: false,
     postal: false,
+    other: false
 });
+
+const validateForm = () => {
+    orderFormErrors.value.city = [orderForm.value.city === null, orderForm.value.city?.length < 1].includes(true);
+    orderFormErrors.value.address = [orderForm.value.address === null, orderForm.value.address?.length < 1].includes(true);
+    orderFormErrors.value.receiver = [orderForm.value.receiver === null, orderForm.value.receiver?.length < 1].includes(true);
+    orderFormErrors.value.postal = [orderForm.value.postal === null, orderForm.value.postal?.length < 1].includes(true);
+
+    return !Object.values(orderFormErrors.value).includes(true);
+}
+
+const onBuyHandle = () => {
+    if (!validateForm()) {
+        return showError('Mandatory Fields')
+    }
+
+    console.log(orderForm.value);
+
+    const orderData = JSON.stringify(orderForm.value);
+
+    const data = Buffer.from(orderData).toString('base64');
+
+    onConfirmedBuy(data);
+}
 
 const selectedQuantity = ref(1);
 
@@ -353,11 +390,12 @@ onOrderCreated(async result => {
 })
 
 
-const onConfirmedBuy = () => {
+const onConfirmedBuy = (data) => {
     createOrder({
         "createOrderVariable": {
             "product_id": getProductData.value.id,
             "product_units": selectedQuantity.value,
+            "data": data
         }
     })
 }
@@ -391,8 +429,6 @@ function calculateArrivalDay(durationInSeconds) {
 
     return arrivalDay;
 };
-
-
 
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
