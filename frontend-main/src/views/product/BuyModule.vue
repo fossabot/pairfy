@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '56rem', height: '60rem' }"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '60rem' }"
             :draggable="false" dismissableMask>
 
             <div class="dialog">
@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                1. Package Destination
+                                Package Destination
                             </div>
 
                             <div class="dialog-country flex">
@@ -23,7 +23,8 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="city" v-model="orderForm.city" fluid placeholder="" />
+                                    <InputText id="city" v-model="orderForm.city" fluid placeholder=""
+                                        :invalid="orderFormErrors.city" />
 
                                     <label for="city">City</label>
                                 </IftaLabel>
@@ -31,7 +32,8 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="address" v-model="orderForm.address" fluid placeholder="" />
+                                    <InputText id="address" v-model="orderForm.address" fluid placeholder=""
+                                        :invalid="orderFormErrors.address" />
 
                                     <label for="address">Address</label>
                                 </IftaLabel>
@@ -39,14 +41,16 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="name" v-model="orderForm.receiver" fluid />
+                                    <InputText id="name" v-model="orderForm.receiver" fluid
+                                        :invalid="orderFormErrors.receiver" />
                                     <label for="name">Receiver Name</label>
                                 </IftaLabel>
                             </div>
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="postal" v-model="orderForm.postal" fluid />
+                                    <InputText id="postal" v-model="orderForm.postal" fluid
+                                        :invalid="orderFormErrors.postal" />
                                     <label for="postal">ZIP/Postal</label>
                                 </IftaLabel>
                             </div>
@@ -69,7 +73,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                2. Payment method
+                                Payment method
                             </div>
 
                             <div class="payments">
@@ -96,42 +100,44 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Protection</span>
+                            <span>Protected:</span>
 
                             <span>Yes</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Shipping Cost</span>
+                            <span>Shipping Cost:</span>
 
                             <span>Free</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Fiat Price</span>
+                            <span>Total Fiat Price:</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange Rate</span>
+                            <span>Exchange Rate:</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Quantity</span>
+                            <span>Quantity:</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
 
+                        <Divider />
+
                         <div class="dialog-values flex">
-                            <span>Total Asset</span>
+                            <span>Total Asset:</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
                         <div class="dialog-control">
-                            <Button label="PAY" @click="onConfirmedBuy" style="color: var(--text-w);"
+                            <Button label="Buy" @click="onConfirmedBuy" style="color: var(--text-w);"
                                 :loading="createOrderLoading" fluid />
                         </div>
                     </div>
@@ -234,6 +240,14 @@ const orderForm = ref({
     postal: getLocationData.value?.postal || null
 });
 
+
+const orderFormErrors = ref({
+    city: false,
+    address: false,
+    receiver: false,
+    postal: false,
+});
+
 const selectedQuantity = ref(1);
 
 const computedTotalPrice = computed(() => {
@@ -276,8 +290,6 @@ const getStockLabel = (readyStock) => {
 }
 
 const toggleDialog = ref(true);
-
-
 
 const onBuyProduct = () => {
     if (!getCurrentUser.value) {
@@ -458,7 +470,7 @@ a {
 .dialog-values {
     justify-content: space-between;
     font-weight: 600;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     margin-top: 1rem;
 }
 
@@ -484,7 +496,7 @@ a {
 }
 
 .grid-item.right {
-    padding: 0 1rem;
+    padding-left: 1rem;
     border-left: 1px dashed var(--border-a);
 }
 
@@ -568,7 +580,7 @@ a {
     width: 50px;
     display: flex;
     align-items: flex-start;
-    color: var(--text-b); 
+    color: var(--text-b);
     height: inherit;
 }
 
