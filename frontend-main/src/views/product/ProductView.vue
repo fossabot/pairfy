@@ -43,6 +43,9 @@ import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { onBeforeUnmount, ref, watch } from "vue";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
 
 const { setProductData, getProductData } = productAPI();
 
