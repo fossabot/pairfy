@@ -96,9 +96,9 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Fund Insurance</span>
+                            <span>Protection</span>
 
-                            <span>100%</span>
+                            <span>Yes</span>
                         </div>
 
                         <div class="dialog-values flex">
@@ -156,7 +156,7 @@
         </div>
 
         <div class="card-full flex green">
-            <span>free & protected</span>
+            <span>free shipping</span>
             <i class="pi pi-truck" />
             <i class="pi pi-bolt green" />
             <span class="full">FULL</span>
@@ -189,6 +189,15 @@
 
             <Button label="Buy Now" fluid @click="onBuyProduct()" style="color: var(--text-w);" />
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
+        </div>
+
+        <div class="card-term flex">
+            <div class="card-term-icon">
+                <i class="pi pi-shield" />
+            </div>
+            <div class="card-term-box">
+                <span class="blue">Purchase Protection.</span> Receive the product you expected or get your money back.
+            </div>
         </div>
     </div>
 </template>
@@ -410,8 +419,8 @@ a {
     text-transform: capitalize;
 }
 
-.card-full{
-    font-weight: 600;
+.card-full {
+    font-weight: 500;
     text-transform: capitalize;
     margin-bottom: 1rem;
     font-size: var(--text-size-1);
@@ -547,5 +556,25 @@ a {
     font-size: var(--text-size-3);
     margin-left: 1rem;
     color: var(--text-b);
+}
+
+.card-term {
+    margin-top: 1rem;
+    height: 80px;
+    box-sizing: border-box;
+}
+
+.card-term-icon {
+    width: 50px;
+    display: flex;
+    align-items: flex-start;
+    color: var(--text-b); 
+    height: inherit;
+}
+
+.card-term-box {
+    font-size: var(--text-size-0);
+    color: var(--text-b);
+    height: inherit;
 }
 </style>
