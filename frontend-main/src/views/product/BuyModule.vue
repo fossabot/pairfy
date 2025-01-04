@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                 Shipping address
+                                Package Destination #1
                             </div>
 
                             <div class="dialog-country flex">
@@ -18,30 +18,29 @@
                                     :class="`flag flag-${getLocationData?.country.toLowerCase()}`" />
 
                                 <span>{{ getLocationData?.name }}, {{ getLocationData?.country }}</span>
-
                             </div>
 
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="username" v-model="orderForm.address" fluid placeholder="" />
+                                    <InputText id="city" v-model="orderForm.city" fluid placeholder="" />
 
-                                    <label for="username">City</label>
+                                    <label for="city">City</label>
                                 </IftaLabel>
                             </div>
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="username" v-model="orderForm.address" fluid placeholder="" />
+                                    <InputText id="address" v-model="orderForm.address" fluid placeholder="" />
 
-                                    <label for="username">Address</label>
+                                    <label for="address">Address</label>
                                 </IftaLabel>
                             </div>
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="usernamex" v-model="orderForm.receiver" fluid />
-                                    <label for="usernamex">Receiver Name</label>
+                                    <InputText id="name" v-model="orderForm.receiver" fluid />
+                                    <label for="name">Receiver Name</label>
                                 </IftaLabel>
                             </div>
 
@@ -51,18 +50,21 @@
                                     <label for="postal">ZIP/Postal</label>
                                 </IftaLabel>
                             </div>
+
+
+                            <div class="dialog-message">
+                                <Message severity="secondary">
+                                    Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA /
+                                    PGP.
+
+                                    <a href="https://www.lace.io/bugbountyprogram" target="_blank"
+                                        rel="noopener noreferrer">
+                                        Read more about 1M USD Lace wallet challenge with PGP encryptation.
+                                    </a>
+                                </Message>
+                            </div>
                         </div>
 
-                        <div class="dialog-message">
-                            <Message severity="secondary">
-                                Data is encrypted and decrypted end-to-end for shipping using AES256-4096 / RSA / PGP.
-
-                                <a href="https://www.lace.io/bugbountyprogram" target="_blank"
-                                    rel="noopener noreferrer">
-                                    Read more about 1M USD Lace wallet challenge with PGP encryptation.
-                                </a>
-                            </Message>
-                        </div>
                         <Divider />
 
                         <div class="dialog-row">
@@ -141,17 +143,14 @@
             <div class="reviews">250 reviews</div>
         </div>
 
-        <div class="card-legend green">
-            Free shipping
+        <div class="card-full flex green">
+            <span>free & protected</span>
             <i class="pi pi-truck" />
-        </div>
-
-        <div class="card-legend green">
-            <span>protected purchase</span>
             <i class="pi pi-bolt green" />
+            <span class="full">FULL</span>
         </div>
 
-        <div class="card-legend">
+        <div class="card-legend flex">
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
 
@@ -208,9 +207,10 @@ getArrivalDate({
 })
 
 const orderForm = ref({
+    city: getLocationData.value?.city || null,
     address: null,
     receiver: null,
-    postal: null
+    postal: getLocationData.value?.postal || null
 });
 
 const selectedQuantity = ref(1);
@@ -373,7 +373,7 @@ const showError = (content) => {
 
 <style lang="css" scoped>
 a {
-    font-weight: 500 !important;
+    font-weight: 600;
 }
 
 .card {
@@ -396,14 +396,27 @@ a {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
-    display: flex;
-    align-items: center;
 }
 
-.card-legend i {
-    margin-left: 0.5rem;
+.card-full{
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-bottom: 1rem;
+    font-size: var(--text-size-1);
 }
 
+.card-full i {
+    margin: 0.25rem;
+}
+
+.card-full span {
+    margin-right: 0.5rem;
+}
+
+.full {
+    font-weight: 700;
+    font-style: italic;
+}
 
 .card-rating {
     margin-bottom: 1rem;
