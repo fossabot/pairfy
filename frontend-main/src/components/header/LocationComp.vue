@@ -132,9 +132,7 @@ const onSaveLocation = () => {
 
     dialogVisible.value = false
 
-    console.log(scheme.country, currentRoute.params.country)
-
-    if (scheme.country === currentRoute.params.country) {
+    if (scheme.country.toLowerCase() === currentRoute.params.country) {
         location.reload()
     } else {
         router.push({

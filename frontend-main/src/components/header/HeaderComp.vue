@@ -73,9 +73,7 @@ const watchRoute = watch(
         }
 
         if (typeof n === 'string' && typeof o === 'string') {
-            if (n !== o) {
-                return location.reload()
-            }
+            return location.reload()
         }
 
     },

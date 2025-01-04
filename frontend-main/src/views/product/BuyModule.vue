@@ -451,7 +451,7 @@ a {
 
 .grid-item.right {
     padding: 1rem;
-    border-left: 2px dashed var(--border-a);
+    border-left: 1px dashed var(--border-a);
 }
 
 .dialog {
