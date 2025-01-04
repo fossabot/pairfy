@@ -134,7 +134,7 @@
         </div>
 
         <div class="card-legend" :class="{ red: 0, }">
-            {{ getStockLabel(15) }}
+            <span style="font-weight: 600;">{{ getStockLabel(15) }}</span>
         </div>
 
         <div class="card-rating flex">
@@ -251,7 +251,7 @@ const computedTotalFiat = computed(() => {
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "In Stock" : "Out Stock";
+    return readyStock > 0 ? "Product In Stock" : "Out Stock";
 }
 
 const toggleDialog = ref(true);
