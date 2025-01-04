@@ -186,7 +186,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 2rem;
     background: var(--background-a);
 }
 
