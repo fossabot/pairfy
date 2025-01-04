@@ -161,7 +161,7 @@ onBeforeUnmount(() => unwatchGetProduct())
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-top: 2rem;
     max-width: 1600px;
     width: 100%;
     height: auto;

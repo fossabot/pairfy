@@ -173,7 +173,6 @@ section {
 }
 
 .connect-wallet {
-    background: var(--text-a);
     border-radius: 20px;
     height: 42px;
     padding: 0.6rem 1rem;
@@ -181,6 +180,8 @@ section {
     font-weight: 600;
     font-size: var(--text-size-1);
     cursor: pointer;
-    color: inherit;
+    border: 1px solid var(--text-a);
+    background: transparent;
+    color: var(--text-a);
 }
 </style>
