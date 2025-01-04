@@ -473,7 +473,7 @@ a {
 
 .dialog-title {
     font-weight: 600;
-    line-height: 2rem;
+    line-height: 2.5rem;
     font-size: var(--text-size-3);
 }
 
