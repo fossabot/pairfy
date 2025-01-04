@@ -168,7 +168,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     position: relative;
     z-index: 10;
     overflow: hidden;
-    background: var(--background-a);
+
 }
 
 .card-header {
@@ -187,6 +187,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     box-sizing: border-box;
     border-radius: 8px;
     padding: 1.5rem;
+    background: var(--background-a);
 }
 
 .card-left {

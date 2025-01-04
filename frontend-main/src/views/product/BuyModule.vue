@@ -415,7 +415,7 @@ a {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    border-radius: 12px;
+    border-radius: 8px;
     width: 285px;
     margin-left: auto;
 }
