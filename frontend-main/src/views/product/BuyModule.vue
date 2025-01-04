@@ -111,31 +111,31 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Protected:</span>
+                            <span>Protected</span>
 
                             <span>Yes</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Shipping Cost:</span>
+                            <span>Shipping Cost</span>
 
                             <span>Free</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Fiat Price:</span>
+                            <span>Total Fiat Price</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange Rate:</span>
+                            <span>Exchange Rate</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Quantity:</span>
+                            <span>Quantity</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
