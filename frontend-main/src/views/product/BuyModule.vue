@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Package Destination
+                                Destination #1
                             </div>
 
                             <div class="dialog-country flex">

@@ -18,7 +18,7 @@
             </div>
             <div class="card">
                 <div class="card-left">
-                    <ProductCard/>
+                    <ProductCard />
                     <Divider />
                     <DescriptionModule />
                 </div>
@@ -145,6 +145,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     align-items: center;
     justify-content: center;
     border-top: 1px solid var(--border-a);
+    background: var(--background-b);
 }
 
 .mask {
@@ -174,7 +175,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     padding: 1rem;
     display: flex;
     align-items: center;
-    background: linear-gradient(96.76deg, color-mix(in srgb,var(--yellow-a), transparent 80%), color-mix(in srgb,var(--yellow-a), transparent 90%)); 
+    background: linear-gradient(96.76deg, color-mix(in srgb, var(--yellow-a), transparent 80%), color-mix(in srgb, var(--yellow-a), transparent 90%));
     background: var(--background-b);
     font-size: var(--text-size-1);
 
@@ -183,8 +184,9 @@ onBeforeUnmount(() => unwatchGetProduct())
 .card {
     display: grid;
     grid-template-columns: 80% 20%;
-    margin-top: 2rem;
     box-sizing: border-box;
+    border-radius: 8px;
+    padding: 1.5rem;
 }
 
 .card-left {
