@@ -188,6 +188,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     border-radius: 8px;
     padding: 2rem;
     background: var(--background-a);
+    border: 1px solid var(--border-a);
 }
 
 .card-left {
