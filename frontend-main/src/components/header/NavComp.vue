@@ -10,15 +10,14 @@
             <span>New Discounts</span>
             <span>Earn Rewards</span>
             <span>Sell Products</span>
-            <span>Help Center</span>
+            <span>Support</span>
             <span>
                 <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
                     rel="noopener noreferrer">Documentation</a>
             </span>
             <span>Electronics</span>
-            <span>Best Sellers</span>
             <span>Garden</span>
-            <span>NFT</span>
+            <span>Best Sellers</span>
             <span>{{ getADAprice }} ADA</span>
         </div>
 </template>
