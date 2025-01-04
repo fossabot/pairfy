@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Package Destination #1
+                                1. Package Destination
                             </div>
 
                             <div class="dialog-country flex">
@@ -69,7 +69,7 @@
 
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Payment method
+                                2. Payment method
                             </div>
 
                             <div class="payments">
@@ -96,25 +96,37 @@
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Fiat Price:</span>
+                            <span>Price Insurance</span>
+
+                            <span>100%</span>
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Shipping Cost</span>
+
+                            <span>Free</span>
+                        </div>
+
+                        <div class="dialog-values flex">
+                            <span>Total Fiat Price</span>
 
                             <span>{{ computedTotalFiat }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Exchange Rate:</span>
+                            <span>Exchange Rate</span>
 
                             <span>{{ getADAprice }} USD</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Product Units:</span>
+                            <span>Quantity</span>
 
                             <span>{{ selectedQuantity }}</span>
                         </div>
 
                         <div class="dialog-values flex">
-                            <span>Total Asset:</span>
+                            <span>Total Asset</span>
                             <span>{{ computedTotalPrice }} ADA</span>
                         </div>
 
@@ -436,8 +448,8 @@ a {
 
 .dialog-values {
     justify-content: space-between;
-    font-weight: 400;
-    font-size: var(--text-size-1);
+    font-weight: 600;
+    font-size: var(--text-size-0);
     margin-top: 1rem;
 }
 
@@ -463,7 +475,7 @@ a {
 }
 
 .grid-item.right {
-    padding: 1rem;
+    padding: 0 1rem;
     border-left: 1px dashed var(--border-a);
 }
 
