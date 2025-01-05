@@ -1,7 +1,7 @@
 <template>
-    <div class="band">
+    <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
         <div class="band-track" :style="trackStyle">
-            <div class="band-item" v-for="(item,index) in imageList" :key="index"
+            <div class="band-item" v-for="(item, index) in imageList" :key="index"
                 :style="{ backgroundImage: `url(${item.src})` }">
             </div>
         </div>
@@ -11,11 +11,16 @@
         <div class="band-arrow right" @click="nextItem">
             <i class="pi pi-angle-right" />
         </div>
+
+        <div class="band-dots">
+            <button v-for="(image, index) in imageList" :key="index" :class="{ active: currentIndex === index }"
+                @click="goItem(index)"></button>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import imageUrl from '@/assets/banner.png';
 
 const imageList = ref([
@@ -32,6 +37,8 @@ const imageList = ref([
 
 const currentIndex = ref(0);
 
+const interval = ref(null);
+
 const trackStyle = computed(() => ({
     transform: `translateX(-${currentIndex.value * 100}%)`,
     transition: 'transform 0.5s ease'
@@ -46,6 +53,26 @@ const prevItem = () => {
         (currentIndex.value - 1 + imageList.value.length) % imageList.value.length;
 };
 
+const goItem = (index) => {
+    currentIndex.value = index;
+};
+
+const startBand = () => {
+    interval.value = setInterval(nextItem, 5000);
+};
+
+const pauseBand = () => {
+    clearInterval(interval.value);
+};
+
+onMounted(() => {
+    startBand();
+});
+
+onBeforeUnmount(() => {
+    clearInterval(interval.value);
+});
+
 </script>
 
 <style lang="css" scoped>
@@ -58,7 +85,7 @@ const prevItem = () => {
     display: flex;
 }
 
-.band-track{
+.band-track {
     display: flex;
     width: inherit;
     height: inherit;
@@ -85,6 +112,10 @@ const prevItem = () => {
     cursor: pointer;
 }
 
+.band-arrow:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
 .band-arrow.left {
     left: 1rem;
 }
@@ -96,5 +127,26 @@ const prevItem = () => {
 .band-arrow i {
     font-size: var(--text-size-4);
     color: var(--text-w);
+}
+
+.band-dots {
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.band-dots button {
+    width: 10px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.band-dots button.active {
+    background: #ffffff;
 }
 </style>
