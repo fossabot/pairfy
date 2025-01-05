@@ -29,7 +29,7 @@
      showgrid="false"
      inkscape:zoom="8.0000001"
      inkscape:cx="57.374999"
-     inkscape:cy="9.2499999"
+     inkscape:cy="8.7499999"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="0"
@@ -119,12 +119,8 @@
          sodipodi:role="line"
          x="37.18399"
          y="30.487082"
-         style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.3333px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';word-spacing:0px;fill:#0f1111;fill-opacity:1;stroke:#0f1111;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5"><tspan
-           style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic'"
-           id="tspan33925"><tspan
-             style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Manrope;-inkscape-font-specification:'Manrope Bold Italic'"
-             id="tspan44079">adamall</tspan></tspan></tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';word-spacing:0px;fill:#0f1111;fill-opacity:1;stroke:#0f1111;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5">αdαmαll</tspan></text>
     <rect
        style="fill:#10b981;fill-opacity:1;stroke:none;stroke-width:0.167649;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
        id="rect1078"
