@@ -73,7 +73,7 @@
 
   --p-dialog-border-radius: 16px !important; 
 
-  --p-button-border-radius: 6px !important;
+  --p-button-border-radius: 20px !important;
 
   --p-rating-gap: 2px !important;
 
@@ -96,7 +96,7 @@
 
 :root {
   --primary-a: #0046be;
-  --primary-b: var(--red-a);
+  --primary-b: var(--green-a);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);

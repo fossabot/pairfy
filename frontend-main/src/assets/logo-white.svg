@@ -28,8 +28,8 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="8.0000001"
-     inkscape:cx="63.749999"
-     inkscape:cy="10.75"
+     inkscape:cx="57.374999"
+     inkscape:cy="9.2499999"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="0"
@@ -109,20 +109,24 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:21.3333px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-0.739659px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       x="35.18399"
+       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.3333px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.739659px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="37.18399"
        y="30.487082"
        id="text2-3-3"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"><tspan
          sodipodi:role="line"
-         x="35.18399"
+         x="37.18399"
          y="30.487082"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';word-spacing:0px;fill:#ff385c;fill-opacity:1;stroke:#ff385c;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5">adamall</tspan></text>
+         style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:21.3333px;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';word-spacing:0px;fill:#0f1111;fill-opacity:1;stroke:#0f1111;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5"><tspan
+           style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic'"
+           id="tspan33925"><tspan
+             style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Manrope;-inkscape-font-specification:'Manrope Bold Italic'"
+             id="tspan44079">adamall</tspan></tspan></tspan></text>
     <rect
-       style="fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.167649;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
+       style="fill:#10b981;fill-opacity:1;stroke:none;stroke-width:0.167649;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
        id="rect1078"
        width="30"
        height="30"
@@ -133,7 +137,7 @@
     <g
        id="g1595"
        transform="matrix(0.76679566,0,0,0.76679566,4.286,6.8309097)"
-       style="fill:#ffffff">
+       style="fill:#ffffff;fill-opacity:1">
       <path
          style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.328836;stroke-opacity:1"
          d="M 27.999999,31.498731 C 26.559107,27.747103 26.477409,25.184232 26.528327,22.345425 26.579202,19.42161 25.793102,17.099838 23.339929,16.2344 13.91851,15.062084 7.211959,17.004969 0,11.936805 c 0,0 1.2694216,3.665543 6.227754,5.706631 5.262201,1.91196 12.37308,2.284501 15.449008,3.030084 1.716721,0.433417 1.76617,1.780611 2.143863,3.54772 0.847708,3.921652 1.819736,6.448285 4.179374,7.277491"

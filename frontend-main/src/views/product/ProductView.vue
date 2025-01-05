@@ -3,15 +3,15 @@
         <div class="container">
             <div class="card-header">
                 <span @click="backRoute">Back</span>
-                <div class="flex" style="margin: 0 0.5rem;">
+                <div class="flex">
                     <i class="pi pi-angle-right" />
                 </div>
                 <span>Home</span>
-                <div class="flex" style="margin: 0 0.5rem;">
+                <div class="flex">
                     <i class="pi pi-angle-right" />
                 </div>
                 <span>Categories</span>
-                <div class="flex" style="margin: 0 0.5rem;">
+                <div class="flex">
                     <i class="pi pi-angle-right" />
                 </div>
                 <span>{{ getProductData?.category }}</span>
@@ -161,7 +161,7 @@ onBeforeUnmount(() => unwatchGetProduct())
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-top: 2rem;
     max-width: 1600px;
     width: 100%;
     height: auto;
@@ -175,21 +175,24 @@ onBeforeUnmount(() => unwatchGetProduct())
     padding: 1rem;
     display: flex;
     align-items: center;
-    background: linear-gradient(96.76deg, color-mix(in srgb, var(--yellow-a), transparent 80%), color-mix(in srgb, var(--yellow-a), transparent 90%));
-    background: var(--background-b);
     font-size: var(--text-size-1);
-    color: var(--text-b);
     text-transform: capitalize;
+    border-bottom: none;
+}
+
+.card-header div{
+    margin: 0 0.5rem;
 }
 
 .card {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
-    border-radius: 8px;
     padding: 2rem;
     background: var(--background-a);
     border: 1px solid var(--border-a);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
 }
 
 .card-left {

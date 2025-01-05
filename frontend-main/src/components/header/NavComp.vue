@@ -1,13 +1,15 @@
 <template>
         <div class="nav flex">
             <div class="categories flex">
-                <div class="categories-button flex"><i class="pi pi-bars" /></div>
+                <div class="categories-button flex">
+                    <i class="pi pi-bars" />
+                </div>
                 <span>All Categories</span>
                 <div class="arrow flex">
                     <i class="pi pi-angle-down" />
                 </div>
             </div>
-            <span>New Discounts</span>
+            <span>Discounts</span>
             <span>Earn Rewards</span>
             <span>Sell Products</span>
             <span>Support</span>
@@ -18,7 +20,7 @@
             <span>Electronics</span>
             <span>Garden</span>
             <span>Best Sellers</span>
-            <span>{{ getADAprice }} ADA</span>
+            <span class="ADA">ADAUSD {{ getADAprice }} </span>
         </div>
 </template>
 
@@ -43,19 +45,20 @@ const { getADAprice } = headerAPI();
     font-weight: 400;
 }
 
-.categories {
+.categories, .ADA {
     background: var(--background-b);
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;
 }
 
-.categories-button{
-    margin-right: 0.5rem;
+.categories span{
+    margin: 0 1rem;
 }
 
 .ADA {
     white-space: nowrap;
     font-weight: 500;
 }
+
 </style>
