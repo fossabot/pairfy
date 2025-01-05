@@ -161,7 +161,7 @@ onBeforeUnmount(() => unwatchGetProduct())
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 2rem;
+    margin-top: 1rem;
     max-width: 1600px;
     width: 100%;
     height: auto;
@@ -178,7 +178,8 @@ onBeforeUnmount(() => unwatchGetProduct())
     background: linear-gradient(96.76deg, color-mix(in srgb, var(--yellow-a), transparent 80%), color-mix(in srgb, var(--yellow-a), transparent 90%));
     background: var(--background-b);
     font-size: var(--text-size-1);
-
+    color: var(--text-b);
+    text-transform: capitalize;
 }
 
 .card {
