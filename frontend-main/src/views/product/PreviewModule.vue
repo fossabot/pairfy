@@ -28,13 +28,14 @@
             </div>
 
             <div class="preview-discount" v-if="getProductData.discount">
+                <Tag severity="contrast" :value="`- ${getProductData.discount_value}%`" />
 
-                <Tag severity="secondary">
+
+                <Tag severity="secondary" style="margin: 0 1rem;">
                     <span style="text-decoration: line-through;">${{ getProductData.price }}</span>
                 </Tag>
 
-                <Tag :value="`- ${getProductData.discount_value}%`" style="margin: 0 1rem;" />
-
+            
                 <Tag :value="`${convertUSDToADA(
                     applyDiscount(getProductData.discount,
                         getProductData.price,

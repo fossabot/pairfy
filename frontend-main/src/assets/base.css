@@ -35,9 +35,9 @@
 
   --section-gap: 160px;
 
-  --p-tag-border-radius: 0px !important;
+  --p-tag-border-radius: 6px !important;
 
-  --p-tag-font-weight: initial !important;
+  --p-tag-font-weight: 500 !important;
 
   --p-badge-min-width: 1rem !important;
 
@@ -55,7 +55,7 @@
 
   --p-divider-horizontal-margin: 1rem 0 !important;
 
-  --p-tag-font-size: var(--text-size-2) !important;
+  --p-tag-font-size: var(--text-size-1) !important;
 
   --p-button-primary-color: var(--text-a) !important;
 
@@ -69,11 +69,11 @@
 
   --p-dialog-color: var(--text-b) !important;
 
-  --p-tag-primary-background: var(--red-a) !important;
+  --p-tag-primary-background: var(--primary-b) !important;
 
   --p-dialog-border-radius: 16px !important; 
 
-  --p-button-border-radius: 20px !important;
+  --p-button-border-radius: 6px !important;
 
   --p-rating-gap: 2px !important;
 
@@ -96,7 +96,7 @@
 
 :root {
   --primary-a: #0046be;
-  --primary-b: var(--green-a);
+  --primary-b: var(--blue-a);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);

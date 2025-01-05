@@ -145,7 +145,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     align-items: center;
     justify-content: center;
     border-top: 1px solid var(--border-a);
-    background: var(--background-b);
+    background: var(--background-a);
 }
 
 .mask {
@@ -178,21 +178,19 @@ onBeforeUnmount(() => unwatchGetProduct())
     font-size: var(--text-size-1);
     text-transform: capitalize;
     border-bottom: none;
+    background: var(--background-b);
 }
 
 .card-header div{
     margin: 0 0.5rem;
+    color: var(--text-b);
 }
 
 .card {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
-    padding: 2rem;
-    background: var(--background-a);
-    border: 1px solid var(--border-a);
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    margin-top: 1rem;
 }
 
 .card-left {

@@ -122,6 +122,7 @@ header {
     width: 100%;
     font-size: var(--text-size-1);
     color: var(--text-w);
+    background: var(--yellow-b);
 }
 
 section {
