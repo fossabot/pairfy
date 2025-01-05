@@ -39,10 +39,9 @@ const { getADAprice } = headerAPI();
 }
 
 .nav span {
- 
     font-size: var(--text-size-1);
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .categories, .ADA {
