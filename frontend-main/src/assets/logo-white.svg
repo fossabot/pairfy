@@ -27,11 +27,11 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="8.0000001"
-     inkscape:cx="57.062499"
-     inkscape:cy="8.2499999"
-     inkscape:window-width="1489"
-     inkscape:window-height="778"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="56.499999"
+     inkscape:cy="17.5"
+     inkscape:window-width="1442"
+     inkscape:window-height="900"
      inkscape:window-x="93"
      inkscape:window-y="101"
      inkscape:window-maximized="0"
@@ -120,7 +120,7 @@
          x="37.18399"
          y="30.487082"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.3333px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';word-spacing:0px;fill:#0f1111;fill-opacity:1;stroke:#0f1111;stroke-width:0.2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5">adangel</tspan></text>
+         id="tspan541421-5-5">adamall</tspan></text>
     <rect
        style="fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.167649;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke markers fill"
        id="rect1078"
@@ -129,7 +129,7 @@
        x="0"
        y="8.5067091"
        rx="30"
-       ry="30" />
+       ry="8" />
     <g
        id="g1595"
        transform="matrix(0.76679566,0,0,0.76679566,4.286,6.8309097)"
