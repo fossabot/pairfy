@@ -2,7 +2,7 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem' }" :draggable="false"
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '60rem' }" :draggable="false"
             dismissableMask>
 
             <div class="dialog">
@@ -543,7 +543,7 @@ a {
 
 .dialog-title {
     font-weight: 600;
-    line-height: 2.5rem;
+    line-height: 2rem;
     font-size: var(--text-size-3);
 }
 
