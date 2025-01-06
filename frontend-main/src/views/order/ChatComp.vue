@@ -390,18 +390,20 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
     transition: 0.2s;
     max-height: 100px;
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--border-a);
     border-radius: 8px;
     resize: none;
     width: inherit;
+    background: var(--background-b);
 }
 
 .chat-input:focus-within {
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--text-a);
 }
 
-.chat-input textarea::placeholder {
+.chat-input::placeholder {
     color: var(--text-b);
+    opacity: 0.5;
 }
 
 .chat-send {

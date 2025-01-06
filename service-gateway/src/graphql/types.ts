@@ -163,6 +163,7 @@ type DispatchProductResponse {
 input CreateOrderInput {
   product_id: String!
   product_units: Int!
+  data: String!
 } 
 
 input ReturnFundsInput {

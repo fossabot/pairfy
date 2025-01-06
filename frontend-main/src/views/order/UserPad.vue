@@ -1,10 +1,10 @@
 <template>
     <div class="pad">
-        <Button size="small" :disabled="disableReceived">
+        <Button :disabled="disableReceived" style="color: var(--text-w)">
             Product Received
         </Button>
 
-        <Button v-if="!currentState || currentState === 0" type="button" size="small" :disabled="disableReturn"
+        <Button v-if="!currentState || currentState === 0" type="button" :disabled="disableReturn"
             @click="onReturnFunds" variant="text">
             <span>Return Funds</span>
 
@@ -13,7 +13,7 @@
             </span>
         </Button>
 
-        <Button v-if="currentState === 1" type="button" size="small" :disabled="disableCancel" @click="onReturnFunds"
+        <Button v-if="currentState === 1" type="button"  :disabled="disableCancel" @click="onReturnFunds"
             variant="text">
             <span>Cancel Order</span>
 
@@ -22,7 +22,7 @@
             </span>
         </Button>
 
-        <Button type="button" size="small" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
+        <Button type="button"  label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
             :loading="false" />
 
     </div>
@@ -167,5 +167,6 @@ onUnmounted(() => {
 .pad button {
     margin-right: 1rem;
     font-weight: 600;
+    font-size: var(--text-size-1);
 }
 </style>

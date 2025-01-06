@@ -60,12 +60,17 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
       version: PGPVersion,
     };
 
-    const encrypted = await encryptMetadata(JSON.stringify(shippingData), PGPVersion);
+    const encrypted = await encryptMetadata(
+      JSON.stringify(shippingData),
+      PGPVersion
+    );
 
     const metadata = {
       version: PGPVersion,
       msg: chunkMetadata(encrypted, 64),
     };
+
+    //////////////////////////////////////////////
 
     const BUILDER = await shippingTransactionBuilder(
       SELLER.address,

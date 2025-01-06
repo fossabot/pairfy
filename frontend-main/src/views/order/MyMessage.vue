@@ -31,7 +31,7 @@ const props = defineProps(['data'])
     padding: 1rem;
     border-radius: 12px;
     border-bottom-right-radius: 0px;
-    background: var(--primary-b);
+    background: var(--primary-a);
     position: relative;
     box-sizing: border-box;
     color: var(--text-w);

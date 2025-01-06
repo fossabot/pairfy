@@ -1,4 +1,5 @@
 import { getContractCollateral, getContractPrice } from "../../lib/index.js";
+import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
 import { UserToken } from "../../middleware/agent.js";
 import { database } from "../../db/client.js";
@@ -64,6 +65,21 @@ const createOrder = async (_: any, args: any, context: any) => {
     }
 
     await connection.beginTransaction();
+    ///////////////////////////////////////////////////
+
+    const PGPVersion = "1.0";
+
+    const externalData = {
+      data: params.data,
+      version: PGPVersion,
+    };
+
+    const encrypted = await encryptMetadata(JSON.stringify(externalData), PGPVersion);
+
+    const metadata = {
+      version: PGPVersion,
+      msg: chunkMetadata(encrypted, 64),
+    };
 
     ///////////////////////////////////////////////////
 
@@ -91,14 +107,14 @@ const createOrder = async (_: any, args: any, context: any) => {
       ADAUSD
     );
 
-
     //////////////////////////////////////////////
 
     const BUILDER = await pendingTransactionBuilder(
       USER.address,
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
-      BigInt(contractCollateral)
+      BigInt(contractCollateral),
+      metadata
     );
 
     //////////////////////////////////////////////
@@ -130,7 +146,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       product_discount_value: RESULT.product_discount_value,
       watch_until: BUILDER.watchUntil,
       pending_until: BUILDER.pendingUntil,
-      shipping_until: BUILDER.shippingUntil
+      shipping_until: BUILDER.shippingUntil,
     };
 
     console.log(orderData);
@@ -167,7 +183,5 @@ const createOrder = async (_: any, args: any, context: any) => {
     }
   }
 };
-
-
 
 export { createOrder };

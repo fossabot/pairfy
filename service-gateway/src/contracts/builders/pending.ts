@@ -19,7 +19,8 @@ async function pendingTransactionBuilder(
   externalWalletAddress: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
-  contractCollateral: bigint
+  contractCollateral: bigint,
+  metadata: any
 ) {
   //////////////////////////////////////////////////
 
@@ -152,6 +153,7 @@ async function pendingTransactionBuilder(
     .attach.MintingPolicy(threadTokenScript)
     .addSigner(externalWalletAddress)
     .validTo(Number(validToMs))
+    .attachMetadata(77, metadata)
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: txCollateral,
@@ -184,11 +186,14 @@ async function main() {
 
   const contractCollateral = 10 * 1_000_000;
 
+  const metadata = { msg: "what" };
+
   const BUILDER = await pendingTransactionBuilder(
     externalWalletAddress,
     sellerPubKeyHash,
     BigInt(contractPrice),
-    BigInt(contractCollateral)
+    BigInt(contractCollateral),
+    metadata
   );
 
   console.log("--------------------------------------------------------");

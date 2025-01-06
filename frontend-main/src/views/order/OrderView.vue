@@ -773,7 +773,7 @@ onUnmounted(() => {
 }
 
 .nav-item .nav-item-border.selected {
-    background: var(--primary-b);
+    background: var(--primary-a);
 }
 
 
@@ -797,7 +797,7 @@ onUnmounted(() => {
 }
 
 .summary-title span {
-    color: var(--primary-b);
+    color: var(--primary-a);
     font-weight: 700;
     margin-left: 0.5rem
 }
@@ -857,9 +857,9 @@ onUnmounted(() => {
 }
 
 .timeline-bar-line {
-    width: 3px;
+    width: 2px;
     height: 100%;
-    background: var(--background-b);
+    background: var(--primary-a);
 }
 
 .timeline-bar-line.disabled {
