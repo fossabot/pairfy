@@ -860,7 +860,7 @@ onUnmounted(() => {
 .timeline-bar-line {
     width: 2px;
     height: 100%;
-    background: var(--primary-a);
+    background: var(--text-a);
 }
 
 .timeline-bar-line.disabled {
