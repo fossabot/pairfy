@@ -2,7 +2,7 @@
     <div class="four">
         <div class="subcard left">
             <div class="title left">
-                Top sellers items
+                Best sellers items
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -10,7 +10,7 @@
 
         <div class="subcard right">
             <div class="title right">
-                Best sellers items
+                
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -113,11 +113,11 @@ const itemList = ref([
 }
 
 .subcard.left {
-    background-image: linear-gradient(134deg, var(--soft-red-a), var(--soft-yellow-b) 80%);
+    background-image: linear-gradient(134deg, var(--soft-red-a), var(--soft-yellow-a) 80%);
 }
 
 .subcard.right {
-    background-image: linear-gradient(134deg, var(--soft-yellow-b), #ffffff 80%);
+    background-image: linear-gradient(134deg, var(--soft-yellow-a), #ffffff 80%);
 }
 
 .minicard {
