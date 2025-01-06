@@ -1,12 +1,13 @@
 <template>
   <main>
     <div class="body">
-      <div class="banner">
-        <BandComp/>
+      <div class="top">
+        <BandComp />
       </div>
       <div class="bottom">
+        <CategoryComp />
         <OneGrid />
-        <FourGrid/>
+        <FourGrid />
         <OneGrid />
       </div>
     </div>
@@ -14,10 +15,10 @@
 </template>
 
 <script setup>
-import OneGrid from '@/views/home/OneGrid.vue' 
-import BandComp from '@/views/home/BandComp.vue' 
-import FourGrid from '@/views/home/FourGrid.vue' 
-
+import OneGrid from '@/views/home/OneGrid.vue'
+import BandComp from '@/views/home/BandComp.vue'
+import FourGrid from '@/views/home/FourGrid.vue'
+import CategoryComp from '@/views/home/CategoryComp.vue'
 
 </script>
 
@@ -30,11 +31,11 @@ main {
   border-top: 1px solid var(--border-a);
 }
 
-.body{
+.body {
   padding: 1rem;
 }
 
-.banner {
+.top {
   min-height: 300px;
   justify-content: center;
   display: flex;
@@ -47,6 +48,6 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0) 30%); 
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0) 30%);
 }
 </style>
