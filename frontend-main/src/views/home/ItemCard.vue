@@ -81,7 +81,7 @@ function formatPriceToUSD(amount) {
 
 .dollar {
     font-size: var(--text-size-1);
-    margin-right: 1px;
+    margin-right: 2px;
 }
 
 .tag{
