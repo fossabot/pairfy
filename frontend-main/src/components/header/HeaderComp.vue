@@ -50,10 +50,10 @@ const route = useRoute()
 
 const router = useRouter()
 
-
 const watchRoute = watch(
     () => route.params.country,
     (n, o) => {
+        let currentRoute = router.currentRoute.value;
 
         if (n === undefined && o === undefined) return;
 
@@ -65,8 +65,12 @@ const watchRoute = watch(
 
                 if (parsed.country.toLowerCase() !== n) {
                     return router.push({
-                        name: 'home',
-                        params: { country: parsed.country.toLowerCase() }
+                        name: currentRoute.name,
+                        params: { 
+                            ...currentRoute.params,
+                            country: parsed.country.toLowerCase()
+                        },
+                        query: currentRoute.query
                     });
                 }
             }
