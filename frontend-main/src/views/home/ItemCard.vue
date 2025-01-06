@@ -9,7 +9,7 @@
             </span>
 
             <div class="tag" v-if="props.content.discount">
-                <span>-{{ props.content.discount_value }}%</span>
+                <span>- {{ props.content.discount_value }}%</span>
             </div>
 
             <div class="shipping flex green">
@@ -60,9 +60,9 @@ function formatPriceToUSD(amount) {
 }
 
 .price {
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-size-3);
-
+    margin-top: 0.25rem;
 }
 
 .full {
@@ -71,8 +71,8 @@ function formatPriceToUSD(amount) {
 }
 
 .shipping {
-    font-weight: 600;
-    margin-top: 0.5rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
 }
 
 .shipping i {

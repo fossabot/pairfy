@@ -30,7 +30,7 @@ const itemList = ref([
     image: "https://ae01.alicdn.com/kf/S84119b3c3608458384008cd3cc0f75a5k.jpg_760x760q75.jpg",
     price: 15,
     alt: "image-alt",
-    discount: true,
+    discount: false,
     discount_value: 11
   },
   {
@@ -46,7 +46,7 @@ const itemList = ref([
     image: "https://ae01.alicdn.com/kf/S3a669ddd04d64ed5b8bf5ce64da38d447.jpg_760x760q75.jpg",
     price: 31,
     alt: "image-alt",
-    discount: true,
+    discount: false,
     discount_value: 5
   },
   {
@@ -70,7 +70,7 @@ const itemList = ref([
     image: "https://ae01.alicdn.com/kf/S5ac929e1a8f243f09949516dbc5b2b89Y.jpg_760x760q75.jpg",
     price: 37,
     alt: "image-alt",
-    discount: true,
+    discount: false,
     discount_value: 6
   },
   {
