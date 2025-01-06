@@ -16,20 +16,11 @@
                 </div>
                 <span>{{ getProductData?.category }}</span>
             </div>
-            <div class="card">
-                <div class="card-left">
-                    <ProductCard />
-                    <Divider />
-                    <DescriptionModule />
-                </div>
-                <div class="card-right">
-                    <BuyModule />
-                </div>
-            </div>
-
-            <div class="footer">
-
-            </div>
+            <ProductCard/>
+            <Divider />
+            <MiniGrid />
+            <Divider />
+            <DescriptionModule />
         </div>
     </div>
 </template>
@@ -38,12 +29,13 @@
 import gql from 'graphql-tag';
 import productAPI from '@/views/product/api/index';
 import DescriptionModule from '@/views/product/DescriptionModule.vue';
+import MiniGrid from '@/views/product/MiniGrid.vue';
 import ProductCard from '@/views/product/ProductCard.vue';
-import BuyModule from "@/views/product/BuyModule.vue"
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { onBeforeUnmount, ref, watch } from "vue";
 import { useToast } from "primevue/usetoast";
+
 
 const toast = useToast();
 
@@ -181,31 +173,9 @@ onBeforeUnmount(() => unwatchGetProduct())
     background: var(--background-b);
 }
 
-.card-header div{
+.card-header div {
     margin: 0 0.5rem;
     color: var(--text-b);
 }
 
-.card {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    box-sizing: border-box;
-    margin-top: 1rem;
-}
-
-.card-left {
-    display: grid;
-    grid-template-rows: auto auto auto 1fr;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-}
-
-.card-right {
-    min-height: 100vh;
-}
-
-.footer {
-    height: 200px;
-    display: flex;
-}
 </style>

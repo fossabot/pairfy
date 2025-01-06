@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt">
+        <img :src="props.content.image" :alt="props.content.alt" :style="{   maxWidth: size, height: size }">
 
         <div class="body">
             <span class="title">{{ props.content.title }}</span>
@@ -24,7 +24,7 @@
 
 <script setup>
 
-const props = defineProps(['content'])
+const props = defineProps(['content', 'size'])
 
 function formatPriceToUSD(amount) {
     return new Intl.NumberFormat('en-US', {
@@ -45,8 +45,6 @@ function formatPriceToUSD(amount) {
 
 .card img {
     width: 100%;
-    max-width: 250px;
-    height: 250px;
     object-fit: contain;
     border-radius: 16px;
     background: var(--background-a);
