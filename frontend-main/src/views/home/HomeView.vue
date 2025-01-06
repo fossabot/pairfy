@@ -10,6 +10,9 @@
         <FourGrid />
         <OneGrid />
       </div>
+      <div class="footer">
+
+      </div>
     </div>
   </main>
 </template>
@@ -49,5 +52,11 @@ main {
   justify-content: center;
   align-items: center;
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0) 30%);
+}
+
+.footer {
+  height: 400px;
+  margin-top: 1rem;
+  background: var(--background-a);
 }
 </style>
