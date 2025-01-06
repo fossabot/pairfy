@@ -2,15 +2,15 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem' }"
-            :draggable="false" dismissableMask>
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem' }" :draggable="false"
+            dismissableMask>
 
             <div class="dialog">
                 <div class="grid">
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                               Destination #1
+                                Destination #1
                             </div>
 
                             <div class="dialog-country flex">
@@ -208,11 +208,12 @@
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
 
-        <div class="card-term flex">
-            <div class="card-term-icon">
+        <div class="card-subterm flex">
+            <div class="card-subterm-icon">
+                <span>✓</span>
                 <i class="pi pi-shield" />
             </div>
-            <div class="card-term-box">
+            <div class="card-subterm-box">
                 <span class="blue">Purchase Protection.</span> Receive the product you expected or get your money back.
             </div>
         </div>
@@ -606,21 +607,29 @@ a {
     color: var(--text-b);
 }
 
-.card-term {
+.card-subterm {
     margin-top: 1rem;
     height: 80px;
     box-sizing: border-box;
 }
 
-.card-term-icon {
+.card-subterm-icon {
     width: 50px;
     display: flex;
     align-items: flex-start;
     color: var(--text-b);
     height: inherit;
+    position: relative;
 }
 
-.card-term-box {
+.card-subterm-icon span {
+    position: absolute;
+    right: 13px;
+    top: -1px;
+    font-size: 10px;
+}
+
+.card-subterm-box {
     font-size: var(--text-size-0);
     color: var(--text-b);
     height: inherit;
