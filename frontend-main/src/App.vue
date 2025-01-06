@@ -69,7 +69,6 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .wrapper {
-  height: 100vh;
   display: flex;
   flex-direction: column;
   transition: all .2s ease;

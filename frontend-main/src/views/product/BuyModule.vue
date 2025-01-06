@@ -505,7 +505,7 @@ a {
 
 .dialog-values {
     justify-content: space-between;
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-size-1);
     margin-top: 1rem;
 }
