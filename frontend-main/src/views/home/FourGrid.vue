@@ -93,15 +93,14 @@ const itemList = ref([
 }
 
 .title.left{
-    color: var(--red-a);
+    color: var(--text-w);
 }
 
 .title.right{
-    color: var(--yellow-a);
+    color: var(--text-w);
 }
 
 .subcard {
-    color: var(--text-w);
     text-align: center;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
@@ -110,10 +109,12 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 16px;
+    background: var(--primary-a);
 }
 
 .subcard.left {
     background-image: linear-gradient(134deg, var(--soft-red-a), var(--soft-yellow-a) 80%);
+   
 }
 
 .subcard.right {
