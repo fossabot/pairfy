@@ -1,4 +1,7 @@
 <template>
+  <div class="title">
+    {{ props.title }}
+  </div>
   <div class="grid">
     <ItemCard v-for="item in itemList" :key="item" :content="item" size="150px" />
   </div>
@@ -7,6 +10,8 @@
 <script setup>
 import ItemCard from '@/views/home/ItemCard.vue';
 import { ref } from 'vue';
+ 
+const props = defineProps(['title'])
 
 const itemList = ref([
   {
@@ -70,6 +75,13 @@ const itemList = ref([
 </script>
 
 <style lang="css" scoped>
+.title {
+  font-size: var(--text-size-3);
+  grid-column: span 3;
+  font-weight: 700;
+  text-align: start;
+}
+
 .grid {
   padding: 1rem 0;
   max-width: 1600px;

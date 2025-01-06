@@ -18,7 +18,9 @@
             </div>
             <ProductCard/>
             <Divider />
-            <MiniGrid />
+            <MiniGrid title="Customers frequently viewed"/>
+            <Divider />
+            <MiniGrid title="Frequently purchased items with fast delivery" />
             <Divider />
             <DescriptionModule />
         </div>
