@@ -3,12 +3,14 @@
     <Toast closeIcon="pi-user" />
     <HeaderComp />
     <RouterView />
+    <FooterComp />
   </div>
 </template>
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
+import FooterComp from '@/components/FooterComp.vue';
 import { setupAudio, convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { queryClient, gatewayClient, notificationClient, chatClient } from './graphql/index.js';
 import { RouterView } from 'vue-router';
