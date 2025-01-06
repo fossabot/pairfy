@@ -620,13 +620,13 @@ a {
     color: var(--text-b);
     height: inherit;
     position: relative;
-    padding-top: 5px;
+    padding-top: 4px;
 }
 
 .card-subterm-icon span {
     position: absolute;
     right: 13px;
-    top: 4px;
+    top: 3px;
     font-size: 10px;
 }
 
