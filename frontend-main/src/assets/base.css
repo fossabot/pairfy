@@ -71,9 +71,9 @@
 
   --p-tag-primary-background: var(--primary-b) !important;
 
-  --p-dialog-border-radius: 16px !important; 
+  --p-dialog-border-radius: 12px !important; 
 
-  --p-button-border-radius: 8px !important;
+  --p-button-border-radius: 6px !important;
 
   --p-rating-gap: 2px !important;
 
