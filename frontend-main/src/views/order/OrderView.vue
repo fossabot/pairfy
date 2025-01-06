@@ -209,6 +209,7 @@
                                                             shippingData.guide }}
                                                         </div>
                                                     </span>
+                                                    <span v-else>-</span>
                                                 </div>
                                             </div>
                                         </template>
@@ -490,7 +491,7 @@ const contractCollateral = ref(0);
 
 const shippingData = ref(null);
 
-const deliveryDate = ref('');
+const deliveryDate = ref('-');
 
 const isFinished = ref(false);
 

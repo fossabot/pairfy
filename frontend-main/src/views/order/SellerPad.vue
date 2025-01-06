@@ -1,6 +1,6 @@
 <template>
     <div class="pad">
-        <Button size="small" v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds">
+        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds" style="color: var(--text-w);">
             Accept Order
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }}
@@ -9,7 +9,7 @@
 
         <DispatchForm />
 
-        <Button type="button" size="small" label="Appeal" :disabled="true" variant="text" :loading="false" />
+        <Button type="button" label="Appeal" :disabled="true" variant="text" :loading="false" />
     </div>
 </template>
 
@@ -131,5 +131,6 @@ onUnmounted(() => {
 .pad button {
     margin-right: 1rem;
     font-weight: 600;
+    font-size: var(--text-size-1);
 }
 </style>
