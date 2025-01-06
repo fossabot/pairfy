@@ -214,7 +214,7 @@
                 <i class="pi pi-shield" />
             </div>
             <div class="card-subterm-box">
-                <span class="blue">Purchase Protection.</span> Receive the product you expected or get your money back.
+                <span class="red">Purchase Protection.</span> Receive the product you expected or get your money back.
             </div>
         </div>
     </div>
@@ -620,12 +620,13 @@ a {
     color: var(--text-b);
     height: inherit;
     position: relative;
+    padding-top: 5px;
 }
 
 .card-subterm-icon span {
     position: absolute;
     right: 13px;
-    top: -1px;
+    top: 4px;
     font-size: 10px;
 }
 
