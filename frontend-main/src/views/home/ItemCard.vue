@@ -4,13 +4,13 @@
 
         <div class="body">
             <span class="title">{{ props.content.title }}</span>
-            <span class="price">
+            <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
-            </span>
 
-            <div class="tag" v-if="props.content.discount">
-                <span>- {{ props.content.discount_value }}%</span>
-            </div>
+                <div class="tag" v-if="props.content.discount">
+                    <span>- {{ props.content.discount_value }}%</span>
+                </div>
+            </span>
 
             <div class="shipping flex green">
                 <span>Free shipping</span>
@@ -84,8 +84,8 @@ function formatPriceToUSD(amount) {
     margin-right: 2px;
 }
 
-.tag{
-    margin-top: 0.25rem;
+.tag {
+    margin-left: 0.5rem;
     background: var(--red-a);
     width: 50px;
     text-align: center;

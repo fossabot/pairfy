@@ -80,7 +80,7 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: 1600px;
     overflow: hidden;
-    height: 325px;
+    height: 350px;
     position: relative;
     display: flex;
     border-radius: 16px;

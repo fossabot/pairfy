@@ -136,6 +136,11 @@
   --yellow-a: #fcbc05;
   --yellow-b: #ffe600;
   --blue-a: #0866ff;
+
+
+  --soft-red-a: rgba(255, 56, 92, 0.3);
+  --soft-yellow-a: rgba(252, 188, 5, 0.3);
+  --soft-yellow-b: rgba(255, 230, 0, 0.3);
 }
 
 *,

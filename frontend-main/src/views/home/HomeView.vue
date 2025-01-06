@@ -6,6 +6,8 @@
       </div>
       <div class="bottom">
         <OneGrid />
+        <FourGrid/>
+        <OneGrid />
       </div>
     </div>
   </main>
@@ -14,6 +16,7 @@
 <script setup>
 import OneGrid from '@/views/home/OneGrid.vue' 
 import BandComp from '@/views/home/BandComp.vue' 
+import FourGrid from '@/views/home/FourGrid.vue' 
 
 
 </script>
@@ -27,18 +30,23 @@ main {
   border-top: 1px solid var(--border-a);
 }
 
+.body{
+  padding: 1rem;
+}
+
 .banner {
   min-height: 300px;
   justify-content: center;
   display: flex;
   align-items: center;
-  padding-top: 2rem;
+  padding: 1rem 0;
 }
 
 .bottom {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0) 30%); 
-  padding-top: 2rem;
 }
 </style>
