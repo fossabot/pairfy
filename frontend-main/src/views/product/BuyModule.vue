@@ -27,7 +27,7 @@
                                         :invalid="orderFormErrors.city" autofocus
                                         v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
-                                    <label for="city">City</label>
+                                    <label for="city">City / State / Department</label>
                                 </IftaLabel>
                             </div>
 
