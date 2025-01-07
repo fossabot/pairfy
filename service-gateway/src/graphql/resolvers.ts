@@ -1,9 +1,9 @@
 import { database } from "../database/client.js";
 import { getBooks, updateBook } from "./books/index.js";
-import { createOrder } from "./orders/createOrder.js";
-import { getOrder } from "./orders/getOrder.js";
-import { lockingFunds } from "./orders/lockingFunds.js";
-import { returnFunds } from "./orders/returnFunds.js";
+import { createOrder } from "./orders/create-order.js";
+import { getOrder } from "./orders/get-order.js";
+import { lockingFunds } from "./orders/locking.js";
+import { returnFunds } from "./orders/return.js";
 import { dispatchProduct } from "./orders/dispatched.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
