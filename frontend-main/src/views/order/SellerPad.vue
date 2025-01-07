@@ -1,7 +1,7 @@
 <template>
     <div class="pad">
         <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds" style="color: var(--text-w);" :loading="true">
-            <ProgressSpinner v-if="lockingFundsLoading" style="width: 1rem; height: 1rem" strokeWidth="6" fill="transparent" 
+            <ProgressSpinner v-if="lockingFundsLoading" style="width: 1rem; height: 1rem" strokeWidth="5" fill="transparent" 
             animationDuration=".5s" aria-label="Custom ProgressSpinner" />
 
             <span>Accept The Order</span>
@@ -52,11 +52,11 @@ onLockingFundsDone(async result => {
         try {
             const { cbor } = response.lockingFunds.payload;
 
-            showSuccess(`Preparing the transaction to the network the process takes a few minutes.`, 100000);
+            showSuccess("Preparing", `Preparing the transaction to the network the process takes a few minutes.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash} The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess("Submitted",`Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -110,8 +110,8 @@ const updatePendingCountdown = () => {
 /////////////////////////////////////////////////
 
 
-const showSuccess = (content, time) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
+const showSuccess = (title, content, time) => {
+    toast.add({ severity: 'success', summary: title, detail: content, life: time });
 };
 
 const showError = (content) => {
@@ -135,5 +135,9 @@ onUnmounted(() => {
     margin-right: 1rem;
     font-weight: 600;
     font-size: var(--text-size-1);
+}
+
+::v-deep(.p-progressspinner-circle){
+    stroke:  #ffffff !important;
 }
 </style>
