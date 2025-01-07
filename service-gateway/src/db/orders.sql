@@ -30,8 +30,10 @@ create table if not exists orders(
   watch_until bigint not null,
   pending_until bigint not null,
   shipping_until bigint not null,
+  expire_until bigint not null,
   pending_tx varchar(200) default null,
   pending_block varchar(200) default null,
+  pending_metadata text default null,
   return_tx varchar(200) default null,
   return_block varchar(200) default null,
   locking_tx varchar(200) default null,
@@ -46,7 +48,7 @@ create table if not exists orders(
   index idx_finished (finished),
   index idx_created_at (created_at),
   index idx_scanned_at (scanned_at),
-  index idx_by_seller (id,seller_id),
-  index idx_by_buyer (id,buyer_pubkeyhash),
+  index idx_seller (id,seller_id),
+  index idx_buyer (id,buyer_pubkeyhash),
   FOREIGN KEY (seller_id) REFERENCES sellers(id)
 ) ENGINE=InnoDB;
