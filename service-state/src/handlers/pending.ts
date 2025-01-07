@@ -20,7 +20,8 @@ async function handlePending(
         contract_address = ?,
         contract_state = ?,
         pending_tx = ?,
-        pending_block = ?
+        pending_block = ?,
+        pending_metadata = ?
     WHERE id = ?`;
 
   const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
@@ -32,6 +33,7 @@ async function handlePending(
     utxo.data.state,
     pendingTx,
     utxo.block_time,
+    utxo.metadata,
     threadtoken,
   ]);
 
@@ -41,24 +43,24 @@ async function handlePending(
     {
       id: getEventId(),
       type: "order",
-      title: "Payment Detected ✅",
+      title: "Payment Detected",
       owner: buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken,
         buyer_address
       }),
-      message: `Payment for order (${threadtoken}) is being processed on the Cardano network. / Account / ${buyer_address}`,
+      message: `Payment is being processed on the Cardano network.`,
     },
     {
       id: getEventId(),
       type: "order",
-      title: "New Purchase Order 🎉",
+      title: "New Purchase",
       owner: seller_id,
       data: JSON.stringify({
         threadtoken,
         seller_address
       }),
-      message: `Payment for order (${threadtoken}) is being processed on the Cardano network. / Account / ${seller_address}`,
+      message: `Payment is being processed on the Cardano network.`
     },
   ];
 
