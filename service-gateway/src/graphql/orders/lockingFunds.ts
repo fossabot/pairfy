@@ -1,6 +1,6 @@
 import { lockingTransactionBuilder } from "../../contracts/builders/locking.js";
 import { SellerToken } from "../../middleware/agent.js";
-import { database } from "../../db/client.js";
+import { database } from "../../database/client.js";
 
 const lockingFunds = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {

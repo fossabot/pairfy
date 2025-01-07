@@ -2,8 +2,8 @@ import { getContractCollateral, getContractPrice } from "../../lib/index.js";
 import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
 import { UserToken } from "../../middleware/agent.js";
-import { database } from "../../db/client.js";
-import { redisClient } from "../../db/redis.js";
+import { database } from "../../database/client.js";
+import { redisClient } from "../../database/redis.js";
 
 const createOrder = async (_: any, args: any, context: any) => {
   if (!context.userData) {

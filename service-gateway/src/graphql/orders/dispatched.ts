@@ -1,7 +1,7 @@
 import { shippingTransactionBuilder } from "../../contracts/builders/shipping.js";
 import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { SellerToken } from "../../middleware/agent.js";
-import { database } from "../../db/client.js";
+import { database } from "../../database/client.js";
 
 const dispatchProduct = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {

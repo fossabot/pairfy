@@ -1,6 +1,6 @@
 import { decryptMetadata } from "../../blockchain/metadata.js";
 import { SellerToken, UserToken } from "../../middleware/agent.js";
-import { database } from "../../db/client.js";
+import { database } from "../../database/client.js";
 
 const getOrder = async (_: any, args: any, context: any) => {
   const USER = (context.userData as UserToken) || null;

@@ -1,4 +1,4 @@
-import { database } from "../db/client.js";
+import { database } from "../database/client.js";
 import { getBooks, updateBook } from "./books/index.js";
 import { createOrder } from "./orders/createOrder.js";
 import { getOrder } from "./orders/getOrder.js";
