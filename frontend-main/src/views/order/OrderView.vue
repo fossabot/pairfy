@@ -327,12 +327,25 @@ const displayNotesDialog = (e) => {
     notesDialog.value = e
 }
 
-const orderTitle = ref({
-    buyer: "Preparing your product, Time Remaining ",
-    seller: "Prepare the product, Time Remaining ",
-    finished: "Order Finished",
-    completed: "Order Completed",
-})
+const orderTitle = computed(
+    () => {
+        let scheme = {
+            buyer: "Preparing your product, Time Remaining ",
+            seller: "Prepare the product, Time Remaining ",
+            finished: "Order Finished",
+            completed: "Order Completed"
+        };
+
+
+        if (statusLog.value === 'pending') {
+            scheme.seller = "Please Verify and Accept, Time Remaining "
+        }
+
+
+        return scheme
+    }
+
+)
 
 const timeline = ref([
     {

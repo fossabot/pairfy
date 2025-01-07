@@ -2,12 +2,19 @@
     <div class="card" v-if="addressData">
         <div class="card-head flex">
             <span> Dispatch To</span>
-            <i class="pi pi-truck"/>
+            <i class="pi pi-truck" />
         </div>
         <div class="card-body">
             <div class="card-item flex" v-for="(value, key) in addressData" :key="key">
-                <span>{{ key }}</span>
-                <span>{{ value }}</span>
+                <template v-if="key !== 'other'">
+                    <span>{{ key }}</span>
+                    <span>{{ value }}</span>
+                </template>
+                <template v-else>
+                    <div class="card-notes">
+                        {{ value }}
+                    </div>
+                </template>
             </div>
         </div>
     </div>
@@ -41,6 +48,7 @@ const addressData = computed(() => {
     border-radius: 12px;
     border: 2px solid var(--border-a);
     margin-top: 1rem;
+    width: 100%;
 }
 
 .card-head {
@@ -49,7 +57,7 @@ const addressData = computed(() => {
     border-bottom: 1px solid var(--border-a);
 }
 
-.card-head i:nth-child(2){
+.card-head i:nth-child(2) {
     margin-left: 0.5rem;
 }
 
@@ -57,6 +65,7 @@ const addressData = computed(() => {
     padding: 1rem;
     display: flex;
     flex-direction: column;
+    width: inherit;
 }
 
 .card-item {
@@ -66,11 +75,20 @@ const addressData = computed(() => {
     line-height: 2.5rem;
     font-size: var(--text-size-1);
     font-weight: 500;
+    width: inherit;
 }
 
 .card-item span:nth-child(2) {
     text-transform: capitalize;
     max-width: 50%;
     line-height: 2rem;
+}
+
+.card-notes{
+    display: flex;
+    width: inherit;
+    border-radius: 12px;
+    padding: 1rem;
+    background: var(--background-b);
 }
 </style>
