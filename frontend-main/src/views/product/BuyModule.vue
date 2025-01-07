@@ -624,7 +624,7 @@ a {
 
 .card-subterm-icon span {
     position: absolute;
-    right: 13px;
+    right: 12px;
     top: 3px;
     font-size: 10px;
 }
