@@ -209,7 +209,7 @@
                                                             shippingData.guide }}
                                                         </div>
                                                     </span>
-                                                    <span v-else>-</span>
+                                                    <span v-else>None</span>
                                                 </div>
                                             </div>
                                         </template>
@@ -283,6 +283,7 @@
                 <!--/////////////////////////////////////////-->
                 <div class="col right">
                     <ChatComp v-if="orderData"/>
+                    {{ addressData }}
                 </div>
             </div>
         </div>
@@ -491,7 +492,9 @@ const contractCollateral = ref(0);
 
 const shippingData = ref(null);
 
-const deliveryDate = ref('-');
+const deliveryDate = ref('None');
+
+const addressData = ref(null);
 
 const isFinished = ref(false);
 
@@ -532,6 +535,13 @@ const unwatchOrder = watch(getOrderResult, value => {
             deliveryDate.value = convertDate(SHIPPING.date, 0);
         }
 
+        const ADDRESS = value.getOrder.address;
+
+        if (ADDRESS) {
+            const addressParsed = JSON.parse(Buffer.from(ADDRESS, 'base64').toString("utf-8"));
+
+            addressData.value = Buffer.from(addressParsed.data, 'base64').toString("utf-8")
+        }
 
         isFinished.value = ORDER.finished;
 
@@ -898,7 +908,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--background-b);
+    background: var(--text-a);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
@@ -911,6 +921,7 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
+    color: var(--text-w)
 }
 
 .diamond span i {

@@ -61,16 +61,18 @@ const getOrder = async (_: any, args: any, context: any) => {
         throw new Error("NO_ORDER");
       }
 
-      const { id, buyer_pubkeyhash, seller_id, shipping_metadata } = orders[0];
+      const { id, buyer_pubkeyhash, seller_id, pending_metadata, shipping_metadata } = orders[0];
 
       const session = `${id}:${buyer_pubkeyhash}:${seller_id}`;
+
+      const pendingMetadata = await decryptMetadata(pending_metadata);
 
       const shippingMetadata = await decryptMetadata(shipping_metadata);
 
       return {
         order: orders[0],
         shipping: shippingMetadata,
-        address: null,
+        address: pendingMetadata,
         session,
       };
     }
