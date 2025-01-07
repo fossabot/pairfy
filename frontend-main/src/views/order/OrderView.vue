@@ -40,16 +40,16 @@
                         <div class="summary-title flex">
                             <template v-if="!isFinished">
                                 <div v-if="getCurrentUser">
-                                    {{ summaryTitle.buyer }}
+                                    {{ orderTitle.buyer }}
                                 </div>
                                 <div v-if="getCurrentSeller">
-                                    {{ summaryTitle.seller }}
+                                    {{ orderTitle.seller }}
                                 </div>
                                 <span>{{ globalCountdown }}</span>
                             </template>
 
                             <div v-if="isFinished">
-                                {{ summaryTitle.finished }}
+                                {{ orderTitle.finished }}
                             </div>
 
                             <FinishedICon />
@@ -80,10 +80,9 @@
                         <Divider class="divider" :unstyled="true" />
                         <div class="timeline">
                             <div class="timeline-item" v-for="item in timeline" :key="item">
-                                <div class="timeline-bar">
-                                    <div class="timeline-bar-box">
+                                <div class="timeline-pipe">
+                                    <div class="timeline-pipe-box">
                                         <div class="diamond">
-
                                             <template v-if="item.template === 'created'">
                                                 <span v-if="!createdStep">{{ item.number }}</span>
                                                 <span v-else>
@@ -105,7 +104,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="timeline-bar-line" :class="{ disabled: !item.line }" />
+                                    <div class="timeline-pipe-line" :class="{ disabled: !item.line }" />
                                 </div>
                                 <div class="timeline-body">
                                     <div class="timeline-title flex">
@@ -197,7 +196,7 @@
                                                 <div class="created-item">
                                                     <span>Guide</span>
                                                     <span v-if="shippingData" class="guide flex">
-                                                        <div class="flex" @click="showNotesDialog(true)"
+                                                        <div class="flex" @click="displayNotesDialog(true)"
                                                             v-tooltip.top="'Notes'">
                                                             <i class="pi pi-inbox" />
                                                         </div>
@@ -282,8 +281,8 @@
                 </template>
                 <!--/////////////////////////////////////////-->
                 <div class="col right">
-                    <ChatComp v-if="orderData"/>
-                    {{ addressData }}
+                    <ChatComp v-if="orderData" />
+                    <AddressComp v-if="orderData" />
                 </div>
             </div>
         </div>
@@ -294,6 +293,7 @@
 import gql from 'graphql-tag';
 import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
+import AddressComp from "@/views/order/AddressComp.vue";
 import SellerPad from "@/views/order/SellerPad.vue";
 import SellerLogin from "@/views/order/SellerLogin.vue";
 import FinishedICon from "@/views/order/FinishedIcon.vue";
@@ -307,7 +307,7 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
-import { Buffer } from 'buffer'
+import { Buffer } from 'buffer';
 
 const { copyToClipboard, convertDate, formatCurrency, convertLovelaceToUSD, convertLovelaceToADA, reduceByLength } = inject('utils');
 
@@ -323,11 +323,11 @@ const currentNav = ref(0);
 
 const notesDialog = ref(false);
 
-const showNotesDialog = (e) => {
+const displayNotesDialog = (e) => {
     notesDialog.value = e
 }
 
-const summaryTitle = ref({
+const orderTitle = ref({
     buyer: "Preparing your product, Time Remaining ",
     seller: "Prepare the product, Time Remaining ",
     finished: "Order Finished",
@@ -445,7 +445,7 @@ const updateQueryVariables = (id) => {
 
 const pendingTx = ref(null);
 
-watch(
+const unwatchRoute = watch(
     () => route,
     ({ params, query }) => {
         if (params.id) {
@@ -494,8 +494,6 @@ const shippingData = ref(null);
 
 const deliveryDate = ref('None');
 
-const addressData = ref(null);
-
 const isFinished = ref(false);
 
 const shippingStatus = computed(() => {
@@ -522,7 +520,7 @@ const shippingStatus = computed(() => {
 const unwatchOrder = watch(getOrderResult, value => {
     if (value) {
         setOrderData(value.getOrder);
-        
+
         const ORDER = value.getOrder.order;
 
         orderData.value = ORDER;
@@ -533,14 +531,6 @@ const unwatchOrder = watch(getOrderResult, value => {
             shippingData.value = JSON.parse(Buffer.from(SHIPPING, 'base64').toString("utf-8"))
 
             deliveryDate.value = convertDate(SHIPPING.date, 0);
-        }
-
-        const ADDRESS = value.getOrder.address;
-
-        if (ADDRESS) {
-            const addressParsed = JSON.parse(Buffer.from(ADDRESS, 'base64').toString("utf-8"));
-
-            addressData.value = Buffer.from(addressParsed.data, 'base64').toString("utf-8")
         }
 
         isFinished.value = ORDER.finished;
@@ -606,7 +596,7 @@ function formatTime(input) {
 
 ////////////////////////////////////////////////////////////////
 
-const scanning = ref(false); 
+const scanning = ref(false);
 
 let scanInterval;
 
@@ -715,6 +705,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
     editor.value.destroy()
     unwatchOrder()
+    unwatchRoute()
 })
 
 onUnmounted(() => {
@@ -851,7 +842,7 @@ onUnmounted(() => {
     width: 100%;
 }
 
-.timeline-bar {
+.timeline-pipe {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -859,7 +850,7 @@ onUnmounted(() => {
     margin-right: 1rem;
 }
 
-.timeline-bar-box {
+.timeline-pipe-box {
     width: inherit;
     min-height: 50px;
     display: flex;
@@ -867,13 +858,13 @@ onUnmounted(() => {
     align-items: center;
 }
 
-.timeline-bar-line {
+.timeline-pipe-line {
     width: 2px;
     height: 100%;
-    background: var(--text-a);
+    background: var(--primary-a);
 }
 
-.timeline-bar-line.disabled {
+.timeline-pipe-line.disabled {
     background: transparent;
 }
 
@@ -908,7 +899,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--text-a);
+    background: var(--background-b);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
@@ -921,7 +912,6 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
-    color: var(--text-w)
 }
 
 .diamond span i {
