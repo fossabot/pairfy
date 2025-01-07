@@ -899,7 +899,7 @@ onUnmounted(() => {
 }
 
 .timeline-content {
-    border: 1px solid var(--border-a);
+    border: 2px solid var(--border-a);
     border-radius: 12px;
     height: 100%;
     width: inherit;
