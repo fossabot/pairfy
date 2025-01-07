@@ -198,7 +198,7 @@
                                                         </div>
                                                         <div class="flex" @click="openWebsite(shippingData.website)"
                                                             v-tooltip.top="'Website'">
-                                                            <i class="pi pi-link" />
+                                                            <i class="pi pi-folder" />
                                                         </div>
                                                         <div class="flex"
                                                             style="padding-right: initial; cursor: initial;"> {{
