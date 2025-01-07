@@ -1053,12 +1053,20 @@ onUnmounted(() => {
     width: 100px;
     height: 100px;
     padding: 0.5rem;
-    border: 1px solid var(--border-a);
     border-radius: 12px;
     display: flex;
     object-fit: contain;
     justify-content: center;
     align-items: center;
+}
+
+.product-card {
+    border: 1px solid var(--border-a);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
 }
 
 .product-card-box {
@@ -1068,7 +1076,6 @@ onUnmounted(() => {
 
 .product-card-box li {
     list-style: none;
-    line-height: 1.75rem;
     justify-content: space-between;
     font-size: var(--text-size-2);
     font-weight: 500;
@@ -1079,18 +1086,10 @@ onUnmounted(() => {
     color: var(--text-b);
 }
 
-.product-card {
-    border: 1px solid var(--border-a);
-    border-radius: 12px;
-    padding: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-    padding: 1.5rem;
-}
 
 .product-list {
     border: 1px solid var(--border-a);
-    padding: 1.5rem;
+    padding: 1rem;
     margin-top: 1rem;
     border-radius: 12px;
 }
