@@ -341,6 +341,10 @@ const orderTitle = computed(
             scheme.seller = "Please Verify and Accept, Time Remaining "
         }
 
+        if (statusLog.value === 'locking') {
+            scheme.seller = "Prepare the package, Time Remaining "
+        }
+
 
         return scheme
     }
