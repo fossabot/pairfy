@@ -25,7 +25,7 @@ const { getProductData } = productAPI();
 section {
     display: grid;
     grid-template-columns: 600px 1fr;
-    gap: 0rem;
+    gap: 1rem;
 }
 
 .card {

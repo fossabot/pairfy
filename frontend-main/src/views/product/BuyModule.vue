@@ -158,12 +158,12 @@
         </Dialog>
 
 
-        <div class="card-legend">
-            <span style="font-weight: 700;">{{ getProductData.brand }}</span>
+        <div class="card-brand">
+            <span>{{ getProductData.brand }}</span>
         </div>
 
-        <div class="card-legend" :class="{ red: 0, }">
-            <span style="font-weight: 600;">{{ getStockLabel(15) }}</span>
+        <div class="card-stock" :class="{ red: 0, }">
+            <span>{{ getStockLabel(15) }}</span>
         </div>
 
         <div class="card-rating flex">
@@ -179,18 +179,18 @@
             <span class="full">FULL</span>
         </div>
 
-        <div class="card-legend flex">
+        <div class="card-arrival flex">
             <span> Arrives on {{ arrivalDate }}</span>
         </div>
 
         <div class="card-within gray">
             <span> Buying within the next</span>
 
-            <span style="color: initial;">{{ withinRange }}</span>
+            <span>{{ withinRange }}</span>
         </div>
 
-        <div class="card-legend" style="font-weight: initial;">
-            <span>Available (15)</span>
+        <div class="card-available">
+            <span> (15 in Stock)</span>
         </div>
 
         <div class="card-control">
@@ -324,7 +324,7 @@ const computedTotalFiat = computed(() => {
 const productRating = ref(4);
 
 const getStockLabel = (readyStock) => {
-    return readyStock > 0 ? "Product In Stock" : "Out Stock";
+    return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
 const toggleDialog = ref(true);
@@ -461,10 +461,60 @@ a {
     gap: 1rem;
 }
 
-.card-legend {
+.card-brand {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
+    font-weight: 700;
+}
+
+.card-stock{
+    font-size: var(--text-size-1);
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    font-weight: 700;
+}
+
+.card-rating {
+    margin-bottom: 1rem;
+}
+
+.card-rating span {
+    margin-left: 0.5rem;
+    font-size: var(--text-size-1);
+    font-weight: 700;
+}
+
+.card-stock{
+    font-size: var(--text-size-12);
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.card-arrival{
+    font-size: var(--text-size-1);
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.card-within {
+    font-size: var(--text-size-1);
+    margin-bottom: 1rem;
+}
+
+.card-within span:nth-child(2) {
+    margin-left: 0.25rem;
+    color: var(--text-a);
+    font-weight: 600;
+}
+
+.card-available{
+    font-size: var(--text-size-1);
+    margin-bottom: 1rem;
+    text-transform: capitalize;
+    font-weight: 600;
 }
 
 .card-full {
@@ -487,15 +537,6 @@ a {
     font-style: italic;
 }
 
-.card-rating {
-    margin-bottom: 1rem;
-}
-
-.card-rating span {
-    margin-left: 0.5rem;
-    font-size: var(--text-size-0);
-    font-weight: 700;
-}
 
 .reviews {
     font-size: var(--text-size-0);
@@ -510,14 +551,6 @@ a {
     margin-top: 1rem;
 }
 
-.card-within {
-    font-size: var(--text-size-1);
-    margin-bottom: 1rem;
-}
-
-.card-within span:nth-child(2) {
-    margin-left: 0.25rem;
-}
 
 .grid {
     display: grid;
