@@ -195,17 +195,18 @@
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Guide</span>
-                                                    <span v-if="shippingData" class="guide flex">
+                                                    <span class="guide flex" v-if="shippingData">
                                                         <div class="flex" @click="displayNotesDialog(true)"
                                                             v-tooltip.top="'Notes'">
-                                                            <i class="pi pi-inbox" />
+                                                            <i class="pi pi-eye" />
                                                         </div>
                                                         <div class="flex" @click="openWebsite(shippingData.website)"
                                                             v-tooltip.top="'Website'">
-                                                            <i class="pi pi-globe" />
+                                                            <i class="pi pi-link" />
                                                         </div>
-                                                        <div style="padding-right: initial; cursor: initial;"> {{
-                                                            shippingData.guide }}
+                                                        <div class="flex"
+                                                            style="padding-right: initial; cursor: initial;"> {{
+                                                                shippingData.guide }}
                                                         </div>
                                                     </span>
                                                     <span v-else>None</span>
@@ -525,7 +526,7 @@ const shippingStatus = computed(() => {
     }
 
     if (state === 2) {
-        return "the package has been dispatched"
+        return "package shipped"
     }
 
     if (state === 3) {
@@ -546,8 +547,8 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         if (SHIPPING) {
             shippingData.value = JSON.parse(Buffer.from(SHIPPING, 'base64').toString("utf-8"))
-
-            deliveryDate.value = convertDate(SHIPPING.date, 0);
+            
+            deliveryDate.value = convertDate(shippingData.value.date, 0);
         }
 
         isFinished.value = ORDER.finished;
@@ -698,7 +699,7 @@ const getTimestamp = (order) => {
     }
 
     if (order.contract_state === 2) {
-        return shippingData.value?.date
+        return shippingData.value.date
     }
 }
 
@@ -961,8 +962,6 @@ onUnmounted(() => {
 
 .guide div {
     height: 36px;
-    justify-content: center;
-    border-radius: 20px;
     padding: 0 0.5rem;
     cursor: pointer;
 }

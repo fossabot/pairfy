@@ -1,6 +1,6 @@
 <template>
-    <Dialog v-model:visible="dispatchDialog" modal header="Dispatch To" :style="{ width: '20vw' }"
-        :draggable="false" :blockScroll="true" :dismissableMask="true">
+    <Dialog v-model:visible="dispatchDialog" modal header="Dispatch To" :style="{ width: '20vw' }" :draggable="false"
+        :blockScroll="true" :dismissableMask="true" :closable="false">
         <template #header>
 
         </template>
@@ -51,13 +51,15 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="dispatchProductLoading" style="color: var(--text-w);" />
+                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="isLoading"
+                        style="color: var(--text-w);" />
                 </div>
             </div>
         </div>
     </Dialog>
 
-    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true" style="color: var(--text-w);"/>
+    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true" :loading="isLoading"
+        style="color: var(--text-w);" />
 </template>
 
 <script setup>
@@ -91,7 +93,7 @@ const dispatchDialog = ref(false);
 
 const disableDispatched = computed(() => getOrderData.value?.order?.contract_state !== 1);
 
-const { mutate: dispatchProduct, loading: dispatchProductLoading, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
+const { mutate: dispatchProduct, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
       mutation($dispatchProductVariable: DispatchProductInput!) {
         dispatchProduct(dispatchProductInput: $dispatchProductVariable) {
           success
@@ -104,6 +106,7 @@ const { mutate: dispatchProduct, loading: dispatchProductLoading, onDone: onDisp
     clientId: 'gateway'
 })
 
+const isLoading = ref(false);
 
 onDispatchProductDone(async result => {
     console.log(result.data);
@@ -112,22 +115,27 @@ onDispatchProductDone(async result => {
 
     if (response.dispatchProduct.success === true) {
         try {
+            isLoading.value = true;
+
             const { cbor } = response.dispatchProduct.payload;
 
             showSuccess("Preparing", `Preparing the transaction to the network the process takes a few minutes.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Submitted",`Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess("Submitted", `Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
+            isLoading.value = false;
 
             dispatchDialog.value = false
         } catch (err) {
             console.error(err);
 
             showError(err);
+
+            isLoading.value = false;
         }
     }
 

@@ -111,7 +111,7 @@ export async function copyToClipboard(text) {
 }
 
 export const convertDate = (timestamp, type) => {
-  let format = 'YYYY/MM/DD'
+  let format = 'YYYY-MM-DD'
 
   if (type === 1) {
     format = 'YYYY-MM-DD mm:ss'
