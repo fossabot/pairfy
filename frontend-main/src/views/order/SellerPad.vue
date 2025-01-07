@@ -1,7 +1,10 @@
 <template>
     <div class="pad">
-        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds" style="color: var(--text-w);">
-            Accept Order
+        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds" style="color: var(--text-w);" :loading="true">
+            <ProgressSpinner v-if="lockingFundsLoading" style="width: 1rem; height: 1rem" strokeWidth="6" fill="transparent" 
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+
+            <span>Accept The Order</span>
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }}
             </span>

@@ -353,7 +353,7 @@ const timeline = ref([
         title: "Order Created",
         subtitle: {
             buyer: "The seller has been notified to prepare your package.",
-            seller: `Please verify the payment and click the "Accept Order" button.`
+            seller: `Please verify the payment and click the "Accept The Order" button.`
         },
         completed: true,
         type: "box",
