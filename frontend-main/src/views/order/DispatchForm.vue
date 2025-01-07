@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="dispatchDialog" modal header="Dispatched Form" :style="{ width: '60vw', height: '90vh' }"
+    <Dialog v-model:visible="dispatchDialog" modal header="Dispatch To" :style="{ width: '20vw' }"
         :draggable="false" :blockScroll="true" :dismissableMask="true">
         <template #header>
 
@@ -31,7 +31,7 @@
                     <IftaLabel>
                         <InputText id="website" v-model="dispatchForm.website" type="text" autofocus fluid
                             :invalid="dispatchFormErrors.website" variant="filled" />
-                        <label for="website">Website</label>
+                        <label for="website">Tracking Website</label>
                     </IftaLabel>
                 </div>
                 <div class="row">
@@ -43,7 +43,7 @@
                 </div>
 
                 <div class="message">
-                    <Message size="small" severity="warn">
+                    <Message size="small" severity="secondary">
                         This information is immutable please check before sending. If there is any subsequent change
                         write it in
                         a timely manner in the chat.
@@ -51,21 +51,19 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="dispatchProductLoading" />
+                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="dispatchProductLoading" style="color: var(--text-w);" />
                 </div>
             </div>
         </div>
     </Dialog>
 
-    <Button type="button" label="Dispatched" size="small" :disabled="disableDispatched" @click="dispatchDialog = true"
-        variant="text" />
+    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true" style="color: var(--text-w);"/>
 </template>
 
 <script setup>
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
-import DispatchForm from '@/views/order/DispatchForm.vue';
-import { computed, ref, onMounted, onUnmounted } from "vue";
+import { computed, ref } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
@@ -116,11 +114,11 @@ onDispatchProductDone(async result => {
         try {
             const { cbor } = response.dispatchProduct.payload;
 
-            showSuccess(`Preparing the transaction to the network the process takes a few minutes.`, 100000);
+            showSuccess("Preparing", `Preparing the transaction to the network the process takes a few minutes.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash} The transaction takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess("Submitted",`Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -157,8 +155,8 @@ const onDispatchProduct = () => {
     })
 }
 
-const showSuccess = (content, time) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
+const showSuccess = (title, content, time) => {
+    toast.add({ severity: 'success', summary: title, detail: content, life: time });
 };
 
 const showError = (content) => {
@@ -179,15 +177,6 @@ button {
     align-items: center;
 }
 
-.form {
-    min-width: 300px;
-    max-width: 350px;
-    min-height: 600px;
-    padding: 1.5rem;
-    border: 1px solid var(--border-a);
-    border-radius: 20px;
-    margin-top: 2rem;
-}
 
 .title {
     display: flex;
