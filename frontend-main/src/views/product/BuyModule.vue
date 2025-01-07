@@ -23,7 +23,7 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="city" v-model="orderForm.city" fluid placeholder=""
+                                    <InputText id="city" v-model="orderForm.city" fluid placeholder="e.g. Miami, Florida"
                                         :invalid="orderFormErrors.city" autofocus
                                         v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
@@ -366,9 +366,9 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`);
+            showSuccess(`Transaction Hash: ${txHash}`);
 
-            console.log(`Transaction submitted with hash: ${txHash}`);
+            console.log(`Transaction Hash: ${txHash}`);
 
             router.push({
                 name: 'order',
