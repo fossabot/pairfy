@@ -25,10 +25,6 @@
                     <span>Transactions</span>
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
-                <div class="nav-scanner flex">
-                    <span v-if="!scanning" class="loader stopped" />
-                    <span v-if="scanning" class="loader actived" />
-                </div>
             </div>
             <div class="grid">
                 <!--SUMMARY-->
@@ -396,6 +392,7 @@ const queryVariablesRef = ref({
         "id": null
     },
 })
+
 const queryEnabled = ref(false)
 
 const { result: getOrderResult, onError: onGetOrderError } = useQuery(gql`
@@ -570,8 +567,6 @@ const unwatchOrder = watch(getOrderResult, value => {
         if (editor) {
             editor.value.commands.setContent(JSON.parse(ORDER.product_features));
         }
-
-        updateScanning()
     }
 }, { immediate: true })
 
@@ -611,17 +606,6 @@ function formatTime(input) {
 
     return `${hours}h : ${minutes}m : ${seconds}s`;
 }
-
-////////////////////////////////////////////////////////////////
-
-const scanning = ref(false);
-
-let scanInterval;
-
-const updateScanning = () => {
-    scanning.value = true;
-    setTimeout(() => scanning.value = false, 5000)
-};
 
 ////////////////////////////////////////////////////////////////
 
@@ -716,7 +700,6 @@ const openWebsite = (website) => {
 onMounted(() => {
     updateGlobalCountdown();
     globalInterval = setInterval(updateGlobalCountdown, 1000);
-    scanInterval = setInterval(updateScanning, 30000)
     setupEditor();
 });
 
@@ -728,7 +711,6 @@ onBeforeUnmount(() => {
 
 onUnmounted(() => {
     clearInterval(globalInterval);
-    clearInterval(scanInterval);
 });
 </script>
 
@@ -1124,44 +1106,4 @@ onUnmounted(() => {
     font-size: var(--text-size-0);
 }
 
-.nav-scanner {
-    margin-left: auto;
-    font-size: var(--text-size-1);
-    color: var(--text-b);
-}
-
-.loader {
-    width: 1rem;
-    height: 1rem;
-    margin-left: 0.5rem;
-    border: 2px solid #ffffff;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 10s linear infinite;
-}
-
-.loader.actived {
-    animation: rotation 1s linear infinite;
-    border: 2px solid var(--primary-c);
-    border-bottom-color: transparent;
-}
-
-.loader.stopped {
-    border: 2px solid var(--text-b);
-    border-bottom-color: transparent;
-    opacity: 0.5;
-
-}
-
-@keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
 </style>
