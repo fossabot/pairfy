@@ -147,6 +147,7 @@ const createOrder = async (_: any, args: any, context: any) => {
       watch_until: BUILDER.watchUntil,
       pending_until: BUILDER.pendingUntil,
       shipping_until: BUILDER.shippingUntil,
+      expire_until: BUILDER.expireUntil
     };
 
     console.log(orderData);

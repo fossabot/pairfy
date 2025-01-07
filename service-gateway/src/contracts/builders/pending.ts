@@ -34,6 +34,7 @@ async function pendingTransactionBuilder(
 
   const shippingRange = parseInt(process.env.SHIPPING_RANGE as string);
 
+  const expiringRange = 5259600000;
   //////////////////////////////////////////////////
 
   const validToMs = BigInt(now + txValidTime);
@@ -44,6 +45,15 @@ async function pendingTransactionBuilder(
 
   const shippingUntil = BigInt(
     now + txValidTime + txWatchWindow + pendingRange + shippingRange
+  );
+
+  const expireUntil = BigInt(
+    now +
+      txValidTime +
+      txWatchWindow +
+      pendingRange +
+      shippingRange +
+      expiringRange
   );
 
   //////////////////////////////////////////////////
@@ -172,6 +182,7 @@ async function pendingTransactionBuilder(
     watchUntil,
     pendingUntil,
     shippingUntil,
+    expireUntil
   };
 }
 
