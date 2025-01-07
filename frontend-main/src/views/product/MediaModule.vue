@@ -2,7 +2,7 @@
     <div class="media">
         <section v-if="getProductData">
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="500" previewIcon="pi-search" 
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="500" height="500" previewIcon="pi-search" 
                     preview />
             </div>
             <div class="media-nav">

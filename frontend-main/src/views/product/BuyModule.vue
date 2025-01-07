@@ -452,8 +452,7 @@ a {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    border-radius: 8px;
-    width: 285px;
+    width: 275px;
     margin-left: auto;
 }
 
