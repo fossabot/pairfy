@@ -912,7 +912,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--background-b);
+    background: var(--primary-a);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
@@ -925,6 +925,7 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
+    color: var(--text-w);
 }
 
 .diamond span i {
