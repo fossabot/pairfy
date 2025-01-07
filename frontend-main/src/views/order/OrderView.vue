@@ -748,7 +748,7 @@ onUnmounted(() => {
 }
 
 .container {
-    min-height: 150vh;
+    min-height: 100vh;
     max-width: 1400px;
     width: 100%;
 }

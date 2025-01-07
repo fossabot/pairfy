@@ -162,7 +162,6 @@ onBeforeUnmount(() => unwatchGetProduct())
     position: relative;
     z-index: 10;
     overflow: hidden;
-
 }
 
 .card-header {
