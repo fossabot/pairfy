@@ -878,7 +878,7 @@ onUnmounted(() => {
 .timeline-pipe-line {
     width: 2px;
     height: 100%;
-    background: var(--primary-a);
+    background: var(--border-a);
 }
 
 .timeline-pipe-line.disabled {
@@ -916,7 +916,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--primary-a);
+    background: var(--text-a);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
