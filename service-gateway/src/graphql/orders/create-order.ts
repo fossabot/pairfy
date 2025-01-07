@@ -38,6 +38,7 @@ const createOrder = async (_: any, args: any, context: any) => {
              p.brand AS product_brand,
              p.features AS product_features,
              p.bullet_list AS product_bullet_list,
+             p.country AS product_country,
              p.discount AS product_discount,
              p.discount_value AS product_discount_value,
              s.id AS seller_id,
@@ -121,6 +122,7 @@ const createOrder = async (_: any, args: any, context: any) => {
 
     const orderData = {
       id: BUILDER.threadTokenPolicyId,
+      country: RESULT.product_country,
       seller_id: RESULT.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
       seller_pubkeyhash: RESULT.seller_pubkeyhash,

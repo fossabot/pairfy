@@ -160,6 +160,7 @@ const main = async () => {
           SELECT id,
                  finished,
                  scanned_at,
+                 country,
                  seller_id,
                  buyer_pubkeyhash,
                  buyer_address,
@@ -200,7 +201,8 @@ const main = async () => {
                   seller_id: order.seller_id,
                   buyer_pubkeyhash: order.buyer_pubkeyhash,
                   buyer_address: order.buyer_address,
-                  seller_address: order.seller_address
+                  seller_address: order.seller_address,
+                  country: order.country
                 },
                 opts: {
                   attempts: 0,

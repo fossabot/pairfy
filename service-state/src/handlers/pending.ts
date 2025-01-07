@@ -9,7 +9,8 @@ async function handlePending(
   seller_id: string,
   buyer_pubkeyhash: string,
   buyer_address: string,
-  seller_address: string
+  seller_address: string,
+  country: string
 ) {
   const statusLog = "pending";
 
@@ -47,7 +48,8 @@ async function handlePending(
       owner: buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken,
-        buyer_address
+        buyer_address,
+        country
       }),
       message: `Payment is being processed on the Cardano network.`,
     },
@@ -58,7 +60,8 @@ async function handlePending(
       owner: seller_id,
       data: JSON.stringify({
         threadtoken,
-        seller_address
+        seller_address,
+        country
       }),
       message: `Payment is being processed on the Cardano network.`
     },

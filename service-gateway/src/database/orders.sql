@@ -2,6 +2,7 @@ create table if not exists orders(
   id varchar(100) not null,
   finished boolean default false,
   scanned_at bigint default 0,
+  country varchar(20) not null,
   status_log varchar(100) default "created",
   seller_id varchar(100) not null,
   buyer_pubkeyhash varchar(100) not null,
