@@ -52,7 +52,7 @@ onLockingFundsDone(async result => {
         try {
             const { cbor } = response.lockingFunds.payload;
 
-            showSuccess("Preparing", `Preparing the transaction to the network the process takes a few minutes.`, 100000);
+            showSuccess("Preparing", `The transaction to the network the process takes a few minutes.`, 100000);
 
             const txHash = await balanceTx(cbor);
 

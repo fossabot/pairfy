@@ -1,13 +1,11 @@
 <template>
     <Dialog v-model:visible="dispatchDialog" modal header="Dispatch To" :style="{ width: '20vw' }" :draggable="false"
-        :blockScroll="true" :dismissableMask="true" :closable="false">
+        :blockScroll="true" :dismissableMask="false" :closable="true">
         <template #header>
-
         </template>
         <div class="card">
             <div class="form">
                 <div class="title">
-                    <span>Shipping Data</span>
                     <span>Fill out the form with the verified information.</span>
                 </div>
 
@@ -44,9 +42,8 @@
 
                 <div class="message">
                     <Message size="small" severity="secondary">
-                        This information is immutable please check before sending. If there is any subsequent change
-                        write it in
-                        a timely manner in the chat.
+                        This information is immutable please check before sending. If there is any change
+                        write it timely in the chat.
                     </Message>
                 </div>
 
@@ -58,8 +55,8 @@
         </div>
     </Dialog>
 
-    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true" :loading="isLoading"
-        style="color: var(--text-w);" />
+    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true"
+        :loading="isLoading" style="color: var(--text-w);" />
 </template>
 
 <script setup>
@@ -115,7 +112,7 @@ onDispatchProductDone(async result => {
 
     if (response.dispatchProduct.success === true) {
         try {
-            isLoading.value = true;
+
 
             const { cbor } = response.dispatchProduct.payload;
 
@@ -129,7 +126,6 @@ onDispatchProductDone(async result => {
 
             isLoading.value = false;
 
-            dispatchDialog.value = false
         } catch (err) {
             console.error(err);
 
@@ -143,10 +139,14 @@ onDispatchProductDone(async result => {
 
 onDispatchProductError(error => {
     showError(error)
+
+    isLoading.value = false;
 })
 
 const onDispatchProduct = () => {
     console.log(dispatchForm)
+
+    isLoading.value = true;
 
     const deliveryDate = new Date(dispatchForm.date).getTime().toString();
 
