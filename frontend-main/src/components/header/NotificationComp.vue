@@ -1,10 +1,9 @@
 <template>
     <div class="notification">
-        <div class="button flex">
-            <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
-                <i class="pi pi-bars" />
-            </OverlayBadge>
-        </div>
+
+        <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
+            <img class="card-image" src="@/assets/user.png" alt="">
+        </OverlayBadge>
 
         <Popover ref="overlay">
             <section>
@@ -213,11 +212,6 @@ const onHandleClick = (notification) => {
     }
 }
 
-
-//////////////////////////////////////////////////////////////////////////////
-
-
-
 </script>
 
 <style lang="css" scoped>
@@ -227,6 +221,10 @@ const onHandleClick = (notification) => {
     align-items: center;
 }
 
+.card-image {
+    width: var(--text-size-5);
+    border-radius: 50%;
+}
 
 .drop {
     width: 350px;
@@ -278,18 +276,6 @@ const onHandleClick = (notification) => {
     font-size: var(--text-size-1);
     cursor: pointer;
     word-break: break-word;
-}
-
-.button {
-    color: var(--text-a);
-    cursor: pointer;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-}
-
-.button i {
-    font-size: var(--text-size-3);
 }
 
 .drop-pad {

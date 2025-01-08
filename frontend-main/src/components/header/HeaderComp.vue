@@ -11,17 +11,10 @@
             </div>
             <div class="header-col right">
 
-                <NotificationComp />
-
                 <CartComp />
 
-                <div class="connect-wallet" v-if="!getCurrentUser" @click="togglePanel(true)">
-                    Connect Wallet
-                </div>
+                <AgentButton />
 
-                <div class="connect-wallet" v-if="getCurrentUser" @click="togglePanel(true)">
-                    {{ getCurrentUser.address.slice(0, 15) }}
-                </div>
             </div>
         </div>
         <section class="flex">
@@ -37,6 +30,7 @@
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
 import LocationComp from '@/components/header/LocationComp.vue';
+import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
@@ -45,6 +39,7 @@ import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
+
 
 const route = useRoute()
 
@@ -86,7 +81,7 @@ const watchRoute = watch(
     }
 )
 
-const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
+const { setADAprice } = headerAPI();
 
 const queryOptions = {
     pollInterval: 60000,
@@ -134,7 +129,7 @@ section {
 }
 
 .header {
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
 }
 
 .brand {
@@ -175,16 +170,5 @@ section {
     width: 100%;
 }
 
-.connect-wallet {
-    border-radius: 20px;
-    height: 42px;
-    padding: 0.6rem 1rem;
-    min-width: 120px;
-    font-weight: 600;
-    font-size: var(--text-size-1);
-    cursor: pointer;
-    border: 1px solid var(--text-a);
-    background: transparent;
-    color: var(--text-a);
-}
+
 </style>

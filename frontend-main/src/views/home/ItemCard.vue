@@ -58,7 +58,6 @@ function formatPriceToUSD(amount) {
 }
 
 .price {
-    font-weight: 500;
     font-size: var(--text-size-3);
     margin-top: 0.25rem;
 }

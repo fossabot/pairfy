@@ -26,7 +26,7 @@ const isFocus = ref(false);
     border-radius: 20px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid var(--text-a);
+    border: 1px solid var(--border-b);
     overflow: hidden;
 
 }
@@ -40,7 +40,7 @@ const isFocus = ref(false);
 
 .search-input {
     width: 100%;
-    padding: 0.65rem 1rem;
+    padding: 0.75rem 1rem;
     border: none;
     outline: none;
     font-size: var(--text-size-1);

@@ -106,3 +106,7 @@
   align-items: center;
   display: flex;
 }
+
+.p-badge{
+  font-size: 9px !important;
+}
