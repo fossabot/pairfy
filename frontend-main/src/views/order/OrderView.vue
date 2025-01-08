@@ -194,11 +194,11 @@
                                                     <span class="guide flex" v-if="shippingData">
                                                         <div class="flex" @click="displayNotesDialog(true)"
                                                             v-tooltip.top="'Notes'">
-                                                            <i class="pi pi-eye" />
+                                                            <i class="pi pi-envelope" />
                                                         </div>
                                                         <div class="flex" @click="openWebsite(shippingData.website)"
                                                             v-tooltip.top="'Website'">
-                                                            <i class="pi pi-folder" />
+                                                            <i class="pi pi-globe" />
                                                         </div>
                                                         <div class="flex"
                                                             style="padding-right: initial; cursor: initial;"> {{
@@ -597,14 +597,20 @@ function formatTime(input) {
     let [minutes, seconds] = input.split(":").map(Number);
 
     const hours = Math.floor(minutes / 60);
+
+    const days = Math.floor(hours / 24);
+
+    const remainingHours = hours % 24;
+
     minutes = minutes % 60;
 
     minutes += Math.floor(seconds / 60);
+
     seconds = seconds % 60;
 
     minutes = Math.min(minutes, 99);
 
-    return `${hours}h : ${minutes}m : ${seconds}s`;
+    return `${days}d : ${remainingHours}h : ${minutes}m : ${seconds}s`;
 }
 
 ////////////////////////////////////////////////////////////////

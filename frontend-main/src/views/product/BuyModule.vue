@@ -190,7 +190,7 @@
         </div>
 
         <div class="card-available">
-            <span> (15 in Stock)</span>
+            <span>In Stock (15)</span>
         </div>
 
         <div class="card-control">
@@ -366,7 +366,7 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction Hash: ${txHash}`);
+            showSuccess("Submitted",`Transaction Hash: ${txHash}`);
 
             console.log(`Transaction Hash: ${txHash}`);
 
@@ -431,8 +431,8 @@ function calculateArrivalDay(durationInSeconds) {
     return arrivalDay;
 };
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+const showSuccess = (title, content) => {
+    toast.add({ severity: 'success', summary: title, detail: content, life: 5000 });
 };
 
 const showError = (content) => {
