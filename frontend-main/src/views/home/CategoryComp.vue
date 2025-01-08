@@ -15,20 +15,20 @@
 <script setup>
 import categories from '@/assets/categories.json';
 import { ref } from 'vue';
-import asset0 from "@/assets/icons/0.svg";
-import asset1 from "@/assets/icons/1.svg";
-import asset2 from "@/assets/icons/2.svg"; 
-import asset3 from "@/assets/icons/3.svg";
-import asset4 from "@/assets/icons/4.svg";
-import asset5 from "@/assets/icons/5.svg";
-import asset6 from "@/assets/icons/6.svg";
-import asset7 from "@/assets/icons/7.svg";
-import asset8 from "@/assets/icons/8.svg";
-import asset9 from "@/assets/icons/9.svg";
-import asset10 from "@/assets/icons/10.svg";
-import asset11 from "@/assets/icons/11.svg";
-import asset12 from "@/assets/icons/12.svg"; 
-import asset13 from "@/assets/icons/13.svg"; 
+import asset0 from "@/assets/icons/0.png";
+import asset1 from "@/assets/icons/1.png";
+import asset2 from "@/assets/icons/2.png"; 
+import asset3 from "@/assets/icons/3.png";
+import asset4 from "@/assets/icons/4.png";
+import asset5 from "@/assets/icons/5.png";
+import asset6 from "@/assets/icons/6.png";
+import asset7 from "@/assets/icons/7.png";
+import asset8 from "@/assets/icons/8.png";
+import asset9 from "@/assets/icons/9.png";
+import asset10 from "@/assets/icons/10.png";
+import asset11 from "@/assets/icons/11.png";
+import asset12 from "@/assets/icons/12.png"; 
+import asset13 from "@/assets/icons/13.png";  
 
 const categoryList = ref(categories);
 
