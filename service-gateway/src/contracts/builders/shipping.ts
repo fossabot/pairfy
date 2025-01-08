@@ -14,7 +14,8 @@ const NETWORK = "Preprod";
 async function shippingTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string,
-  metadata: any
+  metadata: any,
+  deliveryDate: bigint
 ) {
   //////////////////////////////////////////////////
 
@@ -34,6 +35,7 @@ async function shippingTransactionBuilder(
    *  @type {number} contractCollateral 4
    *  @type {number} pendingUntil 5
    *  @type {number} shippingUntil 6
+   *  @type {number} expireUntil 7
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
@@ -57,10 +59,12 @@ async function shippingTransactionBuilder(
 
   const datumValues = {
     state: BigInt(2),
+    delivery: BigInt(deliveryDate),
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
+    delivery: Data.Nullable(Data.Integer()),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -101,6 +105,7 @@ async function shippingTransactionBuilder(
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
         BigInt(stateMachineParams[6]),
+        BigInt(stateMachineParams[7]),
       ]
     ),
   };
@@ -111,19 +116,27 @@ async function shippingTransactionBuilder(
 
   ////////////////////////////////////////////
 
-  const returnInput = "Shipping";
+  const shippingInput = {
+    Shipping: {
+      delivery_param: deliveryDate,
+    },
+  };
 
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
     Data.Literal("Locking"),
-    Data.Literal("Shipping"),
+    Data.Object({
+      Shipping: Data.Object({
+        delivery_param: Data.Integer(),
+      }),
+    }),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
 
   const InputType = StateMachineInput as unknown as InputType;
 
-  const stateMachineRedeemer = Data.to(returnInput, InputType);
+  const stateMachineRedeemer = Data.to(shippingInput, InputType);
 
   ///////////////////////////////////////////
 
@@ -177,10 +190,13 @@ async function main() {
 
   const metadata = { msg: "what" };
 
+  const deliveryDate = BigInt(Date.now());
+
   const BUILDER = await shippingTransactionBuilder(
     externalWalletAddress,
     serializedParams,
-    metadata
+    metadata,
+    deliveryDate
   );
 
   console.log("CBOR---------------------------------------");

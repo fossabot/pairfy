@@ -34,7 +34,7 @@ async function pendingTransactionBuilder(
 
   const shippingRange = parseInt(process.env.SHIPPING_RANGE as string);
 
-  const expiringRange = 5259600000;
+  const expiringRange = parseInt(process.env.EXPIRING_RANGE as string);
   //////////////////////////////////////////////////
 
   const validToMs = BigInt(now + txValidTime);
@@ -106,6 +106,7 @@ async function pendingTransactionBuilder(
     contractCollateral,
     pendingUntil,
     shippingUntil,
+    expireUntil
   ];
 
   const serializedParams = serializeParams(stateMachineParams);
@@ -122,10 +123,12 @@ async function pendingTransactionBuilder(
 
   const datumValues = {
     state: BigInt(0),
+    delivery: null
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
+    delivery: Data.Nullable(Data.Integer())
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;

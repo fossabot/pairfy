@@ -33,6 +33,7 @@ async function lockingTransactionBuilder(
    *  @type {number} contractCollateral 4
    *  @type {number} pendingUntil 5
    *  @type {number} shippingUntil 6
+   *  @type {number} expireUntil 7
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
@@ -59,10 +60,12 @@ async function lockingTransactionBuilder(
 
   const datumValues = {
     state: BigInt(1),
+    delivery: null
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
+    delivery: Data.Nullable(Data.Integer())
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -103,6 +106,7 @@ async function lockingTransactionBuilder(
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
         BigInt(stateMachineParams[6]),
+        BigInt(stateMachineParams[7]),
       ]
     ),
   };
@@ -113,19 +117,23 @@ async function lockingTransactionBuilder(
 
   ////////////////////////////////////////////
 
-  const returnInput = "Locking";
+  const lockingInput = "Locking";
 
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
     Data.Literal("Locking"),
-    Data.Literal("Shipping"),
+    Data.Object({
+      Shipping: Data.Object({
+        delivery_param: Data.Integer()
+      }),
+    }),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
 
   const InputType = StateMachineInput as unknown as InputType;
 
-  const stateMachineRedeemer = Data.to(returnInput, InputType);
+  const stateMachineRedeemer = Data.to(lockingInput, InputType);
 
   ///////////////////////////////////////////
 

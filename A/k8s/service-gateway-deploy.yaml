@@ -77,6 +77,8 @@ spec:
               value: "90000000"
             - name: SHIPPING_RANGE
               value: "90000000"
+            - name: EXPIRING_RANGE
+              value: "5259600000"
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
