@@ -344,6 +344,7 @@ const orderTitle = computed(
 
         if (statusLog.value === 'shipping') {
             scheme.seller = "Waiting for Delivery, Time Remaining "
+            scheme.buyer = "The Package is Arriving, Time Remaining "
         }
 
         return scheme
