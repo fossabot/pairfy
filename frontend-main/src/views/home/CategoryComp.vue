@@ -94,8 +94,9 @@ const getURL = (index) => {
 }
 
 .tag img {
-    width: var(--text-size-3);
-    height: var(--text-size-3);
+    height: auto;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimizequality;
 }
 
 .tag span {
