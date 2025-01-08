@@ -1,7 +1,7 @@
 <template>
     <div class="card" v-if="addressData">
         <div class="card-head flex">
-            <span> Dispatch To</span>
+            <span> Destination</span>
             <i class="pi pi-truck" />
         </div>
         <div class="card-body">

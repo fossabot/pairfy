@@ -1,5 +1,5 @@
 <template>
-    <Dialog v-model:visible="dispatchDialog" modal header="Dispatch To" :style="{ width: '20vw' }" :draggable="false"
+    <Dialog v-model:visible="dispatchDialog" modal header="Shipping Data" :style="{ width: '20vw' }" :draggable="false"
         :blockScroll="true" :dismissableMask="false" :closable="true">
         <template #header>
         </template>
@@ -193,14 +193,14 @@ button {
 }
 
 .title span:nth-child(1) {
-    font-size: var(--text-size-d);
-    font-weight: 600;
+    font-size: var(--text-size-3);
+    font-weight: 500;
 }
 
 .title span:nth-child(2) {
     color: var(--text-b);
     line-height: 2rem;
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-2);
     margin-top: 0.5rem;
 }
 

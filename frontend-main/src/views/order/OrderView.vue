@@ -548,7 +548,7 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         if (SHIPPING) {
             shippingData.value = JSON.parse(Buffer.from(SHIPPING, 'base64').toString("utf-8"))
-            
+
             deliveryDate.value = convertDate(shippingData.value.date, 0);
         }
 
@@ -903,13 +903,13 @@ onUnmounted(() => {
 }
 
 .timeline-content.button {
-    border: 1px solid transparent;
+    border: initial
 }
 
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--text-a);
+    background: var(--background-b);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
@@ -922,7 +922,7 @@ onUnmounted(() => {
     transform: rotate(-45deg);
     font-size: var(--text-size-1);
     font-weight: 600;
-    color: var(--text-w);
+    color: var(--text-a);
 }
 
 .diamond span i {
@@ -1115,5 +1115,4 @@ onUnmounted(() => {
     line-height: 2.25rem;
     font-size: var(--text-size-0);
 }
-
 </style>
