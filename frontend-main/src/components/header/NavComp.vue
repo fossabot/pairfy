@@ -20,14 +20,17 @@
             <span>Electronics</span>
             <span>Garden</span>
             <span>Best Sellers</span>
-            <span class="ADA">ADAUSD {{ getADAprice }} </span>
+            <span class="ADA">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
         </div>
 </template>
 
 <script setup>
 import headerAPI from "@/components/header/api/index";
+import { inject } from 'vue';
 
 const { getADAprice } = headerAPI();
+
+const { formatPriceToUSD } = inject('utils');
 
 
 </script>

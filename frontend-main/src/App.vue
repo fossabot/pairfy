@@ -11,7 +11,7 @@
 import headerAPI from "@/components/header/api/index";
 import HeaderComp from '@/components/header/HeaderComp.vue';
 import FooterComp from '@/components/FooterComp.vue';
-import { setupAudio, convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
+import { formatPriceToUSD, setupAudio, convertDate, copyToClipboard, convertLovelaceToUSD, convertLovelaceToADA, formatWithDots, reduceByLength, formatCurrency, applyDiscount, convertUSDToADA } from "./utils/index"
 import { queryClient, gatewayClient, notificationClient, chatClient } from './graphql/index.js';
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
@@ -56,7 +56,8 @@ provide('utils', {
   convertLovelaceToUSD,
   copyToClipboard,
   convertDate,
-  setupAudio
+  setupAudio,
+  formatPriceToUSD
 });
 
 onBeforeUnmount(() => {

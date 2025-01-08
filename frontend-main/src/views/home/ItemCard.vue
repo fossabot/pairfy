@@ -23,16 +23,12 @@
 </template>
 
 <script setup>
+import { inject } from 'vue';
 
 const props = defineProps(['content', 'size'])
 
-function formatPriceToUSD(amount) {
-    return new Intl.NumberFormat('en-US', {
-        style: 'decimal',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    }).format(amount);
-}
+const { formatPriceToUSD } = inject('utils');
+
 
 
 </script>
@@ -78,7 +74,7 @@ function formatPriceToUSD(amount) {
 
 .dollar {
     font-size: var(--text-size-1);
-    margin-right: 2px;
+    margin-right: 1px;
 }
 
 .tag {
