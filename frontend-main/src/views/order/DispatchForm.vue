@@ -42,8 +42,8 @@
 
                 <div class="message">
                     <Message size="small" severity="secondary">
-                        This information is immutable please check before sending. If there is any change
-                        write it timely in the chat.
+                        This information is immutable please check before sending. 
+                        Please write future changes in the chat.
                     </Message>
                 </div>
 
@@ -116,11 +116,11 @@ onDispatchProductDone(async result => {
 
             const { cbor } = response.dispatchProduct.payload;
 
-            showSuccess("Preparing", `Preparing the transaction to the network the process takes a few minutes.`, 100000);
+            showSuccess("Preparing", `Don't close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Submitted", `Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess("Submitted", `Transaction Hash: (${txHash}). It takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 

@@ -1,8 +1,9 @@
 <template>
     <div class="pad">
-        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds" style="color: var(--text-w);" :loading="true">
-            <ProgressSpinner v-if="lockingFundsLoading" style="width: 1rem; height: 1rem" strokeWidth="5" fill="transparent" 
-            animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds"
+            style="color: var(--text-w);" :loading="true">
+            <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5"
+                fill="transparent" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
 
             <span>Accept The Order</span>
             <span v-if="pendingCountdown !== '00:00'">
@@ -29,7 +30,7 @@ const toast = useToast();
 
 const { getOrderData } = orderAPI();
 
-const { mutate: lockingFunds, loading: lockingFundsLoading, onDone: onLockingFundsDone, onError: onLockingFundsError } = useMutation(gql`
+const { mutate: lockingFunds, onDone: onLockingFundsDone, onError: onLockingFundsError } = useMutation(gql`
       mutation($lockingFundsVariable: LockingFundsInput!) {
         lockingFunds(lockingFundsInput: $lockingFundsVariable) {
           success
@@ -43,6 +44,8 @@ const { mutate: lockingFunds, loading: lockingFundsLoading, onDone: onLockingFun
 })
 
 
+const isLoading = ref(false);
+
 onLockingFundsDone(async result => {
     console.log(result.data);
 
@@ -52,18 +55,23 @@ onLockingFundsDone(async result => {
         try {
             const { cbor } = response.lockingFunds.payload;
 
-            showSuccess("Preparing", `The transaction to the network the process takes a few minutes.`, 100000);
+            showSuccess("Preparing", `Do not close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Submitted",`Transaction Hash: (${txHash}) It takes approximately 5 minutes to appear on the blockchain.`, 200000);
+            showSuccess("Submitted", `Transaction Hash: (${txHash}). It takes few minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
+
+            isLoading.value = false;
+
 
         } catch (err) {
             console.error(err);
 
             showError(err);
+
+            isLoading.value = false;
         }
     }
 
@@ -74,6 +82,9 @@ onLockingFundsError(error => {
 })
 
 const onLockingFunds = () => {
+    isLoading.value = true;
+
+
     lockingFunds({
         "lockingFundsVariable": {
             order_id: getOrderData.value.order.id
@@ -86,7 +97,23 @@ const onLockingFunds = () => {
 
 const currentState = computed(() => getOrderData.value?.order?.contract_state);
 
-const disableAccept = computed(() => pendingCountdown.value === "00:00" || getOrderData.value?.order?.contract_state !== 0)
+const disableAccept = computed(() => {
+    if (pendingCountdown.value === "00:00") {
+        return true
+    }
+
+
+    if (getOrderData.value?.order?.contract_state !== 0) {
+        return true
+    }
+
+
+    if (isLoading.value === true) {
+        return true
+    }
+
+    return false
+})
 ///////////////////////////////////////////////////////////////////
 
 const pendingTimeLeft = ref(Date.now());
@@ -137,7 +164,7 @@ onUnmounted(() => {
     font-size: var(--text-size-1);
 }
 
-::v-deep(.p-progressspinner-circle){
-    stroke:  #ffffff !important;
+::v-deep(.p-progressspinner-circle) {
+    stroke: #ffffff !important;
 }
 </style>

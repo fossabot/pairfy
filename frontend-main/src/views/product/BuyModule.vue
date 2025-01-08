@@ -2,8 +2,8 @@
     <Skeleton v-if="!getProductData" width="100%" height="500px" />
 
     <div class="card" v-if="getProductData">
-        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '60rem' }" :draggable="false"
-            dismissableMask>
+        <Dialog v-model:visible="toggleDialog" modal header="Payment" :style="{ width: '58rem', height: '60rem' }"
+            :draggable="false" dismissableMask>
 
             <div class="dialog">
                 <div class="grid">
@@ -23,8 +23,8 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="city" v-model="orderForm.city" fluid placeholder="e.g. Miami, Florida"
-                                        :invalid="orderFormErrors.city" autofocus
+                                    <InputText id="city" v-model="orderForm.city" fluid
+                                        placeholder="e.g. Miami, Florida" :invalid="orderFormErrors.city" autofocus
                                         v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
                                     <label for="city">City / State / Department</label>
@@ -149,7 +149,7 @@
 
                         <div class="dialog-control">
                             <Button label="Buy" @click="onBuyHandle" style="color: var(--text-w);"
-                                :loading="createOrderLoading" fluid />
+                                :loading="isLoading" fluid />
                         </div>
                     </div>
                 </div>
@@ -272,7 +272,11 @@ const validateForm = () => {
     return !Object.values(orderFormErrors.value).includes(true);
 }
 
+const isLoading = ref(false)
+
 const onBuyHandle = () => {
+    isLoading.value = true;
+
     if (!validateForm()) {
         return showError('Mandatory Fields')
     }
@@ -337,7 +341,7 @@ const onBuyProduct = () => {
     toggleDialog.value = true;
 }
 
-const { mutate: createOrder, loading: createOrderLoading, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
+const { mutate: createOrder, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
 mutation($createOrderVariable: CreateOrderInput!){
     createOrder(createOrderInput: $createOrderVariable){
         success
@@ -366,7 +370,7 @@ onOrderCreated(async result => {
 
             const txHash = await balanceTx(cbor);
 
-            showSuccess("Submitted",`Transaction Hash: ${txHash}`);
+            showSuccess("Submitted", `Transaction Hash: ${txHash}`);
 
             console.log(`Transaction Hash: ${txHash}`);
 
@@ -379,11 +383,12 @@ onOrderCreated(async result => {
                     tx: txHash
                 }
             })
-
+            isLoading.value = false
         } catch (err) {
             console.error(err);
 
             showError(err);
+            isLoading.value = false
         }
     }
 
@@ -468,7 +473,7 @@ a {
     font-weight: 700;
 }
 
-.card-stock{
+.card-stock {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
@@ -485,14 +490,14 @@ a {
     font-weight: 700;
 }
 
-.card-stock{
+.card-stock {
     font-size: var(--text-size-12);
     margin-bottom: 1rem;
     text-transform: capitalize;
     font-weight: 600;
 }
 
-.card-arrival{
+.card-arrival {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
@@ -510,7 +515,7 @@ a {
     font-weight: 600;
 }
 
-.card-available{
+.card-available {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;

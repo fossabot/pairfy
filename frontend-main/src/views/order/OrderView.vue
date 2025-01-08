@@ -449,7 +449,7 @@ query ($getOrderVariable: GetOrderInput!) {
     () => ({
         enabled: queryEnabled.value,
         clientId: 'gateway',
-        pollInterval: 30000
+        pollInterval: 10_000
     })
 );
 
