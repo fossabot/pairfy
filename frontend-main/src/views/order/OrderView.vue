@@ -76,7 +76,7 @@
                                 <i class="pi pi-clone" />
                             </button>
                         </div>
-                        <Divider class="divider" :unstyled="true" />
+                        <Divider />
                         <div class="timeline">
                             <div class="timeline-item" v-for="item in timeline" :key="item">
                                 <div class="timeline-pipe">
@@ -224,12 +224,11 @@
                     </div>
                 </template>
 
-                <!--//////////////////////////////////////////////////////////////-->
 
                 <ProductComp v-if="currentNav === 1" />
+                <!--//////////////////////////////////////////////////////////////-->
 
-
-                <div class="column right">
+                <div class="panel">
                     <template v-if="getCurrentSeller || getCurrentUser">
                         <ChatComp v-if="orderData" />
                     </template>
@@ -657,13 +656,6 @@ onUnmounted(() => {
 .notes {
     overflow: hidden;
     word-break: break-word;
-}
-
-.divider {
-    border-color: var(--border-a);
-    background: var(--border-a);
-    margin: 1rem 0;
-    height: 1px;
 }
 
 .body {
