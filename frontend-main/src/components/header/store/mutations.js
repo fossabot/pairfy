@@ -1,11 +1,11 @@
 const currentSeller = (state, data) => {
-  state.sellerData = data
   sessionStorage.setItem('authToken', data.token)
+  state.sellerData = data
 }
 
 const currentUser = (state, data) => {
-  state.userData = data
   sessionStorage.setItem('authToken', data.token)
+  state.userData = data
 }
 
 const setLocation = (state, data) => {
