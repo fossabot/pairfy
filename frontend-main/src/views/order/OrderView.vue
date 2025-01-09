@@ -1,5 +1,7 @@
 <template>
     <div class="body">
+        <SellerLogin />
+
         <Dialog v-model:visible="notesDialog" modal header="Notes" :style="{ width: '20vw', height: '50vh' }"
             :draggable="false" dismissableMask>
             <template #header>
@@ -10,7 +12,8 @@
             </div>
         </Dialog>
 
-        <SellerLogin />
+        <!--//////////////////////////////////////////////////////////////-->
+
         <div class="container">
             <div class="nav flex">
                 <div class="nav-item" :class="{ selected: currentNav === 0 }" @click="currentNav = 0">
@@ -27,7 +30,7 @@
                 </div>
             </div>
             <div class="grid">
-                <!--SUMMARY-->
+                <!--//////////////////////////////////////////////////////////////-->
                 <template v-if="currentNav === 0">
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
@@ -220,12 +223,13 @@
                         </div>
                     </div>
                 </template>
-                <!--////////////////PRODUCT/////////////////////-->
 
-                    <ProductComp v-if="currentNav === 1"/>
+                <!--//////////////////////////////////////////////////////////////-->
+
+                <ProductComp v-if="currentNav === 1" />
 
                 <!--///////////////////////////////////////////-->
-                <div class="col right">
+                <div class="column right">
                     <template v-if="getCurrentSeller || getCurrentUser">
                         <ChatComp v-if="orderData" />
                     </template>
@@ -516,7 +520,7 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         globalTimestamp.value = getTimestamp(ORDER);
 
-  
+
     }
 }, { immediate: true })
 
@@ -949,6 +953,4 @@ onUnmounted(() => {
         transform: rotate(360deg);
     }
 }
-
-
 </style>
