@@ -7,6 +7,7 @@ export interface UtxoResponse {
 
 export const StateMachineDatum = Data.Object({
   state: Data.Integer(),
+  delivery: Data.Nullable(Data.Integer()),
 });
 
 type DatumType = Data.Static<typeof StateMachineDatum>;

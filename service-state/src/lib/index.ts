@@ -54,9 +54,9 @@ async function getUtxo(threadtoken: string): Promise<UtxoResponse> {
   };
 
   try {
-    const getUtxo = await lucid.utxoByUnit(
-      threadtoken + fromText("threadtoken")
-    );
+    const assetUnit = threadtoken + fromText("threadtoken");
+
+    const getUtxo = await lucid.utxoByUnit(assetUnit);
 
     if (!getUtxo) {
       response = {
