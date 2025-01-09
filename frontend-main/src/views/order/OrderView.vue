@@ -232,6 +232,9 @@
 
 
                 <ProductComp v-if="currentNav === 1" />
+
+                <TransactionsComp v-if="currentNav === 2"/>
+                
                 <!--//////////////////////////////////////////////////////////////-->
 
                 <div class="panel">
@@ -251,6 +254,7 @@ import gql from 'graphql-tag';
 import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
 import AddressComp from "@/views/order/AddressComp.vue";
+import TransactionsComp from "@/views/order/TransactionsComp.vue";
 import ProductComp from "@/views/order/ProductComp.vue";
 import SellerPad from "@/views/order/SellerPad.vue";
 import SellerLogin from "@/views/order/SellerLogin.vue";
@@ -745,11 +749,13 @@ onUnmounted(() => {
     font-size: var(--text-size-1);
     line-height: 2.5rem;
     color: var(--text-a);
+    font-weight: 500;
 }
 
 .summary-subtitle span {
     color: var(--text-b);
     margin-left: 0.5rem;
+    font-weight: 400;
 }
 
 .summary-subtitle button {

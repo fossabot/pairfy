@@ -121,7 +121,6 @@ onBeforeUnmount(() => {
     border: 1px solid var(--border-a);
     padding: 1rem;
     border-radius: 12px;
-    margin-top: 1rem;
 }
 
 
