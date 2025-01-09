@@ -83,6 +83,10 @@ type Order {
   shipping_until: Float!
   pending_tx: String
   pending_block: String
+  return_tx: String
+  return_block: String  
+  locking_tx: String
+  locking_block: String  
   shipping_tx: String
   shipping_block: String
   shipping_metadata: String
