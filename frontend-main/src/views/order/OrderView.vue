@@ -29,8 +29,11 @@
                     <div class="nav-item-border" :class="{ selected: currentNav === 2 }" />
                 </div>
             </div>
+
+        <!--//////////////////////////////////////////////////////////////-->
+
             <div class="grid">
-                <!--//////////////////////////////////////////////////////////////-->
+
                 <template v-if="currentNav === 0">
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
