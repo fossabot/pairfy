@@ -41,6 +41,15 @@ async function shippingTransactionBuilder(
 
   //////////////////////////////////////////////////
 
+  if (deliveryDate <= BigInt(stateMachineParams[6])) {
+    throw new Error("Invalid Delivery Date");
+  }
+
+  if (deliveryDate >= BigInt(stateMachineParams[7])) {
+    throw new Error("Delivery Date Limit");
+  }
+  //////////////////////////////////////////////////
+
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
@@ -118,8 +127,8 @@ async function shippingTransactionBuilder(
 
   const shippingInput = {
     Shipping: {
-      delivery_param: deliveryDate,
-    },
+      delivery_param: BigInt(deliveryDate),
+    }
   };
 
   const StateMachineInput = Data.Enum([
@@ -190,7 +199,7 @@ async function main() {
 
   const metadata = { msg: "what" };
 
-  const deliveryDate = BigInt(Date.now());
+  const deliveryDate = BigInt(Date.now()); ///parametrized 
 
   const BUILDER = await shippingTransactionBuilder(
     externalWalletAddress,

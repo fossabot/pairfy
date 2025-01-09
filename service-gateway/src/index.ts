@@ -109,6 +109,10 @@ const main = async () => {
       throw new Error("EXPIRING_RANGE error");
     }
     
+    if(!process.env.DELIVERY_RANGE){
+      throw new Error("DELIVERY_RANGE error");
+    }
+
     if (!process.env.PROJECT_ID) {
       throw new Error("PROJECT_ID error");
     }
