@@ -228,7 +228,7 @@
 
                 <ProductComp v-if="currentNav === 1" />
 
-                <!--///////////////////////////////////////////-->
+
                 <div class="column right">
                     <template v-if="getCurrentSeller || getCurrentUser">
                         <ChatComp v-if="orderData" />
