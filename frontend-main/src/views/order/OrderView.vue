@@ -278,7 +278,10 @@
                 </template>
                 <!--/////////////////////////////////////////-->
                 <div class="col right">
-                    <ChatComp v-if="orderData" />
+                    <template v-if="getCurrentSeller || getCurrentUser">
+                        <ChatComp v-if="orderData" />
+                    </template>
+
                     <AddressComp v-if="orderData" />
                 </div>
             </div>
