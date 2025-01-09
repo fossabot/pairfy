@@ -820,11 +820,11 @@ onUnmounted(() => {
 .summary-subtitle {
     font-size: var(--text-size-1);
     line-height: 2.5rem;
-    color: var(--text-b);
+    color: var(--text-a);
 }
 
 .summary-subtitle span {
-    color: var(--text-a);
+    color: var(--text-b);
     margin-left: 0.5rem;
 }
 

@@ -1,8 +1,8 @@
 <template>
     <div class="card" v-if="addressData">
         <div class="card-head flex">
-            <span> Destination</span>
-            <i class="pi pi-truck" />
+            <span>Shipping Address</span>
+            <i class="pi pi-box" />
         </div>
         <div class="card-body">
             <div class="card-item flex" v-for="(value, key) in addressData" :key="key">
@@ -46,7 +46,7 @@ const addressData = computed(() => {
 <style lang="css" scoped>
 .card {
     border-radius: 12px;
-    border: 1px solid var(--border-a);
+    border: 2px solid var(--border-a);
     margin-top: 1rem;
     width: 100%;
 }
@@ -87,7 +87,7 @@ const addressData = computed(() => {
 .card-notes{
     display: flex;
     width: inherit;
-    border-radius: 12px;
+    border-radius: 8px;
     padding: 1rem;
     background: var(--background-b);
 }
