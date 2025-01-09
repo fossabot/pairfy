@@ -221,62 +221,10 @@
                     </div>
                 </template>
                 <!--////////////////PRODUCT/////////////////////-->
-                <template v-if="currentNav === 1">
-                    <Skeleton v-if="!orderData" width="80%" height="100%" />
 
-                    <div class="product" v-if="orderData">
-                        <div class="product-header flex">
-                            <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
+                    <ProductComp v-if="currentNav === 1"/>
 
-                            <div class="product-name">
-                                Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
-                                GeForce RTX 4070
-                                - 16GB RAM - 1TB SSD - Black - Open Box
-                            </div>
-                        </div>
-
-                        <div class="product-card flex">
-                            <div class="product-card-box flex">
-                                <li class="flex">
-                                    <div>ID</div>
-                                    <div>{{ orderData.product_id }}</div>
-                                </li>
-                                <li class="flex">
-                                    <div>SKU</div>
-                                    <div>{{ orderData.product_sku.split(":")[0] }}</div>
-                                </li>
-                                <li class="flex">
-                                    <div>Brand</div>
-                                    <div>{{ orderData.product_brand }}</div>
-                                </li>
-                                <li class="flex">
-                                    <div>Price</div>
-                                    <div>{{ formatCurrency(orderData.product_price) }} USD</div>
-                                </li>
-                                <li class="flex">
-                                    <div>Collateral</div>
-                                    <div>{{ orderData.product_collateral }} ADA</div>
-                                </li>
-                                <li class="flex">
-                                    <div>Model</div>
-                                    <div>{{ orderData.product_model }}</div>
-                                </li>
-                            </div>
-                        </div>
-                        <div class="product-list">
-                            <ul>
-                                <li v-for="item of orderData.product_bullet_list.split(',')" :key="item">
-                                    {{ item }}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="product-features">
-                            <editor-content :editor="editor" />
-                        </div>
-                    </div>
-                </template>
-                <!--/////////////////////////////////////////-->
+                <!--///////////////////////////////////////////-->
                 <div class="col right">
                     <template v-if="getCurrentSeller || getCurrentUser">
                         <ChatComp v-if="orderData" />
@@ -294,16 +242,13 @@ import gql from 'graphql-tag';
 import orderAPI from "@/views/order/api/index";
 import UserPad from "@/views/order/UserPad.vue";
 import AddressComp from "@/views/order/AddressComp.vue";
+import ProductComp from "@/views/order/ProductComp.vue";
 import SellerPad from "@/views/order/SellerPad.vue";
 import SellerLogin from "@/views/order/SellerLogin.vue";
 import FinishedICon from "@/views/order/FinishedIcon.vue";
 import headerAPI from "@/components/header/api";
-import StarterKit from '@tiptap/starter-kit';
-import ListItem from '@tiptap/extension-list-item';
-import TextStyle from '@tiptap/extension-text-style';
 import ChatComp from "@/views/order/ChatComp.vue";
 import { ref, watch, computed, inject, onMounted, onUnmounted, onBeforeUnmount, nextTick } from 'vue';
-import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable';
 import { NETWORK } from '@/api';
@@ -571,9 +516,7 @@ const unwatchOrder = watch(getOrderResult, value => {
 
         globalTimestamp.value = getTimestamp(ORDER);
 
-        if (editor) {
-            editor.value.commands.setContent(JSON.parse(ORDER.product_features));
-        }
+  
     }
 }, { immediate: true })
 
@@ -622,25 +565,6 @@ function formatTime(input) {
 
 ////////////////////////////////////////////////////////////////
 
-const editor = ref(null);
-
-const setupEditor = async () => {
-    await nextTick(() => {
-        editor.value = new Editor({
-            editable: false,
-            extensions: [
-                StarterKit,
-                TextStyle.configure({ types: [ListItem.name] }),
-            ],
-            editorProps: {
-                attributes: {
-                    class: 'editor-class',
-                },
-            },
-            content: "",
-        })
-    });
-}
 
 //////////////////////////////////////////////
 
@@ -713,11 +637,9 @@ const openWebsite = (website) => {
 onMounted(() => {
     updateGlobalCountdown();
     globalInterval = setInterval(updateGlobalCountdown, 1000);
-    setupEditor();
 });
 
 onBeforeUnmount(() => {
-    editor.value.destroy()
     unwatchOrder()
     unwatchRoute()
 })
@@ -1028,94 +950,5 @@ onUnmounted(() => {
     }
 }
 
-.product {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-}
 
-.product-name {
-    font-weight: 500;
-    font-size: var(--text-size-3);
-    margin-left: 1rem;
-}
-
-.product-header {
-    border: 1px solid var(--border-a);
-    padding: 1rem;
-    border-radius: 12px;
-    margin-top: 1rem;
-}
-
-
-.product-header img {
-    width: 100px;
-    height: 100px;
-    padding: 0.5rem;
-    border-radius: 12px;
-    display: flex;
-    object-fit: contain;
-    justify-content: center;
-    align-items: center;
-}
-
-.product-card {
-    border: 1px solid var(--border-a);
-    border-radius: 12px;
-    padding: 1rem;
-    width: 100%;
-    margin-top: 1rem;
-    padding: 1rem;
-}
-
-.product-card-box {
-    display: block;
-    width: inherit;
-}
-
-.product-card-box li {
-    list-style: none;
-    justify-content: space-between;
-    font-size: var(--text-size-2);
-    font-weight: 500;
-    line-height: 2.25rem;
-}
-
-.product-card-box li div:nth-child(1) {
-    color: var(--text-b);
-}
-
-
-.product-list {
-    border: 1px solid var(--border-a);
-    padding: 1rem;
-    margin-top: 1rem;
-    border-radius: 12px;
-}
-
-.product-list ul {
-    padding-left: 1rem;
-    justify-content: space-between;
-    font-size: var(--text-size-1);
-}
-
-.product-list li {
-    line-height: 2.25rem;
-}
-
-.product-features {
-    border: 1px solid var(--border-a);
-    margin-top: 1rem;
-    border-radius: 12px;
-    padding: 1.5rem;
-}
-
-::v-deep(.product-features ul) {
-    padding-left: 1rem;
-}
-
-::v-deep(.editor-class) {
-    line-height: 2.25rem;
-    font-size: var(--text-size-0);
-}
 </style>
