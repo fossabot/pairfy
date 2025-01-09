@@ -46,7 +46,7 @@ const addressData = computed(() => {
 <style lang="css" scoped>
 .card {
     border-radius: 12px;
-    border: 2px solid var(--border-a);
+    border: 1px solid var(--border-a);
     margin-top: 1rem;
     width: 100%;
 }
