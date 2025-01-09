@@ -72,15 +72,13 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
 
     //////////////////////////////////////////////
 
-    const deliveryRange = parseInt(process.env.DELIVERY_RANGE as string);
-
-    const deliveryDate = Number(params.date) + deliveryRange;
+    const deliveryDate = BigInt(params.date) + BigInt(process.env.DELIVERY_RANGE as string);
 
     const BUILDER = await shippingTransactionBuilder(
       SELLER.address,
       ORDER.contract_params,
       metadata,
-      BigInt(deliveryDate)
+      deliveryDate
     );
 
     return {
