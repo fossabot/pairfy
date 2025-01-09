@@ -34,7 +34,7 @@
                 <template v-if="currentNav === 0">
                     <Skeleton v-if="!orderData" width="80%" height="100%" />
 
-                    <div class="summary" v-if="orderData">
+                    <div v-if="orderData" class="summary">
 
                         <div class="summary-title flex">
                             <template v-if="!isFinished">
@@ -47,12 +47,15 @@
                                 <span>{{ globalCountdown }}</span>
                             </template>
 
-                            <div v-if="isFinished">
-                                {{ orderTitle.finished }}
-                            </div>
+                            <template v-else="isFinished">
+                                <div>
+                                    {{ orderTitle.finished }}
+                                </div>
 
-                            <FinishedICon />
+                                <FinishedICon />
+                            </template>
                         </div>
+
                         <div class="summary-subtitle flex">
                             Order number
                             <div>
