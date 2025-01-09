@@ -19,11 +19,9 @@ async function shippingTransactionBuilder(
 ) {
   //////////////////////////////////////////////////
 
-  const now = Date.now();
+  const now = BigInt(Date.now());
 
-  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
-
-  const validToMs = BigInt(now + txValidTime);
+  const validToMs = Number(now + BigInt(process.env.TX_VALID_TIME as string));
 
   //////////////////////////////////////////////////
   /**
@@ -172,7 +170,7 @@ async function shippingTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
-    .validTo(Number(validToMs))
+    .validTo(validToMs)
     .attachMetadata(777, metadata)
     .complete({
       changeAddress: externalWalletAddress,

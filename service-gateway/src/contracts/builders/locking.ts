@@ -17,11 +17,9 @@ async function lockingTransactionBuilder(
 ) {
   //////////////////////////////////////////////////
 
-  const now = Date.now();
+  const now = BigInt(Date.now());
 
-  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
-
-  const validToMs = BigInt(now + txValidTime);
+  const validToMs = Number(now + BigInt(process.env.TX_VALID_TIME as string));
 
   //////////////////////////////////////////////////
   /**
@@ -60,12 +58,12 @@ async function lockingTransactionBuilder(
 
   const datumValues = {
     state: BigInt(1),
-    delivery: null
+    delivery: null,
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
-    delivery: Data.Nullable(Data.Integer())
+    delivery: Data.Nullable(Data.Integer()),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -124,7 +122,7 @@ async function lockingTransactionBuilder(
     Data.Literal("Locking"),
     Data.Object({
       Shipping: Data.Object({
-        delivery_param: Data.Integer()
+        delivery_param: Data.Integer(),
       }),
     }),
   ]);
@@ -160,7 +158,7 @@ async function lockingTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
-    .validTo(Number(validToMs))
+    .validTo(validToMs)
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: txCollateral,

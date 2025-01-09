@@ -24,37 +24,36 @@ async function pendingTransactionBuilder(
 ) {
   //////////////////////////////////////////////////
 
-  const now = Date.now();
+  const now = BigInt(Date.now());
 
-  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
+  const txValidTime = BigInt(process.env.TX_VALID_TIME as string);
 
-  const txWatchWindow = parseInt(process.env.TX_WATCH_WINDOW as string);
+  const txWatchWindow = BigInt(process.env.TX_WATCH_WINDOW as string);
 
-  const pendingRange = parseInt(process.env.PENDING_RANGE as string);
+  const pendingRange = BigInt(process.env.PENDING_RANGE as string);
 
-  const shippingRange = parseInt(process.env.SHIPPING_RANGE as string);
+  const shippingRange = BigInt(process.env.SHIPPING_RANGE as string);
 
-  const expiringRange = parseInt(process.env.EXPIRING_RANGE as string);
+  const expiringRange = BigInt(process.env.EXPIRING_RANGE as string);
+
   //////////////////////////////////////////////////
 
-  const validToMs = BigInt(now + txValidTime);
+  const validToMs = now + txValidTime;
 
-  const watchUntil = BigInt(now + txValidTime + txWatchWindow);
+  const watchUntil = now + txValidTime + txWatchWindow;
 
-  const pendingUntil = BigInt(now + txValidTime + txWatchWindow + pendingRange);
+  const pendingUntil = now + txValidTime + txWatchWindow + pendingRange;
 
-  const shippingUntil = BigInt(
-    now + txValidTime + txWatchWindow + pendingRange + shippingRange
-  );
+  const shippingUntil =
+    now + txValidTime + txWatchWindow + pendingRange + shippingRange;
 
-  const expireUntil = BigInt(
+  const expireUntil =
     now +
-      txValidTime +
-      txWatchWindow +
-      pendingRange +
-      shippingRange +
-      expiringRange
-  );
+    txValidTime +
+    txWatchWindow +
+    pendingRange +
+    shippingRange +
+    expiringRange;
 
   //////////////////////////////////////////////////
 
@@ -106,7 +105,7 @@ async function pendingTransactionBuilder(
     contractCollateral,
     pendingUntil,
     shippingUntil,
-    expireUntil
+    expireUntil,
   ];
 
   const serializedParams = serializeParams(stateMachineParams);
@@ -123,12 +122,12 @@ async function pendingTransactionBuilder(
 
   const datumValues = {
     state: BigInt(0),
-    delivery: null
+    delivery: null,
   };
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
-    delivery: Data.Nullable(Data.Integer())
+    delivery: Data.Nullable(Data.Integer()),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
@@ -185,7 +184,7 @@ async function pendingTransactionBuilder(
     watchUntil,
     pendingUntil,
     shippingUntil,
-    expireUntil
+    expireUntil,
   };
 }
 

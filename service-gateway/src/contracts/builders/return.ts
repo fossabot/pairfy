@@ -17,11 +17,9 @@ async function returnTransactionBuilder(
 ) {
   //////////////////////////////////////////////////
 
-  const now = Date.now();
+  const now = BigInt(Date.now());
 
-  const txValidTime = parseInt(process.env.TX_VALID_TIME as string);
-
-  const validToMs = BigInt(now + txValidTime);
+  const validToMs = Number(now + BigInt(process.env.TX_VALID_TIME as string));
 
   //////////////////////////////////////////////////
   /**
@@ -147,7 +145,7 @@ async function returnTransactionBuilder(
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
-    .validTo(Number(validToMs))
+    .validTo(validToMs)
     .complete({
       changeAddress: externalWalletAddress,
       setCollateral: txCollateral,
