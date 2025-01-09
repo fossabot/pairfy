@@ -355,7 +355,7 @@ const orderTitle = computed(
 const timeline = ref([
     {
         number: 1,
-        title: "Order Created",
+        title: "Created",
         subtitle: {
             buyer: "The seller has been notified to prepare your package.",
             seller: `Please verify the payment and click the "Accept The Order" button.`
@@ -887,7 +887,7 @@ onUnmounted(() => {
 .timeline-title {
     min-height: 50px;
     font-weight: 600;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
 }
 
 .timeline-subtitle {
@@ -909,7 +909,7 @@ onUnmounted(() => {
 .diamond {
     width: 20px;
     height: 20px;
-    background: var(--background-b);
+    background: var(--border-a);
     transform: rotate(45deg);
     display: flex;
     justify-content: center;
