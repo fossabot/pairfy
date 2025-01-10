@@ -128,6 +128,7 @@ const openExplorer = (value) => {
     background: var(--background-b);
     padding: 0.5rem;
     border-radius: 8px;
+    font-size: var(--text-size-1);
 }
 
 .explore {
