@@ -4,7 +4,7 @@ use cardano/assets.{PolicyId}
 use cardano/assets
 use aiken/collection/dict
 use aiken/crypto.{VerificationKeyHash}
-use cardano/address.{Address, Script}
+use cardano/address.{Address, Script, VerificationKey }
 use aiken/interval
 
 type POSIXTime =
@@ -52,6 +52,7 @@ pub type StateMachineInput {
   Return
   Locking
   Shipping { delivery_param: POSIXTime }
+  Received
 }
 
 validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer: VerificationKeyHash, price: Int, collateral: Int, pending_until: POSIXTime, shipping_until: POSIXTime, expire_until: POSIXTime) {
@@ -155,7 +156,8 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             let after_range = delivery_param > shipping_until
 
             let before_range = delivery_param < expire_until
-
+            
+            //Both conditions must be true.
             let must_be_range = and {
               after_range,
 
@@ -192,12 +194,55 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
               must_be_datum?
             }
           }
+
+          (StateMachineDatum{ state, .. }, Received) -> {
+            let must_be_state = state == 2
+            
+            let must_be_time = when self.validity_range.lower_bound.bound_type is {
+              interval.Finite(tx_earliest_time) -> tx_earliest_time > shipping_until 
+              _ -> False
+              }
+
+            let must_be_signed = list.has(self.extra_signatories, buyer)
+
+            //One of the transaction inputs belongs to the statemachine.
+            expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
+
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
+            
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
+            
+            //One of the transaction outputs addressed to the seller.
+            expect Some(seller_output) = list.find(self.outputs, fn(output) { output.address.payment_credential == VerificationKey(seller) })
+
+            let must_be_value = assets.lovelace_of(seller_output.value) == price + collateral            
+                        
+            //verification of the new datum.
+            let new_data: Data = StateMachineDatum {
+              state: 3,
+              delivery: None
+            }
+
+            //verification of the new datum.
+            let must_be_datum = InlineDatum(new_data) == sm_output.datum
+
+            and {
+              must_be_state?,
+              must_be_time?,
+              must_be_signed?,
+              must_be_policy?,
+              must_be_value?,
+              must_be_datum?
+            }
+          }
         }
   }
 }
 
 
-/////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////RETURN
 
 test statemachine_return() {
   let own_ref =
@@ -289,7 +334,7 @@ test statemachine_return() {
   statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
-//////////////////////////////////////////////LOCKING
+////////////////////////////////////////////////////////////////////////LOCKING
 
 test statemachine_locking() {
   let own_ref =
@@ -382,7 +427,7 @@ test statemachine_locking() {
   statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
-//////////////////////////////////////////////SHIPPING
+////////////////////////////////////////////////////////////////////////SHIPPING
 
 test statemachine_shipping() {
   let own_ref =
@@ -477,5 +522,118 @@ test statemachine_shipping() {
   statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
+
+////////////////////////////////////////////////////////////////////////RECEIVED
+
+
+test statemachine_received() {
+  let own_ref =
+    OutputReference {
+      transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
+      output_index: 0,
+    }
+  let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
+  let token_name = #"02"
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
+  let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
+  let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let pending_until = 3
+  let shipping_until = 6
+  let expire_until = 10
+  let price = 50_000_000
+  let collateral = 25_000_000
+  let delivery_param = 9
+
+  ////////////////////////INPUT///////////////////////////  
+
+  let old_datum = StateMachineDatum {
+    state: 2,
+    delivery: Some(delivery_param)
+  }
+
+  let input_utxo =
+    Input {
+      output_reference: own_ref,
+      output: Output {
+        address: Address {
+          payment_credential: Script(own_script_hash),
+          stake_credential: None,
+        },
+        value: assets.add(
+          assets.from_lovelace(price),
+          threadtoken,
+          token_name,
+          1,
+        ),
+        datum: NoDatum,
+        reference_script: None,
+      },
+    }
+
+  ////////////////////////////////////////////////////////  
+
+  let new_data: Data = StateMachineDatum {
+      state: 3,
+      delivery: None
+  }  
+
+  let new_datum = InlineDatum(new_data)
+
+  let sm_output =
+    Output {
+      address: Address {
+        payment_credential: Script(own_script_hash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(price + collateral),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: new_datum,
+      reference_script: None,
+    }
+
+  let seller_output =
+    Output {
+      address: Address {
+        payment_credential: VerificationKey(seller_pubkeyhash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(price + collateral),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: NoDatum,
+      reference_script: None,
+    }  
+
+  let redeemer = Received  //StateMachineInput
+
+  let transaction =
+    Transaction {
+      inputs: [input_utxo],
+      reference_inputs: [],
+      outputs: [sm_output, seller_output],
+      fee: transaction.placeholder.fee,
+      mint: transaction.placeholder.mint,
+      certificates: [],
+      withdrawals: [],
+      validity_range: interval.after(shipping_until + 1),
+      extra_signatories: [buyer_pubkeyhash],
+      redeemers: [],
+      datums: transaction.placeholder.datums,
+      id: transaction.placeholder.id,
+      votes: transaction.placeholder.votes,
+      proposal_procedures: transaction.placeholder.proposal_procedures,
+      current_treasury_amount: transaction.placeholder.current_treasury_amount,
+      treasury_donation: transaction.placeholder.treasury_donation
+    }
+
+  statemachine.spend(threadtoken, seller_pubkeyhash, buyer_pubkeyhash, price, collateral, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
+}
 
 
