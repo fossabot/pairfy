@@ -119,8 +119,6 @@ async function shippingTransactionBuilder(
 
   const stateMachineAddress = validatorToAddress(NETWORK, stateMachineScript);
 
-  console.log(stateMachineAddress);
-
   ////////////////////////////////////////////
 
   const shippingInput = {
@@ -149,8 +147,6 @@ async function shippingTransactionBuilder(
 
   const lovelaceToSM =
     BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
-
-  console.log(lovelaceToSM);
 
   const transaction = await lucid
     .newTx()

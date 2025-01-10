@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Login" fluid @click="doLogin" />
+                    <Button label="Login" fluid @click="doLogin" style="color: var(--text-w)" />
                 </div>
             </div>
         </div>
@@ -274,7 +274,7 @@ onBeforeUnmount(() => {
 }
 
 .wallets-item.selected {
-    border: 1px solid var(--primary-c);
+    border: 1px solid var(--primary-a);
 }
 
 .control {
