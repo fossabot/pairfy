@@ -4,12 +4,15 @@
             <div class="card-head flex">
                 <span>Pending</span>
 
-                <span class="ago">{{ formatAgo(getOrderData.order.pending_block) }}</span>
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.pending_block) }}
+                </span>
             </div>
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.pending_tx || "None" }}</span>
                 <span class="explore" @click="openExplorer(getOrderData.order.pending_tx)" v-tooltip.top="'Explore'">
-                    <i class="pi pi-globe"/>
+                    <i class="pi pi-globe" />
                 </span>
             </div>
         </div>
@@ -37,7 +40,7 @@
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.locking_tx || "None" }}</span>
                 <span class="explore" @click="openExplorer(getOrderData.order.locking_tx)" v-tooltip.top="'Explore'">
-                    <i class="pi pi-globe"/>
+                    <i class="pi pi-globe" />
                 </span>
             </div>
         </div>
@@ -85,11 +88,16 @@ const openExplorer = (value) => {
 
 .card-body {
     padding: 1rem;
-
+ display: flex;
+ align-items: center;
 }
 
 .ago {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
+}
+
+.ago i{
+    margin-right: 0.5rem;
 }
 
 .mask {
@@ -98,7 +106,7 @@ const openExplorer = (value) => {
     border-radius: 8px;
 }
 
-.explore{
+.explore {
     padding: 1rem;
     color: var(--text-b);
     cursor: pointer;
