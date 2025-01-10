@@ -8,6 +8,23 @@
             </div>
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.pending_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.pending_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe"/>
+                </span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head flex">
+                <span>Return</span>
+
+                <span class="ago">{{ formatAgo(getOrderData.order.return_block) }}</span>
+            </div>
+            <div class="card-body">
+                <span class="mask">{{ getOrderData.order.return_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.return_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe" />
+                </span>
             </div>
         </div>
 
@@ -19,15 +36,18 @@
             </div>
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.locking_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.locking_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe"/>
+                </span>
             </div>
         </div>
-
     </div>
 </template>
 
 <script setup>
 import orderAPI from "@/views/order/api/index";
 import { format } from 'timeago.js';
+import { NETWORK } from '@/api';
 
 const { getOrderData } = orderAPI();
 
@@ -37,6 +57,10 @@ const formatAgo = (date) => {
     }
 
     return format(date * 1000, 'en_US');
+}
+
+const openExplorer = (value) => {
+    window.open(`https://${NETWORK}.cexplorer.io/tx/${value}`, '_blank');
 }
 
 </script>
@@ -72,5 +96,11 @@ const formatAgo = (date) => {
     background: var(--background-b);
     padding: 0.5rem;
     border-radius: 8px;
+}
+
+.explore{
+    padding: 1rem;
+    color: var(--text-b);
+    cursor: pointer;
 }
 </style>
