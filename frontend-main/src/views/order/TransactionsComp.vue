@@ -21,7 +21,10 @@
             <div class="card-head flex">
                 <span>Return</span>
 
-                <span class="ago">{{ formatAgo(getOrderData.order.return_block) }}</span>
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.return_block) }}
+                </span>
             </div>
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.return_tx || "None" }}</span>
@@ -35,11 +38,32 @@
             <div class="card-head flex">
                 <span>Locking</span>
 
-                <span class="ago">{{ formatAgo(getOrderData.order.locking_block) }}</span>
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.locking_block) }}
+                </span>
             </div>
             <div class="card-body">
                 <span class="mask">{{ getOrderData.order.locking_tx || "None" }}</span>
                 <span class="explore" @click="openExplorer(getOrderData.order.locking_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe" />
+                </span>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-head flex">
+                <span>Shipping</span>
+
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.shipping_block) }}
+                </span>
+            </div>
+            <div class="card-body">
+                <span class="mask">{{ getOrderData.order.shipping_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.shipping_tx)" v-tooltip.top="'Explore'">
                     <i class="pi pi-globe" />
                 </span>
             </div>
