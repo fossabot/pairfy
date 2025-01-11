@@ -42,6 +42,8 @@ create table if not exists orders(
   shipping_tx varchar(200) default null,
   shipping_block varchar(200) default null,
   shipping_metadata text default null,
+  received_tx varchar(200) default null,
+  received_block varchar(200) default null,
   updated_at timestamp default current_timestamp,
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,

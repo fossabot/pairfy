@@ -65,7 +65,7 @@ onDone(async result => {
 
     if (response.receivedEndpoint.success === true) {
         try {
-            const { cbor } = response.returnFunds.payload;
+            const { cbor } = response.receivedEndpoint.payload;
 
             const txHash = await balanceTx(cbor);
 

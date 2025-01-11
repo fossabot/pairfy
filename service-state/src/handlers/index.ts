@@ -5,6 +5,7 @@ import { handlePending } from "./pending.js";
 import { handleReturn } from "./return.js";
 import { handleLocking } from "./locking.js";
 import { handleShipping } from "./shipping.js";
+import { handleReceived } from "./received.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -95,6 +96,18 @@ async function scanThreadToken(job: any) {
             buyer_address,
             seller_address
             );
+          break; 
+        case 3n:
+          await handleReceived(
+            connection,
+            threadtoken,
+            timestamp,
+            utxo,
+            seller_id,
+            buyer_pubkeyhash,
+            buyer_address,
+            seller_address
+            );   
           break;          
       }
     } else {
