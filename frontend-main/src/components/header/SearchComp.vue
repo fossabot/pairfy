@@ -23,24 +23,22 @@ const isFocus = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 999px;
+    border-radius: 5px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid transparent;
     overflow: hidden;
 
 }
 
 .search.focus {
     background: var(--background-b);
-    border: 1px solid transparent;
     outline: 2px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), transparent 60%);
     outline-offset: 1px;
 }
 
 .search-input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0 1rem;
     border: none;
     outline: none;
     font-size: var(--text-size-1);
@@ -56,10 +54,11 @@ const isFocus = ref(false);
 
 .search-button {
     padding: 0 1rem;
-    height: 44px;
+    height: 42px;
     border: none;
-    background: transparent;
+    background: var(--primary-a);
     cursor: pointer;
+    color: var(--text-w);
 }
 
 .search-button i{
@@ -71,7 +70,7 @@ const isFocus = ref(false);
 }
 
 .search-button:hover {
-    background: var(--primary-b);
+   opacity: 0.9;
 }
 
 .search-icon {

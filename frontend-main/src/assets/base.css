@@ -39,9 +39,9 @@
 
   --p-tag-font-weight: 500 !important;
 
-  --p-badge-min-width: 1rem  !important;
+  --p-badge-min-width: 14px !important;
 
-  --p-badge-height: 1rem !important;
+  --p-badge-height: 14px !important;
 
   --p-overlaybadge-outline-width: 0px !important;
 
