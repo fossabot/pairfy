@@ -79,6 +79,7 @@ onLockingFundsDone(async result => {
 
 onLockingFundsError(error => {
     showError(error)
+    isLoading.value = false;
 })
 
 const onLockingFunds = () => {

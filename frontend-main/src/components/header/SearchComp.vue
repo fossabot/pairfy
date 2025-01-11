@@ -3,7 +3,7 @@
         :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search products"
             @focus="isFocus = true" @blur="isFocus = false">
-        <button class="search-button" :class="{ focus: isFocus }">
+        <button class="search-button flex" :class="{ focus: isFocus }"> 
             <i class="pi pi-search" />
         </button>
     </div>
@@ -60,6 +60,10 @@ const isFocus = ref(false);
     border: none;
     background: transparent;
     cursor: pointer;
+}
+
+.search-button i{
+    font-weight: 600;
 }
 
 .search-button.focus {

@@ -135,6 +135,7 @@ async function shippingTransactionBuilder(
         delivery_param: Data.Integer(),
       }),
     }),
+    Data.Literal("Received"),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;

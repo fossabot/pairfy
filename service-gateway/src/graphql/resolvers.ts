@@ -5,6 +5,7 @@ import { getOrder } from "./orders/get-order.js";
 import { lockingFunds } from "./orders/locking.js";
 import { returnFunds } from "./orders/return.js";
 import { dispatchProduct } from "./orders/shipping.js";
+import { receivedEndpoint } from "./orders/received.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
@@ -65,7 +66,8 @@ const orders = {
     createOrder,
     returnFunds,
     lockingFunds,
-    dispatchProduct
+    dispatchProduct,
+    receivedEndpoint
   },
 };
 

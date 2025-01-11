@@ -2,7 +2,7 @@
     <div class="transactions">
         <div class="card">
             <div class="card-head flex">
-                <span>Pending</span>
+                <span>Pending State</span>
 
                 <span class="ago flex">
                     <i class="pi pi-clock" />
@@ -19,7 +19,7 @@
 
         <div class="card">
             <div class="card-head flex">
-                <span>Return</span>
+                <span>Return State</span>
 
                 <span class="ago flex">
                     <i class="pi pi-clock" />
@@ -36,7 +36,7 @@
 
         <div class="card">
             <div class="card-head flex">
-                <span>Locking</span>
+                <span>Locking State</span>
 
                 <span class="ago flex">
                     <i class="pi pi-clock" />
@@ -54,7 +54,7 @@
 
         <div class="card">
             <div class="card-head flex">
-                <span>Shipping</span>
+                <span>Shipping State</span>
 
                 <span class="ago flex">
                     <i class="pi pi-clock" />
@@ -105,9 +105,10 @@ const openExplorer = (value) => {
 
 .card-head {
     border-bottom: 1px solid var(--border-a);
-    padding: 0.5rem 1rem;
+    padding: 1rem;
     font-weight: 500;
     justify-content: space-between;
+    font-size: var(--text-size-1);
 }
 
 .card-body {
@@ -118,6 +119,7 @@ const openExplorer = (value) => {
 
 .ago {
     font-size: var(--text-size-0);
+    color: var(--text-b);
 }
 
 .ago i{

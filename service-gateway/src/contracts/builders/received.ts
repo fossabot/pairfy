@@ -10,8 +10,8 @@ import { deserializeParams, lucid, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
-/**Generates a CBOR transaction to be signed and sent in the browser by the seller to take the order before pending_until. */
-async function lockingTransactionBuilder(
+/**Generates a CBOR transaction to be signed and sent in the browser by the buyer */
+async function receivedTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string
 ) {
@@ -43,10 +43,7 @@ async function lockingTransactionBuilder(
 
   const txCollateral = 5_000_000n;
 
-  const productCollateral = BigInt(stateMachineParams[4]);
-
-  const minLovelace =
-    productCollateral < txCollateral ? txCollateral : productCollateral;
+  const minLovelace = txCollateral 
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -57,7 +54,7 @@ async function lockingTransactionBuilder(
   ///////////////////////////////////////////////////
 
   const datumValues = {
-    state: BigInt(1),
+    state: BigInt(3),
     delivery: null,
   };
 
@@ -85,12 +82,12 @@ async function lockingTransactionBuilder(
 
     console.log(data);
 
-    if (data.state !== 0n) {
+    if (data.state !== 2n) {
       throw new Error("WRONG_STATE");
     }
   }
 
-  ///////////////////////////////////////
+ //////////////////////////////////////////////////
 
   const stateMachineScript: SpendingValidator = {
     type: "PlutusV3",
@@ -111,11 +108,9 @@ async function lockingTransactionBuilder(
 
   const stateMachineAddress = validatorToAddress(NETWORK, stateMachineScript);
 
-  console.log(stateMachineAddress);
-
   ////////////////////////////////////////////
 
-  const lockingInput = "Locking";
+  const receivedInput = "Received";
 
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
@@ -132,14 +127,13 @@ async function lockingTransactionBuilder(
 
   const InputType = StateMachineInput as unknown as InputType;
 
-  const stateMachineRedeemer = Data.to(lockingInput, InputType);
+  const stateMachineRedeemer = Data.to(receivedInput, InputType);
 
   ///////////////////////////////////////////
 
-  const lovelaceToSM =
+  const lovelaceToSeller =
     BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
 
-  console.log(lovelaceToSM);
 
   const transaction = await lucid
     .newTx()
@@ -153,7 +147,7 @@ async function lockingTransactionBuilder(
       },
       {
         [threadTokenUnit]: 1n,
-        lovelace: lovelaceToSM,
+        lovelace: lovelaceToSeller,
       }
     )
     .attach.SpendingValidator(stateMachineScript)
@@ -183,7 +177,7 @@ async function main() {
   const serializedParams =
     "0a09d13dacc36caa75855765930e3f93f840f7e07ea72b05fe31ece2,a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141,746bff9fb367bf3bb1b25fe24a272bb288d62a2cad1aad2e37a8173f,30000000,10000000,1734559401711";
 
-  const BUILDER = await lockingTransactionBuilder(
+  const BUILDER = await receivedTransactionBuilder(
     externalWalletAddress,
     serializedParams
   );
@@ -201,6 +195,6 @@ async function main() {
 
 //main();
 
-export { lockingTransactionBuilder };
+export { receivedTransactionBuilder };
 
 //two signature, collateral, validto, paramterice price, collateral, seller, buyer
