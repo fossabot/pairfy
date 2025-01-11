@@ -298,7 +298,6 @@ onBeforeUnmount(() => {
 }
 
 .header {
-    height: 100px;
     border-bottom: 1px solid var(--border-a);
     padding: 1rem;
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="pad">
+    <div class="pad flex">
         <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds"
             style="color: var(--text-w);" :loading="true">
             <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5"
