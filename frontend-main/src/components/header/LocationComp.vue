@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .location {
     height: 42px;
-    color: var(--text-a);
+    color: inherit;
     white-space: nowrap;
     text-align: start;
     margin: 0 auto;

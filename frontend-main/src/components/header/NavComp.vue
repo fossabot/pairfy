@@ -39,6 +39,7 @@ const { formatPriceToUSD } = inject('utils');
 .nav {
     justify-content: space-between;
     width: inherit;
+    color: inherit;
 }
 
 .nav span {
@@ -52,6 +53,7 @@ const { formatPriceToUSD } = inject('utils');
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;
+    color: var(--text-a);
 }
 
 .categories span{

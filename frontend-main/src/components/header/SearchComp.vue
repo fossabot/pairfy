@@ -23,18 +23,18 @@ const isFocus = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 999px;
     width: 100%;
     margin: 0 auto;
-    border: 1px solid var(--border-b);
+    border: 1px solid transparent;
     overflow: hidden;
 
 }
 
 .search.focus {
     background: var(--background-b);
-    border: 1px solid var(--text-a);
-    outline: 2px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), transparent 5%);
+    border: 1px solid transparent;
+    outline: 2px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), transparent 60%);
     outline-offset: 1px;
 }
 
@@ -49,17 +49,16 @@ const isFocus = ref(false);
     font-weight: 500;
 }
 
-.search-input::placeholder{
+.search-input::placeholder {
     color: var(--text-b);
     opacity: 0.5;
 }
 
 .search-button {
     padding: 0 1rem;
-    height: 40px; 
+    height: 44px;
     border: none;
-    background: color-mix(in srgb,var(--primary-c),transparent 60%);
-    border-radius: 0 3px 3px 0;
+    background: transparent;
     cursor: pointer;
 }
 

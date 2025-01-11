@@ -10,13 +10,11 @@
 
 <style lang="css" scoped>
 .button {
-    color: var(--text-a);
     display: flex;
     flex-direction: column;
     font-weight: 600;
     margin: auto;
     justify-content: center;
-    font-size: var(--text-size-0);
     width: 42px;
     height: 42px;
 }
@@ -26,14 +24,15 @@
 }
 
 .cart {
-    background: var(--text-a);
+    background: var(--background-a);
     border-radius: 20px;
-    color: var(--text-w);
+    color: var(--text-a);
     height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
     padding: 0 1rem;
+    font-size: var(--text-size-0);
 }
 </style>

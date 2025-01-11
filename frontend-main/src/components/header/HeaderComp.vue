@@ -35,7 +35,6 @@ import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
-import NotificationComp from "./NotificationComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
@@ -121,6 +120,7 @@ header {
     width: 100%;
     font-size: var(--text-size-1);
     color: var(--text-w);
+    background: var(--background-c);
 }
 
 section {
@@ -129,7 +129,7 @@ section {
 }
 
 .header {
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
 }
 
 .brand {
@@ -164,7 +164,7 @@ section {
 }
 
 .menu {
-    color: var(--text-a);
+    color: inherit;
     padding: 0.75rem 0;
     max-width: 1600px;
     width: 100%;
