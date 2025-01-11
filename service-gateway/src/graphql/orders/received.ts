@@ -24,7 +24,7 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
              contract_params,
              contract_state
        FROM orders          
-       WHERE id = ? AND buyer_id = ?`,
+       WHERE id = ? AND buyer_pubkeyhash = ?`,
       [params.order_id, BUYER.pubkeyhash]
     );
 

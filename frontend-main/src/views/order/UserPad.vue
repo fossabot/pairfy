@@ -1,8 +1,7 @@
 <template>
     <div class="pad">
-        <Button :disabled="disableReceived" style="color: var(--text-w)">
-            Product Received
-        </Button>
+
+        <PackageReceived />
 
         <Button v-if="!currentState || currentState === 0" type="button" :disabled="disableReturn"
             @click="onReturnFunds" variant="text">
@@ -13,8 +12,7 @@
             </span>
         </Button>
 
-        <Button v-if="currentState === 1" type="button"  :disabled="disableCancel" @click="onReturnFunds"
-            variant="text">
+        <Button v-if="currentState === 1" type="button" :disabled="disableCancel" @click="onReturnFunds" variant="text">
             <span>Cancel Order</span>
 
             <span v-if="shippingCountdown !== '00:00'">
@@ -22,8 +20,7 @@
             </span>
         </Button>
 
-        <Button type="button"  label="Appeal" :disabled="true" @click="onReturnFunds" variant="text"
-            :loading="false" />
+        <Button type="button" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text" :loading="false" />
 
     </div>
 </template>
@@ -31,16 +28,18 @@
 <script setup>
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
+import PackageReceived from '@/views/order/PackageReceived.vue';
 import { computed, ref, onMounted, onUnmounted } from "vue";
-import { useMutation } from '@vue/apollo-composable'
+import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
+
 
 const toast = useToast();
 
 const { getOrderData } = orderAPI();
 
-const { mutate: returnFunds, loading: returnFundsLoading, onDone: onReturnFundsDone, onError: onReturnFundsError } = useMutation(gql`
+const { mutate: returnFunds, onDone: onReturnFundsDone, onError: onReturnFundsError } = useMutation(gql`
       mutation($returnFundsVariable: ReturnFundsInput!) {
         returnFunds(returnFundsInput: $returnFundsVariable) {
           success
@@ -95,8 +94,6 @@ const currentState = computed(() => getOrderData.value?.order?.contract_state ||
 const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
 
 const disableCancel = computed(() => shippingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
-
-const disableReceived = computed(() => getOrderData.value?.order?.finished || getOrderData.value?.order?.contract_state !== 2);
 
 ///////////////////////////////////////////////////////////////////
 
