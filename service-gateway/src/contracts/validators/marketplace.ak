@@ -197,11 +197,6 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
 
           (StateMachineDatum{ state, .. }, Received) -> {
             let must_be_state = state == 2
-            
-            let must_be_time = when self.validity_range.lower_bound.bound_type is {
-              interval.Finite(tx_earliest_time) -> tx_earliest_time > shipping_until 
-              _ -> False
-              }
 
             let must_be_signed = list.has(self.extra_signatories, buyer)
 
@@ -230,7 +225,6 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
 
             and {
               must_be_state?,
-              must_be_time?,
               must_be_signed?,
               must_be_policy?,
               must_be_value?,

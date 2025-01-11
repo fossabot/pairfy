@@ -190,7 +190,7 @@
         </div>
 
         <div class="card-available">
-            <span>In Stock (15)</span>
+            <span>Available (15)</span>
         </div>
 
         <div class="card-control">
@@ -518,7 +518,7 @@ a {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .card-full {
@@ -661,7 +661,7 @@ a {
 
 .card-subterm-icon span {
     position: absolute;
-    right: 12px;
+    right: 11px;
     top: 3px;
     font-size: 10px;
 }

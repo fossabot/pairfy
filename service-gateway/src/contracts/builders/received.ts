@@ -13,7 +13,8 @@ const NETWORK = "Preprod";
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer */
 async function receivedTransactionBuilder(
   externalWalletAddress: string,
-  serializedParams: string
+  serializedParams: string,
+  sellerAddress: string
 ) {
   //////////////////////////////////////////////////
 
@@ -43,7 +44,7 @@ async function receivedTransactionBuilder(
 
   const txCollateral = 5_000_000n;
 
-  const minLovelace = txCollateral 
+  const minLovelace = txCollateral;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
@@ -87,7 +88,7 @@ async function receivedTransactionBuilder(
     }
   }
 
- //////////////////////////////////////////////////
+  //////////////////////////////////////////////////
 
   const stateMachineScript: SpendingValidator = {
     type: "PlutusV3",
@@ -134,7 +135,6 @@ async function receivedTransactionBuilder(
   const lovelaceToSeller =
     BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
 
-
   const transaction = await lucid
     .newTx()
     .collectFrom([utxo], stateMachineRedeemer)
@@ -147,9 +147,10 @@ async function receivedTransactionBuilder(
       },
       {
         [threadTokenUnit]: 1n,
-        lovelace: lovelaceToSeller,
+        lovelace: 0n,
       }
     )
+    .pay.ToAddress(sellerAddress, { lovelace: lovelaceToSeller })
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())
@@ -177,9 +178,12 @@ async function main() {
   const serializedParams =
     "0a09d13dacc36caa75855765930e3f93f840f7e07ea72b05fe31ece2,a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141,746bff9fb367bf3bb1b25fe24a272bb288d62a2cad1aad2e37a8173f,30000000,10000000,1734559401711";
 
+  const sellerAddress = "add";
+
   const BUILDER = await receivedTransactionBuilder(
     externalWalletAddress,
-    serializedParams
+    serializedParams,
+    sellerAddress
   );
 
   console.log("CBOR---------------------------------------");

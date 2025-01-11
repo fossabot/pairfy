@@ -21,6 +21,7 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
       `SELECT
              id,
              finished,
+             seller_address,
              contract_params,
              contract_state
        FROM orders          
@@ -50,7 +51,8 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
 
     const BUILDER = await receivedTransactionBuilder(
       BUYER.address,
-      ORDER.contract_params
+      ORDER.contract_params,
+      ORDER.seller_address
     );
 
     return {
