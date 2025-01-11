@@ -501,7 +501,6 @@ a {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
-    font-weight: 600;
 }
 
 .card-within {
