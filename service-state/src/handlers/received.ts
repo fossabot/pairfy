@@ -15,7 +15,8 @@ async function handleReceived(
 
   const updateQuery = `
     UPDATE orders
-    SET scanned_at = ?,
+    SET finished = ?,
+        scanned_at = ?,
         status_log = ?,
         contract_state = ?,
         received_tx = ?,
@@ -25,12 +26,12 @@ async function handleReceived(
   const receivedTx = utxo.txHash + "#" + utxo.outputIndex;
 
   await connection.execute(updateQuery, [
+    true,
     timestamp,
     statusLog,
     utxo.data.state,
     receivedTx,
     utxo.block_time,
-    utxo.metadata,
     threadtoken,
   ]);
 

@@ -6,7 +6,7 @@
         <div class="card">
             <div class="form">
                 <div class="title">
-                    <span>Fill out the form with the verified information.</span>
+                    <span>Fill out the form.</span>
                 </div>
 
                 <div class="row">
@@ -113,7 +113,6 @@ onDispatchProductDone(async result => {
     if (response.dispatchProduct.success === true) {
         try {
 
-
             const { cbor } = response.dispatchProduct.payload;
 
             showSuccess("Preparing", `Don't close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
@@ -125,6 +124,8 @@ onDispatchProductDone(async result => {
             console.log(`Transaction submitted with hash: ${txHash}`);
 
             isLoading.value = false;
+
+            dispatchDialog.value = false;
 
         } catch (err) {
             console.error(err);

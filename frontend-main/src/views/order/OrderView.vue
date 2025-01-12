@@ -496,7 +496,7 @@ const shippingStatus = computed(() => {
     }
 
     if (state === 3) {
-        return "the package has been received"
+        return "package received"
     }
     return "-"
 });
@@ -638,6 +638,10 @@ const getTimestamp = (order) => {
 
     if (order.contract_state === 2) {
         return shippingData.value.date
+    }
+
+    if (order.contract_state === 3) {
+        return Date.now()
     }
 }
 

@@ -20,6 +20,10 @@ const color = computed(() => {
         if (getOrderData.value?.order?.contract_state === -1) {
             return 'red'
         }
+
+        if (getOrderData.value?.order?.contract_state === 3) {
+            return 'green'
+        }
     }
 
     return false
@@ -35,7 +39,6 @@ const color = computed(() => {
     height: 50px;
     position: absolute;
     z-index: 100;
-    color: var(--text-w);
     align-items: center;
     justify-content: center;
     border-radius: 50%;
@@ -52,6 +55,7 @@ const color = computed(() => {
 .icon i {
     font-size: 20px;
     font-weight: bold;
+    color: var(--text-w);
 }
 
 .circle {

@@ -132,11 +132,9 @@ async function receivedTransactionBuilder(
 
   ///////////////////////////////////////////
 
-  const lovelaceToSeller =
+  const lovelaceToSM =
     BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
 
-  const lovelaceToPool =  2_000_000n;
-  
   ///////////////////////////////////////////
   const transaction = await lucid
     .newTx()
@@ -150,10 +148,9 @@ async function receivedTransactionBuilder(
       },
       {
         [threadTokenUnit]: 1n,
-        lovelace: lovelaceToPool,
+        lovelace: lovelaceToSM,
       }
     )
-    .pay.ToAddress(sellerAddress, { lovelace: lovelaceToSeller - lovelaceToPool })
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
     .validFrom(Date.now())

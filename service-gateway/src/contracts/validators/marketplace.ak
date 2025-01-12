@@ -209,10 +209,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
             let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
             
-            //One of the transaction outputs addressed to the seller.
-            expect Some(seller_output) = list.find(self.outputs, fn(output) { output.address.payment_credential == VerificationKey(seller) })
-
-            let must_be_value = assets.lovelace_of(seller_output.value) == price + collateral            
+            let must_be_value = assets.lovelace_of(sm_output.value) == price + collateral            
                         
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
