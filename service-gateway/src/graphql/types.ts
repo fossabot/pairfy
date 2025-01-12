@@ -90,6 +90,8 @@ type Order {
   shipping_tx: String
   shipping_block: String
   shipping_metadata: String
+  received_tx: String
+  received_block: String
   seller_username: String
   seller_verified: Boolean
   seller_trade_terms: String

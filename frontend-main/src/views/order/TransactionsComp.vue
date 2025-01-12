@@ -68,6 +68,26 @@
                 </span>
             </div>
         </div>
+
+
+        <div class="card">
+            <div class="card-head flex">
+                <span>Received State</span>
+
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.received_block) }}
+                </span>
+            </div>
+            <div class="card-body">
+                <span class="mask">{{ getOrderData.order.received_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.received_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe" />
+                </span>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
