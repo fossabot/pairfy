@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt" :style="{   maxWidth: size, height: size }">
+        <img :src="props.content.image" :alt="props.content.alt" :style="{ maxWidth: size, height: size }">
 
         <div class="body">
             <span class="title">{{ props.content.title }}</span>
@@ -56,7 +56,7 @@ const { formatPriceToUSD } = inject('utils');
 .price {
     font-size: var(--text-size-3);
     margin-top: 0.25rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .full {
@@ -81,7 +81,7 @@ const { formatPriceToUSD } = inject('utils');
 .tag {
     margin-left: 0.5rem;
     background: var(--red-a);
-    width: 50px;
+    padding: 0 0.25rem;
     text-align: center;
     border-radius: 2px;
     color: var(--text-w);
