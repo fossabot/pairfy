@@ -23,7 +23,7 @@ const isFocus = ref(false);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 4px;
     width: 100%;
     margin: 0 auto;
     overflow: hidden;

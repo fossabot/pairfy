@@ -23,13 +23,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="8.6666667"
-     inkscape:cx="27.346154"
-     inkscape:cy="33.692308"
+     inkscape:zoom="6.1282588"
+     inkscape:cx="22.355453"
+     inkscape:cy="25.619023"
      inkscape:window-width="1920"
-     inkscape:window-height="1048"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
+     inkscape:window-height="1020"
+     inkscape:window-x="3840"
+     inkscape:window-y="28"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -46,11 +46,17 @@
        x="0"
        y="0"
        rx="30"
-       ry="8" />
+       ry="8"
+       inkscape:export-filename="/home/debian/Downloads/132.png"
+       inkscape:export-xdpi="264"
+       inkscape:export-ydpi="264" />
     <g
        id="g1595"
        transform="matrix(1.2268731,0,0,1.2268731,6.8288,-2.6609438)"
-       style="display:inline;fill:#ffffff;fill-opacity:1">
+       style="display:inline;fill:#ffffff;fill-opacity:1"
+       inkscape:export-filename="/home/debian/Downloads/132.png"
+       inkscape:export-xdpi="264"
+       inkscape:export-ydpi="264">
       <path
          style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.328836;stroke-opacity:1"
          d="M 27.999999,31.498731 C 26.559107,27.747103 26.477409,25.184232 26.528327,22.345425 26.579202,19.42161 25.793102,17.099838 23.339929,16.2344 13.91851,15.062084 7.211959,17.004969 0,11.936805 c 0,0 1.2694216,3.665543 6.227754,5.706631 5.262201,1.91196 12.37308,2.284501 15.449008,3.030084 1.716721,0.433417 1.76617,1.780611 2.143863,3.54772 0.847708,3.921652 1.819736,6.448285 4.179374,7.277491"
