@@ -5,12 +5,12 @@ import { UserToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 import { redisClient } from "../../database/redis.js";
 
-const createOrder = async (_: any, args: any, context: any) => {
+const pendingEndpoint = async (_: any, args: any, context: any) => {
   if (!context.userData) {
     throw new Error("CREDENTIALS");
   }
 
-  const params = args.createOrderInput;
+  const params = args.pendingEndpointInput;
 
   console.log(params);
 
@@ -187,4 +187,4 @@ const createOrder = async (_: any, args: any, context: any) => {
   }
 };
 
-export { createOrder };
+export { pendingEndpoint };

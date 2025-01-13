@@ -3,12 +3,12 @@ import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 
-const dispatchProduct = async (_: any, args: any, context: any) => {
+const shippingEndpoint = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {
     throw new Error("CREDENTIALS");
   }
 
-  const params = args.dispatchProductInput;
+  const params = args.shippingEndpointInput;
 
   console.log(params);
 
@@ -100,4 +100,4 @@ const dispatchProduct = async (_: any, args: any, context: any) => {
   }
 };
 
-export { dispatchProduct };
+export { shippingEndpoint };

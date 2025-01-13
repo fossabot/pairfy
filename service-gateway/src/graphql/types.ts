@@ -137,7 +137,7 @@ input UpdateBookInput {
   disable_purchases: Boolean!
 } 
 
-type CreateOrderPayload {
+type PendingEndpointPayload {
   cbor: String!
   order: String!
 }
@@ -146,22 +146,22 @@ type CborPayload {
   cbor: String!
 }
 
-type CreateOrderResponse {
+type PendingEndpointResponse {
   success: Boolean!
-  payload: CreateOrderPayload!
+  payload: PendingEndpointPayload!
 }
 
-type ReturnFundsResponse {
-  success: Boolean!
-  payload: CborPayload!
-}
-
-type LockingFundsResponse {
+type ReturnEndpointResponse {
   success: Boolean!
   payload: CborPayload!
 }
 
-type DispatchProductResponse {
+type LockingEndpointResponse {
+  success: Boolean!
+  payload: CborPayload!
+}
+
+type ShippingEndpointResponse {
   success: Boolean!
   payload: CborPayload!
 }
@@ -171,13 +171,13 @@ type ReceivedEndpointResponse {
   payload: CborPayload!
 }
 
-input CreateOrderInput {
+input PendingEndpointInput {
   product_id: String!
   product_units: Int!
   data: String!
 } 
 
-input ReturnFundsInput {
+input ReturnEndpointInput {
   order_id: String!
 } 
 
@@ -185,7 +185,7 @@ input LockingFundsInput {
   order_id: String!
 } 
 
-input DispatchProductInput {
+input ShippingEndpointInput {
   order_id: String!
   guide: String!
   date: String!
@@ -199,10 +199,10 @@ input ReceivedEndpointInput {
 
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
-  createOrder(createOrderInput: CreateOrderInput!): CreateOrderResponse!
-  returnFunds(returnFundsInput: ReturnFundsInput!): ReturnFundsResponse!
-  lockingFunds(lockingFundsInput: LockingFundsInput!): LockingFundsResponse!
-  dispatchProduct(dispatchProductInput: DispatchProductInput!): DispatchProductResponse!
+  pendingEndpoint(pendingEndpointInput: PendingEndpointInput!): PendingEndpointResponse!
+  returnEndpoint(returnEndpointInput: ReturnEndpointInput!): ReturnEndpointResponse!
+  lockingEndpoint(lockingEndpointInput: LockingEndpointInput!): LockingEndpointResponse!
+  shippingEndpoint(shippingEndpointInput: ShippingEndpointInput!): ShippingEndpointResponse!
   receivedEndpoint(receivedEndpointInput: ReceivedEndpointInput!): ReceivedEndpointResponse!
 }
 

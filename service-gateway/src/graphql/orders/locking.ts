@@ -2,11 +2,11 @@ import { lockingTransactionBuilder } from "../../contracts/builders/locking.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 
-const lockingFunds = async (_: any, args: any, context: any) => {
+const lockingEndpoint = async (_: any, args: any, context: any) => {
   if (!context.sellerData) {
     throw new Error("CREDENTIALS");
   }
-  const params = args.lockingFundsInput;
+  const params = args.lockingEndpointInput;
 
   console.log(params);
 
@@ -72,4 +72,4 @@ const lockingFunds = async (_: any, args: any, context: any) => {
   }
 };
 
-export { lockingFunds };
+export { lockingEndpoint };
