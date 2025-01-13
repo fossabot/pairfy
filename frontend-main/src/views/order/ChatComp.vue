@@ -304,14 +304,14 @@ onBeforeUnmount(() => {
 
 .avatar {
     background: var(--background-a);
-    border-radius: 12px;
+    border-radius: 50%;
     overflow: hidden;
     border: 1px solid transparent;
 }
 
 .avatar img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     object-fit: scale-down;
 }
 
