@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
 }
 
 .user-header img {
-    border-radius: 8px;
+    border-radius: 50%;
     width: 2.5rem;
 }
 
