@@ -1,6 +1,6 @@
 <template>
     <div class="pad flex">
-        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingFunds"
+        <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingEndpoint"
             style="color: var(--text-w);" :loading="true">
             <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5"
                 fill="transparent" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
@@ -30,9 +30,9 @@ const toast = useToast();
 
 const { getOrderData } = orderAPI();
 
-const { mutate: lockingFunds, onDone: onLockingFundsDone, onError: onLockingFundsError } = useMutation(gql`
-      mutation($lockingFundsVariable: LockingFundsInput!) {
-        lockingFunds(lockingFundsInput: $lockingFundsVariable) {
+const { mutate: lockingEndpoint, onDone: onDoneLockingEndpoint, onError: onErrorLockingEndpoint } = useMutation(gql`
+      mutation($lockingEndpointVariable: LockingEndpointInput!) {
+        lockingEndpoint(lockingEndpointInput: $lockingEndpointVariable) {
           success
           payload {
             cbor
@@ -46,14 +46,14 @@ const { mutate: lockingFunds, onDone: onLockingFundsDone, onError: onLockingFund
 
 const isLoading = ref(false);
 
-onLockingFundsDone(async result => {
+onDoneLockingEndpoint(async result => {
     console.log(result.data);
 
     const response = result.data;
 
-    if (response.lockingFunds.success === true) {
+    if (response.lockingEndpoint.success === true) {
         try {
-            const { cbor } = response.lockingFunds.payload;
+            const { cbor } = response.lockingEndpoint.payload;
 
             showSuccess("Preparing", `Do not close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
 
@@ -77,17 +77,17 @@ onLockingFundsDone(async result => {
 
 })
 
-onLockingFundsError(error => {
+onErrorLockingEndpoint(error => {
     showError(error)
     isLoading.value = false;
 })
 
-const onLockingFunds = () => {
+const onLockingEndpoint = () => {
     isLoading.value = true;
 
 
-    lockingFunds({
-        "lockingFundsVariable": {
+    lockingEndpoint({
+        "lockingEndpointVariable": {
             order_id: getOrderData.value.order.id
         }
     })

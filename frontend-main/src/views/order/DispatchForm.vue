@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Submit" fluid @click="onDispatchProduct" :loading="isLoading"
+                    <Button label="Submit" fluid @click="onShippingEndpoint" :loading="isLoading"
                         style="color: var(--text-w);" />
                 </div>
             </div>
@@ -90,9 +90,9 @@ const dispatchDialog = ref(false);
 
 const disableDispatched = computed(() => getOrderData.value?.order?.contract_state !== 1);
 
-const { mutate: dispatchProduct, onDone: onDispatchProductDone, onError: onDispatchProductError } = useMutation(gql`
-      mutation($dispatchProductVariable: DispatchProductInput!) {
-        dispatchProduct(dispatchProductInput: $dispatchProductVariable) {
+const { mutate: shippingEndpoint, onDone: onDoneShippingEndpoint, onError: onErrorShippingEndpoint } = useMutation(gql`
+      mutation($shippingEndpointVariable: ShippingEndpointInput!) {
+        shippingEndpoint(shippingEndpointInput: $shippingEndpointVariable) {
           success
           payload {
             cbor
@@ -105,15 +105,15 @@ const { mutate: dispatchProduct, onDone: onDispatchProductDone, onError: onDispa
 
 const isLoading = ref(false);
 
-onDispatchProductDone(async result => {
+onDoneShippingEndpoint(async result => {
     console.log(result.data);
 
     const response = result.data;
 
-    if (response.dispatchProduct.success === true) {
+    if (response.shippingEndpoint.success === true) {
         try {
 
-            const { cbor } = response.dispatchProduct.payload;
+            const { cbor } = response.shippingEndpoint.payload;
 
             showSuccess("Preparing", `Don't close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
 
@@ -138,13 +138,13 @@ onDispatchProductDone(async result => {
 
 })
 
-onDispatchProductError(error => {
+onErrorShippingEndpoint(error => {
     showError(error)
 
     isLoading.value = false;
 })
 
-const onDispatchProduct = () => {
+const onShippingEndpoint = () => {
     console.log(dispatchForm)
 
     isLoading.value = true;
@@ -159,8 +159,8 @@ const onDispatchProduct = () => {
         notes: dispatchForm.notes,
     }
 
-    dispatchProduct({
-        "dispatchProductVariable": scheme
+    shippingEndpoint({
+        "shippingEndpointVariable": scheme
     })
 }
 

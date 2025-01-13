@@ -181,7 +181,7 @@ input ReturnEndpointInput {
   order_id: String!
 } 
 
-input LockingFundsInput {
+input LockingEndpointInput {
   order_id: String!
 } 
 

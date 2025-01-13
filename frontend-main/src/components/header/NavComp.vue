@@ -1,27 +1,27 @@
 <template>
-        <div class="nav flex">
-            <div class="categories flex">
-                <div class="categories-button flex">
-                    <i class="pi pi-bars" />
-                </div>
-                <span>All Categories</span>
-                <div class="arrow flex">
-                    <i class="pi pi-angle-down" />
-                </div>
+    <div class="nav flex">
+        <div class="categories flex">
+            <div class="categories-button flex">
+                <i class="pi pi-bars" />
             </div>
-            <span>Discounts</span>
-            <span>Earn Rewards</span>
-            <span>Sell Products</span>
-            <span>Support</span>
-            <span>
-                <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
-                    rel="noopener noreferrer">Documentation</a>
-            </span>
-            <span>Electronics</span>
-            <span>Garden</span>
-            <span>Best Sellers</span>
-            <span class="ADA">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
+            <span>All Categories</span>
+            <div class="arrow flex">
+                <i class="pi pi-angle-down" />
+            </div>
         </div>
+        <span>Discounts</span>
+        <span>Earn Rewards</span>
+        <span>Sell Products</span>
+        <span>Support</span>
+        <span>
+            <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
+                rel="noopener noreferrer">Documentation</a>
+        </span>
+        <span>Electronics</span>
+        <span>Garden</span>
+        <span>Best Sellers</span>
+        <span class="price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
+    </div>
 </template>
 
 <script setup>
@@ -48,21 +48,24 @@ const { formatPriceToUSD } = inject('utils');
     font-weight: 400;
 }
 
-.categories, .ADA {
-    background: var(--background-b);
+.categories,
+.price {
+    background: rgba(255, 255, 255, 0.1);
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    color: var(--text-a);
 }
 
-.categories span{
+.categories-button i {
+    font-size: var(--text-size-3);
+}
+
+.categories span {
     margin: 0 1rem;
 }
 
-.ADA {
+.price {
     white-space: nowrap;
     font-weight: 500;
 }
-
 </style>

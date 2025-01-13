@@ -38,6 +38,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     border-radius: 999px;
     display: flex;
     align-items: center;
+    background: rgba(255,255,255,0.1);
 }
 
 .card-address {

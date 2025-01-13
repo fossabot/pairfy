@@ -1,7 +1,5 @@
 <template>
-    <Button :disabled="disableReceived" style="color: var(--text-w)" :loading="isLoading" @click="onReceivedPackage">
-        Package Received
-    </Button>
+    <Button :disabled="disableReceived" label="Package Received" style="color: var(--text-w)" :loading="isLoading" @click="onReceivedPackage"/>
 </template>
 
 <script setup>
@@ -67,9 +65,11 @@ onDone(async result => {
         try {
             const { cbor } = response.receivedEndpoint.payload;
 
+            showSuccess("Preparing", `Don't close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
+
             const txHash = await balanceTx(cbor);
 
-            showSuccess(`Transaction submitted with hash: ${txHash}`, 120000);
+            showSuccess("Submitted", `Transaction Hash: (${txHash}). It takes approximately 5 minutes to appear on the blockchain.`, 200000);
 
             console.log(`Transaction submitted with hash: ${txHash}`);
 
@@ -91,8 +91,8 @@ onError(error => {
 })
 
 
-const showSuccess = (content, time) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
+const showSuccess = (title, content, time) => {
+    toast.add({ severity: 'success', summary: title, detail: content, life: time });
 };
 
 const showError = (content) => {

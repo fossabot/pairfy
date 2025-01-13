@@ -1,10 +1,10 @@
 import { database } from "../database/client.js";
 import { getBooks, updateBook } from "./books/index.js";
-import { createOrder } from "./orders/pending.js";
 import { getOrder } from "./orders/get-order.js";
-import { lockingFunds } from "./orders/locking.js";
-import { returnFunds } from "./orders/return.js";
-import { dispatchProduct } from "./orders/shipping.js";
+import { pendingEndpoint } from "./orders/pending.js";
+import { lockingEndpoint } from "./orders/locking.js";
+import { returnEndpoint } from "./orders/return.js";
+import { shippingEndpoint } from "./orders/shipping.js";
 import { receivedEndpoint } from "./orders/received.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
@@ -63,10 +63,10 @@ const orders = {
     getOrder,
   },
   Mutation: {
-    createOrder,
-    returnFunds,
-    lockingFunds,
-    dispatchProduct,
+    pendingEndpoint,
+    returnEndpoint,
+    lockingEndpoint,
+    shippingEndpoint,
     receivedEndpoint
   },
 };

@@ -10,7 +10,7 @@
                     <div class="grid-item left">
                         <div class="dialog-row">
                             <div class="dialog-title flex">
-                                Destination #1
+                                Destination
                             </div>
 
                             <div class="dialog-country flex">
@@ -343,9 +343,9 @@ const onBuyProduct = () => {
     toggleDialog.value = true;
 }
 
-const { mutate: createOrder, onError: onCreateOrderError, onDone: onOrderCreated } = useMutation(gql`
-mutation($createOrderVariable: CreateOrderInput!){
-    createOrder(createOrderInput: $createOrderVariable){
+const { mutate: pendingEndpoint, onError: onErrorPendingEndpoint, onDone: onDonePendingEndpoint } = useMutation(gql`
+mutation($pendingEndpointVariable: PendingEndpointInput!){
+    pendingEndpoint(pendingEndpointInput: $pendingEndpointVariable){
         success
         payload {
             cbor
@@ -358,17 +358,17 @@ mutation($createOrderVariable: CreateOrderInput!){
         clientId: 'gateway'
     })
 
-onCreateOrderError(error => {
+onErrorPendingEndpoint(error => {
     showError(error);
 })
 
 
-onOrderCreated(async result => {
+onDonePendingEndpoint(async result => {
     const response = result.data;
 
-    if (response.createOrder.success === true) {
+    if (response.pendingEndpoint.success === true) {
         try {
-            const { cbor, order } = response.createOrder.payload;
+            const { cbor, order } = response.pendingEndpoint.payload;
 
             const txHash = await balanceTx(cbor);
 
@@ -399,8 +399,8 @@ onOrderCreated(async result => {
 
 
 const onConfirmedBuy = (data) => {
-    createOrder({
-        "createOrderVariable": {
+    pendingEndpoint({
+        "pendingEndpointVariable": {
             "product_id": getProductData.value.id,
             "product_units": selectedQuantity.value,
             "data": data
