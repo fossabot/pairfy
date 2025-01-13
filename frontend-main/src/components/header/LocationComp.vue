@@ -210,7 +210,7 @@ onBeforeUnmount(() => {
 }
 
 .flag-mini {
-    width: 1rem;
+    width: 1.25rem;
 }
 
 .dialog-row {
