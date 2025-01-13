@@ -110,7 +110,10 @@ const onLogin = async () => {
             terms_accepted: true,
         })
     )
-        .then(() => togglePanel(false))
+        .then(() => {
+            togglePanel(false);
+            location.reload();
+        })
         .catch((err) => console.error(err));
 };
 

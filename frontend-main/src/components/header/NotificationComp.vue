@@ -1,9 +1,13 @@
 <template>
     <div class="notification">
 
-        <OverlayBadge value="1" severity="danger" @click="toggle" id="notifications">
-            <img class="card-image" src="@/assets/user.png" alt="">
-        </OverlayBadge>
+
+        <div class="card-image" @click="toggle">
+            <OverlayBadge value="1" severity="danger" id="notifications">
+                <i class="pi pi-bell" />
+            </OverlayBadge>
+        </div>
+
 
         <Popover ref="overlay">
             <section>
@@ -222,8 +226,11 @@ const onHandleClick = (notification) => {
 }
 
 .card-image {
-    width: var(--text-size-5);
-    border-radius: 50%;
+    cursor: pointer;
+}
+
+.card-image i {
+    font-size: var(--text-size-3);
 }
 
 .drop {

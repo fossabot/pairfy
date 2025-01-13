@@ -50,7 +50,7 @@ const { formatPriceToUSD } = inject('utils');
 
 .categories,
 .price {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--soft-white-a);
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;

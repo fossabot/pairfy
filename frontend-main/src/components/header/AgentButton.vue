@@ -8,6 +8,7 @@
             <div class="card-address">
                 {{ getCurrentUser.address.slice(0, 15) }}
             </div>
+
             <div class="card-button flex" @click="togglePanel(true)">
                 <i class="pi pi-bars" />
             </div>
@@ -15,7 +16,7 @@
     </template>
 
     <template v-else>
-        <div class="connect-wallet flex">
+        <div class="connect-wallet flex" @click="togglePanel(true)">
             Connect Wallet
         </div>
     </template>
@@ -34,7 +35,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     border: 1px solid rgba(255,255,255,0.2);
     color: inherit;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.75rem 1rem; 
     border-radius: 999px;
     display: flex;
     align-items: center;
@@ -48,7 +49,6 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 }
 
 .card-button {
-    padding-right: 0.5rem;
     cursor: pointer;
 }
 
@@ -59,13 +59,12 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 .connect-wallet {
     border-radius: 999px;
     height: 45px;
-    width: 150px;
+    font-weight: 500;
     font-size: var(--text-size-1);
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: transparent;
+    background: var(--primary-a);
     color: inherit;
     justify-content: center;
-
+    padding: 0 1.5rem;
 }
 </style>
