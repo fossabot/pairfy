@@ -24,9 +24,9 @@
 }
 
 .cart {
-    background: var(--background-a);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 20px;
-    color: var(--text-a);
     height: 20px;
     display: flex;
     justify-content: center;
