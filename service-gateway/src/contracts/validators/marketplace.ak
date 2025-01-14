@@ -582,6 +582,107 @@ test statemachine_locking() {
   statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
+////////////////////////////////////////////////////////////////////////// CANCEL
+
+test statemachine_cancel() {
+  let own_ref =
+    OutputReference {
+      transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
+      output_index: 0,
+    }
+  let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
+  let token_name = #"02"
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
+  let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
+  let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
+  let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let pending_until = 3
+  let shipping_until = 6
+  let expire_until = 10
+  let price = 50000000
+  let fee = 2000000
+
+  ////////////////////////INPUT//////////////////////////  
+
+  let input_1 =
+    Input {
+      output_reference: own_ref,
+      output: Output {
+        address: Address {
+          payment_credential: Script(own_script_hash),
+          stake_credential: None,
+        },
+        value: assets.add(
+          assets.from_lovelace(50_000_000),
+          threadtoken,
+          token_name,
+          1,
+        ),
+        datum: NoDatum,
+        reference_script: None,
+      },
+    }
+
+  ///////////////////////////////////////////////////////  
+
+  let new_data: Data = StateMachineDatum {
+      state: -2,
+      delivery: None
+  }  
+
+  let new_datum = InlineDatum(new_data)
+
+  /////////////////////////OUTPUT//////////////////////////////
+
+  let sm_output =
+    Output {
+      address: Address {
+        payment_credential: Script(own_script_hash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(50_000_000),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: new_datum,
+      reference_script: None,
+    }
+
+  /////////////////////////////////////////////////////////////
+
+  let redeemer = Cancel       //StateMachineInput
+
+  let old_datum = StateMachineDatum {
+    state: 1,
+    delivery: None
+  }
+
+  let transaction =
+    Transaction {
+      inputs: [input_1],
+      reference_inputs: [],
+      outputs: [sm_output],
+      fee: transaction.placeholder.fee,
+      mint: transaction.placeholder.mint,
+      certificates: [],
+      withdrawals: [],
+      validity_range: interval.after(shipping_until + 1),
+      extra_signatories: [buyer_pubkeyhash],
+      redeemers: [],
+      datums: transaction.placeholder.datums,
+      id: transaction.placeholder.id,
+      votes: transaction.placeholder.votes,
+      proposal_procedures: transaction.placeholder.proposal_procedures,
+      current_treasury_amount: transaction.placeholder.current_treasury_amount,
+      treasury_donation: transaction.placeholder.treasury_donation
+    }
+
+  statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
+}
+
+
 ////////////////////////////////////////////////////////////////////////SHIPPING
 
 test statemachine_shipping() {
