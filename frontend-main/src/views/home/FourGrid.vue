@@ -79,7 +79,6 @@ const itemList = ref([
     padding: 1rem 0;
     width: 100%;
     max-width: 1600px;
-    border-radius: 16px;
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr;
@@ -108,7 +107,7 @@ const itemList = ref([
     display: grid;
     gap: 1rem;
     padding: 1rem;
-    border-radius: 16px;
+    border-radius: 20px;
     background: var(--background-a);
 }
 
