@@ -240,15 +240,17 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
           (StateMachineDatum{ state, delivery }, Appeal) -> {
             //The appeal must be after shipping state
             let must_be_state = state == 2
-
+            
             //The appeal must be within the specified time.
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> when delivery is {
                                                     Some(delivery_date) -> {
+                                                                           let ms_7_days = 604_800_000
+                                                                           
                                                                            //The appeal must be within 7 days after the delivery date - 1.
                                                                            let rule_1 = tx_earliest_time > delivery_date
                                                                            //The appeal must be within 7 days after the delivery date - 2.
-                                                                           let rule_2 = tx_earliest_time < delivery_date + 604_800_000
+                                                                           let rule_2 = tx_earliest_time < delivery_date + ms_7_days
 
                                                                            and {
                                                                             rule_1,
@@ -682,7 +684,6 @@ test statemachine_cancel() {
   statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
-
 ////////////////////////////////////////////////////////////////////////SHIPPING
 
 test statemachine_shipping() {
@@ -780,7 +781,112 @@ test statemachine_shipping() {
   statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
-////////////////////////////////////////////////////////////////////////RECEIVED
+//////////////////////////////////////////////////////////////////////// APPEAL
+
+test statemachine_appeal() {
+  let ms_1_hour = 3_600_000
+  let ms_60_days = 5_184_000_000
+  let ms_1_day = 86_400_000 
+  let ms_9_days = 777_600_000
+  let own_ref =
+    OutputReference {
+      transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
+      output_index: 0,
+    }
+  let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
+  let token_name = #"02"
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
+  let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
+  let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
+  let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let pending_until = ms_1_hour
+  let shipping_until = ms_1_day
+  let expire_until = ms_60_days
+  let price = 50_000_000
+  let delivery_date = shipping_until + ms_9_days + 1
+  let fee = 2000000
+  
+  ////////////////////////INPUT//////////////////////////  
+
+  let input_1 =
+    Input {
+      output_reference: own_ref,
+      output: Output {
+        address: Address {
+          payment_credential: Script(own_script_hash),
+          stake_credential: None,
+        },
+        value: assets.add(
+          assets.from_lovelace(price),
+          threadtoken,
+          token_name,
+          1,
+        ),
+        datum: NoDatum,
+        reference_script: None,
+      },
+    }
+
+  ///////////////////////////////////////////////////////  
+
+  let new_data: Data = StateMachineDatum {
+      state: -3,
+      delivery: None
+  }  
+
+  let new_datum = InlineDatum(new_data)
+
+  /////////////////////////OUTPUT//////////////////////////////
+
+  let sm_output =
+    Output {
+      address: Address {
+        payment_credential: Script(own_script_hash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(price),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: new_datum,
+      reference_script: None,
+    }
+
+  /////////////////////////////////////////////////////////////
+
+  let redeemer = Appeal       //StateMachineInput
+
+  let old_datum = StateMachineDatum {
+    state: 2,
+    delivery: Some(delivery_date)
+  }
+
+  let transaction =
+    Transaction {
+      inputs: [input_1],
+      reference_inputs: [],
+      outputs: [sm_output],
+      fee: transaction.placeholder.fee,
+      mint: transaction.placeholder.mint,
+      certificates: [],
+      withdrawals: [],
+      validity_range: interval.after(delivery_date + 1),
+      extra_signatories: [buyer_pubkeyhash],
+      redeemers: [],
+      datums: transaction.placeholder.datums,
+      id: transaction.placeholder.id,
+      votes: transaction.placeholder.votes,
+      proposal_procedures: transaction.placeholder.proposal_procedures,
+      current_treasury_amount: transaction.placeholder.current_treasury_amount,
+      treasury_donation: transaction.placeholder.treasury_donation
+    }
+
+  statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
+}
+
+//////////////////////////////////////////////////////////////////////// RECEIVED
 
 test statemachine_received() {
   let own_ref =
