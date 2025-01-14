@@ -238,10 +238,10 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
           }
 
           (StateMachineDatum{ state, delivery }, Appeal) -> {
-
+            //The appeal must be after shipping state
             let must_be_state = state == 2
 
-
+            //The appeal must be within the specified time.
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> when delivery is {
                                                     Some(delivery_date) -> {
@@ -259,16 +259,17 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
                                                    }
               _ -> False
               }
-
+            
+            //The appeal must be signed by the buyer only.
             let must_be_signed = list.has(self.extra_signatories, buyer)
 
             //One of the transaction inputs belongs to the statemachine.
             expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
 
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 1.
             expect Some(sm_output) = list.find(self.outputs, fn(output) { output.address == sm_input.output.address })
             
-            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
+            //One of the transaction outputs contains the threadtoken addressed to the statemachine itself - 2.
             let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)  
             
             //verification of the new datum.
@@ -277,9 +278,10 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
               delivery: None
             }
 
+            //The state machine locks the price.
             let must_be_value = assets.lovelace_of(sm_output.value) == price
 
-            //verification of the new datum.
+            //verification of the state machine new datum.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
 
             and {
