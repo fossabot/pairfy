@@ -438,7 +438,7 @@ test statemachine_return() {
 
   /////////////////////////OUTPUT//////////////////////////////
 
-  let output_1 =
+  let sm_output =
     Output {
       address: Address {
         payment_credential: Script(own_script_hash),
@@ -467,7 +467,7 @@ test statemachine_return() {
     Transaction {
       inputs: [input_1],
       reference_inputs: [],
-      outputs: [output_1],
+      outputs: [sm_output],
       fee: transaction.placeholder.fee,
       mint: transaction.placeholder.mint,
       certificates: [],
@@ -536,7 +536,7 @@ test statemachine_locking() {
 
   let new_datum = InlineDatum(new_data)
 
-  let output =
+  let sm_output =
     Output {
       address: Address {
         payment_credential: Script(own_script_hash),
@@ -563,7 +563,7 @@ test statemachine_locking() {
     Transaction {
       inputs: [input_1],
       reference_inputs: [],
-      outputs: [output],
+      outputs: [sm_output],
       fee: transaction.placeholder.fee,
       mint: transaction.placeholder.mint,
       certificates: [],
@@ -633,7 +633,7 @@ test statemachine_shipping() {
 
   let new_datum = InlineDatum(new_data)
 
-  let output =
+  let sm_output =
     Output {
       address: Address {
         payment_credential: Script(own_script_hash),
@@ -660,7 +660,7 @@ test statemachine_shipping() {
     Transaction {
       inputs: [input_1],
       reference_inputs: [],
-      outputs: [output],
+      outputs: [sm_output],
       fee: transaction.placeholder.fee,
       mint: transaction.placeholder.mint,
       certificates: [],
