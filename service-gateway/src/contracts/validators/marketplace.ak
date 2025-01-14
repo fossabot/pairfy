@@ -196,7 +196,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
              
             //Delivery date must be greater than 9 days after shipping_until
             let rule_1 = delivery_param > shipping_until + 777_600_000
-            
+
             //The delivery date must be less than the expiration time of the contract
             let rule_2 = delivery_param < expire_until
           
@@ -245,9 +245,9 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> when delivery is {
                                                     Some(delivery_date) -> {
-                                                                           //The appeal must be made within 7 days after the delivery date - 1.
+                                                                           //The appeal must be within 7 days after the delivery date - 1.
                                                                            let rule_1 = tx_earliest_time > delivery_date
-                                                                           //The appeal must be made within 7 days after the delivery date - 2.
+                                                                           //The appeal must be within 7 days after the delivery date - 2.
                                                                            let rule_2 = tx_earliest_time < delivery_date + 604_800_000
 
                                                                            and {
