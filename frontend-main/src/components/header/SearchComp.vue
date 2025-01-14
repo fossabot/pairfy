@@ -22,10 +22,8 @@ const isFocus = ref(false);
 .search {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 4px;
     width: 100%;
-    margin: 0 auto;
+    border-radius: 12px;
     overflow: hidden;
 
 }
@@ -59,6 +57,7 @@ const isFocus = ref(false);
     background: var(--primary-a);
     cursor: pointer;
     color: var(--text-w);
+    border-radius: 0 12px 12px 0;
 }
 
 .search-button i{

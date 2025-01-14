@@ -44,7 +44,6 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 .card-address {
     font-size: var(--text-size-1);
-    font-weight: 600;
     padding: 0 1rem;
 }
 
