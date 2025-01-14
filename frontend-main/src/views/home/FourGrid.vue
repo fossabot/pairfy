@@ -97,7 +97,7 @@ const itemList = ref([
 }
 
 .title.right{
-    color: var(--yellow-a);
+    color: var(--primary-a);
 }
 
 .subcard {
@@ -117,7 +117,7 @@ const itemList = ref([
 }
 
 .subcard.right {
-    background-image: linear-gradient(134deg, var(--soft-yellow-a), transparent 80%);
+    background-image: linear-gradient(134deg, var(--soft-red-a), transparent 80%);
 }
 
 .minicard {
