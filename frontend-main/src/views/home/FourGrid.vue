@@ -2,7 +2,7 @@
     <div class="four">
         <div class="subcard left">
             <div class="title left">
-                Best sellers items
+               <span> Best sellers items</span>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -10,7 +10,7 @@
 
         <div class="subcard right">
             <div class="title right">
-                
+                Most requested
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -93,11 +93,11 @@ const itemList = ref([
 }
 
 .title.left{
-    color: var(--text-w);
+    color: var(--primary-a);
 }
 
 .title.right{
-    color: var(--text-w);
+    color: var(--yellow-a);
 }
 
 .subcard {
@@ -109,26 +109,22 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 16px;
-    background: var(--primary-a);
+    background: var(--background-a);
 }
 
 .subcard.left {
-    background-image: linear-gradient(134deg, var(--soft-red-a), var(--soft-yellow-a) 80%);
-   
+    background-image: linear-gradient(134deg, var(--soft-red-a), transparent  80%);
 }
 
 .subcard.right {
-    background-image: linear-gradient(134deg, var(--soft-yellow-a), #ffffff 80%);
+    background-image: linear-gradient(134deg, var(--soft-yellow-a), transparent 80%);
 }
 
 .minicard {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--background-b);
     width: 100%;
     height: 250px;
     border-radius: 16px;
-    overflow: hidden;
-    background-size: contain;
-    background-repeat: no-repeat;
 }
 
 @media (max-width: 600px) {

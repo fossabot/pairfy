@@ -17,7 +17,7 @@ import categories from '@/assets/categories.json';
 import { ref } from 'vue';
 import asset0 from "@/assets/icons/0.png";
 import asset1 from "@/assets/icons/1.png";
-import asset2 from "@/assets/icons/2.png"; 
+import asset2 from "@/assets/icons/2.png";
 import asset3 from "@/assets/icons/3.png";
 import asset4 from "@/assets/icons/4.png";
 import asset5 from "@/assets/icons/5.png";
@@ -27,13 +27,13 @@ import asset8 from "@/assets/icons/8.png";
 import asset9 from "@/assets/icons/9.png";
 import asset10 from "@/assets/icons/10.png";
 import asset11 from "@/assets/icons/11.png";
-import asset12 from "@/assets/icons/12.png"; 
-import asset13 from "@/assets/icons/13.png";  
+import asset12 from "@/assets/icons/12.png";
+import asset13 from "@/assets/icons/13.png";
 
 const categoryList = ref(categories);
 
 const assets = ref({
-    0: asset0, 
+    0: asset0,
     1: asset1,
     2: asset2,
     3: asset3,
@@ -55,9 +55,6 @@ const getURL = (index) => {
 </script>
 
 <style lang="css" scoped>
-
-
-
 .category {
     width: 100%;
     display: flex;
@@ -75,7 +72,7 @@ const getURL = (index) => {
 }
 
 .tag {
-    background: var(--background-a);
+    background: var(--background-bs);
     text-align: center;
     padding: 1rem;
     border-radius: 999px;
