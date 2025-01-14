@@ -45,14 +45,14 @@ validator threadtoken(token_name: ByteArray, utxo_ref: OutputReference, _timesta
 
 pub type StateMachineDatum {
   state: Int,
-  appeal: Option<POSIXTime>,
+  delivery: Option<POSIXTime>,
 }
 
 pub type StateMachineInput {
   Return
   Lock
   Cancel
-  Shipped { appeal_param: POSIXTime }
+  Shipped { delivery_param: POSIXTime }
   Appeal
   Received
   Collect
@@ -92,7 +92,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: -1,
-              appeal: None
+              delivery: None
             }
             //verification of the new datum.
             let must_be_datum = InlineDatum(new_data) == sm_output.datum
@@ -130,7 +130,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: 1,
-              appeal: None
+              delivery: None
             }
 
             //verification of the new datum.
@@ -168,7 +168,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: -2,
-              appeal: None
+              delivery: None
             }
 
             //verification of the new datum.
@@ -183,7 +183,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
                 }
           }
 
-          (StateMachineDatum{ state, .. }, Shipped { appeal_param }) -> {
+          (StateMachineDatum{ state, .. }, Shipped { delivery_param }) -> {
             
             let must_be_state = state == 1
             
@@ -193,12 +193,13 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
               }
             
             let must_be_signed = list.has(self.extra_signatories, seller)
-
-            let rule_1 = appeal_param > shipping_until
-
-            let rule_2 = appeal_param < expire_until
+             
+            //Delivery date must be greater than 9 days after shipping_until
+            let rule_1 = delivery_param > shipping_until + 777_600_000
+            
+            //The delivery date must be less than the expiration time of the contract
+            let rule_2 = delivery_param < expire_until
           
-
             //Both conditions must be true.
             let must_be_range = and {
               rule_1,
@@ -219,7 +220,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
                           state: 2,
-                          appeal: Some(appeal_param)
+                          delivery: Some(delivery_param)
                         }
             
             //verification of the new datum.
@@ -236,12 +237,26 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             }
           }
 
-          (StateMachineDatum{ state, appeal }, Appeal) -> {
+          (StateMachineDatum{ state, delivery }, Appeal) -> {
 
             let must_be_state = state == 2
-            
+
+
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
-              interval.Finite(tx_earliest_time) -> tx_earliest_time > appeal 
+              interval.Finite(tx_earliest_time) -> when delivery is {
+                                                    Some(delivery_date) -> {
+                                                                           //The appeal must be made within 7 days after the delivery date - 1.
+                                                                           let rule_1 = tx_earliest_time > delivery_date
+                                                                           //The appeal must be made within 7 days after the delivery date - 2.
+                                                                           let rule_2 = tx_earliest_time < delivery_date + 604_800_000
+
+                                                                           and {
+                                                                            rule_1,
+                                                                            rule_2
+                                                                           }
+                                                                           }
+                                                    _ -> False
+                                                   }
               _ -> False
               }
 
@@ -259,7 +274,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: -3,
-              appeal: None
+              delivery: None
             }
 
             let must_be_value = assets.lovelace_of(sm_output.value) == price
@@ -297,7 +312,7 @@ validator statemachine(threadtoken: PolicyId, seller: VerificationKeyHash, buyer
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: 3,
-              appeal: None
+              delivery: None
             }
 
             //verification of the new datum.
@@ -379,7 +394,7 @@ test statemachine_return() {
   /////////////INPUT/////////////  
   let new_data: Data = StateMachineDatum {
       state: -1,
-      appeal: None
+      delivery: None
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -405,7 +420,7 @@ test statemachine_return() {
 
   let old_datum = StateMachineDatum {
     state: 0,
-    appeal: None
+    delivery: None
   }
 
   let transaction =
@@ -453,7 +468,7 @@ test statemachine_locking() {
 
   let old_datum = StateMachineDatum {
     state: 0,
-    appeal: None
+    delivery: None
   }
 
   let input_utxo =
@@ -477,7 +492,7 @@ test statemachine_locking() {
   /////////////INPUT/////////////  
   let new_data: Data = StateMachineDatum {
       state: 1,
-      appeal: None
+      delivery: None
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -540,13 +555,13 @@ test statemachine_shipping() {
   let shipping_until = 6
   let expire_until = 20
   let price = 50_000_000
-  let appeal_param = 11
+  let delivery_param = 11
 
   /////////////INPUT/////////////
 
   let old_datum = StateMachineDatum {
     state: 1,
-    appeal: None
+    delivery: None
   }
 
   let input_utxo =
@@ -571,7 +586,7 @@ test statemachine_shipping() {
 
   let new_data: Data = StateMachineDatum {
       state: 2,
-      appeal: Some(appeal_param)
+      delivery: Some(delivery_param)
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -592,7 +607,7 @@ test statemachine_shipping() {
       reference_script: None,
     }
 
-  let redeemer = Shipped { appeal_param }      //StateMachineInput
+  let redeemer = Shipped { delivery_param }      //StateMachineInput
 
   let transaction =
     Transaction {
@@ -636,12 +651,12 @@ test statemachine_received() {
   let shipping_until = 6
   let expire_until = 20
   let price = 50_000_000
-  let appeal_param = 9
+  let delivery_param = 9
   ////////////////////////INPUT///////////////////////////  
 
   let old_datum = StateMachineDatum {
     state: 2,
-    appeal: Some(appeal_param)
+    delivery: Some(delivery_param)
   }
 
   let input_utxo =
@@ -667,7 +682,7 @@ test statemachine_received() {
 
   let new_data: Data = StateMachineDatum {
       state: 3,
-      appeal: None
+      delivery: None
   }  
 
   let new_datum = InlineDatum(new_data)
