@@ -386,7 +386,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
 }
 
 
-////////////////////////////////////////////////////////////////////////RETURN
+////////////////////////////////////////////////////////// RETURN
 
 test statemachine_return() {
   let own_ref =
@@ -396,7 +396,7 @@ test statemachine_return() {
     }
   let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
   let token_name = #"02"
-  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
   let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
@@ -405,8 +405,10 @@ test statemachine_return() {
   let expire_until = 10
   let price = 50000000
   let fee = 2000000
-  /////////////INPUT/////////////
-  let input_utxo =
+
+  ////////////////////////INPUT//////////////////////////  
+
+  let input_1 =
     Input {
       output_reference: own_ref,
       output: Output {
@@ -424,7 +426,9 @@ test statemachine_return() {
         reference_script: None,
       },
     }
-  /////////////INPUT/////////////  
+
+  ///////////////////////////////////////////////////////  
+
   let new_data: Data = StateMachineDatum {
       state: -1,
       delivery: None
@@ -432,7 +436,9 @@ test statemachine_return() {
 
   let new_datum = InlineDatum(new_data)
 
-  let output =
+  /////////////////////////OUTPUT//////////////////////////////
+
+  let output_1 =
     Output {
       address: Address {
         payment_credential: Script(own_script_hash),
@@ -448,8 +454,9 @@ test statemachine_return() {
       reference_script: None,
     }
 
-  let redeemer = Return       //StateMachineInput
+  /////////////////////////////////////////////////////////////
 
+  let redeemer = Return       //StateMachineInput
 
   let old_datum = StateMachineDatum {
     state: 0,
@@ -458,9 +465,9 @@ test statemachine_return() {
 
   let transaction =
     Transaction {
-      inputs: [input_utxo],
+      inputs: [input_1],
       reference_inputs: [],
-      outputs: [output],
+      outputs: [output_1],
       fee: transaction.placeholder.fee,
       mint: transaction.placeholder.mint,
       certificates: [],
@@ -498,14 +505,10 @@ test statemachine_locking() {
   let expire_until = 10
   let price = 50_000_000
   let fee = 2000000
-  /////////////INPUT/////////////
 
-  let old_datum = StateMachineDatum {
-    state: 0,
-    delivery: None
-  }
+  //////////////////////////////INPUT////////////////////////////////
 
-  let input_utxo =
+  let input_1 =
     Input {
       output_reference: own_ref,
       output: Output {
@@ -523,7 +526,9 @@ test statemachine_locking() {
         reference_script: None,
       },
     }
-  /////////////INPUT/////////////  
+  
+  ////////////////////////////////////////////////////////////////////////
+
   let new_data: Data = StateMachineDatum {
       state: 1,
       delivery: None
@@ -549,9 +554,14 @@ test statemachine_locking() {
 
   let redeemer = Lock      //StateMachineInput
 
+  let old_datum = StateMachineDatum {
+    state: 0,
+    delivery: None
+  }
+
   let transaction =
     Transaction {
-      inputs: [input_utxo],
+      inputs: [input_1],
       reference_inputs: [],
       outputs: [output],
       fee: transaction.placeholder.fee,
@@ -588,18 +598,14 @@ test statemachine_shipping() {
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
   let pending_until = 3
   let shipping_until = 6
-  let expire_until = 20
+  let expire_until = 777_600_000 * 2
   let price = 50_000_000
-  let delivery_param = 11
+  let delivery_param = shipping_until + 777_600_000 + 1
   let fee = 2000000
-  /////////////INPUT/////////////
 
-  let old_datum = StateMachineDatum {
-    state: 1,
-    delivery: None
-  }
+  ////////////////////////////////////////////////////////////////////////
 
-  let input_utxo =
+  let input_1 =
     Input {
       output_reference: own_ref,
       output: Output {
@@ -617,7 +623,8 @@ test statemachine_shipping() {
         reference_script: None,
       },
     }
-  /////////////INPUT/////////////  
+
+  ////////////////////////////////////////////////////////////////////////
 
   let new_data: Data = StateMachineDatum {
       state: 2,
@@ -644,9 +651,14 @@ test statemachine_shipping() {
 
   let redeemer = Shipped { delivery_param }      //StateMachineInput
 
+  let old_datum = StateMachineDatum {
+    state: 1,
+    delivery: None
+  }
+
   let transaction =
     Transaction {
-      inputs: [input_utxo],
+      inputs: [input_1],
       reference_inputs: [],
       outputs: [output],
       fee: transaction.placeholder.fee,
@@ -667,9 +679,7 @@ test statemachine_shipping() {
   statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
 }
 
-
 ////////////////////////////////////////////////////////////////////////RECEIVED
-
 
 test statemachine_received() {
   let own_ref =
@@ -679,7 +689,7 @@ test statemachine_received() {
     }
   let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
   let token_name = #"02"
-  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
   let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
@@ -690,14 +700,9 @@ test statemachine_received() {
   let delivery_param = 9
   let fee = 2000000
 
-  ////////////////////////INPUT///////////////////////////  
+  ////////////////////////////////////////////////////////////////////////
 
-  let old_datum = StateMachineDatum {
-    state: 2,
-    delivery: Some(delivery_param)
-  }
-
-  let input_utxo =
+  let input_1 =
     Input {
       output_reference: own_ref,
       output: Output {
@@ -758,10 +763,15 @@ test statemachine_received() {
     }  
 
   let redeemer = Received  //StateMachineInput
+  
+  let old_datum = StateMachineDatum {
+    state: 2,
+    delivery: Some(delivery_param)
+  }
 
   let transaction =
     Transaction {
-      inputs: [input_utxo],
+      inputs: [input_1],
       reference_inputs: [],
       outputs: [sm_output, seller_output],
       fee: transaction.placeholder.fee,
