@@ -70,9 +70,10 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
         
         when (datum, redeemer) is {
           (StateMachineDatum { state, .. }, Return) -> {
-
+            //Must be after pending state
             let must_be_state = state == 0  
             
+            //It should be after pending_until
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> tx_earliest_time > pending_until 
               _ -> False
@@ -106,9 +107,10 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             }
           }
           (StateMachineDatum{ state, .. }, Lock) -> {
-            
+            //Must be after pending state
             let must_be_state = state == 0
 
+            //It should be before pending_until
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> tx_earliest_time < pending_until 
               _ -> False
@@ -146,9 +148,10 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             }
           }
           (StateMachineDatum{ state, .. }, Cancel) -> {
-
+            //Must be after locking state
             let must_be_state = state == 1
-
+            
+            //It should be after shipping_until
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> tx_earliest_time > shipping_until 
               _ -> False
@@ -184,18 +187,21 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
           }
 
           (StateMachineDatum{ state, .. }, Shipped { delivery_param }) -> {
-            
+            //Must be after locking state
             let must_be_state = state == 1
             
+            //It should be before shipping_until
             let must_be_time = when self.validity_range.lower_bound.bound_type is {
               interval.Finite(tx_earliest_time) -> tx_earliest_time < shipping_until 
               _ -> False
               }
             
             let must_be_signed = list.has(self.extra_signatories, seller)
-             
+            
+            let ms_9_days = 777_600_000
+
             //Delivery date must be greater than 9 days after shipping_until
-            let rule_1 = delivery_param > shipping_until + 777_600_000
+            let rule_1 = delivery_param > shipping_until + ms_9_days
 
             //The delivery date must be less than the expiration time of the contract
             let rule_2 = delivery_param < expire_until
@@ -298,6 +304,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
           }
 
           (StateMachineDatum{ state, delivery }, Received) -> {
+            //Must be after shipping state
             let must_be_state = state == 2
 
             let must_be_signed = list.has(self.extra_signatories, buyer)
@@ -311,6 +318,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
             let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
             
+            //The price is immutable in the state machine.
             let must_be_value = assets.lovelace_of(sm_output.value) == price          
                         
             //verification of the new datum.
@@ -332,7 +340,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
           }
 
           (StateMachineDatum{ state, delivery }, Collect) -> {
-
+            //must be after received or shipping state
             let must_be_state = state == 3 || state == 2
 
             let must_be_signed = list.has(self.extra_signatories, seller)
@@ -364,7 +372,8 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             
             //One of the transaction outputs contains the threadtoken addressed to the statemachine itself.
             let must_be_policy = list.has(assets.policies(sm_output.value), threadtoken)
-            
+
+            //The fee is immutable in the state machine.
             let must_be_value = assets.lovelace_of(sm_output.value) == fee
 
             //verification of the new datum.
@@ -387,7 +396,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
           }
 
           (StateMachineDatum{ state, .. }, Finish) -> {
-
+            //Must be after collected or appeal state.
             let must_be_state = state == 4 || state == -3
 
             let must_be_signed = list.has(self.extra_signatories, operator)
@@ -395,6 +404,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             //One of the transaction inputs belongs to the statemachine.
             expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
             
+            //It contains threadtoken
             let must_be_policy = list.has(assets.policies(sm_input.output.value), threadtoken)
 
             and {
