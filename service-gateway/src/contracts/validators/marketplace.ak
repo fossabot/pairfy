@@ -297,7 +297,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
 
           }
 
-          (StateMachineDatum{ state, .. }, Received) -> {
+          (StateMachineDatum{ state, delivery }, Received) -> {
             let must_be_state = state == 2
 
             let must_be_signed = list.has(self.extra_signatories, buyer)
@@ -316,7 +316,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             //verification of the new datum.
             let new_data: Data = StateMachineDatum {
               state: 3,
-              delivery: None
+              delivery: delivery
             }
 
             //verification of the new datum.
@@ -331,11 +331,30 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             }
           }
 
-          (StateMachineDatum{ state, .. }, Collect) -> {
+          (StateMachineDatum{ state, delivery }, Collect) -> {
 
-            let must_be_state = state == 3
+            let must_be_state = state == 3 || state == 2
 
             let must_be_signed = list.has(self.extra_signatories, seller)
+
+            //Collect must be within the specified time.
+            let must_be_time = when self.validity_range.lower_bound.bound_type is {
+              interval.Finite(tx_earliest_time) -> when delivery is {
+                                                    Some(delivery_date) -> {
+                                                                             if (state == 2) {
+                                                                              let ms_7_days = 604_800_000
+                                                                           
+                                                                              //The appeal must be after 7 days delivery date + 7 days ( appeal window ).
+                                                                              tx_earliest_time > delivery_date + ms_7_days
+                                                                             } else {
+                                                                                True
+                                                                             }
+
+                                                                           }
+                                                    _ -> False
+                                                   }
+              _ -> False
+              }
 
             //One of the transaction inputs belongs to the statemachine.
             expect Some(sm_input) = list.find(self.inputs, fn(input) { input.output_reference == own_ref }) 
@@ -360,6 +379,7 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             and {
               must_be_state?,
               must_be_signed?,
+              must_be_time?,
               must_be_policy?,
               must_be_value?,
               must_be_datum?
@@ -931,7 +951,7 @@ test statemachine_received() {
 
   let new_data: Data = StateMachineDatum {
       state: 3,
-      delivery: None
+      delivery: Some(delivery_param)
   }  
 
   let new_datum = InlineDatum(new_data)
@@ -1000,7 +1020,11 @@ test statemachine_received() {
 
 //////////////////////////////////////////////////////////////////////////////// COLLECT
 
-test statemachine_collect() {
+test statemachine_collect_1() {
+  let ms_1_hour = 3_600_000
+  let ms_60_days = 5_184_000_000
+  let ms_1_day = 86_400_000 
+  let ms_9_days = 777_600_000
   let own_ref =
     OutputReference {
       transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
@@ -1008,15 +1032,16 @@ test statemachine_collect() {
     }
   let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
   let token_name = #"02"
-  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" // self statemachine hash
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
   let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
-  let pending_until = 3
-  let shipping_until = 6
-  let expire_until = 10
+  let pending_until = ms_1_hour
+  let shipping_until = ms_1_day
+  let expire_until = ms_60_days
   let price = 50_000_000
-  let fee = 2_000_000
+  let delivery_date = shipping_until + ms_9_days + 1
+  let fee = 2000000
 
   //////////////////////////////INPUT////////////////////////////////
 
@@ -1068,7 +1093,7 @@ test statemachine_collect() {
 
   let old_datum = StateMachineDatum {
     state: 3,
-    delivery: None
+    delivery: Some(delivery_date)
   }
 
   let transaction =
@@ -1081,6 +1106,107 @@ test statemachine_collect() {
       certificates: [],
       withdrawals: [],
       validity_range: interval.after(1),
+      extra_signatories: [seller_pubkeyhash],
+      redeemers: [],
+      datums: transaction.placeholder.datums,
+      id: transaction.placeholder.id,
+      votes: transaction.placeholder.votes,
+      proposal_procedures: transaction.placeholder.proposal_procedures,
+      current_treasury_amount: transaction.placeholder.current_treasury_amount,
+      treasury_donation: transaction.placeholder.treasury_donation
+    }
+
+  statemachine.spend(threadtoken, operator_pubkeyhash, seller_pubkeyhash, buyer_pubkeyhash, price, fee, pending_until, shipping_until, expire_until, Some(old_datum), redeemer, own_ref, transaction)
+}
+//////////////////////////////////////////////////////////////////////// COLLECT 2
+
+test statemachine_collect_2() {
+  let ms_1_hour = 3_600_000
+  let ms_60_days = 5_184_000_000
+  let ms_1_day = 86_400_000 
+  let ms_7_days = 604_800_000
+  let ms_9_days = 777_600_000
+  let own_ref =
+    OutputReference {
+      transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
+      output_index: 0,
+    }
+  let threadtoken = #"99999999999999999999999999999999999999999999999999999999"
+  let token_name = #"02"
+  let own_script_hash = #"88888888888888888888888888888888888888888888888888888888" 
+  let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
+  let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
+  let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let pending_until = ms_1_hour
+  let shipping_until = ms_1_day
+  let expire_until = ms_60_days
+  let price = 50_000_000
+  let delivery_date = shipping_until + ms_9_days + 1
+  let fee = 2000000
+
+  //////////////////////////////INPUT////////////////////////////////
+
+  let sm_input =
+    Input {
+      output_reference: own_ref,
+      output: Output {
+        address: Address {
+          payment_credential: Script(own_script_hash),
+          stake_credential: None,
+        },
+        value: assets.add(
+          assets.from_lovelace(price),
+          threadtoken,
+          token_name,
+          1,
+        ),
+        datum: NoDatum,
+        reference_script: None,
+      },
+    }
+  
+  ////////////////////////////////////////////////////////////////////////
+
+  let new_data: Data = StateMachineDatum {
+      state: 4,
+      delivery: None
+  }  
+
+  let new_datum = InlineDatum(new_data)
+
+  let sm_output =
+    Output {
+      address: Address {
+        payment_credential: Script(own_script_hash),
+        stake_credential: None,
+      },
+      value: assets.add(
+        assets.from_lovelace(fee),
+        threadtoken,
+        token_name,
+        1,
+      ),
+      datum: new_datum,
+      reference_script: None,
+    }
+
+  let redeemer = Collect      //StateMachineInput
+
+  let old_datum = StateMachineDatum {
+    state: 2,
+    delivery: Some(delivery_date)
+  }
+
+  let transaction =
+    Transaction {
+      inputs: [sm_input],
+      reference_inputs: [],
+      outputs: [sm_output],
+      fee: transaction.placeholder.fee,
+      mint: transaction.placeholder.mint,
+      certificates: [],
+      withdrawals: [],
+      validity_range: interval.after(delivery_date + ms_7_days + 1),
       extra_signatories: [seller_pubkeyhash],
       redeemers: [],
       datums: transaction.placeholder.datums,
