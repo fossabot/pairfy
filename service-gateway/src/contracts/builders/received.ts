@@ -5,8 +5,9 @@ import {
   Data,
   SpendingValidator,
   validatorToAddress,
+  Lucid,
 } from "@lucid-evolution/lucid";
-import { deserializeParams, lucid, validators } from "./index.js";
+import { deserializeParams, provider, validators } from "./index.js";
 
 const NETWORK = "Preprod";
 
@@ -16,6 +17,9 @@ async function receivedTransactionBuilder(
   serializedParams: string,
   sellerAddress: string
 ) {
+
+  const lucid = await Lucid(provider, NETWORK);
+  
   //////////////////////////////////////////////////
 
   const now = BigInt(Date.now());
