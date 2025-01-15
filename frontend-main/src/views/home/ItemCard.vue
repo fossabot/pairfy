@@ -66,6 +66,7 @@ const { formatPriceToUSD } = inject('utils');
 .full {
     font-weight: 700;
     font-style: italic;
+    font-size: var(--text-size-1);
 }
 
 .shipping {

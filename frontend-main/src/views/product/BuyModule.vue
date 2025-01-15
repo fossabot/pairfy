@@ -488,15 +488,15 @@ a {
 
 .card-rating span {
     margin-left: 0.5rem;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     font-weight: 700;
 }
 
 .card-stock {
-    font-size: var(--text-size-12);
+    font-size: var(--text-size-2);
     margin-bottom: 1rem;
     text-transform: capitalize;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .card-arrival {
@@ -520,7 +520,7 @@ a {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
     text-transform: capitalize;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .card-full {
