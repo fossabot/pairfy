@@ -61,9 +61,8 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     font-weight: 500;
     font-size: var(--text-size-1);
     cursor: pointer;
-    background: var(--primary-a);
-    color: var(--text-w);
     justify-content: center;
     padding: 0 1.5rem;
+    border: 1px solid var(--border-a);
 }
 </style>
