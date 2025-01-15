@@ -32,14 +32,14 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .card {
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid var(--border-a);
     color: inherit;
     justify-content: space-between;
     padding: 0.75rem 1rem; 
     border-radius: 999px;
     display: flex;
     align-items: center;
-
+    color: inherit;
 }
 
 .card-address {

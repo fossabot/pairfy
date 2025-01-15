@@ -1,6 +1,6 @@
 <template>
     <div class="search" :class="{ focus: isFocus }"
-        :style="{ backgroundColor: searchInput.length ? 'var(--background-a)' : 'var(--background-b)' }">
+        :style="{ backgroundColor: searchInput.length ? 'var(--background-b)' : 'var(--background-b)' }">
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search products"
             @focus="isFocus = true" @blur="isFocus = false">
         <button class="search-button flex" :class="{ focus: isFocus }"> 

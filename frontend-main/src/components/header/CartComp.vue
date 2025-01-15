@@ -24,7 +24,7 @@
 }
 
 .cart {
-    background: var(--soft-white-a);
+    background: var(--background-b);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     height: 20px;
@@ -34,5 +34,6 @@
     font-weight: 600;
     padding: 0 1rem;
     font-size: var(--text-size-0);
+    color: var(--text-a);
 }
 </style>

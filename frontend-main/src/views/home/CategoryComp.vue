@@ -72,7 +72,7 @@ const getURL = (index) => {
 }
 
 .tag {
-    background: var(--background-bs);
+    background: var(--background-b);
     text-align: center;
     padding: 1rem;
     border-radius: 999px;

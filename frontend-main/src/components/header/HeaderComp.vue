@@ -119,8 +119,8 @@ header {
     align-items: center;
     width: 100%;
     font-size: var(--text-size-1);
-    color: var(--text-w);
-    background: var(--background-c);
+    color: var(--text-a);
+    background: var(--background-a);
 }
 
 section {
@@ -130,6 +130,7 @@ section {
 
 .header {
     padding: 0.75rem 0;
+    color: var(--text-b);
 }
 
 .brand {
