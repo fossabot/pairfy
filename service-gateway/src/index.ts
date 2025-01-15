@@ -141,6 +141,15 @@ const main = async () => {
       throw new Error("RSA_PASSPHRASE error");
     }
 
+    if (!process.env.FEE_PERCENT) {
+      throw new Error("FEE_PERCENT error");
+    }
+
+    if (!process.env.NETWORK_ENV) {
+      throw new Error("NETWORK_ENV error");
+    }
+
+
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,

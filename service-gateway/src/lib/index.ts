@@ -73,26 +73,30 @@ function convertUSDToLovelace(usdAmount: number, adaPrice: number): number {
   return Math.round(amountInLovelace);
 }
 
-async function getContractCollateral(
-  productCollateral: number,
-  productUnits: number,
-  adaPrice: number
-) {
+async function getContractFee(contractPrice: number) {
   try {
-    if (productCollateral < 0) {
-      throw new Error("USD amount cannot be negative.");
+    if (contractPrice < 0) {
+      throw new Error("INTERNAL_ERROR_GCF");
     }
 
-    if (productUnits <= 0) {
-      throw new Error("productUnits negative");
+    if (!process.env.FEE_PERCENT) {
+      throw new Error("INTERNAL_ERROR_GCF");
+    }
+    
+    const percent = parseInt(process.env.FEE_PERCENT as string);
+
+    if (percent < 0) {
+      throw new Error("INTERNAL_ERROR_GCF");
     }
 
-    const total = productCollateral * productUnits;
+    if (percent > 20) {
+      throw new Error("INTERNAL_ERROR_GCF");
+    }
 
-    return convertUSDToLovelace(total, adaPrice);
+    return (contractPrice * percent) / 100;
   } catch (err) {
     throw err;
   }
 }
 
-export { getContractPrice, getContractCollateral };
+export { getContractPrice, getContractFee };

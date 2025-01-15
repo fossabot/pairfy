@@ -1,4 +1,4 @@
-import { getContractCollateral, getContractPrice } from "../../lib/index.js";
+import { getContractFee, getContractPrice } from "../../lib/index.js";
 import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
 import { UserToken } from "../../middleware/agent.js";
@@ -27,12 +27,11 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
   try {
     connection = await database.client.getConnection();
 
-    const [row] = await connection.execute(
+    const [products] = await connection.execute(
       `SELECT
              p.id AS product_id,
              p.name AS product_name,
              p.price AS product_price,
-             p.collateral AS product_collateral,
              p.sku AS product_sku,
              p.model AS product_model,
              p.brand AS product_brand,
@@ -55,17 +54,18 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
       [params.product_id]
     );
 
-    if (!row.length) {
+    if (!products.length) {
       throw new Error("NO_PRODUCT");
     }
 
-    const RESULT = row[0];
+    const RESULT = products[0];
 
     if (!RESULT.seller_pubkeyhash) {
       throw new Error("NO_SELLER_PKH");
     }
 
     await connection.beginTransaction();
+    
     ///////////////////////////////////////////////////
 
     const PGPVersion = "1.0";
@@ -102,19 +102,17 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
       ADAUSD
     );
 
-    const contractCollateral: number = await getContractCollateral(
-      RESULT.product_collateral,
-      productUnits,
-      ADAUSD
-    );
+    const contractFee: number = await getContractFee(contractPrice);
 
+    const operator = "a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141"
     //////////////////////////////////////////////
 
     const BUILDER = await pendingTransactionBuilder(
+      operator,
       USER.address,
       RESULT.seller_pubkeyhash,
       BigInt(contractPrice),
-      BigInt(contractCollateral),
+      BigInt(contractFee),
       metadata
     );
 
@@ -133,12 +131,11 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
       contract_address: BUILDER.stateMachineAddress,
       contract_params: BUILDER.serializedParams,
       contract_price: contractPrice,
-      contract_collateral: contractCollateral,
+      contract_fee: contractFee,
       contract_units: productUnits,
       product_id: RESULT.product_id,
       product_name: RESULT.product_name,
       product_price: RESULT.product_price,
-      product_collateral: RESULT.product_collateral,
       product_sku: RESULT.product_sku,
       product_model: RESULT.product_model,
       product_brand: RESULT.product_brand,

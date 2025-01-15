@@ -79,6 +79,10 @@ spec:
               value: "864000000"              
             - name: EXPIRING_RANGE
               value: "5184000000"
+            - name: NETWORK_ENV
+              value: "Preprod"
+            - name: FEE_PERCENT
+              value: "10"                    
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:

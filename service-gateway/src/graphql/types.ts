@@ -8,7 +8,6 @@ type Product {
     seller_id: String!
     name: String!
     price: Int!
-    collateral: Int!
     sku: String!
     model: String!
     brand: String!
@@ -36,7 +35,6 @@ type ProductBook {
    id: String!
    name: String!
    price: Int!
-   collateral: Int!
    sku: String!
    media_url: String!
    image_path: String!
@@ -65,12 +63,11 @@ type Order {
   contract_address: String!
   contract_state: Int
   contract_price: Int!
-  contract_collateral: Int!
+  contract_fee: Int!
   contract_units: Int!
   product_id: String!
   product_name: String!
   product_price: Int!
-  product_collateral: Int!
   product_sku: String!
   product_model: String!
   product_brand: String!
