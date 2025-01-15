@@ -82,7 +82,7 @@ async function getContractFee(contractPrice: number) {
     if (!process.env.FEE_PERCENT) {
       throw new Error("INTERNAL_ERROR_GCF");
     }
-    
+
     const percent = parseInt(process.env.FEE_PERCENT as string);
 
     if (percent < 0) {
@@ -92,8 +92,9 @@ async function getContractFee(contractPrice: number) {
     if (percent > 20) {
       throw new Error("INTERNAL_ERROR_GCF");
     }
-
-    return (contractPrice * percent) / 100;
+    const result = (contractPrice * percent) / 100;
+    
+    return Math.round(result);
   } catch (err) {
     throw err;
   }

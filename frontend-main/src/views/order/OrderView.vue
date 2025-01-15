@@ -195,10 +195,6 @@
                                                     <span>{{ deliveryDate }}</span>
                                                 </div>
                                                 <div class="created-item">
-                                                    <span>Collateral</span>
-                                                    <span>{{ contractCollateral }} ADA</span>
-                                                </div>
-                                                <div class="created-item">
                                                     <span>Guide</span>
                                                     <span class="guide flex" v-if="shippingData">
                                                         <div class="flex" @click="displayNotesDialog(true)"
@@ -373,12 +369,11 @@ query ($getOrderVariable: GetOrderInput!) {
             contract_address
             contract_state
             contract_price
-            contract_collateral
+            contract_fee
             contract_units
             product_id
             product_name
             product_price
-            product_collateral
             product_sku
             product_model
             product_brand
@@ -474,8 +469,6 @@ const contractFiat = ref(0);
 
 const contractPrice = ref(0);
 
-const contractCollateral = ref(0);
-
 const shippingData = ref(null);
 
 const deliveryDate = ref('None');
@@ -526,8 +519,6 @@ const unwatchOrder = watch(getOrderResult, value => {
         orderPayment.value = getPaymentStatus(ORDER.pending_block)
 
         contractPrice.value = convertLovelaceToADA(ORDER.contract_price);
-
-        contractCollateral.value = convertLovelaceToADA(ORDER.contract_collateral);
 
         pendingTx.value = ORDER.pending_tx || pendingTx.value;
 
