@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
-import { Kupmios, Lucid } from "@lucid-evolution/lucid";
+import { Kupmios } from "@lucid-evolution/lucid";
 import { blueprint } from "./plutus.js";
 
 dotenv.config();
@@ -37,7 +37,6 @@ function readValidators(): Validators {
   };
 }
 
-const lucid = await Lucid(provider, "Preprod");
 
 const validators = readValidators();
 
@@ -62,7 +61,6 @@ function deserializeParams(params: string) {
 export {
   provider,
   readValidators,
-  lucid,
   validators,
   serializeParams,
   deserializeParams,

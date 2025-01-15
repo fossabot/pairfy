@@ -9,22 +9,37 @@ import {
   SpendingValidator,
   validatorToAddress,
   paymentCredentialOf,
+  Lucid,
+  Network,
 } from "@lucid-evolution/lucid";
-import { lucid, serializeParams, validators } from "./index.js";
-
-const NETWORK = "Preprod";
+import { provider, serializeParams, validators } from "./index.js";
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer. */
 async function pendingTransactionBuilder(
+  operatorPubKeyHash: string,
   externalWalletAddress: string,
   sellerPubKeyHash: string,
   contractPrice: bigint,
-  contractCollateral: bigint,
+  fee: bigint,
   metadata: any
 ) {
   //////////////////////////////////////////////////
 
-  const now = BigInt(Date.now());
+  let NETWORK: Network = "Preprod";
+
+  if (!process.env.NETWORK_ENV) {
+    throw new Error("NETWORK_ENV unset");
+  }
+
+  if (process.env.NETWORK === "Mainnet") {
+    NETWORK = "Mainnet";
+  }
+
+  //////////////////////////////////////////////////
+
+  const lucid = await Lucid(provider, NETWORK);
+
+  //////////////////////////////////////////////////
 
   const txValidTime = BigInt(process.env.TX_VALID_TIME as string);
 
@@ -37,6 +52,8 @@ async function pendingTransactionBuilder(
   const expiringRange = BigInt(process.env.EXPIRING_RANGE as string);
 
   //////////////////////////////////////////////////
+
+  const now = BigInt(Date.now());
 
   const validToMs = now + txValidTime;
 
@@ -65,16 +82,19 @@ async function pendingTransactionBuilder(
 
   //////////////////////////////////////////////////
 
-  const txCollateral = 5_000_000n;
+  const txCollateral = 2_000_000n;
 
-  const minLovelace =
-    contractPrice < txCollateral ? txCollateral : contractPrice;
+  const minLovelace = contractPrice + txCollateral;
 
   const findIndex = externalWalletUtxos.findIndex(
     (item) => item.assets.lovelace > minLovelace
   );
 
   const utxo = externalWalletUtxos[findIndex];
+
+  if (!utxo) {
+    throw new Error("MIN_LOVELACE");
+  }
 
   const utxoRef = new Constr(0, [
     String(utxo.txHash),
@@ -99,10 +119,11 @@ async function pendingTransactionBuilder(
 
   const stateMachineParams = [
     threadTokenPolicyId,
+    operatorPubKeyHash,
     sellerPubKeyHash,
     buyerPubKeyHash,
     contractPrice,
-    contractCollateral,
+    fee,
     pendingUntil,
     shippingUntil,
     expireUntil,
@@ -189,6 +210,9 @@ async function pendingTransactionBuilder(
 }
 
 async function main() {
+  const operatorPubKeyHash =
+    "a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141";
+
   const externalWalletAddress =
     "addr_test1qp6xhlulkdnm7wa3kf07yj389weg34329jk34tfwx75pw0urvzxsjpchzgnhfmvz35ap356vg3a2c2af34zl4va7cfzqtyf6jn";
 
@@ -197,15 +221,16 @@ async function main() {
 
   const contractPrice = 30 * 1_000_000;
 
-  const contractCollateral = 10 * 1_000_000;
+  const fee = 2_000_000;
 
-  const metadata = { msg: "what" };
+  const metadata = { msg: "example" };
 
   const BUILDER = await pendingTransactionBuilder(
+    operatorPubKeyHash,
     externalWalletAddress,
     sellerPubKeyHash,
     BigInt(contractPrice),
-    BigInt(contractCollateral),
+    BigInt(fee),
     metadata
   );
 
@@ -227,5 +252,3 @@ async function main() {
 //main();
 
 export { pendingTransactionBuilder };
-
-//two signature, collateral, validto, paramterice price, collateral, seller, buyer
