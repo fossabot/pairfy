@@ -60,7 +60,6 @@ const { formatPriceToUSD } = inject('utils');
 .price {
     font-size: var(--text-size-3);
     margin-top: 0.25rem;
-    font-weight: 500;
 }
 
 .full {
