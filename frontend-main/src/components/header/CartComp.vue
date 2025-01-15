@@ -34,6 +34,5 @@
     font-weight: 600;
     padding: 0 1rem;
     font-size: var(--text-size-0);
-    color: var(--text-a);
 }
 </style>
