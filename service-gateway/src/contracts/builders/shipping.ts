@@ -230,8 +230,8 @@ async function main() {
   const BUILDER = await shippingTransactionBuilder(
     externalWalletAddress,
     serializedParams,
-    metadata,
-    deliveryDate
+    deliveryDate,
+    metadata
   );
 
   console.log("CBOR---------------------------------------");
