@@ -75,6 +75,8 @@ spec:
               value: "3600000"
             - name: SHIPPING_RANGE
               value: "86400000"
+            - name: APPEAL_RANGE
+              value: "604800000"
             - name: DELIVERY_RANGE
               value: "864000000"              
             - name: EXPIRING_RANGE
@@ -82,7 +84,7 @@ spec:
             - name: NETWORK_ENV
               value: "Preprod"
             - name: FEE_PERCENT
-              value: "10"                    
+              value: "10"                      
             - name: RSA_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:

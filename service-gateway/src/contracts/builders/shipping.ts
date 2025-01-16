@@ -14,8 +14,8 @@ import { deserializeParams, provider, validators } from "./index.js";
 async function shippingTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string,
-  metadata: any,
-  deliveryDate: bigint
+  deliveryDate: bigint,
+  metadata: any
 ) {
   let NETWORK: Network = "Preprod";
 
@@ -60,6 +60,10 @@ async function shippingTransactionBuilder(
   }
 
   if (deliveryDate >= BigInt(stateMachineParams[8])) {
+    throw new Error("Delivery Date Limit");
+  }
+
+  if (deliveryDate + BigInt(process.env.APPEAL_RANGE as string) >= BigInt(stateMachineParams[8])) {
     throw new Error("Delivery Date Limit");
   }
 

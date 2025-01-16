@@ -105,6 +105,10 @@ const main = async () => {
       throw new Error("SHIPPING_RANGE error");
     }
 
+    if (!process.env.APPEAL_RANGE) {
+      throw new Error("APPEAL_RANGE error");
+    }
+
     if(!process.env.EXPIRING_RANGE){
       throw new Error("EXPIRING_RANGE error");
     }
