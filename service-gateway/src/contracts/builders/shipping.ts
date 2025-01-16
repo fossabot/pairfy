@@ -6,10 +6,9 @@ import {
   SpendingValidator,
   validatorToAddress,
   Lucid,
+  Network,
 } from "@lucid-evolution/lucid";
 import { deserializeParams, provider, validators } from "./index.js";
-
-const NETWORK = "Preprod";
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the seller to send before shipping_until. */
 async function shippingTransactionBuilder(
@@ -18,9 +17,20 @@ async function shippingTransactionBuilder(
   metadata: any,
   deliveryDate: bigint
 ) {
+  let NETWORK: Network = "Preprod";
+
+  if (!process.env.NETWORK_ENV) {
+    throw new Error("NETWORK_ENV unset");
+  }
+
+  if (process.env.NETWORK === "Mainnet") {
+    NETWORK = "Mainnet";
+  }
+
+  //////////////////////////////////////////////////
 
   const lucid = await Lucid(provider, NETWORK);
-  
+
   //////////////////////////////////////////////////
 
   const now = BigInt(Date.now());
@@ -28,35 +38,40 @@ async function shippingTransactionBuilder(
   const validToMs = Number(now + BigInt(process.env.TX_VALID_TIME as string));
 
   //////////////////////////////////////////////////
+
   /**
    *
    *  @type {string} threadTokenPolicyId 0
-   *  @type {string} sellerPubKeyHash 1
-   *  @type {string} buyerPubKeyHash 2
-   *  @type {number} contractPrice 3
-   *  @type {number} contractCollateral 4
-   *  @type {number} pendingUntil 5
-   *  @type {number} shippingUntil 6
-   *  @type {number} expireUntil 7
+   *  @type {string} operatorPubKeyHash 1
+   *  @type {string} sellerPubKeyHash 2
+   *  @type {string} buyerPubKeyHash 3
+   *  @type {number} contractPrice 4
+   *  @type {number} contractFee 5
+   *  @type {number} pendingUntil 6
+   *  @type {number} shippingUntil 7
+   *  @type {number} expireUntil 8
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
   //////////////////////////////////////////////////
 
-  if (deliveryDate <= BigInt(stateMachineParams[6])) {
+  if (deliveryDate <= BigInt(stateMachineParams[7])) {
     throw new Error("Invalid Delivery Date");
   }
 
-  if (deliveryDate >= BigInt(stateMachineParams[7])) {
+  if (deliveryDate >= BigInt(stateMachineParams[8])) {
     throw new Error("Delivery Date Limit");
   }
+
   //////////////////////////////////////////////////
 
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
+ 
+  //////////////////////////////////////////////////
 
-  const txCollateral = 5_000_000n;
+  const txCollateral = 2_000_000n;
 
   const minLovelace = txCollateral;
 
@@ -65,6 +80,10 @@ async function shippingTransactionBuilder(
   );
 
   const externalWalletUtxo = externalWalletUtxos[findIndex];
+
+  if (!externalWalletUtxo) {
+    throw new Error("MIN_LOVELACE");
+  }
 
   ///////////////////////////////////////////////////
 
@@ -88,12 +107,12 @@ async function shippingTransactionBuilder(
 
   const threadTokenUnit = stateMachineParams[0] + fromText("threadtoken");
 
-  const utxo = await lucid.utxoByUnit(threadTokenUnit);
+  const stateMachineUtxo = await lucid.utxoByUnit(threadTokenUnit);
 
-  console.log(utxo);
+  console.log(stateMachineUtxo);
 
-  if (utxo.datum) {
-    const data = Data.from(utxo.datum, StateMachineDatum);
+  if (stateMachineUtxo.datum) {
+    const data = Data.from(stateMachineUtxo.datum, StateMachineDatum);
 
     console.log(data);
 
@@ -112,11 +131,12 @@ async function shippingTransactionBuilder(
         stateMachineParams[0],
         stateMachineParams[1],
         stateMachineParams[2],
-        BigInt(stateMachineParams[3]),
+        stateMachineParams[3],
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
         BigInt(stateMachineParams[6]),
         BigInt(stateMachineParams[7]),
+        BigInt(stateMachineParams[8]),
       ]
     ),
   };
@@ -126,20 +146,24 @@ async function shippingTransactionBuilder(
   ////////////////////////////////////////////
 
   const shippingInput = {
-    Shipping: {
+    Shipped: {
       delivery_param: BigInt(deliveryDate),
-    }
+    },
   };
 
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
-    Data.Literal("Locking"),
+    Data.Literal("Lock"),
+    Data.Literal("Cancel"),
     Data.Object({
-      Shipping: Data.Object({
+      Shipped: Data.Object({
         delivery_param: Data.Integer(),
       }),
     }),
+    Data.Literal("Appeal"),
     Data.Literal("Received"),
+    Data.Literal("Collect"),
+    Data.Literal("Finish"),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
@@ -150,12 +174,11 @@ async function shippingTransactionBuilder(
 
   ///////////////////////////////////////////
 
-  const lovelaceToSM =
-    BigInt(stateMachineParams[3]) + BigInt(stateMachineParams[4]);
+  const lovelaceToSM = BigInt(stateMachineParams[4]);
 
   const transaction = await lucid
     .newTx()
-    .collectFrom([utxo], stateMachineRedeemer)
+    .collectFrom([stateMachineUtxo], stateMachineRedeemer)
     .collectFrom([externalWalletUtxo])
     .pay.ToAddressWithData(
       stateMachineAddress,
@@ -198,7 +221,7 @@ async function main() {
 
   const metadata = { msg: "what" };
 
-  const deliveryDate = BigInt(Date.now()); ///parametrized 
+  const deliveryDate = BigInt(Date.now()); ///parametrized
 
   const BUILDER = await shippingTransactionBuilder(
     externalWalletAddress,
