@@ -89,6 +89,8 @@ type Order {
   shipping_metadata: String
   received_tx: String
   received_block: String
+  collected_tx: String
+  collected_block: String  
   seller_username: String
   seller_verified: Boolean
   seller_trade_terms: String
@@ -121,7 +123,7 @@ type Query {
   getBooks(getBooksInput: GetBooksInput!): GetBooksResponse!
 }
 
-#///////////////////////////////////////////////// MUTATIONS
+#////////////////////////////////////////////////////////////////////////////// MUTATIONS
 
 type UpdateBookResponse {
   success: Boolean!
@@ -168,6 +170,11 @@ type ReceivedEndpointResponse {
   payload: CborPayload!
 }
 
+type CollectEndpointResponse {
+  success: Boolean!
+  payload: CborPayload!
+}
+
 input PendingEndpointInput {
   product_id: String!
   product_units: Int!
@@ -194,6 +201,10 @@ input ReceivedEndpointInput {
   order_id: String!
 } 
 
+input CollectEndpointInput {
+  order_id: String!
+} 
+
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
   pendingEndpoint(pendingEndpointInput: PendingEndpointInput!): PendingEndpointResponse!
@@ -201,6 +212,7 @@ type Mutation {
   lockingEndpoint(lockingEndpointInput: LockingEndpointInput!): LockingEndpointResponse!
   shippingEndpoint(shippingEndpointInput: ShippingEndpointInput!): ShippingEndpointResponse!
   receivedEndpoint(receivedEndpointInput: ReceivedEndpointInput!): ReceivedEndpointResponse!
+  collectEndpoint(collectEndpointInput: CollectEndpointInput!): CollectEndpointResponse!
 }
 
 `;

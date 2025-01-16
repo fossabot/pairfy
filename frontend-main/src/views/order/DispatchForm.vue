@@ -55,7 +55,7 @@
         </div>
     </Dialog>
 
-    <Button type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true"
+    <Button v-if="currentState === 1" type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true"
         :loading="isLoading" style="color: var(--text-w);" />
 </template>
 
@@ -71,6 +71,8 @@ import { reactive } from "vue";
 const toast = useToast();
 
 const { getOrderData } = orderAPI();
+
+const currentState = computed(() => getOrderData.value?.order?.contract_state);
 
 const dispatchForm = reactive({
     guide: null,

@@ -1,7 +1,7 @@
 import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
 
-async function handleReceived(
+async function collected(
   connection: PoolConnection,
   threadtoken: string,
   timestamp: number,
@@ -11,24 +11,26 @@ async function handleReceived(
   buyer_address: string,
   seller_address: string
 ) {
-  const statusLog = "received";
+  const statusLog = "collected";
 
   const updateQuery = `
     UPDATE orders
-    SET scanned_at = ?,
+    SET finished = ?,
+        scanned_at = ?,
         status_log = ?,
         contract_state = ?,
-        received_tx = ?,
-        received_block = ?
+        collected_tx = ?,
+        collected_block = ?
     WHERE id = ?`;
 
-  const receivedTx = utxo.txHash + "#" + utxo.outputIndex;
+  const collectedTx = utxo.txHash + "#" + utxo.outputIndex;
 
   await connection.execute(updateQuery, [
+    true,
     timestamp,
     statusLog,
     utxo.data.state,
-    receivedTx,
+    collectedTx,
     utxo.block_time,
     threadtoken,
   ]);
@@ -39,24 +41,24 @@ async function handleReceived(
     {
       id: getEventId(),
       type: "order",
-      title: "Package Received",
+      title: "Order Finished",
       owner: buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken,
         buyer_address
       }),
-      message: `You have received the package.`,
+      message: `The order has ended without appeal.`,
     },
     {
       id: getEventId(),
       type: "order",
-      title: "Package Received",
+      title: "Funds Collected",
       owner: seller_id,
       data: JSON.stringify({
         threadtoken,
         seller_address
       }),
-      message: `The buyer has received the package.`,
+      message: `The funds have been sent to your wallet.`,
     },
   ];
 
@@ -81,4 +83,4 @@ async function handleReceived(
   ]);
 }
 
-export { handleReceived };
+export { collected };

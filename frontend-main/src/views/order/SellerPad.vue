@@ -11,7 +11,11 @@
             </span>
         </Button>
 
+        
+
         <DispatchForm />
+        
+        <CollectComp />
 
         <Button type="button" label="Appeal" :disabled="true" variant="text" :loading="false" />
     </div>
@@ -21,6 +25,7 @@
 import gql from 'graphql-tag'
 import orderAPI from "@/views/order/api/index";
 import DispatchForm from '@/views/order/DispatchForm.vue';
+import CollectComp from '@/views/order/CollectComp.vue';
 import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useMutation } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";

@@ -6,6 +6,7 @@ import { lockingEndpoint } from "./orders/locking.js";
 import { returnEndpoint } from "./orders/return.js";
 import { shippingEndpoint } from "./orders/shipping.js";
 import { receivedEndpoint } from "./orders/received.js";
+import { collectEndpoint } from "./orders/collect.js";
 
 const getOrders = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
@@ -67,7 +68,8 @@ const orders = {
     returnEndpoint,
     lockingEndpoint,
     shippingEndpoint,
-    receivedEndpoint
+    receivedEndpoint,
+    collectEndpoint
   },
 };
 

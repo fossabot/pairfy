@@ -394,6 +394,8 @@ query ($getOrderVariable: GetOrderInput!) {
             shipping_block
             received_tx
             received_block
+            collected_tx
+            collected_block
             seller_username
             seller_verified
             seller_trade_terms
