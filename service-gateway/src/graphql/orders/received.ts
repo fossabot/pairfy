@@ -21,7 +21,6 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
       `SELECT
              id,
              finished,
-             seller_address,
              contract_params,
              contract_state
        FROM orders          
@@ -39,7 +38,7 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
       throw new Error("ORDER_FINISHED");
     }
 
-    if (ORDER.contract_state === 1) {
+    if (ORDER.contract_state === 3) {
       throw new Error("ALREADY_RECEIVED");
     }
 
@@ -51,8 +50,7 @@ const receivedEndpoint = async (_: any, args: any, context: any) => {
 
     const BUILDER = await receivedTransactionBuilder(
       BUYER.address,
-      ORDER.contract_params,
-      ORDER.seller_address
+      ORDER.contract_params
     );
 
     return {
