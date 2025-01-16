@@ -117,7 +117,7 @@ onDoneShippingEndpoint(async result => {
 
             const { cbor } = response.shippingEndpoint.payload;
 
-            showSuccess("Preparing", `Don't close the window. The process takes a few minutes depending on the blockchain network.`, 100000);
+            showSuccess("Preparing", `Please don't close the tab. The process takes a few minutes depending on the blockchain network.`, 100000);
 
             const txHash = await balanceTx(cbor);
 

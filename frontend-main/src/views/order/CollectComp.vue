@@ -1,6 +1,6 @@
 <template>
-    <Button v-if="isEnabled" type="button" label="Collect Funds" @click="onCollect" :loading="loading"
-        style="color: var(--text-w);" />
+    <Button v-if="isEnabled" type="button" label="Collect Funds" @click="onCollect"
+    :loading="loading" :disabled="isDisabled" style="color: var(--text-w);" />
 </template>
 
 <script setup>
@@ -28,20 +28,27 @@ const shippingData = computed(() => {
     return null
 });
 
+const currentState = computed(() => getOrderData.value?.order?.contract_state);
+
+const isDisabled = computed(() => {
+    if (currentState.value === 3) {
+        return false
+    }
+
+    let now = Date.now();
+
+    let appealExpired = BigInt(now) > BigInt(shippingData.value?.appeal_until)
+
+    if (currentState.value === 2 && appealExpired) {
+        return false
+    }
+
+    return true
+});
 
 const isEnabled = computed(() => {
-    const state = getOrderData.value?.order?.contract_state;
-
-    if (typeof state === 'number') {
-        if (state === 3) {
-            return true
-        }
-
-        let now = Date.now();
-
-        if (state === 2 && BigInt(now) > BigInt(shippingData?.appeal_until)) {
-            return true
-        }
+    if (currentState.value === 2) {
+        return true
     }
 
     return false
