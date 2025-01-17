@@ -75,7 +75,6 @@ const { formatPriceToUSD } = inject('utils');
 
 .tag {
     margin-left: 0.5rem;
-    padding: 0 0.25rem;
     text-align: center;
     border-radius: 2px;
     color: var(--primary-a);
