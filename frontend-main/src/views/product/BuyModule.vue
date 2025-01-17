@@ -501,7 +501,6 @@ a {
 .card-arrival {
     font-size: var(--text-size-1);
     margin-bottom: 1rem;
-    text-transform: capitalize;
 }
 
 .card-within {
@@ -530,11 +529,7 @@ a {
 }
 
 .card-full i {
-    margin: 0.25rem;
-}
-
-.card-full span {
-    margin-right: 0.5rem;
+    margin: 0 0.25rem;
 }
 
 .full {
