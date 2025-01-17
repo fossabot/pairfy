@@ -16,9 +16,6 @@
         <DispatchForm />
 
         <CollectComp />
-
-        <Button type="button" label="Appeal" :disabled="true" variant="text"
-            :loading="false" />
     </div>
 </template>
 
