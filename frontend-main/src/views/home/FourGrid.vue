@@ -80,7 +80,7 @@ const itemList = ref([
     width: 100%;
     max-width: 1600px;
     display: grid;
-    gap: 0.75rem;
+    gap: 1rem;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -105,7 +105,7 @@ const itemList = ref([
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
-    gap: 0.75rem;
+    gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
     background: var(--background-a);
