@@ -1,6 +1,6 @@
 <template>
-    <div class="preview">
-        <div v-if="getProductData" class="preview-wrap">
+   
+        <div class="preview" v-if="getProductData">
             <div class="preview-top">
                 <span>+7 Sold </span>
             </div>
@@ -56,7 +56,7 @@
                 <li v-for="item in bulletList" :key="item">{{ item }}</li>
             </ul>
         </div>
-    </div>
+   
 </template>
 
 <script setup>
@@ -82,6 +82,7 @@ const bulletList = computed(() => {
 <style lang="css" scoped>
 .preview {
     min-height: 400px;
+    padding: 0 1rem;
 }
 
 .preview-top {
