@@ -55,6 +55,10 @@ const isEnabled = computed(() => {
         return true
     }
 
+    if (currentState.value === 4) {
+        return true
+    }
+
     return false
 })
 

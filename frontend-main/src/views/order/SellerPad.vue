@@ -17,7 +17,7 @@
 
         <CollectComp />
 
-        <Button v-if="isFinished" type="button" label="Appeal" :disabled="true" variant="text"
+        <Button type="button" label="Appeal" :disabled="true" variant="text"
             :loading="false" />
     </div>
 </template>
@@ -101,8 +101,6 @@ const onLockingEndpoint = () => {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-
-const isFinished = computed(()=> !getOrderData.value?.order?.finished)
 
 const currentState = computed(() => getOrderData.value?.order?.contract_state);
 
