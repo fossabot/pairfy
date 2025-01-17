@@ -1,16 +1,32 @@
 <template>
     <div class="two">
         <div class="subcard left">
-            <div class="title left">
-                <span>Home</span>
+            <div class="head left">
+                <div class="title">
+                    <span>Decorate your home</span>
+                    <span>Most purchased community products</span>
+                </div>
+                <div class="control flex">
+                    <div class="button">
+                        View More
+                    </div>
+                </div>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
         </div>
 
         <div class="subcard right">
-            <div class="title right">
-                Garden
+            <div class="head left">
+                <div class="title">
+                    <span>For your garden</span>
+                    <span>The most purchased products.</span>
+                </div>
+                <div class="control flex">
+                    <div class="button">
+                        View More
+                    </div>
+                </div>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -60,19 +76,42 @@ const itemList = ref([
     grid-template-columns: 1fr 1fr;
 }
 
-.title {
+.head {
     font-size: var(--text-size-4);
     grid-column: span 3;
     font-weight: 700;
     text-align: start;
+    display: flex;
+    justify-content: space-between;
 }
 
-.title.left {
-    color: var(--text-w);
+.head.left {
+    color: var(--primary-a);
 }
 
-.title.right {
+.head.right {
+    color: var(--primary-a);
+}
+
+.button {
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-a);
     color: var(--text-w);
+    font-size: var(--text-size-2);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+}
+
+.title span:nth-child(2) {
+    color: var(--text-a);
+    font-size: var(--text-size-1);
+    font-weight: 400;
 }
 
 .subcard {
@@ -88,19 +127,22 @@ const itemList = ref([
 }
 
 .subcard.left {
-    background-image: linear-gradient(134deg, var(--cyan-a), transparent 95%);
-    background: var(--cyan-a);
+    background-image: linear-gradient(134deg, gray, transparent 95%);
+    background: var(--background-a);
 }
 
 .subcard.right {
     background-image: linear-gradient(134deg, var(--cyan-a), transparent 95%);
+    background: var(--background-a);
 }
 
 .minicard {
     background: var(--background-b);
     width: 100%;
     border-radius: 16px;
+    border: 1px solid var(--border-a);
 }
+
 
 @media (max-width: 600px) {
     .grid-container {
