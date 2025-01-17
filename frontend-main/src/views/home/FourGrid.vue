@@ -80,7 +80,7 @@ const itemList = ref([
     width: 100%;
     max-width: 1600px;
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
     grid-template-columns: 1fr 1fr;
 }
 
@@ -105,7 +105,7 @@ const itemList = ref([
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
     padding: 1rem;
     border-radius: 20px;
     background: var(--background-a);
@@ -122,7 +122,7 @@ const itemList = ref([
 .minicard {
     background: var(--background-b);
     width: 100%;
-    height: 250px;
+  
     border-radius: 16px;
 }
 

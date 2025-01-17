@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt" :style="{ maxWidth: size, height: size }">
+        <img :src="props.content.image" :alt="props.content.alt" >
 
         <div class="body">
             <span class="title">{{ props.content.title }}</span>
@@ -23,7 +23,7 @@
 <script setup>
 import { inject } from 'vue';
 
-const props = defineProps(['content', 'size'])
+const props = defineProps(['content'])
 
 const { formatPriceToUSD } = inject('utils');
 
