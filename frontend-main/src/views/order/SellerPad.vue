@@ -2,8 +2,8 @@
     <div class="pad flex">
         <Button v-if="currentState === 0" :disabled="disableAccept" @click="onLockingEndpoint"
             style="color: var(--text-w);" :loading="true">
-            <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5"
-                fill="transparent" animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+            <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5" fill="transparent"
+                animationDuration=".5s" aria-label="Custom ProgressSpinner" />
 
             <span>Accept The Order</span>
             <span v-if="pendingCountdown !== '00:00'">
@@ -11,13 +11,14 @@
             </span>
         </Button>
 
-        
+
 
         <DispatchForm />
-        
+
         <CollectComp />
 
-        <Button type="button" label="Appeal" :disabled="true" variant="text" :loading="false" />
+        <Button v-if="isFinished" type="button" label="Appeal" :disabled="true" variant="text"
+            :loading="false" />
     </div>
 </template>
 
@@ -100,6 +101,8 @@ const onLockingEndpoint = () => {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
+
+const isFinished = computed(()=> !getOrderData.value?.order?.finished)
 
 const currentState = computed(() => getOrderData.value?.order?.contract_state);
 

@@ -11,7 +11,7 @@ async function handleReturn(
   buyer_address: string,
   seller_address: string
 ) {
-  const statusLog = "returned";
+  const statusLog = "return";
 
   const updateQuery = `
     UPDATE orders

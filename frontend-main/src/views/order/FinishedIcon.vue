@@ -17,13 +17,18 @@ const { getOrderData } = orderAPI();
 const color = computed(() => {
 
     if (getOrderData.value.order.finished) {
-        if (getOrderData.value?.order?.contract_state === -1) {
-            return 'red'
+        const state = getOrderData.value?.order?.contract_state
+
+        if (state) {
+            if (state === -1) {
+                return 'red'
+            }
+
+            if ([3,4].includes(state)) {
+                return 'green'
+            }
         }
 
-        if (getOrderData.value?.order?.contract_state === 3) {
-            return 'green'
-        }
     }
 
     return false

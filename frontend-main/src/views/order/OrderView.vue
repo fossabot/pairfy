@@ -135,26 +135,26 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span :class="{ returned: statusLog === 'returned' }">{{ statusLog
-                                                        }}</span>
+                                                    <span :class="{ red: ['return', 'appeal', 'cancel'].includes(statusLog)  }">
+                                                        {{ statusLog}}
+                                                    </span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Fiat Amount</span>
                                                     <span>{{ formatCurrency(contractFiat) }} USD</span>
                                                 </div>
                                                 <div class="created-item">
-                                                    <span>ADA Amount</span>
+                                                    <span>Asset Amount</span>
                                                     <span>{{ contractPrice }} ADA</span>
                                                 </div>
                                                 <div class="created-item">
-                                                    <span>ADA Price</span>
+                                                    <span>Asset Price</span>
                                                     <span>{{ orderData.ada_price }} ADA</span>
                                                 </div>
                                                 <div class="created-item">
                                                     <span>Quantity</span>
                                                     <span>{{ orderData.contract_units }}</span>
                                                 </div>
-
                                                 <div class="created-item">
                                                     <span>Payment</span>
                                                     <span>
@@ -495,6 +495,11 @@ const shippingStatus = computed(() => {
     if (state === 3) {
         return "package received"
     }
+
+    if (state === 4) {
+        return "package received"
+    }
+    
     return "-"
 });
 
@@ -892,10 +897,6 @@ onUnmounted(() => {
     height: 36px;
     padding: 0 0.5rem;
     cursor: pointer;
-}
-
-.returned {
-    color: var(--red-a);
 }
 
 .payment {

@@ -87,6 +87,22 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-head flex">
+                <span>Collected State</span>
+
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.collected_block) }}
+                </span>
+            </div>
+            <div class="card-body">
+                <span class="mask">{{ getOrderData.order.collected_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.collected_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe" />
+                </span>
+            </div>
+        </div>
 
     </div>
 </template>
