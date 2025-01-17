@@ -13,7 +13,7 @@ import { DatumType, InputType, } from "./types.js";
 
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the buyer to return funds after shipping_until. */
-async function cancelTransactionBuilder(
+async function appealTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string
 ) {
@@ -177,7 +177,7 @@ async function main() {
 
   console.log(deserializeParams(serializedParams));
 
-  const BUILDER = await cancelTransactionBuilder(
+  const BUILDER = await appealTransactionBuilder(
     externalWalletAddress,
     serializedParams
   );
@@ -195,4 +195,4 @@ async function main() {
 
 //main();
 
-export { cancelTransactionBuilder };
+export { appealTransactionBuilder };

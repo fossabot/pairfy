@@ -150,6 +150,11 @@ type PendingEndpointResponse {
   payload: PendingEndpointPayload!
 }
 
+type CancelEndpointResponse {
+  success: Boolean!
+  payload: CborPayload!
+}
+
 type ReturnEndpointResponse {
   success: Boolean!
   payload: CborPayload!
@@ -161,6 +166,11 @@ type LockingEndpointResponse {
 }
 
 type ShippingEndpointResponse {
+  success: Boolean!
+  payload: CborPayload!
+}
+
+type AppealEndpointResponse {
   success: Boolean!
   payload: CborPayload!
 }
@@ -181,6 +191,10 @@ input PendingEndpointInput {
   data: String!
 } 
 
+input CancelEndpointInput {
+  order_id: String!
+} 
+
 input ReturnEndpointInput {
   order_id: String!
 } 
@@ -197,6 +211,10 @@ input ShippingEndpointInput {
   notes: String!
 } 
 
+input AppealEndpointInput {
+  order_id: String!
+} 
+
 input ReceivedEndpointInput {
   order_id: String!
 } 
@@ -208,9 +226,11 @@ input CollectEndpointInput {
 type Mutation {
   updateBook(updateBookInput: UpdateBookInput!): UpdateBookResponse!
   pendingEndpoint(pendingEndpointInput: PendingEndpointInput!): PendingEndpointResponse!
+  cancelEndpoint(cancelEndpointInput: CancelEndpointInput!): CancelEndpointResponse!
   returnEndpoint(returnEndpointInput: ReturnEndpointInput!): ReturnEndpointResponse!
   lockingEndpoint(lockingEndpointInput: LockingEndpointInput!): LockingEndpointResponse!
   shippingEndpoint(shippingEndpointInput: ShippingEndpointInput!): ShippingEndpointResponse!
+  appealEndpoint(appealEndpointInput: AppealEndpointInput!): AppealEndpointResponse!
   receivedEndpoint(receivedEndpointInput: ReceivedEndpointInput!): ReceivedEndpointResponse!
   collectEndpoint(collectEndpointInput: CollectEndpointInput!): CollectEndpointResponse!
 }

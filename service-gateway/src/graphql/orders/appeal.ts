@@ -1,12 +1,12 @@
-import { returnTransactionBuilder } from "../../contracts/builders/return.js";
+import { appealTransactionBuilder } from "../../contracts/builders/appeal.js";
 import { UserToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 
-const returnEndpoint = async (_: any, args: any, context: any) => {
+const appealEndpoint = async (_: any, args: any, context: any) => {
   if (!context.userData) {
     throw new Error("CREDENTIALS");
   }
-  const params = args.returnEndpointInput;
+  const params = args.appealEndpointInput;
 
   console.log(params);
 
@@ -38,18 +38,18 @@ const returnEndpoint = async (_: any, args: any, context: any) => {
       throw new Error("ORDER_FINISHED");
     }
 
-    if (ORDER.contract_state === -1) {
-      throw new Error("ALREADY_RETURNED");
+    if (ORDER.contract_state === -3) {
+      throw new Error("ALREADY_APPEAL");
     }
 
-    if (ORDER.contract_state !== 0) {
+    if (ORDER.contract_state !== 2) {
       throw new Error("WRONG_STATE");
     }
 
 
     //////////////////////////////////////////////
 
-    const BUILDER = await returnTransactionBuilder(
+    const BUILDER = await appealTransactionBuilder(
       USER.address,
       ORDER.contract_params
     );
@@ -73,4 +73,4 @@ const returnEndpoint = async (_: any, args: any, context: any) => {
   }
 };
 
-export { returnEndpoint };
+export { appealEndpoint };
