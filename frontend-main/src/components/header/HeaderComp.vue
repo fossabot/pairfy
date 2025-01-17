@@ -130,7 +130,6 @@ section {
 
 .header {
     padding: 0.75rem 0;
-    color: var(--text-b);
 }
 
 .brand {

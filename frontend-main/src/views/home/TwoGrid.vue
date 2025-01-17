@@ -2,7 +2,7 @@
     <div class="two">
         <div class="subcard left">
             <div class="title left">
-               <span>Home</span>
+                <span>Home</span>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -67,11 +67,11 @@ const itemList = ref([
     text-align: start;
 }
 
-.title.left{
+.title.left {
     color: var(--text-w);
 }
 
-.title.right{
+.title.right {
     color: var(--text-w);
 }
 
@@ -88,13 +88,12 @@ const itemList = ref([
 }
 
 .subcard.left {
-    background-image: linear-gradient(134deg, var(--soft-red-a), transparent  80%);
-    background: var(--primary-a);
+    background-image: linear-gradient(134deg, var(--cyan-a), transparent 95%);
+    background: var(--cyan-a);
 }
 
 .subcard.right {
-    background-image: linear-gradient(134deg, var(--soft-red-a), transparent 80%);
-    background: var(--primary-a);
+    background-image: linear-gradient(134deg, var(--cyan-a), transparent 95%);
 }
 
 .minicard {

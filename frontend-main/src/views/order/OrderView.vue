@@ -757,13 +757,11 @@ onUnmounted(() => {
     font-size: var(--text-size-1);
     line-height: 2.5rem;
     color: var(--text-a);
-    font-weight: 500;
 }
 
 .summary-subtitle span {
     color: var(--text-b);
     margin-left: 0.5rem;
-    font-weight: 400;
 }
 
 .summary-subtitle button {
