@@ -8,14 +8,12 @@
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>- {{ props.content.discount_value }}%</span>
+                    <span>{{ props.content.discount_value }}% OFF</span>
                 </div>
             </span>
 
             <div class="shipping flex green">
                 <span>Free shipping</span>
-                <i class="pi pi-bolt green" />
-                <span class="full">FULL</span>
             </div>
 
         </div>
@@ -43,7 +41,7 @@ const { formatPriceToUSD } = inject('utils');
     width: 100%;
     object-fit: contain;
     border-radius: 16px;
-    background: var(--background-a);
+    background: var(--background-b);
 }
 
 .body {
@@ -60,21 +58,14 @@ const { formatPriceToUSD } = inject('utils');
 .price {
     font-size: var(--text-size-3);
     margin-top: 0.25rem;
+    color: var(--text-a);
+    font-weight: 500;
 }
 
-.full {
-    font-weight: 700;
-    font-style: italic;
-    font-size: var(--text-size-1);
-}
 
 .shipping {
     font-weight: 500;
     margin-top: 0.25rem;
-}
-
-.shipping i {
-    margin: 0 0.25rem;
 }
 
 .dollar {
@@ -84,11 +75,10 @@ const { formatPriceToUSD } = inject('utils');
 
 .tag {
     margin-left: 0.5rem;
-    background: var(--red-a);
     padding: 0 0.25rem;
     text-align: center;
     border-radius: 2px;
-    color: var(--text-w);
+    color: var(--primary-a);
     font-weight: 600;
     font-size: var(--text-size-0);
 }
