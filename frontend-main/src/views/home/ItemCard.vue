@@ -8,7 +8,7 @@
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>{{ props.content.discount_value }}% OFF</span>
+                    <span>PROMO {{ props.content.discount_value }}%</span>
                 </div>
             </span>
 
@@ -80,8 +80,10 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     margin-left: 0.5rem;
     text-align: center;
     border-radius: 2px;
-    color: var(--primary-a);
+    color: var(--text-w);
     font-weight: 600;
     font-size: var(--text-size-0);
+    background: #000000;
+    padding: 0 0.5rem;
 }
 </style>
