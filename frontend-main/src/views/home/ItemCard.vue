@@ -81,7 +81,7 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     text-align: center;
     border-radius: 2px;
     color: var(--text-w);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-size-0);
     background: #000000;
     padding: 0 0.5rem;
