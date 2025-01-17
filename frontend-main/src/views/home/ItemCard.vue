@@ -3,7 +3,7 @@
         <img :src="props.content.image" :alt="props.content.alt" >
 
         <div class="body">
-            <span class="title">{{ props.content.title }}</span>
+            <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
@@ -25,7 +25,7 @@ import { inject } from 'vue';
 
 const props = defineProps(['content'])
 
-const { formatPriceToUSD } = inject('utils');
+const { formatPriceToUSD, reduceByLength } = inject('utils');
 
 
 
@@ -53,6 +53,9 @@ const { formatPriceToUSD } = inject('utils');
 
 .title{
     font-size: var(--text-size-1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .price {
