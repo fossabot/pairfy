@@ -174,7 +174,6 @@
 
         <div class="card-full flex green">
             <span>free shipping</span>
-            <i class="pi pi-truck" />
             <i class="pi pi-bolt green" />
             <span class="full">FULL</span>
         </div>
@@ -243,7 +242,7 @@ const { togglePanel, getADAprice, getCurrentUser, getLocationData } = headerAPI(
 const { getProductData, getArrivalDate, getArrivalData } = productAPI();
 
 getArrivalDate({
-    "destination": "181.132.19.47"
+    "origin": "Bogotá, Cundinamarca, CO"
 })
 
 const orderForm = ref({

@@ -89,16 +89,12 @@ const main = async () => {
 
         console.log(params);
 
-        const origin = "Bogotá, Cundinamarca, CO";
+        const origin = params.origin;
 
-        const mode = "transit";
-
-        const destination = params.destination;
-
-        console.log(req.publicAddress);
+        const publicAddress = "201.236.225.20";
 
         const getLocation = await geoAPI.get(
-          `181.132.19.47?token=f76c9e2af54296`
+          `${publicAddress}?token=f76c9e2af54296`
         );
 
         if (getLocation.status !== 200) {
@@ -107,12 +103,14 @@ const main = async () => {
 
         const { city, region, country } = getLocation.data;
 
-        const preparationTime = Math.floor(Date.now() / 1000) + 86400;
+        const s_1_day = 86400;
+
+        const preparationTime = Math.floor(Date.now() / 1000) + s_1_day;
 
         const matrixParams = new URLSearchParams({
           origins: origin,
           destinations: `${city},${region},${country}`,
-          mode: mode,
+          mode: "transit",
           units: "metric",
           departure_time: preparationTime.toString(),
           language: "en",
@@ -140,6 +138,8 @@ const main = async () => {
               payload: {
                 distance: element.distance.text,
                 duration: element.duration.value,
+                country,
+                city
               },
             };
 
