@@ -197,7 +197,6 @@ onBeforeUnmount(() => {
 
 .box span:nth-child(2) {
     font-size: var(--text-size-1);
-    font-weight: 500;
 }
 
 .body {

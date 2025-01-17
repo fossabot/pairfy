@@ -7,8 +7,9 @@
       <div class="bottom">
         <CategoryComp />
         <OneGrid />
-        <FourGrid />
+        <TwoGrid /> 
         <OneGrid />
+        <FourGrid />
       </div>
     
     </div>
@@ -19,6 +20,7 @@
 import OneGrid from '@/views/home/OneGrid.vue'
 import BandComp from '@/views/home/BandComp.vue'
 import FourGrid from '@/views/home/FourGrid.vue'
+import TwoGrid from '@/views/home/TwoGrid.vue'
 import CategoryComp from '@/views/home/CategoryComp.vue'
 
 </script>
@@ -33,7 +35,8 @@ main {
 }
 
 .body {
-  
+
+
 }
 
 .top {

@@ -51,7 +51,7 @@
 <style lang="css" scoped>
 .footer {
     padding: 2rem 1rem;
-    margin-top: 300px;
+    margin-top: 200px;
     font-size: var(--text-size-1);
     border-top: 1px solid var(--border-a);
 }

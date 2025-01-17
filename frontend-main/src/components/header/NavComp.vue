@@ -15,7 +15,7 @@
         <span>Support</span>
         <span>
             <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
-                rel="noopener noreferrer">Documentation</a>
+                rel="noopener noreferrer">Docs</a>
         </span>
         <span>Electronics</span>
         <span>Garden</span>

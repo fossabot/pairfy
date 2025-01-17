@@ -1,8 +1,8 @@
 <template>
-    <div class="four">
+    <div class="two">
         <div class="subcard left">
             <div class="title left">
-               <span> Best sellers items</span>
+               <span>Home</span>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -10,7 +10,7 @@
 
         <div class="subcard right">
             <div class="title right">
-                Most requested
+                Garden
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -45,37 +45,13 @@ const itemList = ref([
         alt: "image-alt",
         discount: false,
         discount_value: 11
-    },
-    {
-        title: "Original Lenovo SD 1TB Micro TF...",
-        image: "https://ae01.alicdn.com/kf/Sf5d0ad88d9a84e9798196cd3b3070f4aC.jpg_760x760q75.jpg",
-        price: 25,
-        alt: "image-alt",
-        discount: true,
-        discount_value: 10
-    },
-    {
-        title: "The Psychology of Money Timeless...",
-        image: "https://ae01.alicdn.com/kf/S84119b3c3608458384008cd3cc0f75a5k.jpg_760x760q75.jpg",
-        price: 15,
-        alt: "image-alt",
-        discount: false,
-        discount_value: 11
-    },
-    {
-        title: "The Psychology of Money Timeless...",
-        image: "https://ae01.alicdn.com/kf/S272f7ee82a884b4f92d1e1f56d118c14t.jpg_q75.jpg",
-        price: 15,
-        alt: "image-alt",
-        discount: false,
-        discount_value: 11
-    },
+    }
 ])
 
 </script>
 
 <style lang="css" scoped>
-.four {
+.two {
     padding: 1rem 0;
     width: 100%;
     max-width: 1600px;
@@ -124,7 +100,6 @@ const itemList = ref([
 .minicard {
     background: var(--background-b);
     width: 100%;
-  
     border-radius: 16px;
 }
 
