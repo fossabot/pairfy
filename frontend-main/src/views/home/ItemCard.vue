@@ -27,8 +27,6 @@ const props = defineProps(['content'])
 
 const { formatPriceToUSD, reduceByLength } = inject('utils');
 
-
-
 </script>
 
 <style lang="css" scoped>
