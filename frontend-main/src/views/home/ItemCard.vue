@@ -8,7 +8,7 @@
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>SAVE {{ props.content.discount_value }}%</span>
+                    <span>{{ props.content.discount_value }}% OFF</span>
                 </div>
             </span>
 
