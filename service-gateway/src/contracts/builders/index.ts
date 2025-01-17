@@ -44,16 +44,18 @@ function serializeParams(array: any[]) {
   return array.join(",");
 }
 
-/**
- *
- * @param params
- * @returns {string} threadTokenPolicyId 0
- * @returns {string} sellerPubKeyHash 1
- *  @returns {string} buyerPubKeyHash 2
- *  @returns {string} contractPrice 3
- *  @returns {string} contractCollateral 4
- *  @returns {string} pendingUntil 5
- */
+  /**
+   *
+   *  @type {string} threadTokenPolicyId 0
+   *  @type {string} operatorPubKeyHash 1
+   *  @type {string} sellerPubKeyHash 2
+   *  @type {string} buyerPubKeyHash 3
+   *  @type {number} contractPrice 4
+   *  @type {number} contractFee 5
+   *  @type {number} pendingUntil 6
+   *  @type {number} shippingUntil 7
+   *  @type {number} expireUntil 8 
+   */
 function deserializeParams(params: string) {
   return params.split(",");
 }

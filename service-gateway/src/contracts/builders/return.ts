@@ -6,6 +6,7 @@ import {
   SpendingValidator,
   validatorToAddress,
   Lucid,
+  Network,
 } from "@lucid-evolution/lucid";
 import { deserializeParams, provider, validators } from "./index.js";
 
@@ -16,9 +17,22 @@ async function returnTransactionBuilder(
   externalWalletAddress: string,
   serializedParams: string
 ) {
+  //////////////////////////////////////////////////
+
+  let NETWORK: Network = "Preprod";
+
+  if (!process.env.NETWORK_ENV) {
+    throw new Error("NETWORK_ENV unset");
+  }
+
+  if (process.env.NETWORK === "Mainnet") {
+    NETWORK = "Mainnet";
+  }
+
+  //////////////////////////////////////////////////
 
   const lucid = await Lucid(provider, NETWORK);
-  
+
   //////////////////////////////////////////////////
 
   const now = BigInt(Date.now());
@@ -29,22 +43,31 @@ async function returnTransactionBuilder(
   /**
    *
    *  @type {string} threadTokenPolicyId 0
-   *  @type {string} sellerPubKeyHash 1
-   *  @type {string} buyerPubKeyHash 2
-   *  @type {number} contractPrice 3
-   *  @type {number} contractCollateral 4
-   *  @type {number} pendingUntil 5
-   *  @type {number} shippingUntil 6
+   *  @type {string} operatorPubKeyHash 1
+   *  @type {string} sellerPubKeyHash 2
+   *  @type {string} buyerPubKeyHash 3
+   *  @type {number} contractPrice 4
+   *  @type {number} contractFee 5
+   *  @type {number} pendingUntil 6
+   *  @type {number} shippingUntil 7
+   *  @type {number} expireUntil 8
    */
   const stateMachineParams = deserializeParams(serializedParams);
 
   //////////////////////////////////////////////////
 
+  if (now < BigInt(stateMachineParams[6])) {
+    throw new Error("BEFORE_DEADLINE");
+  }
+
+  //////////////////////////////////////////////////
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
 
-  const txCollateral = 5_000_000n;
+  //////////////////////////////////////////////////
+
+  const txCollateral = 2_000_000n;
 
   const minLovelace = txCollateral;
 
@@ -54,32 +77,31 @@ async function returnTransactionBuilder(
 
   const externalWalletUtxo = externalWalletUtxos[findIndex];
 
-  ///////////////////////////////////////////////////
+  if (!externalWalletUtxo) {
+    throw new Error("MIN_LOVELACE");
+  }
 
-  const datumValues = {
-    state: BigInt(-1),
-  };
+  ///////////////////////////////////////////////////
 
   const StateMachineDatum = Data.Object({
     state: Data.Integer(),
+    delivery: Data.Nullable(Data.Integer()),
   });
 
   type DatumType = Data.Static<typeof StateMachineDatum>;
 
   const DatumType = StateMachineDatum as unknown as DatumType;
 
-  const stateMachineDatum = Data.to(datumValues, DatumType);
-
   //////////////////////////////////////////////////
 
   const threadTokenUnit = stateMachineParams[0] + fromText("threadtoken");
 
-  const utxo = await lucid.utxoByUnit(threadTokenUnit);
+  const stateMachineUtxo = await lucid.utxoByUnit(threadTokenUnit);
 
-  console.log(utxo);
+  console.log(stateMachineUtxo);
 
-  if (utxo.datum) {
-    const data = Data.from(utxo.datum, StateMachineDatum);
+  if (stateMachineUtxo.datum) {
+    const data = Data.from(stateMachineUtxo.datum, StateMachineDatum);
 
     console.log(data);
 
@@ -98,10 +120,12 @@ async function returnTransactionBuilder(
         stateMachineParams[0],
         stateMachineParams[1],
         stateMachineParams[2],
-        BigInt(stateMachineParams[3]),
+        stateMachineParams[3],
         BigInt(stateMachineParams[4]),
         BigInt(stateMachineParams[5]),
         BigInt(stateMachineParams[6]),
+        BigInt(stateMachineParams[7]),
+        BigInt(stateMachineParams[8]),
       ]
     ),
   };
@@ -116,8 +140,17 @@ async function returnTransactionBuilder(
 
   const StateMachineInput = Data.Enum([
     Data.Literal("Return"),
-    Data.Literal("Locking"),
-    Data.Literal("Shipping"),
+    Data.Literal("Lock"),
+    Data.Literal("Cancel"),
+    Data.Object({
+      Shipped: Data.Object({
+        delivery_param: Data.Integer(),
+      }),
+    }),
+    Data.Literal("Appeal"),
+    Data.Literal("Received"),
+    Data.Literal("Collect"),
+    Data.Literal("Finish"),
   ]);
 
   type InputType = Data.Static<typeof StateMachineInput>;
@@ -128,9 +161,19 @@ async function returnTransactionBuilder(
 
   ///////////////////////////////////////////
 
+  const datumValues = {
+    state: BigInt(-1),
+    delivery: null,
+  };
+
+  const stateMachineDatum = Data.to(datumValues, DatumType);
+
+  ///////////////////////////////////////////
+  const lovelaceToBuyer = BigInt(stateMachineParams[4]);
+
   const transaction = await lucid
     .newTx()
-    .collectFrom([utxo], stateMachineRedeemer)
+    .collectFrom([stateMachineUtxo], stateMachineRedeemer)
     .collectFrom([externalWalletUtxo])
     .pay.ToAddressWithData(
       stateMachineAddress,
@@ -144,7 +187,7 @@ async function returnTransactionBuilder(
       }
     )
     .pay.ToAddress(externalWalletAddress, {
-      lovelace: BigInt(stateMachineParams[3]),
+      lovelace: lovelaceToBuyer,
     })
     .attach.SpendingValidator(stateMachineScript)
     .addSigner(externalWalletAddress)
