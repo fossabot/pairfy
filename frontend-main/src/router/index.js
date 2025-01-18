@@ -12,12 +12,18 @@ const router = createRouter({
       path: '/:country',
       name: 'home',
       component: HomeView,
-      props: true
+      props: true,
     },
     {
       path: '/:country/product/:id',
       name: 'product',
       component: () => import('../views/product/ProductView.vue'),
+      props: true,
+    },
+    {
+      path: '/:country/search',
+      name: 'search',
+      component: () => import('../views/search/SearchView.vue'),
       props: true,
     },
     {
