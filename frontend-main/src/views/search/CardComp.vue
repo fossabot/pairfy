@@ -6,6 +6,9 @@
         <div class="content">
             <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.title }}</span>
+            <span class="discount flex" v-if="content.discount">
+                {{ `- ${content.discount_value}%` }}
+            </span>
         </div>
     </div>
 </template>
@@ -42,7 +45,7 @@ const props = defineProps(['content'])
     justify-content: flex-start;
     text-transform: capitalize;
     height: 250px;
-    padding: 1rem;
+    padding: 0.25rem 1rem;
 }
 
 .brand {
@@ -50,11 +53,21 @@ const props = defineProps(['content'])
     font-weight: 600;
 }
 
-.title{
+.title {
+    font-size: var(--text-size-2);
     cursor: pointer;
 }
 
-.title:hover{
-    color: var(--blue-a); 
+.title:hover {
+    color: var(--blue-a);
+}
+
+.discount {
+    margin-top: 0.25rem;
+    background: #000000;
+    font-size: var(--text-size-1);
+    justify-content: center;
+    color: var(--text-w);
+    width: 50px;
 }
 </style>

@@ -1,5 +1,4 @@
 <template>
-   
         <div class="preview" v-if="getProductData">
             <div class="preview-top">
                 <span>+7 Sold </span>
