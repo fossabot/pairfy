@@ -487,8 +487,8 @@ a {
 
 .card-rating span {
     margin-left: 0.5rem;
-    font-size: var(--text-size-0);
-    font-weight: 700;
+    font-size: var(--text-size-3);
+    font-weight: 600;
 }
 
 .card-stock {
@@ -537,12 +537,11 @@ a {
     font-style: italic;
 }
 
-
 .reviews {
     font-size: var(--text-size-0);
     margin-left: 0.5rem;
+    text-decoration: underline;
 }
-
 
 .dialog-values {
     justify-content: space-between;
