@@ -72,7 +72,7 @@ const itemList = ref([
 .row {
     padding: 1rem 0;
     width: 100%;
-    max-width: 1600px;
+    max-width: var(--body-a);
     display: flex;
     align-items: center;
 }
