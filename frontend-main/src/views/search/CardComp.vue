@@ -6,10 +6,20 @@
         <div class="content">
             <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.title }}</span>
-            <span class="price">${{ formatPriceToUSD(content.price)}}</span>
-            <span class="discount flex" v-if="content.discount">
+            <span class="rating flex">
+                <Rating v-model="rating" :stars="5" readonly />
+                <span class="rating-value">
+                    4.32
+                </span>
+            </span>
+            <span class="price">${{ formatPriceToUSD(content.price) }}</span>
+                    <span class="tag flex best">
+               BEST SELLER
+            </span>
+            <span class="tag flex discount" v-if="content.discount">
                 {{ `- ${content.discount_value}%` }}
             </span>
+    
         </div>
     </div>
 </template>
@@ -18,11 +28,14 @@
 import { ref, inject } from 'vue';
 const { formatPriceToUSD } = inject('utils');
 
+const rating = ref(4);
+
 const props = defineProps(['content'])
 
 </script>
 
 <style lang="css" scoped>
+
 .card {
     margin: 0.5rem 0;
 }
@@ -41,7 +54,7 @@ const props = defineProps(['content'])
 }
 
 .content {
-    max-width: 800px;
+    max-width: 70%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -51,31 +64,54 @@ const props = defineProps(['content'])
 }
 
 .brand {
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
     font-weight: 600;
 }
 
 .title {
     font-size: var(--text-size-2);
     cursor: pointer;
+    margin-top: 0.25rem;
 }
 
 .title:hover {
     color: var(--primary-a);
 }
 
-.discount {
-    margin-top: 0.25rem;
-    background: #000000;
+.rating{
+    margin-top: 0.5rem;
+    align-items: baseline;
+}
+
+.rating-value{
+    margin-left: 0.5rem;
+    font-weight: 600;
+}
+
+.tag {
+    margin-top: 0.5rem;
     font-size: var(--text-size-1);
     justify-content: center;
     color: var(--text-w);
-    width: 50px;
+    max-width: 50px;
+    white-space: nowrap;
+}
+
+.tag.discount {
+    background: var(--primary-a);
+}
+
+.tag.best {
+    max-width: 90px;
+    font-weight: 500;
+    font-size: var(--text-size-0);
+    background: var(--text-a);
 }
 
 .price {
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     font-size: var(--text-size-3);
     font-weight: 600;
 }
+
 </style>
