@@ -12,14 +12,13 @@
                     4.32
                 </span>
             </span>
+            <span class="tag flex discount" v-if="content.discount">
+                {{ `- ${content.discount_value}%` }}
+            </span>          
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
                     <span class="tag flex best">
                BEST SELLER
             </span>
-            <span class="tag flex discount" v-if="content.discount">
-                {{ `- ${content.discount_value}%` }}
-            </span>
-    
         </div>
     </div>
 </template>
@@ -86,6 +85,7 @@ const props = defineProps(['content'])
 .rating-value{
     margin-left: 0.5rem;
     font-weight: 500;
+    font-size: var(--text-size-1);
 }
 
 .tag {
@@ -111,7 +111,7 @@ const props = defineProps(['content'])
 .price {
     margin-top: 0.5rem;
     font-size: var(--text-size-3);
-    font-weight: 600;
+    font-weight: 500;
 }
 
 </style>
