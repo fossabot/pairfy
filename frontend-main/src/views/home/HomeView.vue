@@ -5,11 +5,13 @@
         <BandComp />
       </div>
       <div class="bottom">
-        <CategoryComp />
-        <OneGrid />
+        <CategoryComp /> 
         <TwoGrid /> 
         <OneGrid />
+        <OneGrid />
+        <RowGrid title="Technology"/>
         <FourGrid />
+        <RowGrid title="Best sellers"/>
       </div>
     
     </div>
@@ -21,6 +23,7 @@ import OneGrid from '@/views/home/OneGrid.vue'
 import BandComp from '@/views/home/BandComp.vue'
 import FourGrid from '@/views/home/FourGrid.vue'
 import TwoGrid from '@/views/home/TwoGrid.vue'
+import RowGrid from '@/views/home/RowGrid.vue'
 import CategoryComp from '@/views/home/CategoryComp.vue'
 
 </script>

@@ -1,6 +1,7 @@
 <template>
     <div class="button">
-        <span class="cart">0</span>
+        <span class="cart">3</span>
+        <span class="text">Items</span>
     </div>
 </template>
 
@@ -15,8 +16,6 @@
     font-weight: 600;
     margin: auto;
     justify-content: center;
-    width: 42px;
-    height: 42px;
 }
 
 .button span {
@@ -31,8 +30,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: 600;
+    font-weight: 500;
     padding: 0 1rem;
     font-size: var(--text-size-0);
+}
+
+.text{
+    background: transparent;
+    font-size: var(--text-size-0);
+    font-weight: 500;
+    margin-top: 0.25rem;
 }
 </style>

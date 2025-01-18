@@ -1,16 +1,8 @@
 <template>
-    <div class="four">
-        <div class="subcard left">
-            <div class="title left">
-               <span> Best sellers items</span>
-            </div>
-
-            <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
-        </div>
-
-        <div class="subcard right">
-            <div class="title right">
-                Most requested
+    <div class="row">
+        <div class="subcard">
+            <div class="title">
+                <span>{{ title }}</span>
             </div>
 
             <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
@@ -20,6 +12,8 @@
 
 <script setup>
 import { ref } from 'vue';
+
+const props = defineProps(['title'])
 
 const itemList = ref([
     {
@@ -75,54 +69,38 @@ const itemList = ref([
 </script>
 
 <style lang="css" scoped>
-.four {
+.row {
     padding: 1rem 0;
     width: 100%;
     max-width: 1600px;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    align-items: center;
 }
 
 .title {
     font-size: var(--text-size-3);
-    grid-column: span 3;
+    grid-column: span 6;
     font-weight: 700;
     text-align: start;
-    color: var(--primary-a);
+    color: var(--text-w);
 }
 
-.title.left{
-
-}
-
-.title.right{
-   
-}
 
 .subcard {
     text-align: center;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
     gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
-}
-
-.subcard.left {
-    background: var(--background-a);
-}
-
-.subcard.right {
-   background: var(--background-a);
+    background-image: linear-gradient(134deg, var(--primary-a) 40%, transparent 100%);
 }
 
 .minicard {
     background: var(--background-b);
     width: 100%;
-    border: 1px solid var(--border-a);
     border-radius: 16px;
 }
 

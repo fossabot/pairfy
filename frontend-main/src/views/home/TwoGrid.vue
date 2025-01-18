@@ -3,7 +3,7 @@
         <div class="subcard left">
             <div class="head left">
                 <div class="title">
-                    <span>Decorate your home</span>
+                    <span>Cardano best sellers</span>
                     <span>Most purchased community products</span>
                 </div>
                 <div class="control flex">
@@ -19,7 +19,7 @@
         <div class="subcard right">
             <div class="head left">
                 <div class="title">
-                    <span>For your garden</span>
+                    <span>Products of the week</span>
                     <span>The most purchased products.</span>
                 </div>
                 <div class="control flex">
@@ -77,9 +77,9 @@ const itemList = ref([
 }
 
 .head {
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     grid-column: span 3;
-    font-weight: 600;
+    font-weight: 700;
     text-align: start;
     display: flex;
     justify-content: space-between;
