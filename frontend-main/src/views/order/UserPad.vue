@@ -3,16 +3,9 @@
 
         <PackageReceived />
 
-        <Button v-if="!currentState || currentState === 0" type="button" :disabled="disableReturn"
-            @click="onReturnFunds" variant="text">
-            <span>Return Funds</span>
+        <ReturnButton />
 
-            <span v-if="pendingCountdown !== '00:00'">
-                {{ pendingCountdown }}
-            </span>
-        </Button>
-
-        <Button v-if="currentState === 1" type="button" :disabled="disableCancel" @click="onReturnFunds" variant="text">
+        <Button v-if="currentState === 1" type="button" :disabled="disableCancel" variant="text">
             <span>Cancel Order</span>
 
             <span v-if="shippingCountdown !== '00:00'">
@@ -20,100 +13,23 @@
             </span>
         </Button>
 
-        <Button type="button" label="Appeal" :disabled="true" @click="onReturnFunds" variant="text" :loading="false" />
+        <Button type="button" label="Appeal" :disabled="true" variant="text" :loading="false" />
 
     </div>
 </template>
 
 <script setup>
-import gql from 'graphql-tag'
-import orderAPI from "@/views/order/api/index";
+
+import ReturnButton from '@/views/order/ReturnButton.vue';
 import PackageReceived from '@/views/order/PackageReceived.vue';
+import orderAPI from "@/views/order/api/index";
 import { computed, ref, onMounted, onUnmounted } from "vue";
-import { useMutation } from '@vue/apollo-composable';
-import { useToast } from "primevue/usetoast";
-import { balanceTx } from "@/api/wallet";
-
-
-const toast = useToast();
 
 const { getOrderData } = orderAPI();
 
-const { mutate: returnFunds, onDone: onReturnFundsDone, onError: onReturnFundsError } = useMutation(gql`
-      mutation($returnFundsVariable: ReturnFundsInput!) {
-        returnFunds(returnFundsInput: $returnFundsVariable) {
-          success
-          payload {
-            cbor
-          }
-        }
-      }
-`, {
-    clientId: 'gateway'
-})
-
-const onReturnFunds = () => {
-    returnFunds({
-        "returnFundsVariable": {
-            order_id: getOrderData.value.order.id
-        }
-    })
-}
-
-onReturnFundsDone(async result => {
-    console.log(result.data);
-
-    const response = result.data;
-
-    if (response.returnFunds.success === true) {
-        try {
-            const { cbor } = response.returnFunds.payload;
-
-            const txHash = await balanceTx(cbor);
-
-            showSuccess(`Transaction submitted with hash: ${txHash}`, 120000);
-
-            console.log(`Transaction submitted with hash: ${txHash}`);
-
-        } catch (err) {
-            console.error(err);
-
-            showError(err);
-        }
-    }
-
-})
-
-onReturnFundsError(error => {
-    showError(error)
-})
-
-
 const currentState = computed(() => getOrderData.value?.order?.contract_state || undefined)
 
-const disableReturn = computed(() => pendingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
-
 const disableCancel = computed(() => shippingCountdown.value !== "00:00" || getOrderData.value?.order?.finished);
-
-///////////////////////////////////////////////////////////////////
-
-const pendingTimeLeft = ref(Date.now());
-
-const pendingCountdown = computed(() => {
-    if (pendingTimeLeft.value <= 0) return "00:00";
-
-    const totalSeconds = Math.floor(pendingTimeLeft.value / 1000);
-    const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
-    const seconds = (totalSeconds % 60).toString().padStart(2, '0');
-
-    return `${minutes}:${seconds}`;
-});
-
-let pendingInterval;
-
-const updatePendingCountdown = () => {
-    pendingTimeLeft.value = getOrderData.value?.order?.pending_until - Date.now();
-};
 
 ///////////////////////////////////////////////////////////////////
 
@@ -135,8 +51,15 @@ const updateShippingCountdown = () => {
     shippingTimeLeft.value = getOrderData.value?.order?.shipping_until - Date.now();
 };
 
+onMounted(() => {
+    updateShippingCountdown();
+    shippingInterval = setInterval(updateShippingCountdown, 1000);
+});
 
-/////////////////////////////////////////////////
+onUnmounted(() => {
+    clearInterval(shippingInterval);
+});
+
 const showSuccess = (content, time) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: time });
 };
@@ -144,19 +67,6 @@ const showSuccess = (content, time) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
-
-
-onMounted(() => {
-    updatePendingCountdown();
-    updateShippingCountdown();
-    pendingInterval = setInterval(updatePendingCountdown, 1000);
-    shippingInterval = setInterval(updateShippingCountdown, 1000);
-});
-
-onUnmounted(() => {
-    clearInterval(pendingInterval);
-    clearInterval(shippingInterval);
-});
 
 </script>
 
