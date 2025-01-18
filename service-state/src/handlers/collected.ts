@@ -2,8 +2,6 @@ import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
 async function collected(params: HandlerParams) {
-  const statusLog = "collected";
-
   const updateQuery = `
     UPDATE orders
     SET finished = ?,
@@ -14,14 +12,16 @@ async function collected(params: HandlerParams) {
         collected_block = ?
     WHERE id = ?`;
 
-  const collectedTx = params.utxo.txHash + "#" + params.utxo.outputIndex;
+  const statusLog = "collected";
+
+  const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
   await params.connection.execute(updateQuery, [
     true,
     params.timestamp,
     statusLog,
     params.utxo.data.state,
-    collectedTx,
+    txHash,
     params.utxo.block_time,
     params.threadtoken,
   ]);

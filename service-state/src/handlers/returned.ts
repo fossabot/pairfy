@@ -2,8 +2,6 @@ import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
 async function returned(params: HandlerParams) {
-  const statusLog = "returned";
-
   const updateQuery = `
     UPDATE orders
     SET finished = ?,
@@ -13,6 +11,8 @@ async function returned(params: HandlerParams) {
         returned_tx = ?,
         returned_block = ?
     WHERE id = ?`;
+
+  const statusLog = "returned";
 
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 

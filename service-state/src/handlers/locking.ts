@@ -2,7 +2,7 @@ import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
 async function locking(params: HandlerParams) {
-  const statusLog = "locking";
+ 
 
   const updateQuery = `
     UPDATE orders
@@ -12,6 +12,8 @@ async function locking(params: HandlerParams) {
         locking_tx = ?,
         locking_block = ?
     WHERE id = ?`;
+
+  const statusLog = "locking";
 
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 

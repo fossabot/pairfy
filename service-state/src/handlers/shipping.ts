@@ -2,8 +2,6 @@ import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
 async function handleShipping(params: HandlerParams) {
-  const statusLog = "shipping";
-
   const updateQuery = `
     UPDATE orders
     SET scanned_at = ?,
@@ -14,6 +12,8 @@ async function handleShipping(params: HandlerParams) {
         shipping_metadata = ?
     WHERE id = ?`;
 
+  const statusLog = "shipping";
+  
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
   await params.connection.execute(updateQuery, [

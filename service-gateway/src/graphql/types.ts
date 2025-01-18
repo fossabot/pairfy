@@ -80,13 +80,17 @@ type Order {
   shipping_until: Float!
   pending_tx: String
   pending_block: String
-  return_tx: String
-  return_block: String  
+  returned_tx: String
+  returned_block: String  
   locking_tx: String
   locking_block: String  
+  canceled_tx: String
+  canceled_block: String  
   shipping_tx: String
   shipping_block: String
   shipping_metadata: String
+  appealed_tx: String
+  appealed_block: String    
   received_tx: String
   received_block: String
   collected_tx: String

@@ -2,8 +2,6 @@ import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
 async function appealed(params: HandlerParams) {
-  const statusLog = "appealed";
-
   const updateQuery = `
     UPDATE orders
     SET scanned_at = ?,
@@ -12,6 +10,8 @@ async function appealed(params: HandlerParams) {
         appealed_tx = ?,
         appealed_block = ?
     WHERE id = ?`;
+
+  const statusLog = "appealed";
 
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
