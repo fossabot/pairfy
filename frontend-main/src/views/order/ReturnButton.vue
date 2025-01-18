@@ -9,7 +9,7 @@
 
             <span>Return Funds</span>
 
-            <span v-if="pendingCountdown !== '00:00'">
+            <span v-if="pendingCountdown !== '00:00'" style="margin-left: 0.5rem" >
                 {{ pendingCountdown }}
             </span>
         </div>
@@ -135,6 +135,5 @@ onUnmounted(() => {
 .button {
     display: flex;
     align-items: center;
-
 }
 </style>
