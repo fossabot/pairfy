@@ -1,11 +1,14 @@
 <template>
     <div class="panel">
 
-        <div class="panel-item">
+        <div class="panel-row">
             <span class="label">Price</span>
-            <InputText v-model.number="value" :max="maxLimit" />
-            <Slider v-model="value" class="w-full" />
+            <InputText v-model.number="price" :max="maxLimit" />
+            <Slider v-model="price" />
         </div>
+
+
+
 
     </div>
 </template>
@@ -15,7 +18,8 @@ import { ref } from 'vue';
 
 const maxLimit = ref(100000);
 
-const value = ref(0);
+const price = ref(0);
+
 
 
 </script>
@@ -30,7 +34,7 @@ const value = ref(0);
     padding: 1rem;
 }
 
-.panel-item{
+.panel-row{
     display: flex;
     flex-direction: column;
 }
