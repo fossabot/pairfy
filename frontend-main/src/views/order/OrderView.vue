@@ -284,7 +284,7 @@ const displayNotesDialog = (e) => {
 const orderTitle = computed(
     () => {
         let scheme = {
-            buyer: "Preparing your product, Time Remaining ",
+            buyer: "Preparing your package, Time Remaining ",
             seller: "Prepare the product, Time Remaining ",
             finished: "Order Finished",
             completed: "Order Completed"
