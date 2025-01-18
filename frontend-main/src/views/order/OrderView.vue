@@ -386,8 +386,8 @@ query ($getOrderVariable: GetOrderInput!) {
             shipping_until
             pending_tx
             pending_block
-            return_tx
-            return_block
+            returned_tx
+            returned_block
             locking_tx
             locking_block
             shipping_tx

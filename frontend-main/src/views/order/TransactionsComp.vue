@@ -23,12 +23,12 @@
 
                 <span class="ago flex">
                     <i class="pi pi-clock" />
-                    {{ formatAgo(getOrderData.order.return_block) }}
+                    {{ formatAgo(getOrderData.order.returned_block) }}
                 </span>
             </div>
             <div class="card-body">
-                <span class="mask">{{ getOrderData.order.return_tx || "None" }}</span>
-                <span class="explore" @click="openExplorer(getOrderData.order.return_tx)" v-tooltip.top="'Explore'">
+                <span class="mask">{{ getOrderData.order.returned_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.returned_tx)" v-tooltip.top="'Explore'">
                     <i class="pi pi-globe" />
                 </span>
             </div>

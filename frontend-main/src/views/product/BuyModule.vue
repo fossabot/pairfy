@@ -168,7 +168,7 @@
 
         <div class="card-rating flex">
             <Rating v-model="productRating" :stars="5" readonly />
-            <span>4.5</span>
+            <span>4.53</span>
             <div class="reviews">250 reviews</div>
         </div>
 
