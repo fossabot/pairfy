@@ -49,4 +49,12 @@ const props = defineProps(['content'])
     font-size: var(--text-size-3);
     font-weight: 600;
 }
+
+.title{
+    cursor: pointer;
+}
+
+.title:hover{
+    color: var(--blue-a); 
+}
 </style>
