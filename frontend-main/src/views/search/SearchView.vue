@@ -26,6 +26,7 @@ const itemList = ref([
         image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
         discount: true,
         discount_value: 10,
+        price: 35
     },
     {
         brand: "apple",
@@ -33,6 +34,7 @@ const itemList = ref([
         image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
         discount: true,
         discount_value: 10,
+        price: 35
     },
     {
         brand: "apple",
@@ -40,6 +42,7 @@ const itemList = ref([
         image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
         discount: true,
         discount_value: 10,
+        price: 35
     },
     {
         brand: "apple",
@@ -47,6 +50,7 @@ const itemList = ref([
         image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
         discount: true,
         discount_value: 10,
+        price: 35
     }
 ])
 </script>

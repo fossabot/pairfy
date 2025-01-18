@@ -6,6 +6,7 @@
         <div class="content">
             <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.title }}</span>
+            <span class="price">${{ formatPriceToUSD(content.price)}}</span>
             <span class="discount flex" v-if="content.discount">
                 {{ `- ${content.discount_value}%` }}
             </span>
@@ -14,7 +15,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
+const { formatPriceToUSD } = inject('utils');
 
 const props = defineProps(['content'])
 
@@ -69,5 +71,11 @@ const props = defineProps(['content'])
     justify-content: center;
     color: var(--text-w);
     width: 50px;
+}
+
+.price {
+    margin-top: 0.25rem;
+    font-size: var(--text-size-3);
+    font-weight: 600;
 }
 </style>
