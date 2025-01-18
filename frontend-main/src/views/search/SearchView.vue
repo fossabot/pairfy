@@ -72,7 +72,7 @@ const itemList = ref([
 
 .banner {
     width: inherit;
-    height: 60px;
+    height: 50px;
     margin-top: 1rem;
     margin-bottom: 1rem;
     background: var(--background-b);

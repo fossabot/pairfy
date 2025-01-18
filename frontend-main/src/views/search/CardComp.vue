@@ -49,7 +49,7 @@ const props = defineProps(['content'])
 }
 
 .brand {
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-2);
     font-weight: 600;
 }
 
@@ -59,7 +59,7 @@ const props = defineProps(['content'])
 }
 
 .title:hover {
-    color: var(--blue-a);
+    color: var(--primary-a);
 }
 
 .discount {

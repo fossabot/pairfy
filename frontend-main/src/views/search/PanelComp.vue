@@ -3,8 +3,8 @@
 
         <div class="panel-row">
             <span class="label">Price</span>
-            <InputText v-model.number="price" :max="maxLimit" />
-            <Slider v-model="price" style="margin: 1rem 0.5rem;"/>
+            <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
+            <Slider v-model="price" style="margin: 1rem 0.5rem;" :max="maxLimit"/>
         </div>
 
 
@@ -16,7 +16,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const maxLimit = ref(100000);
+const maxLimit = ref(10000);
 
 const price = ref(0);
 
