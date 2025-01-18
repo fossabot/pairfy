@@ -78,7 +78,7 @@ const itemList = ref([
 .title {
   font-size: var(--text-size-3);
   grid-column: span 3;
-  font-weight: 700;
+  font-weight: 600;
   text-align: start;
 }
 
