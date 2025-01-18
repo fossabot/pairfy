@@ -4,7 +4,7 @@
         <div class="panel-row">
             <span class="label">Price</span>
             <InputText v-model.number="price" :max="maxLimit" />
-            <Slider v-model="price" />
+            <Slider v-model="price" style="margin: 1rem 0.5rem;"/>
         </div>
 
 
