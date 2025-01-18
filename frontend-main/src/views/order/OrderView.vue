@@ -712,7 +712,7 @@ onUnmounted(() => {
 
 .nav-item span {
     color: inherit;
-    font-weight: 600;
+    font-weight: 500;
     padding: 0.5rem 0;
 }
 
