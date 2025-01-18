@@ -85,7 +85,7 @@ const props = defineProps(['content'])
 
 .rating-value{
     margin-left: 0.5rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .tag {
