@@ -123,24 +123,15 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
-    background: var(--background-a);
+    background: var(--background-b);
 }
 
-.subcard.left {
-    background-image: linear-gradient(134deg, gray, transparent 95%);
-    background: var(--background-a);
-}
 
-.subcard.right {
-    background-image: linear-gradient(134deg, var(--cyan-a), transparent 95%);
-    background: var(--background-a);
-}
 
 .minicard {
     background: var(--background-b);
     width: 100%;
     border-radius: 16px;
-    border: 1px solid var(--border-a);
 }
 
 

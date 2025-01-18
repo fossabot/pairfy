@@ -137,7 +137,7 @@ section {
     background-image: url('../../assets/logo-white.png');
     background-repeat: repeat-x;
     background-position: 0px 0px;
-    width: 185px;
+    width: 160px;
     min-height: 42px;
     background-repeat: no-repeat;
 }

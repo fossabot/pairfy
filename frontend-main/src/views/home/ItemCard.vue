@@ -39,7 +39,8 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     width: 100%;
     object-fit: contain;
     border-radius: 16px;
-    background: var(--background-b);
+    background: var(--background-a);
+    border: 1px solid var(--border-a);
 }
 
 .body {

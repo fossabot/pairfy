@@ -20,7 +20,7 @@
         <span>Electronics</span>
         <span>Garden</span>
         <span>Best Sellers</span>
-        <span class="price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
+        <span class="price">{{ formatPriceToUSD(getADAprice) }} ADAUSD</span>
     </div>
 </template>
 
@@ -48,8 +48,7 @@ const { formatPriceToUSD } = inject('utils');
     font-weight: 400;
 }
 
-.categories,
-.price {
+.categories {
     background: var(--background-b);
     white-space: nowrap;
     padding: 0.5rem 1rem;
