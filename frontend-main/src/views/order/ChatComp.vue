@@ -304,7 +304,7 @@ onBeforeUnmount(() => {
 
 .avatar {
     background: var(--background-a);
-    border-radius: 50%;
+    border-radius: 12px;
     overflow: hidden;
     border: 1px solid transparent;
 }
