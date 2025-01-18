@@ -1,16 +1,7 @@
-import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
+import { HandlerParams } from "./types.js";
 
-async function collected(
-  connection: PoolConnection,
-  threadtoken: string,
-  timestamp: number,
-  utxo: any,
-  seller_id: string,
-  buyer_pubkeyhash: string,
-  buyer_address: string,
-  seller_address: string
-) {
+async function collected(params: HandlerParams) {
   const statusLog = "collected";
 
   const updateQuery = `
@@ -23,16 +14,16 @@ async function collected(
         collected_block = ?
     WHERE id = ?`;
 
-  const collectedTx = utxo.txHash + "#" + utxo.outputIndex;
+  const collectedTx = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
-  await connection.execute(updateQuery, [
+  await params.connection.execute(updateQuery, [
     true,
-    timestamp,
+    params.timestamp,
     statusLog,
-    utxo.data.state,
+    params.utxo.data.state,
     collectedTx,
-    utxo.block_time,
-    threadtoken,
+    params.utxo.block_time,
+    params.threadtoken,
   ]);
 
   /////////////////////////////////////////////////////////////////////
@@ -42,10 +33,11 @@ async function collected(
       id: getEventId(),
       type: "order",
       title: "Order Finished",
-      owner: buyer_pubkeyhash,
+      owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
-        threadtoken,
-        buyer_address
+        threadtoken: params.threadtoken,
+        buyer_address: params.buyer_address,
+        country: params.country,
       }),
       message: `The order has ended without appeal.`,
     },
@@ -53,12 +45,13 @@ async function collected(
       id: getEventId(),
       type: "order",
       title: "Funds Collected",
-      owner: seller_id,
+      owner: params.seller_id,
       data: JSON.stringify({
-        threadtoken,
-        seller_address
+        threadtoken: params.threadtoken,
+        seller_address: params.seller_address,
+        country: params.country,
       }),
-      message: `The funds have been sent to your wallet.`,
+      message: "The funds have been collected.",
     },
   ];
 
@@ -72,9 +65,9 @@ async function collected(
     ) VALUES (?, ?, ?, ?, ?)
   `;
 
-  const eventId = threadtoken + statusLog;
+  const eventId = params.threadtoken + statusLog;
 
-  await connection.execute(eventSchema, [
+  await params.connection.execute(eventSchema, [
     eventId,
     "gateway",
     "CreateNotification",

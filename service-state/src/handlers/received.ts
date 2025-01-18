@@ -1,16 +1,7 @@
-import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
+import { HandlerParams } from "./types.js";
 
-async function handleReceived(
-  connection: PoolConnection,
-  threadtoken: string,
-  timestamp: number,
-  utxo: any,
-  seller_id: string,
-  buyer_pubkeyhash: string,
-  buyer_address: string,
-  seller_address: string
-) {
+async function handleReceived(params: HandlerParams) {
   const statusLog = "received";
 
   const updateQuery = `
@@ -22,15 +13,15 @@ async function handleReceived(
         received_block = ?
     WHERE id = ?`;
 
-  const receivedTx = utxo.txHash + "#" + utxo.outputIndex;
+  const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
-  await connection.execute(updateQuery, [
-    timestamp,
+  await params.connection.execute(updateQuery, [
+    params.timestamp,
     statusLog,
-    utxo.data.state,
-    receivedTx,
-    utxo.block_time,
-    threadtoken,
+    params.utxo.data.state,
+    txHash,
+    params.utxo.block_time,
+    params.threadtoken,
   ]);
 
   /////////////////////////////////////////////////////////////////////
@@ -40,21 +31,23 @@ async function handleReceived(
       id: getEventId(),
       type: "order",
       title: "Package Received",
-      owner: buyer_pubkeyhash,
+      owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
-        threadtoken,
-        buyer_address
+        threadtoken: params.threadtoken,
+        buyer_address: params.buyer_address,
+        country: params.country,
       }),
-      message: `You have received the package.`,
+      message: `The order has been finished.`,
     },
     {
       id: getEventId(),
       type: "order",
       title: "Package Received",
-      owner: seller_id,
+      owner: params.seller_id,
       data: JSON.stringify({
-        threadtoken,
-        seller_address
+        threadtoken: params.threadtoken,
+        seller_address: params.seller_address,
+        country: params.country,
       }),
       message: `The buyer has received the package.`,
     },
@@ -70,9 +63,9 @@ async function handleReceived(
     ) VALUES (?, ?, ?, ?, ?)
   `;
 
-  const eventId = threadtoken + statusLog;
+  const eventId = params.threadtoken + statusLog;
 
-  await connection.execute(eventSchema, [
+  await params.connection.execute(eventSchema, [
     eventId,
     "gateway",
     "CreateNotification",

@@ -1,16 +1,16 @@
 import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
-async function locking(params: HandlerParams) {
-  const statusLog = "locking";
+async function appealed(params: HandlerParams) {
+  const statusLog = "appealed";
 
   const updateQuery = `
     UPDATE orders
     SET scanned_at = ?,
         status_log = ?,
         contract_state = ?,
-        locking_tx = ?,
-        locking_block = ?
+        appealed_tx = ?,
+        appealed_block = ?
     WHERE id = ?`;
 
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
@@ -30,26 +30,26 @@ async function locking(params: HandlerParams) {
     {
       id: getEventId(),
       type: "order",
-      title: "Preparing Package",
+      title: "Order Appealed",
       owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken: params.threadtoken,
         buyer_address: params.buyer_address,
-        country: params.country
+        country: params.country,
       }),
-      message: `The seller is preparing the package.`,
+      message: `The order has been appealed.`,
     },
     {
       id: getEventId(),
       type: "order",
-      title: "Prepare the Product",
+      title: "Order Appealed",
       owner: params.seller_id,
       data: JSON.stringify({
         threadtoken: params.threadtoken,
         seller_address: params.seller_address,
-        country: params.country
+        country: params.country,
       }),
-      message: `Please prepare the package before deadline.`,
+      message: `The order has been appealed.`,
     },
   ];
 
@@ -74,4 +74,4 @@ async function locking(params: HandlerParams) {
   ]);
 }
 
-export { locking };
+export { appealed };

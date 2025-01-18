@@ -1,16 +1,7 @@
-import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
+import { HandlerParams } from "./types.js";
 
-async function handleShipping(
-  connection: PoolConnection,
-  threadtoken: string,
-  timestamp: number,
-  utxo: any,
-  seller_id: string,
-  buyer_pubkeyhash: string,
-  buyer_address: string,
-  seller_address: string
-) {
+async function handleShipping(params: HandlerParams) {
   const statusLog = "shipping";
 
   const updateQuery = `
@@ -23,16 +14,16 @@ async function handleShipping(
         shipping_metadata = ?
     WHERE id = ?`;
 
-  const shippingTx = utxo.txHash + "#" + utxo.outputIndex;
+  const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
-  await connection.execute(updateQuery, [
-    timestamp,
+  await params.connection.execute(updateQuery, [
+    params.timestamp,
     statusLog,
-    utxo.data.state,
-    shippingTx,
-    utxo.block_time,
-    utxo.metadata,
-    threadtoken,
+    params.utxo.data.state,
+    txHash,
+    params.utxo.block_time,
+    params.utxo.metadata,
+    params.threadtoken,
   ]);
 
   /////////////////////////////////////////////////////////////////////
@@ -41,24 +32,26 @@ async function handleShipping(
     {
       id: getEventId(),
       type: "order",
-      title: "Product Shipped 📦",
-      owner: buyer_pubkeyhash,
+      title: "Package Shipped",
+      owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
-        threadtoken,
-        buyer_address
+        threadtoken: params.threadtoken,
+        buyer_address: params.buyer_address,
+        country: params.country,
       }),
-      message: `The seller has shipped your package from order (${threadtoken}) / Account / ${buyer_address}`,
+      message: "The seller sent the package.",
     },
     {
       id: getEventId(),
       type: "order",
-      title: "Product Shipped 📦",
-      owner: seller_id,
+      title: "Package Shipped",
+      owner: params.seller_id,
       data: JSON.stringify({
-        threadtoken,
-        seller_address
+        threadtoken: params.threadtoken,
+        seller_address: params.seller_address,
+        country: params.country,
       }),
-      message: `You have shipped the package of order (${threadtoken}) / Account / ${seller_address}`,
+      message: "The package has been sent.",
     },
   ];
 
@@ -72,9 +65,9 @@ async function handleShipping(
     ) VALUES (?, ?, ?, ?, ?)
   `;
 
-  const eventId = threadtoken + statusLog;
+  const eventId = params.threadtoken + statusLog;
 
-  await connection.execute(eventSchema, [
+  await params.connection.execute(eventSchema, [
     eventId,
     "gateway",
     "CreateNotification",

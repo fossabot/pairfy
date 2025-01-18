@@ -1,18 +1,7 @@
-import { PoolConnection } from "mysql2";
 import { getEventId } from "../utils/index.js";
+import { HandlerParams } from "./types.js";
 
-async function handlePending(
-  connection: PoolConnection,
-  threadtoken: string,
-  timestamp: number,
-  utxo: any,
-  seller_id: string,
-  buyer_pubkeyhash: string,
-  buyer_address: string,
-  seller_address: string,
-  country: string
-) {
-  const statusLog = "pending";
+async function pending(params: HandlerParams) {
 
   const updateQuery = `
     UPDATE orders
@@ -25,17 +14,19 @@ async function handlePending(
         pending_metadata = ?
     WHERE id = ?`;
 
-  const pendingTx = utxo.txHash + "#" + utxo.outputIndex;
+  const statusLog = "pending";
 
-  await connection.execute(updateQuery, [
-    timestamp,
+  const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
+
+  await params.connection.execute(updateQuery, [
+    params.timestamp,
     statusLog,
-    utxo.address,
-    utxo.data.state,
-    pendingTx,
-    utxo.block_time,
-    utxo.metadata,
-    threadtoken,
+    params.utxo.address,
+    params.utxo.data.state,
+    txHash,
+    params.utxo.block_time,
+    params.utxo.metadata,
+    params.threadtoken,
   ]);
 
   /////////////////////////////////////////////////////////////////////
@@ -45,25 +36,25 @@ async function handlePending(
       id: getEventId(),
       type: "order",
       title: "Payment Detected",
-      owner: buyer_pubkeyhash,
+      owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
-        threadtoken,
-        buyer_address,
-        country
+        threadtoken: params.threadtoken,
+        buyer_address: params.buyer_address,
+        country: params.country
       }),
-      message: `Payment is being processed on the Cardano network.`,
+      message: `The payment is being processed on the network.`,
     },
     {
       id: getEventId(),
       type: "order",
       title: "New Purchase",
-      owner: seller_id,
+      owner: params.seller_id,
       data: JSON.stringify({
-        threadtoken,
-        seller_address,
-        country
+        threadtoken: params.threadtoken,
+        seller_address: params.seller_address,
+        country: params.country
       }),
-      message: `Payment is being processed on the Cardano network.`
+      message: `Verify payment and accept the order.`
     },
   ];
 
@@ -77,9 +68,9 @@ async function handlePending(
     ) VALUES (?, ?, ?, ?, ?)
   `;
 
-  const eventId = threadtoken + statusLog;
+  const eventId = params.threadtoken + statusLog;
 
-  await connection.execute(eventSchema, [
+  await params.connection.execute(eventSchema, [
     eventId,
     "gateway",
     "CreateNotification",
@@ -88,4 +79,4 @@ async function handlePending(
   ]);
 }
 
-export { handlePending };
+export { pending };

@@ -1,12 +1,15 @@
 import { logger } from "../utils/index.js";
 import { database } from "../db/client.js";
 import { getUtxo } from "../lib/index.js";
-import { handlePending } from "./pending.js";
-import { handleReturn } from "./return.js";
-import { handleLocking } from "./locking.js";
+import { pending } from "./pending.js";
+import { returned } from "./returned.js";
+import { locking } from "./locking.js";
 import { handleShipping } from "./shipping.js";
 import { handleReceived } from "./received.js";
 import { collected } from "./collected.js";
+import { canceled } from "./canceled.js";
+import { appealed } from "./appealed.js";
+import { HandlerParams } from "./types.js";
 
 async function scanThreadToken(job: any) {
   let connection = null;
@@ -19,7 +22,7 @@ async function scanThreadToken(job: any) {
       buyer_pubkeyhash,
       buyer_address,
       seller_address,
-      country
+      country,
     } = job.data;
 
     const { code, utxo } = await getUtxo(threadtoken);
@@ -46,82 +49,44 @@ async function scanThreadToken(job: any) {
     await connection.beginTransaction();
 
     if (code === 200) {
+      const handlerParams: HandlerParams = {
+        connection,
+        threadtoken,
+        timestamp,
+        utxo,
+        seller_id,
+        buyer_pubkeyhash,
+        buyer_address,
+        seller_address,
+        country,
+      };
       switch (utxo.data.state) {
         case null:
           break;
         case 0n:
-          await handlePending(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address,
-            country
-          );
+          await pending(handlerParams);
           break;
         case -1n:
-          await handleReturn(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address
-          );
+          await returned(handlerParams);
           break;
         case 1n:
-          await handleLocking(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address
-          );
+          await locking(handlerParams);
+          break;
+        case -2n:
+          await canceled(handlerParams);
           break;
         case 2n:
-          await handleShipping(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address
-            );
-          break; 
+          await handleShipping(handlerParams);
+          break;
+        case -3n:
+          await appealed(handlerParams);
+          break;
         case 3n:
-          await handleReceived(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address
-            );   
-          break;  
+          await handleReceived(handlerParams);
+          break;
         case 4n:
-          await collected(
-            connection,
-            threadtoken,
-            timestamp,
-            utxo,
-            seller_id,
-            buyer_pubkeyhash,
-            buyer_address,
-            seller_address
-            );
-          break;      
+          await collected(handlerParams);
+          break;
       }
     } else {
       const updateQuery = `
@@ -142,7 +107,7 @@ async function scanThreadToken(job: any) {
     await connection.commit();
 
     ///////////////////////////////////////////////////////////////
-    
+
     return {
       threadtoken,
       finished,

@@ -1,21 +1,23 @@
 import { getEventId } from "../utils/index.js";
 import { HandlerParams } from "./types.js";
 
-async function locking(params: HandlerParams) {
-  const statusLog = "locking";
+async function returned(params: HandlerParams) {
+  const statusLog = "returned";
 
   const updateQuery = `
     UPDATE orders
-    SET scanned_at = ?,
+    SET finished = ?,
+        scanned_at = ?,
         status_log = ?,
         contract_state = ?,
-        locking_tx = ?,
-        locking_block = ?
+        returned_tx = ?,
+        returned_block = ?
     WHERE id = ?`;
 
   const txHash = params.utxo.txHash + "#" + params.utxo.outputIndex;
 
   await params.connection.execute(updateQuery, [
+    true,
     params.timestamp,
     statusLog,
     params.utxo.data.state,
@@ -30,26 +32,26 @@ async function locking(params: HandlerParams) {
     {
       id: getEventId(),
       type: "order",
-      title: "Preparing Package",
+      title: "Payment Returned",
       owner: params.buyer_pubkeyhash,
       data: JSON.stringify({
         threadtoken: params.threadtoken,
         buyer_address: params.buyer_address,
         country: params.country
       }),
-      message: `The seller is preparing the package.`,
+      message: `The payment has been returned`,
     },
     {
       id: getEventId(),
       type: "order",
-      title: "Prepare the Product",
+      title: "Order Cancelled",
       owner: params.seller_id,
       data: JSON.stringify({
         threadtoken: params.threadtoken,
         seller_address: params.seller_address,
         country: params.country
       }),
-      message: `Please prepare the package before deadline.`,
+      message: `The buyer has cancelled the order.`,
     },
   ];
 
@@ -74,4 +76,4 @@ async function locking(params: HandlerParams) {
   ]);
 }
 
-export { locking };
+export { returned };
