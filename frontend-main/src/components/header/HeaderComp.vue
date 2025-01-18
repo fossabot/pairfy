@@ -145,7 +145,7 @@ section {
 .header {
     display: grid;
     grid-template-columns: 25% 50% 25%;
-    max-width: 1600px;
+    max-width: var(--body-a);
     width: 100%;
 }
 
@@ -166,7 +166,7 @@ section {
 .menu {
     color: inherit;
     padding: 0.75rem 0;
-    max-width: 1600px;
+    max-width: var(--body-a);
     width: 100%;
 }
 

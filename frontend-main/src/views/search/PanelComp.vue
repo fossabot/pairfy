@@ -40,8 +40,9 @@ const price = ref(0);
 }
 
 .label{
-    font-size: var(--text-size-2);
-    font-weight: 600;
+    font-size: var(--text-size-1);
+    font-weight: 700;
+    margin-bottom: 0.25rem;
 }
 
 </style>

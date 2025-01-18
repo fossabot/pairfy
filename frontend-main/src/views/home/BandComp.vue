@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .band {
     width: 100%;
-    max-width: 1600px;
+    max-width: var(--body-a);
     overflow: hidden;
     height: 350px;
     position: relative;

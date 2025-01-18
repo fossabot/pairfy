@@ -1,13 +1,15 @@
 <template>
-    <div class="body flex">
-        <PanelComp />
-        <div class="content">
-            <div class="banner">
-                  
-            </div>
-            
+    <div class="wrap flex">
 
-            <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
+        <div class="body flex">
+            <PanelComp />
+            <div class="content">
+                <div class="banner">
+
+                </div>
+
+                <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
+            </div>
         </div>
     </div>
 </template>
@@ -50,9 +52,15 @@ const itemList = ref([
 </script>
 
 <style lang="css" scoped>
-.body {
+.wrap {
     width: 100%;
     border-top: 1px solid var(--border-a);
+    justify-content: center;
+}
+
+.body {
+    width: 100%;
+    max-width: var(--body-a);
 }
 
 .content {

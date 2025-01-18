@@ -64,7 +64,7 @@ const getURL = (index) => {
 
 .tag-body {
     width: inherit;
-    max-width: 1600px;
+    max-width: var(--body-a);
     gap: 1rem;
     flex-wrap: wrap;
     display: flex;

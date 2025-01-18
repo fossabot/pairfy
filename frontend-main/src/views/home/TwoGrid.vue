@@ -70,7 +70,7 @@ const itemList = ref([
 .two {
     padding: 1rem 0;
     width: 100%;
-    max-width: 1600px;
+    max-width: var(--body-a);
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 1fr;

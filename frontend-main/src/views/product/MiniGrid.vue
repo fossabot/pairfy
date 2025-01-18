@@ -84,7 +84,7 @@ const itemList = ref([
 
 .grid {
   padding: 1rem 0;
-  max-width: 1600px;
+  max-width: var(--body-a);
   width: 100%;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
