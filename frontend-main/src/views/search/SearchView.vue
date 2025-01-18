@@ -67,6 +67,6 @@ const itemList = ref([
     height: 60px;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    background: #000;
+    background: var(--background-b);
 }
 </style>

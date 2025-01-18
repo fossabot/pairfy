@@ -50,6 +50,7 @@ import Drawer from 'primevue/drawer'
 import Popover from 'primevue/popover'
 import DatePicker from 'primevue/datepicker'
 import ProgressSpinner from 'primevue/progressspinner'
+import Slider from 'primevue/slider'
 
 import Tooltip from 'primevue/tooltip'
 import Ripple from 'primevue/ripple'
@@ -115,6 +116,7 @@ app.component('Drawer', Drawer)
 app.component('Popover', Popover)
 app.component('DatePicker', DatePicker)
 app.component('ProgressSpinner', ProgressSpinner)
+app.component('Slider', Slider)
 
 app.directive('keyfilter', KeyFilter)
 app.directive('ripple', Ripple)
