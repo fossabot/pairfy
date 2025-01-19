@@ -64,6 +64,10 @@ const httpLink = new HttpLink({
 
 const token = localStorage.getItem('authToken')
 
+if (token) {
+  console.log('TOKEN')
+}
+
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `ws://${domain}/api/chat/graphql`,

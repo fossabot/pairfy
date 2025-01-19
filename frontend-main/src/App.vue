@@ -16,7 +16,7 @@ import { queryClient, gatewayClient, notificationClient, chatClient } from './gr
 import { RouterView } from 'vue-router';
 import { ApolloClients } from '@vue/apollo-composable';
 import { walletClient } from "@/api/wallet";
-import { onBeforeUnmount, provide } from 'vue';
+import { onBeforeUnmount, provide, onUnmounted, onMounted } from 'vue';
 
 const { currentUser, currentSeller, getLocation } = headerAPI();
 
@@ -60,10 +60,23 @@ provide('utils', {
   formatPriceToUSD
 });
 
+const handleBeforeUnload = () => {
+  localStorage.setItem('authToken', null);
+};
+
+onMounted(() => {
+  window.addEventListener('beforeunload', handleBeforeUnload);
+})
+
 onBeforeUnmount(() => {
   stopWalletService()
-  localStorage.removeItem('authToken')
+
 })
+
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
 </script>
 
 
