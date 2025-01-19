@@ -198,10 +198,8 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             
             let must_be_signed = list.has(self.extra_signatories, seller)
             
-            let ms_9_days = 777_600_000
-
-            //Delivery date must be greater than 9 days after shipping_until
-            let rule_1 = delivery_param > shipping_until + ms_9_days
+            //Delivery date must be greater than shipping_until
+            let rule_1 = delivery_param > shipping_until
 
             //The delivery date must be less than the expiration time of the contract
             let rule_2 = delivery_param < expire_until
@@ -729,9 +727,9 @@ test statemachine_shipping() {
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
   let pending_until = 3
   let shipping_until = 6
-  let expire_until = 777_600_000 * 2
+  let expire_until = 20
   let price = 50_000_000
-  let delivery_param = shipping_until + 777_600_000 + 1
+  let delivery_param = shipping_until + 1
   let fee = 2000000
 
   ////////////////////////////////////////////////////////////////////////
@@ -816,7 +814,6 @@ test statemachine_appeal() {
   let ms_1_hour = 3_600_000
   let ms_60_days = 5_184_000_000
   let ms_1_day = 86_400_000 
-  let ms_9_days = 777_600_000
   let own_ref =
     OutputReference {
       transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
@@ -832,7 +829,7 @@ test statemachine_appeal() {
   let shipping_until = ms_1_day
   let expire_until = ms_60_days
   let price = 50_000_000
-  let delivery_date = shipping_until + ms_9_days + 1
+  let delivery_date = shipping_until + 1
   let fee = 2000000
   
   ////////////////////////INPUT//////////////////////////  
@@ -933,7 +930,7 @@ test statemachine_received() {
   let shipping_until = 6
   let expire_until = 20
   let price = 50_000_000
-  let delivery_param = 9
+  let delivery_param = shipping_until + 1
   let fee = 2000000
 
   ////////////////////////////////////////////////////////////////////////
@@ -1034,7 +1031,6 @@ test statemachine_collect_1() {
   let ms_1_hour = 3_600_000
   let ms_60_days = 5_184_000_000
   let ms_1_day = 86_400_000 
-  let ms_9_days = 777_600_000
   let own_ref =
     OutputReference {
       transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
@@ -1050,7 +1046,7 @@ test statemachine_collect_1() {
   let shipping_until = ms_1_day
   let expire_until = ms_60_days
   let price = 50_000_000
-  let delivery_date = shipping_until + ms_9_days + 1
+  let delivery_date = shipping_until + 1
   let fee = 2000000
 
   //////////////////////////////INPUT////////////////////////////////
@@ -1135,7 +1131,6 @@ test statemachine_collect_2() {
   let ms_60_days = 5_184_000_000
   let ms_1_day = 86_400_000 
   let ms_7_days = 604_800_000
-  let ms_9_days = 777_600_000
   let own_ref =
     OutputReference {
       transaction_id: #"ee220ba9258ef159bb44f0d3522b840a80475eac2df7176f2c513d59a2ead71f",
@@ -1151,7 +1146,7 @@ test statemachine_collect_2() {
   let shipping_until = ms_1_day
   let expire_until = ms_60_days
   let price = 50_000_000
-  let delivery_date = shipping_until + ms_9_days + 1
+  let delivery_date = shipping_until + 1
   let fee = 2000000
 
   //////////////////////////////INPUT////////////////////////////////
