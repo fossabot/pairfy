@@ -84,7 +84,7 @@ const loginUser = async ({ commit }, params) => {
 
     return { ok: true, response: response.data }
   } catch (error) {
-    return { ok: false, response: error.response.data }
+    throw { ok: false, response: error.response.data }
   }
 }
 
@@ -94,7 +94,7 @@ const logoutSeller = async ({ commit }, params) => {
 
     commit('currentSeller', null)
 
-    sessionStorage.removeItem('authToken')
+    localStorage.removeItem('authToken')
 
     return { ok: true, response: response.data }
   } catch (error) {
@@ -110,7 +110,7 @@ const logoutUser = async ({ commit }, params) => {
 
     commit('currentUser', null)
 
-    sessionStorage.removeItem('authToken')
+    localStorage.removeItem('authToken')
 
     return { ok: true, response: response.data }
   } catch (error) {

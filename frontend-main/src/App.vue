@@ -62,7 +62,7 @@ provide('utils', {
 
 onBeforeUnmount(() => {
   stopWalletService()
-  sessionStorage.removeItem('authToken')
+  localStorage.removeItem('authToken')
 })
 </script>
 

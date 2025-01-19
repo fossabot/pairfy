@@ -62,12 +62,15 @@ const httpLink = new HttpLink({
   credentials: 'include',
 })
 
+const token = localStorage.getItem('authToken')
+
 const wsLink = new GraphQLWsLink(
   createClient({
     url: `ws://${domain}/api/chat/graphql`,
     credentials: 'include',
+    keepAlive: 10_000,
     connectionParams: {
-      authToken: sessionStorage.getItem('authToken'),
+      authToken: token,
     },
     on: {
       connected: () => console.log('WEBSOCKET'),

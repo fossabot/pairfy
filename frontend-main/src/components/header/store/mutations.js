@@ -1,10 +1,10 @@
 const currentSeller = (state, data) => {
-  sessionStorage.setItem('authToken', data.token)
+  localStorage.setItem('authToken', data.token)
   state.sellerData = data
 }
 
 const currentUser = (state, data) => {
-  sessionStorage.setItem('authToken', data.token)
+  localStorage.setItem('authToken', data.token)
   state.userData = data
 }
 
