@@ -20,7 +20,7 @@
                 <div class="row">
                     <IftaLabel>
                         <DatePicker v-model="dispatchForm.date" inputId="date" showIcon iconDisplay="input"
-                            variant="filled" fluid :minDate="new Date()" />
+                            variant="filled" fluid :minDate="tomorrow" />
                         <label for="date">Delivery Date</label>
                     </IftaLabel>
                 </div>
@@ -42,7 +42,7 @@
 
                 <div class="message">
                     <Message size="small" severity="secondary">
-                        This information is immutable please check before sending. 
+                        This information is immutable please check before sending.
                         Please write future changes in the chat.
                     </Message>
                 </div>
@@ -55,8 +55,8 @@
         </div>
     </Dialog>
 
-    <Button v-if="currentState === 1" type="button" label="Dispatched" :disabled="disableDispatched" @click="dispatchDialog = true"
-        :loading="isLoading" style="color: var(--text-w);" />
+    <Button v-if="currentState === 1" type="button" label="Dispatched" :disabled="disableDispatched"
+        @click="dispatchDialog = true" :loading="isLoading" style="color: var(--text-w);" />
 </template>
 
 <script setup>
@@ -87,6 +87,15 @@ const dispatchFormErrors = reactive({
     website: false,
     notes: false,
 });
+
+const tomorrow = computed(() => {
+
+    const today = new Date();
+    const tomo = new Date(today);
+    tomo.setDate(today.getDate() + 1);
+
+    return tomo
+})
 
 const dispatchDialog = ref(false);
 
