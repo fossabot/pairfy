@@ -20,7 +20,7 @@ const color = computed(() => {
         const state = getOrderData.value?.order?.contract_state
 
         if (state) {
-            if (state === -1) {
+            if ([-1,-2].includes(state)) {
                 return 'red'
             }
 

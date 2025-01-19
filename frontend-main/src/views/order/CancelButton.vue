@@ -3,7 +3,7 @@
         variant="text">
 
         <div class="flex">
-            <ProgressSpinner v-if="loading" style="width: 1rem; margin-right: 0.5rem; height: 1rem" strokeWidth="5" fill="transparent"
+            <ProgressSpinner v-if="loading" style="width: 1rem; height: 1rem;  margin-right: 0.5rem; " strokeWidth="5" fill="transparent"
                 animationDuration=".5s" aria-label="Custom ProgressSpinner" />
 
             <span>Cancel Order</span>

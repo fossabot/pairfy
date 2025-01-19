@@ -135,7 +135,7 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span :class="{ red: ['return', 'appeal', 'cancel'].includes(statusLog)  }">
+                                                    <span :class="{ red: ['returned', 'appealed', 'canceled'].includes(statusLog)  }">
                                                         {{ statusLog}}
                                                     </span>
                                                 </div>
@@ -390,8 +390,12 @@ query ($getOrderVariable: GetOrderInput!) {
             returned_block
             locking_tx
             locking_block
+            canceled_tx
+            canceled_block
             shipping_tx
             shipping_block
+            appealed_tx
+            appealed_block
             received_tx
             received_block
             collected_tx
