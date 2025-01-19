@@ -88,7 +88,6 @@ const props = defineProps(['content'])
 }
 
 .tag {
-    margin-top: 0.5rem;
     font-size: var(--text-size-1);
     justify-content: center;
     color: var(--text-w);
@@ -98,9 +97,12 @@ const props = defineProps(['content'])
 
 .tag.discount {
     background: var(--primary-a);
+    margin-top: 1rem;
+    
 }
 
 .tag.best {
+    margin-top: 0.5rem;
     max-width: 90px;
     font-weight: 500;
     font-size: var(--text-size-0);
