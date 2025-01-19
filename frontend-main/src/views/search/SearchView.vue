@@ -63,7 +63,8 @@ const sortOptions = ref([
     { name: 'Price: Low To High', code: 'LH' },
     { name: 'Price: High To Low', code: 'HL' },
     { name: 'Rating', code: 'R' },
-    { name: 'Best Seller', code: 'BS' }
+    { name: 'Best Seller', code: 'BS' },
+    { name: 'Discount', code: 'DD' }
 ]);
 </script>
 
@@ -77,6 +78,7 @@ const sortOptions = ref([
 .body {
     width: 100%;
     max-width: var(--body-a);
+    align-items: flex-start;
 }
 
 .content {

@@ -4,7 +4,9 @@
         <div class="panel-row">
             <span class="label">Price</span>
             <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
-            <Slider v-model="price" style="margin: 1rem 0.5rem;" :max="maxLimit" />
+            <div class="slider">
+                <Slider v-model="price" :max="maxLimit" style="margin: 1rem 0.5rem;" />
+            </div>
         </div>
 
 
@@ -20,7 +22,9 @@
             </span>
         </div>
 
-
+        <div class="panel-row">
+            <Button label="Go" severity="secondary" variant="outlined" />
+        </div>
 
     </div>
 </template>
@@ -55,6 +59,7 @@ label {
 .panel-row {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 }
 
 .label {
@@ -66,4 +71,14 @@ label {
 .checkbox {
     margin-top: 0.5rem;
 }
+
+.button {
+    padding: 0.75rem;
+    background: transparent;
+    border: 1px solid var(--border-a);
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 </style>
