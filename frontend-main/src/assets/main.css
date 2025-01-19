@@ -26,20 +26,18 @@
   color: var(--blue-a);
 }
 
-.p-select-sm .p-select-label {
-  font-size: var(--text-size-a) !important;
+.p-select-label {
+  font-size: var(--text-size-1) !important;
 }
 
 .p-select-option {
-  font-size: var(--text-size-a) !important;
+  font-size: var(--text-size-1) !important;
 }
-
 
 .p-rating-icon {
   width: 12px !important;
   height: 12px !important;
 }
-
 
 .p-dialog-header {
   border-bottom: 1px solid var(--border-a);

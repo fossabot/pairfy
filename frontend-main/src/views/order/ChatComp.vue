@@ -155,9 +155,7 @@ const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscrip
         enabled: true,
         lazy: true
     }
-
 )
-
 
 onNewMessagesError((error, context) => {
     console.error(error, context)
