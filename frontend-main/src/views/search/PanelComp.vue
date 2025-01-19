@@ -2,15 +2,6 @@
     <div class="panel">
 
         <div class="panel-row">
-            <span class="label">Price</span>
-            <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
-            <div class="slider">
-                <Slider v-model="price" :max="maxLimit" style="margin: 1rem 0.5rem;" />
-            </div>
-        </div>
-
-
-        <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
                 <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
@@ -21,6 +12,17 @@
                 <label for="used"> Used </label>
             </span>
         </div>
+        
+        <div class="panel-row">
+            <span class="label">Price</span>
+            <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
+            <div class="slider">
+                <Slider v-model="price" :max="maxLimit" style="margin: 1rem 0.5rem;" />
+            </div>
+        </div>
+
+
+
 
         <div class="panel-row">
             <Button label="Go" severity="secondary" variant="outlined" />
