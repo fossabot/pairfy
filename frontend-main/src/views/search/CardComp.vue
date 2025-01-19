@@ -83,7 +83,7 @@ const props = defineProps(['content'])
 }
 
 .rating-value{
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     font-weight: 500;
     font-size: var(--text-size-1);
 }

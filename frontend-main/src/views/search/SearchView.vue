@@ -4,10 +4,14 @@
         <div class="body flex">
             <PanelComp />
             <div class="content">
-                <div class="banner">
-
+                <div class="banner flex">
+                    <div class="counter">
+                        1-24 of over 1,000 results for <span>"iphone"</span>
+                    </div>
+                    <Select class="selector" v-model="selectedSort" :options="sortOptions" size="small" showClear
+                        optionLabel="name" placeholder="Sort by" checkmark :highlightOnSelect="false" />
                 </div>
-
+                <Divider />
                 <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
             </div>
         </div>
@@ -52,7 +56,15 @@ const itemList = ref([
         discount_value: 10,
         price: 35
     }
-])
+]);
+
+const selectedSort = ref();
+const sortOptions = ref([
+    { name: 'Price: Low To High', code: 'LH' },
+    { name: 'Price: High To Low', code: 'HL' },
+    { name: 'Rating', code: 'R' },
+    { name: 'Best Seller', code: 'BS' }
+]);
 </script>
 
 <style lang="css" scoped>
@@ -76,9 +88,19 @@ const itemList = ref([
 
 .banner {
     width: inherit;
-    height: 50px;
     margin-top: 1rem;
-    margin-bottom: 1rem;
-    background: var(--background-b);
 }
+
+.selector {
+    margin-left: auto;
+}
+
+.counter {
+    font-size: var(--text-size-1);
+}
+
+.counter span{
+font-weight: 600;
+}
+
 </style>
