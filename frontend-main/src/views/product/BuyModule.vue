@@ -24,7 +24,7 @@
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="city" v-model="orderForm.city" fluid
-                                        placeholder="e.g. Miami, Florida" :invalid="orderFormErrors.city" autofocus
+                                        placeholder="Miami, Florida" :invalid="orderFormErrors.city" autofocus
                                         v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
                                     <label for="city">City / State / Department</label>
@@ -332,7 +332,7 @@ const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
 }
 
-const toggleDialog = ref(true);
+const toggleDialog = ref(false);
 
 const onBuyProduct = () => {
     if (!getCurrentUser.value) {

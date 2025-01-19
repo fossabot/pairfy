@@ -122,7 +122,7 @@ const { result: onGetMessagesResult } = useQuery(gql`
     })
 
 
-watch(onGetMessagesResult, value => {
+const unwatchMessages = watch(onGetMessagesResult, value => {
     messageList.value = [];
 
     messageList.value.push(...value.getMessages.messages);
@@ -152,7 +152,8 @@ const { result: onNewMessagesResult, onError: onNewMessagesError } = useSubscrip
     }),
     {
         clientId: "chat",
-        enabled: true
+        enabled: true,
+        lazy: true
     }
 
 )
@@ -284,13 +285,15 @@ onUnmounted(() => {
 
 onBeforeUnmount(() => {
     unwatchChat()
+
+    unwatchMessages()
 })
 </script>
 
 <style lang="css" scoped>
 .chat {
     width: 100%;
-    min-height: 700px;  
+    min-height: 700px;
     border: 2px solid var(--border-a);
     border-radius: 20px;
     overflow: hidden;

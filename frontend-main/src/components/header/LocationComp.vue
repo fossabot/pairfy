@@ -55,7 +55,7 @@
 
         </div>
         <div class="dialog-footer flex">
-            <Button type="button" label="Save Locally" :disabled="disableSave" @click="onSaveLocation"
+            <Button type="button" label="Save" :disabled="disableSave" @click="onSaveLocation"
                 style="color: var(--text-w)" />
         </div>
     </Dialog>

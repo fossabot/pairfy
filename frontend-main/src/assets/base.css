@@ -35,7 +35,7 @@
 
   --section-gap: 160px;
 
-  --p-tag-border-radius: 0px !important;
+  --p-tag-border-radius: 4px !important;
 
   --p-tag-font-weight: 400 !important;
 
@@ -71,7 +71,7 @@
 
   --p-tag-primary-background: var(--primary-a) !important;
 
-  --p-dialog-border-radius: 20px !important;
+  --p-dialog-border-radius: 12px !important;
 
   --p-button-border-radius: 12px !important;
 
