@@ -106,7 +106,7 @@ const props = defineProps(['content'])
 .tag.best {
     margin-top: 0.5rem;
     max-width: 90px;
-    font-weight: 500;
+    font-weight: 400;
     background: var(--text-a);
 }
 
