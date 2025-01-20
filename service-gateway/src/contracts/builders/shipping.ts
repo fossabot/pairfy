@@ -9,6 +9,7 @@ import {
   Network,
 } from "@lucid-evolution/lucid";
 import { deserializeParams, provider, validators } from "./index.js";
+import { DatumType, InputType } from "./types.js";
 
 /**Generates a CBOR transaction to be signed and sent in the browser by the seller to send before shipping_until. */
 async function shippingTransactionBuilder(
@@ -63,7 +64,10 @@ async function shippingTransactionBuilder(
     throw new Error("Delivery Date Limit");
   }
 
-  if (deliveryDate + BigInt(process.env.APPEAL_RANGE as string) >= BigInt(stateMachineParams[8])) {
+  const appealWindow =
+    deliveryDate + BigInt(process.env.APPEAL_RANGE as string);
+
+  if (appealWindow >= BigInt(stateMachineParams[8])) {
     throw new Error("Delivery Date Limit");
   }
 
@@ -72,7 +76,7 @@ async function shippingTransactionBuilder(
   const externalWalletUtxos = await lucid.utxosAt(externalWalletAddress);
 
   lucid.selectWallet.fromAddress(externalWalletAddress, externalWalletUtxos);
- 
+
   //////////////////////////////////////////////////
 
   const txCollateral = 2_000_000n;
@@ -89,24 +93,6 @@ async function shippingTransactionBuilder(
     throw new Error("MIN_LOVELACE");
   }
 
-  ///////////////////////////////////////////////////
-
-  const datumValues = {
-    state: BigInt(2),
-    delivery: BigInt(deliveryDate),
-  };
-
-  const StateMachineDatum = Data.Object({
-    state: Data.Integer(),
-    delivery: Data.Nullable(Data.Integer()),
-  });
-
-  type DatumType = Data.Static<typeof StateMachineDatum>;
-
-  const DatumType = StateMachineDatum as unknown as DatumType;
-
-  const stateMachineDatum = Data.to(datumValues, DatumType);
-
   //////////////////////////////////////////////////
 
   const threadTokenUnit = stateMachineParams[0] + fromText("threadtoken");
@@ -116,7 +102,7 @@ async function shippingTransactionBuilder(
   console.log(stateMachineUtxo);
 
   if (stateMachineUtxo.datum) {
-    const data = Data.from(stateMachineUtxo.datum, StateMachineDatum);
+    const data = Data.from(stateMachineUtxo.datum, DatumType);
 
     console.log(data);
 
@@ -155,28 +141,18 @@ async function shippingTransactionBuilder(
     },
   };
 
-  const StateMachineInput = Data.Enum([
-    Data.Literal("Return"),
-    Data.Literal("Lock"),
-    Data.Literal("Cancel"),
-    Data.Object({
-      Shipped: Data.Object({
-        delivery_param: Data.Integer(),
-      }),
-    }),
-    Data.Literal("Appeal"),
-    Data.Literal("Received"),
-    Data.Literal("Collect"),
-    Data.Literal("Finish"),
-  ]);
-
-  type InputType = Data.Static<typeof StateMachineInput>;
-
-  const InputType = StateMachineInput as unknown as InputType;
-
   const stateMachineRedeemer = Data.to(shippingInput, InputType);
 
-  ///////////////////////////////////////////
+  ////////////////////////////////////////////
+
+  const datumValues = {
+    state: BigInt(2),
+    delivery: BigInt(deliveryDate),
+  };
+
+  const stateMachineDatum = Data.to(datumValues, DatumType);
+
+  ////////////////////////////////////////////
 
   const lovelaceToSM = BigInt(stateMachineParams[4]);
 

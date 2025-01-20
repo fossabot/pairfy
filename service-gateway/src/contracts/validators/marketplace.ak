@@ -198,11 +198,13 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             
             let must_be_signed = list.has(self.extra_signatories, seller)
             
+            let ms_7_days = 604_800_000
+            
             //Delivery date must be greater than shipping_until
             let rule_1 = delivery_param > shipping_until
 
-            //The delivery date must be less than the expiration time of the contract
-            let rule_2 = delivery_param < expire_until
+            //The delivery date + appeal window must be less than the expiration time of the contract
+            let rule_2 = delivery_param + ms_7_days < expire_until
           
             //Both conditions must be true.
             let must_be_range = and {
@@ -725,9 +727,10 @@ test statemachine_shipping() {
   let operator_pubkeyhash = #"33333333333333333333333333333333333333333333333333333333"
   let seller_pubkeyhash = #"00000000000000000000000000000000000000000000000000000000"
   let buyer_pubkeyhash = #"77777777777777777777777777777777777777777777777777777777"  
+  let ms_60_days = 5_184_000_000
   let pending_until = 3
   let shipping_until = 6
-  let expire_until = 20
+  let expire_until = ms_60_days
   let price = 50_000_000
   let delivery_param = shipping_until + 1
   let fee = 2000000

@@ -50,19 +50,23 @@ const shippingEndpoint = async (_: any, args: any, context: any) => {
 
     //////////////////////////////////////////////
 
-    const deliveryDate = BigInt(params.date) + BigInt(process.env.DELIVERY_RANGE as string);
+    const deliveryDate = BigInt(params.date);
 
-    const appealUntil = deliveryDate + BigInt(process.env.APPEAL_RANGE as string)
+    const extension =
+      deliveryDate + BigInt(process.env.DELIVERY_RANGE as string);
+
+    const appealUntil =
+      deliveryDate + BigInt(process.env.APPEAL_RANGE as string);
 
     //////////////////////////////////////////////
-    
+
     const PGPVersion = "1.0";
 
     const shippingData = {
       order_id: params.order_id,
       guide: params.guide,
-      date: params.date,
-      extension: deliveryDate.toString(),
+      date: deliveryDate.toString(),
+      extension: extension.toString(),
       appeal_until: appealUntil.toString(),
       website: params.website,
       notes: params.notes,
