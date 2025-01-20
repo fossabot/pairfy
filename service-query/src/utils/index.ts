@@ -1,7 +1,7 @@
-import { Logger } from "tslog";
 import { customAlphabet } from "nanoid";
 import { redisClient } from "../database/redis.js";
 import { database } from "../database/client.js";
+import { Logger } from "tslog";
 
 const logger = new Logger({ name: "POD", 
     prettyLogTemplate: "{{logLevelName}} {{dateIsoStr}} {{fileNameWithLine}}",

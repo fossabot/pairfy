@@ -78,6 +78,23 @@ const main = async () => {
       throw new Error("REDIS_HOST error");
     }
 
+    if (!process.env.REDIS_HOST) {
+      throw new Error("REDIS_HOST error");
+    }
+
+    if (!process.env.REDIS_HOST) {
+      throw new Error("REDIS_HOST error");
+    }
+
+    if (!process.env.ELASTIC_ENDPOINT) {
+      throw new Error("ELASTIC_ENDPOINT error");
+    }
+
+    if (!process.env.ELASTIC_API_KEY) {
+      throw new Error("ELASTIC_API_KEY error");
+    }
+
+
     const corsOptions = {
       origin: process.env.CORS_DOMAINS.split(",") || "*",
       credentials: true,

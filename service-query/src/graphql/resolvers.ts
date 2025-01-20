@@ -1,6 +1,7 @@
 import { redisClient } from "../database/redis.js";
 import { database } from "../database/client.js";
 import { getProductPage } from "./product/page.js";
+import { searchProduct } from "./product/search.js";
 
 const getProduct = async (_: any, args: any, context: any) => {
   const params = args.getProductInput;
@@ -50,7 +51,8 @@ const getAssetPrice = async () => {
 const products = {
   Query: {
     getProduct,
-    getProductPage
+    getProductPage,
+    searchProduct
   },
 };
 

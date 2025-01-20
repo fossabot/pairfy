@@ -31,12 +31,32 @@ type Product {
     created_at: String!
 }
 
+type GetProductPageResponse {
+    success: Boolean!
+    payload: String!
+}
+
+type SearchProductResponse {
+    success: Boolean!
+    payload: String!
+}
+
 input GetProductInput {
   id: String!
 } 
 
+input GetProductPageInput {
+  product_id: ID!
+} 
+
+input SearchProductInput {
+  text: String!
+} 
+
 type Query {
   getProduct(getProductInput: GetProductInput!): Product!
+  getProductPage(getProductPageInput: GetProductPageInput!): GetProductPageResponse!
+  searchProduct(searchProductInput: SearchProductInput!): SearchProductResponse!
   getAssetPrice: Float!
 }
 

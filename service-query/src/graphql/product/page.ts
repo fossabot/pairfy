@@ -17,7 +17,12 @@ const getProductPage = async (_: any, args: any, context: any) => {
       throw new Error("NO_PRODUCT");
     }
 
-    return product[0];
+    const scheme = {
+      success: true,
+      payload: "test"
+    }
+
+    return scheme
   } catch (err: any) {
     if (connection) {
       await connection.rollback();

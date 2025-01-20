@@ -165,13 +165,13 @@ onBeforeUnmount(() => unwatchGetProduct())
 }
 
 .card-header {
-    padding: 1rem;
     display: flex;
     align-items: center;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     text-transform: capitalize;
     border-bottom: none;
-    background: var(--background-b);
+    padding: 0.5rem 0;
+    color: var(--text-b);
 }
 
 .card-header div {

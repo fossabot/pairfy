@@ -56,7 +56,7 @@ section {
 .nav {
     display: flex;
     flex-direction: column;
-    padding-left: 0.5rem;
+    padding-left: 2px;
 }
 
 .nav-item {
