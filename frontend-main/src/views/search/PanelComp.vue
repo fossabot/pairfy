@@ -2,6 +2,14 @@
     <div class="panel">
 
         <div class="panel-row">
+            <span class="label">Category</span>
+            <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
+                <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
+                <label for="new"> {{ item.name }} </label>
+            </span>
+        </div>
+
+        <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
                 <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
@@ -12,7 +20,7 @@
                 <label for="used"> Used </label>
             </span>
         </div>
-        
+
         <div class="panel-row">
             <span class="label">Price</span>
             <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
@@ -32,7 +40,10 @@
 </template>
 
 <script setup>
+import categories from '@/assets/categories.json';
 import { ref } from 'vue';
+
+const categoryList = ref(categories);
 
 const maxLimit = ref(10000);
 
@@ -46,8 +57,8 @@ const used = ref(false)
 
 <style lang="css" scoped>
 label {
+    font-size: var(--text-size-0);
     margin-left: 0.5rem;
-    font-size: var(--text-size-1);
 }
 
 .panel {
@@ -82,5 +93,4 @@ label {
     border-radius: 8px;
     cursor: pointer;
 }
-
 </style>

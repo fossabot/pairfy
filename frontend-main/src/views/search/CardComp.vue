@@ -11,6 +11,7 @@
                 <span class="rating-value">
                     4.32
                 </span>
+                <span class="reviews">(232 reviews) </span>
             </span>
 
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
@@ -79,16 +80,17 @@ const props = defineProps(['content'])
 
 .rating {
     margin-top: 0.5rem;
+    align-items: baseline;
 }
 
 .rating-value {
     margin-left: 0.25rem;
     font-weight: 600;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
 }
 
 .tag {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     justify-content: center;
     color: var(--text-w);
     max-width: 50px;
@@ -97,7 +99,7 @@ const props = defineProps(['content'])
 
 .tag.discount {
     background: var(--primary-a);
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 
 }
 
@@ -105,7 +107,6 @@ const props = defineProps(['content'])
     margin-top: 0.5rem;
     max-width: 90px;
     font-weight: 500;
-    font-size: var(--text-size-0);
     background: var(--text-a);
 }
 
@@ -113,5 +114,12 @@ const props = defineProps(['content'])
     margin-top: 0.5rem;
     font-size: var(--text-size-3);
     font-weight: 500;
+}
+
+.reviews {
+    font-size: var(--text-size-0);
+    margin-left: 0.25rem;
+    font-weight: 400;
+    color: var(--text-b);
 }
 </style>
