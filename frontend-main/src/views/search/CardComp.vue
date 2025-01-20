@@ -12,12 +12,13 @@
                     4.32
                 </span>
             </span>
+
+            <span class="price">${{ formatPriceToUSD(content.price) }}</span>
+            <span class="tag flex best">
+                BEST SELLER
+            </span>
             <span class="tag flex discount" v-if="content.discount">
                 {{ `- ${content.discount_value}%` }}
-            </span>          
-            <span class="price">${{ formatPriceToUSD(content.price) }}</span>
-                    <span class="tag flex best">
-               BEST SELLER
             </span>
         </div>
     </div>
@@ -34,7 +35,6 @@ const props = defineProps(['content'])
 </script>
 
 <style lang="css" scoped>
-
 .card {
     margin: 0.5rem 0;
 }
@@ -77,11 +77,11 @@ const props = defineProps(['content'])
     color: var(--primary-a);
 }
 
-.rating{
+.rating {
     margin-top: 0.5rem;
 }
 
-.rating-value{
+.rating-value {
     margin-left: 0.25rem;
     font-weight: 600;
     font-size: var(--text-size-0);
@@ -98,7 +98,7 @@ const props = defineProps(['content'])
 .tag.discount {
     background: var(--primary-a);
     margin-top: 1rem;
-    
+
 }
 
 .tag.best {
@@ -114,5 +114,4 @@ const props = defineProps(['content'])
     font-size: var(--text-size-3);
     font-weight: 500;
 }
-
 </style>
