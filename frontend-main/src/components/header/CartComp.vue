@@ -23,7 +23,7 @@
 }
 
 .cart {
-    background: var(--text-a);
+    background: var(--background-b);
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -31,7 +31,6 @@
     font-weight: 600;
     padding: 0 0.5rem;
     font-size: var(--text-size-0);
-    color: var(--text-w);
     height: 16px;
 }
 
