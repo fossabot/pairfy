@@ -5,10 +5,10 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { catcher, errorEvents, logger } from "./utils/index.js";
-import { database } from "./db/client.js";
+import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { assets, products } from "./graphql/resolvers.js";
-import { redisClient } from "./db/redis.js";
+import { redisClient } from "./database/redis.js";
 
 const app = express();
 

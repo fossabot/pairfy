@@ -1,15 +1,17 @@
 <template>
     <div class="media">
         <section v-if="getProductData">
-            <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" width="500" height="500" previewIcon="pi-search" 
-                    preview />
-            </div>
-            <div class="media-nav">
-                <div class="media-item" :class="{ selected: selectedImageIndex === index }"
-                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)" @mouseover="selectImage(index)">
+            <div class="nav">
+                <div class="nav-item flex" :class="{ selected: selectedImageIndex === index }"
+                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
+                    @mouseover="selectImage(index)">
                     <img :src="item" alt="item">
                 </div>
+            </div>
+
+            <div class="media-image">
+                <Image :src="productImageList[selectedImageIndex]" alt="Image"  style="max-width: 700px;" height="500"
+                    previewIcon="pi-search" preview />
             </div>
         </section>
 
@@ -49,12 +51,31 @@ const selectImage = (index) => {
 <style lang="css" scoped>
 section {
     display: flex;
-    flex-direction: column;
 }
 
-.media-nav {
+.nav {
     display: flex;
-    margin-top: 2rem;
+    flex-direction: column;
+    padding-left: 0.5rem;
+}
+
+.nav-item {
+    border: 1px solid var(--border-a);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.nav-item.selected {
+    outline: 2px solid var(--text-a);
+}
+
+.nav-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
 }
 
 .media-image {
@@ -64,29 +85,6 @@ section {
     width: 100%;
     min-height: 600px;
     max-height: 600px;
-}
-
-.media-item {
-    border: 1px solid var(--border-a);
-    border-radius: 8px;
-    width: 80px;
-    height: 80px;
-    margin-right: 1rem;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.media-item.selected {
-    border: 2px solid var(--text-a);
-}
-
-.media-item img {
-    width: 70px;
-    height: 70px;
-    object-fit: contain;
 }
 
 ::v-deep(.p-image-preview-mask:hover) {
