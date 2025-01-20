@@ -12,7 +12,15 @@
                         optionLabel="name" placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
-                <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
+
+                <template v-if="isLoading">
+                    <Skeleton v-for="item in 5" :key="item" width="100%" height="250px" style="margin: 0.5rem 0;" />
+                </template>
+
+                <template v-else>   
+                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />   
+                </template>
+               
             </div>
         </div>
     </div>
@@ -22,6 +30,8 @@
 import PanelComp from '@/views/search/PanelComp.vue';
 import CardComp from '@/views/search/CardComp.vue';
 import { ref } from 'vue';
+
+const isLoading = ref(true);
 
 const itemList = ref([
     {
@@ -101,8 +111,7 @@ const sortOptions = ref([
     font-size: var(--text-size-1);
 }
 
-.counter span{
-font-weight: 600;
+.counter span {
+    font-weight: 600;
 }
-
 </style>

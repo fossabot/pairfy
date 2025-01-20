@@ -59,6 +59,7 @@ const used = ref(false)
 label {
     font-size: var(--text-size-0);
     margin-left: 0.5rem;
+    color: var(--text-b);
 }
 
 .panel {

@@ -27,7 +27,7 @@ const handleSearch = () => {
         router.push({
             name: 'search',
             query: {
-                text: text
+                k: text
             }
         })
 
