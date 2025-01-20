@@ -89,7 +89,7 @@ onDone(async result => {
 
             const { cbor } = response.collectEndpoint.payload;
 
-            showSuccess("Preparing", `Please don't close the tab. The process takes a few minutes depending on the blockchain network.`, 100000);
+            showSuccess("Transaction", `Please don't close the tab. The process takes a few minutes depending on the blockchain network.`, 100000);
 
             const txHash = await balanceTx(cbor);
 
