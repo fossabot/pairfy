@@ -1,6 +1,5 @@
 <template>
-    <div class="search" :class="{ focus: isFocus }"
-        :style="{ backgroundColor: searchInput.length ? 'var(--background-b)' : 'var(--background-b)' }">
+    <div class="search" :class="{ focus: isFocus }">
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search products"
             @focus="isFocus = true" @blur="isFocus = false">
         <button class="search-button flex" :class="{ focus: isFocus }"> 
@@ -25,12 +24,12 @@ const isFocus = ref(false);
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-   
+    background: var(--background-b);
 }
 
 .search.focus {
-    background: var(--background-b);
-    outline: 3px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), transparent 60%);
+    background: var(--background-a);
+    outline: 3px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), var(--primary-a) 20%);
     outline-offset: 0px;
 }
 

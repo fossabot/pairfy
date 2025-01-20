@@ -112,7 +112,7 @@ const props = defineProps(['content'])
 
 .price {
     margin-top: 0.5rem;
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     font-weight: 500;
 }
 
