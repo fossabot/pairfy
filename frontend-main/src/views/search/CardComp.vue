@@ -98,7 +98,6 @@ const props = defineProps(['content'])
 }
 
 .tag.discount {
-    background: var(--primary-a);
     margin-top: 0.5rem;
 
 }
@@ -107,7 +106,6 @@ const props = defineProps(['content'])
     margin-top: 0.5rem;
     max-width: 90px;
     font-weight: 400;
-   
 }
 
 .price {

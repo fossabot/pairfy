@@ -695,7 +695,7 @@ onUnmounted(() => {
 
 .nav {
     border-bottom: 1px solid var(--border-a);
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .nav-item {
