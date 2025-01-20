@@ -9,7 +9,7 @@
                         1-24 of over 1,000 results for <span>"iphone"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" size="small" showClear
-                        optionLabel="name" placeholder="Sort by" checkmark :highlightOnSelect="false" />
+                        optionLabel="name" placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
                 <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
