@@ -13,8 +13,8 @@
                 </div>
                 <Divider />
 
-                <template v-if="isLoading">
-                    <Skeleton v-for="item in 5" :key="item" width="100%" height="250px" style="margin: 0.5rem 0;" />
+                <template v-if="!isLoading">
+                    <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
 
                 <template v-else>   

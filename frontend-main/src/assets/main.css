@@ -108,3 +108,7 @@
 .p-badge{
   font-size: 9px !important;
 }
+
+.best{
+  background: var(--cyan-a);
+}

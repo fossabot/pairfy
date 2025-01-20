@@ -43,8 +43,8 @@ const props = defineProps(['content'])
 .preview {
     background: var(--background-b);
     overflow: hidden;
-    width: 250px;
-    height: 250px;
+    width: 220px;
+    height: 220px;
 }
 
 .image {
@@ -59,7 +59,7 @@ const props = defineProps(['content'])
     flex-direction: column;
     justify-content: flex-start;
     text-transform: capitalize;
-    height: 250px;
+    height: 220px;
     padding: 0.25rem 1rem;
 }
 
@@ -107,7 +107,7 @@ const props = defineProps(['content'])
     margin-top: 0.5rem;
     max-width: 90px;
     font-weight: 400;
-    background: var(--text-a);
+   
 }
 
 .price {
