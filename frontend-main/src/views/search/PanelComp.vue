@@ -23,13 +23,11 @@
 
         <div class="panel-row">
             <span class="label">Price</span>
-            <InputNumber v-model="price" inputId="mile" suffix=" USD" fluid />
+            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
             <div class="slider">
-                <Slider v-model="price" :max="maxLimit" style="margin: 1rem 0.5rem;" />
+                <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
             </div>
         </div>
-
-
 
 
         <div class="panel-row">
@@ -41,13 +39,15 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const categoryList = ref(categories);
 
-const maxLimit = ref(10000);
+const maxLimit = ref(5000);
 
 const price = ref(0);
+
+const priceRange = ref([25, 2000]);
 
 const newed = ref(false)
 
@@ -93,5 +93,10 @@ label {
     font-weight: 600;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.slider-text {
+    font-size: var(--text-size-1);
+    font-weight: 500;
 }
 </style>
