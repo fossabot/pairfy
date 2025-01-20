@@ -1,20 +1,40 @@
 <template>
     <div class="search" :class="{ focus: isFocus }">
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search products"
-            @focus="isFocus = true" @blur="isFocus = false">
-        <button class="search-button flex" :class="{ focus: isFocus }"> 
+            @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
+        <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
             <i class="pi pi-search" />
         </button>
     </div>
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
-const searchInput = ref("");
+const router = useRouter();
 
 const isFocus = ref(false);
 
+const searchInput = ref("");
+
+const handleSearch = () => {
+    const text = searchInput.value.trim();
+
+    if (text) {
+        console.log("Performing search for:", text);
+
+        router.push({
+            name: 'search',
+            query: {
+                text: text
+            }
+        })
+
+    } else {
+        console.warn("Search query is empty. Please enter a query.");
+    }
+}
 </script>
 
 <style lang="css" scoped>
@@ -61,12 +81,12 @@ const isFocus = ref(false);
     outline-offset: -1px;
 }
 
-.search-button i{
+.search-button i {
     font-weight: 600;
 }
 
 .search-button:hover {
-   opacity: 0.9;
+    opacity: 0.9;
 }
 
 .search-icon {
