@@ -7,8 +7,8 @@
 
         <CancelButton/>
 
-        <Button type="button" label="Appeal" :disabled="true" variant="text" :loading="false" />
-
+        <AppealButton/>
+        
     </div>
 </template>
 
@@ -17,6 +17,8 @@
 import ReturnButton from '@/views/order/ReturnButton.vue';
 import PackageReceived from '@/views/order/PackageReceived.vue';
 import CancelButton from '@/views/order/CancelButton.vue';
+import AppealButton from '@/views/order/AppealButton.vue';
+
 </script>
 
 <style lang="css" scoped>
