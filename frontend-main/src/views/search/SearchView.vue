@@ -8,8 +8,8 @@
                     <div class="counter">
                         1-24 of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
-                    <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear
-                        optionLabel="name" placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
+                    <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
+                        placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
 
@@ -18,7 +18,7 @@
                 </template>
 
                 <template v-else>
-                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
+                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item._source" />
                 </template>
 
             </div>
@@ -40,6 +40,8 @@ const router = useRouter();
 
 const searchKey = ref("");
 
+const queryEnabled = ref(false);
+
 const unwatchRoute = watch(
     () => route.query,
     (query) => {
@@ -50,27 +52,81 @@ const unwatchRoute = watch(
             })
         }
 
-        searchKey.value = query.k
+        searchKey.value = query.k;
+
+        queryEnabled.value = true;
     },
     { immediate: true }
 );
 
-
 const isLoading = ref(true);
 
-const queryVariablesRef = ref({
-    "searchProductVariable": {
-        "text": "tv"
+const query = ref({
+    text: "samsung",
+    sku: {
+        enabled: false,
+        value: "6552953",
     },
-})
+    brand: {
+        enabled: false,
+        value: "samsung",
+    },
+    model: {
+        enabled: false,
+        value: "SP-LFF3CLAXXZA",
+    },
+    quality: {
+        enabled: false,
+        value: "new",
+    },
+    discount: {
+        enabled: false,
+        value: false,
+    },
+    best_seller: {
+        enabled: false,
+        value: false,
+    },
+    price: {
+        enabled: false,
+        value: {
+            gte: 0,
+            lte: 0,
+        },
+    },
+    sort: {
+        price: "asc",
+        rating: "desc",
+        reviews: "desc",
+        discount_value: "desc",
+    },
+});
 
-const queryEnabled = ref(true);
+
+const queryVariablesRef = ref({
+    "searchProductVariable": query,
+});
 
 const { result: searchProduct } = useQuery(gql`
       query ($searchProductVariable: SearchProductInput!) {
         searchProduct(searchProductInput: $searchProductVariable) {
-            success
-            payload
+          _source {    
+            id
+            name
+            sku
+            category
+            brand
+            model
+            price
+            quality
+            image
+            keywords
+            rating
+            reviews
+            discount
+            discount_value
+            best_seller  
+          }
         }
       }
     `,
@@ -81,44 +137,13 @@ const { result: searchProduct } = useQuery(gql`
     })
 );
 
-const unwatchSearchProduct = watch(searchProduct, value => {
-    console.log(value)
-});
+const itemList = ref([]);
 
-const itemList = ref([
-    {
-        brand: "apple",
-        title: "Apple iPhone 13, 128GB, Green for AT&T (Renewed)",
-        image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
-        discount: true,
-        discount_value: 10,
-        price: 35
-    },
-    {
-        brand: "apple",
-        title: "SAMSUNG Galaxy S23 Ultra Series AI Phone, Unlocked Android Smartphone, 256GB Storage, 8GB RAM, 200MP Camera, Night Mode, Long Battery Life, S Pen, US Version, 2023, Green",
-        image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
-        discount: true,
-        discount_value: 10,
-        price: 35
-    },
-    {
-        brand: "apple",
-        title: "15 ProMax Smartphone, 6+256GB Unlocked Phone, Android 13.0, 48+108MP Zoom Camera, Mobile Phone with Build-in Pen,Long Battery Life 6800mAh, Dual SIM, 6.7“ HD Screen,5G/4G Phone (Natural Titanium)",
-        image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
-        discount: true,
-        discount_value: 10,
-        price: 35
-    },
-    {
-        brand: "apple",
-        title: "Apple iPhone 13, 128GB, Green for AT&T (Renewed)",
-        image: "https://m.media-amazon.com/images/I/71MHTD3uL4L._AC_UY218_.jpg",
-        discount: true,
-        discount_value: 10,
-        price: 35
-    }
-]);
+const unwatchSearchProduct = watch(searchProduct, value => {
+    console.log(value.searchProduct);
+
+    itemList.value = value.searchProduct;
+});
 
 const selectedSort = ref();
 
@@ -130,12 +155,10 @@ const sortOptions = ref([
     { name: 'Discount', code: 'DD' }
 ]);
 
-
 onBeforeUnmount(() => {
     unwatchRoute()
     unwatchSearchProduct()
 });
-
 </script>
 
 <style lang="css" scoped>

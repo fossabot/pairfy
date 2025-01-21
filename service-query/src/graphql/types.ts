@@ -36,9 +36,26 @@ type GetProductPageResponse {
     payload: String!
 }
 
+type ProductSource {
+  id: ID!
+  name: String!
+  sku: String!
+  category: String!
+  brand: String!
+  model: String!
+  price: Float!
+  quality: String!
+  image: String!
+  keywords: String!
+  rating: Float!
+  reviews: Int!
+  discount: Boolean!
+  discount_value: Int!
+  best_seller: Boolean!
+}
+
 type SearchProductResponse {
-    success: Boolean!
-    payload: String!
+  _source: ProductSource!
 }
 
 input GetProductInput {
@@ -49,14 +66,54 @@ input GetProductPageInput {
   product_id: ID!
 } 
 
+input StringFilterInput {
+  enabled: Boolean!
+  value: String
+}
+
+input BooleanFilterInput {
+  enabled: Boolean!
+  value: Boolean
+}
+
+input PriceFilterInput {
+  enabled: Boolean!
+  value: PriceRangeInput
+}
+
+input PriceRangeInput {
+  gte: Float
+  lte: Float
+}
+
+input SortInput {
+  price: SortOrder!
+  rating: SortOrder!
+  reviews: SortOrder!
+  discount_value: SortOrder!
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
 input SearchProductInput {
   text: String!
+  sku: StringFilterInput
+  brand: StringFilterInput
+  model: StringFilterInput
+  quality: StringFilterInput
+  discount: BooleanFilterInput
+  best_seller: BooleanFilterInput
+  price: PriceFilterInput!
+  sort: SortInput!
 } 
 
 type Query {
   getProduct(getProductInput: GetProductInput!): Product!
   getProductPage(getProductPageInput: GetProductPageInput!): GetProductPageResponse!
-  searchProduct(searchProductInput: SearchProductInput!): SearchProductResponse!
+  searchProduct(searchProductInput: SearchProductInput!): [SearchProductResponse]!
   getAssetPrice: Float!
 }
 

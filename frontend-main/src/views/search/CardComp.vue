@@ -5,21 +5,21 @@
         </div>
         <div class="content">
             <span class="brand">{{ content.brand }}</span>
-            <span class="title">{{ content.title }}</span>
+            <span class="title">{{ content.name }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rating-value">
-                    4.32
+                    {{ content.rating }}
                 </span>
                 <span class="reviews">(232 reviews) </span>
             </span>
 
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
-            <span class="tag flex best">
+            <span class="tag flex best" v-if="content.best_seller">
                 BEST SELLER
             </span>
             <span class="tag flex discount" v-if="content.discount">
-                {{ `- ${content.discount_value}%` }}
+                {{ `- ${content.discount_value}% off` }}
             </span>
         </div>
     </div>
@@ -92,20 +92,16 @@ const props = defineProps(['content'])
 .tag {
     font-size: var(--text-size-0);
     justify-content: center;
-    color: var(--text-w);
-    max-width: 50px;
     white-space: nowrap;
-}
-
-.tag.discount {
-    margin-top: 0.5rem;
-
-}
-
-.tag.best {
-    margin-top: 0.5rem;
-    max-width: 90px;
+    text-align: center;
+    color: var(--text-w);
+    max-width: fit-content;
+    display: inline-block;
+    line-height: 12px;
+    border-radius: 2px;
+    padding: 4px 6px;
     font-weight: 400;
+    margin-top: 0.5rem;
 }
 
 .price {

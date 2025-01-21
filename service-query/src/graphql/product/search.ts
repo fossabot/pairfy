@@ -94,56 +94,11 @@ const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
 
-    const query = {
-      text: "samsung",
-      sku: {
-        enabled: true,
-        value: "6552953",
-      },
-      brand: {
-        enabled: false,
-        value: "samsung",
-      },
-      model: {
-        enabled: false,
-        value: "SP-LFF3CLAXXZA",
-      },
-      quality: {
-        enabled: false,
-        value: "new",
-      },
-      discount: {
-        enabled: false,
-        value: false,
-      },
-      best_seller: {
-        enabled: false,
-        value: false,
-      },
-      price: {
-        enabled: false,
-        value: {
-          gte: 100,
-          lte: 700,
-        },
-      },
-      sort: {
-        price: "asc",
-        rating: "desc",
-        reviews: "desc",
-        discount_value: "desc",
-      },
-    };
-
-    const search = await searchIndex(query);
+    const search = await searchIndex(params);
 
     console.log(search);
 
-    const scheme = {
-      success: true,
-      payload: "test",
-    };
-    return scheme;
+    return search;
   } catch (err: any) {
     logger.error(err);
   }
