@@ -11,8 +11,8 @@
         </div>
         <span>Discounts</span>
         <span>Earn Rewards</span>
-        <span>Sell Products</span>
         <span>Support</span>
+        <span>Sell</span>
         <span>
             <a href="https://cardano-ecommerce.gitbook.io/marketplace" target="_blank"
                 rel="noopener noreferrer">Docs</a>

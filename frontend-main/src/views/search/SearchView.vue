@@ -62,7 +62,7 @@ const unwatchRoute = watch(
 const isLoading = ref(true);
 
 const query = ref({
-    text: "samsung",
+    text: searchKey.value,
     sku: {
         enabled: false,
         value: "6552953",
