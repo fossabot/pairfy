@@ -37,11 +37,6 @@ main {
   border-top: 1px solid var(--border-a);
 }
 
-.body {
-
-
-}
-
 .top {
   min-height: 300px;
   justify-content: center;
