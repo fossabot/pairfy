@@ -114,9 +114,9 @@
 }
 
 .best{
-  background: var(--cyan-a);
+  background: var(--text-a);
 }
 
 .discount {
-  background: var(--red-a);
+  background: var(--cyan-a);
 }
