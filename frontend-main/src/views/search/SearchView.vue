@@ -17,21 +17,73 @@
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
 
-                <template v-else>   
-                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />   
+                <template v-else>
+                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item" />
                 </template>
-               
+
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
 import PanelComp from '@/views/search/PanelComp.vue';
 import CardComp from '@/views/search/CardComp.vue';
-import { ref } from 'vue';
+import { useQuery } from '@vue/apollo-composable'
+import { ref, watch, onBeforeUnmount } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const router = useRouter();
+
+const searchKey = ref("");
+
+const unwatchRoute = watch(
+    () => route.query,
+    (query) => {
+        console.log(query)
+        if (!query.k) {
+            router.push({
+                name: 'home'
+            })
+        }
+
+        searchKey.value = query.k
+    },
+    { immediate: true }
+);
+
 
 const isLoading = ref(true);
+
+const queryVariablesRef = ref({
+    "searchProductVariable": {
+        "text": "tv"
+    },
+})
+
+const queryEnabled = ref(false);
+
+const { result: searchProduct } = useQuery(gql`
+      query ($searchProductVariable: GetOrderInput!) {
+        searchProduct(searchProductInput: $searchProductVariable) {
+            success
+            payload
+        }
+      }
+    `,
+    () => (queryVariablesRef.value),
+    () => ({
+        enabled: queryEnabled.value,
+        clientId: 'query'
+    })
+);
+
+const unwatchSearchProduct = watch(searchProduct, value => {
+    console.log(value)
+});
 
 const itemList = ref([
     {
@@ -69,6 +121,7 @@ const itemList = ref([
 ]);
 
 const selectedSort = ref();
+
 const sortOptions = ref([
     { name: 'Price: Low To High', code: 'LH' },
     { name: 'Price: High To Low', code: 'HL' },
@@ -76,6 +129,13 @@ const sortOptions = ref([
     { name: 'Best Seller', code: 'BS' },
     { name: 'Discount', code: 'DD' }
 ]);
+
+
+onBeforeUnmount(() => {
+    unwatchRoute()
+    unwatchSearchProduct()
+});
+
 </script>
 
 <style lang="css" scoped>

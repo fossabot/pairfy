@@ -7,8 +7,8 @@
                     <span>Most purchased community products</span>
                 </div>
                 <div class="control flex">
-                    <div class="button">
-                        View More
+                    <div class="button flex">
+                        <i class="pi pi-arrow-right" />
                     </div>
                 </div>
             </div>
@@ -23,8 +23,8 @@
                     <span>The most purchased products.</span>
                 </div>
                 <div class="control flex">
-                    <div class="button">
-                        View More
+                    <div class="button flex">
+                        <i class="pi pi-arrow-right" />
                     </div>
                 </div>
             </div>
@@ -94,13 +94,15 @@ const itemList = ref([
 }
 
 .button {
+    justify-content: center; 
     border-radius: 999px;
-    padding: 0.75rem 1.5rem;
-    background: var(--primary-a);
-    color: var(--text-w);
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-1);
     font-weight: 500;
     cursor: pointer;
+    background: var(--primary-a);
+    color: var(--text-w);
+    width: 40px;
+    height: 40px;
 }
 
 .title {
