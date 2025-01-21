@@ -8,8 +8,8 @@
         <CategoryComp /> 
         <TwoGrid /> 
         <OneGrid />
-        <OneGrid />
         <RowGrid title="Technology"/>
+        <OneGrid />
         <FourGrid />
         <RowGrid title="Best sellers"/>
       </div>
