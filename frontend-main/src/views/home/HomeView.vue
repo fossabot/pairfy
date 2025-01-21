@@ -55,6 +55,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(0deg, var(--background-b) 80%, var(--background-a) 86%);
 }
 
 
