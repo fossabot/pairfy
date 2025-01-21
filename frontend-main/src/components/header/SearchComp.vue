@@ -1,6 +1,6 @@
 <template>
     <div class="search" :class="{ focus: isFocus }">
-        <input v-model="searchInput" type="text" class="search-input" placeholder="Search products"
+        <input v-model="searchInput" type="text" class="search-input" placeholder="Search"
             @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
         <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
             <i class="pi pi-search" />
