@@ -6,9 +6,9 @@
             <div class="content">
                 <div class="banner flex">
                     <div class="counter">
-                        1-24 of over 1,000 results for <span>"iphone"</span>
+                        1-24 of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
-                    <Select class="selector" v-model="selectedSort" :options="sortOptions" size="small" showClear
+                    <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear
                         optionLabel="name" placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
@@ -64,10 +64,10 @@ const queryVariablesRef = ref({
     },
 })
 
-const queryEnabled = ref(false);
+const queryEnabled = ref(true);
 
 const { result: searchProduct } = useQuery(gql`
-      query ($searchProductVariable: GetOrderInput!) {
+      query ($searchProductVariable: SearchProductInput!) {
         searchProduct(searchProductInput: $searchProductVariable) {
             success
             payload
