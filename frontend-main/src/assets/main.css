@@ -22,6 +22,10 @@
   color: var(--text-b);
 }
 
+.cyan{
+  color: var(--cyan-a);
+}
+
 .blue{ 
   color: var(--blue-a);
 }
