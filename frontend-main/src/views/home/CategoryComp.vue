@@ -87,7 +87,7 @@ const getURL = (index) => {
 }
 
 .tag:hover {
-    background: var(--soft-red-a);
+    background: var(--soft-cyan-a);
 }
 
 .tag img {
