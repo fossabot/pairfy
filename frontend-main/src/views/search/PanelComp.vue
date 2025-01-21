@@ -2,6 +2,15 @@
     <div class="panel">
 
         <div class="panel-row">
+            <div class="message flex">
+                <div class="flex">
+                    <i class="pi pi-times"/> 
+                </div>
+                <span>Filters</span>
+            </div>
+        </div>
+
+        <div class="panel-row">
             <span class="label">Category</span>
             <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
                 <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
@@ -73,7 +82,7 @@ label {
 .panel-row {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .label {
@@ -98,5 +107,24 @@ label {
 .slider-text {
     font-size: var(--text-size-1);
     font-weight: 500;
+}
+
+.message {
+    font-size: var(--text-size-0);
+    width: fit-content;
+    border: 1px solid var(--border-a);
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    padding-left: 0;
+}
+
+.message div{
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.message i{
+    font-size: inherit;
 }
 </style>
