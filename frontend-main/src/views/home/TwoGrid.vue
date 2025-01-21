@@ -85,14 +85,6 @@ const itemList = ref([
     justify-content: space-between;
 }
 
-.head.left {
-    color: var(--primary-a);
-}
-
-.head.right {
-    color: var(--primary-a);
-}
-
 .button {
     justify-content: center; 
     border-radius: 999px;

@@ -20,15 +20,15 @@ const processQueryParams = (query: any): any => {
   ];
 
   if (query.sku.enabled) {
-    must.push({ match: { sku: query.sku } });
+    must.push({ match: { sku: query.sku.value } });
   }
 
   if (query.brand.enabled) {
-    must.push({ match: { brand: query.brand } });
+    must.push({ match: { brand: query.brand.value } });
   }
 
   if (query.model.enabled) {
-    must.push({ match: { model: query.model } });
+    must.push({ match: { model: query.model.value } });
   }
 
   const filter: any = [];
@@ -36,20 +36,20 @@ const processQueryParams = (query: any): any => {
   if (query.price.enabled) {
     filter.push({
       range: {
-        price: { gte: query.price.gte, lte: query.price.lte },
+        price: { gte: query.price.value.gte, lte: query.price.value.lte },
       },
     });
   }
   if (query.quality.enabled) {
-    filter.push({ term: { quality: query.quality } });
+    filter.push({ term: { quality: query.quality.value } });
   }
 
   if (query.discount.enabled) {
-    filter.push({ term: { discount: query.discount } });
+    filter.push({ term: { discount: query.discount.value } });
   }
 
   if (query.best_seller.enabled) {
-    filter.push({ term: { best_seller: query.best_seller } });
+    filter.push({ term: { best_seller: query.best_seller.value } });
   }
 
   const body = {
