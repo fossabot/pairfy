@@ -49,7 +49,7 @@ const handleSearch = () => {
 
 .search.focus {
     background: var(--background-a);
-    outline: 3px solid color-mix(in srgb, rgba(255, 255, 255, 0.5), var(--primary-a) 20%);
+    outline: 3px solid color-mix(in srgb, transparent, var(--primary-a) 30%);
     outline-offset: 0px;
 }
 

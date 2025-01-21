@@ -32,7 +32,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .card {
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     color: inherit;
     justify-content: space-between;
     padding: 0.75rem 1rem; 

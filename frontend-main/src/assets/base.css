@@ -100,8 +100,8 @@
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
   --background-bs: #E7EBEF;
-  --background-c: #090F17;
-  --background-d: #263241;
+  --background-c: #181a20;
+  --background-d: #1e2329;
 
   --text-a: #0f1111;
   --text-b: var(--p-surface-600);
@@ -129,7 +129,7 @@
   --body-a: 1600px;
   
   --border-a: #e2e8f0;
-  --border-b: #2b3139;
+  --border-b: #474d57;
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
 

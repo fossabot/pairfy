@@ -119,8 +119,8 @@ header {
     align-items: center;
     width: 100%;
     font-size: var(--text-size-1);
-    color: var(--text-b);
-    background: var(--background-a);
+    color: var(--text-w);
+    background: var(--background-c);
 }
 
 section {
