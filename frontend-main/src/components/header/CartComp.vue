@@ -23,7 +23,7 @@
 }
 
 .cart {
-    background: var(--primary-a);
+    background: var(--text-a);
     border-radius: 20px;
     display: flex;
     justify-content: center;
