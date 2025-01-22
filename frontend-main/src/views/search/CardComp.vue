@@ -37,7 +37,7 @@ const props = defineProps(['content'])
 
 <style lang="css" scoped>
 .card {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 .preview {

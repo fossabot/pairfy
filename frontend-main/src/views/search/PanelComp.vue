@@ -4,7 +4,7 @@
         <div class="panel-row">
             <div class="message flex">
                 <div class="flex">
-                    <i class="pi pi-times"/> 
+                    <i class="pi pi-times" />
                 </div>
                 <span>Filters</span>
             </div>
@@ -13,20 +13,16 @@
         <div class="panel-row">
             <span class="label">Category</span>
             <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
-                <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
-                <label for="new"> {{ item.name }} </label>
+                <Checkbox :value="item.name" v-model="selectedCategories" inputId="category" size="small" />
+                <label for="category"> {{ item.name }} </label>
             </span>
         </div>
 
         <div class="panel-row">
             <span class="label">Condition</span>
-            <span class="checkbox flex">
-                <Checkbox v-model="newed" inputId="new" name="new" value="new" size="small" />
-                <label for="new"> New </label>
-            </span>
-            <span class="checkbox flex">
-                <Checkbox v-model="used" inputId="used" name="used" value="used" size="small" />
-                <label for="used"> Used </label>
+            <span class="checkbox flex" v-for="(item, index) in conditionList" :key="index">
+                <Checkbox :value="item.label" v-model="selectedCondition" inputId="condition" size="small" />
+                <label for="condition"> {{ item.label }} </label>
             </span>
         </div>
 
@@ -52,13 +48,25 @@ import { computed, ref } from 'vue';
 
 const categoryList = ref(categories);
 
+const conditionList = ref([{
+    label: "New",
+    value: false
+},
+{
+    label: "Used",
+    value: false
+}
+]);
+
 const maxLimit = ref(5000);
 
 const price = ref(0);
 
 const priceRange = ref([25, 2000]);
 
-const newed = ref(false)
+const selectedCategories = ref([]);
+
+const selectedCondition = ref([]);
 
 const used = ref(false)
 
@@ -119,12 +127,12 @@ label {
     padding-left: 0;
 }
 
-.message div{
+.message div {
     cursor: pointer;
     padding: 0.5rem;
 }
 
-.message i{
+.message i {
     font-size: inherit;
 }
 </style>
