@@ -6,7 +6,7 @@
             <div class="content">
                 <div class="banner flex">
                     <div class="counter">
-                        1-{{ itemList.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
+                        1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
@@ -18,7 +18,7 @@
                 </template>
 
                 <template v-else>
-                    <CardComp v-for="(item, index) in itemList" :key="index" :content="item._source" />
+                    <CardComp v-for="(item, index) in productData" :key="index" :content="item._source" />
                 </template>
 
             </div>
@@ -44,7 +44,9 @@ const loading = ref(false);
 
 const queryEnabled = ref(false);
 
-const itemList = ref([]);
+const productData = ref([]);
+
+const currentRoute = ref(null);
 
 const unwatchRoute = watch(
     () => route.query,
@@ -156,7 +158,7 @@ const unwatchSearchProduct = watch(searchProduct, value => {
 
         let data = value.searchProduct
 
-        itemList.value = data;
+        productData.value = data;
     }
 
     loading.value = false;
