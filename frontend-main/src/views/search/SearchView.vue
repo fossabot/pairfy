@@ -6,14 +6,14 @@
             <div class="content">
                 <div class="banner flex">
                     <div class="counter">
-                        1-24 of over 1,000 results for <span>"{{ searchKey }}"</span>
+                        1-{{ itemList.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
 
-                <template v-if="!isLoading">
+                <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
 
@@ -31,7 +31,7 @@ import gql from 'graphql-tag';
 import PanelComp from '@/views/search/PanelComp.vue';
 import CardComp from '@/views/search/CardComp.vue';
 import { useQuery } from '@vue/apollo-composable'
-import { ref, watch, onBeforeUnmount } from 'vue';
+import { ref, watch, onBeforeUnmount, reactive } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const route = useRoute();
@@ -45,7 +45,6 @@ const queryEnabled = ref(false);
 const unwatchRoute = watch(
     () => route.query,
     (query) => {
-        console.log(query)
         if (!query.k) {
             router.push({
                 name: 'home'
@@ -59,53 +58,51 @@ const unwatchRoute = watch(
     { immediate: true }
 );
 
-const isLoading = ref(true);
 
-const query = ref({
-    text: searchKey.value,
-    sku: {
-        enabled: false,
-        value: "6552953",
-    },
-    brand: {
-        enabled: false,
-        value: "samsung",
-    },
-    model: {
-        enabled: false,
-        value: "SP-LFF3CLAXXZA",
-    },
-    quality: {
-        enabled: false,
-        value: "new",
-    },
-    discount: {
-        enabled: false,
-        value: false,
-    },
-    best_seller: {
-        enabled: false,
-        value: false,
-    },
-    price: {
-        enabled: false,
-        value: {
-            gte: 0,
-            lte: 0,
+const queryVariables = reactive({
+    searchProductVariable: {
+        text: searchKey.value,
+        sku: {
+            enabled: false,
+            value: "6552953",
         },
-    },
-    sort: {
-        price: "asc",
-        rating: "desc",
-        reviews: "desc",
-        discount_value: "desc",
-    },
+        brand: {
+            enabled: false,
+            value: "samsung",
+        },
+        model: {
+            enabled: false,
+            value: "SP-LFF3CLAXXZA",
+        },
+        quality: {
+            enabled: false,
+            value: "new",
+        },
+        discount: {
+            enabled: false,
+            value: false,
+        },
+        best_seller: {
+            enabled: false,
+            value: false,
+        },
+        price: {
+            enabled: false,
+            value: {
+                gte: 0,
+                lte: 0,
+            },
+        },
+        sort: {
+            price: "asc",
+            rating: "desc",
+            reviews: "desc",
+            discount_value: "desc",
+        },
+    }
 });
 
-
-const queryVariablesRef = ref({
-    "searchProductVariable": query,
-});
+const loading = ref(true);
 
 const { result: searchProduct } = useQuery(gql`
       query ($searchProductVariable: SearchProductInput!) {
@@ -130,19 +127,36 @@ const { result: searchProduct } = useQuery(gql`
         }
       }
     `,
-    () => (queryVariablesRef.value),
+    queryVariables,
     () => ({
         enabled: queryEnabled.value,
         clientId: 'query'
     })
 );
 
+const unwatchKey = watch(searchKey,
+    (key) => {
+        console.log("NEW__KEY", key);
+
+        queryVariables.searchProductVariable.text = key
+    },
+    { immediate: true }
+);
+
+
 const itemList = ref([]);
 
 const unwatchSearchProduct = watch(searchProduct, value => {
-    console.log(value.searchProduct);
+    console.log(value);
 
-    itemList.value = value.searchProduct;
+    if (value) {
+
+        let data = value.searchProduct
+
+        itemList.value = data;
+
+        loading.value = false;
+    }
 });
 
 const selectedSort = ref();
@@ -157,6 +171,7 @@ const sortOptions = ref([
 
 onBeforeUnmount(() => {
     unwatchRoute()
+    unwatchKey()
     unwatchSearchProduct()
 });
 </script>
