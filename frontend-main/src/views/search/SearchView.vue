@@ -12,7 +12,7 @@
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
-                {{ itemList.length }}
+               
                 <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
@@ -136,6 +136,7 @@ const { result: searchProduct } = useQuery(gql`
     queryVariables,
     () => ({
         enabled: queryEnabled.value,
+        fetchPolicy: 'no-cache',
         clientId: 'query'
     })
 );
@@ -143,15 +144,13 @@ const { result: searchProduct } = useQuery(gql`
 
 const unwatchKey = watch(searchKey,
     (key) => {
-        console.log("NEWKEY", key, queryEnabled.value, itemList.value.length);
-
         queryVariables.searchProductVariable.text = key
     },
     { immediate: true }
 );
 
 const unwatchSearchProduct = watch(searchProduct, value => {
-    console.log(value);
+    console.log("RESULT", value);
 
     if (value) {
 
