@@ -27,14 +27,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="5.6568543"
-     inkscape:cx="82.289551"
-     inkscape:cy="4.9497474"
-     inkscape:window-width="1920"
-     inkscape:window-height="1020"
+     inkscape:zoom="8.0000001"
+     inkscape:cx="6.4374999"
+     inkscape:cy="22.25"
+     inkscape:window-width="1530"
+     inkscape:window-height="934"
      inkscape:window-x="3840"
-     inkscape:window-y="28"
-     inkscape:window-maximized="1"
+     inkscape:window-y="115"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
      showguides="false"
@@ -120,10 +120,11 @@
          sodipodi:role="line"
          x="37.726665"
          y="30.544643"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#60a3ff;fill-opacity:1;stroke:#60a3ff;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5">adaheaven</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5"
+         dx="0">adaheaven</tspan></text>
     <rect
-       style="fill:#60a3ff;fill-opacity:1;stroke:none;stroke-width:0.168;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       style="fill:#ff4500;fill-opacity:1;stroke:none;stroke-width:0.168;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="rect1078"
        width="30"
        height="30"
@@ -132,27 +133,27 @@
        rx="8"
        ry="8" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.25215;stroke-opacity:1"
-       d="m 25.738278,30.97 c -1.10487,-2.876732 -1.167516,-4.841931 -1.128472,-7.018715 0.03901,-2.241969 -0.563767,-4.022294 -2.44485,-4.685908 C 14.940653,18.36645 9.7980989,19.856246 4.268,15.97 c 0,0 0.973387,2.810722 4.7754147,4.37582 4.0350333,1.466082 9.4876243,1.751745 11.8462323,2.323455 1.316374,0.332342 1.354292,1.365365 1.643905,2.720376 0.650019,3.007106 1.395366,4.944517 3.204726,5.580349"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.243363;stroke-opacity:1"
+       d="M 25.178095,30.97 C 24.148886,28.093268 24.09053,26.128069 24.1269,23.951285 24.163239,21.709316 23.601741,19.928991 21.849473,19.265377 15.119888,18.36645 10.329495,19.856246 5.1780952,15.97 c 0,0 0.9067298,2.810722 4.4483958,4.37582 3.758716,1.466082 8.837915,1.751745 11.035006,2.323455 1.226229,0.332342 1.26155,1.365365 1.531331,2.720376 0.605505,3.007106 1.299811,4.944517 2.985267,5.580349"
        id="path33289-7"
        sodipodi:nodetypes="cccccccc" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.285543;stroke-opacity:1"
-       d="m 21.810481,29.105805 c -1.991272,-0.272347 -6.25066,-0.299688 -6.25066,-0.299688 2.530901,1.078397 8.755714,3.579329 6.25066,0.299688 z"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275593;stroke-opacity:1"
+       d="m 21.519273,29.105805 c -1.854911,-0.272347 -5.822617,-0.299688 -5.822617,-0.299688 2.357585,1.078397 8.156125,3.579329 5.822617,0.299688 z"
        id="path33287-0"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.285552;stroke-opacity:1"
-       d="m 21.731474,28.115954 c 0.06139,-1.460574 -1.654158,-1.750792 -3.32842,-1.850691 -1.000998,-0.05468 -2.00319,-0.109351 -2.564061,-0.145115 -2.349893,-0.145115 -4.729367,-0.444792 -4.729367,-0.444792 0,0 0.296997,1.307048 2.89063,1.814936 2.584188,0.507886 7.731218,0.625659 7.731218,0.625659 z"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275601;stroke-opacity:1"
+       d="m 21.445676,28.115954 c 0.05719,-1.460574 -1.540882,-1.750792 -3.100491,-1.850691 -0.93245,-0.05468 -1.866012,-0.109351 -2.388475,-0.145115 -2.188972,-0.145115 -4.405501,-0.444792 -4.405501,-0.444792 0,0 0.276659,1.307048 2.69268,1.814936 2.407224,0.507886 7.201787,0.625659 7.201787,0.625659 z"
        id="path33285-9"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.285552;stroke-opacity:1"
-       d="m 20.648816,25.54812 c 0,0 0.132504,-1.751845 -1.828089,-1.978975 -1.9606,-0.227129 -4.615477,-0.614673 -8.128505,-1.278185 -3.5141766,-0.662464 -4.9343347,-1.894595 -4.9343347,-1.894595 0,0 -0.040189,2.800541 4.8003527,3.807903 4.831138,0.998952 10.090576,1.343852 10.090576,1.343852 z"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275601;stroke-opacity:1"
+       d="m 20.437158,25.54812 c 0,0 0.123431,-1.751845 -1.702902,-1.978975 -1.826339,-0.227129 -4.299411,-0.614673 -7.571868,-1.278185 -3.2735264,-0.662464 -4.5964325,-1.894595 -4.5964325,-1.894595 0,0 -0.037437,2.800541 4.4716265,3.807903 4.500302,0.998952 9.399576,1.343852 9.399576,1.343852 z"
        id="path1156-3"
        sodipodi:nodetypes="cscccc"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
