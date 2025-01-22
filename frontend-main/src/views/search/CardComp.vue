@@ -13,7 +13,6 @@
                 </span>
                 <span class="reviews">(232 reviews) </span>
             </span>
-
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
             <span class="tag flex best" v-if="content.best_seller">
                 BEST SELLER

@@ -2,7 +2,7 @@
     <div class="panel">
 
         <div class="panel-row">
-            <div class="message flex">
+            <div class="message flex" @click="clearFilter">
                 <div class="flex">
                     <i class="pi pi-times" />
                 </div>
@@ -20,9 +20,9 @@
 
         <div class="panel-row">
             <span class="label">Condition</span>
-            <span class="checkbox flex" v-for="(item, index) in conditionList" :key="index">
-                <Checkbox :value="item.label" v-model="selectedCondition" inputId="condition" size="small" />
-                <label for="condition"> {{ item.label }} </label>
+            <span class="checkbox flex">
+                <Checkbox value="used" v-model="usedProduct" inputId="condition" size="small" />
+                <label for="condition"> Used </label>
             </span>
         </div>
 
@@ -36,7 +36,7 @@
 
 
         <div class="panel-row">
-            <Button label="Go" severity="secondary" variant="outlined" @click="onFilter"/>
+            <Button label="Go" severity="secondary" variant="outlined" @click="onFilter" />
         </div>
 
     </div>
@@ -44,8 +44,10 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, inject } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+
+const { randomString } = inject('utils');
 
 const route = useRoute();
 
@@ -63,15 +65,7 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
-const conditionList = ref([{
-    label: "New",
-    value: false
-},
-{
-    label: "Used",
-    value: false
-}
-]);
+const usedProduct = ref(null);
 
 const maxLimit = ref(5000);
 
@@ -81,26 +75,40 @@ const priceRange = ref([0, 2000]);
 
 const selectedCategories = ref([]);
 
-const selectedCondition = ref([]);
-
 const used = ref(false);
 
+const clearFilter = () => {
+    router.push({
+        search: 'search',
+        ...currentRoute.value.params,
+        query: {
+            k: currentRoute.value.query.k,
+            tag: generateRandomString(10)
+        }
+    })
+
+    usedProduct.value = []
+}
+
 const onFilter = () => {
-    console.log("filter")
+    console.log("filter",usedProduct.value)
 
     router.push({
-        name:'search',
+        name: 'search',
         ...currentRoute.value.params,
         query: {
             k: currentRoute.value.query.k,
             f: true,
             cs: selectedCategories.value,
-            co: selectedCondition.value,
+            qy: usedProduct.value[0],
             gte: priceRange.value[0],
             lte: priceRange.value[1]
         }
     })
 }
+
+
+
 </script>
 
 <style lang="css" scoped>

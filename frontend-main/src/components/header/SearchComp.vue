@@ -10,7 +10,9 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
+
+const { randomString } = inject('utils');
 
 const router = useRouter();
 
@@ -25,7 +27,8 @@ const handleSearch = () => {
         router.push({
             name: 'search',
             query: {
-                k: text
+                k: text,
+                tag: randomString(10)
             }
         })
 

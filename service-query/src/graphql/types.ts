@@ -108,6 +108,7 @@ input SearchProductInput {
   best_seller: BooleanFilterInput
   price: PriceFilterInput!
   sort: SortInput!
+  tag: String!
 } 
 
 type Query {

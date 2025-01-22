@@ -12,7 +12,7 @@
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
-               
+
                 <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
@@ -31,8 +31,10 @@ import gql from 'graphql-tag';
 import PanelComp from '@/views/search/PanelComp.vue';
 import CardComp from '@/views/search/CardComp.vue';
 import { useQuery } from '@vue/apollo-composable'
-import { ref, watch, onBeforeUnmount, reactive } from 'vue';
+import { ref, watch, onBeforeUnmount, reactive, inject } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+
+const { randomString } = inject('utils');
 
 const route = useRoute();
 
@@ -49,15 +51,19 @@ const productData = ref([]);
 const currentRoute = ref(null);
 
 const unwatchRoute = watch(
-    () => route.query,
-    (query) => {
-        if (!query.k) {
+    route,
+    (route_) => {
+        if (!route_.query.k) {
             router.push({
                 name: 'home'
             })
         }
 
-        searchKey.value = query.k;
+        console.log("ROUTE CHANGED");
+
+        searchKey.value = route_.query.k;
+
+        currentRoute.value = route;
 
         loading.value = true;
 
@@ -67,7 +73,8 @@ const unwatchRoute = watch(
 );
 
 
-const queryVariables = reactive({
+const variables = reactive({
+    
     searchProductVariable: {
         text: searchKey.value,
         sku: {
@@ -84,7 +91,7 @@ const queryVariables = reactive({
         },
         quality: {
             enabled: false,
-            value: "new",
+            value: "",
         },
         discount: {
             enabled: false,
@@ -107,6 +114,8 @@ const queryVariables = reactive({
             reviews: "desc",
             discount_value: "desc",
         },
+
+        tag: "",
     }
 });
 
@@ -135,7 +144,7 @@ const { result: searchProduct } = useQuery(gql`
         }
       }
     `,
-    queryVariables,
+    variables,
     () => ({
         enabled: queryEnabled.value,
         fetchPolicy: 'no-cache',
@@ -144,9 +153,20 @@ const { result: searchProduct } = useQuery(gql`
 );
 
 
-const unwatchKey = watch(searchKey,
-    (key) => {
-        queryVariables.searchProductVariable.text = key
+const unwatchKey = watch(currentRoute.value,
+    (route) => {
+        console.log("KEY______", route.query)
+        
+        variables.searchProductVariable.text = route.query.k
+
+        if(route.query.qy){
+            variables.searchProductVariable.quality.enabled = true;
+            variables.searchProductVariable.quality.value = route.query.qy;
+        } else {
+            variables.searchProductVariable.quality.enabled = false;
+        }
+
+       variables.searchProductVariable.tag = randomString(10); 
     },
     { immediate: true }
 );
