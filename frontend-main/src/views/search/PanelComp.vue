@@ -81,7 +81,7 @@ const clearFilter = () => {
         ...currentRoute.value.params,
         query: {
             k: currentRoute.value.query.k,
-            tag: generateRandomString(10)
+            tag: randomString(10)
         }
     })
 

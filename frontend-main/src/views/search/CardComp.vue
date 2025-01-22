@@ -15,10 +15,10 @@
             </span>
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
             <span class="tag flex best" v-if="content.best_seller">
-                BEST SELLER
+                BEST
             </span>
             <span class="tag flex discount" v-if="content.discount">
-                {{ `- ${content.discount_value}% off` }}
+                {{ `${content.discount_value}% off` }}
             </span>
         </div>
     </div>
@@ -101,6 +101,7 @@ const props = defineProps(['content'])
     padding: 4px 6px;
     font-weight: 400;
     margin-top: 0.5rem;
+    font-weight: 500;
 }
 
 .price {
