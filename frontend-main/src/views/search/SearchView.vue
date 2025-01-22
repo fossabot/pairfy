@@ -184,7 +184,6 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .wrap {
     width: 100%;
-    border-top: 1px solid var(--border-a);
     justify-content: center;
 }
 
