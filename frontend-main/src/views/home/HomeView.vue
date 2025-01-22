@@ -34,7 +34,6 @@ main {
   min-height: 100vh;
   display: grid;
   width: 100%;
-  border-top: 1px solid var(--border-a);
 }
 
 .top {
@@ -42,7 +41,8 @@ main {
   justify-content: center;
   display: flex;
   align-items: center;
-  padding: 1rem 0;
+  padding: 2rem 0;
+  background: #000000;
 }
 
 .bottom {
