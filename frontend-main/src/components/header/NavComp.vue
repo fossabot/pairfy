@@ -49,7 +49,7 @@ const { formatPriceToUSD } = inject('utils');
 }
 
 .categories {
-    background: var(--background-d);
+    background: var(--background-b);
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;

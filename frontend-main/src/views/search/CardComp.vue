@@ -89,19 +89,16 @@ const props = defineProps(['content'])
 }
 
 .tag {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     justify-content: center;
     white-space: nowrap;
     text-align: center;
     color: var(--text-w);
     max-width: fit-content;
     display: inline-block;
-    line-height: 12px;
     border-radius: 2px;
     padding: 4px 6px;
-    font-weight: 400;
     margin-top: 0.5rem;
-    font-weight: 500;
 }
 
 .price {

@@ -95,7 +95,7 @@
 }
 
 :root {
-  --primary-a: var(--orange-b);
+  --primary-a: var(--cyan-a);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);

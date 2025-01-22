@@ -126,8 +126,9 @@ header {
     align-items: center;
     width: 100%;
     font-size: var(--text-size-1);
-    color: var(--text-w);
-    background: var(--background-c);
+    color: var(--text-a);
+    background: var(--background-a);
+    border-bottom: 1px solid var(--border-a);
 }
 
 section {

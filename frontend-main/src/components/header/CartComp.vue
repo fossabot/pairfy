@@ -32,6 +32,7 @@
     padding: 0 0.5rem;
     font-size: var(--text-size-0);
     height: 16px;
+    color: var(--text-w);
 }
 
 .text{
