@@ -103,7 +103,7 @@ const itemList = ref([
 }
 
 .title span:nth-child(2) {
-    color: var(--text-a);
+    color: var(--text-b);
     font-size: var(--text-size-1);
     font-weight: 400;
 }
