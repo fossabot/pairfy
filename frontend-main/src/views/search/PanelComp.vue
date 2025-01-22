@@ -36,7 +36,7 @@
 
 
         <div class="panel-row">
-            <Button label="Go" severity="secondary" variant="outlined" />
+            <Button label="Go" severity="secondary" variant="outlined" @click="onFilter"/>
         </div>
 
     </div>
@@ -44,7 +44,22 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+
+const route = useRoute();
+
+const router = useRouter();
+
+const currentRoute = ref(null);
+
+const unwatchRoute = watch(
+    () => route,
+    (route) => {
+        currentRoute.value = route;
+    },
+    { immediate: true }
+);
 
 const categoryList = ref(categories);
 
@@ -68,8 +83,24 @@ const selectedCategories = ref([]);
 
 const selectedCondition = ref([]);
 
-const used = ref(false)
+const used = ref(false);
 
+const onFilter = () => {
+    console.log("filter")
+
+    router.push({
+        name:'search',
+        ...currentRoute.value.params,
+        query: {
+            k: currentRoute.value.query.k,
+            f: true,
+            cs: selectedCategories.value,
+            co: selectedCondition.value,
+            gte: priceRange.value[0],
+            lte: priceRange.value[1]
+        }
+    })
+}
 </script>
 
 <style lang="css" scoped>
