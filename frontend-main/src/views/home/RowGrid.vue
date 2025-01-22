@@ -82,7 +82,7 @@ const itemList = ref([
     grid-column: span 6;
     font-weight: 700;
     text-align: start;
-    color: var(--text-w);
+    color: var(--text-a);
 }
 
 
@@ -96,6 +96,7 @@ const itemList = ref([
     padding: 1rem;
     border-radius: 20px;
     background-image: linear-gradient(134deg, var(--primary-a) 40%, transparent 100%);
+    background: var(--background-b);
 }
 
 .minicard {
