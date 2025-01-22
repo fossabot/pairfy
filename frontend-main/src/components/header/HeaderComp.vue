@@ -3,7 +3,7 @@
         <DrawerComp />
         <div class="header">
             <div class="header-col left">
-                <div class="brand" />
+                <div class="brand" @click="toHome"/>
                 <LocationComp />
             </div>
             <div class="header-col center">
@@ -60,7 +60,7 @@ const watchRoute = watch(
                 if (parsed.country.toLowerCase() !== n) {
                     return router.push({
                         name: currentRoute.name,
-                        params: { 
+                        params: {
                             ...currentRoute.params,
                             country: parsed.country.toLowerCase()
                         },
@@ -102,6 +102,13 @@ onGetAssetPriceError(error => {
     console.log(error)
 })
 
+
+const toHome = () => {
+    router.push({
+        name: 'home',
+        query: {}
+    })
+}
 
 onBeforeUnmount(() => {
     watchAssetPrice()
@@ -169,6 +176,4 @@ section {
     max-width: var(--body-a);
     width: 100%;
 }
-
-
 </style>
