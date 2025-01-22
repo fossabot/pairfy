@@ -45,13 +45,12 @@ const handleSearch = () => {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--background-b);
+    background: var(--background-a);
+    border: 2px solid var(--text-a);
 }
 
 .search.focus {
     background: var(--background-a);
-    outline: 3px solid color-mix(in srgb, transparent, var(--primary-a) 30%);
-    outline-offset: 0px;
 }
 
 .search-input {
@@ -74,13 +73,15 @@ const handleSearch = () => {
     padding: 0 1rem;
     height: 44px;
     border: none;
-    background: var(--primary-a);
     cursor: pointer;
-    color: var(--text-w);
+    color: var(--text-a);
     border-radius: 0 12px 12px 0;
-    outline: 1px solid var(--primary-a);
     outline-offset: -1px;
+    background: transparent;
+    outline: 1px solid transparent;
 }
+
+
 
 .search-button i {
     font-weight: 600;
