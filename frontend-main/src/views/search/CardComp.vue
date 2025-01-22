@@ -15,7 +15,7 @@
             </span>
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
             <span class="tag flex best" v-if="content.best_seller">
-                BEST
+               Best seller
             </span>
             <span class="tag flex discount" v-if="content.discount">
                 {{ `${content.discount_value}% off` }}
@@ -57,7 +57,7 @@ const props = defineProps(['content'])
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    text-transform: capitalize;
+
     height: 220px;
     padding: 0.25rem 1rem;
 }
@@ -68,6 +68,7 @@ const props = defineProps(['content'])
 }
 
 .title {
+    text-transform: capitalize;
     font-size: var(--text-size-2);
     cursor: pointer;
     margin-top: 0.25rem;
