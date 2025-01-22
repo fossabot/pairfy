@@ -12,7 +12,7 @@
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
                 <Divider />
-
+                {{ itemList.length }}
                 <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
@@ -40,7 +40,11 @@ const router = useRouter();
 
 const searchKey = ref("");
 
+const loading = ref(false);
+
 const queryEnabled = ref(false);
+
+const itemList = ref([]);
 
 const unwatchRoute = watch(
     () => route.query,
@@ -52,6 +56,8 @@ const unwatchRoute = watch(
         }
 
         searchKey.value = query.k;
+
+        loading.value = true;
 
         queryEnabled.value = true;
     },
@@ -102,7 +108,7 @@ const queryVariables = reactive({
     }
 });
 
-const loading = ref(true);
+
 
 const { result: searchProduct } = useQuery(gql`
       query ($searchProductVariable: SearchProductInput!) {
@@ -134,17 +140,15 @@ const { result: searchProduct } = useQuery(gql`
     })
 );
 
+
 const unwatchKey = watch(searchKey,
     (key) => {
-        console.log("NEW__KEY", key);
+        console.log("NEWKEY", key, queryEnabled.value, itemList.value.length);
 
         queryVariables.searchProductVariable.text = key
     },
     { immediate: true }
 );
-
-
-const itemList = ref([]);
 
 const unwatchSearchProduct = watch(searchProduct, value => {
     console.log(value);
@@ -154,9 +158,9 @@ const unwatchSearchProduct = watch(searchProduct, value => {
         let data = value.searchProduct
 
         itemList.value = data;
-
-        loading.value = false;
     }
+
+    loading.value = false;
 });
 
 const selectedSort = ref();

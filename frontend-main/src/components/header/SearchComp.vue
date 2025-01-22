@@ -22,8 +22,6 @@ const handleSearch = () => {
     const text = searchInput.value.trim();
 
     if (text) {
-        console.log("Performing search for:", text);
-
         router.push({
             name: 'search',
             query: {
@@ -32,7 +30,7 @@ const handleSearch = () => {
         })
 
     } else {
-        console.warn("Search query is empty. Please enter a query.");
+        console.warn("Search query is empty");
     }
 }
 </script>
