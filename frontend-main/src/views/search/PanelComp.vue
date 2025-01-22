@@ -21,7 +21,7 @@
         <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
-                <Checkbox value="used" v-model="usedProduct" inputId="condition" size="small" />
+                <Checkbox value="used" v-model="used" inputId="condition" size="small" />
                 <label for="condition"> Used </label>
             </span>
         </div>
@@ -65,7 +65,7 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
-const usedProduct = ref(null);
+const used = ref(null);
 
 const maxLimit = ref(5000);
 
@@ -74,8 +74,6 @@ const price = ref(0);
 const priceRange = ref([0, 2000]);
 
 const selectedCategories = ref([]);
-
-const used = ref(false);
 
 const clearFilter = () => {
     router.push({
@@ -87,12 +85,10 @@ const clearFilter = () => {
         }
     })
 
-    usedProduct.value = []
+    used.value = []
 }
 
 const onFilter = () => {
-    console.log("filter",usedProduct.value)
-
     router.push({
         name: 'search',
         ...currentRoute.value.params,
@@ -100,7 +96,7 @@ const onFilter = () => {
             k: currentRoute.value.query.k,
             f: true,
             cs: selectedCategories.value,
-            qy: usedProduct.value[0],
+            qy: used.value[0],
             gte: priceRange.value[0],
             lte: priceRange.value[1]
         }
