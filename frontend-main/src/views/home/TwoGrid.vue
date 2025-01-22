@@ -79,7 +79,7 @@ const itemList = ref([
 .head {
     font-size: var(--text-size-3);
     grid-column: span 3;
-    font-weight: 700;
+    font-weight: 600;
     text-align: start;
     display: flex;
     justify-content: space-between;
@@ -119,8 +119,6 @@ const itemList = ref([
     border-radius: 20px;
     background: var(--background-b);
 }
-
-
 
 .minicard {
     background: var(--background-b);
