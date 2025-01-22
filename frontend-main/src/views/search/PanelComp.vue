@@ -62,7 +62,7 @@ const maxLimit = ref(5000);
 
 const price = ref(0);
 
-const priceRange = ref([25, 2000]);
+const priceRange = ref([0, 2000]);
 
 const selectedCategories = ref([]);
 
