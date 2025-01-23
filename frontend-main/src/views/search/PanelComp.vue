@@ -65,7 +65,7 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
-const used = ref(null);
+const used = ref([]);
 
 const maxLimit = ref(5000);
 
