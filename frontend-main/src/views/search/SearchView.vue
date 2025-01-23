@@ -11,8 +11,7 @@
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
                         placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
                 </div>
-                <Divider />
-
+                
                 <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
@@ -222,7 +221,7 @@ onBeforeUnmount(() => {
 
 .banner {
     width: inherit;
-    margin-top: 1rem;
+    padding: 1rem 0;
 }
 
 .selector {
