@@ -21,9 +21,14 @@
         <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
-                <Checkbox value="used" v-model="used" inputId="condition" size="small" />
-                <label for="condition"> Used </label>
+                <Checkbox value="New" v-model="newed" inputId="newed" size="small" />
+                <label for="newed"> New</label>
             </span>
+            <span class="checkbox flex">
+                <Checkbox value="Used" v-model="used" inputId="used" size="small" />
+                <label for="used"> Used </label>
+            </span>
+
         </div>
 
         <div class="panel-row">
@@ -65,6 +70,8 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
+const newed = ref([]);
+
 const used = ref([]);
 
 const maxLimit = ref(5000);
@@ -84,9 +91,11 @@ const clearFilter = () => {
             tag: randomString(10)
         }
     })
+    
+    newed.value = [];
 
     used.value = [];
-    
+
     selectedCategories.value = [];
 }
 
@@ -98,7 +107,7 @@ const onFilter = () => {
             k: currentRoute.value.query.k,
             f: true,
             cs: selectedCategories.value.join(","),
-            qy: used.value[0],
+            qy: newed.value[0] || used.value[0],
             gte: priceRange.value[0],
             lte: priceRange.value[1]
         }
