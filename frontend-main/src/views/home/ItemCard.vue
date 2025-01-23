@@ -63,7 +63,6 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     font-weight: 500;
 }
 
-
 .shipping {
     font-weight: 500;
     margin-top: 0.25rem;
@@ -75,15 +74,16 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
 }
 
 .tag {
-    margin-left: 0.5rem;
+    font-size: var(--text-size-1);
+    justify-content: center;
+    white-space: nowrap;
     text-align: center;
     color: var(--text-w);
-    font-size: var(--text-size-1);
-    min-width: fit-content;
+    max-width: fit-content;
     display: inline-block;
-    line-height: 12px;
     border-radius: 2px;
     padding: 4px 6px;
-    font-weight: 400;
+    margin-left: 0.5rem;
+    line-height: 16px;
 }
 </style>

@@ -102,6 +102,7 @@ const props = defineProps(['content'])
     border-radius: 2px;
     padding: 4px 6px;
     margin-top: 0.5rem;
+    line-height: 16px;
 }
 
 .price {

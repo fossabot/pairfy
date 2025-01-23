@@ -10,6 +10,7 @@
         <OneGrid />
         <RowGrid title="Technology"/>
         <OneGrid />
+        <RowGrid title="Home"/>
         <FourGrid />
         <RowGrid title="Best sellers"/>
       </div>
