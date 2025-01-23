@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="165"
+   width="160"
    height="50"
-   viewBox="0 0 165 50"
+   viewBox="0 0 160 50"
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="logo-white.svg"
@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="8.0000001"
-     inkscape:cx="65.562499"
-     inkscape:cy="21.75"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="88.624999"
+     inkscape:cy="0.99999999"
      inkscape:window-width="1920"
      inkscape:window-height="1020"
      inkscape:window-x="3840"
@@ -133,28 +133,22 @@
        ry="8" />
     <path
        style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.243363;stroke-opacity:1"
-       d="M 25.178095,30.97 C 24.148886,28.093268 24.09053,26.128069 24.1269,23.951285 24.163239,21.709316 23.601741,19.928991 21.849473,19.265377 15.119888,18.36645 10.329495,19.856246 5.1780952,15.97 c 0,0 0.9067298,2.810722 4.4483958,4.37582 3.758716,1.466082 8.837915,1.751745 11.035006,2.323455 1.226229,0.332342 1.26155,1.365365 1.531331,2.720376 0.605505,3.007106 1.299811,4.944517 2.985267,5.580349"
+       d="M 23.795496,30.72 C 22.897032,25.748588 22.568688,24.50608 21.584805,19.612847 13.780857,18.078205 12.05527,17.396696 3.7954963,15.72 c 1.3147118,1.559747 2.9416458,3.0812 4.4483958,4.37582 4.4659849,1.114661 8.8379149,1.751745 11.0350059,2.323455 1.669525,2.862939 3.508958,6.546625 4.516598,8.300725"
        id="path33289-7"
-       sodipodi:nodetypes="cccccccc" />
+       sodipodi:nodetypes="cccccc" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275593;stroke-opacity:1"
-       d="m 21.519273,29.105805 c -1.854911,-0.272347 -5.822617,-0.299688 -5.822617,-0.299688 2.357585,1.078397 8.156125,3.579329 5.822617,0.299688 z"
-       id="path33287-0"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
-       inkscape:export-xdpi="121.6"
-       inkscape:export-ydpi="121.6" />
-    <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275601;stroke-opacity:1"
-       d="m 21.445676,28.115954 c 0.05719,-1.460574 -1.540882,-1.750792 -3.100491,-1.850691 -0.93245,-0.05468 -1.866012,-0.109351 -2.388475,-0.145115 -2.188972,-0.145115 -4.405501,-0.444792 -4.405501,-0.444792 0,0 0.276659,1.307048 2.69268,1.814936 2.407224,0.507886 7.201787,0.625659 7.201787,0.625659 z"
-       id="path33285-9"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
-       inkscape:export-xdpi="121.6"
-       inkscape:export-ydpi="121.6" />
-    <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.275601;stroke-opacity:1"
-       d="m 20.437158,25.54812 c 0,0 0.123431,-1.751845 -1.702902,-1.978975 -1.826339,-0.227129 -4.299411,-0.614673 -7.571868,-1.278185 -3.2735264,-0.662464 -4.5964325,-1.894595 -4.5964325,-1.894595 0,0 -0.037437,2.800541 4.4716265,3.807903 4.500302,0.998952 9.399576,1.343852 9.399576,1.343852 z"
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
+       d="M 20.366534,26.264355 18.574257,23.407531 C 14.13912,22.388354 12.150814,21.927651 8.6240281,21.1126 c 0,0 1.7618399,1.918524 3.7854039,3.807903 4.080167,0.63859 7.957102,1.343852 7.957102,1.343852 z"
        id="path1156-3"
-       sodipodi:nodetypes="cscccc"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
+    <path
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
+       d="m 22.099407,29.424267 -1.326281,-2.316492 c -3.530607,-0.58525 -4.305704,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.989644,2.721945 3.222442,0.456473 6.284377,0.960605 6.284377,0.960605 z"
+       id="path1156-3-3"
+       sodipodi:nodetypes="ccccc"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6" />

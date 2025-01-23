@@ -36,7 +36,8 @@ const props = defineProps(['content'])
 
 <style lang="css" scoped>
 .card {
-    margin: 1rem 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-a);
 }
 
 .preview {
@@ -63,6 +64,7 @@ const props = defineProps(['content'])
 }
 
 .brand {
+    text-transform: capitalize;
     font-size: var(--text-size-2);
     font-weight: 600;
 }
