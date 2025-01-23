@@ -13,7 +13,7 @@
         <div class="panel-row">
             <span class="label">Category</span>
             <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
-                <Checkbox :value="item.name" v-model="selectedCategories" inputId="category" size="small" />
+                <Checkbox :value="item.name" v-model="category" inputId="category" size="small" />
                 <label for="category"> {{ item.name }} </label>
             </span>
         </div>
@@ -21,11 +21,11 @@
         <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
-                <Checkbox value="New" v-model="newed" inputId="newed" size="small" />
+                <Checkbox binary trueValue="New" :falseValue="null" v-model="condition" inputId="newed" size="small" />
                 <label for="newed"> New</label>
             </span>
             <span class="checkbox flex">
-                <Checkbox value="Used" v-model="used" inputId="used" size="small" />
+                <Checkbox binary trueValue="Used" :falseValue="null" v-model="condition" inputId="used" size="small" />
                 <label for="used"> Used </label>
             </span>
 
@@ -70,17 +70,13 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
-const newed = ref([]);
-
-const used = ref([]);
+const condition = ref(false);
 
 const maxLimit = ref(5000);
 
-const price = ref(0);
-
 const priceRange = ref([0, 2000]);
 
-const selectedCategories = ref([]);
+const category = ref([]);
 
 const clearFilter = () => {
     router.push({
@@ -91,12 +87,12 @@ const clearFilter = () => {
             tag: randomString(10)
         }
     })
-    
+
     newed.value = [];
 
     used.value = [];
 
-    selectedCategories.value = [];
+    category.value = [];
 }
 
 const onFilter = () => {
@@ -106,8 +102,8 @@ const onFilter = () => {
         query: {
             k: currentRoute.value.query.k,
             f: true,
-            cs: selectedCategories.value.join(","),
-            qy: newed.value[0] || used.value[0],
+            cs: category.value.join(","),
+            qy: condition.value,
             gte: priceRange.value[0],
             lte: priceRange.value[1]
         }

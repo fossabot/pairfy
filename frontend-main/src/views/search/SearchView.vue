@@ -78,15 +78,15 @@ const variables = reactive({
         text: searchKey.value,
         sku: {
             enabled: false,
-            value: "6552953",
+            value: "",
         },
         brand: {
             enabled: false,
-            value: "samsung",
+            value: "",
         },
         model: {
             enabled: false,
-            value: "SP-LFF3CLAXXZA",
+            value: "",
         },
         category: {
             enabled: false,
@@ -173,6 +173,20 @@ const unwatchKey = watch(currentRoute.value,
         if(route.query.cs){
             variables.searchProductVariable.category.enabled = true;
             variables.searchProductVariable.category.value = route.query.cs;
+        } else {
+            variables.searchProductVariable.category.enabled = false;
+        }
+
+        if(route.query.gte){
+            variables.searchProductVariable.price.enabled = true;
+            variables.searchProductVariable.price.value.gte = Number(route.query.gte);
+        } else {
+            variables.searchProductVariable.category.enabled = false;
+        }
+
+        if(route.query.lte){
+            variables.searchProductVariable.price.enabled = true;
+            variables.searchProductVariable.price.value.lte = Number(route.query.lte);
         } else {
             variables.searchProductVariable.category.enabled = false;
         }
