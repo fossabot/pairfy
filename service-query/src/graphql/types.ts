@@ -103,6 +103,7 @@ input SearchProductInput {
   sku: StringFilterInput
   brand: StringFilterInput
   model: StringFilterInput
+  category: StringFilterInput
   quality: StringFilterInput
   discount: BooleanFilterInput
   best_seller: BooleanFilterInput

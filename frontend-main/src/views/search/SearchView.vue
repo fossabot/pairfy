@@ -88,6 +88,10 @@ const variables = reactive({
             enabled: false,
             value: "SP-LFF3CLAXXZA",
         },
+        category: {
+            enabled: false,
+            value: "",
+        },
         quality: {
             enabled: false,
             value: "",
@@ -167,10 +171,10 @@ const unwatchKey = watch(currentRoute.value,
 
 
         if(route.query.cs){
-            variables.searchProductVariable.quality.enabled = true;
-            variables.searchProductVariable.quality.value = route.query.cs;
+            variables.searchProductVariable.category.enabled = true;
+            variables.searchProductVariable.category.value = route.query.cs;
         } else {
-            variables.searchProductVariable.quality.enabled = false;
+            variables.searchProductVariable.category.enabled = false;
         }
 
 

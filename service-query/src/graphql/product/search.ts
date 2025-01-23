@@ -34,7 +34,7 @@ const processQueryParams = (query: any): any => {
   const filter: any = [];
 
   if (query.category.enabled) {
-    filter.push({ term: { category: query.category.value.split(',') } });
+    filter.push({ terms: { category: query.category.value.split(',') } });
   }
 
   if (query.price.enabled) {
@@ -73,6 +73,8 @@ const processQueryParams = (query: any): any => {
     size: 30,
   };
 
+  console.log(body);
+
   return body;
 };
 
@@ -84,8 +86,6 @@ const searchIndex = async (query: any) => {
       index: "products",
       body: processQueryParams(query),
     });
-
-    console.log(response);
 
     result = response.hits.hits;
   } catch (err) {
@@ -99,8 +99,6 @@ const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
     
-    console.log(params);
-
     const search = await searchIndex(params);
 
     console.log(search);

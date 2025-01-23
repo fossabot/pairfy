@@ -85,7 +85,9 @@ const clearFilter = () => {
         }
     })
 
-    used.value = []
+    used.value = [];
+    
+    selectedCategories.value = [];
 }
 
 const onFilter = () => {
