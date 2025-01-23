@@ -13,7 +13,7 @@ const processQueryParams = (query: any): any => {
     {
       multi_match: {
         query: query.text,
-        fields: ["name^3", "category^2", "keywords"],
+        fields: ["name^3", "category^2", "keywords^1"],
         type: "best_fields",
       },
     },
@@ -31,11 +31,17 @@ const processQueryParams = (query: any): any => {
     must.push({ match: { model: query.model.value } });
   }
 
-  const filter: any = [];
+  let should: any = [];
 
   if (query.category.enabled) {
-    filter.push({ terms: { category: query.category.value.split(',') } });
+    const categories = query.category.value.split(",");
+
+    should = categories.map((category: string) => ({
+      term: { category }
+    }));
   }
+
+  const filter: any = [];
 
   if (query.price.enabled) {
     filter.push({
@@ -61,8 +67,9 @@ const processQueryParams = (query: any): any => {
     query: {
       bool: {
         must,
-        filter,
-      },
+        should,
+        filter
+      }
     },
     sort: [
       { price: query.sort.price },
@@ -73,7 +80,7 @@ const processQueryParams = (query: any): any => {
     size: 30,
   };
 
-  console.log(body);
+  console.log(JSON.stringify(body));
 
   return body;
 };
@@ -98,7 +105,7 @@ const searchIndex = async (query: any) => {
 const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
-    
+
     const search = await searchIndex(params);
 
     console.log(search);

@@ -103,7 +103,7 @@ const onFilter = () => {
             k: currentRoute.value.query.k,
             f: true,
             cs: category.value.join(","),
-            qy: condition.value,
+            qy: condition.value || null,
             gte: priceRange.value[0],
             lte: priceRange.value[1]
         }
