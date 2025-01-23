@@ -165,6 +165,15 @@ const unwatchKey = watch(currentRoute.value,
             variables.searchProductVariable.quality.enabled = false;
         }
 
+
+        if(route.query.cs){
+            variables.searchProductVariable.quality.enabled = true;
+            variables.searchProductVariable.quality.value = route.query.cs;
+        } else {
+            variables.searchProductVariable.quality.enabled = false;
+        }
+
+
        variables.searchProductVariable.tag = randomString(10); 
     },
     { immediate: true }

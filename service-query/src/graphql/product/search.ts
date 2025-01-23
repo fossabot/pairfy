@@ -33,6 +33,10 @@ const processQueryParams = (query: any): any => {
 
   const filter: any = [];
 
+  if (query.category.enabled) {
+    filter.push({ term: { category: query.category.value.split(',') } });
+  }
+
   if (query.price.enabled) {
     filter.push({
       range: {
@@ -40,6 +44,7 @@ const processQueryParams = (query: any): any => {
       },
     });
   }
+
   if (query.quality.enabled) {
     filter.push({ term: { quality: query.quality.value } });
   }
@@ -93,6 +98,8 @@ const searchIndex = async (query: any) => {
 const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
+    
+    console.log(params);
 
     const search = await searchIndex(params);
 
