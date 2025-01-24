@@ -1,5 +1,5 @@
 import { getEventId, getProductId, logger } from "../utils/index.js";
-import { database } from "../db/client.js";
+import { database } from "../database/client.js";
 
 const updateProduct = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
