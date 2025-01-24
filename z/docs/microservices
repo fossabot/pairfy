@@ -1,13 +1,13 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="26.0.6">
   <diagram name="microservices" id="IcvIM7nfxtChby0fbi-c">
-    <mxGraphModel dx="1434" dy="1920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="989" dy="1666" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="InqgQ493OhGsWise2C8i-6" value="" style="rounded=1;whiteSpace=wrap;html=1;glass=0;dashed=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
           <mxGeometry x="1240" y="-560" width="200" height="640" as="geometry" />
         </mxCell>
-        <mxCell id="y7bAVpZdRzomH11BTOyZ-1" value="&lt;b&gt;service-gate&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="y7bAVpZdRzomH11BTOyZ-1" value="&lt;b&gt;service-gateway&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="120" y="-80" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="y7bAVpZdRzomH11BTOyZ-2" value="&lt;b&gt;ogmios&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
