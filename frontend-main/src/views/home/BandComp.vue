@@ -21,14 +21,12 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import banner1 from '@/assets/banner1.png';
+import banner1 from '@/assets/banner/1.png';
+import banner2 from '@/assets/banner/2.png';
 
 const imageList = ref([
     {
-        src: "https://http2.mlstatic.com/D_NQ_600825-MLA81632155002_012025-OO.webp"
-    },
-    {
-        src: banner1
+        src: banner2
     },
     {
         src: banner1
