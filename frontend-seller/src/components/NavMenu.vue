@@ -1,6 +1,6 @@
 <template>
   <div class="navigation">
-    <img class="logo" src="@/assets/logo.svg" alt="logo">
+    <img class="logo" src="@/assets/logo-white.svg" alt="">
     <nav>
       <ul>
         <li :class="{ actived: currentRoute === 'home' }">
@@ -34,7 +34,7 @@
 
         <li :class="{ actived: currentRoute === 'notifications' }">
           <RouterLink to="/notifications">
-            <i class="pi pi-bell"/>
+            <i class="pi pi-bell" />
             <span>Notifications</span>
           </RouterLink>
         </li>
@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .navigation {
-  background: var(--primary-a);
+  background: var(--background-c);
   margin-left: 0;
   width: 17rem;
   z-index: 10;
@@ -94,15 +94,31 @@ li {
   display: flex;
   align-items: center;
   position: relative;
-  font-weight: 500;
+  font-weight: 400;
   box-shadow: none;
   cursor: pointer;
-  font-size: var(--text-size-a);
+  font-size: var(--text-size-2);
   border: 1px solid transparent;
   color: var(--text-w);
 }
 
+a {
+  width: 100%;
+  text-decoration: none;
+  transition: 0.2s;
+  padding: 3px;
+  border-top-left-radius: initial;
+  border-bottom-left-radius: initial;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
 li i {
+  font-size: var(--text-size-2);
   margin-right: 0.75rem;
   padding: 0.5rem 0;
 }
@@ -131,8 +147,9 @@ a {
 }
 
 .actived {
-  border-left: 2px solid white;
+  border-left: 2px solid var(--orange-a);
   color: var(--text-w);
- background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 30%);;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+  ;
 }
 </style>

@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="120"
+   width="160"
    height="50"
-   viewBox="0 0 120 50"
+   viewBox="0 0 160 50"
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="logo-white.svg"
@@ -27,17 +27,19 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="1.7771776"
-     inkscape:cx="-80.18332"
-     inkscape:cy="47.547302"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="88.624998"
+     inkscape:cy="0"
      inkscape:window-width="1920"
-     inkscape:window-height="1020"
-     inkscape:window-x="3840"
-     inkscape:window-y="28"
+     inkscape:window-height="1048"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
-     showguides="false" />
+     showguides="false"
+     inkscape:lockguides="false"
+     width="165px" />
   <defs
      id="defs132">
     <rect
@@ -58,6 +60,48 @@
        width="127.8846"
        height="23.821753"
        id="rect3454" />
+    <clipPath
+       id="b983e3c625">
+      <path
+         d="m 142,147.30078 h 115 v 72.75 H 142 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1144" />
+    </clipPath>
+    <clipPath
+       id="0e8c13dd3a">
+      <path
+         d="m 70.261719,116.35938 h 89.156251 v 70.49999 H 70.261719 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1147" />
+    </clipPath>
+    <clipPath
+       id="b983e3c625-3">
+      <path
+         d="m 142,147.30078 h 115 v 72.75 H 142 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1144-6" />
+    </clipPath>
+    <clipPath
+       id="0e8c13dd3a-7">
+      <path
+         d="m 70.261719,116.35938 h 89.156251 v 70.49999 H 70.261719 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1147-5" />
+    </clipPath>
+    <clipPath
+       id="b983e3c625-3-1">
+      <path
+         d="m 142,147.30078 h 115 v 72.75 H 142 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1144-6-2" />
+    </clipPath>
+    <clipPath
+       id="b983e3c625-3-3">
+      <path
+         d="m 142,147.30078 h 115 v 72.75 H 142 Z m 0,0"
+         clip-rule="nonzero"
+         id="path1144-6-6" />
+    </clipPath>
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -66,18 +110,48 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:26.6667px;line-height:0;font-family:Manrope;-inkscape-font-specification:Manrope;letter-spacing:-1px;fill:#ffffff;stroke:#ff9a00;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:stroke fill markers"
-       x="1.033332"
-       y="31.343609"
-       id="text2"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-seller/src/assets/logo-white.png"
+       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="37.726665"
+       y="30.544643"
+       id="text2-3-3"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"><tspan
          sodipodi:role="line"
-         id="tspan2"
-         x="1.033332"
-         y="31.343609"
-         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:26.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';fill:#ffffff;fill-opacity:1;stroke:none">αdαbuy</tspan></text>
+         x="37.726665"
+         y="30.544643"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#ffffff;fill-opacity:1;stroke:#fffff0;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5">lovelαcers</tspan></text>
+    <rect
+       style="fill:#ff4500;fill-opacity:1;stroke:none;stroke-width:0.168;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
+       id="rect1078"
+       width="30"
+       height="30"
+       x="0"
+       y="8.4799995"
+       rx="8"
+       ry="8" />
+    <path
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.243363;stroke-opacity:1"
+       d="M 23.795496,30.72 C 22.897032,25.748588 22.568688,24.50608 21.584805,19.612847 13.780857,18.078205 12.05527,17.396696 3.7954963,15.72 c 1.3147118,1.559747 2.9416458,3.0812 4.4483958,4.37582 4.4659849,1.114661 8.8379149,1.751745 11.0350059,2.323455 1.669525,2.862939 3.508958,6.546625 4.516598,8.300725"
+       id="path33289-7"
+       sodipodi:nodetypes="cccccc" />
+    <path
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
+       d="M 20.366534,26.264355 18.574257,23.407531 C 14.13912,22.388354 12.150814,21.927651 8.6240281,21.1126 c 0,0 1.7618399,1.918524 3.7854039,3.807903 4.080167,0.63859 7.957102,1.343852 7.957102,1.343852 z"
+       id="path1156-3"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
+    <path
+       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
+       d="m 22.099407,29.424267 -1.326281,-2.316492 c -3.530607,-0.58525 -4.305704,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.989644,2.721945 3.222442,0.456473 6.284377,0.960605 6.284377,0.960605 z"
+       id="path1156-3-3"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
   </g>
   <g
      inkscape:groupmode="layer"

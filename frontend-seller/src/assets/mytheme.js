@@ -1,7 +1,7 @@
-import Lara from '@primevue/themes/lara';
-import { definePreset } from '@primevue/themes';
+import Lara from "@primevue/themes/lara";
+import { definePreset } from "@primevue/themes";
 
-export const MyPreset = definePreset(Lara, {
+const MyPreset = definePreset(Lara, {
     primitive: {
         borderRadius: {
             none: "0",
@@ -310,17 +310,17 @@ export const MyPreset = definePreset(Lara, {
         iconSize: "1rem",
         anchorGutter: "2px",
         primary: {
-            50: "#f3f7ff",
-            100: "#c4daff",
-            200: "#95bdff",
-            300: "#66a0ff",
-            400: "#3783ff",
-            500: "#0866ff",
-            600: "#0757d9",
-            700: "#0647b3",
-            800: "#04388c",
-            900: "#032966",
-            950: "#021a40"
+            50: "#fff6f2",
+            100: "#ffd2c2",
+            200: "#ffaf91",
+            300: "#ff8c61",
+            400: "#ff6830",
+            500: "#ff4500",
+            600: "#d93b00",
+            700: "#b33000",
+            800: "#8c2600",
+            900: "#661c00",
+            950: "#401100"
         },
         formField: {
             paddingX: "0.75rem",
@@ -663,3 +663,6 @@ export const MyPreset = definePreset(Lara, {
         }
     }
 });
+
+
+export { MyPreset }

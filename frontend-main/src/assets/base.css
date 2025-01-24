@@ -178,7 +178,7 @@ body {
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;
-  font-size: var(--text-size-b);
+  font-size: var(--text-size-1);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
