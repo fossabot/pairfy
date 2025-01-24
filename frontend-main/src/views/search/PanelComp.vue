@@ -2,7 +2,7 @@
     <div class="panel">
 
         <div class="panel-row">
-            <div class="message flex" @click="clearFilter">
+            <div class="message flex" v-if="filterEnabled" @click="clearFilter">
                 <div class="flex">
                     <i class="pi pi-times" />
                 </div>
@@ -49,7 +49,7 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import { computed, ref, watch, inject } from 'vue';
+import { computed, ref, watch, inject, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
 const { randomString } = inject('utils');
@@ -70,13 +70,31 @@ const unwatchRoute = watch(
 
 const categoryList = ref(categories);
 
-const condition = ref(false);
-
 const maxLimit = ref(5000);
+
+const condition = ref(false);
 
 const priceRange = ref([0, 2000]);
 
 const category = ref([]);
+
+const filterEnabled = computed(() => {
+    if(currentRoute.value.query.f){
+        return true
+    }
+    
+    if (category.value.length) {
+        return true
+    }
+
+    if (condition.value) {
+        return true
+    }
+
+    return false
+
+})
+
 
 const clearFilter = () => {
     router.push({
@@ -110,7 +128,9 @@ const onFilter = () => {
     })
 }
 
-
+onBeforeUnmount(() => {
+    unwatchRoute()
+})
 
 </script>
 
