@@ -82,7 +82,7 @@ const filterEnabled = computed(() => {
     if(currentRoute.value.query.f){
         return true
     }
-    
+
     if (category.value.length) {
         return true
     }
@@ -105,13 +105,15 @@ const clearFilter = () => {
             tag: randomString(10)
         }
     })
-
-    newed.value = [];
-
-    used.value = [];
+    
+    condition.value = false;
+    
+    priceRange.value = [0, 2000];
 
     category.value = [];
 }
+
+
 
 const onFilter = () => {
     router.push({
