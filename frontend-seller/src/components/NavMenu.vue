@@ -137,7 +137,10 @@ a {
 }
 
 .logo {
-  padding: 1.5rem;
+  height: 4rem;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .label {
