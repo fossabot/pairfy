@@ -33,12 +33,16 @@ const processQueryParams = (query: any): any => {
 
   let should: any = [];
 
+  let minimum_should_match: number = 0;
+
   if (query.category.enabled) {
     const categories = query.category.value.split(",");
 
     should = categories.map((category: string) => ({
       term: { category }
     }));
+
+    minimum_should_match = 1;
   }
 
   const filter: any = [];
@@ -68,6 +72,7 @@ const processQueryParams = (query: any): any => {
       bool: {
         must,
         should,
+        minimum_should_match,
         filter
       }
     },
