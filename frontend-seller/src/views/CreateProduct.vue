@@ -12,7 +12,6 @@
             </template>
 
             <template #center>
-
             </template>
 
             <template #end>
@@ -41,7 +40,8 @@
                                 <InputText v-model="productSKU" type="text" placeholder="Product SKU"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
+                                    v-tooltip.right="'Stock keeping unit ID must be unique'" />
                             </InputGroup>
 
 
@@ -81,12 +81,14 @@
                                 <InputText v-model="productSKU" type="text" placeholder="Origin City"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius);"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
+                                    v-tooltip.top="'City from which the package is sent. Important to know the shipping time. Can affect your trust score.'" />
 
                                 <InputText v-model="productSKU" type="text" placeholder="Origin Postal"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
+                                    v-tooltip.top="'Important to know the shipping time. Can affect your trust score.'" />
                             </InputGroup>
 
 
@@ -272,12 +274,12 @@
 
                         <div class="box-content">
                             <Button type="button" label="Generate" :loading="bulletListLoading"
-                                @click="handleBulletList" style="font-size: var(--text-size-a); margin-bottom: 1rem"
+                                @click="handleBulletList" style="font-size: var(--text-size-1); margin-bottom: 1rem"
                                 variant="outlined" :disabled="!productEditorCounter" />
 
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
-                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
+                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-1)' }"
                                 :invalid="formErrors.bullet_list" size="large" placeholder=""
                                 removeTokenIcon="pi pi-minus" />
                         </div>
@@ -290,7 +292,7 @@
 
                         <div class="box-content">
                             <Select v-model="productCategory" :options="productCategories" optionLabel="name"
-                                placeholder="Select a category" style="font-size: var(--text-size-a)" fluid
+                                placeholder="Select a category" style="font-size: var(--text-size-1)" fluid
                                 :invalid="formErrors.category" />
                         </div>
                     </div>
@@ -304,7 +306,7 @@
                         <div class="box-content">
                             <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
                                 placeholder="Keywords" :typeahead="false"
-                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="formErrors.keywords" />
+                                :inputStyle="{ fontSize: 'var(--text-size-1)' }" :invalid="formErrors.keywords" />
                         </div>
                     </div>
 
@@ -373,10 +375,10 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
-                            style="font-size: var(--text-size-a)" fluid />
+                            style="font-size: var(--text-size-1)" fluid />
 
-                        <Button type="button" label="Publish" icon="pi pi-check" :loading="sendMessageLoading"
-                            @click="beforeCreate" style="font-size: var(--text-size-a)" fluid />
+                        <Button type="button" label="Publish" :loading="sendMessageLoading" @click="beforeCreate"
+                            style="font-size: var(--text-size-1); color: var(--text-w)" fluid />
                     </div>
                 </div>
             </div>
@@ -393,6 +395,7 @@ import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
 import dashboardAPI from "@/views/api"
+import categories from '@/assets/categories.json'
 import { onMounted, ref, nextTick, computed, onBeforeUnmount } from 'vue';
 import { useToast } from "primevue/usetoast";
 import { useMutation } from '@vue/apollo-composable';
@@ -400,6 +403,8 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter } from 'vue-router';
 import { HOST } from '@/api';
 
+
+const categoryList = ref(categories);
 
 const { getBulletList } = dashboardAPI();
 
@@ -439,24 +444,11 @@ const productBrand = ref(null);
 
 const productBulletList = ref(null);
 
-const productCategories = ref([
-    { name: "Electronics", code: "electronics" },
-    { name: "Books", code: "books" },
-    { name: "Music", code: "music" },
-    { name: "Movies", code: "movies" },
-    { name: "Games", code: "games" },
-    { name: "Clothing & Accessories", code: "clothing-accessories" },
-    { name: "Home & Garden", code: "home-garden" },
-    { name: "Beauty & Personal Care", code: "beauty-personal-care" },
-    { name: "Health & Household", code: "health-household" },
-    { name: "Grocery & Gourmet Food", code: "grocery-gourmet-food" },
-    { name: "Toys, Hobbies & Collectibles", code: "toys-hobbies-collectibles" },
-    { name: "Sports & Outdoors", code: "sports-outdoors" },
-    { name: "Automotive & Industrial", code: "automotive-industrial" },
-    { name: "Pet Supplies", code: "pets-supplies" },
-    { name: "Office Supplies & Equipment", code: "office-supplies-equipment" },
-    { name: "Digital Content & Software", code: "digital-content-software" },
-]);
+const productCategories = Object.values(categoryList.value).map(item => ({
+    name: item.name,
+    code: item.name
+}));
+
 
 const productCategory = ref(null);
 
@@ -715,11 +707,11 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.p-inputtext) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-select-label) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-toolbar) {
@@ -733,15 +725,15 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.p-chip) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-message-text) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-togglebutton) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-fileupload-header) {
@@ -804,7 +796,7 @@ main {
 
 .subtitle {
     border-bottom: 1px solid var(--border-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 700;
     padding: 1rem;
 }
@@ -850,7 +842,7 @@ main {
     border-radius: 4px;
     background: transparent;
     color: var(--text-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -901,7 +893,7 @@ main {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-1);
     color: var(--text-b);
 }
 
@@ -925,7 +917,7 @@ main {
     overflow-x: hidden;
     padding: 1rem;
     color: var(--text-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     outline: none;
     box-sizing: border-box;
 }
@@ -996,8 +988,8 @@ main {
 }
 
 .editor-control button svg {
-    width: var(--text-size-b);
-    height: var(--text-size-b);
+    width: var(--text-size-1);
+    height: var(--text-size-1);
 }
 
 .editor-control button.is-active {
@@ -1005,13 +997,13 @@ main {
 }
 
 .editor-control-counter {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     color: var(--text-b);
 }
 
 .price-discount {
     background: var(--background-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     margin-left: 1rem;
     padding: 5px;
     font-weight: 500;
