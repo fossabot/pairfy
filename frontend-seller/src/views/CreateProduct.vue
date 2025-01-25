@@ -59,20 +59,27 @@
                             <InputGroup>
                                 <InputNumber v-model="productWeight" type="number" placeholder="Shipping Weight (kg)"
                                     :invalid="formErrors.weight" :min="0" :useGrouping="false"
+                                    :minFractionDigits="0" :maxFractionDigits="3"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
                                 <InputNumber v-model="productLength" type="number" placeholder="Shipping Length (cm)"
                                     :invalid="formErrors.length" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
+                                    :minFractionDigits="0" :maxFractionDigits="2"
+                                    />
 
                                 <InputNumber v-model="productWidth" type="number" placeholder="Shipping Width (cm)"
                                     :invalid="formErrors.width" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
+                                    :minFractionDigits="0" :maxFractionDigits="2"
+                                    />
 
 
                                 <InputNumber v-model="productHeight" type="number" placeholder="Shipping Height (cm)"
                                     :invalid="formErrors.height" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" 
+                                    :minFractionDigits="0" :maxFractionDigits="2"
+                                    />
                             </InputGroup>
 
 

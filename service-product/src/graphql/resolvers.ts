@@ -1,4 +1,4 @@
-import { getEventId, getProductId, logger } from "../utils/index.js";
+import { getCurrentTimestamp, getEventId, getProductId, logger } from "../utils/index.js";
 import { database } from "../database/client.js";
 
 const updateProduct = async (_: any, args: any, context: any) => {
@@ -95,10 +95,6 @@ const createProduct = async (_: any, args: any, context: any) => {
 
   const SELLER = context.sellerData;
 
-  if (params.collateral >= params.price) {
-    throw new Error("MAX_COLLATERAL");
-  }
-
   let connection = null;
 
   try {
@@ -117,7 +113,6 @@ const createProduct = async (_: any, args: any, context: any) => {
       seller_id: SELLER.id,
       name: params.name,
       price: params.price,
-      collateral: params.collateral,
       sku: productSKU,
       model: params.model,
       brand: params.brand,
@@ -137,9 +132,18 @@ const createProduct = async (_: any, args: any, context: any) => {
       video_set: params.video_set,
       discount: params.discount,
       discount_value: params.discount_value,
+      shipping_weight: params.shipping_weight,
+      shipping_length: params.shipping_length,
+      shipping_width: params.shipping_width,
+      shipping_height: params.shipping_height,
+      shipping_origin_city: params.shipping_origin_city,
+      shipping_origin_postal: params.shipping_origin_postal,
+      shipping_instructions: params.shipping_instructions,
+      shipping_fragile: params.shipping_fragile,
+      updated_at: getCurrentTimestamp(),
       schema_v: productVersion,
     };
-    
+
     const columns = Object.keys(productData);
 
     const values = Object.values(productData);
@@ -172,7 +176,7 @@ const createProduct = async (_: any, args: any, context: any) => {
       "CreateProduct",
       JSON.stringify(productData),
       SELLER.id,
-      0
+      0,
     ];
 
     await connection.execute(eventSchema, eventValue);

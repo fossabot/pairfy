@@ -84,6 +84,14 @@ input CreateProductInput {
   video_set: String!
   discount: Boolean!
   discount_value: Int!
+  shipping_weight: Float!
+  shipping_length: Float!
+  shipping_width: Float!
+  shipping_height: Float!
+  shipping_origin_city: String!
+  shipping_origin_postal: String!
+  shipping_instructions: String!
+  shipping_fragile: Boolean!
 }
 
 input UpdateProductInput {
