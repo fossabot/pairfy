@@ -386,8 +386,8 @@
 </template>
 
 <script setup>
-import Sortable from 'sortablejs';
 import gql from 'graphql-tag';
+import Sortable from 'sortablejs';
 import StarterKit from '@tiptap/starter-kit';
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
@@ -401,7 +401,6 @@ import { useMutation } from '@vue/apollo-composable';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { useRouter } from 'vue-router';
 import { HOST } from '@/api';
-
 
 const categoryList = ref(categories);
 
