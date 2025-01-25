@@ -299,7 +299,7 @@
 
                     <div class="box">
                         <div class="subtitle">
-                            Tags
+                            keywords
                         </div>
 
                         <div class="box-content">
