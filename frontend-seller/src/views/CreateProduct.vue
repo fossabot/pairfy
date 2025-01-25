@@ -57,21 +57,21 @@
                             </InputGroup>
 
                             <InputGroup>
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Weight"
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Weight (kg)"
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Length"
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Length (cm)"
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Width"
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Width (cm)"
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
 
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Height"
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Height (cm)"
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
                             </InputGroup>
@@ -82,13 +82,13 @@
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius);"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
-                                    v-tooltip.top="'City from which the package is sent. Important to know the shipping time. Can affect your trust score.'" />
+                                    v-tooltip.right="'City from which the package is sent. Important to know the shipping time. Can affect your trust score.'" />
 
                                 <InputText v-model="productSKU" type="text" placeholder="Origin Postal"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
-                                    v-tooltip.top="'Important to know the shipping time. Can affect your trust score.'" />
+                                    v-tooltip.right="'Important to know the shipping time. Can affect your trust score.'" />
                             </InputGroup>
 
 
@@ -375,10 +375,10 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
-                            style="font-size: var(--text-size-1)" fluid />
+                             fluid />
 
                         <Button type="button" label="Publish" :loading="sendMessageLoading" @click="beforeCreate"
-                            style="font-size: var(--text-size-1); color: var(--text-w)" fluid />
+                            style="color: var(--text-w)" fluid />
                     </div>
                 </div>
             </div>
@@ -704,10 +704,6 @@ onBeforeUnmount(() => {
 <style scoped>
 ::v-deep(.p-progressbar) {
     height: 0.35rem;
-}
-
-::v-deep(.p-inputtext) {
-    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-select-label) {
