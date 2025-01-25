@@ -31,7 +31,7 @@ create table if not exists products(
   shipping_width decimal(10, 2) not null,
   shipping_height decimal(10, 2) not null,
   shipping_origin_city varchar(255) not null,
-  shipping_origin_postal varchar(20) not null,
+  shipping_origin_postal varchar(50) not null,
   shipping_instructions text not null,
   shipping_fragile boolean not null,
   updated_at timestamp default current_timestamp,      
