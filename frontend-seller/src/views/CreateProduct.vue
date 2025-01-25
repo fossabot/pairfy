@@ -37,13 +37,11 @@
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                                <InputNumber v-model="productCollateral" type="number" placeholder="Product Collateral"
-                                    :invalid="formErrors.collateral" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', margin: '0 1rem' }" />
 
                                 <InputText v-model="productSKU" type="text" placeholder="Product SKU"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
-                                    style="border-radius: var(--p-inputtext-border-radius)" />
+                                    style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
                             </InputGroup>
 
 
@@ -57,6 +55,41 @@
                                     style="border-radius: var(--p-inputtext-border-radius)"
                                     :invalid="formErrors.brand" />
                             </InputGroup>
+
+                            <InputGroup>
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Weight"
+                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+
+
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Length"
+                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Width"
+                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+
+
+                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Height"
+                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                            </InputGroup>
+
+
+                            <InputGroup>
+                                <InputText v-model="productSKU" type="text" placeholder="Origin City"
+                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
+                                    style="border-radius: var(--p-inputtext-border-radius);"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+
+                                <InputText v-model="productSKU" type="text" placeholder="Origin Postal"
+                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
+                                    style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                            </InputGroup>
+
+
                         </div>
                     </div>
 
