@@ -334,7 +334,7 @@
                         </div>
 
                         <div class="box-content">
-                            <SelectButton v-model="productQuality" :options="productStateOptions"
+                            <SelectButton v-model="productQuality" :options="productQualityOptions"
                                 aria-labelledby="basic" :invalid="formErrors.quality" />
                         </div>
                     </div>
@@ -417,14 +417,6 @@ const toast = useToast();
 
 const router = useRouter()
 
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
-
 const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
 const navItems = ref([
@@ -471,15 +463,17 @@ const productColor = ref("000000");
 
 const productColorName = ref(null);
 
-const productStateOptions = ref(['New', 'Used']);
+const productQualityOptions = ref(['New', 'Used']);
 
 const productQuality = ref(null);
-
-const productPaused = ref(false);
 
 const productDiscount = ref(false);
 
 const productDiscountValue = ref(0);
+
+const productPaused = ref(false);
+
+/////////////////////////////////////////////////////
 
 const files = ref([]);
 
@@ -709,6 +703,13 @@ onBeforeUnmount(() => {
     }
 });
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 </script>
 
 <style scoped>
