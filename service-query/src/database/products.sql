@@ -1,5 +1,5 @@
 create table if not exists products(
-  id varchar(20) not null,
+  id varchar(50) not null,
   state varchar(100) default "created",
   state_label varchar(500) default "",
   moderated boolean default false,
@@ -16,6 +16,7 @@ create table if not exists products(
   paused boolean not null,                     
   color varchar(100) not null,
   color_name varchar(100) not null,
+  variations varchar(1000) not null,
   quality varchar(50) not null,
   country varchar(10) not null,
   media_url varchar(500) not null,
@@ -31,7 +32,7 @@ create table if not exists products(
   shipping_height decimal(10, 2) not null,
   shipping_origin_city varchar(255) not null,
   shipping_origin_postal varchar(50) not null,
-  shipping_instructions text not null,
+  shipping_instructions varchar(1000) not null,
   shipping_fragile boolean not null,
   updated_at timestamp default current_timestamp,      
   created_at timestamp default current_timestamp,        

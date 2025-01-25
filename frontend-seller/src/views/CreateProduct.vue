@@ -58,40 +58,38 @@
 
                             <InputGroup>
                                 <InputNumber v-model="productWeight" type="number" placeholder="Shipping Weight (kg)"
-                                    :invalid="formErrors.weight" :min="0" :useGrouping="false"
-                                    :minFractionDigits="0" :maxFractionDigits="3"
+                                    :invalid="formErrors.weight" :min="0" :useGrouping="false" :minFractionDigits="0"
+                                    :maxFractionDigits="3"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
                                 <InputNumber v-model="productLength" type="number" placeholder="Shipping Length (cm)"
                                     :invalid="formErrors.length" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
-                                    :minFractionDigits="0" :maxFractionDigits="2"
-                                    />
+                                    :minFractionDigits="0" :maxFractionDigits="2" />
 
                                 <InputNumber v-model="productWidth" type="number" placeholder="Shipping Width (cm)"
                                     :invalid="formErrors.width" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
-                                    :minFractionDigits="0" :maxFractionDigits="2"
-                                    />
-
+                                    :minFractionDigits="0" :maxFractionDigits="2" />
 
                                 <InputNumber v-model="productHeight" type="number" placeholder="Shipping Height (cm)"
                                     :invalid="formErrors.height" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" 
-                                    :minFractionDigits="0" :maxFractionDigits="2"
-                                    />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
+                                    :minFractionDigits="0" :maxFractionDigits="2" />
                             </InputGroup>
 
 
                             <InputGroup>
-                                <InputText v-model="productOrigin" type="text" placeholder="Origin City"
-                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.origin"
+                                <InputText v-model="productCity" type="text" placeholder="Origin City"
+                                    v-keyfilter="{ pattern: /^[A-Za-z0-9.,'\- ]{1,100}$/, validateOnly: true }"
+                                    :invalid="formErrors.origin"
                                     style="border-radius: var(--p-inputtext-border-radius);"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
                                     v-tooltip.right="'City from which the package is sent. Important to know the shipping time. Can affect your trust score.'" />
 
                                 <InputText v-model="productPostal" type="text" placeholder="Origin Postal"
-                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.postal"
+                                    v-keyfilter="{ pattern: /^[A-Za-z0-9.,'@+&/(~)°#\-\s]{1,50}$/, validateOnly: true }"
+                                    :invalid="formErrors.postal"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
                                     v-tooltip.right="'Important to know the shipping time. Can affect your trust score.'" />
@@ -381,7 +379,7 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="sendMessageLoading" outlined
-                             fluid />
+                            fluid />
 
                         <Button type="button" label="Publish" :loading="sendMessageLoading" @click="beforeCreate"
                             style="color: var(--text-w)" fluid />
@@ -450,7 +448,7 @@ const productWidth = ref(null);
 
 const productHeight = ref(null);
 
-const productOrigin = ref(null);
+const productCity = ref(null);
 
 const productPostal = ref(null);
 
@@ -602,22 +600,30 @@ onProductCreated(result => {
 })
 
 const formErrors = ref({
-    "name": false,
-    "price": false,
-    "sku": false,
-    "model": false,
-    "brand": false,
-    "features": false,
-    "category": false,
-    "keywords": false,
-    "bullet_list": false,
-    "paused": false,
-    "color": false,
-    "color_name": false,
-    "quality": false,
-    "image_set": false,
-    "video_set": false,
-    "discount": false
+    name: false,
+    price: false,
+    sku: false,
+    model: false,
+    brand: false,
+    features: false,
+    category: false,
+    keywords: false,
+    bullet_list: false,
+    paused: false,
+    color: false,
+    color_name: false,
+    quality: false,
+    image_set: false,
+    video_set: false,
+    discount: false,
+    shipping_weight: false,
+    shipping_length: false,
+    shipping_width: false,
+    shipping_height: false,
+    shipping_origin_city: false,
+    shipping_origin_postal: false,
+    shipping_instructions: false,
+    shipping_fragile: false
 });
 
 const checkMandatory = () => {
@@ -634,6 +640,12 @@ const checkMandatory = () => {
     formErrors.value.color_name = productColorName.value === null;
     formErrors.value.quality = productQuality.value === null;
     formErrors.value.discount = productDiscount.value && productDiscountValue.value < 1;
+    formErrors.value.shipping_weight = productWeight.value === null;
+    formErrors.value.shipping_length = productLength.value === null;
+    formErrors.value.shipping_width = productWidth.value === null;
+    formErrors.value.shipping_height = productHeight.value === null;
+    formErrors.value.shipping_city = productCity.value === null;
+    formErrors.value.shipping_postal = productPostal.value === null;
     formErrors.value.image_set = productImageSet.value.length > productImageSetLimit.value || productImageSet.value.length === 0;
     formErrors.value.video_set = false;
 
