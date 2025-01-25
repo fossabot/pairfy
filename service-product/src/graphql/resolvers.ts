@@ -123,6 +123,7 @@ const createProduct = async (_: any, args: any, context: any) => {
       paused: params.paused,
       color: params.color,
       color_name: params.color_name,
+      variations: params.variations,
       quality: params.quality,
       country: SELLER.country,
       media_url: "https://pairfy.dev",
