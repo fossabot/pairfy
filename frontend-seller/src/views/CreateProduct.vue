@@ -41,7 +41,7 @@
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
-                                    v-tooltip.right="'Stock keeping unit ID must be unique'" />
+                                    v-tooltip.right="'Stock keeping unit ID must be unique.'" />
                             </InputGroup>
 
 
@@ -57,34 +57,34 @@
                             </InputGroup>
 
                             <InputGroup>
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Weight (kg)"
-                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productWeight" type="number" placeholder="Shipping Weight (kg)"
+                                    :invalid="formErrors.weight" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Length (cm)"
-                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productLength" type="number" placeholder="Shipping Length (cm)"
+                                    :invalid="formErrors.length" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Width (cm)"
-                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productWidth" type="number" placeholder="Shipping Width (cm)"
+                                    :invalid="formErrors.width" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
 
 
-                                <InputNumber v-model="productPrice" type="number" placeholder="Shipping Height (cm)"
-                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productHeight" type="number" placeholder="Shipping Height (cm)"
+                                    :invalid="formErrors.height" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
                             </InputGroup>
 
 
                             <InputGroup>
-                                <InputText v-model="productSKU" type="text" placeholder="Origin City"
-                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
+                                <InputText v-model="productOrigin" type="text" placeholder="Origin City"
+                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.origin"
                                     style="border-radius: var(--p-inputtext-border-radius);"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
                                     v-tooltip.right="'City from which the package is sent. Important to know the shipping time. Can affect your trust score.'" />
 
-                                <InputText v-model="productSKU" type="text" placeholder="Origin Postal"
-                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
+                                <InputText v-model="productPostal" type="text" placeholder="Origin Postal"
+                                    v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.postal"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
                                     v-tooltip.right="'Important to know the shipping time. Can affect your trust score.'" />
@@ -432,14 +432,29 @@ const navItems = ref([
     { label: 'Create Product' }
 ]);
 
-////////////////////////////////
+////////////////////////////////////////////////////////////////
 
 const productName = ref(null);
+
 const productPrice = ref(null);
-const productCollateral = ref(null);
+
 const productSKU = ref(null);
+
 const productModel = ref(null);
+
 const productBrand = ref(null);
+
+const productWeight = ref(null);
+
+const productLength = ref(null);
+
+const productWidth = ref(null);
+
+const productHeight = ref(null);
+
+const productOrigin = ref(null);
+
+const productPostal = ref(null);
 
 const productBulletList = ref(null);
 
@@ -447,7 +462,6 @@ const productCategories = Object.values(categoryList.value).map(item => ({
     name: item.name,
     code: item.name
 }));
-
 
 const productCategory = ref(null);
 
@@ -590,7 +604,6 @@ onProductCreated(result => {
 const formErrors = ref({
     "name": false,
     "price": false,
-    "collateral": false,
     "sku": false,
     "model": false,
     "brand": false,
@@ -610,7 +623,6 @@ const formErrors = ref({
 const checkMandatory = () => {
     formErrors.value.name = productName.value === null;
     formErrors.value.price = productPrice.value === null;
-    formErrors.value.collateral = productCollateral.value === null;
     formErrors.value.sku = productSKU.value === null;
     formErrors.value.model = productModel.value === null;
     formErrors.value.brand = productBrand.value === null;
@@ -646,7 +658,6 @@ const submitProduct = () => {
         "createProductVariable": {
             "name": productName.value,
             "price": parseInt(productPrice.value),
-            "collateral": parseInt(productCollateral.value),
             "sku": productSKU.value,
             "model": productModel.value,
             "brand": productBrand.value,
