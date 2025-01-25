@@ -610,7 +610,7 @@ const formErrors = ref({
     keywords: false,
     bullet_list: false,
     paused: false,
-    color: false,
+    color: false, 
     color_name: false,
     quality: false,
     image_set: false,
@@ -620,8 +620,8 @@ const formErrors = ref({
     shipping_length: false,
     shipping_width: false,
     shipping_height: false,
-    shipping_origin_city: false,
-    shipping_origin_postal: false,
+    shipping_city: false,
+    shipping_postal: false,
     shipping_instructions: false,
     shipping_fragile: false
 });
@@ -680,11 +680,20 @@ const submitProduct = () => {
             "paused": productPaused.value ? 1 : 0,
             "color": productColor.value,
             "color_name": productColorName.value,
+            "variations": "none",
             "quality": productQuality.value,
             "discount": productDiscount.value,
             "discount_value": productDiscount.value ? productDiscountValue.value : 0,
             "image_set": productImageSet.value.join(','),
-            "video_set": ""
+            "video_set": "",
+            "shipping_weight": productWeight.value,
+            "shipping_length": productLength.value,
+            "shipping_width": productWidth.value,
+            "shipping_height": productHeight.value,
+            "shipping_city": productCity.value,
+            "shipping_postal": productPostal.value,
+            "shipping_instructions": "none",
+            "shipping_fragile": false
         }
     })
 }

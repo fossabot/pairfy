@@ -79,6 +79,7 @@ input CreateProductInput {
   paused: Int!
   color: String!
   color_name: String!
+  variations: String!
   quality: String!
   image_set: String!
   video_set: String!
