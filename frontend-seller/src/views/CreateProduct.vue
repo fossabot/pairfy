@@ -61,7 +61,6 @@
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-
                                 <InputNumber v-model="productPrice" type="number" placeholder="Shipping Length (cm)"
                                     :invalid="formErrors.price" :min="0" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
