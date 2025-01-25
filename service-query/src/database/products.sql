@@ -6,7 +6,6 @@ create table if not exists products(
   seller_id varchar(20) not null,
   name varchar(200) not null,
   price int unsigned not null,
-  collateral int unsigned not null,
   sku varchar(100) not null,
   model varchar(200) not null,
   brand varchar(200) not null,
