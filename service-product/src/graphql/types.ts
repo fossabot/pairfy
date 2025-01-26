@@ -8,7 +8,6 @@ type Product {
     seller_id: String!
     name: String!
     price: Int!
-    collateral: Int!
     sku: String!
     model: String!
     brand: String!
@@ -68,7 +67,6 @@ type DeleteProductResponse {
 input CreateProductInput {
   name: String!
   price: Int! 
-  collateral: Int!
   sku: String!              
   model: String!
   brand: String!
@@ -98,7 +96,6 @@ input CreateProductInput {
 input UpdateProductInput {
   name: String!
   price: Int! 
-  collateral: Int!
   sku: String!              
   model: String!
   brand: String!
