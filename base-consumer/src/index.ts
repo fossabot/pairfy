@@ -1,13 +1,13 @@
 import express from "express";
+import { catcher, checkDatabase, logger } from "./utils/index.js";
+import { database } from "./database/client.js";
+import { connect } from "@nats-io/transport-node";
 import {
   AckPolicy,
   DeliverPolicy,
   jetstreamManager,
   ReplayPolicy,
 } from "@nats-io/jetstream";
-import { catcher, logger } from "./utils/index.js";
-import { database } from "./database/client.js";
-import { connect } from "@nats-io/transport-node";
 
 const main = async () => {
   try {
@@ -62,21 +62,9 @@ const main = async () => {
       `./handlers/${process.env.SERVICE_NAME}/index.js`
     );
 
-    /////////////////////////////////////////////////////////////////////////
-
     const app = express();
 
     const port = 3000;
-
-    app.get("/healthz", (req, res) => {
-      res.status(200).send("OK");
-    });
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
-
-    /////////////////////////////////////////////////////////////////////////
 
     const errorEvents: string[] = [
       "exit",
@@ -92,6 +80,16 @@ const main = async () => {
     errorEvents.forEach((e: string) =>
       process.on(e, (err) => disableConnections(e, err))
     );
+
+    app.get("/healthz", (req, res) => {
+      res.status(200).send("OK");
+    });
+
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
+    });
+
+    /////////////////////////////////////////////////////////////////////////
 
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -110,29 +108,10 @@ const main = async () => {
       bigNumberStrings: true,
     });
 
-    async function healthCheck() {
-      let connection = null;
-      try {
-        connection = await database.client.getConnection();
-        await connection.ping();
-        console.log("Database Online");
-      } catch (error) {
-        logger.error("Database Error", error);
-
-        if (connection) {
-          await connection.rollback();
-        }
-      } finally {
-        if (connection) {
-          connection.release();
-        }
-      }
-    }
-
-    setInterval(healthCheck, 30000);
+    checkDatabase(database);
 
     const natsClient = await connect({
-      name: process.env.POD_NAME,
+      name: process.env.POD_NAME as string,
       servers: ["nats:4222"],
       reconnect: true,
       pingInterval: 20 * 1000,
@@ -162,7 +141,7 @@ const main = async () => {
       }
 
       setTimeout(() => {
-        console.log("POD_EXIT", signal);
+        console.log("EXIT", signal);
         process.exit(1);
       }, 30_000);
     }
@@ -183,14 +162,14 @@ const main = async () => {
 
         const consumerInfo = await jetStreamManager.consumers.info(
           stream,
-          process.env.DURABLE_NAME!
+          process.env.DURABLE_NAME as string
         );
 
         console.log(consumerInfo);
 
         const consumer = await jetStream.consumers.get(
           stream,
-          process.env.DURABLE_NAME
+          process.env.DURABLE_NAME as string
         );
 
         while (true) {
