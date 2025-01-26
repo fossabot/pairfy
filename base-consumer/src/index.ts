@@ -58,6 +58,15 @@ const main = async () => {
     if (!process.env.DATABASE_NAME) {
       throw new Error("DATABASE_NAME error");
     }
+
+    if (!process.env.ELASTIC_NODE) {
+      throw new Error("ELASTIC_NODE error");
+    }
+
+    if (!process.env.ELASTIC_KEY) {
+      throw new Error("ELASTIC_KEY error");
+    }
+
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`
     );
