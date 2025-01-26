@@ -1,4 +1,4 @@
-import { database } from "../../db/client.js";
+import { database } from "../../database/client.js";
 import { logger } from "../../utils/index.js";
 
 const CreateNotification = async (

@@ -6,7 +6,7 @@ import {
   ReplayPolicy,
 } from "@nats-io/jetstream";
 import { catcher, logger } from "./utils/index.js";
-import { database } from "./db/client.js";
+import { database } from "./database/client.js";
 import { connect } from "@nats-io/transport-node";
 
 const main = async () => {
