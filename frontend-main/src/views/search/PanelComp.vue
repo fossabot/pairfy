@@ -11,13 +11,13 @@
         </div>
 
         <div class="panel-row">
-            <span class="label">Category</span>
-            <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
-                <Checkbox :value="item.name" v-model="category" inputId="category" size="small" />
-                <label for="category"> {{ item.name }} </label>
-            </span>
+            <span class="label">Price</span>
+            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
+            <div class="slider">
+                <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
+            </div>
         </div>
-
+        
         <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
@@ -31,13 +31,16 @@
 
         </div>
 
+
         <div class="panel-row">
-            <span class="label">Price</span>
-            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
-            <div class="slider">
-                <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
-            </div>
+            <span class="label">Category</span>
+            <span class="checkbox flex" v-for="(item, index) in categoryList" :key="index">
+                <Checkbox :value="item.name" v-model="category" inputId="category" size="small" />
+                <label for="category"> {{ item.name }} </label>
+            </span>
         </div>
+
+
 
 
         <div class="panel-row">
