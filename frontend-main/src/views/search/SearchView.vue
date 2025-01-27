@@ -35,7 +35,7 @@ import { useRouter, useRoute } from 'vue-router';
 
 const { randomString } = inject('utils');
 
-const route = useRoute();
+const theRoute = useRoute();
 
 const router = useRouter();
 
@@ -50,9 +50,9 @@ const productData = ref([]);
 const currentRoute = ref(null);
 
 const unwatchRoute = watch(
-    route,
-    (route_) => {
-        if (!route_.query.k) {
+    theRoute,
+    (route) => {
+        if (!route.query.k) {
             router.push({
                 name: 'home'
             })
@@ -60,7 +60,7 @@ const unwatchRoute = watch(
 
         console.log("ROUTE CHANGED");
 
-        searchKey.value = route_.query.k;
+        searchKey.value = route.query.k;
 
         currentRoute.value = route;
 

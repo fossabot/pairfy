@@ -16,14 +16,13 @@ const { randomString } = inject('utils');
 
 const router = useRouter();
 
-const route = useRoute();
+const theRoute = useRoute();
 
 const isFocus = ref(false);
 
-
 const searchInput = ref("");
 
-const unwatchRoute = watch(route,
+const unwatchRoute = watch(theRoute,
     (route) => {
         searchInput.value = route.query.k
     },

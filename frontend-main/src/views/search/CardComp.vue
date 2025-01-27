@@ -26,6 +26,7 @@
 
 <script setup>
 import { ref, inject } from 'vue';
+
 const { formatPriceToUSD } = inject('utils');
 
 const rating = ref(4);

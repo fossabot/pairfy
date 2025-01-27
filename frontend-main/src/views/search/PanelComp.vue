@@ -55,14 +55,13 @@ import { useRouter, useRoute } from 'vue-router';
 
 const { randomString } = inject('utils');
 
-const route = useRoute();
+const theRoute = useRoute();
 
 const router = useRouter();
 
 const currentRoute = ref(null);
 
-const unwatchRoute = watch(
-    () => route,
+const unwatchRoute = watch(theRoute,
     (route) => {
         currentRoute.value = route;
     },
