@@ -9,16 +9,26 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref, inject } from 'vue';
+import { ref, inject, onBeforeUnmount, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const { randomString } = inject('utils');
 
 const router = useRouter();
 
+const route = useRoute();
+
 const isFocus = ref(false);
 
+
 const searchInput = ref("");
+
+const unwatchRoute = watch(route,
+    (route) => {
+        searchInput.value = route.query.k
+    },
+    { immediate: true }
+);
 
 const handleSearch = () => {
     const text = searchInput.value.trim();
@@ -36,6 +46,10 @@ const handleSearch = () => {
         console.warn("Search query is empty");
     }
 }
+
+onBeforeUnmount(() => {
+    unwatchRoute()
+})
 </script>
 
 <style lang="css" scoped>
