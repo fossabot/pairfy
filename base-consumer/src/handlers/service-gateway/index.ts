@@ -1,80 +1,5 @@
 import { database } from "../../database/client.js";
 import { logger } from "../../utils/index.js";
-import { Client } from "@elastic/elasticsearch";
-
-const searchClient = new Client({
-  node: process.env.ELASTIC_NODE as string,
-  auth: {
-    apiKey: process.env.ELASTIC_KEY as string,
-  },
-});
-
-type Product = {
-  id: string; 
-  name: string;
-  sku: string;
-  category: string;
-  brand: string;
-  model: string;
-  price: number;
-  quality: string;
-  image: string; 
-  keywords: string;
-  rating: number; 
-  reviews: number; 
-  discount: boolean;
-  discount_value: number;
-  best_seller: boolean;
-};
-
-const createProductIndex = async (data: any) => {
-  let result = false;
-
-  try {
-    const exists = await searchClient.exists({
-      index: "products",
-      id: data.id,
-    });
-
-    if (exists) {
-      result = true;
-    } else {
-      const document: Product = {
-        id: data.id,
-        name: data.name,
-        sku: data.sku,
-        category: data.category,
-        brand: data.brand,
-        model: data.model,
-        price: data.price,
-        quality: data.quality,
-        image: data.image,
-        keywords: data.keywords,
-        rating: 0.0,
-        reviews: 0,
-        discount: data.discount,
-        discount_value: data.discount_value,
-        best_seller: false,
-      };
-
-      const response = await searchClient.index({
-        index: "products",
-        id: document.id,
-        document,
-      });
-
-      if (response.result !== "created") {
-        throw new Error("createProductIndexError");
-      }
-
-      result = true;
-    }
-  } catch (err) {
-    logger.error(err);
-  } finally {
-    return result;
-  }
-};
 
 const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -121,12 +46,7 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
       "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
       [event.id, seq, event.type, true]
     );
-
-    const elastic = await createProductIndex(payload);
-
-    if (!elastic) {
-      throw new Error("CreateProductElastic");
-    }
+    
     await connection.commit();
 
     ///////////////////////////////////////////////////

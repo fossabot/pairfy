@@ -1,5 +1,68 @@
 import { database } from "../../database/client.js";
 import { logger } from "../../utils/index.js";
+import { Client } from "@elastic/elasticsearch";
+
+const searchClient = new Client({
+  node: process.env.ELASTIC_NODE as string,
+  auth: {
+    apiKey: process.env.ELASTIC_KEY as string,
+  },
+});
+
+const createProductIndex = async (data: any) => {
+  let result = false;
+
+  try {
+    const exists = await searchClient.exists({
+      index: "products",
+      id: data.id,
+    });
+
+    if (exists) {
+      result = true;
+    } else {
+      const images = data.image_set.split(",");
+
+      const productImage = data.media_url + data.image_path + images[0];
+
+      const document = {
+        id: data.id,
+        name: data.name,
+        sku: data.sku,
+        category: data.category,
+        brand: data.brand,
+        model: data.model,
+        price: data.price,
+        quality: data.quality,
+        image: productImage,
+        keywords: data.keywords,
+        rating: 0.0,
+        reviews: 0,
+        discount: data.discount,
+        discount_value: data.discount_value,
+        best_seller: false,
+      };
+
+      console.log(document);
+
+      const response = await searchClient.index({
+        index: "products",
+        id: document.id,
+        document,
+      });
+
+      if (response.result !== "created") {
+        throw new Error("createProductIndexError");
+      }
+
+      result = true;
+    }
+  } catch (err) {
+    logger.error(err);
+  } finally {
+    return result;
+  }
+};
 
 const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -15,11 +78,15 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     );
 
     if (findProcessed.length > 0) {
+      console.log("CreateProductRepeated");
+
       return Promise.resolve(true);
     }
 
     const payload = JSON.parse(event.data);
-    //Transaction Start
+
+    /////////////////////////////////////////////////
+
     await connection.beginTransaction();
 
     const columns = Object.keys(payload);
@@ -32,14 +99,22 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
     `;
 
     await connection.execute(schemeData, values);
-  
+
     await connection.execute(
       "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
       [event.id, seq, event.type, true]
     );
 
+    const elastic = await createProductIndex(payload);
+
+    if (!elastic) {
+      throw new Error("CreateProductElastic");
+    }
+
     await connection.commit();
-    //Transaction End
+
+    /////////////////////////////////////////////////
+
     response = Promise.resolve(true);
   } catch (err: any) {
     logger.error(err);
