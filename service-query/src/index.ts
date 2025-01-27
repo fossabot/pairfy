@@ -4,11 +4,12 @@ import cors from "cors";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { catcher, errorEvents, logger } from "./utils/index.js";
+import { catcher, checkRedis, errorEvents, logger } from "./utils/index.js";
+import { assets, products } from "./graphql/resolvers.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
-import { assets, products } from "./graphql/resolvers.js";
 import { redisClient } from "./database/redis.js";
+import { createProductIndex } from "./elastic/index.js";
 
 const app = express();
 
@@ -17,7 +18,7 @@ const httpServer = http.createServer(app);
 const resolvers = {
   Query: {
     ...products.Query,
-    ...assets.Query
+    ...assets.Query,
   },
 };
 
@@ -94,6 +95,30 @@ const main = async () => {
       throw new Error("ELASTIC_API_KEY error");
     }
 
+    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+
+    database.connect({
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT) || 3306,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+    });
+
+    await redisClient
+      .connect({
+        url: process.env.REDIS_HOST,
+        connectTimeout: 100000,
+        keepAlive: 100000,
+      })
+      .then(() => checkRedis(redisClient))
+      .catch((err: any) => catcher(err));
+
+    const elastic = await createProductIndex();
+
+    if (!elastic) {
+      throw new Error("ELASTIC");
+    }
 
     const corsOptions = {
       origin: process.env.CORS_DOMAINS.split(",") || "*",
@@ -103,35 +128,6 @@ const main = async () => {
       exposedHeaders: ["Set-Cookie", "Cookie"],
       optionsSuccessStatus: 204,
     };
-
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
-
-    await redisClient
-      .connect({
-        url: process.env.REDIS_HOST,
-        connectTimeout: 100000,
-        keepAlive: 100000,
-      })
-      .then(() => console.log("redisClient connected"))
-      .catch((err: any) => catcher(err));
-
-    const redisCheck = setInterval(async () => {
-      try {
-        await redisClient.client.ping();
-        console.log("Redis Online");
-      } catch (err) {
-        console.error("REDIS_CONNECTION", err);
-        clearInterval(redisCheck);
-      }
-    }, 10_000);
-
-    database.connect({
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT) || 3306,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-    });
 
     app.options("*", cors(corsOptions));
 
