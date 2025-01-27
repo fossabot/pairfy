@@ -7,11 +7,11 @@
             <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.name }}</span>
             <span class="rating flex">
-                <Rating v-model="rating" :stars="5" readonly />
+                <Rating v-model="rating" :stars="content.rating" readonly />
                 <span class="rating-value">
                     {{ content.rating }}
                 </span>
-                <span class="reviews">(232 reviews) </span>
+                <span class="reviews">({{ content.reviews }} reviews) </span>
             </span>
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
             <span class="tag flex best" v-if="content.best_seller">
@@ -71,7 +71,7 @@ const props = defineProps(['content'])
 
 .title {
     text-transform: capitalize;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
     cursor: pointer;
     margin-top: 0.25rem;
 }

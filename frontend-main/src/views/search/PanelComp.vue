@@ -11,14 +11,6 @@
         </div>
 
         <div class="panel-row">
-            <span class="label">Price</span>
-            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
-            <div class="slider">
-                <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
-            </div>
-        </div>
-        
-        <div class="panel-row">
             <span class="label">Condition</span>
             <span class="checkbox flex">
                 <Checkbox binary trueValue="New" :falseValue="null" v-model="condition" inputId="newed" size="small" />
@@ -41,7 +33,13 @@
         </div>
 
 
-
+        <div class="panel-row">
+            <span class="label">Price</span>
+            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
+            <div class="slider">
+                <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
+            </div>
+        </div>
 
         <div class="panel-row">
             <Button label="Go" severity="secondary" variant="outlined" @click="onFilter" />
@@ -82,7 +80,7 @@ const priceRange = ref([0, 2000]);
 const category = ref([]);
 
 const filterEnabled = computed(() => {
-    if(currentRoute.value.query.f){
+    if (currentRoute.value.query.f) {
         return true
     }
 
@@ -108,9 +106,9 @@ const clearFilter = () => {
             tag: randomString(10)
         }
     })
-    
+
     condition.value = false;
-    
+
     priceRange.value = [0, 2000];
 
     category.value = [];
