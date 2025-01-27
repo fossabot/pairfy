@@ -46,7 +46,7 @@ const handleSearch = () => {
     border-radius: 12px;
     overflow: hidden;
     background: var(--background-a);
-    border: 2px solid var(--text-a);
+    border: 1px solid var(--text-a);
 }
 
 .search.focus {
@@ -80,8 +80,6 @@ const handleSearch = () => {
     background: transparent;
     outline: 1px solid transparent;
 }
-
-
 
 .search-button i {
     font-weight: 600;
