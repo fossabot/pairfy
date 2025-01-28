@@ -52,5 +52,4 @@ main {
   align-items: center;
 }
 
-
 </style>
