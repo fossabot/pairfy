@@ -3,7 +3,8 @@
         <DrawerComp />
         <div class="header">
             <div class="header-col left">
-                <div class="brand" @click="toHome"/>
+                <img class="brand" src="@/assets/logo-white.svg" alt="">
+
                 <LocationComp />
             </div>
             <div class="header-col center">
@@ -141,12 +142,7 @@ section {
 
 .brand {
     cursor: pointer;
-    background-image: url('../../assets/logo-white.png');
-    background-repeat: repeat-x;
-    background-position: 0px 0px;
-    width: 167px;
-    min-height: 42px;
-    background-repeat: no-repeat;
+    height: 60px;
 }
 
 .header {
