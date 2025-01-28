@@ -82,7 +82,7 @@ const itemList = ref([
     grid-column: span 6;
     font-weight: 700;
     text-align: start;
-    color: var(--text-a);
+    color: var(--primary-a);
 }
 
 
