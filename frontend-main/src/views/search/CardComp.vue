@@ -7,7 +7,7 @@
             <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.name }}</span>
             <span class="rating flex">
-                <Rating v-model="rating" :stars="content.rating" readonly />
+                <Rating v-model="rating" :stars="5" readonly />
                 <span class="rating-value">
                     {{ content.rating }}
                 </span>
@@ -29,9 +29,9 @@ import { ref, inject } from 'vue';
 
 const { formatPriceToUSD } = inject('utils');
 
-const rating = ref(4);
-
 const props = defineProps(['content'])
+
+const rating = ref(props.content.rating);
 
 </script>
 
