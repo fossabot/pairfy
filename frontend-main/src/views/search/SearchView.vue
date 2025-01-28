@@ -9,7 +9,7 @@
                         1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
-                        placeholder="Sort by: Featured" checkmark :highlightOnSelect="false" />
+                        placeholder="Price: High To Low" checkmark :highlightOnSelect="false" @change="onSortChange"/>
                 </div>
                 
                 <template v-if="loading">
@@ -117,7 +117,6 @@ const variables = reactive({
             reviews: "desc",
             discount_value: "desc",
         },
-
         tag: "",
     }
 });
@@ -219,6 +218,10 @@ const sortOptions = ref([
     { name: 'Best Seller', code: 'BS' },
     { name: 'Discount', code: 'DD' }
 ]);
+
+const onSortChange = (value) => {
+    console.log(value)
+}
 
 onBeforeUnmount(() => {
     unwatchRoute()

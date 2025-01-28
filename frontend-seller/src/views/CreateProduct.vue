@@ -29,7 +29,7 @@
                     <div class="left-column-item">
                         <div class="formulary">
                             <InputText v-model="productName" type="text" placeholder="Product Name"
-                                v-keyfilter='/^[a-zA-Z0-9("-–.”)/+$ ]+$/' :invalid="formErrors.name" />
+                                v-keyfilter='/^[a-zA-Z0-9("--–.”)/+$ ]+$/' :invalid="formErrors.name" />
 
                             <InputGroup>
                                 <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
@@ -467,7 +467,7 @@ const productColor = ref("000000");
 
 const productColorName = ref(null);
 
-const productQualityOptions = ref(['New', 'Used']);
+const productQualityOptions = ref(['New', 'Used', 'Refurbished']);
 
 const productQuality = ref(null);
 

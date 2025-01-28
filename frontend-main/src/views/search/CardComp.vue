@@ -4,8 +4,8 @@
             <img class="image" :src="content.image" alt="">
         </div>
         <div class="content">
-            <span class="brand">{{ content.brand }}</span>
             <span class="title">{{ content.name }}</span>
+            <span class="brand">{{ content.brand }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rating-value">
@@ -59,9 +59,8 @@ const rating = ref(props.content.rating);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
     height: 220px;
-    padding: 0.25rem 1rem;
+    padding: 0 1rem;
 }
 
 .brand {
@@ -74,7 +73,6 @@ const rating = ref(props.content.rating);
     text-transform: capitalize;
     font-size: var(--text-size-3);
     cursor: pointer;
-    margin-top: 0.25rem;
 }
 
 .title:hover {
