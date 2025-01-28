@@ -3,8 +3,8 @@
 
 <svg
    width="160"
-   height="50"
-   viewBox="0 0 160 50"
+   height="30"
+   viewBox="0 0 160 30"
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="logo-white.svg"
@@ -28,18 +28,19 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="4.0000001"
-     inkscape:cx="74.999998"
+     inkscape:cx="60.749998"
      inkscape:cy="20"
-     inkscape:window-width="1920"
-     inkscape:window-height="1048"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1489"
+     inkscape:window-height="778"
+     inkscape:window-x="2185"
+     inkscape:window-y="203"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
      showguides="false"
      inkscape:lockguides="false"
-     width="165px" />
+     width="165px"
+     height="30px" />
   <defs
      id="defs132">
     <rect
@@ -111,15 +112,15 @@
     <text
        xml:space="preserve"
        style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       x="37.726665"
-       y="30.544643"
+       x="37.676666"
+       y="21.773342"
        id="text2-3-3"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"><tspan
          sodipodi:role="line"
-         x="37.726665"
-         y="30.544643"
+         x="37.676666"
+         y="21.773342"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="tspan541421-5-5">AdαMαrket</tspan></text>
     <rect
@@ -128,17 +129,17 @@
        width="30"
        height="30"
        x="0"
-       y="8.4799995"
+       y="0"
        rx="8"
        ry="8" />
     <path
        style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.243363;stroke-opacity:1"
-       d="M 23.795496,30.72 C 22.897032,25.748588 22.568688,24.50608 21.584805,19.612847 13.780857,18.078205 12.05527,17.396696 3.7954963,15.72 c 1.3147118,1.559747 2.9416458,3.0812 4.4483958,4.37582 4.4659849,1.114661 8.8379149,1.751745 11.0350059,2.323455 1.669525,2.862939 3.508958,6.546625 4.516598,8.300725"
+       d="M 23.295496,23.11708 C 22.397032,18.145668 22.068688,16.90316 21.084805,12.009927 13.280857,10.475285 11.55527,9.7937757 3.2954963,8.1170797 4.6102081,9.6768267 6.2371421,11.19828 7.7438921,12.4929 c 4.4659849,1.114661 8.8379149,1.751745 11.0350059,2.323455 1.669525,2.862939 3.508958,6.546625 4.516598,8.300725"
        id="path33289-7"
        sodipodi:nodetypes="cccccc" />
     <path
        style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
-       d="M 20.366534,26.264355 18.574257,23.407531 C 14.13912,22.388354 12.150814,21.927651 8.6240281,21.1126 c 0,0 1.7618399,1.918524 3.7854039,3.807903 4.080167,0.63859 7.957102,1.343852 7.957102,1.343852 z"
+       d="m 19.866534,18.661435 -1.792277,-2.856824 c -4.435137,-1.019177 -6.423443,-1.47988 -9.9502289,-2.294931 0,0 1.7618399,1.918524 3.7854039,3.807903 4.080167,0.63859 7.957102,1.343852 7.957102,1.343852 z"
        id="path1156-3"
        sodipodi:nodetypes="ccccc"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
@@ -146,7 +147,7 @@
        inkscape:export-ydpi="121.6" />
     <path
        style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
-       d="m 22.099407,29.424267 -1.326281,-2.316492 c -3.530607,-0.58525 -4.305704,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.989644,2.721945 3.222442,0.456473 6.284377,0.960605 6.284377,0.960605 z"
+       d="m 21.599407,21.821347 -1.326281,-2.316492 c -3.530607,-0.58525 -4.305704,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.989644,2.721945 3.222442,0.456473 6.284377,0.960605 6.284377,0.960605 z"
        id="path1156-3-3"
        sodipodi:nodetypes="ccccc"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
