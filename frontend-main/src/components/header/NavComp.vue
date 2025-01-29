@@ -10,7 +10,7 @@
             </div>
         </div>
         <span>Discounts</span>
-        <span>Earn Rewards</span>
+        <span>Rewards</span>
         <span>Support</span>
         <span>Sell</span>
         <span>
