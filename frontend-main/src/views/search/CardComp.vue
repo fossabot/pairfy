@@ -4,8 +4,8 @@
             <img class="image" :src="content.image" alt="">
         </div>
         <div class="content">
-            <span class="title">{{ content.name }}</span>
             <span class="brand">{{ content.brand }}</span>
+            <span class="title">{{ content.name }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rating-value">
@@ -42,7 +42,6 @@ const rating = ref(props.content.rating);
 }
 
 .preview {
-    background: var(--background-b);
     overflow: hidden;
     width: 220px;
     height: 220px;

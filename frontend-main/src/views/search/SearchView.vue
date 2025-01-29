@@ -9,9 +9,9 @@
                         1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
-                        placeholder="Price: High To Low" checkmark :highlightOnSelect="false" @change="onSortChange"/>
+                        placeholder="Price: High To Low" checkmark :highlightOnSelect="false" @change="onSortChange" />
                 </div>
-                
+
                 <template v-if="loading">
                     <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
                 </template>
@@ -73,7 +73,7 @@ const unwatchRoute = watch(
 
 
 const variables = reactive({
-    
+
     searchProductVariable: {
         text: searchKey.value,
         sku: {
@@ -158,10 +158,10 @@ const { result: searchProduct } = useQuery(gql`
 const unwatchKey = watch(currentRoute.value,
     (route) => {
         console.log("KEY______", route.query)
-        
+
         variables.searchProductVariable.text = route.query.k
 
-        if(route.query.qy){
+        if (route.query.qy) {
             variables.searchProductVariable.quality.enabled = true;
             variables.searchProductVariable.quality.value = route.query.qy;
         } else {
@@ -169,21 +169,21 @@ const unwatchKey = watch(currentRoute.value,
         }
 
 
-        if(route.query.cs){
+        if (route.query.cs) {
             variables.searchProductVariable.category.enabled = true;
             variables.searchProductVariable.category.value = route.query.cs;
         } else {
             variables.searchProductVariable.category.enabled = false;
         }
 
-        if(route.query.gte){
+        if (route.query.gte) {
             variables.searchProductVariable.price.enabled = true;
             variables.searchProductVariable.price.value.gte = Number(route.query.gte);
         } else {
             variables.searchProductVariable.category.enabled = false;
         }
 
-        if(route.query.lte){
+        if (route.query.lte) {
             variables.searchProductVariable.price.enabled = true;
             variables.searchProductVariable.price.value.lte = Number(route.query.lte);
         } else {
@@ -191,7 +191,7 @@ const unwatchKey = watch(currentRoute.value,
         }
 
 
-       variables.searchProductVariable.tag = randomString(10); 
+        variables.searchProductVariable.tag = randomString(10);
     },
     { immediate: true }
 );
@@ -212,15 +212,22 @@ const unwatchSearchProduct = watch(searchProduct, value => {
 const selectedSort = ref();
 
 const sortOptions = ref([
-    { name: 'Price: Low To High', code: 'LH' },
-    { name: 'Price: High To Low', code: 'HL' },
-    { name: 'Rating', code: 'R' },
-    { name: 'Best Seller', code: 'BS' },
-    { name: 'Discount', code: 'DD' }
+    { name: 'Price: Low To High', code: 'price:asc' },
+    { name: 'Price: High To Low', code: 'price:desc' },
+    { name: 'Rating', code: 'rating:asc' },
+    { name: 'Discount', code: 'discount_value:asc' }
 ]);
 
 const onSortChange = (value) => {
-    console.log(value)
+    
+    router.push({
+        name: currentRoute.value.name,
+        params: currentRoute.value.params,
+        query: {
+            ...currentRoute.value.query,
+            sort: value.value.code
+        }
+    })
 }
 
 onBeforeUnmount(() => {

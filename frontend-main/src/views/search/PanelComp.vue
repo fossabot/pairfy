@@ -20,7 +20,10 @@
                 <Checkbox binary trueValue="Used" :falseValue="null" v-model="condition" inputId="used" size="small" />
                 <label for="used"> Used </label>
             </span>
-
+            <span class="checkbox flex">
+                <Checkbox binary trueValue="Refurbished" :falseValue="null" v-model="condition" inputId="refurbished" size="small" />
+                <label for="refurbished"> Refurbished </label>
+            </span>
         </div>
 
 
