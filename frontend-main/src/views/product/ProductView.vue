@@ -68,7 +68,6 @@ query ($getProductVariable: GetProductInput!) {
         id
         name
         price
-        collateral
         sku
         model
         brand
@@ -139,6 +138,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     align-items: center;
     justify-content: center;
     background: var(--background-a);
+    border-top: 1px solid var(--border-a);
 }
 
 .mask {
