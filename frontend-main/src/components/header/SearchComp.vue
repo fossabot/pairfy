@@ -58,12 +58,11 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    background: var(--background-a);
-    border: 2px solid var(--text-a);
+    background: var(--background-b);
 }
 
 .search.focus {
-    background: var(--background-a);
+    background: var(--background-b);
 }
 
 .search-input {
@@ -79,7 +78,8 @@ onBeforeUnmount(() => {
 
 .search-input::placeholder {
     color: var(--text-b);
-    opacity: 0.5;
+    font-weight: 400;
+    opacity: 0.8;
 }
 
 .search-button {
@@ -87,10 +87,10 @@ onBeforeUnmount(() => {
     height: 44px;
     border: none;
     cursor: pointer;
-    color: var(--text-a);
+    color: var(--text-w);
     border-radius: 0 12px 12px 0;
     outline-offset: -1px;
-    background: transparent;
+    background: var(--primary-a);
     outline: 1px solid transparent;
 }
 
