@@ -38,7 +38,7 @@
 
         <div class="panel-row">
             <span class="label">Price</span>
-            <span class="slider-text">${{ priceRange[0] }} – {{ priceRange[1] }}+</span>
+            <span class="slider-text">{{ priceRange[0] }} – {{ priceRange[1] }} USD</span>
             <div class="slider">
                 <Slider v-model="priceRange" :max="maxLimit" style="margin: 1rem 0.5rem;" range />
             </div>

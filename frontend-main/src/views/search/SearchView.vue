@@ -8,7 +8,7 @@
                     <div class="counter">
                         1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
-                    <Select class="selector" v-model="selectedSort" :options="sortOptions" showClear optionLabel="name"
+                    <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
                         placeholder="Price: High To Low" checkmark :highlightOnSelect="false" @change="onSortChange" />
                 </div>
 
@@ -190,6 +190,17 @@ const unwatchKey = watch(currentRoute.value,
             variables.searchProductVariable.category.enabled = false;
         }
 
+        if (route.query.sort) {
+            const sortParam = route.query.sort.split(':');
+            variables.searchProductVariable.sort[sortParam[0]] = sortParam[1]
+        } else {
+            variables.searchProductVariable.sort = {
+                price: "asc",
+                rating: "desc",
+                reviews: "desc",
+                discount_value: "desc",
+            }
+        }
 
         variables.searchProductVariable.tag = randomString(10);
     },
@@ -219,7 +230,7 @@ const sortOptions = ref([
 ]);
 
 const onSortChange = (value) => {
-    
+
     router.push({
         name: currentRoute.value.name,
         params: currentRoute.value.params,

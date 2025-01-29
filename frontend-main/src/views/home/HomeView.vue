@@ -43,7 +43,6 @@ main {
   display: flex;
   align-items: center;
   padding: 2rem 0;
-  background: var(--background-b);
 }
 
 .bottom {

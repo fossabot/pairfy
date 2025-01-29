@@ -3,7 +3,7 @@
         <DrawerComp />
         <div class="header">
             <div class="header-col left">
-                <img class="brand" src="@/assets/logo-white.svg" alt="">
+                <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
 
                 <LocationComp />
             </div>
