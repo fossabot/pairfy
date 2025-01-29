@@ -28,13 +28,13 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="4.0000001"
-     inkscape:cx="60.749998"
-     inkscape:cy="20"
-     inkscape:window-width="1489"
-     inkscape:window-height="778"
-     inkscape:window-x="2185"
-     inkscape:window-y="203"
-     inkscape:window-maximized="0"
+     inkscape:cx="60.874998"
+     inkscape:cy="-1.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1020"
+     inkscape:window-x="3840"
+     inkscape:window-y="28"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
      showguides="false"
@@ -111,7 +111,7 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
        x="37.676666"
        y="21.773342"
        id="text2-3-3"
@@ -121,8 +121,8 @@
          sodipodi:role="line"
          x="37.676666"
          y="21.773342"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5">AdαMαrket</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5">adamarket</tspan></text>
     <rect
        style="fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.168;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:stroke markers fill"
        id="rect1078"
@@ -133,26 +133,9 @@
        rx="8"
        ry="8" />
     <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.243363;stroke-opacity:1"
-       d="M 23.295496,23.11708 C 22.397032,18.145668 22.068688,16.90316 21.084805,12.009927 13.280857,10.475285 11.55527,9.7937757 3.2954963,8.1170797 4.6102081,9.6768267 6.2371421,11.19828 7.7438921,12.4929 c 4.4659849,1.114661 8.8379149,1.751745 11.0350059,2.323455 1.669525,2.862939 3.508958,6.546625 4.516598,8.300725"
-       id="path33289-7"
-       sodipodi:nodetypes="cccccc" />
-    <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
-       d="m 19.866534,18.661435 -1.792277,-2.856824 c -4.435137,-1.019177 -6.423443,-1.47988 -9.9502289,-2.294931 0,0 1.7618399,1.918524 3.7854039,3.807903 4.080167,0.63859 7.957102,1.343852 7.957102,1.343852 z"
-       id="path1156-3"
-       sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
-       inkscape:export-xdpi="121.6"
-       inkscape:export-ydpi="121.6" />
-    <path
-       style="display:inline;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
-       d="m 21.599407,21.821347 -1.326281,-2.316492 c -3.530607,-0.58525 -4.305704,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.989644,2.721945 3.222442,0.456473 6.284377,0.960605 6.284377,0.960605 z"
-       id="path1156-3-3"
-       sodipodi:nodetypes="ccccc"
-       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
-       inkscape:export-xdpi="121.6"
-       inkscape:export-ydpi="121.6" />
+       style="color:#000000;fill:#ffffff;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 15.061678,3.452018 c -1.104165,0 -2.218411,0.3645 -3.076172,1.126953 -0.85776,0.762454 -1.423828,1.935549 -1.423828,3.373047 v 0.75 H 8.5753502 c -0.953203,-1.74e-4 -1.765254,0.72979 -1.865235,1.677734 l -1.263671,12 c -0.115579,1.095831 0.763326,2.073447 1.865234,2.072266 H 22.811678 c 1.100987,0 1.980452,-0.977703 1.865234,-2.072266 L 23.41324,10.381706 C 23.31379,9.433614 22.501609,8.702018 21.548006,8.702018 h -1.986328 v -0.75 C 19.561678,6.51452 18.99561,5.341425 18.13785,4.578971 17.280089,3.816518 16.165843,3.452018 15.061678,3.452018 Z m 0,1.5 c 0.770833,0 1.53159,0.260502 2.080078,0.748047 0.548488,0.487545 0.919922,1.189455 0.919922,2.251953 v 0.75 h -6 v -0.75 c 0,-1.062498 0.371434,-1.764408 0.919922,-2.251953 0.548488,-0.487545 1.309245,-0.748047 2.080078,-0.748047 z m -6.4863278,5.25 h 1.9863278 v 1.40625 c -0.0017,0.0015 -0.0041,4.24e-4 -0.0059,0.002 -0.224948,0.199957 -0.36914,0.5293 -0.36914,0.8418 0,0.3125 0.144192,0.641843 0.369141,0.841797 0.224948,0.199954 0.495443,0.283203 0.755859,0.283203 0.260416,0 0.530911,-0.08325 0.755859,-0.283203 0.224949,-0.199954 0.369141,-0.529297 0.369141,-0.841797 0,-0.3125 -0.144192,-0.641843 -0.369141,-0.841797 -0.0017,-0.0015 -0.0041,-4.38e-4 -0.0059,-0.002 v -1.406253 h 6 v 1.40625 c -0.0017,0.0015 -0.0041,4.24e-4 -0.0059,0.002 -0.224908,0.199957 -0.3691,0.5293 -0.3691,0.8418 0,0.3125 0.144192,0.641843 0.369141,0.841797 0.224948,0.199954 0.495443,0.283203 0.755859,0.283203 0.260416,0 0.530911,-0.08325 0.755859,-0.283203 0.224949,-0.199954 0.369141,-0.529297 0.369141,-0.841797 0,-0.3125 -0.144192,-0.641843 -0.369141,-0.841797 -0.0017,-0.0015 -0.0041,-4.38e-4 -0.0059,-0.002 v -1.406253 h 1.986328 c 0.198396,0 0.352497,0.14003 0.373047,0.335938 l 1.263713,11.999999 c 0.02486,0.235436 -0.135954,0.414063 -0.372966,0.414063 H 7.3116782 c -0.235065,2.52e-4 -0.399656,-0.180294 -0.375,-0.414063 l 1.265625,-11.999999 c 0.02079,-0.197141 0.174813,-0.335974 0.373047,-0.335938 z"
+       id="path2" />
   </g>
   <g
      inkscape:groupmode="layer"
