@@ -91,7 +91,7 @@ const getURL = (index) => {
 }
 
 .tag img {
-    width: var(--text-size-3);
+    width: var(--text-size-4);
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
