@@ -190,7 +190,7 @@
                         <editor-content :editor="editor" />
                     </div>
 
-                   <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                    <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                     <div class="left-column-item">
                         <div class="uploader" :class="{ invalid: formErrors.image_set }">
                             <Toast />
@@ -266,7 +266,7 @@
                         </div>
                     </div>
                 </div>
-               <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <div class="right-column">
                     <div class="box">
                         <div class="subtitle" v-tooltip="'List of important features'">
@@ -451,10 +451,12 @@ const productPostal = ref(null);
 
 const productBulletList = ref(null);
 
-const productCategories = Object.values(categoryList.value).map(item => ({
+const productCategories = ref(
+    Object.values(categoryList.value).map(item => ({
     name: item.name,
     code: item.name
-}));
+}))
+);
 
 const productCategory = ref(null);
 
@@ -694,7 +696,6 @@ const submitProduct = () => {
         }
     })
 }
-
 
 const goBackRoute = () => {
     router.go(-1)

@@ -129,16 +129,6 @@
                 </template>
             </Column>
 
-            <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.collateral) }}
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
             <Column field="category" header="Category" sortable style="min-width: 8rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -230,7 +220,6 @@ query($getProductsVariable: GetProductsInput!){
             name
             sku
             price
-            collateral
             category
             paused
             media_url

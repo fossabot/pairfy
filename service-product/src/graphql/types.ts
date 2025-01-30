@@ -27,6 +27,15 @@ type Product {
     video_set: String!
     discount: Boolean!
     discount_value: Int!
+    shipping_weight: Float!
+    shipping_length: Float!
+    shipping_width: Float!
+    shipping_height: Float!
+    shipping_city: String!
+    shipping_postal: String!
+    shipping_instructions: String!
+    shipping_fragile: Boolean!  
+    updated_at: String!  
     created_at: String!
 }
 
@@ -94,6 +103,7 @@ input CreateProductInput {
 }
 
 input UpdateProductInput {
+  id: ID!
   name: String!
   price: Int! 
   sku: String!              
@@ -111,7 +121,14 @@ input UpdateProductInput {
   video_set: String!
   discount: Boolean!
   discount_value: Int!
-  id: String!
+  shipping_weight: Float!
+  shipping_length: Float!
+  shipping_width: Float!
+  shipping_height: Float!
+  shipping_city: String!
+  shipping_postal: String!
+  shipping_instructions: String!
+  shipping_fragile: Boolean!   
 }
 
 input DeleteProductInput {
