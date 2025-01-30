@@ -3,9 +3,11 @@
         <div class="tag-body">
             <div class="tag" v-for="(category, index) in categoryList" :key="index">
 
-                <img :src="getURL(index)" alt="">
+                <span class="image flex">
+                    <img :src="getURL(index)" alt="">
+                </span>
 
-                <span>{{ category.name }}</span>
+                <span class="name">{{ category.name }}</span>
 
             </div>
         </div>
@@ -74,7 +76,7 @@ const getURL = (index) => {
 .tag {
     background: var(--background-b);
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 999px;
     font-size: var(--text-size-1);
     transition: 0.2s;
@@ -90,14 +92,24 @@ const getURL = (index) => {
     background: var(--soft-cyan-a);
 }
 
-.tag img {
-    width: var(--text-size-4);
+.image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--background-a);
+    justify-content: center;
+  
+}
+
+.image img {
+    width: var(--text-size-3);
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
 }
 
-.tag span {
-    margin-left: 0.5rem;
+.name {
+    margin: 0 0.5rem;
+
 }
 </style>
