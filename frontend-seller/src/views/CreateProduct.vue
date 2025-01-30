@@ -28,16 +28,16 @@
                 <div class="left-column">
                     <div class="left-column-item">
                         <div class="formulary">
-                            <InputText v-model="productName" type="text" placeholder="Product Name"
+                            <InputText v-model="productName" type="text" placeholder="Name"
                                 v-keyfilter='/^[a-zA-Z0-9("--–.”)/+$ ]+$/' :invalid="formErrors.name" />
 
                             <InputGroup>
-                                <InputNumber v-model="productPrice" type="number" placeholder="Product Price"
-                                    :invalid="formErrors.price" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                <InputNumber v-model="productPrice" type="number" placeholder="Price"
+                                    :invalid="formErrors.price" :min="0" :max="9999999" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" suffix=" USD" />
 
 
-                                <InputText v-model="productSKU" type="text" placeholder="Product SKU"
+                                <InputText v-model="productSKU" type="text" placeholder="SKU"
                                     v-keyfilter="/^[a-zA-Z0-9-]+$/" :invalid="formErrors.sku"
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
@@ -57,23 +57,23 @@
                             </InputGroup>
 
                             <InputGroup>
-                                <InputNumber v-model="productWeight" type="number" placeholder="Shipping Weight (kg)"
-                                    :invalid="formErrors.weight" :min="0" :useGrouping="false" :minFractionDigits="0"
-                                    :maxFractionDigits="3"
+                                <InputNumber v-model="productWeight" type="number" placeholder="Weight (kg)"
+                                    :invalid="formErrors.weight" :min="0" :max="9999" :useGrouping="false"
+                                    :minFractionDigits="0" :maxFractionDigits="3"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                                <InputNumber v-model="productLength" type="number" placeholder="Shipping Length (cm)"
-                                    :invalid="formErrors.length" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productLength" type="number" placeholder="Length (cm)"
+                                    :invalid="formErrors.length" :min="0" :max="9999" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
                                     :minFractionDigits="0" :maxFractionDigits="2" />
 
-                                <InputNumber v-model="productWidth" type="number" placeholder="Shipping Width (cm)"
-                                    :invalid="formErrors.width" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productWidth" type="number" placeholder="Width (cm)"
+                                    :invalid="formErrors.width" :min="0" :max="9999" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
                                     :minFractionDigits="0" :maxFractionDigits="2" />
 
-                                <InputNumber v-model="productHeight" type="number" placeholder="Shipping Height (cm)"
-                                    :invalid="formErrors.height" :min="0" :useGrouping="false"
+                                <InputNumber v-model="productHeight" type="number" placeholder="Height (cm)"
+                                    :invalid="formErrors.height" :min="0" :max="9999" :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }"
                                     :minFractionDigits="0" :maxFractionDigits="2" />
                             </InputGroup>
@@ -94,11 +94,9 @@
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }"
                                     v-tooltip.right="'Important to know the shipping time. Can affect your trust score.'" />
                             </InputGroup>
-
-
                         </div>
                     </div>
-
+                    <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                     <div v-if="editor" class="editor" :class="{ invalid: formErrors.features }">
                         <div class="editor-control">
                             <div class="editor-control-group">
@@ -192,7 +190,7 @@
                         <editor-content :editor="editor" />
                     </div>
 
-                    <!--/////////////////////////////-->
+                   <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                     <div class="left-column-item">
                         <div class="uploader" :class="{ invalid: formErrors.image_set }">
                             <Toast />
@@ -268,8 +266,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!--///////////////////////////////////////-->
+               <!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
                 <div class="right-column">
                     <div class="box">
                         <div class="subtitle" v-tooltip="'List of important features'">
@@ -610,7 +607,7 @@ const formErrors = ref({
     keywords: false,
     bullet_list: false,
     paused: false,
-    color: false, 
+    color: false,
     color_name: false,
     quality: false,
     image_set: false,
