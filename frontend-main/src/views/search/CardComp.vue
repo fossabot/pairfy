@@ -1,11 +1,11 @@
 <template>
     <div class="card flex">
-        <div class="preview">
+        <div class="preview" @click="openProduct(content.id)">
             <img class="image" :src="content.image" alt="">
         </div>
         <div class="content">
             <span class="brand">{{ content.brand }}</span>
-            <span class="title">{{ content.name }}</span>
+            <span class="title" @click="openProduct(content.id)">{{ content.name }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rating-value">
@@ -15,7 +15,7 @@
             </span>
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
             <span class="tag flex best" v-if="content.best_seller">
-               Best seller
+                Best seller
             </span>
             <span class="tag flex discount" v-if="content.discount">
                 {{ `${content.discount_value}% off` }}
@@ -25,14 +25,29 @@
 </template>
 
 <script setup>
+import { useRouter, useRoute } from 'vue-router';
 import { ref, inject } from 'vue';
 
 const { formatPriceToUSD } = inject('utils');
+
+const router = useRouter();
+
+const theRoute = useRoute();
 
 const props = defineProps(['content'])
 
 const rating = ref(props.content.rating);
 
+const openProduct = (id) => {
+    router.push({
+        name: 'product',
+        params: {
+            ...theRoute.params,
+            id
+        },
+    })
+
+}
 </script>
 
 <style lang="css" scoped>
@@ -84,7 +99,7 @@ const rating = ref(props.content.rating);
 }
 
 .rating-value {
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
     font-weight: 500;
     font-size: var(--text-size-1);
 }
@@ -111,7 +126,7 @@ const rating = ref(props.content.rating);
 
 .reviews {
     font-size: var(--text-size-0);
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
     font-weight: 400;
     color: var(--text-b);
 }

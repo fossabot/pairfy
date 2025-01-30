@@ -33,6 +33,7 @@ section {
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
     margin-top: 1rem;
+    padding-bottom: 100px;
 }
 
 

@@ -10,7 +10,7 @@
             </div>
 
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image"  style="max-width: 700px;" height="500"
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '600px' }"
                     previewIcon="pi-search" preview />
             </div>
         </section>

@@ -58,7 +58,6 @@ const sortOptions = ref([
     { name: 'Discount', code: 'discount_value:asc' }
 ]);
 
-
 const unwatchRoute = watch(
     theRoute,
     (route) => {
