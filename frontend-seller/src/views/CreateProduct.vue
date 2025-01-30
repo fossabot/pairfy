@@ -1016,11 +1016,12 @@ main {
     justify-content: center;
     color: var(--text-b);
     margin-right: 0.5rem;
+    cursor: pointer;
 }
 
 .editor-control button svg {
-    width: var(--text-size-1);
-    height: var(--text-size-1);
+    width: var(--text-size-2);
+    height: var(--text-size-2);
 }
 
 .editor-control button.is-active {
