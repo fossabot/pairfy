@@ -49,6 +49,16 @@ const productData = ref([]);
 
 const currentRoute = ref(null);
 
+const selectedSort = ref();
+
+const sortOptions = ref([
+    { name: 'Price: Low To High', code: 'price:asc' },
+    { name: 'Price: High To Low', code: 'price:desc' },
+    { name: 'Rating', code: 'rating:asc' },
+    { name: 'Discount', code: 'discount_value:asc' }
+]);
+
+
 const unwatchRoute = watch(
     theRoute,
     (route) => {
@@ -58,11 +68,13 @@ const unwatchRoute = watch(
             })
         }
 
-        console.log("ROUTE CHANGED");
-
         searchKey.value = route.query.k;
 
         currentRoute.value = route;
+
+        if(route.query.sort){
+            selectedSort.value = sortOptions.value.find(item => item.code === route.query.sort);
+        }
 
         loading.value = true;
 
@@ -157,8 +169,6 @@ const { result: searchProduct } = useQuery(gql`
 
 const unwatchKey = watch(currentRoute.value,
     (route) => {
-        console.log("KEY______", route.query)
-
         variables.searchProductVariable.text = route.query.k
 
         if (route.query.qy) {
@@ -208,7 +218,6 @@ const unwatchKey = watch(currentRoute.value,
 );
 
 const unwatchSearchProduct = watch(searchProduct, value => {
-    console.log("RESULT", value);
 
     if (value) {
 
@@ -220,14 +229,6 @@ const unwatchSearchProduct = watch(searchProduct, value => {
     loading.value = false;
 });
 
-const selectedSort = ref();
-
-const sortOptions = ref([
-    { name: 'Price: Low To High', code: 'price:asc' },
-    { name: 'Price: High To Low', code: 'price:desc' },
-    { name: 'Rating', code: 'rating:asc' },
-    { name: 'Discount', code: 'discount_value:asc' }
-]);
 
 const onSortChange = (value) => {
 
