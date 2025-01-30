@@ -154,7 +154,6 @@ onBeforeUnmount(() => unwatchGetProduct())
 .container {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
     max-width: var(--body-a);
     width: 100%;
     height: auto;
@@ -169,7 +168,7 @@ onBeforeUnmount(() => unwatchGetProduct())
     font-size: var(--text-size-0);
     text-transform: capitalize;
     border-bottom: none;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     color: var(--text-b);
 }
 
