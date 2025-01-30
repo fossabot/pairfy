@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="4.0000001"
-     inkscape:cx="60.874998"
-     inkscape:cy="-0.49999999"
+     inkscape:zoom="8.0000002"
+     inkscape:cx="109.4375"
+     inkscape:cy="4.9999999"
      inkscape:window-width="1920"
      inkscape:window-height="1020"
      inkscape:window-x="3840"
@@ -123,6 +123,38 @@
          y="21.773342"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;font-family:Manrope;-inkscape-font-specification:'Manrope Bold';fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="tspan541421-5-5">adamarket</tspan></text>
+    <path
+       style="display:inline;fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
+       d="m 108.66728,16.389365 -1.79227,-2.856824 c -4.43514,-1.019177 -6.42345,-1.47988 -9.950224,-2.294931 0,0 1.761837,1.918524 3.785394,3.807903 4.08017,0.63859 7.9571,1.343852 7.9571,1.343852 z"
+       id="path1156-3"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
+    <path
+       style="display:inline;fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
+       d="m 110.40016,19.549277 -1.32628,-2.316492 c -3.53061,-0.58525 -4.30571,-0.732076 -7.94774,-1.366058 0,0 1.39147,1.371389 2.98964,2.721945 3.22244,0.456473 6.28438,0.960605 6.28438,0.960605 z"
+       id="path1156-3-3"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
+    <path
+       style="display:inline;fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.253574;stroke-opacity:1"
+       d="m 112.13304,16.389365 1.79227,-2.856824 c 4.43514,-1.019177 6.42345,-1.47988 9.95023,-2.294931 0,0 -1.76184,1.918524 -3.7854,3.807903 -4.08017,0.63859 -7.9571,1.343852 -7.9571,1.343852 z"
+       id="path1156-3-36"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
+    <path
+       style="display:inline;fill:#ff385c;fill-opacity:1;stroke:none;stroke-width:0.190527;stroke-opacity:1"
+       d="m 110.40016,19.549277 1.32628,-2.316492 c 3.53061,-0.58525 4.30571,-0.732076 7.94774,-1.366058 0,0 -1.39147,1.371389 -2.98964,2.721945 -3.22244,0.456473 -6.28438,0.960605 -6.28438,0.960605 z"
+       id="path1156-3-3-7"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/path33287-0.png"
+       inkscape:export-xdpi="121.6"
+       inkscape:export-ydpi="121.6" />
   </g>
   <g
      inkscape:groupmode="layer"
