@@ -137,7 +137,7 @@ a {
 }
 
 .logo {
-  height: 4rem;
+  height: 3rem; 
   margin-right: auto;
   margin-top: 1rem;
   margin-left: 1rem;
