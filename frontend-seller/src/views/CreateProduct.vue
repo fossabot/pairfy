@@ -416,7 +416,7 @@ const uploadImages = () => {
 
 const toast = useToast();
 
-const router = useRouter()
+const router = useRouter();
 
 const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
