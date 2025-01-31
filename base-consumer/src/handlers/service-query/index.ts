@@ -160,13 +160,17 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
       .map((key) => `${key} = ?`)
       .join(", ");
 
-    const values = [...Object.values(payload), payload.id];
-
     const updateScheme = `
         UPDATE products
         SET ${fields}
-        WHERE id = ?
+        WHERE id = ? AND schema_v = ?
         `;
+
+    const values = [
+      ...Object.values(payload),
+      payload.id,
+      payload.schema_v - 1,
+    ];
 
     const [updated] = await connection.execute(updateScheme, values);
 
@@ -175,7 +179,7 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
     }
 
     ///////////////////////////////////////////////////////
-    
+
     await connection.execute(
       "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
       [event.id, seq, event.type, true]
