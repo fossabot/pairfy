@@ -21,7 +21,7 @@
         </Toolbar>
         <div class="card">
             <div class="title">
-                Create Product
+                Edit Product
             </div>
 
             <div class="card-wrap">
@@ -259,12 +259,12 @@
 
                         <div class="box-content">
                             <Button type="button" label="Generate" :loading="bulletListLoading"
-                                @click="handleBulletList" style="font-size: var(--text-size-a); margin-bottom: 1rem"
+                                @click="handleBulletList" style="font-size: var(--text-size-1); margin-bottom: 1rem"
                                 variant="outlined" :disabled="!productEditorCounter" />
 
 
                             <AutoComplete inputId="productBulletList" v-model="productBulletList" multiple fluid
-                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
+                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-1)' }"
                                 :invalid="formErrors.bullet_list" size="large" placeholder=""
                                 removeTokenIcon="pi pi-minus" />
                         </div>
@@ -277,7 +277,7 @@
 
                         <div class="box-content">
                             <Select v-model="productCategory" :options="productCategories" optionLabel="name"
-                                placeholder="Select a category" style="font-size: var(--text-size-a)" fluid
+                                placeholder="Select a category" style="font-size: var(--text-size-1)" fluid
                                 :invalid="formErrors.category" />
                         </div>
                     </div>
@@ -289,7 +289,7 @@
 
                         <div class="box-content">
                             <AutoComplete v-model="productKeywords" inputId="multiple-ac-2" multiple fluid
-                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-a)' }"
+                                :typeahead="false" :inputStyle="{ fontSize: 'var(--text-size-1)' }"
                                 :invalid="formErrors.keywords" />
                         </div>
                     </div>
@@ -359,10 +359,10 @@
 
                     <div class="box-buttons">
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="updateProductLoading"
-                            outlined style="font-size: var(--text-size-a)" fluid @click="reloadPage" />
+                            outlined style="font-size: var(--text-size-1)" fluid @click="reloadPage" />
 
-                        <Button type="button" label="Save" icon="pi pi-check" :loading="updateProductLoading"
-                            @click="beforeUpdate" style="font-size: var(--text-size-a)" fluid />
+                        <Button type="button" label="Save" :loading="updateProductLoading"
+                            @click="beforeUpdate" style="color: var(--text-w)" fluid />
                     </div>
                 </div>
             </div>
@@ -941,11 +941,11 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.p-inputtext) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-select-label) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-toolbar) {
@@ -959,15 +959,15 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.p-chip) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-message-text) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-togglebutton) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-fileupload-advanced) {
@@ -994,6 +994,7 @@ main {
 .title {
     margin-bottom: 1.5rem;
     font-weight: 700;
+    font-size: var(--text-size-2);
 }
 
 .card-wrap {
@@ -1030,7 +1031,7 @@ main {
 
 .subtitle {
     border-bottom: 1px solid var(--border-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     font-weight: 700;
     padding: 1rem;
 }
@@ -1082,7 +1083,7 @@ main {
     border-radius: 50%;
     background: transparent;
     color: var(--text-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1092,7 +1093,7 @@ main {
 }
 
 .uploader-item button i {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .uploader-image {
@@ -1136,7 +1137,7 @@ main {
 }
 
 .uploader-choose i {
-    font-size: var(--text-size-b);
+    font-size: var(--text-size-2);
 }
 
 .uploader-header {
@@ -1162,7 +1163,7 @@ main {
     overflow-x: hidden;
     padding: 1rem;
     color: var(--text-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     outline: none;
     box-sizing: border-box;
 }
@@ -1232,8 +1233,8 @@ main {
 }
 
 .editor-control button svg {
-    width: var(--text-size-b);
-    height: var(--text-size-b);
+    width: var(--text-size-2);
+    height: var(--text-size-2);
 }
 
 
@@ -1242,13 +1243,13 @@ main {
 }
 
 .editor-control-counter {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     color: var(--text-b);
 }
 
 .price-discount {
     background: var(--background-b);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     margin-left: 1rem;
     padding: 5px;
     font-weight: 500;

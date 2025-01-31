@@ -9,7 +9,7 @@ const searchClient = new Client({
   },
 });
 
-const createProductIndex = async (payload: any) => {
+const createProductIndex = async (payload: any): Promise<boolean> => {
   let result = false;
 
   try {
@@ -55,6 +55,27 @@ const createProductIndex = async (payload: any) => {
 
       result = true;
     }
+  } catch (err) {
+    logger.error(err);
+  } finally {
+    return result;
+  }
+};
+
+const deleteProductIndex = async (id: string): Promise<boolean> => {
+  let result = false;
+
+  try {
+    const response = await searchClient.delete({
+      index: "products",
+      id,
+    });
+
+    if (response.result !== "deleted") {
+      throw new Error("DeleteProductIndexError");
+    }
+
+    result = true;
   } catch (err) {
     logger.error(err);
   } finally {
@@ -239,6 +260,12 @@ const DeleteProduct = async (event: any, seq: number): Promise<boolean> => {
 
     if (result.affectedRows !== 1) {
       throw new Error("DeleteProductError");
+    }
+
+    const deleteIndex = await deleteProductIndex(payload.id);
+
+    if (!deleteIndex) {
+      throw new Error("DeleteProductIndexError");
     }
 
     await connection.execute(

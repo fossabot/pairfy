@@ -7,8 +7,8 @@
                 <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name }}</b>?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" variant="outlined" @click="deleteProductDialog = false" />
-                <Button label="Yes" icon="pi pi-check" @click="onDeleteConfirmed" />
+                <Button label="No"  variant="outlined" @click="deleteProductDialog = false" />
+                <Button label="Yes" @click="onDeleteConfirmed" style="color: var(--text-w)" />
             </template>
         </Dialog>
 
@@ -362,11 +362,11 @@ const getLabelColor = (status) => {
 }
 
 ::v-deep(button) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 .p-inputtext {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-datatable-header) {
@@ -389,14 +389,13 @@ const getLabelColor = (status) => {
 }
 
 .p-datatable {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     border: 1px solid var(--border-a);
     border-radius: 1rem;
 }
 
 .p-tag {
-    font-size: var(--text-size-a);
-    font-weight: 600;
+    font-size: var(--text-size-1);
 }
 
 .card {
