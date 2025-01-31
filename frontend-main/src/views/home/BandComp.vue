@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: var(--body-a);
     overflow: hidden;
-    height: 350px;
+    height: 300px;
     position: relative;
     display: flex;
     border-radius: 16px;
@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
     height: 50px;
     border-radius: 50%;
     position: absolute;
-    bottom: calc(325px / 2 - 0px);
+    bottom: calc(100% / 2 );
     display: flex;
     align-items: center;
     justify-content: center;

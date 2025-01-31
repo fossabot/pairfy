@@ -131,8 +131,81 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
   return response;
 };
 
+const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
+  let response = null;
+
+  let connection = null;
+
+  try {
+    connection = await database.client.getConnection();
+
+    const [findProcessed] = await connection.execute(
+      "SELECT id FROM processed WHERE id = ? AND processed = ?",
+      [event.id, true]
+    );
+
+    if (findProcessed.length > 0) {
+      console.log("CreateProductRepeated");
+
+      return Promise.resolve(true);
+    }
+
+    const payload = JSON.parse(event.data);
+
+    ///////////////////////////////////////////////////////
+
+    await connection.beginTransaction();
+
+    const fields = Object.keys(payload)
+      .map((key) => `${key} = ?`)
+      .join(", ");
+
+    const values = [...Object.values(payload), payload.id];
+
+    const updateScheme = `
+        UPDATE products
+        SET ${fields}
+        WHERE id = ?
+        `;
+
+    const [updated] = await connection.execute(updateScheme, values);
+
+    if (updated.affectedRows !== 1) {
+      throw new Error("UpdateProductError");
+    }
+
+    ///////////////////////////////////////////////////////
+    
+    await connection.execute(
+      "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
+      [event.id, seq, event.type, true]
+    );
+
+    await connection.commit();
+
+    ///////////////////////////////////////////////////////
+
+    response = Promise.resolve(true);
+  } catch (err: any) {
+    logger.error(err);
+
+    if (connection) {
+      await connection.rollback();
+    }
+
+    response = Promise.resolve(false);
+  } finally {
+    if (connection) {
+      await connection.release();
+    }
+  }
+
+  return response;
+};
+
 const handlers: any = {
   CreateProduct,
+  UpdateProduct,
 };
 
 export const processEvent = (message: any) => {
