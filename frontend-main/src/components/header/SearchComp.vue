@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
 }
 
 .search-button:hover {
-    opacity: 0.9;
+    background: var(--background-b);
 }
 
 .search-icon {
