@@ -64,15 +64,6 @@ const getURL = (index) => {
     padding: 1rem 0;
 }
 
-.tag-body {
-    width: inherit;
-    max-width: var(--body-a);
-    gap: 1rem;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: center;
-}
-
 .tag {
     background: var(--background-b);
     text-align: center;
@@ -90,6 +81,15 @@ const getURL = (index) => {
 
 .tag:hover {
     background: var(--soft-cyan-a);
+}
+
+.tag-body {
+    width: inherit;
+    max-width: var(--body-a);
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
 }
 
 .image {
