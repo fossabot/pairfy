@@ -1,3 +1,4 @@
+import { getCurrentTimestamp } from "../../utils/index.js";
 import { database } from "../../database/client.js";
 
 export const updateProduct = async (_: any, args: any, context: any) => {
@@ -7,65 +8,56 @@ export const updateProduct = async (_: any, args: any, context: any) => {
   
     const SELLER = context.sellerData;
   
-    if (params.collateral >= params.price) {
-      throw new Error("MAX_COLLATERAL");
-    }
-  
     let connection = null;
   
     try {
       connection = await database.client.getConnection();
   
       await connection.beginTransaction();
-  
+
+      const productData = {
+        name: params.name,
+        price: params.price,
+        model: params.model,
+        brand: params.brand,
+        features: params.features,
+        category: params.category,
+        keywords: params.keywords,
+        bullet_list: params.bullet_list,
+        paused: params.paused,
+        color: params.color,
+        color_name: params.color_name,
+        variations: params.variations,
+        quality: params.quality,
+        image_set: params.image_set,
+        video_set: params.video_set,
+        discount: params.discount,
+        discount_value: params.discount_value,
+        shipping_weight: params.shipping_weight,
+        shipping_length: params.shipping_length,
+        shipping_width: params.shipping_width,
+        shipping_height: params.shipping_height,
+        shipping_city: params.shipping_city,
+        shipping_postal: params.shipping_postal,
+        shipping_instructions: params.shipping_instructions,
+        shipping_fragile: params.shipping_fragile,
+        updated_at: getCurrentTimestamp(),
+      };
+
+      const fields = Object.keys(productData)
+      .map(key => `${key} = ?`)
+      .join(', ');
+
+      const values = [...Object.values(productData), params.id, SELLER.id];
+      
       const schemeData = `
-          UPDATE products
-          SET name = ?,
-              price = ?,  
-              collateral = ?,
-              sku = ?,              
-              model = ?,
-              brand = ?,
-              features = ?,
-              category = ?,
-              keywords = ?,
-              bullet_list = ?,
-              paused = ?,
-              color = ?,
-              color_name = ?,
-              quality = ?,
-              image_set = ?,
-              video_set = ?,
-              discount = ?,
-              discount_value = ?,
-              schema_v = schema_v + 1
-          WHERE id = ? AND seller_id = ?
+        UPDATE products
+        SET ${fields}, schema_v = schema_v + 1
+        WHERE id = ? AND seller_id = ?
          `;
   
-      const schemeValue = [
-        params.name,
-        params.price,
-        params.collateral,
-        params.sku,
-        params.model,
-        params.brand,
-        params.features,
-        params.category,
-        params.keywords,
-        params.bullet_list,
-        params.paused,
-        params.color,
-        params.color_name,
-        params.quality,
-        params.image_set,
-        params.video_set,
-        params.discount,
-        params.discount_value,
-        params.id,
-        SELLER.id,
-      ];
   
-      const [result] = await connection.execute(schemeData, schemeValue);
+      const [result] = await connection.execute(schemeData, values);
   
       if (result.affectedRows !== 1) {
         throw new Error("INTERNAL_ERROR");
