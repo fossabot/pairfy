@@ -61,7 +61,6 @@ const getURL = (index) => {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 1rem 0;
 }
 
 .tag {
@@ -89,7 +88,7 @@ const getURL = (index) => {
     gap: 0.5rem;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .image {
