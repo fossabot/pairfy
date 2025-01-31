@@ -18,6 +18,7 @@ type Product {
     paused: Int!
     color: String!
     color_name: String!
+    variations: String!
     quality: String!
     country: String!
     media_url: String!
@@ -116,6 +117,7 @@ input UpdateProductInput {
   paused: Int!
   color: String!
   color_name: String!
+  variations: String!
   quality: String!
   image_set: String!
   video_set: String!

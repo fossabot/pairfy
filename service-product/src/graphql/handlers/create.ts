@@ -1,4 +1,4 @@
-import { getCurrentTimestamp, getProductId } from "../../utils/index.js";
+import { formatProduct, getCurrentTimestamp, getProductId } from "../../utils/index.js";
 import { database } from "../../database/client.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
@@ -62,16 +62,31 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     const values = Object.values(productData);
 
-    const schemeData = `
+    const createScheme = `
         INSERT INTO products (${columns.join(", ")})
         VALUES (${columns.map(() => "?").join(", ")})
       `;
 
-    await connection.execute(schemeData, values);
+    const [created] = await connection.execute(createScheme, values);
+
+    if (created.affectedRows !== 1) {
+      throw new Error("INTERNAL_ERROR");
+    }
 
     //////////////////////////////////////////////////////////////
 
-    const eventId = productId + "-" + productVersion;
+    const [products] = await connection.execute(
+      `SELECT * FROM products WHERE id = ?`,
+      [productId]
+    );
+
+    if (products.length === 0) {
+      throw new Error("INTERNAL_ERROR");
+    }
+
+    const PRODUCT = formatProduct(products[0]);
+   
+    const eventId = PRODUCT.id + "-" + PRODUCT.schema_v;
 
     const eventSchema = `
           INSERT INTO events (
@@ -88,12 +103,14 @@ export const createProduct = async (_: any, args: any, context: any) => {
       eventId,
       "service-product",
       "CreateProduct",
-      JSON.stringify(productData),
+      JSON.stringify(PRODUCT),
       SELLER.id,
       0,
     ];
 
     await connection.execute(eventSchema, eventValue);
+
+    //////////////////////////////////////////////////////////////
 
     await connection.commit();
 

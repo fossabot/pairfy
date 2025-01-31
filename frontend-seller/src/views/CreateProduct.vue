@@ -682,7 +682,7 @@ const submitProduct = () => {
             "variations": "none",
             "quality": productQuality.value,
             "image_set": productImageSet.value.join(','),
-            "video_set": "",
+            "video_set": "none",
             "discount": productDiscount.value,
             "discount_value": productDiscount.value ? productDiscountValue.value : 0,
             "shipping_weight": productWeight.value,

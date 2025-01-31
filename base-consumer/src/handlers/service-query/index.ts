@@ -9,41 +9,39 @@ const searchClient = new Client({
   },
 });
 
-const createProductIndex = async (data: any) => {
+const createProductIndex = async (payload: any) => {
   let result = false;
 
   try {
     const exists = await searchClient.exists({
       index: "products",
-      id: data.id,
+      id: payload.id,
     });
 
     if (exists) {
       result = true;
     } else {
-      const images = data.image_set.split(",");
+      const images = payload.image_set.split(",");
 
-      const productImage = data.media_url + data.image_path + images[0];
+      const productImage = payload.media_url + payload.image_path + images[0];
 
       const document = {
-        id: data.id,
-        name: data.name,
-        sku: data.sku,
-        category: data.category,
-        brand: data.brand,
-        model: data.model,
-        price: data.price,
-        quality: data.quality,
+        id: payload.id,
+        name: payload.name,
+        sku: payload.sku,
+        category: payload.category,
+        brand: payload.brand,
+        model: payload.model,
+        price: payload.price,
+        quality: payload.quality,
         image: productImage,
-        keywords: data.keywords,
+        keywords: payload.keywords,
         rating: 0.0,
         reviews: 0,
-        discount: data.discount,
-        discount_value: data.discount_value,
+        discount: payload.discount,
+        discount_value: payload.discount_value,
         best_seller: false,
       };
-
-      console.log(document);
 
       const response = await searchClient.index({
         index: "products",
@@ -85,7 +83,7 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const payload = JSON.parse(event.data);
 
-    /////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     await connection.beginTransaction();
 
@@ -93,12 +91,12 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const values = Object.values(payload);
 
-    const schemeData = `
+    const createScheme = `
       INSERT INTO products (${columns.join(", ")})
       VALUES (${columns.map(() => "?").join(", ")})
     `;
 
-    await connection.execute(schemeData, values);
+    await connection.execute(createScheme, values);
 
     await connection.execute(
       "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
@@ -113,7 +111,7 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     await connection.commit();
 
-    /////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     response = Promise.resolve(true);
   } catch (err: any) {

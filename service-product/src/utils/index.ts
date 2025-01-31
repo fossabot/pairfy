@@ -27,4 +27,38 @@ function getCurrentTimestamp() {
   return new Date().toISOString().replace("T", " ").substring(0, 19);
 }
 
-export { logger, catcher, getProductId, getEventId, getCurrentTimestamp };
+function toTimestamp(input: string | Date) {
+  if (input instanceof Date) {
+    input = input.toISOString();
+  }
+
+  if (typeof input === "string") {
+    return input.replace("T", " ").slice(0, 19);
+  }
+
+  throw new Error("Invalid input: expected a string or Date object");
+}
+
+function formatProduct(PRODUCT: any): any {
+  PRODUCT.moderated = PRODUCT.moderated === 1;
+
+  PRODUCT.paused = PRODUCT.paused === 1;
+
+  PRODUCT.discount = PRODUCT.discount === 1;
+
+  PRODUCT.updated_at = toTimestamp(PRODUCT.updated_at);
+
+  PRODUCT.created_at = toTimestamp(PRODUCT.created_at);
+
+  return PRODUCT;
+}
+
+export {
+  logger,
+  catcher,
+  getProductId,
+  getEventId,
+  getCurrentTimestamp,
+  toTimestamp,
+  formatProduct,
+};
