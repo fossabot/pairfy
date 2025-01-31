@@ -67,4 +67,8 @@ const { formatPriceToUSD } = inject('utils');
     white-space: nowrap;
     font-weight: 500;
 }
+
+.arrow i {
+    font-size: var(--text-size-2);
+}
 </style>
