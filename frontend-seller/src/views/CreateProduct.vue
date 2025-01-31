@@ -792,6 +792,7 @@ main {
 .title {
     margin-bottom: 1.5rem;
     font-weight: 700;
+    font-size: var(--text-size-2);
 }
 
 .card-wrap {
