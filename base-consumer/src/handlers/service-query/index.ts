@@ -41,6 +41,7 @@ const createProductIndex = async (payload: any): Promise<boolean> => {
         discount: payload.discount,
         discount_value: payload.discount_value,
         best_seller: false,
+        sold_count: 0
       };
 
       const response = await searchClient.index({
