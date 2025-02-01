@@ -91,7 +91,7 @@ const itemList = ref([
     font-size: var(--text-size-1);
     font-weight: 500;
     cursor: pointer;
-    background: var(--primary-a);
+    background-image: var(--button-gradient-a);
     color: var(--text-w);
     width: 40px;
     height: 40px;

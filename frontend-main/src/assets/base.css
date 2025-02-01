@@ -99,7 +99,7 @@
 
   --background-a: #ffffff;
   --background-b: #f7f7f7;
-  --background-bs: #E7EBEF;
+  --background-bs: #e7ebef;
   --background-c: #181a20;
   --background-d: #1e2329;
 
@@ -127,7 +127,7 @@
   --text-size-8: 84px;
 
   --body-a: 1600px;
-  
+
   --border-a: #e2e8f0;
   --border-b: #474d57;
 
@@ -135,17 +135,19 @@
 
   --red-a: #ff385c;
   --green-a: #10b981;
-  --orange-a: #FF7733;
+  --orange-a: #ff7733;
   --orange-b: #ff4500;
   --yellow-a: #fcbc05;
   --yellow-b: #ffe600;
   --blue-a: #0866ff;
   --cyan-a: #60a3ff;
-  --soft-red-a: rgba(255, 56, 92, 0.3);
+  --soft-red-a: rgba(255, 56, 92, 0.8);
   --soft-yellow-a: rgba(252, 188, 5, 0.3);
   --soft-yellow-b: rgba(255, 230, 0, 0.3);
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
+
+  --button-gradient-a: linear-gradient(145deg, var(--soft-yellow-a) 0%, var(--primary-a) 50%);
 }
 
 *,
