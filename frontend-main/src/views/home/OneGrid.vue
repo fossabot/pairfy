@@ -111,7 +111,6 @@ const itemList = ref([
 
 <style lang="css" scoped>
 .grid {
-  padding: 1rem 0;
   max-width: var(--body-a);
   width: 100%;
   border-top-left-radius: 0px;
