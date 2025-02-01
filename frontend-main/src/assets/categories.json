@@ -44,16 +44,16 @@
       "keywords": "pets, pet food, pet toys, dog accessories, cat supplies, pet grooming, pet health, aquarium, pet training, animal care"
     },
     "11": {
-      "name": "Shoes",
-      "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers"
-    },
-    "12": {
       "name": "Lights & Lighting",
       "keywords": "lighting, lamps, light bulbs, LED, chandeliers, home lighting, outdoor lights, ceiling lights, wall sconces, floor lamps"
     },
-    "13": {
+    "12": {
       "name": "Mother & Kids",
       "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care"
+    },
+    "13": {
+      "name": "Shoes",
+      "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers"
     }
   }
   
