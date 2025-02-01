@@ -1,9 +1,7 @@
 <template>
     <header>
         <DrawerComp />
-        <div class="bar">
-
-        </div>
+        <PriceBar />
         <div class="header">
             <div class="header-col left">
                 <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
@@ -39,6 +37,7 @@ import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
+import PriceBar from "@/components/header/PriceBar.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
@@ -143,12 +142,6 @@ section {
 
 .header {
     padding: 0.75rem 0;
-}
-
-.bar{
-    width: inherit;
-    height: 2rem;
-    border-bottom: 1px solid var(--border-a);
 }
 
 .brand {
