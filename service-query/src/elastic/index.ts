@@ -61,6 +61,7 @@ const createProductIndex = async () => {
                 discount: { type: "boolean" }, // For filtering
                 discount_value: { type: "double" }, // For sorting
                 best_seller: { type: "boolean" }, // For filtering
+                units_sold: { type: "integer" }  // For sorting
               },
             },
           },
