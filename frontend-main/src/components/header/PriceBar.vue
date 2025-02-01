@@ -2,6 +2,9 @@
     <div class="bar flex">
         <div class="bar-body flex">
             <span class="price">ADAUSD ${{ formatPriceToUSD(getADAprice) }} </span>
+            <span class="price">IUSD $1.0</span>
+            <span class="price">USDM $1.0</span>
+            <span class="price">USDA $1.0</span>
         </div>
     </div>
 </template>
@@ -32,5 +35,6 @@ const { formatPriceToUSD } = inject('utils');
 .price{
     font-size: var(--text-size-0);
     font-weight: 500;
+    margin-left: 2rem; 
 }
 </style>
