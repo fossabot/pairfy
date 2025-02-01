@@ -1,6 +1,7 @@
 <template>
     <div class="bar flex">
         <div class="bar-body flex">
+            <span class="price">Blackdays 1.000.000 ADA</span>
             <span class="price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
             <span class="price">IUSD 1.0</span>
             <span class="price">USDM 1.0</span>
@@ -9,7 +10,7 @@
                 <span>
                     <i class="pi pi-wallet" />
                 </span>
-                <span>{{ getCurrentUser.address.slice(0, 20) }}</span>
+                <span class="wallet">{{ getCurrentUser.address.slice(0, 20) }}</span>
             </div>
         </div>
     </div>
@@ -38,7 +39,8 @@ const { formatPriceToUSD } = inject('utils');
     width: 100%;
 }
 
-.price {
+.price,
+.wallet {
     font-size: var(--text-size-0);
     font-weight: 500;
     margin-left: 2rem;
@@ -52,5 +54,9 @@ const { formatPriceToUSD } = inject('utils');
 .address i {
     font-size: var(--text-size-0);
     margin-right: 0.5rem;
+}
+
+.wallet {
+    margin: initial;
 }
 </style>
