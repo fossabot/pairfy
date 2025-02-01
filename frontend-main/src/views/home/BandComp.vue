@@ -27,13 +27,13 @@ import banner3 from '@/assets/banner/3.png';
 
 const imageList = ref([
     {
-        src: banner3
-    },
-    {
         src: banner1
     },
     {
         src: banner2
+    },
+    {
+        src: banner3
     }
 ])
 
@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: var(--body-a);
     overflow: hidden;
-    height: 325px;
+    height: 360px;
     position: relative;
     display: flex;
     border-radius: 16px;
