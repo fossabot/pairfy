@@ -89,10 +89,6 @@ const openProduct = (id) => {
     cursor: pointer;
 }
 
-.title:hover {
-    color: var(--primary-a);
-}
-
 .rating {
     margin-top: 0.5rem;
     align-items: baseline;

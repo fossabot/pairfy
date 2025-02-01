@@ -100,7 +100,7 @@ const itemList = ref([
 .title {
     display: flex;
     flex-direction: column;
-    color: var(--text-a);
+    color: var(--primary-a);
 }
 
 .title span:nth-child(2) {
