@@ -9,7 +9,7 @@
                         1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
-                        placeholder="Price: High To Low" checkmark :highlightOnSelect="false" @change="onSortChange" />
+                        placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange" />
                 </div>
 
                 <template v-if="loading">
@@ -49,12 +49,12 @@ const productData = ref([]);
 
 const currentRoute = ref(null);
 
-const selectedSort = ref();
+const selectedSort = ref({ name: 'Price: Low To High', code: 'price:asc' });
 
 const sortOptions = ref([
     { name: 'Price: Low To High', code: 'price:asc' },
     { name: 'Price: High To Low', code: 'price:desc' },
-    { name: 'Rating', code: 'rating:asc' },
+    { name: 'Rating', code: 'rating:desc' },
     { name: 'Discount', code: 'discount_value:asc' }
 ]);
 
