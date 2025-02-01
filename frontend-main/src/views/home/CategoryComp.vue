@@ -1,7 +1,8 @@
 <template>
     <div class="category">
         <div class="tag-body">
-            <div class="tag" v-for="(category, index) in categoryList" :key="index">
+            <div class="tag" v-for="(category, index) in categoryList" :key="index"
+                @click="searchCategory(category.name)">
 
                 <span class="image flex">
                     <img :src="getURL(index)" alt="">
@@ -15,7 +16,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import categories from '@/assets/categories.json';
 import asset0 from "@/assets/icons/0.svg";
 import asset1 from "@/assets/icons/1.svg";
@@ -31,8 +31,14 @@ import asset10 from "@/assets/icons/10.svg";
 import asset11 from "@/assets/icons/11.svg";
 import asset12 from "@/assets/icons/12.svg";
 import asset13 from "@/assets/icons/13.svg";
+import { useRoute, useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 const categoryList = ref(categories);
+
+const route = useRoute();
+
+const router = useRouter();
 
 const assets = ref({
     0: asset0,
@@ -53,6 +59,16 @@ const assets = ref({
 
 const getURL = (index) => {
     return assets.value[index]
+}
+
+const searchCategory = (name) => {
+    router.push({
+        name: 'search',
+        params: route.params,
+        query: {
+            k: name
+        }
+    })
 }
 </script>
 
