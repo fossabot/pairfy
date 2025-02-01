@@ -95,7 +95,7 @@ const getURL = (index) => {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--background-a);
+    background: var(--primary-a);
     justify-content: center;
   
 }
@@ -105,6 +105,7 @@ const getURL = (index) => {
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
+    filter: invert(1);
 }
 
 .name {
