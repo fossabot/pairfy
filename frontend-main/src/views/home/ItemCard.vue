@@ -65,7 +65,7 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
 }
 
 .shipping {
-    font-weight: 500;
+    font-weight: 400;
     margin-top: 0.25rem;
 }
 
