@@ -92,10 +92,11 @@ const getURL = (index) => {
 }
 
 .image {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     justify-content: center;
+    background: var(--primary-a);
     background-image: var(--gradient-a);
 }
 

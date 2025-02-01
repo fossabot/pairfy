@@ -100,11 +100,11 @@ const itemList = ref([
 .title {
     display: flex;
     flex-direction: column;
-    color: var(--text-w);
+    color: var(--text-a);
 }
 
 .title span:nth-child(2) {
-    color: var(--text-w);
+    color: var(--text-b);
     font-size: var(--text-size-1);
     font-weight: 400;
 }
@@ -118,8 +118,7 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
-    background: var(--primary-a);
-    background-image: var(--gradient-a);
+    background: var(--background-b);
 }
 
 .minicard {
