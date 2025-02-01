@@ -6,7 +6,7 @@
             <div class="content">
                 <div class="banner flex">
                     <div class="counter">
-                        1-{{ productData.length }} of over 1,000 results for <span>"{{ searchKey }}"</span>
+                        1-{{ productData.length }} of over {{ productData.length }} results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
                         placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange" />
