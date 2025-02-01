@@ -147,7 +147,7 @@
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
 
-  --button-gradient-a: linear-gradient(145deg, var(--soft-yellow-a) 0%, var(--primary-a) 50%);
+  --gradient-a: linear-gradient(145deg, var(--soft-yellow-a) 0%, var(--primary-a) 50%);
 }
 
 *,

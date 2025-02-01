@@ -96,7 +96,7 @@ const getURL = (index) => {
     height: 50px;
     border-radius: 50%;
     justify-content: center;
-    background-image: var(--button-gradient-a);
+    background-image: var(--gradient-a);
 }
 
 .image img {

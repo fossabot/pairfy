@@ -91,7 +91,7 @@ const itemList = ref([
     font-size: var(--text-size-1);
     font-weight: 500;
     cursor: pointer;
-    background-image: var(--button-gradient-a);
+    background: var(--primary-a);
     color: var(--text-w);
     width: 40px;
     height: 40px;
@@ -100,11 +100,11 @@ const itemList = ref([
 .title {
     display: flex;
     flex-direction: column;
-    color: var(--primary-a);
+    color: var(--text-w);
 }
 
 .title span:nth-child(2) {
-    color: var(--text-b);
+    color: var(--text-w);
     font-size: var(--text-size-1);
     font-weight: 400;
 }
@@ -118,7 +118,8 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
-    background: var(--background-b);
+    background: var(--primary-a);
+    background-image: var(--gradient-a);
 }
 
 .minicard {
