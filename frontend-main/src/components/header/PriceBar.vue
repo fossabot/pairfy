@@ -5,6 +5,12 @@
             <span class="price">IUSD 1.0</span>
             <span class="price">USDM 1.0</span>
             <span class="price">USDA 1.0</span>
+            <div class="address flex" v-if="getCurrentUser">
+                <span>
+                    <i class="pi pi-wallet" />
+                </span>
+                <span>{{ getCurrentUser.address.slice(0, 20) }}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -13,7 +19,7 @@
 import headerAPI from "@/components/header/api/index";
 import { inject } from 'vue';
 
-const { getADAprice } = headerAPI();
+const { getADAprice, getCurrentUser } = headerAPI();
 
 const { formatPriceToUSD } = inject('utils');
 </script>
@@ -26,15 +32,25 @@ const { formatPriceToUSD } = inject('utils');
     justify-content: center;
 }
 
-.bar-body{
+.bar-body {
     justify-content: flex-end;
     max-width: var(--body-a);
     width: 100%;
 }
 
-.price{
+.price {
     font-size: var(--text-size-0);
     font-weight: 500;
-    margin-left: 2rem; 
+    margin-left: 2rem;
+}
+
+.address {
+    font-weight: 400;
+    margin-left: 2rem;
+}
+
+.address i {
+    font-size: var(--text-size-0);
+    margin-right: 0.5rem;
 }
 </style>

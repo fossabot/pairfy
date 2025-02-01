@@ -5,10 +5,6 @@
 
             <NotificationComp />
 
-            <div class="card-address">
-                {{ getCurrentUser.address.slice(0, 15) }}
-            </div>
-
             <div class="card-button flex" @click="togglePanel(true)">
                 <i class="pi pi-bars" />
             </div>
@@ -48,6 +44,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 .card-button {
     cursor: pointer;
+    margin-left: 2rem;
 }
 
 .card-button i {
