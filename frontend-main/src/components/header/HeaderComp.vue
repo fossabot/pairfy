@@ -1,6 +1,9 @@
 <template>
     <header>
         <DrawerComp />
+        <div class="bar">
+
+        </div>
         <div class="header">
             <div class="header-col left">
                 <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
@@ -134,10 +137,18 @@ header {
 section {
     width: inherit;
     justify-content: center;
+    border-top: 1px solid var(--border-a);
+    padding: 0.5rem 0;
 }
 
 .header {
     padding: 0.75rem 0;
+}
+
+.bar{
+    width: inherit;
+    height: 2rem;
+    border-bottom: 1px solid var(--border-a);
 }
 
 .brand {
@@ -168,7 +179,6 @@ section {
 
 .menu {
     color: inherit;
-    padding: 0.75rem 0;
     max-width: var(--body-a);
     width: 100%;
 }

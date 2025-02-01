@@ -43,9 +43,9 @@ const { formatPriceToUSD } = inject('utils');
 }
 
 .nav span {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 700;
 }
 
 .categories {
