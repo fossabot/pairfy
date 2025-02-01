@@ -145,9 +145,7 @@ section {
 }
 
 .brand {
-    background-image: linear-gradient(145deg, rgba(255, 230, 0, 0.1) 0%, rgba(255, 56, 92, 0.1) 50%);
     cursor: pointer;
-    padding: 0 0.5rem;
     height: 46px;
 }
 
