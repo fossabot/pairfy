@@ -9,6 +9,7 @@
                 <i class="pi pi-angle-down" />
             </div>
         </div>
+        <span>Best Sellers</span>
         <span>Discounts</span>
         <span>Rewards</span>
         <span>Support</span>
@@ -19,20 +20,11 @@
         </span>
         <span>Electronics</span>
         <span>Garden</span>
-        <span>Best Sellers</span>
-        <span class="price">{{ formatPriceToUSD(getADAprice) }} ADAUSD</span>
+        <span>Office</span>
     </div>
 </template>
 
 <script setup>
-import headerAPI from "@/components/header/api/index";
-import { inject } from 'vue';
-
-const { getADAprice } = headerAPI();
-
-const { formatPriceToUSD } = inject('utils');
-
-
 </script>
 
 <style lang="css" scoped>
