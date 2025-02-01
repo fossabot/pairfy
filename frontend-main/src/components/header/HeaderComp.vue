@@ -146,7 +146,7 @@ section {
 
 .brand {
     cursor: pointer;
-    height: 44px;
+    height: 48px;
 }
 
 .header {

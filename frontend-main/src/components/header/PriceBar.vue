@@ -1,10 +1,10 @@
 <template>
     <div class="bar flex">
         <div class="bar-body flex">
-            <span class="price">ADAUSD ${{ formatPriceToUSD(getADAprice) }} </span>
-            <span class="price">IUSD $1.0</span>
-            <span class="price">USDM $1.0</span>
-            <span class="price">USDA $1.0</span>
+            <span class="price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
+            <span class="price">IUSD 1.0</span>
+            <span class="price">USDM 1.0</span>
+            <span class="price">USDA 1.0</span>
         </div>
     </div>
 </template>
