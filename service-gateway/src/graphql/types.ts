@@ -32,7 +32,7 @@ type Product {
 
 
 type ProductBook {
-   id: String!
+   id: ID!
    name: String!
    price: Int!
    sku: String!
@@ -45,6 +45,7 @@ type ProductBook {
    book_keeping_stock: Int!
    book_ready_stock: Int!
    book_blocked_stock: Int!
+   book_disable_purchases: Boolean!
 }
 
 type GetBooksResponse {

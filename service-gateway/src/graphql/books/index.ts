@@ -70,7 +70,6 @@ const updateBook = async (_: any, args: any, context: any) => {
         p.id AS id,
         p.name AS name,
         p.price AS price,
-        p.collateral AS collateral,
         p.sku AS sku,
         p.media_url AS media_url,
         p.image_path  AS image_path,
@@ -81,7 +80,7 @@ const updateBook = async (_: any, args: any, context: any) => {
         b.keeping_stock AS book_keeping_stock,
         b.ready_stock AS book_ready_stock,
         b.blocked_stock AS book_blocked_stock,
-        b.disable_purchases AS disable_purchases
+        b.disable_purchases AS book_disable_purchases
       FROM
         products p
       INNER JOIN

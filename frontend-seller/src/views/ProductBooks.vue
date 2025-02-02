@@ -43,7 +43,7 @@
 
             <template #footer>
                 <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
-                <Button label="Done" @click="onConfigDone" />
+                <Button label="Done" @click="onConfigDone" style="color: var(--text-w);" />
             </template>
         </Dialog>
 
@@ -163,17 +163,6 @@
                 </template>
             </Column>
 
-            <Column field="collateral" header="Collateral" sortable style="min-width: 8rem;">
-                <template #body="slotProps">
-                    {{ formatCurrency(slotProps.data.collateral) }}
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
             <Column field="book_keeping_stock" header="Keeping" sortable
                 style="min-width: 4rem; text-transform: capitalize;">
                 <template #sorticon="{ sortOrder }">
@@ -201,7 +190,7 @@
                 </template>
             </Column>
 
-            <Column field="book_ready_stock" header="ST" sortable style="min-width: 4rem">
+            <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
                         :severity="getLabelColor(slotProps.data.book_ready_stock ? 1 : 0)" />
@@ -213,6 +202,18 @@
                 </template>
             </Column>
 
+
+            <Column field="book_disable_purchases" header="Active" sortable style="min-width: 4rem">
+                <template #body="slotProps">
+                    <Tag :value="slotProps.data.book_disable_purchases ? '' : ''"
+                        :severity="getLabelColor(slotProps.data.book_disable_purchases ? 0 : 1)" />
+                </template>
+                <template #sorticon="{ sortOrder }">
+                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                </template>
+            </Column>
 
             <Column :exportable="false" style="min-width: 4rem">
                 <template #body="slotProps">
@@ -231,7 +232,7 @@
 <script setup>
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
@@ -249,14 +250,6 @@ const navItems = ref([
     { label: 'Dashboard' },
     { label: 'Product Books' }
 ]);
-
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
 
 const queryOptions = {
     pollInterval: 1500,
@@ -276,7 +269,6 @@ query($getBooksVariable: GetBooksInput!){
             id
             name
             price
-            collateral
             sku
             media_url
             image_path
@@ -287,6 +279,7 @@ query($getBooksVariable: GetBooksInput!){
             book_keeping_stock
             book_ready_stock
             book_blocked_stock
+            book_disable_purchases
         }
 
         cursor
@@ -314,18 +307,6 @@ const booksTemp = ref([]);
 
 const books = computed(() => booksTemp.value);
 
-watch(getBooksResult, value => {
-    if (value) {
-        booksTemp.value.push(...value.getBooks.books)
-    }
-}, { immediate: true })
-
-const bookCount = computed(() => getBooksResult.value?.getBooks.count);
-
-const dt = ref();
-
-const bookConfigDialog = ref(false);
-
 const bookForm = ref({
     keeping_stock: null,
     ready_stock: null,
@@ -337,6 +318,20 @@ const bookFormErrors = ref({
     ready_stock: false,
     disable_purchases: false
 });
+
+const unwatchBooks = watch(getBooksResult, value => {
+    if (value) {
+        const BOOKS = value.getBooks.books;
+
+        booksTemp.value.push(...BOOKS);
+    }
+}, { immediate: true })
+
+const bookCount = computed(() => getBooksResult.value?.getBooks.count);
+
+const dt = ref();
+
+const bookConfigDialog = ref(false);
 
 const selectedBook = ref(null);
 
@@ -390,7 +385,9 @@ const buildImageUrl = (data) => {
 
 const beforeEditBook = (data) => {
     selectedBook.value = data;
-
+    bookForm.value.keeping_stock = data.book_keeping_stock;
+    bookForm.value.ready_stock = data.book_ready_stock;
+    bookForm.value.disable_purchases = data.book_disable_purchases;
     bookConfigDialog.value = true;
 };
 
@@ -422,6 +419,17 @@ const goEditProduct = (event) => {
         }
     })
 }
+
+onBeforeUnmount(() => {
+    unwatchBooks();
+})
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 </script>
 
 
@@ -433,11 +441,11 @@ const goEditProduct = (event) => {
 }
 
 ::v-deep(button) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 ::v-deep(.p-inputtext) {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
 }
 
 
@@ -461,14 +469,13 @@ const goEditProduct = (event) => {
 }
 
 .p-datatable {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     border: 1px solid var(--border-a);
     border-radius: 1rem;
 }
 
 .p-tag {
-    font-size: var(--text-size-a);
-    font-weight: 600;
+    font-size: var(--text-size-1);
 }
 
 .card {
@@ -492,7 +499,7 @@ const goEditProduct = (event) => {
 }
 
 .dialog-content-title {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     margin-bottom: 0.5rem;
     color: var(--text-b);
     font-weight: 600;
