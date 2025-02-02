@@ -146,9 +146,9 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const payload = JSON.parse(event.data);
 
-    ///////////////////////////////////////////////////////
-
     await connection.beginTransaction();
+
+    ///////////////////////////////////////////////////////
 
     const columns = Object.keys(payload);
 
@@ -172,9 +172,9 @@ const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
       throw new Error("CreateProductElastic");
     }
 
-    await connection.commit();
-
     ///////////////////////////////////////////////////////
+
+    await connection.commit();
 
     response = Promise.resolve(true);
   } catch (err: any) {
@@ -215,9 +215,8 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const payload = JSON.parse(event.data);
 
-    await connection.beginTransaction();
-
     ///////////////////////////////////////////////////////
+    await connection.beginTransaction();
 
     const fields = Object.keys(payload)
       .map((key) => `${key} = ?`)
@@ -252,9 +251,9 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
       [event.id, seq, event.type, true]
     );
 
-    ///////////////////////////////////////////////////////
-
     await connection.commit();
+
+    ///////////////////////////////////////////////////////
 
     response = Promise.resolve(true);
   } catch (err: any) {
@@ -295,9 +294,9 @@ const DeleteProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const payload = JSON.parse(event.data);
 
-    ///////////////////////////////////////////////////////
-
     await connection.beginTransaction();
+
+    ///////////////////////////////////////////////////////
 
     const [result] = await connection.execute(
       "DELETE FROM products WHERE id = ? AND schema_v = ?",
