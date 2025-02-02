@@ -112,8 +112,7 @@ const searchCategory = (name) => {
     height: 40px;
     border-radius: 50%;
     justify-content: center;
-    background: var(--primary-a);
-    background-image: var(--gradient-a);
+    background: var(--background-a);
 }
 
 .image img {
@@ -121,7 +120,6 @@ const searchCategory = (name) => {
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
-    filter: invert(1);
 }
 
 .name {
