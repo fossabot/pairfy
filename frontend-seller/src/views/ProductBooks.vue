@@ -51,14 +51,6 @@
 
         <Toolbar class="mb-6">
             <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBack" />
-
-                <Breadcrumb :model="navItems">
-                    <template #item="{ item }">
-                        <span style="font-weight: 600;">{{ item.label }}</span>
-                    </template>
-                    <template #separator> / </template>
-                </Breadcrumb>
             </template>
 
             <template #end>
@@ -87,7 +79,7 @@
             <template #header>
                 <div class="datatable-header">
                     <RouterLink to="/create-product">
-                        .
+                        Books
                     </RouterLink>
                 </div>
             </template>
@@ -246,11 +238,6 @@ const toast = useToast();
 
 const router = useRouter();
 
-const navItems = ref([
-    { label: 'Dashboard' },
-    { label: 'Product Books' }
-]);
-
 const queryOptions = {
     pollInterval: 1500,
     clientId: "gateway"
@@ -407,10 +394,6 @@ const getLabelColor = (status) => {
     }
 };
 
-const goBack = () => {
-    router.go(-1)
-}
-
 const goEditProduct = (event) => {
     router.push({
         name: 'edit-product',
@@ -435,7 +418,7 @@ const showError = (content) => {
 
 <style scoped>
 ::v-deep(.p-toolbar) {
-    padding: 0 1rem;
+    padding: 1rem;
     background: var(--background-a);
     border-radius: 1rem;
 }

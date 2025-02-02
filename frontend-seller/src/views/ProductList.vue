@@ -7,37 +7,10 @@
                 <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name }}</b>?</span>
             </div>
             <template #footer>
-                <Button label="No"  variant="outlined" @click="deleteProductDialog = false" />
+                <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
                 <Button label="Yes" @click="onDeleteConfirmed" style="color: var(--text-w)" />
             </template>
         </Dialog>
-
-        <!--/////////////////////////-->
-
-        <Toolbar class="mb-6">
-            <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBack" />
-
-                <Breadcrumb :model="navItems">
-                    <template #item="{ item }">
-                        <span style="font-weight: 600;">{{ item.label }}</span>
-                    </template>
-                    <template #separator> / </template>
-                </Breadcrumb>
-            </template>
-
-            <template #end>
-                <IconField style="margin-right: 1rem;">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Search..." />
-                </IconField>
-
-                <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
-            </template>
-        </Toolbar>
-
 
         <DataTable class="card-datatable" ref="dt" :value="products" dataKey="id" :paginator="true" :rows="15"
             :filters="filters" @page="updateCursor()" @rowSelect="editProduct" selectionMode="single"
@@ -45,15 +18,29 @@
             currentPageReportTemplate="Showing {first} to {last}">
             <template #paginatorstart>
                 <div style="color: var(--text-b);">
-                    <span>{{ productCount }} Products</span>
+                    <span>{{ productCount }} Items</span>
                 </div>
             </template>
 
             <template #header>
                 <div class="datatable-header">
-                    <RouterLink to="/create-product">
-                        <Button label="New" icon="pi pi-plus" variant="outlined" />
-                    </RouterLink>
+                    <div class="datatable-control">
+                        <RouterLink to="/create-product">
+                            <Button label="New" icon="pi pi-plus" variant="outlined" />
+                        </RouterLink>
+
+                        <Button label="Export" icon="pi pi-upload" variant="outlined" @click="exportCSV($event)" />
+                    </div>
+
+                    <div class="datatable-search">
+                        <IconField>
+                            <InputIcon>
+                                <i class="pi pi-search" />
+                            </InputIcon>
+                            <InputText v-model="filters['global'].value" placeholder="Search..." />
+                        </IconField>
+                    </div>
+
                 </div>
             </template>
 
@@ -65,8 +52,7 @@
 
             </Column>
 
-
-            <Column field="id" header="ID" sortable style="max-width: 8rem">
+            <Column field="id" header="Id" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -77,7 +63,7 @@
                 </template>
             </Column>
 
-            <Column field="sku" header="SKU" sortable style="max-width: 8rem">
+            <Column field="sku" header="Sku" sortable style="max-width: 8rem">
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
                     <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
@@ -148,10 +134,10 @@
                 </template>
             </Column>
 
-            <Column field="paused" header="Paused" sortable style="min-width: 4rem">
+            <Column field="paused" header="Active" sortable style="min-width: 4rem">
                 <template #body="slotProps">
-                    <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
-                        :severity="getLabelColor(slotProps.data.paused)" />
+                    <Tag :value="slotProps.data.paused ? '' : ''"
+                        :severity="getLabelColor(slotProps.data.paused ? 1 : 0)" />
                 </template>
                 <template #sorticon="{ sortOrder }">
                     <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
@@ -168,7 +154,7 @@
                     </div>
                 </template>
             </Column>
-            
+
         </DataTable>
     </div>
 </template>
@@ -344,7 +330,7 @@ const getLabelColor = (status) => {
         case 1:
             return 'warn';
         case 0:
-            return 'secondary';
+            return 'success';
 
         default:
             return null;
@@ -355,12 +341,6 @@ const getLabelColor = (status) => {
 
 
 <style scoped>
-::v-deep(.p-toolbar) {
-    padding: 0 1rem;
-    background: var(--background-a);
-    border-radius: 1rem;
-}
-
 ::v-deep(button) {
     font-size: var(--text-size-1);
 }
@@ -390,12 +370,6 @@ const getLabelColor = (status) => {
 
 .p-datatable {
     font-size: var(--text-size-1);
-    border: 1px solid var(--border-a);
-    border-radius: 1rem;
-}
-
-.p-tag {
-    font-size: var(--text-size-1);
 }
 
 .card {
@@ -405,13 +379,22 @@ const getLabelColor = (status) => {
 }
 
 .card-datatable {
-    margin-top: 1rem;
+    box-shadow: var(--shadow-a);
     background: var(--background-a);
 }
 
 .datatable-header {
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.datatable-control button {
+    margin-right: 1rem;
+}
+
+.datatable-search {
+    margin-left: auto;
 }
 
 .datatable-image {

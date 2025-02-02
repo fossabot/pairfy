@@ -1,24 +1,5 @@
 <template>
     <main>
-        <Toolbar>
-            <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBackRoute" />
-                <Breadcrumb :model="navItems">
-                    <template #item="{ item }">
-                        <span style="font-weight: 600;">{{ item.label }}</span>
-                    </template>
-                    <template #separator> / </template>
-                </Breadcrumb>
-            </template>
-
-            <template #center>
-
-            </template>
-
-            <template #end>
-
-            </template>
-        </Toolbar>
         <div class="card">
             <div class="title">
                 Edit Product
@@ -410,11 +391,6 @@ const router = useRouter()
 const createImageURL = computed(() => HOST + '/api/media/create-image')
 
 const getImageURL = computed(() => HOST + '/api/media/get-image/')
-
-const navItems = ref([
-    { label: 'Dashboard' },
-    { label: 'Edit Product' }
-]);
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -910,10 +886,6 @@ const formatSKU = (value) => {
     }
 };
 
-const goBackRoute = () => {
-    router.go(-1)
-}
-
 const reloadPage = () => {
     window.location.reload();
 }
@@ -950,12 +922,6 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
 }
 
-::v-deep(.p-toolbar) {
-    padding: 0 1rem;
-    background: var(--background-a);
-    border-radius: 1rem;
-}
-
 ::v-deep(.p-colorpicker-preview) {
     border-radius: 50%;
 }
@@ -985,11 +951,9 @@ main {
 .card {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-a);
-    border-radius: 16px;
     padding: 2rem;
-    margin-top: 1rem;
     background: var(--background-a);
+    box-shadow: var(--shadow-a);
 }
 
 .title {

@@ -83,11 +83,11 @@ startWalletService()
 }
 
 .header {
+  background: var(--background-a);
   padding: 0 2rem;
 }
 
 .logo {
   height: 46px;
-  margin-top: 1rem;
 }
 </style>

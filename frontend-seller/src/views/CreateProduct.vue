@@ -1,24 +1,5 @@
 <template>
     <main>
-        <Toolbar>
-            <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBackRoute" />
-                <Breadcrumb :model="navItems">
-                    <template #item="{ item }">
-                        <span style="font-weight: 600;">{{ item.label }}</span>
-                    </template>
-                    <template #separator> / </template>
-                </Breadcrumb>
-            </template>
-
-            <template #center>
-            </template>
-
-            <template #end>
-
-            </template>
-        </Toolbar>
-
         <div class="card">
             <div class="title">
                 Create Product
@@ -421,11 +402,6 @@ const router = useRouter();
 
 const mediaImagesURL = computed(() => HOST + '/api/media/create-image')
 
-const navItems = ref([
-    { label: 'Dashboard' },
-    { label: 'Create Product' }
-]);
-
 ////////////////////////////////////////////////////////////////
 
 const productName = ref(null);
@@ -698,10 +674,6 @@ const submitProduct = () => {
     })
 }
 
-const goBackRoute = () => {
-    router.go(-1)
-}
-
 const discountResult = computed(() => {
     if (productDiscountValue.value < 0 || productDiscountValue.value > 100) {
         throw new Error('Discount percentage must be between 0 and 100');
@@ -747,12 +719,6 @@ const showError = (content) => {
     font-size: var(--text-size-1);
 }
 
-::v-deep(.p-toolbar) {
-    padding: 0 1rem;
-    background: var(--background-a);
-    border-radius: 16px;
-}
-
 ::v-deep(.p-colorpicker-preview) {
     border-radius: 50%;
 }
@@ -782,13 +748,11 @@ main {
 
 
 .card {
-    background: var(--background-a);
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-a);
-    border-radius: 1rem;
     padding: 2rem;
-    margin-top: 1rem;
+    background: var(--background-a);
+    box-shadow: var(--shadow-a);
 }
 
 .title {

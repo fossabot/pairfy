@@ -41,7 +41,7 @@
       </ul>
     </nav>
 
-   
+
   </div>
 </template>
 
@@ -81,7 +81,9 @@ onBeforeUnmount(() => {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  transition: margin .4s cubic-bezier(.05, .74, .2, .99), transform .4s cubic-bezier(.05, .74, .2, .99);
+  transition: 0.2s;
+  border-right: 1px solid var(--border-a);
+  overflow: hidden;
 }
 
 .navigation.focus {
@@ -116,14 +118,8 @@ a {
   display: flex;
   align-items: center;
   color: inherit;
-  justify-content: center;
-}
-
-a.focus {
   justify-content: flex-start;
 }
-
-
 
 @media (hover: hover) {
   a:hover {
@@ -142,12 +138,14 @@ li span {
 }
 
 .legend {
-  display: none;
-  margin-left: 1rem;
+  opacity: 0;
+  white-space: nowrap;
+  margin-left: 0;
 }
 
 .legend.focus {
-  display: initial;
+  opacity: 1;
+  margin-left: 1rem;
 }
 
 .icon {
@@ -163,6 +161,7 @@ li span {
 
 .actived {
   color: var(--primary-a);
-  background-color: var(--soft-blue-a);
+  background: var(--soft-blue-a);
+  border-left: 2px solid var(--primary-a);
 }
 </style>
