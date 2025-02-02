@@ -344,6 +344,10 @@
                     <div class="box">
                         <div class="subtitle">
                             Discount
+
+                            <span class="price-discount">
+                                {{ discountResult }}
+                            </span>
                         </div>
 
                         <div class="box-content">
@@ -355,9 +359,6 @@
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :invalid="formErrors.discount" :disabled="!productDiscount" />
 
-                                <span class="price-discount">
-                                    {{ discountResult }}
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -453,9 +454,9 @@ const productBulletList = ref(null);
 
 const productCategories = ref(
     Object.values(categoryList.value).map(item => ({
-    name: item.name,
-    code: item.name
-}))
+        name: item.name,
+        code: item.name
+    }))
 );
 
 const productCategory = ref(null);
@@ -1040,6 +1041,7 @@ main {
     font-size: var(--text-size-1);
     margin-left: 1rem;
     padding: 5px;
+    font-weight: 400;
     border-radius: 0.25rem;
     white-space: nowrap;
 }

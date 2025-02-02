@@ -157,6 +157,15 @@
   margin: 0;
 }
 
+*{
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: text;
+}
+
 body {
   min-height: 100vh;
   color: var(--text-a);

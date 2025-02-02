@@ -338,6 +338,10 @@
                     <div class="box">
                         <div class="subtitle">
                             Discount
+
+                            <span class="price-discount">
+                                {{ discountResult }}
+                            </span>
                         </div>
 
                         <div class="box-content">
@@ -349,9 +353,7 @@
                                     style="border-radius: var(--p-inputtext-border-radius); margin-left: 1rem;"
                                     :invalid="formErrors.discount" />
 
-                                <span class="price-discount">
-                                    {{ discountResult }}
-                                </span>
+
                             </div>
                         </div>
                     </div>
@@ -361,8 +363,8 @@
                         <Button type="button" label="Discard" icon="pi pi-trash" :loading="updateProductLoading"
                             outlined style="font-size: var(--text-size-1)" fluid @click="reloadPage" />
 
-                        <Button type="button" label="Save" :loading="updateProductLoading"
-                            @click="beforeUpdate" style="color: var(--text-w)" fluid />
+                        <Button type="button" label="Save" :loading="updateProductLoading" @click="beforeUpdate"
+                            style="color: var(--text-w)" fluid />
                     </div>
                 </div>
             </div>
@@ -1252,6 +1254,7 @@ main {
     font-size: var(--text-size-1);
     margin-left: 1rem;
     padding: 5px;
+    font-weight: 400;
     border-radius: 0.25rem;
     white-space: nowrap;
 }
