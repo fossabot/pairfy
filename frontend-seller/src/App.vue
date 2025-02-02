@@ -69,6 +69,7 @@ startWalletService()
   background: var(--background-b);
   background-image: url('@/assets/shape.png');
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .body-content {
