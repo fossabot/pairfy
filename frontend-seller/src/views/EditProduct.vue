@@ -1252,8 +1252,8 @@ main {
     font-size: var(--text-size-1);
     margin-left: 1rem;
     padding: 5px;
-    font-weight: 500;
     border-radius: 0.25rem;
+    white-space: nowrap;
 }
 
 
