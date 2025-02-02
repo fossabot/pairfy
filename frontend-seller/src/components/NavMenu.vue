@@ -1,41 +1,43 @@
 <template>
-  <div class="navigation">
+  <div class="navigation" :class="{ focus: isFocus }"
+  @mouseover="isFocus = true"
+  @mouseleave="isFocus = false">
     <img class="logo" src="@/assets/logo-white.svg" alt="">
     <nav>
       <ul>
         <li :class="{ actived: currentRoute === 'home' }">
-          <RouterLink to="/">
-            <i class="pi pi-home" />
-            <span>Home</span>
+          <RouterLink to="/" :class="{ focus: isFocus }">
+            <img class="icon" src="@/assets/icons/home.svg" alt="">
+            <span class="legend" :class="{ focus: isFocus }">Home</span>
           </RouterLink>
         </li>
 
         <li :class="{ actived: currentRoute === 'product-list' }">
-          <RouterLink to="/product-list">
-            <i class="pi pi-list" />
-            <span>Product List</span>
+          <RouterLink to="/product-list" :class="{ focus: isFocus }">
+            <img class="icon" src="@/assets/icons/market.svg" alt="">
+            <span class="legend" :class="{ focus: isFocus }">Product List</span>
           </RouterLink>
         </li>
 
         <li :class="{ actived: currentRoute === 'create-product' }">
-          <RouterLink to="/create-product">
-            <i class="pi pi-plus" />
-            <span>Create Product</span>
+          <RouterLink to="/create-product" :class="{ focus: isFocus }">
+            <img class="icon" src="@/assets/icons/plus.svg" alt="">
+            <span class="legend" :class="{ focus: isFocus }">Create Product</span>
           </RouterLink>
         </li>
 
         <li :class="{ actived: currentRoute === 'product-books' }">
-          <RouterLink to="/product-books">
-            <i class="pi pi-folder" />
-            <span>Product Books</span>
+          <RouterLink to="/product-books" :class="{ focus: isFocus }">
+            <img class="icon" src="@/assets/icons/book.svg" alt="">
+            <span class="legend" :class="{ focus: isFocus }">Product Books</span>
           </RouterLink>
         </li>
 
 
         <li :class="{ actived: currentRoute === 'notifications' }">
-          <RouterLink to="/notifications">
-            <i class="pi pi-bell" />
-            <span>Notifications</span>
+          <RouterLink to="/notifications" :class="{ focus: isFocus }">
+            <img class="icon" src="@/assets/icons/bell.svg" alt="">
+            <span class="legend" :class="{ focus: isFocus }">Notifications</span>
           </RouterLink>
         </li>
 
@@ -60,6 +62,8 @@ const unwatchRoute = watch(
   { immediate: true }
 );
 
+const isFocus = ref(false);
+
 onBeforeUnmount(() => {
   unwatchRoute()
 });
@@ -70,10 +74,9 @@ onBeforeUnmount(() => {
 .navigation {
   background: var(--background-a);
   margin-left: 0;
-  width: 17rem;
+  width: 64px;
   z-index: 10;
   height: 100%;
-
   overflow: hidden;
   box-shadow: 0 1px 2px #1212170d;
   display: flex;
@@ -82,6 +85,10 @@ onBeforeUnmount(() => {
   -moz-user-select: none;
   user-select: none;
   transition: margin .4s cubic-bezier(.05, .74, .2, .99), transform .4s cubic-bezier(.05, .74, .2, .99);
+}
+
+.navigation.focus {
+  width: 17rem;
 }
 
 ul {
@@ -104,27 +111,31 @@ li {
 
 a {
   width: 100%;
-  text-decoration: none;
-  transition: 0.2s;
-  padding: 3px;
-  border-top-left-radius: initial;
-  border-bottom-left-radius: initial;
-  padding: 0.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  display: flex;
-  align-items: center;
-  color: inherit;
+    text-decoration: none;
+    transition: 0.2s;
+    border-top-left-radius: initial;
+    border-bottom-left-radius: initial;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    color: inherit;
+    justify-content: center;
 }
+
+a.focus{
+  justify-content: flex-start;
+}
+
+
 
 @media (hover: hover) {
   a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--background-b);
   }
 }
 
 li i {
-  font-size: var(--text-size-2);
+  font-size: var(--text-size-3);
   margin-right: 0.75rem;
   padding: 0.5rem 0;
 }
@@ -133,8 +144,22 @@ li span {
   color: inherit;
 }
 
+.legend {
+  display: none;
+  margin-left: 1rem; 
+}
+
+.legend.focus {
+  display: initial;
+}
+
+.icon{
+  width: var(--text-size-4);
+  height: var(--text-size-4);
+}
+
 .logo {
-  height: 46px; 
+  height: 46px;
   margin-right: auto;
   margin-top: 1rem;
   margin-left: 1rem;
@@ -147,8 +172,7 @@ li span {
 }
 
 .actived {
-  border-left: 2px solid var(--primary-a); 
   color: var(--primary-a);
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+  background-color: var(--soft-blue-a);
 }
 </style>

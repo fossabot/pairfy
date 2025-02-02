@@ -987,7 +987,7 @@ main {
     flex-direction: column;
     border: 1px solid var(--border-a);
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-top: 1rem;
     background: var(--background-a);
 }
@@ -1021,7 +1021,7 @@ main {
 .right-column {
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 
 .box {

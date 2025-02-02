@@ -36,8 +36,9 @@
 
 .nav span {
     font-size: var(--text-size-0);
+    color: var(--text-b);
     cursor: pointer;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .categories {

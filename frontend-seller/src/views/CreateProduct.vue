@@ -787,7 +787,7 @@ main {
     flex-direction: column;
     border: 1px solid var(--border-a);
     border-radius: 1rem;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-top: 1rem;
 }
 
@@ -809,8 +809,6 @@ main {
     gap: 1rem;
 }
 
-.left-column-item {}
-
 .formulary {
     display: flex;
     flex-direction: column;
@@ -818,7 +816,7 @@ main {
 }
 
 .right-column {
-    padding: 0 1rem;
+    margin-left: 2rem;
     display: flex;
     flex-direction: column;
 }
