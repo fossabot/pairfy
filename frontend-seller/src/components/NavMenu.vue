@@ -68,12 +68,12 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .navigation {
-  background: var(--background-c);
+  background: var(--background-a);
   margin-left: 0;
   width: 17rem;
   z-index: 10;
   height: 100%;
-  border-radius: 0 1.5rem 1.5rem 0;
+
   overflow: hidden;
   box-shadow: 0 1px 2px #1212170d;
   display: flex;
@@ -99,7 +99,7 @@ li {
   cursor: pointer;
   font-size: var(--text-size-2);
   border: 1px solid transparent;
-  color: var(--text-w);
+  color: var(--text-a);
 }
 
 a {
@@ -109,6 +109,12 @@ a {
   padding: 3px;
   border-top-left-radius: initial;
   border-bottom-left-radius: initial;
+  padding: 0.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  display: flex;
+  align-items: center;
+  color: inherit;
 }
 
 @media (hover: hover) {
@@ -127,17 +133,8 @@ li span {
   color: inherit;
 }
 
-a {
-  padding: 0.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  display: flex;
-  align-items: center;
-  color: inherit;
-}
-
 .logo {
-  height: 3rem; 
+  height: 46px; 
   margin-right: auto;
   margin-top: 1rem;
   margin-left: 1rem;
@@ -151,7 +148,7 @@ a {
 
 .actived {
   border-left: 2px solid var(--primary-a); 
-  color: var(--text-w);
+  color: var(--primary-a);
   background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
 }
 </style>

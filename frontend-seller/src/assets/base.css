@@ -80,10 +80,12 @@
   --p-rating-gap: 2px !important;
 
   --p-message-text-font-weight: 400 !important;
+
+  --p-togglebutton-font-weight: 400 !important;
 }
 
 :root {
-  --primary-a: var(--red-a);
+  --primary-a: var(--blue-a);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);

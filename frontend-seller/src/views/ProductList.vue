@@ -357,7 +357,7 @@ const getLabelColor = (status) => {
 <style scoped>
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
-    background: transparent;
+    background: var(--background-a);
     border-radius: 1rem;
 }
 
@@ -406,6 +406,7 @@ const getLabelColor = (status) => {
 
 .card-datatable {
     margin-top: 1rem;
+    background: var(--background-a);
 }
 
 .datatable-header {

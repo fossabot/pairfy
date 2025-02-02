@@ -436,7 +436,7 @@ const showError = (content) => {
 <style scoped>
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
-    background: transparent;
+    background: var(--background-a);
     border-radius: 1rem;
 }
 
@@ -482,6 +482,7 @@ const showError = (content) => {
     padding: 1rem 2rem;
     display: flex;
     flex-direction: column;
+    
 }
 
 .dialog-title {
@@ -506,6 +507,7 @@ const showError = (content) => {
 }
 
 .card-datatable {
+    background: var(--background-a);
     margin-top: 1rem;
 }
 

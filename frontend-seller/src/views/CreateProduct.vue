@@ -749,8 +749,8 @@ const showError = (content) => {
 
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
-    background: transparent;
-    border-radius: 1rem;
+    background: var(--background-a);
+    border-radius: 16px;
 }
 
 ::v-deep(.p-colorpicker-preview) {
@@ -782,6 +782,7 @@ main {
 
 
 .card {
+    background: var(--background-a);
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-a);

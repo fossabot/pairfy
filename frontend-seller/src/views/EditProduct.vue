@@ -952,7 +952,7 @@ onBeforeUnmount(() => {
 
 ::v-deep(.p-toolbar) {
     padding: 0 1rem;
-    background: transparent;
+    background: var(--background-a);
     border-radius: 1rem;
 }
 
@@ -976,21 +976,20 @@ onBeforeUnmount(() => {
     border: none;
 }
 
-
 main {
     padding: 1rem 2rem;
     flex: 1 1 auto;
     position: relative;
 }
 
-
 .card {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-a);
-    border-radius: 1rem;
+    border-radius: 16px;
     padding: 1.5rem;
     margin-top: 1rem;
+    background: var(--background-a);
 }
 
 .title {
@@ -1020,9 +1019,9 @@ main {
 }
 
 .right-column {
-    padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    margin-left: 1rem;
 }
 
 .box {

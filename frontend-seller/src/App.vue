@@ -1,9 +1,9 @@
 <template>
-  <div class="wrapper">
+  <div class="body">
     <Toast closeIcon="false" />
     <NavMenu v-if="getUserData" />
 
-    <div class="wrapper-content">
+    <div class="body-content">
       <RouterView />
     </div>
   </div>
@@ -62,13 +62,16 @@ startWalletService()
   user-select: none;
 }
 
-.wrapper {
+.body {
   height: 100vh;
   display: flex;
   transition: all .2s ease;
+  background: var(--background-b);
+  background-image: url('@/assets/shape.png');
+  background-repeat: no-repeat;
 }
 
-.wrapper-content {
+.body-content {
   flex: 1;
   height: 100%;
   overflow-y: scroll;
@@ -82,7 +85,7 @@ startWalletService()
     padding-right: calc(var(--section-gap) / 2);
   }
 
-  header .wrapper {
+  header .body {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
