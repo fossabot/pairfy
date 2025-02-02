@@ -41,7 +41,7 @@ const createProductIndex = async (payload: any): Promise<boolean> => {
         discount: payload.discount,
         discount_value: payload.discount_value,
         best_seller: false,
-        sold_count: 0
+        sold_count: 0,
       };
 
       const response = await searchClient.index({
@@ -51,7 +51,7 @@ const createProductIndex = async (payload: any): Promise<boolean> => {
       });
 
       if (response.result !== "created") {
-        throw new Error("createProductIndexError");
+        throw new Error("CreateProductIndexError");
       }
 
       result = true;
@@ -74,6 +74,47 @@ const deleteProductIndex = async (id: string): Promise<boolean> => {
 
     if (response.result !== "deleted") {
       throw new Error("DeleteProductIndexError");
+    }
+
+    result = true;
+  } catch (err) {
+    logger.error(err);
+  } finally {
+    return result;
+  }
+};
+
+const updateProductIndex = async (payload: any): Promise<boolean> => {
+  let result = false;
+
+  try {
+    const images = payload.image_set.split(",");
+
+    const productImage = payload.media_url + payload.image_path + images[0];
+
+    const document = {
+      id: payload.id,
+      name: payload.name,
+      sku: payload.sku,
+      category: payload.category,
+      brand: payload.brand,
+      model: payload.model,
+      price: payload.price,
+      quality: payload.quality,
+      image: productImage,
+      keywords: payload.keywords,
+      discount: payload.discount,
+      discount_value: payload.discount_value,
+    };
+
+    const response = await searchClient.update({
+      index: "products",
+      id: document.id,
+      doc: document,
+    });
+
+    if (response.result !== "updated") {
+      throw new Error("UpdateProductIndexError");
     }
 
     result = true;
@@ -174,9 +215,9 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
 
     const payload = JSON.parse(event.data);
 
-    ///////////////////////////////////////////////////////
-
     await connection.beginTransaction();
+
+    ///////////////////////////////////////////////////////
 
     const fields = Object.keys(payload)
       .map((key) => `${key} = ?`)
@@ -200,16 +241,20 @@ const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
       throw new Error("UpdateProductError");
     }
 
-    ///////////////////////////////////////////////////////
+    const updateIndex = await updateProductIndex(payload);
+
+    if (!updateIndex) {
+      throw new Error("UpdateProductElastic");
+    }
 
     await connection.execute(
       "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
       [event.id, seq, event.type, true]
     );
 
-    await connection.commit();
-
     ///////////////////////////////////////////////////////
+
+    await connection.commit();
 
     response = Promise.resolve(true);
   } catch (err: any) {
