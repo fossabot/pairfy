@@ -31,7 +31,7 @@
 
 
                 <Tag severity="secondary" style="margin: 0 1rem;">
-                    <span style="text-decoration: line-through;">${{ getProductData.price }} USD</span>
+                    <span style="text-decoration: line-through;">${{ formatCurrency(getProductData.price) }} USD</span>
                 </Tag>
 
             
