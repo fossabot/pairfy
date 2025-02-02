@@ -213,7 +213,7 @@
                 <i class="pi pi-shield" />
             </div>
             <div class="card-subterm-box">
-                <span class="cyan">Purchase Protection.</span> Receive the product you expected or get your money back.
+                <span class="red">Purchase Protection.</span> Receive the product you expected or get your money back.
             </div>
         </div>
     </div>
