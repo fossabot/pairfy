@@ -1,8 +1,5 @@
 <template>
-  <div class="navigation" :class="{ focus: isFocus }"
-  @mouseover="isFocus = true"
-  @mouseleave="isFocus = false">
-    <img class="logo" src="@/assets/logo-white.svg" alt="">
+  <div class="navigation" :class="{ focus: isFocus }" @mouseover="isFocus = true" @mouseleave="isFocus = false">
     <nav>
       <ul>
         <li :class="{ actived: currentRoute === 'home' }">
@@ -44,7 +41,7 @@
       </ul>
     </nav>
 
-
+   
   </div>
 </template>
 
@@ -111,18 +108,18 @@ li {
 
 a {
   width: 100%;
-    text-decoration: none;
-    transition: 0.2s;
-    border-top-left-radius: initial;
-    border-bottom-left-radius: initial;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    color: inherit;
-    justify-content: center;
+  text-decoration: none;
+  transition: 0.2s;
+  border-top-left-radius: initial;
+  border-bottom-left-radius: initial;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  justify-content: center;
 }
 
-a.focus{
+a.focus {
   justify-content: flex-start;
 }
 
@@ -146,23 +143,16 @@ li span {
 
 .legend {
   display: none;
-  margin-left: 1rem; 
+  margin-left: 1rem;
 }
 
 .legend.focus {
   display: initial;
 }
 
-.icon{
+.icon {
   width: var(--text-size-4);
   height: var(--text-size-4);
-}
-
-.logo {
-  height: 46px;
-  margin-right: auto;
-  margin-top: 1rem;
-  margin-left: 1rem;
 }
 
 .label {

@@ -16,7 +16,7 @@
         <div class="entry-left">
             <div class="card">
                 <div class="logo">
-                    <img src="@/assets/logo-white.png" alt="">
+                    <img src="@/assets/logo.svg" alt="">
                 </div>
                 <div class="logan">
                     <span> Buy and sell products in Cardano ecosystem.</span>

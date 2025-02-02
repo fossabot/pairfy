@@ -4,6 +4,9 @@
     <NavMenu v-if="getUserData" />
 
     <div class="body-content">
+      <div class="header">
+        <img class="logo" src="@/assets/logo.svg" alt="">
+      </div>
       <RouterView />
     </div>
   </div>
@@ -79,17 +82,12 @@ startWalletService()
   overflow-x: hidden;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.header {
+  padding: 0 2rem;
+}
 
-  header .body {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.logo {
+  height: 46px;
+  margin-top: 1rem;
 }
 </style>
