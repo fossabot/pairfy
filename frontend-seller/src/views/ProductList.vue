@@ -3,8 +3,7 @@
     <div class="card">
         <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true"
             :draggable="false">
-            <div class="flex">
-
+            <div class="card-message flex">
                 <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name }}</b>?</span>
             </div>
             <template #footer>
@@ -371,6 +370,11 @@ main {
     flex-direction: column;
 }
 
+.card-message{
+    line-height: 1.75rem;
+    font-size: var(--text-size-2);
+}
+
 .card-datatable {
     box-shadow: var(--shadow-a);
     background: var(--background-a);
@@ -403,8 +407,6 @@ main {
     object-fit: contain;
     border: 1px solid var(--border-a);
 }
-
-
 
 .arrow {
     font-size: 12px;
