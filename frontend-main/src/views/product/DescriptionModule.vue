@@ -14,7 +14,6 @@ import productAPI from '@/views/product/api/index';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { onMounted, ref, nextTick, onBeforeUnmount, watch } from 'vue';
 
-
 const { getProductData } = productAPI();
 
 const editor = ref(null);
@@ -37,11 +36,11 @@ const setupEditor = async () => {
     });
 }
 
-watch(getProductData, () => {
-    if (editor) {
+const unwatchData = watch(getProductData, () => {
+    if (editor.value) {
         editor.value.commands.setContent(JSON.parse(getProductData.value?.features));
     }
-})
+}, { immediate: true })
 
 
 onMounted(() => {
@@ -49,7 +48,11 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-    editor.value.destroy()
+    if (editor.value) {
+        editor.value.destroy()
+    }
+
+    unwatchData()
 })
 
 
