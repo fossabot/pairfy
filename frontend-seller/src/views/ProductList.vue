@@ -134,7 +134,7 @@
                 </template>
             </Column>
 
-            <Column field="paused" header="Active" sortable style="min-width: 4rem">
+            <Column field="paused" header="Active" sortable style="min-width: 4rem; ">
                 <template #body="slotProps">
                     <Tag :value="slotProps.data.paused ? '' : ''"
                         :severity="getLabelColor(slotProps.data.paused ? 1 : 0)" />
@@ -146,7 +146,7 @@
                 </template>
             </Column>
 
-            <Column :exportable="false" style="min-width: 4rem">
+            <Column :exportable="false" style="min-width: 4rem; border-right: none;">
                 <template #body="slotProps">
                     <div class="datatable-control">
                         <Button icon="pi pi-trash" outlined size="small" rounded
@@ -356,7 +356,8 @@ const getLabelColor = (status) => {
 
 ::v-deep(.p-datatable-header-cell) {
     background: transparent;
-    border-top: 1px solid var(--border-a);
+    border: 1px solid var(--border-a);
+    border-left: none;
 }
 
 ::v-deep(.p-datatable-paginator-bottom) {
@@ -373,7 +374,7 @@ const getLabelColor = (status) => {
 }
 
 .card {
-    padding: 1rem 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
 }
@@ -386,6 +387,11 @@ const getLabelColor = (status) => {
 .datatable-header {
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.datatable-control {
+    display: flex;
     justify-content: center;
 }
 
@@ -406,10 +412,7 @@ const getLabelColor = (status) => {
     border: 1px solid var(--border-a);
 }
 
-.datatable-control {
-    display: flex;
-    justify-content: center;
-}
+
 
 .arrow {
     font-size: 12px;

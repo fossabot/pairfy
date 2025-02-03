@@ -47,25 +47,6 @@
             </template>
         </Dialog>
 
-        <!--/////////////////////////-->
-
-        <Toolbar class="mb-6">
-            <template #start>
-            </template>
-
-            <template #end>
-                <IconField style="margin-right: 1rem;">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Search..." />
-                </IconField>
-
-                <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
-            </template>
-        </Toolbar>
-
-
         <DataTable class="card-datatable" ref="dt" :value="books" dataKey="id" :paginator="true" :rows="15"
             :filters="filters" @page="updateCursor()" @rowSelect="goEditProduct" selectionMode="single"
             paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
@@ -78,9 +59,17 @@
 
             <template #header>
                 <div class="datatable-header">
-                    <RouterLink to="/create-product">
-                        Books
-                    </RouterLink>
+                    <div class="datatable-control">
+                        <Button label="Export" icon="pi pi-upload" variant="outlined" @click="exportCSV($event)" />
+                    </div>
+                    <div class="datatable-search">
+                        <IconField>
+                            <InputIcon>
+                                <i class="pi pi-search" />
+                            </InputIcon>
+                            <InputText v-model="filters['global'].value" placeholder="Search..." />
+                        </IconField>
+                    </div>
                 </div>
             </template>
 
@@ -207,7 +196,7 @@
                 </template>
             </Column>
 
-            <Column :exportable="false" style="min-width: 4rem">
+            <Column :exportable="false" style="min-width: 4rem; border-right: none;">
                 <template #body="slotProps">
                     <div class="datatable-control">
                         <Button icon="pi pi-cog" outlined size="small" rounded
@@ -439,7 +428,8 @@ const showError = (content) => {
 
 ::v-deep(.p-datatable-header-cell) {
     background: transparent;
-    border-top: 1px solid var(--border-a);
+    border: 1px solid var(--border-a);
+    border-left: none;
 }
 
 ::v-deep(.p-datatable-paginator-bottom) {
@@ -453,19 +443,13 @@ const showError = (content) => {
 
 .p-datatable {
     font-size: var(--text-size-1);
-    border: 1px solid var(--border-a);
-    border-radius: 1rem;
-}
-
-.p-tag {
-    font-size: var(--text-size-1);
 }
 
 .card {
-    padding: 1rem 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
-    
+
 }
 
 .dialog-title {
@@ -490,13 +474,14 @@ const showError = (content) => {
 }
 
 .card-datatable {
+    box-shadow: var(--shadow-a);
     background: var(--background-a);
-    margin-top: 1rem;
 }
 
 .datatable-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .datatable-image {
@@ -514,7 +499,7 @@ const showError = (content) => {
 }
 
 .datatable-control button {
-    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 

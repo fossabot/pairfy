@@ -189,7 +189,7 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 main {
-    padding: 1rem 2rem;
+    padding: 1rem;
     flex: 1 1 auto;
     position: relative;
 }
