@@ -45,7 +45,6 @@ type ProductBook {
    book_keeping_stock: Int!
    book_ready_stock: Int!
    book_blocked_stock: Int!
-   book_disable_purchases: Boolean!
 }
 
 type GetBooksResponse {
@@ -138,7 +137,6 @@ input UpdateBookInput {
   id: String!
   keeping_stock: Int!
   ready_stock: Int!
-  disable_purchases: Boolean!
 } 
 
 type PendingEndpointPayload {

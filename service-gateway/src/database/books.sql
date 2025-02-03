@@ -6,7 +6,6 @@ create table if not exists books(
   keeping_stock bigint default 0,
   ready_stock bigint default 0,
   blocked_stock bigint default 0,
-  disable_purchases boolean default false,
   updated_at timestamp default current_timestamp,
   created_at timestamp default current_timestamp,
   schema_v int unsigned default 0,

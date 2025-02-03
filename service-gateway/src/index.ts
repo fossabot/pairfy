@@ -153,7 +153,14 @@ const main = async () => {
       throw new Error("NETWORK_ENV error");
     }
 
+    if (!process.env.ELASTIC_NODE) {
+      throw new Error("ELASTIC_NODE error");
+    }
 
+    if (!process.env.ELASTIC_KEY) {
+      throw new Error("ELASTIC_KEY error");
+    }
+    
     const sessionOptions: object = {
       maxAge: 168 * 60 * 60 * 1000,
       signed: false,
