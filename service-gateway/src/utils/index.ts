@@ -36,4 +36,8 @@ const errorEvents: string[] = [
   "SIGCONT",
 ];
 
-export { logger, catcher, getProductId, errorEvents };
+function getCurrentTimestamp() {
+  return new Date().toISOString().replace("T", " ").substring(0, 19);
+}
+
+export { logger, catcher, getProductId, errorEvents, getCurrentTimestamp };

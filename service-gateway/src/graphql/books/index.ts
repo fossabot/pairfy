@@ -1,6 +1,6 @@
+import { getCurrentTimestamp, logger } from "../../utils/index.js";
 import { searchClient } from "../../elastic/index.js";
 import { database } from "../../database/client.js";
-import { logger } from "../../utils/index.js";
 
 const updateProductIndex = async (payload: any): Promise<boolean> => {
   let result = false;
@@ -45,36 +45,50 @@ const updateBook = async (_: any, args: any, context: any) => {
 
     /////////////////////////////////////////////////////////////////
 
-    const schemeData = `
+    const [books] = await connection.execute(
+      "SELECT ready_stock FROM books WHERE id = ? AND seller_id = ?",
+      [params.id, SELLER.id]
+    );
+
+    if (books.length < 1) {
+      throw new Error("BookExistence");
+    }
+
+    const BOOK = books[0];
+
+    const updateScheme = `
           UPDATE books
           SET keeping_stock = ?,
-              ready_stock = ?,             
+              ready_stock = ?, 
+              updated_at = ?,            
               schema_v = schema_v + 1
-          WHERE id = ? AND seller_id = ?
+          WHERE id = ? 
          `;
 
-    const schemeValue = [
+    const updateValues = [
       params.keeping_stock,
       params.ready_stock,
+      getCurrentTimestamp(),
       params.id,
-      SELLER.id,
     ];
 
-    const [result] = await connection.execute(schemeData, schemeValue);
+    const [updated] = await connection.execute(updateScheme, updateValues);
 
-    if (result.affectedRows !== 1) {
+    if (updated.affectedRows !== 1) {
       throw new Error("INTERNAL_ERROR");
     }
 
-    const payload = {
-      id: params.id,
-      available: params.ready_stock,
-    };
+    if (BOOK.ready_stock !== params.ready_stock) {
+      const payload = {
+        id: params.id,
+        available: params.ready_stock,
+      };
 
-    const updateIndex = await updateProductIndex(payload);
+      const updateIndex = await updateProductIndex(payload);
 
-    if (!updateIndex) {
-      throw new Error("INTERNAL_ERROR");
+      if (!updateIndex) {
+        throw new Error("INTERNAL_ERROR");
+      }
     }
 
     /////////////////////////////////////////////////////////////////
@@ -162,12 +176,10 @@ const getBooks = async (_: any, args: any, context: any) => {
     }
 
     const [books] = await connection.query(queryScheme, queryParams);
-    
+
     const lastBook = books[books.length - 1];
 
-    const cursor = books.length
-      ? lastBook.created_at
-      : params.cursor;
+    const cursor = books.length ? lastBook.created_at : params.cursor;
 
     const count = PRODUCTS.total;
 

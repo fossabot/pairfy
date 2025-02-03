@@ -9,9 +9,7 @@
                     <div class="dialog-content">
                         <div class="dialog-row">
                             <Message severity="secondary" icon="pi pi-exclamation-circle">
-                                The product book allows to manage keeping stock, stock ready to sell and stock blocked
-                                by
-                                active orders in the blockchain.
+                                The product book allows to manage keeping and ready stock to sell.
                             </Message>
                         </div>
                         <div class="dialog-row">
@@ -22,20 +20,20 @@
                         <div class="dialog-row">
                             <IftaLabel>
                                 <InputNumber v-model="bookForm.keeping_stock" id="keeping" type="number"
-                                    placeholder="Stock" :invalid="bookFormErrors.keeping_stock" :min="0" fluid
+                                    placeholder="Stock" :invalid="bookFormErrors.keeping_stock" :min="0" :max="9999"
                                     :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" fluid />
 
-                                <label for="keeping">Keeping</label>
+                                <label for="keeping">Keeping stock</label>
                             </IftaLabel>
                         </div>
                         <div class="dialog-row">
                             <IftaLabel>
-                                <InputNumber v-model="bookForm.ready_stock" id="ready" type="number" fluid
+                                <InputNumber v-model="bookForm.ready_stock" id="ready" type="number"
                                     placeholder="Ready To Sell" :invalid="bookFormErrors.ready_stock" :min="0"
-                                    :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
-                                <label for="ready">Ready</label>
+                                    :max="9999" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" fluid />
+                                <label for="ready">Ready to sell</label>
                             </IftaLabel>
                         </div>
                     </div>
@@ -324,6 +322,16 @@ onUpdateBook(result => {
 })
 
 const onConfigDone = () => {
+    if (bookForm.value.keeping_stock === selectedBook.value.book_keeping_stock) {
+        bookConfigDialog.value = false;
+        return;
+    }
+
+    if (bookForm.value.ready_stock === selectedBook.value.book_ready_stock) {
+        bookConfigDialog.value = false;
+        return;
+    }
+
     sendUpdateBook({
         "updateBookVariable": {
             "id": selectedBook.value.id,
