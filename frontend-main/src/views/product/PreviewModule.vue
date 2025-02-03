@@ -49,6 +49,7 @@
                 <div :style="{ backgroundColor: `#${getProductData.color}` }" />
             </div>
 
+            <Divider />
 
             <div class="preview-about">About this item</div>
             <ul class="preview-bullet">
@@ -121,12 +122,13 @@ const bulletList = computed(() => {
 }
 
 .preview-about {
+    margin-top: 1rem;
     font-weight: 600;
     font-size: var(--text-size-2);
-    line-height: 4rem;
 }
 
 .preview-bullet {
+    margin-top: 1rem;
     font-size: var(--text-size-1);
     padding-left: 1rem;
 }

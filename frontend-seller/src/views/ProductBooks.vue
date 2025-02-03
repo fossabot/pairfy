@@ -9,7 +9,7 @@
                     <div class="dialog-content">
                         <div class="dialog-row">
                             <Message severity="secondary" icon="pi pi-exclamation-circle">
-                                The product book allows to manage keeping and ready stock to sell.
+                                The product book allows to manage keeping and ready stock.
                             </Message>
                         </div>
                         <div class="dialog-row">
