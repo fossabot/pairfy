@@ -198,14 +198,12 @@
 
 <script setup>
 import gql from 'graphql-tag';
-import dayjs from 'dayjs';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
-
 
 const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
 
@@ -214,7 +212,7 @@ const toast = useToast();
 const router = useRouter();
 
 const queryOptions = {
-    pollInterval: 10000,
+    pollInterval: 1000,
     clientId: "gateway"
 }
 
@@ -285,11 +283,9 @@ const unwatchBooks = watch(getBooksResult, value => {
 
         bookCount.value = value.getBooks.count;
 
-        booksTemp.value.push(...value.getBooks.books);
+        booksTemp.value = value.getBooks.books;
     }
 }, { immediate: true })
-
-
 
 const dt = ref();
 
@@ -322,16 +318,6 @@ onUpdateBook(result => {
 })
 
 const onConfigDone = () => {
-    if (bookForm.value.keeping_stock === selectedBook.value.book_keeping_stock) {
-        bookConfigDialog.value = false;
-        return;
-    }
-
-    if (bookForm.value.ready_stock === selectedBook.value.book_ready_stock) {
-        bookConfigDialog.value = false;
-        return;
-    }
-
     sendUpdateBook({
         "updateBookVariable": {
             "id": selectedBook.value.id,
@@ -339,8 +325,6 @@ const onConfigDone = () => {
             "ready_stock": bookForm.value.ready_stock
         }
     });
-
-    booksTemp.value = [];
     bookConfigDialog.value = false;
 }
 
@@ -388,7 +372,8 @@ const goEditProduct = (event) => {
 
 onBeforeUnmount(() => {
     unwatchBooks();
-})
+});
+
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
