@@ -76,7 +76,7 @@ const updateBook = async (_: any, args: any, context: any) => {
     if (!updateIndex) {
       throw new Error("INTERNAL_ERROR");
     }
-    
+
     /////////////////////////////////////////////////////////////////
 
     await connection.commit();
@@ -96,69 +96,80 @@ const updateBook = async (_: any, args: any, context: any) => {
 };
 
 const getBooks = async (_: any, args: any, context: any) => {
-  const params = args.getBooksInput;
-
-  const SELLER = context.sellerData;
-
-  const pageSize = 16;
-
-  const defaultCursor = "NOT";
-
   let connection = null;
 
-  let queryScheme = `
-      SELECT
-        p.id AS id,
-        p.name AS name,
-        p.price AS price,
-        p.sku AS sku,
-        p.media_url AS media_url,
-        p.image_path  AS image_path,
-        p.image_set  AS image_set,
-        p.discount AS discount,
-        p.discount_value AS discount_value,
-        p.created_at AS created_at,      
-        b.keeping_stock AS book_keeping_stock,
-        b.ready_stock AS book_ready_stock,
-        b.blocked_stock AS book_blocked_stock
-      FROM
-        products p
-      INNER JOIN
-        books b
-      ON
-        p.id = b.id    
-      WHERE
-        p.seller_id = ?`;
-
-  let queryParams: any = [SELLER.id];
-
-  if (params.cursor !== defaultCursor) {
-    queryScheme += " AND p.created_at < ?";
-
-    const date = new Date(parseInt(params.cursor)).toISOString();
-
-    queryParams.push(date);
-  }
-
-  queryScheme += " ORDER BY p.created_at DESC LIMIT ?";
-
-  queryParams.push(pageSize);
-
   try {
+    const params = args.getBooksInput;
+
+    const SELLER = context.sellerData;
+
+    const pageSize = 16;
+
+    const defaultCursor = "NOT";
+
+    let queryScheme = `
+        SELECT
+          p.id AS id,
+          p.name AS name,
+          p.price AS price,
+          p.sku AS sku,
+          p.media_url AS media_url,
+          p.image_path  AS image_path,
+          p.image_set  AS image_set,
+          p.discount AS discount,
+          p.discount_value AS discount_value,
+          p.created_at AS created_at,      
+          b.keeping_stock AS book_keeping_stock,
+          b.ready_stock AS book_ready_stock,
+          b.blocked_stock AS book_blocked_stock
+        FROM
+          products p
+        INNER JOIN
+          books b
+        ON
+          p.id = b.id    
+        WHERE
+          p.seller_id = ?`;
+
+    let queryParams: any = [SELLER.id];
+
+    if (params.cursor !== defaultCursor) {
+      queryScheme += " AND p.created_at < ?";
+
+      const date = new Date(parseInt(params.cursor)).toISOString();
+
+      queryParams.push(date);
+    }
+
+    queryScheme += " ORDER BY p.created_at DESC LIMIT ?";
+
+    queryParams.push(pageSize);
+
     connection = await database.client.getConnection();
 
-    const [books] = await connection.query(queryScheme, queryParams);
-
-    const [productCount] = await connection.execute(
-      "SELECT COUNT(*) AS total_books FROM books WHERE seller_id = ?",
+    const [products] = await connection.execute(
+      "SELECT COUNT(*) AS total FROM products WHERE seller_id = ?",
       [SELLER.id]
     );
+    const PRODUCTS = products[0];
+
+    if (PRODUCTS.total < 1) {
+      return {
+        books: [],
+        cursor: params.cursor,
+        count: 0,
+      };
+    }
+
+    const [books] = await connection.query(queryScheme, queryParams);
+    
+    const lastBook = books[books.length - 1];
 
     const cursor = books.length
-      ? books[books.length - 1].created_at
+      ? lastBook.created_at
       : params.cursor;
 
-    const count = productCount[0].total_books;
+    const count = PRODUCTS.total;
 
     return {
       books,

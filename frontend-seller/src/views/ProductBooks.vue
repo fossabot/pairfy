@@ -231,7 +231,7 @@ const toast = useToast();
 const router = useRouter();
 
 const queryOptions = {
-    pollInterval: 1500,
+    pollInterval: 10000,
     clientId: "gateway"
 }
 
@@ -258,7 +258,6 @@ query($getBooksVariable: GetBooksInput!){
             book_keeping_stock
             book_ready_stock
             book_blocked_stock
-            book_disable_purchases
         }
 
         cursor
@@ -271,7 +270,7 @@ query($getBooksVariable: GetBooksInput!){
 );
 
 onGetBooksError(error => {
-    showError("The connection to the server has failed, please try again later.");
+    showError("Request failed please try again later.");
 })
 
 const updateCursor = () => {
