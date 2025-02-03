@@ -1,37 +1,30 @@
 <template>
     <main>
-        <Toolbar>
-            <template #start>
-                <Button icon="pi pi-chevron-left" class="mr-2" text severity="secondary" @click="goBack" />
-                <Breadcrumb :model="navItems">
-                    <template #item="{ item }">
-                        <span style="font-weight: 600;">{{ item.label }}</span>
-                    </template>
-                    <template #separator> / </template>
-                </Breadcrumb>
-            </template>
-
-            <template #center>
-
-            </template>
-
-            <template #end>
-                <IconField style="margin-right: 1rem;">
-                    <InputIcon>
-                        <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Search..." />
-                </IconField>
-
-                <Button label="Export" icon="pi pi-upload" severity="secondary" @click="exportCSV($event)" />
-            </template>
-        </Toolbar>
         <div class="card">
-
             <DataTable class="card-datatable" ref="dt" :value="notificationList" dataKey="id" :paginator="true"
                 :rows="15" :filters="filters" @page="updateCursor()" @rowSelect="onSelect" selectionMode="single"
                 paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
                 currentPageReportTemplate="Showing {first} to {last}">
+
+                <template #header>
+                    <div class="datatable-header flex">
+                        <div class="datatable-control">
+                            <Button label="Export" icon="pi pi-upload" severity="secondary"
+                                @click="exportCSV($event)" />
+                        </div>
+
+                        <div class="datatable-search">
+                            <IconField>
+                                <InputIcon>
+                                    <i class="pi pi-search" />
+                                </InputIcon>
+                                <InputText v-model="filters['global'].value" placeholder="Search..." />
+                            </IconField>
+                        </div>
+                    </div>
+                </template>
+
+
                 <template #paginatorstart>
                     <div style="color: var(--text-b);">
                         <span>{{ notificationCount }} Elements</span>
@@ -93,7 +86,7 @@
                     </template>
                 </Column>
 
-                <Column :exportable="false" style="max-width: 2rem">
+                <Column :exportable="false" style="max-width: 2rem; border-right: none;">
                     <template #body="slotProps">
                         <div class="datatable-control">
                             <Button icon="pi pi-arrow-up-right" outlined size="small" rounded
@@ -188,19 +181,34 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
+::v-deep(.p-datatable-header) {
+    background: transparent;
+    border: none;
+}
+
+::v-deep(.p-datatable-header-cell) {
+    background: transparent;
+    border: 1px solid var(--border-a);
+    border-left: none;
+}
+
+::v-deep(.p-datatable-paginator-bottom) {
+    border: none;
+    padding: 0.2rem;
+}
+
+::v-deep(.p-datatable-column-title) {
+    font-weight: 600;
+}
+
 main {
     padding: 1rem;
-    flex: 1 1 auto;
-    position: relative;
 }
 
 .card {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-a);
-    border-radius: 1rem;
-    margin-top: 1rem;
-    overflow: hidden;
+    background: var(--background-a);
 }
 
 .datatable-image {
@@ -217,9 +225,21 @@ main {
     font-size: 20px;
 }
 
+.datatable-header {
+    justify-content: center;
+}
+
 .datatable-control {
     display: flex;
     justify-content: center;
+}
+
+.datatable-control button {
+    margin-right: 1rem;
+}
+
+.datatable-search {
+    margin-left: auto;
 }
 
 .arrow {

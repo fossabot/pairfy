@@ -1,4 +1,5 @@
 <template>
+    <main>
     <div class="card">
         <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true"
             :draggable="false">
@@ -23,7 +24,7 @@
             </template>
 
             <template #header>
-                <div class="datatable-header">
+                <div class="datatable-header flex">
                     <div class="datatable-control">
                         <RouterLink to="/create-product">
                             <Button label="New" icon="pi pi-plus" variant="outlined" />
@@ -154,9 +155,9 @@
                     </div>
                 </template>
             </Column>
-
         </DataTable>
     </div>
+</main>
 </template>
 
 <script setup>
@@ -341,14 +342,6 @@ const getLabelColor = (status) => {
 
 
 <style scoped>
-::v-deep(button) {
-    font-size: var(--text-size-1);
-}
-
-.p-inputtext {
-    font-size: var(--text-size-1);
-}
-
 ::v-deep(.p-datatable-header) {
     background: transparent;
     border: none;
@@ -369,12 +362,11 @@ const getLabelColor = (status) => {
     font-weight: 600;
 }
 
-.p-datatable {
-    font-size: var(--text-size-1);
+main {
+    padding: 1rem;
 }
 
 .card {
-    padding: 1rem;
     display: flex;
     flex-direction: column;
 }
