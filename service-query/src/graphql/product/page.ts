@@ -1,11 +1,11 @@
 import { database } from "../../database/client.js";
 
 const getProductPage = async (_: any, args: any, context: any) => {
-  const params = args.getProductInput;
-
   let connection = null;
 
   try {
+    const params = args.getProductInput;
+
     connection = await database.client.getConnection();
 
     const [product] = await connection.execute(
@@ -19,10 +19,10 @@ const getProductPage = async (_: any, args: any, context: any) => {
 
     const scheme = {
       success: true,
-      payload: "test"
-    }
+      payload: "test",
+    };
 
-    return scheme
+    return scheme;
   } catch (err: any) {
     if (connection) {
       await connection.rollback();
@@ -36,5 +36,4 @@ const getProductPage = async (_: any, args: any, context: any) => {
   }
 };
 
-
-export { getProductPage }
+export { getProductPage };

@@ -1,12 +1,5 @@
-import { Client } from "@elastic/elasticsearch";
 import { logger } from "../../utils/index.js";
-
-const searchClient = new Client({
-  node: process.env.ELASTIC_ENDPOINT as string,
-  auth: {
-    apiKey: process.env.ELASTIC_API_KEY as string,
-  },
-});
+import { searchClient } from "../../elastic/index.js";
 
 const processQueryParams = (query: any): any => {
   const must: any = [

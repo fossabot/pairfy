@@ -16,9 +16,9 @@
                 </div>
                 <span>{{ getProductData?.category }}</span>
             </div>
-            <ProductCard/>
+            <ProductCard />
             <Divider />
-            <MiniGrid title="Customers frequently viewed"/>
+            <MiniGrid title="Customers frequently viewed" />
             <Divider />
             <MiniGrid title="Frequently purchased items with fast delivery" />
             <Divider />
@@ -38,22 +38,13 @@ import { useQuery } from '@vue/apollo-composable'
 import { onBeforeUnmount, ref, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 
-
 const toast = useToast();
 
 const { setProductData, getProductData } = productAPI();
 
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000, closable: false });
-};
-
 const route = useRoute()
 
 const router = useRouter()
-
-const backRoute = () => {
-    router.go(-1)
-}
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -105,7 +96,7 @@ const updateQueryVariables = (id) => {
     }
 }
 
-watch(
+const watchRoute = watch(
     () => route.params.id,
     (id) => {
         if (id) {
@@ -126,7 +117,18 @@ onGetProductError(error => {
     showError(error);
 })
 
-onBeforeUnmount(() => unwatchGetProduct())
+const backRoute = () => {
+    router.go(-1)
+}
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000, closable: true });
+};
+
+onBeforeUnmount(() => {
+    watchRoute()
+    unwatchGetProduct()
+})
 
 </script>
 
@@ -176,5 +178,4 @@ onBeforeUnmount(() => unwatchGetProduct())
     margin: 0 0.5rem;
     color: var(--text-b);
 }
-
 </style>

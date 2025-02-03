@@ -31,11 +31,6 @@ type Product {
     created_at: String!
 }
 
-type GetProductPageResponse {
-    success: Boolean!
-    payload: String!
-}
-
 type ProductSource {
   id: ID!
   name: String!
@@ -60,10 +55,6 @@ type SearchProductResponse {
 
 input GetProductInput {
   id: String!
-} 
-
-input GetProductPageInput {
-  product_id: ID!
 } 
 
 input StringFilterInput {
@@ -114,7 +105,6 @@ input SearchProductInput {
 
 type Query {
   getProduct(getProductInput: GetProductInput!): Product!
-  getProductPage(getProductPageInput: GetProductPageInput!): GetProductPageResponse!
   searchProduct(searchProductInput: SearchProductInput!): [SearchProductResponse]!
   getAssetPrice: Float!
 }

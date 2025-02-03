@@ -82,4 +82,4 @@ const createProductIndex = async () => {
   };
   
 
-  export { createProductIndex }
+  export { createProductIndex, searchClient }
