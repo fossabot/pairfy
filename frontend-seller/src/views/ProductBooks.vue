@@ -15,30 +15,28 @@
                             </Message>
                         </div>
                         <div class="dialog-row">
-                            <div class="dialog-content-title">
+                            <div class="dialog-title">
                                 Configuration
                             </div>
-                            <InputGroup>
-                                <InputNumber v-model="bookForm.keeping_stock" type="number" placeholder="Stock"
-                                    :invalid="bookFormErrors.keeping_stock" :min="0" :useGrouping="false"
+                        </div>
+                        <div class="dialog-row">
+                            <IftaLabel>
+                                <InputNumber v-model="bookForm.keeping_stock" id="keeping" type="number"
+                                    placeholder="Stock" :invalid="bookFormErrors.keeping_stock" :min="0" fluid
+                                    :useGrouping="false"
                                     :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                                <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready To Sell"
-                                    :invalid="bookFormErrors.ready_stock" :min="0" :useGrouping="false"
-                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
-                            </InputGroup>
+                                <label for="keeping">Keeping</label>
+                            </IftaLabel>
                         </div>
                         <div class="dialog-row">
-                            <Message severity="secondary" icon="pi pi-exclamation-circle">
-                                Disable purchases disables the option to purchase the product.
-                            </Message>
-                        </div>
-
-                        <div class="dialog-row">
-                            <div class="dialog-content-title">
-                                Disable Purchases
-                            </div>
-                            <ToggleSwitch v-model="bookForm.disable_purchases" />
+                            <IftaLabel>
+                                <InputNumber v-model="bookForm.ready_stock" id="ready" type="number" fluid
+                                    placeholder="Ready To Sell" :invalid="bookFormErrors.ready_stock" :min="0"
+                                    :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                                <label for="ready">Ready</label>
+                            </IftaLabel>
                         </div>
                     </div>
                 </template>
@@ -185,19 +183,6 @@
                     </template>
                 </Column>
 
-
-                <Column field="book_disable_purchases" header="Active" sortable style="min-width: 4rem">
-                    <template #body="slotProps">
-                        <Tag :value="slotProps.data.book_disable_purchases ? '' : ''"
-                            :severity="getLabelColor(slotProps.data.book_disable_purchases ? 0 : 1)" />
-                    </template>
-                    <template #sorticon="{ sortOrder }">
-                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                    </template>
-                </Column>
-
                 <Column :exportable="false" style="min-width: 4rem; border-right: none;">
                     <template #body="slotProps">
                         <div class="datatable-control">
@@ -287,25 +272,26 @@ const books = computed(() => booksTemp.value);
 
 const bookForm = ref({
     keeping_stock: null,
-    ready_stock: null,
-    disable_purchases: false
+    ready_stock: null
 });
 
 const bookFormErrors = ref({
     keeping_stock: false,
-    ready_stock: false,
-    disable_purchases: false
+    ready_stock: false
 });
+
+const bookCount = ref(() => 0);
 
 const unwatchBooks = watch(getBooksResult, value => {
     if (value) {
-        const BOOKS = value.getBooks.books;
 
-        booksTemp.value.push(...BOOKS);
+        bookCount.value = value.getBooks.count;
+
+        booksTemp.value.push(...value.getBooks.books);
     }
 }, { immediate: true })
 
-const bookCount = computed(() => getBooksResult.value?.getBooks.count);
+
 
 const dt = ref();
 
@@ -342,8 +328,7 @@ const onConfigDone = () => {
         "updateBookVariable": {
             "id": selectedBook.value.id,
             "keeping_stock": bookForm.value.keeping_stock,
-            "ready_stock": bookForm.value.ready_stock,
-            "disable_purchases": bookForm.value.disable_purchases
+            "ready_stock": bookForm.value.ready_stock
         }
     });
 
@@ -365,7 +350,6 @@ const beforeEditBook = (data) => {
     selectedBook.value = data;
     bookForm.value.keeping_stock = data.book_keeping_stock;
     bookForm.value.ready_stock = data.book_ready_stock;
-    bookForm.value.disable_purchases = data.book_disable_purchases;
     bookConfigDialog.value = true;
 };
 
@@ -466,7 +450,7 @@ main {
     margin-bottom: 1.5rem;
 }
 
-.dialog-content-title {
+.dialog-title {
     font-size: var(--text-size-1);
     margin-bottom: 0.5rem;
     color: var(--text-b);
