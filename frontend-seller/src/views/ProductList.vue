@@ -363,7 +363,7 @@ const getLabelColor = (status) => {
 }
 
 main {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .card {

@@ -1,213 +1,216 @@
 <template>
-    <div class="card">
-        <Dialog v-model:visible="bookConfigDialog" :style="{ width: '400px' }" header="Edit Book" :modal="true"
-            :draggable="false" dismissableMask>
+    <main>
+        <div class="card">
+            <Dialog v-model:visible="bookConfigDialog" :style="{ width: '400px' }" header="Edit Book" :modal="true"
+                :draggable="false" dismissableMask>
 
 
-            <template #default>
-                <div class="dialog-content">
-                    <div class="dialog-row">
-                        <Message severity="secondary" icon="pi pi-exclamation-circle">
-                            The product book allows to manage keeping stock, stock ready to sell and stock blocked by
-                            active orders in the blockchain.
-                        </Message>
-                    </div>
-                    <div class="dialog-row">
-                        <div class="dialog-content-title">
-                            Configuration
+                <template #default>
+                    <div class="dialog-content">
+                        <div class="dialog-row">
+                            <Message severity="secondary" icon="pi pi-exclamation-circle">
+                                The product book allows to manage keeping stock, stock ready to sell and stock blocked
+                                by
+                                active orders in the blockchain.
+                            </Message>
                         </div>
-                        <InputGroup>
-                            <InputNumber v-model="bookForm.keeping_stock" type="number" placeholder="Stock"
-                                :invalid="bookFormErrors.keeping_stock" :min="0" :useGrouping="false"
-                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
+                        <div class="dialog-row">
+                            <div class="dialog-content-title">
+                                Configuration
+                            </div>
+                            <InputGroup>
+                                <InputNumber v-model="bookForm.keeping_stock" type="number" placeholder="Stock"
+                                    :invalid="bookFormErrors.keeping_stock" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)' }" />
 
-                            <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready To Sell"
-                                :invalid="bookFormErrors.ready_stock" :min="0" :useGrouping="false"
-                                :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
-                        </InputGroup>
-                    </div>
-                    <div class="dialog-row">
-                        <Message severity="secondary" icon="pi pi-exclamation-circle">
-                            Disable purchases disables the option to purchase the product.
-                        </Message>
-                    </div>
-
-                    <div class="dialog-row">
-                        <div class="dialog-content-title">
-                            Disable Purchases
+                                <InputNumber v-model="bookForm.ready_stock" type="number" placeholder="Ready To Sell"
+                                    :invalid="bookFormErrors.ready_stock" :min="0" :useGrouping="false"
+                                    :inputStyle="{ borderRadius: 'var(--p-inputtext-border-radius)', marginLeft: '1rem' }" />
+                            </InputGroup>
                         </div>
-                        <ToggleSwitch v-model="bookForm.disable_purchases" />
-                    </div>
-                </div>
-            </template>
+                        <div class="dialog-row">
+                            <Message severity="secondary" icon="pi pi-exclamation-circle">
+                                Disable purchases disables the option to purchase the product.
+                            </Message>
+                        </div>
 
-            <template #footer>
-                <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
-                <Button label="Done" @click="onConfigDone" style="color: var(--text-w);" />
-            </template>
-        </Dialog>
-
-        <DataTable class="card-datatable" ref="dt" :value="books" dataKey="id" :paginator="true" :rows="15"
-            :filters="filters" @page="updateCursor()" @rowSelect="goEditProduct" selectionMode="single"
-            paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
-            currentPageReportTemplate="Showing {first} to {last}">
-            <template #paginatorstart>
-                <div style="color: var(--text-b);">
-                    <span>{{ bookCount }} Books</span>
-                </div>
-            </template>
-
-            <template #header>
-                <div class="datatable-header">
-                    <div class="datatable-control">
-                        <Button label="Export" icon="pi pi-upload" variant="outlined" @click="exportCSV($event)" />
-                    </div>
-                    <div class="datatable-search">
-                        <IconField>
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText v-model="filters['global'].value" placeholder="Search..." />
-                        </IconField>
-                    </div>
-                </div>
-            </template>
-
-
-            <Column header="Image">
-                <template #body="slotProps">
-                    <img :src="buildImageUrl(slotProps.data)" :alt="slotProps.data.image" class="datatable-image" />
-                </template>
-
-            </Column>
-
-
-            <Column field="id" header="ID" sortable style="max-width: 8rem">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-
-                <template #body="slotProps">
-                    {{ formatWithDots(slotProps.data.id, 7) }}
-                </template>
-            </Column>
-
-            <Column field="sku" header="SKU" sortable style="max-width: 8rem">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-
-                <template #body="slotProps">
-                    {{ formatSKU(slotProps.data.sku) }}
-                </template>
-            </Column>
-            <Column field="name" header="Name" sortable style="min-width: 8rem; text-transform: capitalize;">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-                <template #body="slotProps">
-                    {{ reduceByLength(slotProps.data.name, 50) }}
-                </template>
-
-            </Column>
-            <Column field="price" header="Price" sortable style="min-width: 8rem">
-                <template #body="slotProps">
-                    <Tag :value="formatCurrency(slotProps.data.price)" severity="secondary" />
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
-            <Column field="discount_value" header="Discount" sortable
-                style="min-width: 8rem; text-transform: capitalize;">
-                <template #body="slotProps">
-                    <div v-if="slotProps.data.discount">
-                        <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
-                    </div>
-                    <div v-else>
-                        -
+                        <div class="dialog-row">
+                            <div class="dialog-content-title">
+                                Disable Purchases
+                            </div>
+                            <ToggleSwitch v-model="bookForm.disable_purchases" />
+                        </div>
                     </div>
                 </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
 
-            <Column field="book_keeping_stock" header="Keeping" sortable
-                style="min-width: 4rem; text-transform: capitalize;">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                <template #footer>
+                    <Button label="Discard" variant="outlined" @click="bookConfigDialog = false" />
+                    <Button label="Done" @click="onConfigDone" style="color: var(--text-w);" />
                 </template>
-            </Column>
+            </Dialog>
 
-            <Column field="book_ready_stock" header="Ready" sortable
-                style="min-width: 4rem; text-transform: capitalize;">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
-            <Column field="book_blocked_stock" header="Locked" sortable
-                style="min-width: 4rem; text-transform: capitalize;">
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
-            <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
-                        :severity="getLabelColor(slotProps.data.book_ready_stock ? 1 : 0)" />
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
-
-            <Column field="book_disable_purchases" header="Active" sortable style="min-width: 4rem">
-                <template #body="slotProps">
-                    <Tag :value="slotProps.data.book_disable_purchases ? '' : ''"
-                        :severity="getLabelColor(slotProps.data.book_disable_purchases ? 0 : 1)" />
-                </template>
-                <template #sorticon="{ sortOrder }">
-                    <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
-                    <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
-                    <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
-                </template>
-            </Column>
-
-            <Column :exportable="false" style="min-width: 4rem; border-right: none;">
-                <template #body="slotProps">
-                    <div class="datatable-control">
-                        <Button icon="pi pi-cog" outlined size="small" rounded
-                            @click="beforeEditBook(slotProps.data)" />
-
-                        <Button icon="pi pi-eye" outlined size="small" rounded />
+            <DataTable class="card-datatable" ref="dt" :value="books" dataKey="id" :paginator="true" :rows="15"
+                :filters="filters" @page="updateCursor()" @rowSelect="goEditProduct" selectionMode="single"
+                paginatorTemplate="PrevPageLink   NextPageLink  CurrentPageReport"
+                currentPageReportTemplate="Showing {first} to {last}">
+                <template #paginatorstart>
+                    <div style="color: var(--text-b);">
+                        <span>{{ bookCount }} Books</span>
                     </div>
                 </template>
-            </Column>
-        </DataTable>
-    </div>
+
+                <template #header>
+                    <div class="datatable-header">
+                        <div class="datatable-control">
+                            <Button label="Export" icon="pi pi-upload" variant="outlined" @click="exportCSV($event)" />
+                        </div>
+                        <div class="datatable-search">
+                            <IconField>
+                                <InputIcon>
+                                    <i class="pi pi-search" />
+                                </InputIcon>
+                                <InputText v-model="filters['global'].value" placeholder="Search..." />
+                            </IconField>
+                        </div>
+                    </div>
+                </template>
+
+
+                <Column header="Image">
+                    <template #body="slotProps">
+                        <img :src="buildImageUrl(slotProps.data)" :alt="slotProps.data.image" class="datatable-image" />
+                    </template>
+
+                </Column>
+
+
+                <Column field="id" header="ID" sortable style="max-width: 8rem">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+
+                    <template #body="slotProps">
+                        {{ formatWithDots(slotProps.data.id, 7) }}
+                    </template>
+                </Column>
+
+                <Column field="sku" header="SKU" sortable style="max-width: 8rem">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+
+                    <template #body="slotProps">
+                        {{ formatSKU(slotProps.data.sku) }}
+                    </template>
+                </Column>
+                <Column field="name" header="Name" sortable style="min-width: 8rem; text-transform: capitalize;">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                    <template #body="slotProps">
+                        {{ reduceByLength(slotProps.data.name, 50) }}
+                    </template>
+
+                </Column>
+                <Column field="price" header="Price" sortable style="min-width: 8rem">
+                    <template #body="slotProps">
+                        <Tag :value="formatCurrency(slotProps.data.price)" severity="secondary" />
+                    </template>
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column field="discount_value" header="Discount" sortable
+                    style="min-width: 8rem; text-transform: capitalize;">
+                    <template #body="slotProps">
+                        <div v-if="slotProps.data.discount">
+                            <Tag :value="`- ${slotProps.data.discount_value}%`" severity="contrast" />
+                        </div>
+                        <div v-else>
+                            -
+                        </div>
+                    </template>
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column field="book_keeping_stock" header="Keeping" sortable
+                    style="min-width: 4rem; text-transform: capitalize;">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column field="book_ready_stock" header="Ready" sortable
+                    style="min-width: 4rem; text-transform: capitalize;">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column field="book_blocked_stock" header="Locked" sortable
+                    style="min-width: 4rem; text-transform: capitalize;">
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column field="book_ready_stock" header="Stock" sortable style="min-width: 4rem">
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.book_ready_stock ? '' : ''"
+                            :severity="getLabelColor(slotProps.data.book_ready_stock ? 1 : 0)" />
+                    </template>
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+
+                <Column field="book_disable_purchases" header="Active" sortable style="min-width: 4rem">
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.book_disable_purchases ? '' : ''"
+                            :severity="getLabelColor(slotProps.data.book_disable_purchases ? 0 : 1)" />
+                    </template>
+                    <template #sorticon="{ sortOrder }">
+                        <i v-if="sortOrder === 0" class="pi pi-sort-alt arrow" />
+                        <i v-else-if="sortOrder === 1" class="pi pi-arrow-up arrow" />
+                        <i v-else-if="sortOrder === -1" class="pi pi-arrow-down arrow" />
+                    </template>
+                </Column>
+
+                <Column :exportable="false" style="min-width: 4rem; border-right: none;">
+                    <template #body="slotProps">
+                        <div class="datatable-control">
+                            <Button icon="pi pi-cog" outlined size="small" rounded
+                                @click="beforeEditBook(slotProps.data)" />
+
+                            <Button icon="pi pi-eye" outlined size="small" rounded />
+                        </div>
+                    </template>
+                </Column>
+            </DataTable>
+        </div>
+    </main>
 </template>
 
 <script setup>
@@ -441,15 +444,13 @@ const showError = (content) => {
     font-weight: 600;
 }
 
-.p-datatable {
-    font-size: var(--text-size-1);
+main {
+    padding: 0.5rem;
 }
 
 .card {
-    padding: 1rem;
     display: flex;
     flex-direction: column;
-
 }
 
 .dialog-title {

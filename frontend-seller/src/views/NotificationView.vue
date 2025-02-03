@@ -89,7 +89,7 @@
                 <Column :exportable="false" style="max-width: 2rem; border-right: none;">
                     <template #body="slotProps">
                         <div class="datatable-control">
-                            <Button icon="pi pi-arrow-up-right" outlined size="small" rounded
+                            <Button icon="pi pi-eye" outlined size="small" rounded
                                 @click="beforeDeleteProduct(slotProps.data)" />
                         </div>
                     </template>
@@ -202,7 +202,7 @@ onBeforeUnmount(() => {
 }
 
 main {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 .card {

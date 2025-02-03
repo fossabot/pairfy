@@ -741,11 +741,8 @@ const showError = (content) => {
 }
 
 main {
-    padding: 1rem;
-    flex: 1 1 auto;
-    position: relative;
+    padding: 0.5rem;
 }
-
 
 .card {
     display: flex;
