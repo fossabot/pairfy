@@ -84,6 +84,9 @@ onBeforeUnmount(() => {
     height: 360px;
     position: relative;
     display: flex;
+    max-width: var(--body-a);
+    margin-top: 1rem;
+    border-radius: 16px;
 } 
 
 .band-track {
