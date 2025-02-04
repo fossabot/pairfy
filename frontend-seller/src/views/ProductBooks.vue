@@ -409,6 +409,7 @@ const showError = (content) => {
     background: transparent;
     border: 1px solid var(--border-a);
     border-left: none;
+    color: var(--text-a);
 }
 
 ::v-deep(.p-datatable-paginator-bottom) {
