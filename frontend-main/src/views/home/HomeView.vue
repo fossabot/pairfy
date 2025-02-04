@@ -43,7 +43,6 @@ main {
   justify-content: center;
   display: flex;
   align-items: center;
-  padding: 2rem 0;
 }
 
 .bottom {

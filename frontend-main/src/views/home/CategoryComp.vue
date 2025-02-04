@@ -77,6 +77,7 @@ const searchCategory = (name) => {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 2rem;
 }
 
 .tag {
@@ -112,7 +113,6 @@ const searchCategory = (name) => {
     height: 40px;
     border-radius: 50%;
     justify-content: center;
-    background: var(--background-a);
 }
 
 .image img {

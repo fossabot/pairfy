@@ -80,12 +80,10 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .band {
     width: 100%;
-    max-width: var(--body-a);
     overflow: hidden;
     height: 360px;
     position: relative;
     display: flex;
-    border-radius: 16px;
 } 
 
 .band-track {
@@ -98,7 +96,6 @@ onBeforeUnmount(() => {
     background-size: cover;
     width: inherit;
     height: inherit;
-    border-radius: 16px;
     flex: 0 0 100%;
 }
 
