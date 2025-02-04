@@ -70,7 +70,7 @@ const itemList = ref([
 
 <style lang="css" scoped>
 .row {
-    padding: 1rem 0;
+    margin-top: 1rem; 
     width: 100%;
     max-width: var(--body-a);
     display: flex;

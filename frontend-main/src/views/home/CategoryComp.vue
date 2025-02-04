@@ -77,10 +77,6 @@ const searchCategory = (name) => {
     width: 100%;
     display: flex;
     justify-content: center;
-    background: var(--background-a);
-    padding: 2rem 0;
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
 }
 
 .tag {
@@ -109,6 +105,10 @@ const searchCategory = (name) => {
     flex-wrap: wrap;
     display: flex;
     justify-content: flex-start;
+    background: var(--background-a);
+    padding: 2rem;
+    margin-top: 1rem;
+    border-radius: 20px;
 }
 
 .image {
