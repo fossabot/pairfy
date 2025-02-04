@@ -23,8 +23,8 @@
 
                             <div class="dialog-input">
                                 <IftaLabel>
-                                    <InputText id="city" v-model="orderForm.city" fluid
-                                        placeholder="Miami, Florida" :invalid="orderFormErrors.city" autofocus
+                                    <InputText id="city" v-model="orderForm.city" fluid placeholder="Miami, Florida"
+                                        :invalid="orderFormErrors.city" autofocus
                                         v-keyfilter="{ pattern: /^[A-Za-z0-9.'\- ]{1,100}$/, validateOnly: true }" />
 
                                     <label for="city">City / State / Department</label>
@@ -148,8 +148,8 @@
                         </div>
 
                         <div class="dialog-control">
-                            <Button label="Buy" @click="onBuyHandle" style="color: var(--text-w);"
-                                :loading="isLoading" fluid />
+                            <Button label="Buy" @click="onBuyHandle" style="color: var(--text-w);" :loading="isLoading"
+                                fluid />
                         </div>
                     </div>
                 </div>
@@ -162,14 +162,14 @@
             <span>{{ getProductData.brand }}</span>
         </div>
 
-        <div class="card-stock" :class="{ red: 0, }">
-            <span>{{ getStockLabel(15) }}</span>
+        <div class="card-stock" :class="{ red: getProductData.available < 1 }">
+            <span>{{ getStockLabel(getProductData.available) }}</span>
         </div>
 
         <div class="card-rating flex">
             <Rating v-model="productRating" :stars="5" readonly />
-            <span>4.53</span>
-            <div class="reviews">250 reviews</div>
+            <span>{{ getProductData.rating }}</span>
+            <div class="reviews">{{ getProductData.reviews }} reviews</div>
         </div>
 
         <div class="card-full flex green">
@@ -189,7 +189,7 @@
         </div>
 
         <div class="card-available">
-            <span>Available (15)</span>
+            <span>Available ({{ getProductData.available }})</span>
         </div>
 
         <div class="card-control">
@@ -278,7 +278,7 @@ const onBuyHandle = () => {
 
     if (!validateForm()) {
         isLoading.value = false;
-        
+
         return showError('Mandatory Fields')
     }
 
@@ -326,7 +326,7 @@ const computedTotalFiat = computed(() => {
     return 0;
 })
 
-const productRating = ref(4);
+const productRating = ref(getProductData.value?.rating);
 
 const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
