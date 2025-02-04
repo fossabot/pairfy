@@ -29,6 +29,11 @@ type Product {
     discount: Boolean!
     discount_value: Int!
     created_at: String!
+    rating: Float!
+    reviews: Int!
+    best_seller: Boolean!
+    sold: Int!
+    available: Int!
 }
 
 type ProductSource {
@@ -51,6 +56,11 @@ type ProductSource {
 
 type SearchProductResponse {
   _source: ProductSource!
+}
+
+type GetProductResponse {
+  success: Boolean!
+  payload: Product!
 }
 
 input GetProductInput {
@@ -104,7 +114,7 @@ input SearchProductInput {
 } 
 
 type Query {
-  getProduct(getProductInput: GetProductInput!): Product!
+  getProduct(getProductInput: GetProductInput!): GetProductResponse!
   searchProduct(searchProductInput: SearchProductInput!): [SearchProductResponse]!
   getAssetPrice: Float!
 }

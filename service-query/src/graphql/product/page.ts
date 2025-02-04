@@ -1,6 +1,32 @@
+import { searchClient } from "../../elastic/index.js";
 import { database } from "../../database/client.js";
+import { logger } from "../../utils/index.js";
 
-const getProductPage = async (_: any, args: any, context: any) => {
+const searchIndex = async (id: string) => {
+  let result: any = [];
+
+  try {
+    const response = await searchClient.search({
+      index: "products",
+      body: {
+        query: {
+          term: {
+            id,
+          },
+        },
+      },
+    });
+
+    result = response.hits.hits;
+
+  } catch (err) {
+    logger.error(err);
+  } finally {
+    return result;
+  }
+};
+
+const getProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
@@ -14,15 +40,36 @@ const getProductPage = async (_: any, args: any, context: any) => {
     );
 
     if (!product.length) {
-      throw new Error("NO_PRODUCT");
+      throw new Error("ProductExistence");
     }
 
-    const scheme = {
-      success: true,
-      payload: "test",
+    const PRODUCT = product[0];
+
+    let payload = {
+      ...PRODUCT,
+      rating: 0,
+      reviews: 0,
+      best_seller: false,
+      sold: 0,
+      available: 0,
     };
 
-    return scheme;
+    const search = await searchIndex(PRODUCT.id);
+
+    if (search.length) {
+      const data = search[0]._source;
+
+      payload.rating = data.rating;
+      payload.reviews = data.reviews;
+      payload.best_seller = data.best_seller;
+      payload.sold = data.sold;
+      payload.available = data.available;
+    }
+
+    return {
+      success: true,
+      payload,
+    };
   } catch (err: any) {
     if (connection) {
       await connection.rollback();
@@ -36,4 +83,4 @@ const getProductPage = async (_: any, args: any, context: any) => {
   }
 };
 
-export { getProductPage };
+export { getProduct };

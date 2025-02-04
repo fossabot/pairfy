@@ -56,26 +56,34 @@ const queryEnabled = ref(false)
 const { result: getProductResult, onError: onGetProductError } = useQuery(gql`
 query ($getProductVariable: GetProductInput!) {
     getProduct(getProductInput: $getProductVariable) {
-        id
-        name
-        price
-        sku
-        model
-        brand
-        features
-        category
-        keywords
-        bullet_list
-        paused
-        color
-        color_name
-        quality
-        media_url
-        image_path
-        image_set
-        video_set
-        discount
-        discount_value
+        success
+        payload { 
+            id
+            name
+            price
+            sku
+            model
+            brand
+            features
+            category
+            keywords
+            bullet_list
+            paused
+            color
+            color_name
+            quality
+            media_url
+            image_path
+            image_set
+            video_set
+            discount
+            discount_value
+            rating
+            reviews
+            best_seller
+            sold
+            available
+        }
     }
 }
 `,
@@ -109,7 +117,7 @@ const watchRoute = watch(
 
 const unwatchGetProduct = watch(getProductResult, value => {
     if (value) {
-        setProductData(value.getProduct)
+        setProductData(value.getProduct.payload)
     }
 })
 
