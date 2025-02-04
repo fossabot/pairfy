@@ -78,6 +78,7 @@ const searchCategory = (name) => {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .tag {

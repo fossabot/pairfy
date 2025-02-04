@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import OneGrid from '@/views/home/OneGrid.vue'
+import OneGrid from '@/views/home/NormalGrid.vue'
 import BandComp from '@/views/home/BandComp.vue'
 import FourGrid from '@/views/home/FourGrid.vue'
 import TwoGrid from '@/views/home/TwoGrid.vue'

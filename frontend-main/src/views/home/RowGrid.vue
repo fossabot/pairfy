@@ -85,7 +85,6 @@ const itemList = ref([
     color: var(--text-w);
 }
 
-
 .subcard {
     text-align: center;
     grid-template-columns: repeat(6, 1fr);
