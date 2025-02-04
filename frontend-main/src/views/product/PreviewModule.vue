@@ -1,62 +1,62 @@
 <template>
-        <div class="preview" v-if="getProductData">
-            <div class="preview-top">
-                <span>3 Sold </span>
-            </div>
+    <div class="preview" v-if="getProductData">
+        <div class="preview-top">
+            <span>{{ getProductData.sold }} Sold </span>
+        </div>
 
 
-            <div class="preview-name">
-                {{ getProductData.name }}
-            </div>
+        <div class="preview-name">
+            {{ getProductData.name }}
+        </div>
 
-            <div class="preview-model">
-                <span>{{ getProductData.model }} <span></span> SKU {{ getProductData.sku.split(":")[0] }} </span>
-            </div>
+        <div class="preview-model">
+            <span>{{ getProductData.model }} <span></span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+        </div>
 
-            <Divider />
+        <Divider />
 
-            <div class="preview-price flex">
-                <div>$</div>
-                <span>
-                    {{ formatCurrency(
-                        applyDiscount(getProductData.discount,
-                            getProductData.price,
-                            getProductData.discount_value)
-                    ) }}
-                </span>
-            </div>
-
-            <div class="preview-discount" v-if="getProductData.discount">
-                <Tag severity="contrast" :value="`- ${getProductData.discount_value}%`" />
-
-
-                <Tag severity="secondary" style="margin: 0 1rem;">
-                    <span style="text-decoration: line-through;">${{ formatCurrency(getProductData.price) }} USD</span>
-                </Tag>
-
-            
-                <Tag :value="`${convertUSDToADA(
+        <div class="preview-price flex">
+            <div>$</div>
+            <span>
+                {{ formatCurrency(
                     applyDiscount(getProductData.discount,
                         getProductData.price,
-                        getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
-            </div>
-
-
-            <div class="preview-variants flex ">
-                <span>Color</span>
-                <span>:</span>
-                <label> {{ getProductData.color_name }}</label>
-                <div :style="{ backgroundColor: `#${getProductData.color}` }" />
-            </div>
-
-            <Divider />
-
-            <div class="preview-about">About this item</div>
-            <ul class="preview-bullet">
-                <li v-for="item in bulletList" :key="item">{{ item }}</li>
-            </ul>
+                        getProductData.discount_value)
+                ) }}
+            </span>
         </div>
-   
+
+        <div class="preview-discount" v-if="getProductData.discount">
+            <Tag severity="contrast" :value="`- ${getProductData.discount_value}%`" />
+
+
+            <Tag severity="secondary" style="margin: 0 1rem;">
+                <span style="text-decoration: line-through;">${{ formatCurrency(getProductData.price) }} USD</span>
+            </Tag>
+
+
+            <Tag :value="`${convertUSDToADA(
+                applyDiscount(getProductData.discount,
+                    getProductData.price,
+                    getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
+        </div>
+
+
+        <div class="preview-variants flex ">
+            <span>Color</span>
+            <span>:</span>
+            <label> {{ getProductData.color_name }}</label>
+            <div :style="{ backgroundColor: `#${getProductData.color}` }" />
+        </div>
+
+        <Divider />
+
+        <div class="preview-about">About this item</div>
+        <ul class="preview-bullet">
+            <li v-for="item in bulletList" :key="item">{{ item }}</li>
+        </ul>
+    </div>
+
 </template>
 
 <script setup>

@@ -1,6 +1,6 @@
 <template>
     <div class="button">
-        <span class="cart">3</span>
+        <span class="cart">0</span>
         <span class="text">Items</span>
     </div>
 </template>
