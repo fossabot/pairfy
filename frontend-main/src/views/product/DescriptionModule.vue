@@ -12,34 +12,46 @@ import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import productAPI from '@/views/product/api/index';
 import { Editor, EditorContent } from '@tiptap/vue-3';
-import { onMounted, ref, nextTick, onBeforeUnmount, watch } from 'vue';
+import { onMounted, ref, onBeforeUnmount, watch } from 'vue';
 
 const { getProductData } = productAPI();
 
 const editor = ref(null);
 
 const setupEditor = async () => {
-    await nextTick(() => {
-        editor.value = new Editor({
-            editable: false,
-            extensions: [
-                StarterKit,
-                TextStyle.configure({ types: [ListItem.name] }),
-            ],
-            editorProps: {
-                attributes: {
-                    class: 'editor-class',
-                },
+    editor.value = new Editor({
+        editable: false,
+        extensions: [
+            StarterKit,
+            TextStyle.configure({ types: [ListItem.name] }),
+        ],
+        editorProps: {
+            attributes: {
+                class: 'editor-class',
             },
-            content: "",
-        })
-    });
+        },
+        content: "",
+    })
+
+    if (getProductData.value) {
+        const features = JSON.parse(getProductData.value.features);
+
+        editor.value.commands.setContent(features);
+    }
+
+
 }
 
-const unwatchData = watch(getProductData, () => {
-    if (editor.value) {
-        editor.value.commands.setContent(JSON.parse(getProductData.value?.features));
+const unwatchData = watch(getProductData, async (value) => {
+    if (value) {
+        const features = JSON.parse(value.features);
+
+        if (editor.value) {
+            
+            editor.value.commands.setContent(features);
+        }
     }
+
 }, { immediate: true })
 
 

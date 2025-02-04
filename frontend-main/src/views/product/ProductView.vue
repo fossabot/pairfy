@@ -33,9 +33,9 @@ import productAPI from '@/views/product/api/index';
 import DescriptionModule from '@/views/product/DescriptionModule.vue';
 import MiniGrid from '@/views/product/MiniGrid.vue';
 import ProductCard from '@/views/product/ProductCard.vue';
+import { onBeforeUnmount, ref, watch } from "vue";
 import { useRouter, useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
-import { onBeforeUnmount, ref, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
@@ -104,7 +104,7 @@ const updateQueryVariables = (id) => {
     }
 }
 
-const watchRoute = watch(
+const unwatchRoute = watch(
     () => route.params.id,
     (id) => {
         if (id) {
@@ -134,7 +134,7 @@ const showError = (content) => {
 };
 
 onBeforeUnmount(() => {
-    watchRoute()
+    unwatchRoute()
     unwatchGetProduct()
 })
 
