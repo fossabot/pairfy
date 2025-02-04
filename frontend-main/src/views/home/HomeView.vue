@@ -35,7 +35,6 @@ main {
   min-height: 100vh;
   display: grid;
   width: 100%;
-  border-top: 1px solid var(--border-a);
 }
 
 .top {
