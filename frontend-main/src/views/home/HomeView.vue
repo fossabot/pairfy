@@ -31,7 +31,7 @@ import CategoryComp from '@/views/home/CategoryComp.vue'
 
 <style lang="css" scoped>
 main {
-  background: var(--background-a);
+  background: var(--background-b);
   min-height: 100vh;
   display: grid;
   width: 100%;

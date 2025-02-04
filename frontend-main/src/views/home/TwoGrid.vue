@@ -118,7 +118,7 @@ const itemList = ref([
     gap: 1rem;
     padding: 1rem;
     border-radius: 20px;
-    background: var(--background-b);
+    background: var(--background-a);
 }
 
 .minicard {

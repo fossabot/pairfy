@@ -77,8 +77,10 @@ const searchCategory = (name) => {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    background: var(--background-a);
+    padding: 2rem 0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
 }
 
 .tag {
