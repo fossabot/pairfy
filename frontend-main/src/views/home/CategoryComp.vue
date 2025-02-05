@@ -106,7 +106,7 @@ const searchCategory = (name) => {
     display: flex;
     justify-content: flex-start;
     background: var(--background-a);
-    padding: 2rem;
+    padding: 1rem;
     margin-top: 1rem;
     border-radius: 20px;
 }
