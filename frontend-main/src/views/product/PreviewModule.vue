@@ -55,6 +55,12 @@
         <ul class="preview-bullet">
             <li v-for="item in bulletList" :key="item">{{ item }}</li>
         </ul>
+
+        <div class="preview-keywords">
+            <Tag severity="secondary" style="margin-right: 1rem;" v-for="item in keywordList" :key="item">
+                <span>{{ item }}</span>
+            </Tag>
+        </div>
     </div>
 
 </template>
@@ -76,6 +82,15 @@ const bulletList = computed(() => {
     return strings.sort((a, b) => a.length - b.length);
 });
 
+const keywordList = computed(() => {
+    const datum = getProductData.value;
+
+    if (datum) {
+        return datum.keywords.split(',');
+    }
+
+    return []
+})
 
 </script>
 
@@ -151,5 +166,9 @@ const bulletList = computed(() => {
     width: 15px;
     height: 15px;
     border-radius: 50%;
+}
+
+.preview-keywords {
+    margin-top: 1rem;
 }
 </style>
