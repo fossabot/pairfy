@@ -60,7 +60,7 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     font-size: var(--text-size-3);
     margin-top: 0.25rem;
     color: var(--text-a);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .shipping {
