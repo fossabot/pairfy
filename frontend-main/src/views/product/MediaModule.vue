@@ -60,8 +60,8 @@ section {
 }
 
 .nav-item {
-    border: 1px solid var(--border-a);
-    border-radius: 8px;
+    border: none;
+    border-radius: 0px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;
@@ -69,7 +69,7 @@ section {
 }
 
 .nav-item.selected {
-    outline: 2px solid var(--text-a);
+    outline: 1px solid var(--text-a);
 }
 
 .nav-item img {
