@@ -13,7 +13,9 @@
                 </span>
                 <span class="reviews">({{ content.reviews }} reviews) </span>
             </span>
+    
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
+
             <span class="tag flex best" v-if="content.best_seller">
                 Best seller
             </span>
@@ -90,7 +92,6 @@ const openProduct = (id) => {
 }
 
 .rating {
-    margin-top: 0.5rem;
     align-items: baseline;
 }
 
@@ -115,9 +116,8 @@ const openProduct = (id) => {
 }
 
 .price {
-    margin-top: 0.5rem;
     font-size: var(--text-size-4);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .reviews {

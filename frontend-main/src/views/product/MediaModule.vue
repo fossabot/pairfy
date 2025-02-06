@@ -66,6 +66,7 @@ section {
     cursor: pointer;
     justify-content: center;
     margin-bottom: 1rem;
+    border: 1px solid var(--border-a);
 }
 
 .nav-item.selected {
