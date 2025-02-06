@@ -178,7 +178,7 @@
                             <Toast />
                             <div class="uploader-header">
                                 <FileUpload class="uploader-body" ref="fileupload" name="image" :url="createImageURL"
-                                    :multiple="true" accept="image/*" :maxFileSize="1000000" :withCredentials="true"
+                                    :multiple="true" accept="image/*" :maxFileSize="3000000" :withCredentials="true"
                                     @upload="onImagesUpload($event)" @select="onSelectedFiles">
 
                                     <template #header="{ chooseCallback, uploadCallback, clearCallback, files }">
