@@ -10,7 +10,7 @@
         </div>
 
         <div class="preview-model">
-            <span>{{ getProductData.model }} <span></span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+            <span>Model {{ getProductData.model }} <span></span> SKU {{ getProductData.sku.split(":")[0] }} </span>
         </div>
 
         <Divider />
