@@ -301,7 +301,7 @@
                         <div class="box-content">
 
                             <div class="box-content-flex">
-                                <InputText v-model="productColorName" type="text" placeholder="Color Name"
+                                <InputText v-model="productColorName" type="text" placeholder="Color name"
                                     v-keyfilter="/^[a-zA-Z0-9 ]+$/" style="margin-right: 1rem;"
                                     :invalid="formErrors.color_name" />
 
