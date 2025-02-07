@@ -207,13 +207,13 @@
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
 
-        <div class="card-subterm flex">
-            <div class="card-subterm-icon">
+        <div class="card-terms flex">
+            <div class="card-terms-icon">
                 <span>✓</span>
                 <i class="pi pi-shield" />
             </div>
-            <div class="card-subterm-box">
-                <span class="red">Purchase Protection.</span> Receive the product you expected or get your money back.
+            <div class="card-terms-box">
+                <span class="term-title">Purchase Protection.</span> Receive the product you expected or get your money back.
             </div>
         </div>
     </div>
@@ -640,13 +640,13 @@ a {
     color: var(--text-b);
 }
 
-.card-subterm {
+.card-terms {
     margin-top: 1rem;
     height: 80px;
     box-sizing: border-box;
 }
 
-.card-subterm-icon {
+.card-terms-icon {
     width: 50px;
     display: flex;
     align-items: flex-start;
@@ -656,16 +656,21 @@ a {
     padding-top: 4px;
 }
 
-.card-subterm-icon span {
+.card-terms-icon span {
     position: absolute;
     right: 11px;
     top: 3px;
     font-size: 10px;
 }
 
-.card-subterm-box {
+.card-terms-box {
     font-size: var(--text-size-0);
     color: var(--text-b);
     height: inherit;
+}
+
+.term-title{
+    font-weight: 600;
+    color: var(--text-a);
 }
 </style>
