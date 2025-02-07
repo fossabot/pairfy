@@ -20,7 +20,7 @@
                 Best seller
             </span>
             <span class="tag flex discount" v-if="content.discount">
-                {{ `${content.discount_value}% off` }}
+                {{ `-${content.discount_value}%` }}
             </span>
         </div>
     </div>
@@ -102,7 +102,7 @@ const openProduct = (id) => {
 }
 
 .tag {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-2);
     justify-content: center;
     white-space: nowrap;
     text-align: center;
@@ -113,6 +113,7 @@ const openProduct = (id) => {
     padding: 4px 6px;
     margin-top: 0.5rem;
     line-height: 16px;
+   
 }
 
 .price {
