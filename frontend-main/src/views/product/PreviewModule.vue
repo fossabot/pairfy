@@ -156,6 +156,7 @@ const keywordList = computed(() => {
 
 .preview-variants {
     margin-top: 2rem;
+    text-transform: capitalize;
 }
 
 .preview-variants label {
