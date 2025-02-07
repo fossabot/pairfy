@@ -119,6 +119,7 @@ const openProduct = (id) => {
 .price {
     font-size: var(--text-size-4);
     font-weight: 600;
+    margin-top: 0.5rem;
 }
 
 .reviews {
