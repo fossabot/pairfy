@@ -178,12 +178,8 @@
             <span class="full">FULL</span>
         </div>
 
-        <div class="card-arrival flex">
-            <span> Arrives on {{ arrivalDate }}</span>
-        </div>
-
-        <div class="card-within gray">
-            <span> Buying within the next</span>
+        <div class="card-within">
+            <span> Arrives on {{ arrivalDate }} buying within the next</span>
 
             <span>{{ withinRange }}</span>
         </div>
@@ -498,11 +494,6 @@ a {
     margin-bottom: 1rem;
     text-transform: capitalize;
     font-weight: 500;
-}
-
-.card-arrival {
-    font-size: var(--text-size-1);
-    margin-bottom: 1rem;
 }
 
 .card-within {

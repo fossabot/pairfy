@@ -61,7 +61,7 @@ section {
 
 .nav-item {
     border: none;
-    border-radius: 0px;
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;
