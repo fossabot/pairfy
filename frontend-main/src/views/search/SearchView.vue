@@ -9,7 +9,7 @@
                         1-{{ productData.length }} of over {{ productData.length }} results for <span>"{{ searchKey }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
-                        placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange" />
+                        placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange" size="small"/>
                 </div>
 
                 <template v-if="loading">
