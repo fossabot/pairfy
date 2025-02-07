@@ -115,7 +115,7 @@ const keywordList = computed(() => {
 
 .preview-price {
     margin-top: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-size-6);
 }
 
