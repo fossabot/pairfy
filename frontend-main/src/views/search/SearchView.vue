@@ -252,7 +252,6 @@ onBeforeUnmount(() => {
 .wrap {
     width: 100%;
     justify-content: center;
-    border-top: 1px solid var(--border-a);
 }
 
 .body {
