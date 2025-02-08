@@ -31,8 +31,6 @@ const { formatPriceToUSD } = inject('utils');
     height: 2rem;
     border-bottom: 1px solid var(--border-a);
     justify-content: center;
-    color: var(--text-w);
-    background: var(--primary-a);
 }
 
 .bar-body {
