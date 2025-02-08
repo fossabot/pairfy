@@ -62,6 +62,7 @@ const openProduct = (id) => {
     overflow: hidden;
     width: 220px;
     height: 220px;
+    border-radius: 16px;
 }
 
 .image {
