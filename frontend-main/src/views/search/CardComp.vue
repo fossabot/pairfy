@@ -82,13 +82,14 @@ const openProduct = (id) => {
 
 .brand {
     text-transform: capitalize;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-1);
     font-weight: 600;
 }
 
 .title {
+    margin-top: 0.5rem;
     text-transform: capitalize;
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-2);
     cursor: pointer;
 }
 
@@ -114,7 +115,6 @@ const openProduct = (id) => {
     padding: 4px 6px;
     margin-top: 0.5rem;
     line-height: 16px;
-   
 }
 
 .price {

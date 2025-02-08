@@ -33,6 +33,13 @@ const router = createRouter({
       props: true,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition; // Restore scroll position when navigating back
+    } else {
+      return { top: 0, left: 0 }; // Scroll to top with smooth effect
+    }
+  },
 })
 
 export default router
