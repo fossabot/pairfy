@@ -77,7 +77,6 @@ const searchCategory = (name) => {
     width: 100%;
     display: flex;
     justify-content: center;
-    background: var(--background-a);
 }
 
 .tag {

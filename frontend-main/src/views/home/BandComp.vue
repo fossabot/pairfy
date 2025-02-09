@@ -86,6 +86,7 @@ onBeforeUnmount(() => {
     display: flex;
     max-width: var(--body-a);
     margin-top: 1rem;
+    margin-bottom: 1rem;
     border-radius: 16px;
 } 
 
