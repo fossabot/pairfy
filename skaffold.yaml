@@ -158,3 +158,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .                   
+    - image: pairfy/service-feed
+      context: service-feed
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .             
