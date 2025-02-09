@@ -93,7 +93,7 @@ const itemList = ref([
     display: grid;
     gap: 1rem;
     padding: 1rem;
-    border-radius: 20px;
+    border-radius: 16px;
     background: var(--primary-a);
 }
 

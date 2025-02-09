@@ -1,6 +1,6 @@
 <template>
     <div class="category">
-        <div class="tag-body">
+        <div class="categories">
             <div class="tag" v-for="(category, index) in categoryList" :key="index"
                 @click="searchCategory(category.name)">
 
@@ -97,7 +97,7 @@ const searchCategory = (name) => {
     background: var(--soft-cyan-a);
 }
 
-.tag-body {
+.categories {
     width: inherit;
     max-width: var(--body-a);
     gap: 0.5rem;
@@ -106,7 +106,7 @@ const searchCategory = (name) => {
     justify-content: flex-start;
     background: var(--background-a);
     padding: 1rem;
-    border-radius: 20px;
+    border-radius: 16px;
 }
 
 .image {
