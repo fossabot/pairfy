@@ -107,16 +107,17 @@ const searchCategory = (name) => {
     justify-content: flex-start;
     background: var(--background-a);
     padding: 1rem;
-    margin-top: 1rem;
     border-radius: 20px;
 }
 
 .image {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     justify-content: center;
     background: var(--background-a);
+    background-image: url(https://ir.ebaystatic.com/cr/v/c01/06_PopularDestination_PreLoved.jpg);
+    background-size: cover;
 }
 
 .image img {
@@ -124,6 +125,7 @@ const searchCategory = (name) => {
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
+    display: none;
 }
 
 .name {

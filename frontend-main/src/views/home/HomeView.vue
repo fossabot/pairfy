@@ -42,7 +42,6 @@ main {
   justify-content: center;
   display: flex;
   align-items: center;
-  background: var(--background-a);
 }
 
 .bottom {
