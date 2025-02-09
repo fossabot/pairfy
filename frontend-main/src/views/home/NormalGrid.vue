@@ -117,7 +117,7 @@ const itemList = ref([
   border-top-right-radius: 0px;
   display: grid;
   gap: 1rem;
-  row-gap: 2rem;
+  row-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: auto;
   margin-top: 1rem;
