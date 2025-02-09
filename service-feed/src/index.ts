@@ -1,7 +1,12 @@
-import { catcher, logger } from "./utils/index.js";
-import { Queue, Worker } from "bullmq";
-import { redisClient } from "./db/redis.js";
-import { getAssetPrice } from "./handlers/assets.js";
+import { redisClient } from "./database/redis.js";
+import { searchIndex } from "./elastic/index.js";
+import {
+  handleError,
+  errorEvents,
+  logger,
+  redisChecker,
+  sleep,
+} from "./utils/index.js";
 
 const main = async () => {
   try {
@@ -21,18 +26,13 @@ const main = async () => {
       throw new Error("ELASTIC_KEY error");
     }
 
-    const errorEvents: string[] = [
-      "exit",
-      "SIGINT",
-      "SIGTERM",
-      "SIGQUIT",
-      "uncaughtException",
-      "unhandledRejection",
-      "SIGHUP",
-      "SIGCONT",
-    ];
+    if (!process.env.INTERVAL_MS) {
+      throw new Error("INTERVAL_MS error");
+    }
 
-   /////////////////////////////////////////
+    if (!process.env.BEST_SELLER) {
+      throw new Error("BEST_SELLER error");
+    }
 
     await redisClient
       .connect({
@@ -40,92 +40,34 @@ const main = async () => {
         connectTimeout: 100000,
         keepAlive: 100000,
       })
-      .then(() => console.log("redisClient connected"))
-      .catch((err: any) => catcher(err));
-
-    const checkRedis = setInterval(async () => {
-      try {
-        await redisClient.client.ping();
-        console.log("Redis Online");
-      } catch (err) {
-        console.error("REDIS_CONNECTION", err);
-      }
-    }, 10_000);
-    
-    /////////////////////////////////////////
-
-    const watchAssetPriceQueue = new Queue("getAssetPrice", {
-      connection: { url: process.env.REDIS_HOST },
-    });
-
-    /////////////////////////////////////////////////////
-
-    await watchAssetPriceQueue.add(
-      "ADAUSDT",
-      {
-        symbol: "ADAUSDT",
-      },
-      {
-        repeat: {
-          every: 30000,
-        },
-        attempts: 99999,
-        backoff: {
-          type: "fixed",
-          delay: 1000,
-        },
-        removeOnComplete: false,
-        removeOnFail: false,
-        jobId: "ADAUSDT",
-      }
-    );
-
-    logger.info("getAssetPrice added.");
-
-    const watchAssetPrice = new Worker("getAssetPrice", getAssetPrice, {
-      removeOnComplete: false,
-      removeOnFail: false,
-      autorun: true,
-      drainDelay: 1000,
-      connection: { url: process.env.REDIS_HOST },
-    } as any);
-
-    ////////////////////////////////////////////////////////
-
-    watchAssetPrice.on("failed", (job: any, err) => {
-      logger.info("FAILED", job.id);
-      logger.error(err);
-    });
-
-    watchAssetPrice.on("completed", (job: any, result) => {
-      logger.info("COMPLETED", job.id, result);
-    });
-
-    watchAssetPrice.on("error", (err) => {
-      logger.error(err);
-    });
-
-    watchAssetPrice.on("stalled", (job: any) => {
-      logger.info("STALLED", job.id);
-    });
-
-    watchAssetPrice.on("drained", () => {
-      logger.info("DRAINED");
-    });
+      .then(() => redisChecker(redisClient))
+      .catch((err: any) => handleError(err));
 
     errorEvents.forEach((e: string) =>
       process.on(e, async (err) => {
         logger.error(err);
-        await watchAssetPrice.close();
         await redisClient.client.disconnect();
-        clearInterval(checkRedis);
         process.exit(1);
       })
     );
 
+    ///////////////////////////////////////////////////////////
+
     logger.info("ONLINE");
+
+    while (true) {
+      const search = await searchIndex("Office Supplies & Equipment", 18);
+
+      if (search.length) {
+        const data = search;
+
+        console.log(data);
+      }
+
+      await sleep(Number(process.env.INTERVAL_MS as string));
+    }
   } catch (err) {
-    catcher(err);
+    handleError(err);
   }
 };
 

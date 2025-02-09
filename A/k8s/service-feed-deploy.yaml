@@ -24,6 +24,10 @@ spec:
               value: "120000"
             - name: REDIS_HOST
               value: redis://service-state-redis:6379
+            - name: INTERVAL_MS
+              value: "604800000"       
+            - name: BEST_SELLER
+              value: "false"                     
             - name: ELASTIC_NODE
               valueFrom:
                 secretKeyRef:
