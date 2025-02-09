@@ -95,7 +95,6 @@ const itemList = ref([
     padding: 1rem;
     border-radius: 20px;
     background: var(--primary-a);
-    background-image: var(--gradient-a);
 }
 
 .minicard {

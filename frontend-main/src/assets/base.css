@@ -133,7 +133,7 @@
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
 
-  --red-a: #ff385c;
+  --red-a: #ff2e4d;
   --green-a: #10b981;
   --orange-a: #ff7733;
   --orange-b: #ff4500;
@@ -147,8 +147,6 @@
   --soft-yellow-b: rgba(255, 230, 0, 0.2);
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
-
-  --gradient-a: linear-gradient(145deg, var(--soft-yellow-b) 0%, var(--primary-a) 50%);
 }
 
 *,
