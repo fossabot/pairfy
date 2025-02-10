@@ -6,6 +6,7 @@
             <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
+                <span class="rate">3.6</span>
                 <span class="line" /> 
                 <span>2 sold</span>
             </span>
@@ -112,5 +113,9 @@ const rating = ref(4);
     height: 10px;
     width: 1px;
     margin: 0 5px;
+}
+
+.rate{
+    margin-left: 5px;
 }
 </style>
