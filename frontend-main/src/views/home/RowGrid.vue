@@ -1,12 +1,16 @@
 <template>
     <div class="row">
-        <div class="title">
+        <div class="title flex">
             <span>{{ title }}</span>
+
+            <div class="button flex">
+                <i class="pi pi-arrow-right" />
+            </div>
         </div>
 
         <div class="band flex">
             <div class="grid">
-                <ItemCard v-for="item in itemList" :key="item" :content="item"/>
+                <ItemCard v-for="item in itemList" :key="item" :content="item" />
             </div>
         </div>
     </div>
@@ -92,9 +96,11 @@ const itemList = ref([
 }
 
 .title {
+    justify-content: space-between;    
     font-size: var(--text-size-3);
     color: var(--text-w);
     font-weight: 700;
+    width: inherit;
 }
 
 .grid {
@@ -108,11 +114,20 @@ const itemList = ref([
     border-radius: 16px;
 }
 
-@media (min-width: 768px) {
 
+.button {
+    justify-content: center;
+    border-radius: 999px;
+    font-size: var(--text-size-1);
+    font-weight: 500;
+    cursor: pointer;
+    background: var(--primary-a);
+    color: var(--text-w);
+    width: 40px;
+    height: 40px;
 }
 
-@media (min-width: 1200px) {
-  
-}
+@media (min-width: 768px) {}
+
+@media (min-width: 1200px) {}
 </style>

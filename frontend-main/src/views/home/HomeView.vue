@@ -20,7 +20,6 @@
 <script setup>
 import OneGrid from '@/views/home/NormalGrid.vue'
 import BandComp from '@/views/home/BandComp.vue'
-import TwoGrid from '@/views/home/TwoGrid.vue'
 import RowGrid from '@/views/home/RowGrid.vue'
 import CategoryComp from '@/views/home/CategoryComp.vue'
 
