@@ -61,7 +61,7 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--text-a) !important;
+  --p-rating-icon-active-color: var(--yellow-a) !important;
 
   --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
 
@@ -99,7 +99,6 @@
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
-  --background-bs: red;
   --background-c: #181a20;
   --background-d: #1e2329;
 
