@@ -106,7 +106,7 @@ const main = async () => {
         }
       }
 
-      console.log(categories);
+      await redisClient.client.del("feed:timeline");
 
       await redisClient.client.set("feed:timeline", JSON.stringify(categories));
 
