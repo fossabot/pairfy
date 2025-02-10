@@ -1,9 +1,9 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt" loading="lazy">
+        <img :src="props.content.image" :alt="props.content.image" loading="lazy">
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
+            <span class="title">{{ reduceByLength(props.content.name, 30) }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rate">4.2</span>
