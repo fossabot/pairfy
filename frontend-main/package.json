@@ -24,6 +24,7 @@
     "@tiptap/vue-3": "^2.10.3",
     "@vue/apollo-composable": "^4.2.1",
     "@vue/apollo-option": "^4.2.0",
+    "@vueuse/core": "^12.5.0",
     "axios": "^1.7.8",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.13",
