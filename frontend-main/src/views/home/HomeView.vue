@@ -8,9 +8,16 @@
       <div class="bottom">
         <CategoryComp />
         <NormalGrid :content="bestSellers" />
-        <div ref="target" class="target" />
-        <template v-for="(item, index, a) in feedData" :key="index">
-          <section v-if="item.length !== 0 && index !== 'Best Sellers'">
+        <span style="    position: fixed;
+    width: 99%;
+    height: 137px;
+    z-index: 1000;
+    top: 0;
+    color: var(--text-a);">
+          {{ visibilityMap }}
+        </span>
+        <template v-for="(item, index) in feedData" :key="index">
+          <section :ref="el => setCategoryRef(el, index)" v-if="visibilityMap[index]">
             <RowGrid :content="item" :title="index" />
             <NormalGrid :content="item" />
           </section>
@@ -27,21 +34,7 @@ import BandComp from '@/views/home/BandComp.vue'
 import RowGrid from '@/views/home/RowGrid.vue'
 import CategoryComp from '@/views/home/CategoryComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { ref, computed } from 'vue'
-
-const root = ref(null)
-const target = ref(null)
-const isVisible = ref(false)
-
-const { isActive, pause, resume } = useIntersectionObserver(
-  target,
-  ([entry]) => {
-    isVisible.value = entry?.isIntersecting || false
-  },
-  { root },
-)
-
-const bestSellers = computed(() => Object.values(feedData.value)[0]);
+import { ref, computed, reactive, onMounted } from 'vue'
 
 const products = [
   {
@@ -388,6 +381,21 @@ const products = [
   }
 ];
 
+
+const root = ref(null)
+const target = ref(null)
+const isVisible = ref(false)
+
+const { isActive, pause, resume } = useIntersectionObserver(
+  target,
+  ([entry]) => {
+    isVisible.value = entry?.isIntersecting || false
+  },
+  { root },
+)
+
+const bestSellers = computed(() => Object.values(feedData.value)[0]);
+
 const feedData = ref({
   "Best Sellers": products,
   "Electronics & Digital Content": products,
@@ -405,6 +413,39 @@ const feedData = ref({
   "Mother & Kids": products,
   "Shoes": products
 });
+
+const categoryRefs = ref({}); // Store refs for categories
+
+const visibilityMap = reactive({}); // Track which categories are visible
+
+// Initialize visibility map
+Object.keys(feedData.value).forEach((category) => {
+  visibilityMap[category] = false;
+});
+
+
+const setCategoryRef = (el, category) => {
+  if (el) {
+    categoryRefs.value[category] = el;
+
+    useIntersectionObserver(
+      categoryRefs.value[category], // Observe each category container
+      ([{ isIntersecting }]) => {
+        if (isIntersecting) {
+          console.log("INTERSECTION", category)
+
+          visibilityMap[category] = true; // Mark as visible when it enters viewport
+        }
+      }
+    );
+
+    return categoryRefs.value[category]
+  }
+};
+
+
+
+
 
 </script>
 
