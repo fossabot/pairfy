@@ -485,6 +485,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 200px;
 }
 
 .target {
