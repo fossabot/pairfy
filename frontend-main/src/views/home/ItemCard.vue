@@ -6,7 +6,7 @@
             <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
-                <span class="rate">3.6</span>
+                <span class="rate">4.2</span>
                 <span class="line" /> 
                 <span>2 sold</span>
             </span>
