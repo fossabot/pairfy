@@ -99,8 +99,7 @@ const itemList = ref([
 
 .grid {
     text-align: center;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
@@ -110,14 +109,10 @@ const itemList = ref([
 }
 
 @media (min-width: 768px) {
-    .grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+
 }
 
 @media (min-width: 1200px) {
-    .grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+  
 }
 </style>
