@@ -1,6 +1,7 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.image" loading="lazy">
+        <div class="image" :style="{ backgroundImage:  `url(${props.content.image})`, ...props.style }">
+        </div>
 
         <div class="body">
             <span class="title">{{ reduceByLength(props.content.name, 30) }}</span>
@@ -29,7 +30,7 @@
 <script setup>
 import { inject, ref } from 'vue';
 
-const props = defineProps(['content'])
+const props = defineProps(['content', 'style'])
 
 const { formatPriceToUSD, reduceByLength } = inject('utils');
 
@@ -118,5 +119,12 @@ const rating = ref(4);
 
 .rate{
     margin-left: 5px;
+}
+
+.image{
+    border-radius: 16px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: 50%;
 }
 </style>

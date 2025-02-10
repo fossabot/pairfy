@@ -10,7 +10,7 @@
 
         <div class="band flex">
             <div class="grid">
-                <ItemCard v-for="(item, index) in itemList" :key="index" :content="item" />
+                <ItemCard v-for="(item, index) in itemList" :key="index" :content="item" :style="{ minHeight: '200px' }"/>
             </div>
         </div>
     </div>
