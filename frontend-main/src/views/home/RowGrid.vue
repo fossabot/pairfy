@@ -54,7 +54,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-top: 1rem;
     border-radius: 16px;
 }

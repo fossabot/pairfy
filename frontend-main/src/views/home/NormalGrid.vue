@@ -20,7 +20,7 @@ const props = defineProps(['content'])
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   display: grid;
-  gap: 1rem;
+  gap: 0.5rem;
   row-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: auto;
