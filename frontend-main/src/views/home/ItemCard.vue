@@ -122,7 +122,7 @@ const rating = ref(4);
 }
 
 .image{
-    border-radius: 16px;
+    border-radius: 0px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position-x: 50%;
