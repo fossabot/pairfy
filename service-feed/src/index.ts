@@ -76,10 +76,12 @@ const main = async () => {
       categoryList.forEach(async (category) => {
         const feedKey = `feed:${category}`;
 
+        console.log(feedKey);
+
         await redisClient.client.del(feedKey);
-  
+
         const search = await searchIndex(category, 18);
-  
+
         if (search.length) {
           for (const product of search) {
             await redisClient.client.rPush(feedKey, JSON.stringify(product));
