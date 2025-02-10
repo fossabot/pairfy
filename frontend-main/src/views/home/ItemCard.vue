@@ -1,9 +1,14 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt" >
+        <img :src="props.content.image" :alt="props.content.alt">
 
         <div class="body">
             <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
+            <span class="rating flex">
+                <Rating v-model="rating" :stars="5" readonly />
+                <span class="line" /> 
+                <span>2 sold</span>
+            </span>
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
@@ -21,18 +26,27 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 
 const props = defineProps(['content'])
 
 const { formatPriceToUSD, reduceByLength } = inject('utils');
 
+const rating = ref(4);
 </script>
 
 <style lang="css" scoped>
+::v-deep(.p-rating-icon) {
+    width: 10px !important;
+    height: 10px !important;
+}
+
 .card {
+    background: var(--background-a);
     overflow: hidden;
     cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 16px;
 }
 
 .card img {
@@ -49,7 +63,7 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     font-size: var(--text-size-1);
 }
 
-.title{
+.title {
     font-size: var(--text-size-1);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -81,8 +95,22 @@ const { formatPriceToUSD, reduceByLength } = inject('utils');
     max-width: fit-content;
     display: inline-block;
     border-radius: 2px;
-    padding: 4px 6px;
     margin-left: 0.5rem;
     line-height: 16px;
+    padding: 4px 6px;
+}
+
+.rating {
+    font-size: var(--text-size-0);
+    margin-top: 0.25rem;
+    color: var(--text-b);
+}
+
+.line {
+    background: #979797;
+    display: inline-block;
+    height: 10px;
+    width: 1px;
+    margin: 0 5px;
 }
 </style>

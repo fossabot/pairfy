@@ -6,7 +6,6 @@
       </div>
       <div class="bottom">
         <CategoryComp /> 
-        <TwoGrid /> 
         <OneGrid />
         <RowGrid title="Office Supplies & Equipment"/>
         <OneGrid />

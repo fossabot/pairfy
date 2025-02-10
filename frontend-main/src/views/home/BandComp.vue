@@ -79,6 +79,7 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 .band {
+    box-shadow: var(--shadow-a);
     width: 100%;
     overflow: hidden;
     height: 360px;

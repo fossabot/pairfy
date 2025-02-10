@@ -80,10 +80,11 @@ const searchCategory = (name) => {
 }
 
 .tag {
+    background: var(--background-b);
+    font-size: var(--text-size-1);
     text-align: center;
     padding: 0.5rem;
     border-radius: 999px;
-    font-size: var(--text-size-1);
     transition: 0.2s;
     cursor: pointer;
     white-space: nowrap;
