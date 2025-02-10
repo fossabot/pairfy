@@ -66,6 +66,7 @@ const rating = ref(4);
 
 .title {
     font-size: var(--text-size-1);
+    margin-top: 0.25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
