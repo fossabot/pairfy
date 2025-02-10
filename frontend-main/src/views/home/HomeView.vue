@@ -7,7 +7,6 @@
 
       <div class="bottom">
         <CategoryComp />
-        {{ isVisible }}
         <OneGrid />
         <div ref="target" class="target" />
         <RowGrid title="Office Supplies & Equipment" />

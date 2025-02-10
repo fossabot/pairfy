@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <img :src="props.content.image" :alt="props.content.alt">
+        <img :src="props.content.image" :alt="props.content.alt" loading="lazy">
 
         <div class="body">
             <span class="title">{{ reduceByLength(props.content.title, 30) }}</span>
