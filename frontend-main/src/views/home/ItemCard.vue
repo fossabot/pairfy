@@ -47,7 +47,7 @@ const rating = ref(4);
     overflow: hidden;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 16px;
+    border-radius: 0px;
 }
 
 .card img {

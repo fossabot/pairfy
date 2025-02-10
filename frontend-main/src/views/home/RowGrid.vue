@@ -1,16 +1,19 @@
 <template>
     <div class="row">
-        <div class="subcard">
-            <div class="title">
-                <span>{{ title }}</span>
-            </div>
+        <div class="title">
+            <span>{{ title }}</span>
+        </div>
 
-            <img class="minicard" v-for="item in itemList" :key="item" :src="item.image" :alt="item.alt" />
+        <div class="band flex">
+            <div class="grid">
+                <ItemCard v-for="item in itemList" :key="item" :content="item"/>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import ItemCard from '@/views/home/ItemCard.vue';
 import { ref } from 'vue';
 
 const props = defineProps(['title'])
@@ -64,49 +67,57 @@ const itemList = ref([
         discount: false,
         discount_value: 11
     },
+    {
+        title: "The Psychology of Money Timeless...",
+        image: "https://ae01.alicdn.com/kf/S272f7ee82a884b4f92d1e1f56d118c14t.jpg_q75.jpg",
+        price: 15,
+        alt: "image-alt",
+        discount: false,
+        discount_value: 11
+    },
 ])
 
 </script>
 
 <style lang="css" scoped>
 .row {
-    margin-top: 1rem; 
+    margin-top: 1rem;
     width: 100%;
     max-width: var(--body-a);
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--primary-a);
+    padding: 1rem;
 }
 
 .title {
     font-size: var(--text-size-3);
-    grid-column: span 6;
-    font-weight: 700;
-    text-align: start;
     color: var(--text-w);
+    font-weight: 700;
 }
 
-.subcard {
+.grid {
     text-align: center;
     grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
     gap: 1rem;
-    padding: 1rem;
-    border-radius: 16px;
-    background: var(--primary-a);
-}
-
-.minicard {
-    background: var(--background-b);
-    width: 100%;
+    margin-top: 1rem;
     border-radius: 16px;
 }
 
-@media (max-width: 600px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-        /* 1 column for small screens */
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (min-width: 1200px) {
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
 }
 </style>
