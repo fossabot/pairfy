@@ -124,7 +124,7 @@ const rating = ref(4);
 .image{
     border-radius: 0px;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-position-x: 50%;
 }
 </style>
