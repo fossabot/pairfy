@@ -56,6 +56,7 @@ const main = async () => {
     logger.info("ONLINE");
 
     const categoryList: string[] = [
+      "Best Sellers",
       "Electronics & Digital Content",
       "Clothing & Fashion",
       "Health & Beauty",
@@ -72,28 +73,42 @@ const main = async () => {
       "Shoes",
     ];
 
+    const categories: Record<string, any[]> = categoryList.reduce(
+      (acc, category) => {
+        acc[category] = [];
+        return acc;
+      },
+      {} as Record<string, any[]>
+    );
+
     while (true) {
-      const feedBest = `feed:Best Sellers`;
+      const bestKey = `feed:Best Sellers`;
 
-      await redisClient.client.del(feedBest);
+      await redisClient.client.del(bestKey);
 
-      categoryList.forEach(async (category) => {
-        const feedKey = `feed:${category}`;
-
-        console.log(feedKey);
-
-        await redisClient.client.del(feedKey);
-
+      await categoryList.forEach(async (category) => {
         const search = await searchIndex(category, 18);
 
-        if (search.length) {
-          await redisClient.client.rPush(feedBest, JSON.stringify(search[0]));
+        const categoryKey = `feed:${category}`;
 
-          for (const product of search) {
-            await redisClient.client.rPush(feedKey, JSON.stringify(product));
+        await redisClient.client.del(categoryKey);
+
+        if (search.length) {
+          await redisClient.client.rPush(bestKey, JSON.stringify(search[0]));
+
+          for (const item of search) {
+            await redisClient.client.rPush(categoryKey, JSON.stringify(item));
           }
+
+          categories["Best Sellers"].push(search[0]);
+
+          categories[category] = search;
         }
       });
+
+      console.log(categories);
+
+      await redisClient.client.set("feed:timeline", JSON.stringify(categories));
 
       await sleep(Number(process.env.INTERVAL_MS as string));
     }
