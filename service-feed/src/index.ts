@@ -55,14 +55,37 @@ const main = async () => {
 
     logger.info("ONLINE");
 
+    const categoryList: string[] = [
+      "Electronics & Digital Content",
+      "Clothing & Fashion",
+      "Health & Beauty",
+      "Books, Music & Movies",
+      "Home & Garden",
+      "Toys, Hobbies & Collectibles",
+      "Sports & Outdoors & Entertainment",
+      "Grocery & Gourmet Food",
+      "Automotive & Industrial",
+      "Office Supplies & Equipment",
+      "Pet Supplies",
+      "Lights & Lighting",
+      "Mother & Kids",
+      "Shoes",
+    ];
+
     while (true) {
-      const search = await searchIndex("Office Supplies & Equipment", 18);
+      categoryList.forEach(async (category) => {
+        const feedKey = `feed:${category}`;
 
-      if (search.length) {
-        const data = search;
-
-        console.log(data);
-      }
+        await redisClient.client.del(feedKey);
+  
+        const search = await searchIndex(category, 18);
+  
+        if (search.length) {
+          for (const product of search) {
+            await redisClient.client.rPush(feedKey, JSON.stringify(product));
+          }
+        }
+      });
 
       await sleep(Number(process.env.INTERVAL_MS as string));
     }
