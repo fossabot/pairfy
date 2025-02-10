@@ -13,7 +13,7 @@
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag discount" v-if="props.content.discount">
-                    <span>{{ props.content.discount_value }}% off</span>
+                    <span>-{{ props.content.discount_value }}% Deal</span>
                 </div>
             </span>
 
@@ -78,8 +78,9 @@ const rating = ref(4);
 }
 
 .shipping {
-    font-weight: 400;
+    font-size: var(--text-size-0);
     margin-top: 0.25rem;
+    font-weight: 400;
 }
 
 .dollar {
@@ -87,8 +88,7 @@ const rating = ref(4);
 }
 
 .tag {
-    font-size: var(--text-size-1);
-    justify-content: center;
+    font-size: var(--text-size-0);
     white-space: nowrap;
     text-align: center;
     color: var(--text-w);
