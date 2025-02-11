@@ -100,15 +100,15 @@ const searchCategory = (name) => {
 }
 
 .categories {
+    background: var(--background-a);
     width: inherit;
     max-width: var(--body-a);
     gap: 0.5rem;
     flex-wrap: wrap;
     display: flex;
     justify-content: flex-start;
-    background: var(--background-a);
-    padding: 1rem;
     border-radius: 16px;
+    padding-bottom: 1rem;
 }
 
 .image {

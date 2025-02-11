@@ -4,16 +4,16 @@
       <div class="top">
         <BandComp />
       </div>
-
+      <CategoryComp />
       <div class="bottom">
-        <CategoryComp />
+
         <NormalGrid :content="bestSellers" />
         <template v-for="(item, index) in feedData" :key="index">
 
-            <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-              <RowGrid :content="item" :title="index" />
-              <NormalGrid :content="item" />
-            </section>
+          <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
+            <RowGrid :content="item" :title="index" />
+            <NormalGrid :content="item" />
+          </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
         </template>
@@ -445,7 +445,6 @@ const setCategoryRef = (el, category) => {
 
 <style lang="css" scoped>
 main {
-  background: var(--background-b);
   min-height: 100vh;
   display: grid;
   width: 100%;
@@ -460,6 +459,7 @@ section.visible {
     transform: translateY(5%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -488,12 +488,12 @@ section.visible {
 }
 
 .bottom {
+  background: var(--background-b);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-bottom: 200px;
+  border-radius: 24px;
 }
-
-
 </style>

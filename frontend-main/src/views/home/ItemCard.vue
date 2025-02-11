@@ -14,7 +14,7 @@
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
-                <div class="tag" v-if="props.content.discount">
+                <div class="tag discount" v-if="props.content.discount">
                     <span>-{{ props.content.discount_value }}%</span>
                 </div>
             </span>
@@ -107,7 +107,6 @@ const onSelect = (id) => {
 }
 
 .tag {
-    background: var(--text-a);
     font-size: var(--text-size-0);
     white-space: nowrap;
     text-align: center;
