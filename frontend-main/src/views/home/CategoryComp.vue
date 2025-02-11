@@ -94,7 +94,7 @@ const searchCategory = (name) => {
     overflow: hidden;
     display: flex;
     align-items: center;
-    color: var(--text-b);
+    color: var(--text-a);
     font-weight: 500;
 }
 
