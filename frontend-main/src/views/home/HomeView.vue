@@ -17,10 +17,11 @@
           {{ visibilityMap }}
         </span>
         <template v-for="(item, index) in feedData" :key="index">
-          <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-            <RowGrid :content="item" :title="index" />
-            <NormalGrid :content="item" />
-          </section>
+
+            <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
+              <RowGrid :content="item" :title="index" />
+              <NormalGrid :content="item" />
+            </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
         </template>
@@ -459,9 +460,20 @@ main {
 }
 
 section.visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: slideUp 0.5s ease-out;
 }
+
+@keyframes slideUp {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 
 .target {
   background: transparent;
@@ -490,8 +502,6 @@ section.visible {
   align-items: center;
   padding-bottom: 200px;
 }
-
-
 
 
 </style>
