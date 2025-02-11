@@ -113,8 +113,6 @@ const searchCategory = (name) => {
 }
 
 .image {
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
     justify-content: center;
     overflow: hidden;
@@ -122,7 +120,7 @@ const searchCategory = (name) => {
 }
 
 .image img {
-    width: 50px;
+    width: 40px;
     height: auto;
 }
 
