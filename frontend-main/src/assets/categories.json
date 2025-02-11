@@ -52,7 +52,11 @@
       "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care"
     },
     "13": {
-      "name": "Shoes",
+      "name": "Shoes & Accessories",
+      "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers"
+    },
+    "14": {
+      "name": "Art & NFT's",
       "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers"
     }
   }

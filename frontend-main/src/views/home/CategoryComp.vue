@@ -28,9 +28,10 @@ import asset7 from "@/assets/icons/7.jpeg";
 import asset8 from "@/assets/icons/8.jpeg";
 import asset9 from "@/assets/icons/9.jpeg";
 import asset10 from "@/assets/icons/10.jpeg";
-import asset11 from "@/assets/icons/11.svg";
-import asset12 from "@/assets/icons/12.svg";
-import asset13 from "@/assets/icons/13.svg";
+import asset11 from "@/assets/icons/11.jpeg";
+import asset12 from "@/assets/icons/12.jpeg";
+import asset13 from "@/assets/icons/13.jpeg";
+import asset14 from "@/assets/icons/14.jpeg";
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 
@@ -54,7 +55,8 @@ const assets = ref({
     10: asset10,
     11: asset11,
     12: asset12,
-    13: asset13
+    13: asset13,
+    14: asset14
 });
 
 const getURL = (index) => {
