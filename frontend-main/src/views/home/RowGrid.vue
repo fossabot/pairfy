@@ -62,14 +62,15 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 
 .button {
     justify-content: center;
-    border-radius: 999px;
     font-size: var(--text-size-1);
     font-weight: 500;
     cursor: pointer;
-    background: var(--primary-a);
-    color: var(--text-w);
-    width: 40px;
+    background: var(--background-a);
+    color: var(--text-a);
     height: 40px;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0 1rem;
 }
 
 @media (min-width: 768px) {}
