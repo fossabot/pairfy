@@ -51,7 +51,7 @@ const productData = ref([]);
 
 const currentRoute = ref(null);
 
-const selectedSort = ref({ name: 'Price: Low To High', code: 'price:asc' });
+const selectedSort = ref({ name: 'Rating', code: 'rating:desc' });
 
 const sortOptions = ref([
     { name: 'Price: Low To High', code: 'price:asc' },
@@ -75,6 +75,8 @@ const unwatchRoute = watch(
 
         if (route.query.sort) {
             selectedSort.value = sortOptions.value.find(item => item.code === route.query.sort);
+        } else {
+            selectedSort.value = { name: 'Rating', code: 'rating:desc' };
         }
 
         loading.value = true;
@@ -189,28 +191,31 @@ const unwatchKey = watch(currentRoute.value,
             variables.searchProductVariable.quality.value = route.query.qy;
         } else {
             variables.searchProductVariable.quality.enabled = false;
+            variables.searchProductVariable.quality.value = "";
         }
-
 
         if (route.query.cs) {
             variables.searchProductVariable.category.enabled = true;
             variables.searchProductVariable.category.value = route.query.cs;
         } else {
             variables.searchProductVariable.category.enabled = false;
+            variables.searchProductVariable.category.value = "";
         }
 
         if (route.query.gte) {
             variables.searchProductVariable.price.enabled = true;
             variables.searchProductVariable.price.value.gte = Number(route.query.gte);
         } else {
-            variables.searchProductVariable.category.enabled = false;
+            variables.searchProductVariable.price.enabled = false;
+            variables.searchProductVariable.price.value.gte = 0;
         }
 
         if (route.query.lte) {
             variables.searchProductVariable.price.enabled = true;
             variables.searchProductVariable.price.value.lte = Number(route.query.lte);
         } else {
-            variables.searchProductVariable.category.enabled = false;
+            variables.searchProductVariable.price.enabled = false;
+            variables.searchProductVariable.price.value.lte = 0;
         }
 
         if (route.query.sort) {
