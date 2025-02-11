@@ -83,7 +83,7 @@ const searchCategory = (name) => {
 
 .tag {
     background: var(--background-b);
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     text-align: center;
     padding: 0.5rem;
     border-radius: 999px;
@@ -94,8 +94,6 @@ const searchCategory = (name) => {
     overflow: hidden;
     display: flex;
     align-items: center;
-    color: var(--text-a);
-    font-weight: 500;
 }
 
 .tag:hover {
