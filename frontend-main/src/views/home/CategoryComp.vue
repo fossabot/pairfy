@@ -82,8 +82,8 @@ const searchCategory = (name) => {
 }
 
 .tag {
-    background: linear-gradient(90deg, rgba(241,245,249,1) 40%, rgba(255,255,255,0) 100%);
-    font-size: var(--text-size-1);
+    background: var(--background-b);
+    font-size: var(--text-size-0);
     text-align: center;
     padding: 0.5rem;
     border-radius: 999px;
@@ -94,6 +94,7 @@ const searchCategory = (name) => {
     overflow: hidden;
     display: flex;
     align-items: center;
+    font-weight: 500;
 }
 
 .tag:hover {
@@ -120,12 +121,11 @@ const searchCategory = (name) => {
 }
 
 .image img {
-    width: 40px;
+    width: 44px;
     height: auto;
 }
 
 .name {
     margin: 0 0.5rem;
-    font-size: var(--text-size-1);
 }
 </style>
