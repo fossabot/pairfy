@@ -17,11 +17,11 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import asset0 from "@/assets/icons/0.svg";
-import asset1 from "@/assets/icons/1.svg";
-import asset2 from "@/assets/icons/2.svg";
-import asset3 from "@/assets/icons/3.svg";
-import asset4 from "@/assets/icons/4.svg";
+import asset0 from "@/assets/icons/0.jpeg";
+import asset1 from "@/assets/icons/1.jpeg";
+import asset2 from "@/assets/icons/2.jpeg";
+import asset3 from "@/assets/icons/3.jpeg";
+import asset4 from "@/assets/icons/4.jpeg";
 import asset5 from "@/assets/icons/5.svg";
 import asset6 from "@/assets/icons/6.svg";
 import asset7 from "@/assets/icons/7.svg";
@@ -114,17 +114,15 @@ const searchCategory = (name) => {
     height: 50px;
     border-radius: 50%;
     justify-content: center;
+    overflow: hidden;
     background: var(--background-a);
-    background-image: url(@/assets/icons/0.jpeg);
-    background-size: cover;
 }
 
 .image img {
-    width: var(--text-size-4);
+    width: 50px;
     height: auto;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: optimizequality;
-    display: none;
 }
 
 .name {
