@@ -64,7 +64,7 @@ const onSelect = (id) => {
     overflow: hidden;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 16px;
+    border-radius: 0px;
 }
 
 .body {
@@ -131,7 +131,7 @@ const onSelect = (id) => {
 }
 
 .image {
-    border-radius: 8px;
+    border-radius: 0px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position-x: 50%;
