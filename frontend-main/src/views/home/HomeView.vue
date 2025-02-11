@@ -17,10 +17,12 @@
           {{ visibilityMap }}
         </span>
         <template v-for="(item, index) in feedData" :key="index">
-          <section :ref="el => setCategoryRef(el, index)" v-if="visibilityMap[index]">
+          <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
             <RowGrid :content="item" :title="index" />
             <NormalGrid :content="item" />
           </section>
+
+          <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
         </template>
       </div>
 
@@ -423,18 +425,17 @@ Object.keys(feedData.value).forEach((category) => {
   visibilityMap[category] = false;
 });
 
-
 const setCategoryRef = (el, category) => {
   if (el) {
     categoryRefs.value[category] = el;
 
     useIntersectionObserver(
-      categoryRefs.value[category], // Observe each category container
+      categoryRefs.value[category],
       ([{ isIntersecting }]) => {
         if (isIntersecting) {
           console.log("INTERSECTION", category)
 
-          visibilityMap[category] = true; // Mark as visible when it enters viewport
+          visibilityMap[category] = true;
         }
       }
     );
@@ -457,6 +458,24 @@ main {
   width: 100%;
 }
 
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.target {
+  background: transparent;
+  width: 100%;
+  height: 1px;
+  margin-top: 100px;
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+
+.target.visible {
+  margin-top: 0px;
+}
+
 .top {
   min-height: 300px;
   justify-content: center;
@@ -472,9 +491,7 @@ main {
   padding-bottom: 200px;
 }
 
-.target {
-  background: transparent;
-  width: 100%;
-  height: 0px;
-}
+
+
+
 </style>
