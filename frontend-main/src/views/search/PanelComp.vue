@@ -86,11 +86,19 @@ const filterEnabled = computed(() => {
         return true
     }
 
-    if (category.value.length) {
+    if (currentRoute.value.query.qy) {
         return true
     }
 
-    if (condition.value) {
+    if (currentRoute.value.query.cs) {
+        return true
+    }
+
+    if (currentRoute.value.query.gte) {
+        return true
+    }
+
+    if (currentRoute.value.query.lte) {
         return true
     }
 

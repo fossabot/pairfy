@@ -60,6 +60,24 @@ const processQueryParams = (query: any): any => {
     filter.push({ term: { best_seller: query.best_seller.value } });
   }
 
+  let sort: any = [];
+
+  if (query.sort.price.enabled) {
+    sort.push({ price: query.sort.price.value });
+  }
+
+  if (query.sort.rating.enabled) {
+    sort.push({ rating: query.sort.rating.value });
+  }
+
+  if (query.sort.reviews.enabled) {
+    sort.push({ reviews: query.sort.reviews.value });
+  }
+
+  if (query.sort.discount_value.enabled) {
+    sort.push({ discount_value: query.sort.discount_value.value });
+  }
+
   const body = {
     query: {
       bool: {
@@ -69,12 +87,7 @@ const processQueryParams = (query: any): any => {
         filter
       }
     },
-    sort: [
-      { price: query.sort.price },
-      { rating: query.sort.rating },
-      { reviews: query.sort.reviews },
-      { discount_value: query.sort.discount_value },
-    ],
+    sort,
     size: 30,
   };
 
@@ -105,8 +118,6 @@ const searchProduct = async (_: any, args: any, context: any) => {
     const params = args.searchProductInput;
 
     const search = await searchIndex(params);
-
-    console.log(search);
 
     return search;
   } catch (err: any) {

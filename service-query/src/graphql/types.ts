@@ -88,15 +88,10 @@ input PriceRangeInput {
 }
 
 input SortInput {
-  price: SortOrder!
-  rating: SortOrder!
-  reviews: SortOrder!
-  discount_value: SortOrder!
-}
-
-enum SortOrder {
-  asc
-  desc
+  price: StringFilterInput!
+  rating: StringFilterInput!
+  reviews: StringFilterInput!
+  discount_value: StringFilterInput!
 }
 
 input SearchProductInput {

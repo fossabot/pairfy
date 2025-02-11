@@ -6,10 +6,12 @@
             <div class="content">
                 <div class="banner flex">
                     <div class="counter">
-                        1-{{ productData.length }} of over {{ productData.length }} results for <span>"{{ searchKey }}"</span>
+                        1-{{ productData.length }} of over {{ productData.length }} results for <span>"{{ searchKey
+                            }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
-                        placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange" size="small"/>
+                        placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange"
+                        size="small" />
                 </div>
 
                 <template v-if="loading">
@@ -55,7 +57,7 @@ const sortOptions = ref([
     { name: 'Price: Low To High', code: 'price:asc' },
     { name: 'Price: High To Low', code: 'price:desc' },
     { name: 'Rating', code: 'rating:desc' },
-    { name: 'Discount', code: 'discount_value:asc' }
+    { name: 'Discount', code: 'discount_value:desc' }
 ]);
 
 const unwatchRoute = watch(
@@ -71,7 +73,7 @@ const unwatchRoute = watch(
 
         currentRoute.value = route;
 
-        if(route.query.sort){
+        if (route.query.sort) {
             selectedSort.value = sortOptions.value.find(item => item.code === route.query.sort);
         }
 
@@ -123,10 +125,22 @@ const variables = reactive({
             },
         },
         sort: {
-            price: "asc",
-            rating: "desc",
-            reviews: "desc",
-            discount_value: "desc",
+            price: {
+                enabled: true,
+                value: "asc"
+            },
+            rating: {
+                enabled: true,
+                value: "desc",
+            },
+            reviews: {
+                enabled: false,
+                value: "desc"
+            },
+            discount_value: {
+                enabled: false,
+                value: "desc",
+            },
         },
         tag: "",
     }
@@ -201,13 +215,23 @@ const unwatchKey = watch(currentRoute.value,
 
         if (route.query.sort) {
             const sortParam = route.query.sort.split(':');
-            variables.searchProductVariable.sort[sortParam[0]] = sortParam[1]
+            
+            variables.searchProductVariable.sort = {};
+
+            variables.searchProductVariable.sort[sortParam[0]] = {
+                enabled: true,
+                value: sortParam[1]
+            }
         } else {
             variables.searchProductVariable.sort = {
-                price: "asc",
-                rating: "desc",
-                reviews: "desc",
-                discount_value: "desc",
+                price: {
+                    enabled: true,
+                    value: "asc"
+                },
+                rating: {
+                    enabled: true,
+                    value: "desc",
+                }
             }
         }
 
