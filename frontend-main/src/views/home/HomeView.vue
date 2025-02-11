@@ -8,14 +8,6 @@
       <div class="bottom">
         <CategoryComp />
         <NormalGrid :content="bestSellers" />
-        <span style="    position: fixed;
-    width: 99%;
-    height: 137px;
-    z-index: 1000;
-    top: 0;
-    color: var(--text-a);">
-          {{ visibilityMap }}
-        </span>
         <template v-for="(item, index) in feedData" :key="index">
 
             <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
