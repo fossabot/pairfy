@@ -102,6 +102,10 @@ const filterEnabled = computed(() => {
         return true
     }
 
+    if (currentRoute.value.query.sort) {
+        return true
+    }
+
     return false
 
 })
