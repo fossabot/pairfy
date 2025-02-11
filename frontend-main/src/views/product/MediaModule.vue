@@ -10,7 +10,7 @@
             </div>
 
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '600px' }"
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '584px', maxHeight: '600px' }"
                     previewIcon="pi-search" preview />
             </div>
         </section>
@@ -81,11 +81,11 @@ section {
 
 .media-image {
     justify-content: center;
-    display: flex;
-    align-items: center;
-    width: 100%;
+    align-items: flex-start;
     min-height: 600px;
     max-height: 600px;
+    display: flex;
+    width: 100%;
 }
 
 ::v-deep(.p-image-preview-mask:hover) {
