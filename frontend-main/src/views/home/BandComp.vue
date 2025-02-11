@@ -82,14 +82,14 @@ onBeforeUnmount(() => {
     box-shadow: var(--shadow-a);
     width: 100%;
     overflow: hidden;
-    height: 360px;
+    height: 325px;
     position: relative;
     display: flex;
     max-width: var(--body-a);
     margin-top: 1rem;
     margin-bottom: 1rem;
     border-radius: 16px;
-} 
+}
 
 .band-track {
     display: flex;
