@@ -8,7 +8,7 @@
         </template>
         <div class="body">
             <Message severity="secondary">
-                Hello Cardano Community, currently there is only logistics for the USA and CO.
+                Hello Cardano Community, currently there is only logistics for the USA.
                 The other countries will be added progressively.
             </Message>
 
@@ -106,8 +106,7 @@ const watchLocation = watch(getLocationData, (data) => {
 )
 
 const countriesOptions = ref([
-    { name: 'United States', code: 'US' },
-    { name: 'Colombia', code: 'CO' },
+    { name: 'United States', code: 'US' }
 ]);
 
 const disableSave = computed(() => {

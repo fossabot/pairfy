@@ -82,7 +82,7 @@ const searchCategory = (name) => {
 }
 
 .tag {
-    background: var(--background-b);
+    background: linear-gradient(90deg, rgba(241,245,249,1) 40%, rgba(255,255,255,0) 100%);
     font-size: var(--text-size-1);
     text-align: center;
     padding: 0.5rem;
