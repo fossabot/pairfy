@@ -82,6 +82,7 @@ const searchCategory = (name) => {
 }
 
 .tag {
+    background: var(--background-b);
     font-size: var(--text-size-1);
     text-align: center;
     padding: 0.5rem;
