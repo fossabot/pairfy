@@ -115,7 +115,7 @@ const searchCategory = (name) => {
     border-radius: 50%;
     justify-content: center;
     background: var(--background-a);
-    background-image: url(https://ir.ebaystatic.com/cr/v/c01/06_PopularDestination_PreLoved.jpg);
+    background-image: url(@/assets/icons/0.jpeg);
     background-size: cover;
 }
 

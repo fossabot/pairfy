@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .navigation {
-  background: var(--background-a);
+  background: var(--background-b);
   margin-left: 0;
   width: 64px;
   z-index: 10;
@@ -82,7 +82,6 @@ onBeforeUnmount(() => {
   -moz-user-select: none;
   user-select: none;
   transition: 0.2s;
-  border-right: 1px solid var(--border-a);
   overflow: hidden;
 }
 
@@ -105,7 +104,7 @@ li {
   cursor: pointer;
   font-size: var(--text-size-2);
   border: 1px solid transparent;
-  color: var(--text-a);
+  color: var(--text-b);
 }
 
 a {
@@ -149,8 +148,8 @@ li span {
 }
 
 .icon {
-  width: var(--text-size-4);
-  height: var(--text-size-4);
+  width: var(--text-size-3);
+  height: var(--text-size-3);
 }
 
 .label {
