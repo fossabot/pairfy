@@ -1,6 +1,6 @@
 <template>
-    <div class="card">
-        <div class="image" :style="{ backgroundImage:  `url(${props.content.image})`, ...props.style }">
+    <div class="card" @click="onSelect(props.content.id)">
+        <div class="image" :style="{ backgroundImage: `url(${props.content.image})`, ...props.style }">
         </div>
 
         <div class="body">
@@ -8,7 +8,7 @@
             <span class="rating flex">
                 <Rating v-model="rating" :stars="5" readonly />
                 <span class="rate">4.2</span>
-                <span class="line" /> 
+                <span class="line" />
                 <span>2 sold</span>
             </span>
             <span class="price flex">
@@ -29,12 +29,28 @@
 
 <script setup>
 import { inject, ref } from 'vue';
-
-const props = defineProps(['content', 'style'])
+import { useRouter, useRoute } from 'vue-router';
 
 const { formatPriceToUSD, reduceByLength } = inject('utils');
 
+const props = defineProps(['content', 'style'])
+
+const theRoute = useRoute();
+
+const router = useRouter();
+
 const rating = ref(4);
+
+const onSelect = (id) => {
+    router.push({
+        name: 'product',
+        params: {
+            ...theRoute.params,
+            id
+        }
+       
+    })
+}
 </script>
 
 <style lang="css" scoped>
@@ -118,11 +134,11 @@ const rating = ref(4);
     margin: 0 5px;
 }
 
-.rate{
+.rate {
     margin-left: 5px;
 }
 
-.image{
+.image {
     border-radius: 0px;
     background-repeat: no-repeat;
     background-size: contain;
