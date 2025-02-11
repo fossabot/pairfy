@@ -32,8 +32,8 @@ import gql from 'graphql-tag';
 import PanelComp from '@/views/search/PanelComp.vue';
 import CardComp from '@/views/search/CardComp.vue';
 import { useQuery } from '@vue/apollo-composable'
-import { ref, watch, onBeforeUnmount, reactive, inject } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import { ref, watch, onBeforeUnmount, reactive, inject } from 'vue';
 
 const { randomString } = inject('utils');
 
@@ -126,7 +126,7 @@ const variables = reactive({
         },
         sort: {
             price: {
-                enabled: true,
+                enabled: false,
                 value: "asc"
             },
             rating: {
@@ -140,7 +140,7 @@ const variables = reactive({
             discount_value: {
                 enabled: false,
                 value: "desc",
-            },
+            }
         },
         tag: "",
     }
@@ -215,24 +215,51 @@ const unwatchKey = watch(currentRoute.value,
 
         if (route.query.sort) {
             const sortParam = route.query.sort.split(':');
-            
-            variables.searchProductVariable.sort = {};
 
-            variables.searchProductVariable.sort[sortParam[0]] = {
+            let scheme = {
+                price: {
+                    enabled: false,
+                    value: "asc"
+                },
+                rating: {
+                    enabled: false,
+                    value: "desc",
+                },
+                reviews: {
+                    enabled: false,
+                    value: "desc"
+                },
+                discount_value: {
+                    enabled: false,
+                    value: "desc",
+                }
+            };
+
+            scheme[sortParam[0]] = {
                 enabled: true,
                 value: sortParam[1]
             }
+
+            variables.searchProductVariable.sort = scheme;
         } else {
             variables.searchProductVariable.sort = {
                 price: {
-                    enabled: true,
+                    enabled: false,
                     value: "asc"
                 },
                 rating: {
                     enabled: true,
                     value: "desc",
+                },
+                reviews: {
+                    enabled: false,
+                    value: "desc"
+                },
+                discount_value: {
+                    enabled: false,
+                    value: "desc",
                 }
-            }
+            };
         }
 
         variables.searchProductVariable.tag = randomString(10);
