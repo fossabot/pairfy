@@ -22,12 +22,12 @@ import asset1 from "@/assets/icons/1.jpeg";
 import asset2 from "@/assets/icons/2.jpeg";
 import asset3 from "@/assets/icons/3.jpeg";
 import asset4 from "@/assets/icons/4.jpeg";
-import asset5 from "@/assets/icons/5.svg";
-import asset6 from "@/assets/icons/6.svg";
-import asset7 from "@/assets/icons/7.svg";
-import asset8 from "@/assets/icons/8.svg";
-import asset9 from "@/assets/icons/9.svg";
-import asset10 from "@/assets/icons/10.svg";
+import asset5 from "@/assets/icons/5.jpeg";
+import asset6 from "@/assets/icons/6.jpeg";
+import asset7 from "@/assets/icons/7.jpeg";
+import asset8 from "@/assets/icons/8.jpeg";
+import asset9 from "@/assets/icons/9.jpeg";
+import asset10 from "@/assets/icons/10.jpeg";
 import asset11 from "@/assets/icons/11.svg";
 import asset12 from "@/assets/icons/12.svg";
 import asset13 from "@/assets/icons/13.svg";
@@ -121,8 +121,6 @@ const searchCategory = (name) => {
 .image img {
     width: 50px;
     height: auto;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimizequality;
 }
 
 .name {
