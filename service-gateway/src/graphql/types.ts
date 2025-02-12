@@ -75,6 +75,11 @@ type Order {
   product_bullet_list: String!
   product_discount: Boolean!
   product_discount_value: Int!
+  product_media_url: String!
+  product_image_path: String!
+  product_video_path: String!
+  product_image_set: String!
+  product_video_set: String!
   watch_until: Float!
   pending_until: Float!
   shipping_until: Float!

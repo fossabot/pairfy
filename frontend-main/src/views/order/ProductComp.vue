@@ -3,12 +3,10 @@
 
     <div class="product" v-if="getOrderData">
         <div class="product-header flex">
-            <img src="https://pairfy.dev/api/media/get-image/4NWYDtDBHwszeyIsd7Td.jpeg" alt="">
+            <img src="" alt="">
 
             <div class="product-name">
-                Razer - Blade 15 - 15.6 Gaming Laptop - QHD 240Hz - Intel Core i7 - NVIDIA
-                GeForce RTX 4070
-                - 16GB RAM - 1TB SSD - Black - Open Box
+                {{ getOrderData.order.product_name }}
             </div>
         </div>
 
@@ -93,6 +91,9 @@ const setupEditor = async () => {
 }
 
 
+const buildImage = () =>{
+
+}
 
 onMounted(() => {
     setupEditor();
