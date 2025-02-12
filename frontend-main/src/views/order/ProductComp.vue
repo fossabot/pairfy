@@ -3,7 +3,7 @@
 
     <div class="product" v-if="getOrderData">
         <div class="product-header flex">
-            <img src="" alt="">
+            <img :src="productImageList[0]" alt="">
 
             <div class="product-name">
                 {{ getOrderData.order.product_name }}
@@ -59,7 +59,7 @@ import StarterKit from '@tiptap/starter-kit';
 import TextStyle from '@tiptap/extension-text-style';
 import ListItem from '@tiptap/extension-list-item';
 import { Editor, EditorContent } from '@tiptap/vue-3';
-import { inject, ref, onMounted, onBeforeUnmount, nextTick } from 'vue';
+import { inject, ref, onMounted, onBeforeUnmount, nextTick, computed } from 'vue';
 
 const { formatCurrency } = inject('utils');
 
@@ -91,9 +91,21 @@ const setupEditor = async () => {
 }
 
 
-const buildImage = () =>{
+const productImageList = computed(() => {
+    let data = getOrderData.value.order;
 
-}
+    let result = [];
+
+    if (data) {
+        const splited = data.product_image_set.split(",")
+
+        splited.forEach(element => {
+            result.push(data.product_media_url + data.product_image_path + element)
+        });
+    }
+
+    return result
+})
 
 onMounted(() => {
     setupEditor();

@@ -381,6 +381,11 @@ query ($getOrderVariable: GetOrderInput!) {
             product_bullet_list
             product_discount
             product_discount_value
+            product_media_url
+            product_image_path
+            product_video_path
+            product_image_set
+            product_video_set
             watch_until
             pending_until
             shipping_until
