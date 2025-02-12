@@ -94,6 +94,7 @@ const searchCategory = (name) => {
     overflow: hidden;
     display: flex;
     align-items: center;
+    color: var(--text-a);
 }
 
 .tag:hover {

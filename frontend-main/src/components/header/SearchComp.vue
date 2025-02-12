@@ -58,11 +58,12 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid var(--text-a);
+    background: var(--background-b);
 }
 
 .search.focus {
     background: var(--background-a);
+    outline: 1px solid  color-mix(in srgb,var(--primary-a), transparent 10%);
 }
 
 .search-input {
@@ -87,10 +88,10 @@ onBeforeUnmount(() => {
     height: 44px;
     border: none;
     cursor: pointer;
-    color: var(--text-a);
+    color: var(--text-w);
     border-radius: 0 12px 12px 0;
     outline-offset: -1px;
-    background: transparent;
+    background: var(--primary-a);
     outline: 1px solid transparent;
 }
 
