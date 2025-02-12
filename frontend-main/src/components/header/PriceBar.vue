@@ -1,7 +1,7 @@
 <template>
     <div class="bar flex">
         <div class="bar-body flex">
-            <span class="price">Blackdays Liq: 1.000.000 ADA</span>
+            <span class="price">Blackdays: 1.000.000 ADA</span>
             <span class="price">Volume 24h: 253.894 ADA</span>
             <span class="price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
             <span class="price">IUSD 1.0</span>
@@ -43,7 +43,7 @@ const { formatPriceToUSD } = inject('utils');
 .price,
 .wallet {
     font-size: var(--text-size-0);
-    font-weight: 500;
+    font-weight: 400;
     margin-left: 2rem;
 }
 

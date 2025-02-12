@@ -83,7 +83,7 @@ const searchCategory = (name) => {
 
 .tag {
     background: var(--p-surface-50);
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     text-align: center;
     padding: 0.5rem;
     border-radius: 999px;
