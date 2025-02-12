@@ -136,7 +136,6 @@ header {
 section {
     width: inherit;
     justify-content: center;
-    border-top: 1px solid var(--border-a);
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--border-a);
 }
