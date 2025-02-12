@@ -121,7 +121,7 @@ const searchCategory = (name) => {
 }
 
 .image img {
-    width: 44px;
+    width: 46px;
     height: auto;
 }
 
