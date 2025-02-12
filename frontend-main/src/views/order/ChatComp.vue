@@ -345,16 +345,16 @@ onBeforeUnmount(() => {
 }
 
 .content::-webkit-scrollbar-thumb {
-    background-color: var(--text-b);
+    background: #f1f1f1;
     border-radius: 2px;
 }
 
 .content::-webkit-scrollbar-thumb:hover {
-    background-color: #ffffff;
+    background: #c1c1c1;
 }
 
 .content::-webkit-scrollbar-track {
-    background-color: transparent;
+    background: transparent;
     border-radius: 10px;
 }
 
