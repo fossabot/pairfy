@@ -1,5 +1,5 @@
 <template>
-    <Button v-if="currentState === 2" type="button" :disabled="disableButton" @click="onAppealEndpoint" variant="text">
+    <Button v-if="currentState === 2 && shippingData" type="button" :disabled="disableButton" @click="onAppealEndpoint" variant="text">
 
         <div class="flex">
             <ProgressSpinner v-if="loading" style="width: 1rem; height: 1rem;  margin-right: 0.5rem; " strokeWidth="5"
@@ -109,7 +109,7 @@ const disableButton = computed(() => {
     }
 
 
-    if(Date.now() > Number(shippingData.value.appeal_until)){
+    if(Date.now() > Number(shippingData.value?.appeal_until)){
         return true
     }
 
@@ -132,7 +132,7 @@ const deliveryCountdown = computed(() => {
 let deliveryInterval;
 
 const updateDeliveryCountdown = () => {
-    deliveryTimeLeft.value = Number(shippingData.value.date) - Date.now();
+    deliveryTimeLeft.value = Number(shippingData.value?.date) - Date.now();
 };
 
 onMounted(() => {

@@ -199,7 +199,8 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="onBuyProduct()" style="color: var(--text-w);" />
+            <Button label="Buy Now" fluid @click="onBuyProduct()" style="color: var(--text-w);"
+                :disabled="getProductData.available < 1" />
             <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
         </div>
 
@@ -209,7 +210,8 @@
                 <i class="pi pi-shield" />
             </div>
             <div class="card-terms-box">
-                <span class="term-title">Purchase Protection.</span> Receive the product you expected or get your money back.
+                <span class="term-title">Purchase Protection.</span> Receive the product you expected or get your money
+                back.
             </div>
         </div>
     </div>
@@ -660,7 +662,7 @@ a {
     height: inherit;
 }
 
-.term-title{
+.term-title {
     font-weight: 600;
     color: var(--text-a);
 }

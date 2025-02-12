@@ -684,7 +684,6 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
     background: var(--background-a);
-    border-top: 1px solid var(--border-a);
 }
 
 .container {
