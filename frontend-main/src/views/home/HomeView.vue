@@ -488,7 +488,7 @@ section.visible {
 }
 
 .bottom {
-  background: var(--background-b);
+  background: var(--background-a);
   display: flex;
   flex-direction: column;
   justify-content: center;

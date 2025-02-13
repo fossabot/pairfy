@@ -60,7 +60,7 @@ const onSelect = (id) => {
 }
 
 .card {
-    background: var(--background-a);
+    background: transparent;
     overflow: hidden;
     cursor: pointer;
     padding: 0.5rem;
@@ -84,14 +84,14 @@ const onSelect = (id) => {
 
 .price {
     font-size: var(--text-size-3);
-    margin-top: 0.25rem;
+    margin-top: 0rem;
     color: var(--text-a);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .shipping {
     font-size: var(--text-size-0);
-    margin-top: 0.25rem;
+    margin-top: 0rem;
     font-weight: 400;
 }
 
@@ -114,7 +114,7 @@ const onSelect = (id) => {
 
 .rating {
     font-size: var(--text-size-0);
-    margin-top: 0.25rem;
+    margin-top: 0rem;
     color: var(--text-b);
 }
 
@@ -131,9 +131,9 @@ const onSelect = (id) => {
 }
 
 .image {
-    border-radius: 0px;
+    border-radius: 16px;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position-x: 50%;
 }
 </style>
