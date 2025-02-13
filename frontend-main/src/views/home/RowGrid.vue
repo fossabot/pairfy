@@ -38,7 +38,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     align-items: flex-start;
     padding: 1rem;
     border-radius: 16px;
-    background: rgba(252, 188, 5, 0.1);
+    background: color-mix(in srgb, var(--pastel-yellow) 30%, transparent);
 }
 
 .title {

@@ -15,12 +15,12 @@
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
-                <div class="tag discount" v-if="props.content.discount">
+                <div class="tag" v-if="props.content.discount">
                     <span>-{{ props.content.discount_value }}%</span>
                 </div>
             </span>
 
-            <div class="shipping flex green">
+            <div class="shipping flex">
                 <span>Free shipping</span>
             </div>
 
@@ -68,7 +68,7 @@ const onSelect = (id) => {
 }
 
 .body {
-    padding: 0 0.5rem;
+    padding: 0rem;
     display: flex;
     flex-direction: column;
     font-size: var(--text-size-1);
@@ -90,9 +90,8 @@ const onSelect = (id) => {
 }
 
 .shipping {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     margin-top: 0rem;
-    font-weight: 400;
 }
 
 .dollar {
@@ -103,7 +102,7 @@ const onSelect = (id) => {
     font-size: var(--text-size-0);
     white-space: nowrap;
     text-align: center;
-    color: var(--text-w);
+    color: var(--primary-a);
     max-width: fit-content;
     display: inline-block;
     border-radius: 0px;
