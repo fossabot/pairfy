@@ -146,6 +146,16 @@
   --soft-yellow-b: rgba(255, 230, 0, 0.2);
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
+
+
+
+  --pastel-red: #ff6b7d;
+  --pastel-pink: #ffb3c1;
+  --pastel-orange: #ffc9a9;
+  --pastel-yellow: #ffe5a9;
+  --pastel-green: #b8f2c2;
+  --pastel-cyan: #b3e5fc;
+  --pastel-purple: #d7b3ff;
 }
 
 *,
