@@ -13,7 +13,7 @@
 
     <template v-else>
         <div class="connect-wallet flex" @click="togglePanel(true)">
-            Connect Wallet
+            Connect
         </div>
     </template>
 </template>
@@ -52,13 +52,15 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 }
 
 .connect-wallet {
-    border-radius: 999px;
-    height: 45px;
+    border-radius: 12px;
+    height: 44px;
     font-weight: 500;
     font-size: var(--text-size-1);
     cursor: pointer;
     justify-content: center;
     padding: 0 1.5rem;
     border: 1px solid var(--border-a);
+    background: var(--primary-a);
+    color: var(--text-w);
 }
 </style>

@@ -7,7 +7,7 @@
       <CategoryComp />
       <div class="bottom">
 
-        <NormalGrid :content="bestSellers" />
+        <NormalGrid :content="bestSellers"/>
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
@@ -493,7 +493,9 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 2rem;
   padding-bottom: 200px;
-  border-radius: 24px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
 }
 </style>

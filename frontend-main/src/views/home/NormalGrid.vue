@@ -24,7 +24,6 @@ const props = defineProps(['content'])
   row-gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: auto;
-  margin-top: 1rem;
 }
 
 @media (min-width: 768px) {

@@ -59,11 +59,12 @@ onBeforeUnmount(() => {
     border-radius: 12px;
     overflow: hidden;
     background: var(--background-b);
-    border: 1px solid var(--border-a);
+    border: 1px solid transparent;
 }
 
 .search.focus {
-    border: 1px solid var(--primary-a);
+    border: 1px solid var(--border-a);
+    background: var(--background-b);
 }
 
 .search-input {
@@ -100,7 +101,7 @@ onBeforeUnmount(() => {
 }
 
 .search-button:hover {
-    background: var(--background-b);
+    opacity: 0.8;
 }
 
 .search-icon {

@@ -30,7 +30,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 
 <style lang="css" scoped>
 .row {
-    margin-top: 1rem;
+    margin: 2rem 0;
     width: 100%;
     max-width: var(--body-a);
     display: flex;
