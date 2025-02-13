@@ -10,7 +10,7 @@
 
         <div class="band flex">
             <div class="grid">
-                <ItemCard v-for="(item, index) in itemList" :key="index" :content="item" :style="{ minHeight: '200px' }"/>
+                <ItemCard v-for="(item, index) in itemList" :key="index" :content="item" :style="{ minHeight: '217px', maxHeight: '100%' }"/>
             </div>
         </div>
     </div>
@@ -36,14 +36,15 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background: var(--primary-a);
     padding: 1rem;
+    border-radius: 16px;
+    background: rgba(252, 188, 5, 0.1);
 }
 
 .title {
     justify-content: space-between;
     font-size: var(--text-size-3);
-    color: var(--text-w);
+    color: var(--primary-a);
     font-weight: 700;
     width: inherit;
 }
@@ -54,7 +55,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     grid-template-rows: auto;
     grid-auto-rows: auto;
     display: grid;
-    gap: 0.5rem;
+    gap: 1rem;
     margin-top: 1rem;
     border-radius: 16px;
 }
