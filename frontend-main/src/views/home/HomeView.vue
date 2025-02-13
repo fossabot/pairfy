@@ -495,7 +495,7 @@ section.visible {
   align-items: center;
   padding-top: 2rem;
   padding-bottom: 200px;
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
+  border-top-left-radius: 26px;
+  border-top-right-radius: 26px;
 }
 </style>
