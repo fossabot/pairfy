@@ -1,6 +1,7 @@
 <template>
     <div class="card" @click="onSelect(props.content.id)">
-        <div class="image" :style="{ backgroundImage: `url(${props.content.image})`, ...props.style }">
+        <div class="image" >
+            <img :src="props.content.image" :style="{ ...props.style }" alt="" >
         </div>
 
         <div class="body">
@@ -130,9 +131,12 @@ const onSelect = (id) => {
 }
 
 .image {
+    overflow: hidden;
+}
+
+.image img{
+    width: 100%;
+    object-fit: cover;
     border-radius: 16px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position-x: 50%;
 }
 </style>

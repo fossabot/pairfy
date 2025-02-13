@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <ItemCard v-for="item, index in content" :key="index" :content="item" :style="{ minHeight: '250px' }"/>
+    <ItemCard v-for="item, index in content" :key="index" :content="item" :style="{ minHeight: '253px', maxHeight: '100%' }"/>
   </div>
 </template>
 
