@@ -118,10 +118,11 @@ const searchCategory = (name) => {
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
+    width: 50px;
 }
 
 .image img {
-    width: 46px;
+    width: 100%;
     height: auto;
 }
 

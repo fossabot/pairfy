@@ -63,7 +63,6 @@ const onSelect = (id) => {
     background: transparent;
     overflow: hidden;
     cursor: pointer;
-    padding: 0.5rem;
     border-radius: 0px;
 }
 

@@ -488,12 +488,11 @@ section.visible {
 }
 
 .bottom {
-  background: var(--background-a);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 1rem;
   padding-bottom: 200px;
   border-top-left-radius: 26px;
   border-top-right-radius: 26px;
