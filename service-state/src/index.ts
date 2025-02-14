@@ -1,7 +1,13 @@
-import { catcher, errorEvents, logger, sleep } from "./utils/index.js";
+import {
+  catchError,
+  errorEvents,
+  logger,
+  redisChecker,
+  sleep,
+} from "./utils/index.js";
 import { Job, Queue, Worker } from "bullmq";
-import { redisClient } from "./database/redis.js";
 import { scanThreadToken } from "./handlers/index.js";
+import { redisClient } from "./database/redis.js";
 import { database } from "./database/client.js";
 
 const main = async () => {
@@ -57,7 +63,14 @@ const main = async () => {
     if (!process.env.OGMIOS_KEY) {
       throw new Error("OGMIOS_KEY error");
     }
-    /////////////////////////////////////////
+
+    if (!process.env.ELASTIC_NODE) {
+      throw new Error("ELASTIC_NODE error");
+    }
+
+    if (!process.env.ELASTIC_KEY) {
+      throw new Error("ELASTIC_KEY error");
+    }
 
     await redisClient
       .connect({
@@ -65,17 +78,8 @@ const main = async () => {
         connectTimeout: 100000,
         keepAlive: 100000,
       })
-      .then(() => console.log("redisClient connected"))
-      .catch((err: any) => catcher(err));
-
-    const checkRedis = setInterval(async () => {
-      try {
-        await redisClient.client.ping();
-        console.log("Redis Online");
-      } catch (err) {
-        logger.error("Redis Error", err);
-      }
-    }, 30_000);
+      .then(() => redisChecker(redisClient))
+      .catch((err: any) => catchError(err));
 
     //////////////////////////////////////////
 
@@ -141,12 +145,11 @@ const main = async () => {
         await worker.close();
         await database.client.end();
         await redisClient.client.disconnect();
-        clearInterval(checkRedis);
         process.exit(1);
       })
     );
 
-    /////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     let connection: any = null;
 
@@ -182,7 +185,7 @@ const main = async () => {
         ]);
 
         if (!findOrders.length) {
-          console.log("EMPTY_ORDERS");
+          console.log("EmptyOrder");
         }
 
         for (const order of findOrders) {
@@ -202,7 +205,7 @@ const main = async () => {
                   buyer_pubkeyhash: order.buyer_pubkeyhash,
                   buyer_address: order.buyer_address,
                   seller_address: order.seller_address,
-                  country: order.country
+                  country: order.country,
                 },
                 opts: {
                   attempts: 0,
@@ -217,10 +220,10 @@ const main = async () => {
             );
 
             if (!createWork.name) {
-              throw new Error("CREATE_WORK");
+              throw new Error("CreateWorkError");
             }
 
-            console.log("ADDED", createWork.name);
+            console.log("WorkAdded", createWork.name);
           } catch (err) {
             logger.error(err);
             continue;
@@ -237,11 +240,14 @@ const main = async () => {
           connection.release();
         }
       }
-      //SLEEP
+
       await sleep(parseInt(process.env.QUERY_INTERVAL));
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
   } catch (err) {
-    catcher(err);
+    catchError(err);
   }
 };
 

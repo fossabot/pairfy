@@ -63,7 +63,17 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: ogmios-key
-                  key: key                          
+                  key: key   
+            - name: ELASTIC_NODE
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-endpoint
+                  key: key
+            - name: ELASTIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-api-key
+                  key: key                                             
           resources:
             limits:
               memory: "500Mi"

@@ -7,7 +7,7 @@ const logger = new Logger({
   type: "pretty",
 });
 
-const catcher = (message?: any, error?: any, bypass?: boolean) => {
+const catchError = (message?: any, error?: any, bypass?: boolean) => {
   logger.error(`EXIT=>${message}-${error}`);
 
   return bypass || process.exit(1);
@@ -28,4 +28,23 @@ const errorEvents: string[] = [
   "SIGHUP",
   "SIGCONT",
 ];
-export { logger, catcher, getEventId, sleep, errorEvents };
+
+const redisChecker = (redisClient: any) => {
+  let interval: NodeJS.Timeout;
+
+  if (redisClient) {
+    const checker = async () => {
+      try {
+        await redisClient.client.ping();
+        console.log("RedisOnline");
+      } catch (err) {
+        logger.error("RedisError", err);
+        clearInterval(interval);
+      }
+    };
+
+    interval = setInterval(checker, 30_000);
+  }
+};
+
+export { logger, catchError, getEventId, sleep, errorEvents, redisChecker };
