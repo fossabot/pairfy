@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    border-radius: 999px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--background-a);
     border: 2px solid var(--text-a);
