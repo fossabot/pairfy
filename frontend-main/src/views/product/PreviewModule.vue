@@ -105,6 +105,7 @@ const keywordList = computed(() => {
 
 .preview-name {
     font-size: var(--text-size-4);
+    line-height: 2.25rem;
     font-weight: 500;
     margin-top: 1rem;
 }
