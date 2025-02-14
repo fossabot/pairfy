@@ -44,7 +44,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 .card-button {
     cursor: pointer;
-    margin-left: 2rem;
+    margin-left: 3rem;
 }
 
 .card-button i {

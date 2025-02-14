@@ -121,7 +121,7 @@ const searchCategory = (name) => {
     align-items: center;
     overflow: hidden;
     color: var(--text-a);
-    font-weight: 500;
+    font-weight: 400;
     padding: 0.5rem;
     display: flex;
 }

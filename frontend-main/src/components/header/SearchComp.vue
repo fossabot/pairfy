@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
 }
 
 .search.focus {
-    background: var(--background-b);
+    background: var(--background-a);
 }
 
 .search-input {
@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
     height: 44px;
     border: none;
     cursor: pointer;
-    color: var(--text-a);
+    color: var(--text-b);
     border-radius: 0 12px 12px 0;
     outline-offset: -1px;
     background: transparent;
