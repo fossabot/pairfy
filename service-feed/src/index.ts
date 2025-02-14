@@ -71,6 +71,7 @@ const main = async () => {
       "Lights & Lighting",
       "Mother & Kids",
       "Shoes",
+      "Art & NFT's"
     ];
 
     const categories: Record<string, any[]> = categoryList.reduce(
