@@ -6,7 +6,6 @@
       </div>
       <CategoryComp />
       <div class="bottom">
-
         <NormalGrid :content="bestSellers"/>
         <template v-for="(item, index) in feedData" :key="index">
 

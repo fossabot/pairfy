@@ -1,5 +1,8 @@
 <template>
     <div class="category">
+        <div class="title">
+            Trending on Cardano
+        </div>
         <div class="categories">
             <div class="tag" v-for="(category, index) in categoryList" :key="index"
                 @click="searchCategory(category.name)">
@@ -76,9 +79,33 @@ const searchCategory = (name) => {
 
 <style lang="css" scoped>
 .category {
-    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+.title {
+    width: inherit;
+    font-size: var(--text-size-4);
+    max-width: var(--body-a);
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+.categories {
+    width: inherit;
+    max-width: var(--body-a);
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: flex-start;
+    background: var(--background-a);
+    border-radius: 16px;
+    padding-bottom: 1rem;
+    margin-top: 1rem;
 }
 
 .tag {
@@ -101,24 +128,12 @@ const searchCategory = (name) => {
     background: var(--soft-cyan-a);
 }
 
-.categories {
-    background: var(--background-a);
-    width: inherit;
-    max-width: var(--body-a);
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: flex-start;
-    border-radius: 16px;
-    padding-bottom: 1rem;
-}
-
 .image {
     border-radius: 50%;
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
-    width: 50px;
+    width: 60px;
 }
 
 .image img {
