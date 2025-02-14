@@ -1,8 +1,8 @@
 import { catcher, errorEvents, logger, sleep } from "./utils/index.js";
 import { Job, Queue, Worker } from "bullmq";
-import { redisClient } from "./db/redis.js";
+import { redisClient } from "./database/redis.js";
 import { scanThreadToken } from "./handlers/index.js";
-import { database } from "./db/client.js";
+import { database } from "./database/client.js";
 
 const main = async () => {
   try {

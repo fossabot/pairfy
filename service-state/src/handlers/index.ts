@@ -1,5 +1,5 @@
 import { logger } from "../utils/index.js";
-import { database } from "../db/client.js";
+import { database } from "../database/client.js";
 import { getUtxo } from "../lib/index.js";
 import { pending } from "./pending.js";
 import { returned } from "./returned.js";
