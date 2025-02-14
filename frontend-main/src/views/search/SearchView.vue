@@ -1,6 +1,5 @@
 <template>
-    <div class="wrap flex">
-
+    <main>
         <div class="body flex">
             <PanelComp />
             <div class="content">
@@ -24,7 +23,7 @@
 
             </div>
         </div>
-    </div>
+    </main>
 </template>
 
 <script setup>
@@ -305,15 +304,17 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-.wrap {
-    width: 100%;
+main {
+    border-top: 1px solid var(--border-a);
     justify-content: center;
+    display: flex;
 }
 
 .body {
     width: 100%;
     max-width: var(--body-a);
     align-items: flex-start;
+
 }
 
 .content {

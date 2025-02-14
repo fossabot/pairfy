@@ -83,18 +83,18 @@ const searchCategory = (name) => {
 
 .tag {
     background: var(--p-surface-50);
-    font-size: var(--text-size-0);
-    text-align: center;
-    padding: 0.5rem;
+    font-size: var(--text-size-1);
     border-radius: 999px;
+    text-align: center;
     transition: 0.2s;
     cursor: pointer;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden;
-    display: flex;
     align-items: center;
+    overflow: hidden;
     color: var(--text-a);
+    padding: 0.5rem;
+    display: flex;
 }
 
 .tag:hover {
