@@ -16,7 +16,7 @@
         <Divider />
 
         <div class="preview-price flex">
-            <div>$</div>
+            <div>US $</div>
             <span>
                 {{ formatCurrency(
                     applyDiscount(getProductData.discount,
@@ -156,7 +156,7 @@ const keywordList = computed(() => {
 }
 
 .preview-variants {
-    margin-top: 2rem;
+    margin-top: 1rem;
     text-transform: capitalize;
 }
 
