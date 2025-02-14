@@ -1,7 +1,7 @@
 <template>
     <div class="nav flex">
-        <div class="categories flex">
-            <div class="categories-button flex">
+        <div class="selector flex">
+            <div class="selector-b flex">
                 <i class="pi pi-bars" />
             </div>
             <span>All Categories</span>
@@ -35,22 +35,25 @@
 }
 
 .nav span {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
+    color: var(--text-b);
     cursor: pointer;
+    font-weight: 600;
+
 }
 
-.categories {
+.selector {
     background: var(--background-b);
     white-space: nowrap;
     padding: 0.5rem 1rem;
     border-radius: 20px;
 }
 
-.categories-button i {
+.selector-b i {
     font-size: var(--text-size-3);
 }
 
-.categories span {
+.selector span {
     margin: 0 1rem;
 }
 

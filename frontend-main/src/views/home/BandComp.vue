@@ -80,12 +80,12 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .band {
     box-shadow: var(--shadow-a);
+    max-width: var(--body-a);
     width: 100%;
     overflow: hidden;
-    height: 350px;
+    height: 360px;
     position: relative;
     display: flex;
-    max-width: var(--body-a);
     margin-top: 1rem;
     margin-bottom: 1rem;
     border-radius: 16px;

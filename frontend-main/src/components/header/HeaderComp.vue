@@ -137,7 +137,7 @@ section {
     width: inherit;
     justify-content: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid var(--border-a);
+    border-top: 1px solid var(--border-a);
 }
 
 .header {
@@ -151,7 +151,7 @@ section {
 
 .header {
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 20% 60% 20%;
     max-width: var(--body-a);
     width: 100%;
 }
@@ -171,8 +171,8 @@ section {
 }
 
 .menu {
+    max-width: calc(var(--body-a) - 10rem);
     color: inherit;
-    max-width: var(--body-a);
     width: 100%;
 }
 </style>

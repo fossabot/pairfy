@@ -56,14 +56,13 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 999px;
     overflow: hidden;
-    background: var(--background-b);
-    border: 1px solid transparent;
+    background: var(--background-a);
+    border: 2px solid var(--text-a);
 }
 
 .search.focus {
-    border: 1px solid var(--border-a);
     background: var(--background-b);
 }
 
@@ -89,10 +88,10 @@ onBeforeUnmount(() => {
     height: 44px;
     border: none;
     cursor: pointer;
-    color: var(--text-w);
+    color: var(--text-a);
     border-radius: 0 12px 12px 0;
     outline-offset: -1px;
-    background: var(--primary-a);
+    background: transparent;
     outline: 1px solid transparent;
 }
 
