@@ -1,7 +1,8 @@
 <template>
     <div class="category">
-        <div class="title">
-            Trending on Cardano
+        <div class="title flex">
+          <span>Trending on Cardano</span>
+          <img class="icon" src="@/assets/icons/hot.png" alt="">
         </div>
         <div class="categories">
             <div class="tag" v-for="(category, index) in categoryList" :key="index"
@@ -109,7 +110,7 @@ const searchCategory = (name) => {
 }
 
 .tag {
-    background: var(--p-surface-50);
+    background: transparent;
     font-size: var(--text-size-1);
     border-radius: 999px;
     text-align: center;
@@ -120,6 +121,7 @@ const searchCategory = (name) => {
     align-items: center;
     overflow: hidden;
     color: var(--text-a);
+    font-weight: 500;
     padding: 0.5rem;
     display: flex;
 }
@@ -133,7 +135,7 @@ const searchCategory = (name) => {
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
-    width: 60px;
+    width: 64px;
 }
 
 .image img {
@@ -143,5 +145,9 @@ const searchCategory = (name) => {
 
 .name {
     margin: 0 0.5rem;
+}
+
+.icon{
+    width: 34px;
 }
 </style>
