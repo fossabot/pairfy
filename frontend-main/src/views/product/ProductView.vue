@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
 .card-header {
     display: flex;
     align-items: center;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     text-transform: capitalize;
     border-bottom: none;
     padding: 1rem 0;
