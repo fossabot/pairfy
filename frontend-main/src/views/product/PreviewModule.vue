@@ -6,7 +6,9 @@
         </div>
 
         <div class="preview-model">
-            <span>Model {{ getProductData.model }} <span></span> Sku {{ getProductData.sku.split(":")[0] }} </span>
+            <span>Model {{ getProductData.model }} <span>
+            </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+            <span class="red"> +{{ getProductData.sold }} Sold</span>
         </div>
 
         <Divider />
@@ -15,9 +17,9 @@
             <div>US $</div>
             <span>
                 {{ formatCurrency(
-                    applyDiscount(getProductData.discount,
-                        getProductData.price,
-                        getProductData.discount_value)
+                applyDiscount(getProductData.discount,
+                getProductData.price,
+                getProductData.discount_value)
                 ) }}
             </span>
         </div>
