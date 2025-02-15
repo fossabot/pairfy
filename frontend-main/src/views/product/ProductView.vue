@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
     text-transform: capitalize;
     border-bottom: none;
-    color: var(--text-b);
+    color: var(--text-a);
     margin-top: 1rem;
     padding: 1rem;
     font-weight: 500;

@@ -30,6 +30,10 @@
   color: var(--blue-a);
 }
 
+.primary{ 
+  color: var(--blue-a);
+}
+
 .p-select-label {
   font-size: var(--text-size-1) !important;
 }

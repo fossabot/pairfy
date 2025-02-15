@@ -174,8 +174,6 @@
 
         <div class="card-full flex green">
             <span>free shipping</span>
-            <i class="pi pi-bolt green" />
-            <span class="full">FULL</span>
         </div>
 
         <div class="card-within">
@@ -525,11 +523,6 @@ a {
 
 .card-full i {
     margin: 0 0.25rem;
-}
-
-.full {
-    font-weight: 700;
-    font-style: italic;
 }
 
 .reviews {

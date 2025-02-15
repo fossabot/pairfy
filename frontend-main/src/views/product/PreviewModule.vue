@@ -8,7 +8,7 @@
         <div class="preview-model">
             <span>Model {{ getProductData.model }} <span>
                 </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
-            <span class="red"> +{{ getProductData.sold }} Sold</span>
+            <span class="primary"> +{{ getProductData.sold }} Sold</span>
         </div>
 
         <Divider />
@@ -30,7 +30,6 @@
 
             <TagComp :tag="`${formatCurrency(getProductData.price)} USD`" type=""
                 style="margin: 0 1rem; text-decoration: line-through;" />
-
 
 
             <TagComp :tag="`${convertUSDToADA(
