@@ -68,6 +68,7 @@ section {
     margin-bottom: 1rem;
     width: 70px;
     height: 70px;
+    border: 1px solid var(--border-a);
 }
 
 .nav-item.selected {

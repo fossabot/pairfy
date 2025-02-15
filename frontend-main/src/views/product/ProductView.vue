@@ -144,7 +144,6 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
     background: var(--background-a);
-    border-top: 1px solid var(--border-a);
 }
 
 .mask {
@@ -171,11 +170,13 @@ onBeforeUnmount(() => {
 .card-header {
     display: flex;
     align-items: center;
+    background: var(--background-b);
     font-size: var(--text-size-1);
     text-transform: capitalize;
     border-bottom: none;
-    padding: 1rem 0;
-    color: var(--text-b);
+    color: var(--text-a);
+    margin-top: 1rem;
+    padding: 1rem;
 }
 
 .card-header div {

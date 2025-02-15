@@ -1,16 +1,12 @@
 <template>
     <div class="preview" v-if="getProductData">
-        <div class="preview-top">
-            <span>{{ getProductData.sold }} Sold </span>
-        </div>
-
 
         <div class="preview-name">
             {{ getProductData.name }}
         </div>
 
         <div class="preview-model">
-            <span>Model {{ getProductData.model }} <span></span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+            <span>Model {{ getProductData.model }} <span></span> Sku {{ getProductData.sku.split(":")[0] }} </span>
         </div>
 
         <Divider />
@@ -42,11 +38,17 @@
         </div>
 
 
-        <div class="preview-variants flex ">
+        <div class="preview-color flex ">
             <span>Color</span>
             <span>:</span>
             <label> {{ getProductData.color_name }}</label>
             <div :style="{ backgroundColor: `#${getProductData.color}` }" />
+        </div>
+
+        <div class="preview-condition flex">
+            <span>Condition</span>
+            <span>:</span>
+            <label> {{ getProductData.quality }}</label>
         </div>
 
         <Divider />
@@ -99,15 +101,10 @@ const keywordList = computed(() => {
     min-height: 400px;
 }
 
-.preview-top {
-    font-size: var(--text-size-1);
-}
-
 .preview-name {
     font-size: var(--text-size-4);
     line-height: 2.25rem;
     font-weight: 500;
-    margin-top: 1rem;
 }
 
 .preview-rating {
@@ -155,17 +152,19 @@ const keywordList = computed(() => {
     padding-left: 10px;
 }
 
-.preview-variants {
+.preview-color,
+.preview-condition {
     margin-top: 1rem;
     text-transform: capitalize;
 }
 
-.preview-variants label {
+.preview-color label,
+.preview-condition label {
     font-weight: 600;
     margin: 0 0.5rem;
 }
 
-.preview-variants div {
+.preview-color div {
     width: 15px;
     height: 15px;
     border-radius: 50%;
