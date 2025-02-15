@@ -623,7 +623,7 @@ a {
     font-weight: 500;
     font-size: var(--text-size-3);
     margin-left: 1rem;
-    color: var(--text-b);
+    color: var(--text-a);
 }
 
 .card-terms {
