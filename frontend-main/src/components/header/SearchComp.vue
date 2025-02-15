@@ -90,7 +90,7 @@ onBeforeUnmount(() => {
     border: none;
     cursor: pointer;
     color: var(--text-a);
-    border-radius: 0 12px 12px 0;
+    border-radius: 0 11px 11px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
     background: color-mix(in srgb, var(--pastel-yellow) 100%, transparent);
