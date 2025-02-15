@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
     border-radius: 12px;
     overflow: hidden;
     background: var(--background-a);
-    border: 2px solid var(--text-a);
+    border: 2px solid var(--black-a);
 }
 
 .search.focus {

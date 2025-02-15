@@ -23,14 +23,14 @@
 }
 
 .cart {
-    background: var(--text-a);
+    background: var(--black-a);
+    font-size: var(--text-size-0);
     border-radius: 20px;
-    display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 600;
     padding: 0 0.5rem;
-    font-size: var(--text-size-0);
+    display: flex;
     height: 16px;
     color: var(--text-w);
 }
