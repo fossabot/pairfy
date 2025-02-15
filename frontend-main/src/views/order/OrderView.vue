@@ -652,6 +652,10 @@ const getTimestamp = (order) => {
     if (order.contract_state === 3) {
         return Date.now()
     }
+
+    if (order.contract_state === -3) {
+        return Date.now()
+    }
 }
 
 const openExplorer = () => {

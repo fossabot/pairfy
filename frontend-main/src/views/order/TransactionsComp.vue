@@ -86,6 +86,22 @@
             </div>
         </div>
 
+        <div class="card">
+            <div class="card-head flex">
+                <span>Appeal State</span>
+
+                <span class="ago flex">
+                    <i class="pi pi-clock" />
+                    {{ formatAgo(getOrderData.order.appealed_block) }}
+                </span>
+            </div>
+            <div class="card-body">
+                <span class="mask">{{ getOrderData.order.appealed_tx || "None" }}</span>
+                <span class="explore" @click="openExplorer(getOrderData.order.appealed_tx)" v-tooltip.top="'Explore'">
+                    <i class="pi pi-globe" />
+                </span>
+            </div>
+        </div>
 
         <div class="card">
             <div class="card-head flex">
