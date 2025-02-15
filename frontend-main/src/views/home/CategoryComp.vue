@@ -110,7 +110,7 @@ const searchCategory = (name) => {
 }
 
 .tag {
-    background: transparent;
+    background: var(--background-b);
     font-size: var(--text-size-1);
     border-radius: 999px;
     text-align: center;
@@ -135,7 +135,7 @@ const searchCategory = (name) => {
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
-    width: 60px;
+    width: 58px;
 }
 
 .image img {
