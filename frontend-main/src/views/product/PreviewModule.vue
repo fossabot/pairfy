@@ -8,7 +8,7 @@
         <div class="preview-model">
             <span>Model {{ getProductData.model }} <span>
                 </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
-            <span class="primary"> +{{ getProductData.sold }} Sold</span>
+            <span class="gray"> +{{ getProductData.sold }} Sold</span>
         </div>
 
         <Divider />
