@@ -43,10 +43,10 @@
 }
 
 .selector {
-    background: var(--background-b);
+    background: transparent;
     white-space: nowrap;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
+    padding: 0.5rem 0;
+    color: var(--text-b);
 }
 
 .selector-b i {

@@ -7,7 +7,7 @@
 
         <div class="preview-model">
             <span>Model {{ getProductData.model }} <span>
-            </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+                </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
             <span class="red"> +{{ getProductData.sold }} Sold</span>
         </div>
 
@@ -17,28 +17,30 @@
             <div>US $</div>
             <span>
                 {{ formatCurrency(
-                applyDiscount(getProductData.discount,
-                getProductData.price,
-                getProductData.discount_value)
+                    applyDiscount(getProductData.discount,
+                        getProductData.price,
+                        getProductData.discount_value)
                 ) }}
             </span>
         </div>
 
         <div class="preview-discount" v-if="getProductData.discount">
-            <Tag severity="contrast" :value="`- ${getProductData.discount_value}%`" />
+            <TagComp :tag="`- ${getProductData.discount_value}%`" type="contrast" />
 
 
-            <Tag severity="secondary" style="margin: 0 1rem;">
-                <span style="text-decoration: line-through;">${{ formatCurrency(getProductData.price) }} USD</span>
-            </Tag>
+            <TagComp :tag="`${formatCurrency(getProductData.price)} USD`" type=""
+                style="margin: 0 1rem; text-decoration: line-through;" />
 
 
-            <Tag :value="`${convertUSDToADA(
+
+            <TagComp :tag="`${convertUSDToADA(
                 applyDiscount(getProductData.discount,
                     getProductData.price,
-                    getProductData.discount_value), getADAprice)} ADA`" severity="secondary" />
+                    getProductData.discount_value), getADAprice)} ADA`" type="" />
+
         </div>
 
+        <Divider />
 
         <div class="preview-color flex ">
             <span>Color</span>
@@ -52,8 +54,6 @@
             <span>:</span>
             <label> {{ getProductData.quality }}</label>
         </div>
-
-        <Divider />
 
         <div class="preview-about">About this item</div>
         <ul class="preview-bullet">
@@ -71,6 +71,7 @@
 
 <script setup>
 import headerAPI from '@/components/header/api';
+import TagComp from '@/components/TagComp.vue';
 import productAPI from '@/views/product/api/index';
 import { inject, computed } from 'vue';
 

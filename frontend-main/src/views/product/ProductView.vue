@@ -174,9 +174,10 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
     text-transform: capitalize;
     border-bottom: none;
-    color: var(--text-a);
+    color: var(--text-b);
     margin-top: 1rem;
     padding: 1rem;
+    font-weight: 500;
 }
 
 .card-header div {

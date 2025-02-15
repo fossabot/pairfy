@@ -72,11 +72,14 @@ section {
 }
 
 .nav-item.selected {
+    border: none;
     outline: 2px solid var(--text-a);
 }
 
 .nav-item img {
     width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .media-image {
