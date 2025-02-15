@@ -64,7 +64,7 @@ onBeforeUnmount(() => {
 
 .search.focus {
     background: var(--background-a);
-    border: 1px solid var(--yellow-a);
+    border: 1px solid var(--pastel-yellow);
 }
 
 .search-input {
