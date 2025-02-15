@@ -16,19 +16,18 @@
     
             <span class="price">${{ formatPriceToUSD(content.price) }}</span>
 
-            <span class="tag flex best" v-if="content.best_seller">
-                Best seller
-            </span>
-            <span class="tag flex discount" v-if="content.discount">
-                {{ `-${content.discount_value}%` }}
-            </span>
+            <TagComp v-if="content.best_seller" tag="Best seller" type="contrast"  />
+
+            <TagComp v-if="content.discount" :tag="`-${content.discount_value}%`" type="contrast"  />
         </div>
     </div>
 </template>
 
 <script setup>
+import TagComp from '@/components/TagComp.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ref, inject } from 'vue';
+
 
 const { formatPriceToUSD } = inject('utils');
 
@@ -102,24 +101,10 @@ const openProduct = (id) => {
     font-size: var(--text-size-1);
 }
 
-.tag {
-    font-size: var(--text-size-2);
-    justify-content: center;
-    white-space: nowrap;
-    text-align: center;
-    color: var(--text-w);
-    max-width: fit-content;
-    display: inline-block;
-    border-radius: 2px;
-    padding: 4px 6px;
-    margin-top: 0.5rem;
-    line-height: 16px;
-}
-
 .price {
     font-size: var(--text-size-4);
     font-weight: 600;
-    margin-top: 0.5rem;
+    margin-top: 0rem;
 }
 
 .reviews {

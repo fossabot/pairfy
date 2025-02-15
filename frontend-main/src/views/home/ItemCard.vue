@@ -102,7 +102,7 @@ const onSelect = (id) => {
     font-size: var(--text-size-0);
     white-space: nowrap;
     text-align: center;
-    color: var(--primary-a);
+    color: var(--red-a);
     max-width: fit-content;
     display: inline-block;
     border-radius: 0px;

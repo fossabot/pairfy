@@ -13,10 +13,12 @@ const props = defineProps(['tag', 'type']);
 .tag {
     background: var(--background-b);
     font-size: var(--text-size-1);
+    width: fit-content;
     display: inline-flex;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-weight: 400;
+    
 }
 
 .contrast {

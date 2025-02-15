@@ -45,7 +45,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 .title {
     justify-content: space-between;
     font-size: var(--text-size-3);
-    color: var(--primary-a);
+    color: var(--red-a);
     font-weight: 700;
     width: inherit;
 }
@@ -70,7 +70,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     font-weight: 500;
     cursor: pointer;
     background: var(--background-a);
-    color: var(--primary-a);
+    color: var(--blue-a);
     height: 40px;
     white-space: nowrap;
     border-radius: 999px;
