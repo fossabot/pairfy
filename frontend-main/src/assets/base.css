@@ -96,6 +96,7 @@
 
 :root {
   --primary-a: var(--blue-a);
+  --primary-b: red;
 
   --background-a: #ffffff;
   --background-b: #f7f7f7;
@@ -139,14 +140,16 @@
   --yellow-a: #fcbc05;
   --yellow-b: #ffe600;
   --blue-a: #0866ff;
-  --blue-b: #0363eb;
+  --blue-b: #0046be;
   --cyan-a: #60a3ff;
   --soft-red-a: rgba(255, 56, 92, 0.8);
   --soft-yellow-a: rgba(252, 188, 5, 0.3);
   --soft-yellow-b: rgba(255, 230, 0, 0.2);
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
+
   --black-a: #000000;
+  --black-b: #161C24;
 
   --pastel-red: #ff6b7d;
   --pastel-pink: #ffb3c1;

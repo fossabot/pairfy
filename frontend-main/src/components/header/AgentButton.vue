@@ -28,9 +28,8 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .card {
-    color: var(--text-b);
     justify-content: space-between;
-    border: 1px solid var(--border-a);
+    border: 1px solid var(--border-b);
     padding: 0.75rem 1rem; 
     border-radius: 999px;
     display: flex;
@@ -59,7 +58,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     cursor: pointer;
     justify-content: center;
     padding: 0 1.5rem;
-    background: var(--black-a);
+    background: var(--primary-a);
     color: var(--text-w);
 }
 </style>

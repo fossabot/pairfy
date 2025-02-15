@@ -36,7 +36,6 @@
 
 .nav span {
     font-size: var(--text-size-0);
-    color: var(--text-b);
     cursor: pointer;
     font-weight: 600;
 
@@ -46,7 +45,6 @@
     background: transparent;
     white-space: nowrap;
     padding: 0.5rem 0;
-    color: var(--text-b);
 }
 
 .selector-b i {

@@ -127,21 +127,21 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
     font-size: var(--text-size-1);
-    color: var(--text-a);
-    background: var(--background-a);
+    background: var(--black-b);
+    color: var(--text-w);
+    width: 100%;
+}
+
+.header{
+    padding: 0.5rem 0;
 }
 
 section {
     width: inherit;
     justify-content: center;
     padding: 0.5rem 0;
-    border-top: 1px solid var(--border-a);
-}
-
-.header {
-    padding: 0.75rem 0;
+      
 }
 
 .brand {
