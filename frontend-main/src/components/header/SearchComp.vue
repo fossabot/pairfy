@@ -1,5 +1,6 @@
 <template>
     <div class="search" :class="{ focus: isFocus }">
+        <SelectorComp/>
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search Cardano"
             @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
         <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
@@ -11,6 +12,7 @@
 <script setup>
 import { ref, inject, onBeforeUnmount, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import SelectorComp from './SelectorComp.vue';
 
 const { randomString } = inject('utils');
 
@@ -56,7 +58,8 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     width: 100%;
-    border-radius: 12px;
+    height: 46px;
+    border-radius: 6px;
     overflow: hidden;
     background: var(--background-a);
     border: 1px solid var(--black-b);
@@ -69,13 +72,14 @@ onBeforeUnmount(() => {
 
 .search-input {
     width: 100%;
-    padding: 0.75rem 1rem;
+    height: inherit;
     border: none;
     outline: none;
     font-size: var(--text-size-1);
     font-family: inherit;
     background: inherit;
     font-weight: 500;
+    padding: 0 1rem;
 }
 
 .search-input::placeholder {
@@ -86,10 +90,10 @@ onBeforeUnmount(() => {
 
 .search-button {
     padding: 0 1rem;
-    height: 44px;
+    height: inherit;
     border: none;
     cursor: pointer;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 4px 4px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
     background: color-mix(in srgb, var(--pastel-yellow) 100%, transparent);
@@ -103,8 +107,5 @@ onBeforeUnmount(() => {
     opacity: 0.8;
 }
 
-.search-icon {
-    width: 20px;
-    height: 20px;
-}
+
 </style>

@@ -1,14 +1,5 @@
 <template>
     <div class="nav flex">
-        <div class="selector flex">
-            <div class="selector-b flex">
-                <i class="pi pi-bars" />
-            </div>
-            <span>All Categories</span>
-            <div class="arrow flex">
-                <i class="pi pi-angle-down" />
-            </div>
-        </div>
         <span>Best Sellers</span>
         <span>Discounts</span>
         <span>Rewards</span>
@@ -42,19 +33,6 @@
     cursor: pointer;
     font-weight: 600;
 
-}
-
-.selector {
-    background: transparent;
-    white-space: nowrap;
-}
-
-.selector-b i {
-    font-size: var(--text-size-3);
-}
-
-.selector span {
-    margin: 0 1rem;
 }
 
 .price {
