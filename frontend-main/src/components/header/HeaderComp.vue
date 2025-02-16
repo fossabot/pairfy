@@ -123,6 +123,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 header {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -130,7 +131,6 @@ header {
     font-size: var(--text-size-1);
     background: var(--black-b);
     color: var(--text-w);
-    width: 100%;
 }
 
 .header{
@@ -140,7 +140,7 @@ header {
 section {
     width: inherit;
     justify-content: center;   
-    padding: 1rem 0;
+    padding: 0.75rem;
 }
 
 .brand {

@@ -21,11 +21,11 @@
 <style lang="css" scoped>
 .nav {
     justify-content: space-between;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     width: inherit;
     color: inherit;
     cursor: pointer;
- 
+    font-weight: 600;
 }
 
 .price {
