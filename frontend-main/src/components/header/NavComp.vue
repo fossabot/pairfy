@@ -30,8 +30,11 @@
 <style lang="css" scoped>
 .nav {
     justify-content: space-between;
+    font-size: var(--text-size-0);
     width: inherit;
     color: inherit;
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .nav span {
@@ -44,7 +47,6 @@
 .selector {
     background: transparent;
     white-space: nowrap;
-    padding: 1rem 0;
 }
 
 .selector-b i {
