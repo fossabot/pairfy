@@ -1,20 +1,22 @@
 <template>
-    <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
-        <div class="band-track" :style="trackStyle">
-            <div class="band-item" v-for="(item, index) in imageList" :key="index"
-                :style="{ backgroundImage: `url(${item.src})` }">
+    <div class="p-band flex">
+        <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
+            <div class="band-track" :style="trackStyle">
+                <div class="band-item" v-for="(item, index) in imageList" :key="index"
+                    :style="{ backgroundImage: `url(${item.src})` }">
+                </div>
             </div>
-        </div>
-        <div class="band-arrow left" @click="prevItem">
-            <i class="pi pi-angle-left" />
-        </div>
-        <div class="band-arrow right" @click="nextItem">
-            <i class="pi pi-angle-right" />
-        </div>
+            <div class="band-arrow left" @click="prevItem">
+                <i class="pi pi-angle-left" />
+            </div>
+            <div class="band-arrow right" @click="nextItem">
+                <i class="pi pi-angle-right" />
+            </div>
 
-        <div class="band-dots">
-            <button v-for="(image, index) in imageList" :key="index" :class="{ active: currentIndex === index }"
-                @click="goItem(index)"></button>
+            <div class="band-dots">
+                <button v-for="(image, index) in imageList" :key="index" :class="{ active: currentIndex === index }"
+                    @click="goItem(index)"></button>
+            </div>
         </div>
     </div>
 </template>
@@ -78,6 +80,14 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
+
+.p-band{
+    width: 100%;
+    justify-content: center;
+    background: var(--black-a);
+}
+
+
 .band {
     box-shadow: var(--shadow-a);
     max-width: var(--body-a);
@@ -86,8 +96,9 @@ onBeforeUnmount(() => {
     height: 360px;
     position: relative;
     display: flex;
-    margin-top: 2rem;
+    margin-top: 1rem;
     border-radius: 16px;
+    margin-bottom: 1rem;
 }
 
 .band-track {

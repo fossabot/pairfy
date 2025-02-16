@@ -3,8 +3,8 @@
     <div class="body">
       <div class="top">
         <BandComp />
+        <CategoryComp />
       </div>
-      <CategoryComp />
       <div class="bottom">
         <NormalGrid :content="bestSellers"/>
         <template v-for="(item, index) in feedData" :key="index">
@@ -482,8 +482,9 @@ section.visible {
 .top {
   min-height: 300px;
   justify-content: center;
-  display: flex;
+  flex-direction: column;
   align-items: center;
+  display: flex;
 }
 
 .bottom {

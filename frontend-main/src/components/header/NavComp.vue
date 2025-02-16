@@ -44,7 +44,7 @@
 .selector {
     background: transparent;
     white-space: nowrap;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 }
 
 .selector-b i {

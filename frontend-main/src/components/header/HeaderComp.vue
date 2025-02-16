@@ -139,9 +139,7 @@ header {
 
 section {
     width: inherit;
-    justify-content: center;
-    padding: 0.5rem 0;
-      
+    justify-content: center;   
 }
 
 .brand {
