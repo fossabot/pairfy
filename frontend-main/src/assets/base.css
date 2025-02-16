@@ -100,8 +100,6 @@
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
-  --background-c: #181a20;
-  --background-d: #30363E;
 
   --text-a: #222;
   --text-b: #707070;
@@ -151,6 +149,7 @@
 
   --black-a: #000000;
   --black-b: #161C24;
+  --black-c: #30363E;
 
   --pastel-red: #ff6b7d;
   --pastel-pink: #ffb3c1;
