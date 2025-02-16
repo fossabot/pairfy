@@ -84,7 +84,6 @@ onBeforeUnmount(() => {
 .p-band{
     width: 100%;
     justify-content: center;
-    background: var(--black-b);
 }
 
 
@@ -98,7 +97,6 @@ onBeforeUnmount(() => {
     display: flex;
     border-radius: 16px;
     margin-top: 1rem;
-    margin-bottom: 1rem;
 }
 
 .band-track {

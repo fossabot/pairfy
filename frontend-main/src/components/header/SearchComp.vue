@@ -89,11 +89,10 @@ onBeforeUnmount(() => {
     height: 44px;
     border: none;
     cursor: pointer;
-    color: var(--text-w);
     border-radius: 0 10px 10px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
-    background: var(--red-a);
+    background: color-mix(in srgb, var(--pastel-yellow) 100%, transparent);
 }
 
 .search-button i {
