@@ -30,8 +30,8 @@ const { formatPriceToUSD } = inject('utils');
 .bar {
     width: inherit;
     height: 2rem;
-    border-bottom: 1px solid var(--border-b);
     justify-content: center;
+    background: var(--background-d);
 }
 
 .bar-body {
