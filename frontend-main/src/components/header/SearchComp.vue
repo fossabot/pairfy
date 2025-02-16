@@ -93,14 +93,15 @@ onBeforeUnmount(() => {
     height: inherit;
     border: none;
     cursor: pointer;
+    color: var(--text-a);
     border-radius: 0 4px 4px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
-    color: var(--text-a);
     background: color-mix(in srgb, var(--pastel-yellow) 100%, transparent);
 }
 
 .search-button i {
+    font-size: var(--text-size-2);
     font-weight: 600;
 }
 
