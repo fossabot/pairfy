@@ -90,7 +90,7 @@ const searchCategory = (name) => {
 
 .title {
     width: inherit;
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     max-width: var(--body-a);
     font-weight: 600;
     margin-top: 2rem;

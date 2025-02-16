@@ -84,7 +84,7 @@ onBeforeUnmount(() => {
 .p-band{
     width: 100%;
     justify-content: center;
-    background: var(--black-a);
+    background: var(--black-b);
 }
 
 
