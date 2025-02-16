@@ -97,6 +97,7 @@ onBeforeUnmount(() => {
     position: relative;
     display: flex;
     border-radius: 16px;
+    margin-top: 1rem;
     margin-bottom: 1rem;
 }
 
