@@ -93,7 +93,7 @@ const searchCategory = (name) => {
     font-size: var(--text-size-4);
     max-width: var(--body-a);
     font-weight: 600;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .categories {
@@ -105,7 +105,6 @@ const searchCategory = (name) => {
     justify-content: flex-start;
     background: var(--background-a);
     border-radius: 16px;
-    padding-bottom: 1rem;
     margin-top: 1rem;
 }
 
@@ -127,7 +126,7 @@ const searchCategory = (name) => {
 }
 
 .tag:hover {
-    background: var(--soft-cyan-a);
+    background: var(--soft-blue-a);
 }
 
 .image {
@@ -135,7 +134,7 @@ const searchCategory = (name) => {
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
-    width: 58px;
+    width: 60px;
 }
 
 .image img {

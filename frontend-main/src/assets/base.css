@@ -146,7 +146,8 @@
   --soft-yellow-a: rgba(252, 188, 5, 0.3);
   --soft-yellow-b: rgba(255, 230, 0, 0.2);
   --soft-white-a: rgba(255, 255, 255, 0.1);
-  --soft-cyan-a: rgba(96, 163, 255, 0.2);
+  --soft-cyan-a: rgba(96, 163, 255, 0.1);
+  --soft-blue-a: rgba(8, 102, 255, 0.1);
 
   --black-a: #000000;
   --black-b: #161C24;
