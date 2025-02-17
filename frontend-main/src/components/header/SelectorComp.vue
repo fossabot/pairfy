@@ -13,6 +13,7 @@
 
 <style lang="css" scoped>
 .selector {
+    border-right: 1px solid var(--border-a);
     background: var(--background-b);
     font-size: var(--text-size-0);
     height: inherit;
