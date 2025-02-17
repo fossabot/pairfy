@@ -616,7 +616,7 @@ a {
 }
 
 .dialog-country {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .dialog-country span {
