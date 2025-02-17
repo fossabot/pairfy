@@ -97,7 +97,8 @@ onBeforeUnmount(() => {
     border-radius: 0 4px 4px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
-    background: color-mix(in srgb, var(--pastel-yellow) 100%, transparent);
+    background: var(--background-b);
+    border-left: 1px solid var(--border-a);
 }
 
 .search-button i {

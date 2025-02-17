@@ -99,13 +99,14 @@ const searchCategory = (name) => {
 .categories {
     width: inherit;
     max-width: var(--body-a);
-    gap: 0.5rem;
     flex-wrap: wrap;
     display: flex;
     justify-content: flex-start;
     background: var(--background-a);
     border-radius: 16px;
     margin-top: 1rem;
+    padding: 0 1rem;
+    gap: 1rem;
 }
 
 .tag {
@@ -121,12 +122,7 @@ const searchCategory = (name) => {
     overflow: hidden;
     color: var(--text-a);
     font-weight: 400;
-    padding: 0.5rem;
     display: flex;
-}
-
-.tag:hover {
-    background: var(--soft-blue-a);
 }
 
 .image {
@@ -134,7 +130,7 @@ const searchCategory = (name) => {
     justify-content: center;
     overflow: hidden;
     background: var(--background-a);
-    width: 80px;
+    width: 70px;
 }
 
 .image img {
@@ -143,7 +139,7 @@ const searchCategory = (name) => {
 }
 
 .name {
-    margin: 0 0.5rem;
+    margin: 0 1rem;
 }
 
 .icon{

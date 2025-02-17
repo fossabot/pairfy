@@ -19,11 +19,9 @@
 
             </div>
         </div>
-        <section class="flex">
-            <div class="menu">
-                <NavComp />
-            </div>
-        </section>
+
+        <NavComp />
+
     </header>
 
 </template>
@@ -134,14 +132,9 @@ header {
 }
 
 .header{
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
 }
 
-section {
-    width: inherit;
-    justify-content: center;   
-    padding: 0.75rem;
-}
 
 .brand {
     cursor: pointer;
@@ -169,9 +162,4 @@ section {
     justify-content: flex-start;
 }
 
-.menu {
-    max-width: calc(var(--body-a) - 10rem);
-    color: inherit;
-    width: 100%;
-}
 </style>
