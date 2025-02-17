@@ -616,14 +616,14 @@ a {
 }
 
 .dialog-country {
-    line-height: 4rem;
+    margin-top: 2rem;
 }
 
 .dialog-country span {
-    font-weight: 500;
-    font-size: var(--text-size-3);
-    margin-left: 1rem;
+    font-size: var(--text-size-2);
     color: var(--text-a);
+    font-weight: 500;
+    margin-left: 1rem;
 }
 
 .card-terms {
