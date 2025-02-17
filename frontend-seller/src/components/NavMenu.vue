@@ -1,46 +1,57 @@
 <template>
-  <div class="navigation" :class="{ focus: isFocus }" @mouseover="isFocus = true" @mouseleave="isFocus = !false">
-    <div class="navigation-item" :class="{ focus: isFocus, actived: currentRoute === 'home' }">
+  <div class="navigation" :class="{ focus: isFocus }" @mouseover="isFocus = true" @mouseleave="isFocus = false">
+    <div class="navigation-item" :class="{ focus: isFocus, actived: isActive('home') }">
       <RouterLink to="/" :class="{ focus: isFocus }">
         <div class="image flex">
-          <img src="@/assets/icons/home.svg" alt="">
+          <div class="image-mask" :class="{ actived: isActive('home') }">
+            <img src="@/assets/icons/home.svg" alt="">
+          </div>
+
         </div>
         <span class="legend" :class="{ focus: isFocus }">Home</span>
       </RouterLink>
     </div>
 
-    <div class="navigation-item" :class="{ actived: currentRoute === 'product-list' }">
+    <div class="navigation-item" :class="{ actived: isActive('product-list') }">
       <RouterLink to="/product-list" :class="{ focus: isFocus }">
         <div class="image flex">
-          <img src="@/assets/icons/market.svg" alt="">
+          <div class="image-mask" :class="{ actived: isActive('product-list') }">
+            <img src="@/assets/icons/market.svg" alt="">
+          </div>
         </div>
         <span class="legend" :class="{ focus: isFocus }">Product List</span>
       </RouterLink>
     </div>
 
-    <div class="navigation-item" :class="{ actived: currentRoute === 'create-product' }">
+    <div class="navigation-item" :class="{ actived: isActive('create-product') }">
       <RouterLink to="/create-product" :class="{ focus: isFocus }">
         <div class="image flex">
-          <img src="@/assets/icons/plus.svg" alt="">
+          <div class="image-mask" :class="{ actived: isActive('create-product') }">
+            <img src="@/assets/icons/plus.svg" alt="">
+          </div>
         </div>
         <span class="legend" :class="{ focus: isFocus }">Create Product</span>
       </RouterLink>
     </div>
 
-    <div class="navigation-item" :class="{ actived: currentRoute === 'product-books' }">
+    <div class="navigation-item" :class="{ actived: isActive('product-books') }">
       <RouterLink to="/product-books" :class="{ focus: isFocus }">
         <div class="image flex">
-          <img src="@/assets/icons/book.svg" alt="">
+          <div class="image-mask" :class="{ actived: isActive('product-books') }">
+            <img src="@/assets/icons/book.svg" alt="">
+          </div>
         </div>
         <span class="legend" :class="{ focus: isFocus }">Product Books</span>
       </RouterLink>
     </div>
 
 
-    <div class="navigation-item" :class="{ actived: currentRoute === 'notifications' }">
+    <div class="navigation-item" :class="{ actived: isActive('notifications') }">
       <RouterLink to="/notifications" :class="{ focus: isFocus }">
         <div class="image flex">
-          <img src="@/assets/icons/bell.svg" alt="">
+          <div class="image-mask" :class="{ actived: isActive('notifications') }">
+            <img src="@/assets/icons/bell.svg" alt="">
+          </div>
         </div>
         <span class="legend" :class="{ focus: isFocus }">Notifications</span>
       </RouterLink>
@@ -62,7 +73,10 @@ const unwatchRoute = watch(
   { immediate: true }
 );
 
-const isFocus = ref(!false);
+const isActive = (name) => {
+  return currentRoute.value === name
+}
+const isFocus = ref(false);
 
 onBeforeUnmount(() => {
   unwatchRoute()
@@ -102,7 +116,7 @@ onBeforeUnmount(() => {
   box-shadow: none;
   cursor: pointer;
   font-size: var(--text-size-2);
-  color: inherit; 
+  color: inherit;
 }
 
 a {
@@ -139,9 +153,22 @@ a {
 }
 
 .image img {
-  background: #d3dbe561;
   width: var(--text-size-4);
   height: var(--text-size-4);
+}
+
+.image-mask {
+  border-radius: 50%;
+  background: transparent;
+  width: 60%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-mask.actived {
+  background: #d3dbe561;
 }
 
 .legend {
@@ -150,7 +177,5 @@ a {
   margin-left: 0;
 }
 
-.legend.focus {
-
-}
+.legend.focus {}
 </style>
