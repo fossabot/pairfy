@@ -105,7 +105,6 @@ const searchCategory = (name) => {
     background: var(--background-a);
     border-radius: 16px;
     margin-top: 1rem;
-    padding: 0 1rem;
     gap: 1rem;
 }
 
