@@ -90,13 +90,13 @@ onBeforeUnmount(() => {
 .band {
     box-shadow: var(--shadow-a);
     max-width: var(--body-a);
-    width: 100%;
     overflow: hidden;
-    height: 360px;
     position: relative;
     display: flex;
+    height: 360px;
+    width: 100%;
     border-radius: 16px;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .band-track {
