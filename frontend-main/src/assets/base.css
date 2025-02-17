@@ -130,7 +130,7 @@
   --body-a: 1600px;
 
   --border-a: #e2e8f0;
-  --border-b: #474d57;
+  --border-b: rgba(71, 77, 87, 0.5);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
 
