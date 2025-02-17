@@ -603,7 +603,7 @@ a {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--text-b);
+    border: 1px solid var(--primary-a);
 }
 
 .payment-item.disabled {
