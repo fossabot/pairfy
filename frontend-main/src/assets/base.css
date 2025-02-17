@@ -101,6 +101,8 @@
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
   --background-c: var(--p-surface-50);
+  --background-d: var(--black-b);
+  --background-e: var(--black-c);
 
   --text-a: #222;
   --text-b: #565959;
@@ -149,8 +151,8 @@
   --soft-blue-a: rgba(8, 102, 255, 0.1);
 
   --black-a: #000000;
-  --black-b: #161C24;
-  --black-c: #30363E;
+  --black-b: #10161E;
+  --black-c: #2A3038;
 
   --pastel-red: #ff6b7d;
   --pastel-pink: #ffb3c1;
