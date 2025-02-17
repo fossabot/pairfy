@@ -1,6 +1,6 @@
 <template>
         <div class="selector flex">
-            <span>All Categories</span>
+            <span>All</span>
             <div class="arrow flex">
                 <i class="pi pi-sort-down-fill" />
             </div>
