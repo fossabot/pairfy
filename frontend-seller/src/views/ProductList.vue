@@ -362,10 +362,6 @@ const getLabelColor = (status) => {
     font-weight: 600;
 }
 
-main {
-    padding: 0.5rem;
-}
-
 .card {
     display: flex;
     flex-direction: column;

@@ -84,10 +84,11 @@ startWalletService()
 
 .header {
   background: var(--background-a);
-  padding: 0 2rem;
+  border-bottom: 1px solid var(--border-a);
+  padding: 0 1rem;
 }
 
 .logo {
-  height: 46px;
+  height: 2.5rem;
 }
 </style>

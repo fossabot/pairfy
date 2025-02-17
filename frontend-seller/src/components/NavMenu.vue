@@ -1,47 +1,50 @@
 <template>
-  <div class="navigation" :class="{ focus: isFocus }" @mouseover="isFocus = true" @mouseleave="isFocus = false">
-    <nav>
-      <ul>
-        <li :class="{ actived: currentRoute === 'home' }">
-          <RouterLink to="/" :class="{ focus: isFocus }">
-            <img class="icon" src="@/assets/icons/home.svg" alt="">
-            <span class="legend" :class="{ focus: isFocus }">Home</span>
-          </RouterLink>
-        </li>
+  <div class="navigation" :class="{ focus: isFocus }" @mouseover="isFocus = true" @mouseleave="isFocus = !false">
+    <div class="navigation-item" :class="{ focus: isFocus, actived: currentRoute === 'home' }">
+      <RouterLink to="/" :class="{ focus: isFocus }">
+        <div class="image flex">
+          <img src="@/assets/icons/home.svg" alt="">
+        </div>
+        <span class="legend" :class="{ focus: isFocus }">Home</span>
+      </RouterLink>
+    </div>
 
-        <li :class="{ actived: currentRoute === 'product-list' }">
-          <RouterLink to="/product-list" :class="{ focus: isFocus }">
-            <img class="icon" src="@/assets/icons/market.svg" alt="">
-            <span class="legend" :class="{ focus: isFocus }">Product List</span>
-          </RouterLink>
-        </li>
+    <div class="navigation-item" :class="{ actived: currentRoute === 'product-list' }">
+      <RouterLink to="/product-list" :class="{ focus: isFocus }">
+        <div class="image flex">
+          <img src="@/assets/icons/market.svg" alt="">
+        </div>
+        <span class="legend" :class="{ focus: isFocus }">Product List</span>
+      </RouterLink>
+    </div>
 
-        <li :class="{ actived: currentRoute === 'create-product' }">
-          <RouterLink to="/create-product" :class="{ focus: isFocus }">
-            <img class="icon" src="@/assets/icons/plus.svg" alt="">
-            <span class="legend" :class="{ focus: isFocus }">Create Product</span>
-          </RouterLink>
-        </li>
+    <div class="navigation-item" :class="{ actived: currentRoute === 'create-product' }">
+      <RouterLink to="/create-product" :class="{ focus: isFocus }">
+        <div class="image flex">
+          <img src="@/assets/icons/plus.svg" alt="">
+        </div>
+        <span class="legend" :class="{ focus: isFocus }">Create Product</span>
+      </RouterLink>
+    </div>
 
-        <li :class="{ actived: currentRoute === 'product-books' }">
-          <RouterLink to="/product-books" :class="{ focus: isFocus }">
-            <img class="icon" src="@/assets/icons/book.svg" alt="">
-            <span class="legend" :class="{ focus: isFocus }">Product Books</span>
-          </RouterLink>
-        </li>
-
-
-        <li :class="{ actived: currentRoute === 'notifications' }">
-          <RouterLink to="/notifications" :class="{ focus: isFocus }">
-            <img class="icon" src="@/assets/icons/bell.svg" alt="">
-            <span class="legend" :class="{ focus: isFocus }">Notifications</span>
-          </RouterLink>
-        </li>
-
-      </ul>
-    </nav>
+    <div class="navigation-item" :class="{ actived: currentRoute === 'product-books' }">
+      <RouterLink to="/product-books" :class="{ focus: isFocus }">
+        <div class="image flex">
+          <img src="@/assets/icons/book.svg" alt="">
+        </div>
+        <span class="legend" :class="{ focus: isFocus }">Product Books</span>
+      </RouterLink>
+    </div>
 
 
+    <div class="navigation-item" :class="{ actived: currentRoute === 'notifications' }">
+      <RouterLink to="/notifications" :class="{ focus: isFocus }">
+        <div class="image flex">
+          <img src="@/assets/icons/bell.svg" alt="">
+        </div>
+        <span class="legend" :class="{ focus: isFocus }">Notifications</span>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
@@ -59,7 +62,7 @@ const unwatchRoute = watch(
   { immediate: true }
 );
 
-const isFocus = ref(false);
+const isFocus = ref(!false);
 
 onBeforeUnmount(() => {
   unwatchRoute()
@@ -75,27 +78,23 @@ onBeforeUnmount(() => {
   z-index: 10;
   height: 100%;
   overflow: hidden;
-  box-shadow: 0 1px 2px #1212170d;
   display: flex;
+  align-items: flex-start;
   flex-direction: column;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
   transition: 0.2s;
   overflow: hidden;
+  color: var(--text-b);
+
 }
 
 .navigation.focus {
   width: 17rem;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
+.navigation-item {
   display: flex;
   align-items: center;
   position: relative;
@@ -103,8 +102,7 @@ li {
   box-shadow: none;
   cursor: pointer;
   font-size: var(--text-size-2);
-  border: 1px solid transparent;
-  color: var(--text-b);
+  color: inherit; 
 }
 
 a {
@@ -113,7 +111,6 @@ a {
   transition: 0.2s;
   border-top-left-radius: initial;
   border-bottom-left-radius: initial;
-  padding: 1rem;
   display: flex;
   align-items: center;
   color: inherit;
@@ -126,41 +123,34 @@ a {
   }
 }
 
-li i {
-  font-size: var(--text-size-3);
-  margin-right: 0.75rem;
-  padding: 0.5rem 0;
-}
-
-li span {
+.navigation-item span {
   color: inherit;
 }
 
+.navigation-item.actived {
+  color: var(--primary-a);
+
+}
+
+.image {
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+}
+
+.image img {
+  background: #d3dbe561;
+  width: var(--text-size-4);
+  height: var(--text-size-4);
+}
+
 .legend {
-  opacity: 0;
+  display: initial;
   white-space: nowrap;
   margin-left: 0;
 }
 
 .legend.focus {
-  opacity: 1;
-  margin-left: 1rem;
-}
 
-.icon {
-  width: var(--text-size-3);
-  height: var(--text-size-3);
-}
-
-.label {
-  font-size: var(--text-size-a);
-  font-weight: 700;
-  color: inherit;
-}
-
-.actived {
-  color: var(--primary-a);
-  background: var(--soft-blue-a);
-  border-left: 2px solid var(--primary-a);
 }
 </style>
