@@ -125,6 +125,10 @@ const searchCategory = (name) => {
     display: flex;
 }
 
+.tag:hover{
+    background: var(--background-c);
+}
+
 .image {
     border-radius: 50%;
     justify-content: center;
