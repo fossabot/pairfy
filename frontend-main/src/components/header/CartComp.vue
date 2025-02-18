@@ -23,7 +23,7 @@
 }
 
 .cart {
-    background: var(--background-e);
+    background: transparent;
     font-size: var(--text-size-0);
     border-radius: 20px;
     justify-content: center;

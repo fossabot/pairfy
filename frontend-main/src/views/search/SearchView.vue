@@ -305,16 +305,17 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 main {
-    border-top: 1px solid var(--border-a);
     justify-content: center;
     display: flex;
 }
 
 .body {
     width: 100%;
+    padding: 1.5rem;
     max-width: var(--body-a);
     align-items: flex-start;
-
+    background: var(--background-a);
+    margin-top: 1rem;
 }
 
 .content {

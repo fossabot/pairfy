@@ -72,10 +72,11 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .wrap {
+  background: var(--background-b);
   display: flex;
   flex-direction: column;
   transition: all .2s ease;
-  flex: 1;
   height: 100%;
+  flex: 1;
 }
 </style>

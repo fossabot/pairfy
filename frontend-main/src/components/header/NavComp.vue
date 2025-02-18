@@ -26,8 +26,7 @@
 
 <style lang="css" scoped>
 section {
-    border-top: 1px solid var(--border-b);
-    background: var(--black-b);
+    border-bottom: 1px solid var(--border-a);
     justify-content: center;   
     height: 2.5rem;
     width: inherit;

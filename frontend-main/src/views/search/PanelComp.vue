@@ -162,7 +162,6 @@ label {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    padding: 1rem;
 }
 
 .panel-row {

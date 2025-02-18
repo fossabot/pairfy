@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
     border-radius: 0 4px 4px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
-    background: var(--background-b);
+    background: transparent;
     border-left: 1px solid var(--border-a);
 }
 

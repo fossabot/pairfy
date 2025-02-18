@@ -1,8 +1,8 @@
 <template>
     <div class="category">
         <div class="title flex">
-          <span>Trending on Cardano</span>
-          <img class="icon" src="@/assets/icons/hot.png" alt="">
+            <span>Trending on Cardano</span>
+            <img class="icon" src="@/assets/icons/hot.png" alt="">
         </div>
         <div class="categories">
             <div class="tag" v-for="(category, index) in categoryList" :key="index"
@@ -85,7 +85,6 @@ const searchCategory = (name) => {
     justify-content: center;
     align-items: center;
     width: 100%;
-
 }
 
 .title {
@@ -101,9 +100,11 @@ const searchCategory = (name) => {
     max-width: var(--body-a);
     flex-wrap: wrap;
     display: flex;
+    box-shadow: var(--shadow-b);
     justify-content: flex-start;
     background: var(--background-a);
-    border-radius: 16px;
+    border-radius: 0px;
+    padding: 1rem;
     margin-top: 1rem;
     gap: 1rem;
 }
@@ -124,7 +125,7 @@ const searchCategory = (name) => {
     display: flex;
 }
 
-.tag:hover{
+.tag:hover {
     background: var(--background-c);
 }
 
@@ -145,7 +146,7 @@ const searchCategory = (name) => {
     margin: 0 1rem;
 }
 
-.icon{
+.icon {
     width: 34px;
 }
 </style>

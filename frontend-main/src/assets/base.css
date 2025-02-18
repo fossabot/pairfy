@@ -73,7 +73,7 @@
 
   --p-dialog-border-radius: 12px !important;
 
-  --p-button-border-radius: 999px !important;
+  --p-button-border-radius: 6px !important;
 
   --p-rating-gap: 2px !important;
 
@@ -101,7 +101,7 @@
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
   --background-c: var(--p-surface-50);
-  --background-d: var(--black-b);
+  --background-d: var(--yellow-b);
   --background-e: var(--black-c);
 
   --text-a: #222;
@@ -130,9 +130,10 @@
   --body-a: 1500px;
 
   --border-a: #e2e8f0;
-  --border-b: rgba(71, 77, 87, 0.5);
+  --border-b: rgba(71, 77, 87, 0.1);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
+  --shadow-b: 0 1px 2px 0 rgba(0,0,0,.12);
 
   --red-a: #ff2e4d;
   --green-a: #10b981;
