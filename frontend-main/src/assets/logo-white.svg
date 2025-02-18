@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="93"
+   width="86"
    height="30"
-   viewBox="0 0 93 30"
+   viewBox="0 0 86 30"
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="logo-white.svg"
@@ -27,13 +27,13 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="2.8284272"
-     inkscape:cx="54.800774"
-     inkscape:cy="-31.819804"
-     inkscape:window-width="1489"
-     inkscape:window-height="778"
-     inkscape:window-x="111"
-     inkscape:window-y="127"
+     inkscape:zoom="5.6568544"
+     inkscape:cx="52.679454"
+     inkscape:cy="-4.6845823"
+     inkscape:window-width="1451"
+     inkscape:window-height="827"
+     inkscape:window-x="4304"
+     inkscape:window-y="132"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
@@ -111,7 +111,7 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:18.6667px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-1.2px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
        x="-0.32333374"
        y="21.773342"
        id="text2-3-3"
@@ -129,8 +129,8 @@
        id="rect9988"
        width="58.017315"
        height="1.9999995"
-       x="32.029541"
-       y="24.201813"
+       x="26.777346"
+       y="24.464447"
        rx="2.220446e-15"
        ry="2.220446e-15" />
   </g>
