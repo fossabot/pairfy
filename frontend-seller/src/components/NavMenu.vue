@@ -3,10 +3,9 @@
     <div class="navigation-item" :class="{ focus: isFocus, actived: isActive('home') }">
       <RouterLink to="/" :class="{ focus: isFocus }">
         <div class="image flex">
-          <div class="image-mask" :class="{ actived: isActive('home') }">
+          <div class="mask" :class="{ actived: isActive('home') }">
             <img src="@/assets/icons/home.svg" alt="">
           </div>
-
         </div>
         <span class="legend" :class="{ focus: isFocus }">Home</span>
       </RouterLink>
@@ -15,7 +14,7 @@
     <div class="navigation-item" :class="{ actived: isActive('product-list') }">
       <RouterLink to="/product-list" :class="{ focus: isFocus }">
         <div class="image flex">
-          <div class="image-mask" :class="{ actived: isActive('product-list') }">
+          <div class="mask" :class="{ actived: isActive('product-list') }">
             <img src="@/assets/icons/market.svg" alt="">
           </div>
         </div>
@@ -26,7 +25,7 @@
     <div class="navigation-item" :class="{ actived: isActive('create-product') }">
       <RouterLink to="/create-product" :class="{ focus: isFocus }">
         <div class="image flex">
-          <div class="image-mask" :class="{ actived: isActive('create-product') }">
+          <div class="mask" :class="{ actived: isActive('create-product') }">
             <img src="@/assets/icons/plus.svg" alt="">
           </div>
         </div>
@@ -37,7 +36,7 @@
     <div class="navigation-item" :class="{ actived: isActive('product-books') }">
       <RouterLink to="/product-books" :class="{ focus: isFocus }">
         <div class="image flex">
-          <div class="image-mask" :class="{ actived: isActive('product-books') }">
+          <div class="mask" :class="{ actived: isActive('product-books') }">
             <img src="@/assets/icons/book.svg" alt="">
           </div>
         </div>
@@ -49,7 +48,7 @@
     <div class="navigation-item" :class="{ actived: isActive('notifications') }">
       <RouterLink to="/notifications" :class="{ focus: isFocus }">
         <div class="image flex">
-          <div class="image-mask" :class="{ actived: isActive('notifications') }">
+          <div class="mask" :class="{ actived: isActive('notifications') }">
             <img src="@/assets/icons/bell.svg" alt="">
           </div>
         </div>
@@ -87,48 +86,46 @@ onBeforeUnmount(() => {
 <style scoped>
 .navigation {
   background: var(--background-b);
-  margin-left: 0;
-  width: 64px;
-  z-index: 10;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
   align-items: flex-start;
   flex-direction: column;
   -webkit-user-select: none;
   -moz-user-select: none;
+  color: var(--text-b);
   user-select: none;
   transition: 0.2s;
   overflow: hidden;
-  color: var(--text-b);
-
+  display: flex;
+  margin-left: 0;
+  width: 64px;
+  z-index: 10;
+  height: 100%;
 }
 
 .navigation.focus {
   width: 17rem;
 }
 
-.navigation-item {
+.navigation .navigation-item {
+  font-size: var(--text-size-2);
   display: flex;
   align-items: center;
   position: relative;
   font-weight: 400;
   box-shadow: none;
   cursor: pointer;
-  font-size: var(--text-size-2);
   color: inherit;
 }
 
 a {
   width: 100%;
   text-decoration: none;
-  transition: 0.2s;
+  justify-content: flex-start;
   border-top-left-radius: initial;
   border-bottom-left-radius: initial;
   display: flex;
-  align-items: center;
   color: inherit;
-  justify-content: flex-start;
+  align-items: center;
+  transition: 0.2s;
 }
 
 @media (hover: hover) {
@@ -137,27 +134,27 @@ a {
   }
 }
 
-.navigation-item span {
+.navigation .navigation-item span {
   color: inherit;
 }
 
-.navigation-item.actived {
+.navigation .navigation-item.actived {
   color: var(--primary-a);
 
 }
 
-.image {
+.navigation .navigation-item .image {
   justify-content: center;
   width: 64px;
   height: 64px;
 }
 
-.image img {
+.navigation .navigation-item .image img {
   width: var(--text-size-4);
   height: var(--text-size-4);
 }
 
-.image-mask {
+.mask {
   border-radius: 50%;
   background: transparent;
   width: 60%;
@@ -167,7 +164,7 @@ a {
   align-items: center;
 }
 
-.image-mask.actived {
+.mask.actived {
   background: #d3dbe561;
 }
 
@@ -177,5 +174,4 @@ a {
   margin-left: 0;
 }
 
-.legend.focus {}
 </style>
