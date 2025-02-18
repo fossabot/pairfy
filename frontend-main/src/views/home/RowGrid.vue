@@ -46,13 +46,12 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 .title {
     justify-content: space-between;
     font-size: var(--text-size-3);
-    color: var(--red-a);
     font-weight: 700;
     width: inherit;
 }
 
 .grid {
-    text-align: center;
+    background: var(--background-a);
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
     grid-auto-rows: auto;
@@ -60,17 +59,16 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     gap: 1rem;
     margin-top: 1rem;
     border-radius: 16px;
-    background: var(--background-a);
+    text-align: center;
 }
 
 
 .button {
+    background: var(--background-a);
     justify-content: center;
     font-size: var(--text-size-1);
     font-weight: 500;
     cursor: pointer;
-    background: var(--background-a);
-    color: var(--primary-b);
     height: 40px;
     white-space: nowrap;
     border-radius: 999px;
