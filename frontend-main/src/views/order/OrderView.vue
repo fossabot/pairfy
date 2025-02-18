@@ -232,8 +232,6 @@
 
                 <TransactionsComp v-if="currentNav === 2" />
 
-                <!--//////////////////////////////////////////////////////////////-->
-
                 <div class="panel">
                     <template v-if="getCurrentSeller || getCurrentUser">
                         <ChatComp v-if="orderData" />
@@ -696,6 +694,7 @@ onUnmounted(() => {
 
 .container {
     background: var(--background-a);
+    box-shadow: var(--shadow-b);
     max-width: var(--body-a);
     min-height: 100vh;
     padding: 1.5rem;

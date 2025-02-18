@@ -50,10 +50,10 @@
 
 <style lang="css" scoped>
 .footer {
-    padding: 2rem 1rem;
-    margin-top: 200px;
+    padding: 4rem 1rem;
+    margin-top: 4rem;
     font-size: var(--text-size-1);
-    border-top: 1px solid var(--border-a);
+    background: var(--background-a);
 }
 
 .title {
