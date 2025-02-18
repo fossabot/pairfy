@@ -132,7 +132,7 @@ header {
 }
 
 .header{
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
 }
 
 
