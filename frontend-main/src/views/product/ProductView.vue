@@ -143,7 +143,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--background-a);
+    background: var(--background-b);
 }
 
 .mask {
@@ -157,25 +157,26 @@ onBeforeUnmount(() => {
 }
 
 .container {
-    display: flex;
+    background: var(--background-a);
     flex-direction: column;
     max-width: var(--body-a);
+    position: relative;
+    display: flex;
     width: 100%;
     height: auto;
-    position: relative;
     z-index: 10;
     overflow: hidden;
+    padding: 1.5rem;
+    margin-top: 1rem;
 }
 
 .card-header {
     display: flex;
     align-items: center;
-    padding: 1rem 0;
     font-size: var(--text-size-0);
     text-transform: capitalize;
     border-bottom: none;
     color: var(--text-b);
-    margin-top: 1rem;
 }
 
 .card-header div {

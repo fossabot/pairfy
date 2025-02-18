@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrap">
     <Toast closeIcon="pi-user" />
     <HeaderComp />
     <RouterView />
@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-.wrapper {
+.wrap {
   display: flex;
   flex-direction: column;
   transition: all .2s ease;
