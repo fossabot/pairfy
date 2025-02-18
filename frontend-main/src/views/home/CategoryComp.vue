@@ -100,11 +100,8 @@ const searchCategory = (name) => {
     max-width: var(--body-a);
     flex-wrap: wrap;
     display: flex;
-    box-shadow: var(--shadow-b);
     justify-content: flex-start;
-    background: var(--background-a);
     border-radius: 0px;
-    padding: 1.5rem;
     margin-top: 1rem;
     gap: 1rem;
 }

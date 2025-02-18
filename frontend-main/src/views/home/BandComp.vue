@@ -86,9 +86,7 @@ onBeforeUnmount(() => {
     justify-content: center;
 }
 
-
 .band {
-    box-shadow: var(--shadow-a);
     max-width: var(--body-a);
     overflow: hidden;
     position: relative;
