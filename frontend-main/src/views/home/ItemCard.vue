@@ -6,12 +6,7 @@
 
         <div class="body">
             <span class="title">{{ reduceByLength(props.content.name, 30) }}</span>
-            <span class="rating flex">
-                <Rating v-model="rating" :stars="5" readonly />
-                <span class="rate">4.2</span>
-                <span class="line" />
-                <span>2 sold</span>
-            </span>
+
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
@@ -40,8 +35,6 @@ const theRoute = useRoute();
 
 const router = useRouter();
 
-const rating = ref(4);
-
 const onSelect = (id) => {
     router.push({
         name: 'product',
@@ -55,10 +48,6 @@ const onSelect = (id) => {
 </script>
 
 <style lang="css" scoped>
-::v-deep(.p-rating-icon) {
-    width: 10px !important;
-    height: 10px !important;
-}
 
 .card {
     background: transparent;
@@ -109,24 +98,6 @@ const onSelect = (id) => {
     margin-left: 0.5rem;
     line-height: 14px;
     padding: 4px 4px;
-}
-
-.rating {
-    font-size: var(--text-size-0);
-    margin-top: 0rem;
-    color: var(--text-b);
-}
-
-.line {
-    background: #979797;
-    display: inline-block;
-    height: 10px;
-    width: 1px;
-    margin: 0 5px;
-}
-
-.rate {
-    margin-left: 5px;
 }
 
 .image {
