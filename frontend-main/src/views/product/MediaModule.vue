@@ -10,7 +10,7 @@
             </div>
 
             <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '600px', maxHeight: '600px', borderRadius: '16px' }"
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '600px', maxHeight: '600px', borderRadius: '0px' }"
                     previewIcon="pi-search" preview />
             </div>
         </section>
@@ -61,7 +61,7 @@ section {
 
 .nav-item {
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;

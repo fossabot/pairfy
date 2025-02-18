@@ -456,7 +456,7 @@ a {
     padding: 1rem;
     width: 275px;
     margin-left: auto;
-    border-radius: 8px;
+    border-radius: 6px;
     max-height: 600px;
 }
 

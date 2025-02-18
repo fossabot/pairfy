@@ -104,7 +104,7 @@ const searchCategory = (name) => {
     justify-content: flex-start;
     background: var(--background-a);
     border-radius: 0px;
-    padding: 1rem;
+    padding: 1.5rem;
     margin-top: 1rem;
     gap: 1rem;
 }
