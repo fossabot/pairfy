@@ -32,7 +32,7 @@ section {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
-    margin-top: 2rem;
+    margin-top: 1rem;
     padding-bottom: 50px;
 }
 

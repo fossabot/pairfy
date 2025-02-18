@@ -170,14 +170,12 @@ onBeforeUnmount(() => {
 .card-header {
     display: flex;
     align-items: center;
-    background: var(--background-b);
-    font-size: var(--text-size-1);
+    padding: 1rem 0;
+    font-size: var(--text-size-0);
     text-transform: capitalize;
     border-bottom: none;
-    color: var(--text-a);
+    color: var(--text-b);
     margin-top: 1rem;
-    padding: 1rem;
-    font-weight: 500;
 }
 
 .card-header div {
