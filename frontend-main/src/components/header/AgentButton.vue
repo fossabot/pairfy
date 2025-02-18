@@ -51,14 +51,14 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 }
 
 .connect-wallet {
+    background: var(--black-a);
     border-radius: 999px;
-    height: 44px;
+    height: 46px;
     font-weight: 500;
     font-size: var(--text-size-1);
     cursor: pointer;
     justify-content: center;
     padding: 0 1.5rem;
-    background: var(--primary-a);
     color: var(--text-w);
 }
 </style>
