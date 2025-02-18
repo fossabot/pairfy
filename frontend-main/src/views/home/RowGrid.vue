@@ -11,7 +11,7 @@
         <div class="band flex">
             <div class="grid">
                 <ItemCard v-for="(item, index) in itemList" :key="index" :content="item"
-                    :style="{ minHeight: '217px', maxHeight: '100%' }" />
+                    :style="{ minHeight: '196px', maxHeight: '100%' }" />
             </div>
         </div>
     </div>
@@ -46,12 +46,12 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 .title {
     justify-content: space-between;
     font-size: var(--text-size-3);
+    color: var(--primary-b);
     font-weight: 700;
     width: inherit;
 }
 
 .grid {
-    background: var(--background-a);
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: auto;
     grid-auto-rows: auto;
