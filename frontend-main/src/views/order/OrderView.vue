@@ -1,5 +1,5 @@
 <template>
-    <div class="body">
+    <div class="body flex">
         <SellerLogin />
 
         <Dialog v-model:visible="notesDialog" modal header="Notes" :style="{ width: '20vw', height: '50vh' }"
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-        <!--//////////////////////////////////////////////////////////////-->
+            <!--//////////////////////////////////////////////////////////////-->
 
             <div class="grid">
 
@@ -135,8 +135,9 @@
                                             <div class="created">
                                                 <div class="created-item">
                                                     <span>Status</span>
-                                                    <span :class="{ red: ['returned', 'appealed', 'canceled'].includes(statusLog)  }">
-                                                        {{ statusLog}}
+                                                    <span
+                                                        :class="{ red: ['returned', 'appealed', 'canceled'].includes(statusLog) }">
+                                                        {{ statusLog }}
                                                     </span>
                                                 </div>
                                                 <div class="created-item">
@@ -229,8 +230,8 @@
 
                 <ProductComp v-if="currentNav === 1" />
 
-                <TransactionsComp v-if="currentNav === 2"/>
-                
+                <TransactionsComp v-if="currentNav === 2" />
+
                 <!--//////////////////////////////////////////////////////////////-->
 
                 <div class="panel">
@@ -508,7 +509,7 @@ const shippingStatus = computed(() => {
     if (state === 4) {
         return "package received"
     }
-    
+
     return "-"
 });
 
@@ -690,20 +691,20 @@ onUnmounted(() => {
 }
 
 .body {
-    display: flex;
     justify-content: center;
-    background: var(--background-a);
 }
 
 .container {
+    background: var(--background-a);
+    max-width: var(--body-a);
     min-height: 100vh;
-    max-width: 1400px;
+    padding: 1.5rem;
+    margin-top: 1rem;
     width: 100%;
 }
 
 .nav {
     border-bottom: 1px solid var(--border-a);
-    margin-top: 1rem;
 }
 
 .nav-item {
