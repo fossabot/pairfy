@@ -22,7 +22,7 @@ const props = defineProps(['tag', 'type']);
 }
 
 .contrast {
-    background: #020617;
+    background: var(--black-a);
     color: var(--text-w);
 }
 
