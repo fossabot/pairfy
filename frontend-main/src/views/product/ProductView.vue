@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
 
 .container {
     background: var(--background-a);
-    box-shadow: var(--shadow-b);
+    border: 1px solid var(--border-a);
     flex-direction: column;
     max-width: var(--body-a);
     position: relative;

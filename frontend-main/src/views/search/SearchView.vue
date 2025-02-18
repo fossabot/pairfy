@@ -315,6 +315,7 @@ main {
     max-width: var(--body-a);
     align-items: flex-start;
     background: var(--background-a);
+    border: 1px solid var(--border-a);
     margin-top: 1rem;
 }
 
