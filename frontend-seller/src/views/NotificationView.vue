@@ -202,9 +202,6 @@ onBeforeUnmount(() => {
     font-weight: 600;
 }
 
-main {
-    padding: 0.5rem;
-}
 
 .card {
     display: flex;

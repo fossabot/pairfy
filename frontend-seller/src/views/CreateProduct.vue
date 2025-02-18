@@ -745,7 +745,6 @@ const showError = (content) => {
     flex-direction: column;
     padding: 2rem;
     background: var(--background-a);
-    box-shadow: var(--shadow-a);
 }
 
 .title {

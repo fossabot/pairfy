@@ -373,7 +373,6 @@ const getLabelColor = (status) => {
 }
 
 .card-datatable {
-    box-shadow: var(--shadow-a);
     background: var(--background-a);
 }
 
