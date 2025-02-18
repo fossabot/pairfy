@@ -62,13 +62,11 @@ onBeforeUnmount(() => {
     border-radius: 6px;
     overflow: hidden;
     background: var(--background-a);
-    border: none;
     box-shadow: var(--shadow-b);
 }
 
 .search.focus {
     background: var(--background-a);
-    border: none;
 }
 
 .search-input {
