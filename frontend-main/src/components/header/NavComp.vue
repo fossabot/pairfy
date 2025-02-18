@@ -44,7 +44,7 @@ section {
     width: inherit;
     color: inherit;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .price {

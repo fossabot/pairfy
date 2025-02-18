@@ -75,7 +75,7 @@ const onSelect = (id) => {
     font-size: var(--text-size-3);
     margin-top: 0rem;
     color: var(--text-a);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .shipping {
@@ -88,13 +88,13 @@ const onSelect = (id) => {
 }
 
 .tag {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     white-space: nowrap;
     text-align: center;
     max-width: fit-content;
     display: inline-block;
     border-radius: 0px;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     line-height: 14px;
     padding: 4px 4px;
 }
@@ -106,6 +106,6 @@ const onSelect = (id) => {
 .image img{
     width: 100%;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 0px;
 }
 </style>

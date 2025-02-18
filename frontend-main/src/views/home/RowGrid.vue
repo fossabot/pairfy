@@ -31,15 +31,16 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
 
 <style lang="css" scoped>
 .row {
-    background: color-mix(in srgb, var(--pastel-yellow) 40%, transparent);
     margin: 2rem 0;
     width: 100%;
-    max-width: var(--body-a);
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     padding: 1rem;
-    border-radius: 16px;
+    border-radius: 0px;
+    box-shadow: var(--shadow-b);
+    align-items: flex-start;
+    flex-direction: column;
+    max-width: var(--body-a);
+    background: var(--background-a);
 }
 
 .title {
@@ -57,7 +58,6 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     grid-auto-rows: auto;
     display: grid;
     gap: 1rem;
-    padding: 1rem;
     margin-top: 1rem;
     border-radius: 16px;
     background: var(--background-a);
