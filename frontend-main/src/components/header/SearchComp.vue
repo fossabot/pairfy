@@ -65,6 +65,7 @@ onBeforeUnmount(() => {
 }
 
 .search.focus {
+    outline: 1px solid var(--black-a);
     background: var(--background-a);
 }
 
@@ -93,9 +94,7 @@ onBeforeUnmount(() => {
     cursor: pointer;
     color: var(--text-a);
     border-radius: 0 4px 4px 0;
-    outline-offset: -1px;
-    outline: 1px solid transparent;
-    background: var(--yellow-b);
+    background: transparent;
 }
 
 .search-button i {

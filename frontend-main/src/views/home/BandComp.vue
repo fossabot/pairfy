@@ -93,8 +93,7 @@ onBeforeUnmount(() => {
     display: flex;
     height: 768px;
     width: 100%;
-    max-width: calc(var(--body-b) + 2rem);
-
+    max-width: var(--body-a);
 }
 
 .band-track {
@@ -173,6 +172,6 @@ onBeforeUnmount(() => {
     height: 100%;
     z-index: 3;
     position: absolute;
-    background: linear-gradient(0deg, var(--background-b) 0%, transparent 50%);
+    background: linear-gradient(0deg, var(--primary-a) 0%, transparent 50%);
 }
 </style>

@@ -132,7 +132,7 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
-    background: var(--background-b);
+    background: var(--primary-a);
     flex-direction: column;
     justify-content: center;
     color: var(--text-w);
@@ -242,7 +242,7 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .conta {
-    margin-top: 0.5rem; 
+    margin-top: 0.5rem;
     width: inherit;
     height: 100%;
 }
