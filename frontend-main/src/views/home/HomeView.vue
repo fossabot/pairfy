@@ -6,7 +6,7 @@
         <CategoryComp />
       </div>
       <div class="bottom">
-        <NormalGrid :content="bestSellers"/>
+        <NormalGrid :content="bestSellers" />
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
@@ -78,7 +78,7 @@ const products = [
     "model": "black",
     "price": 25,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/mzsMA3NcAMNtcuqlzUF4.png",
+    "image": "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
     "keywords": "chair,headrest,ergonomic,pillow",
     "rating": 0,
     "reviews": 0,
@@ -287,7 +287,7 @@ const products = [
     "model": "F75 green",
     "price": 155,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/dJqBTyVW2C6p6J4enPG6.png",
+    "image": "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
     "keywords": "Wireless,Mechanical,RGB,Gaming ",
     "rating": 0,
     "reviews": 0,
@@ -497,4 +497,8 @@ section.visible {
   border-top-left-radius: 26px;
   border-top-right-radius: 26px;
 }
+
+
+
+
 </style>

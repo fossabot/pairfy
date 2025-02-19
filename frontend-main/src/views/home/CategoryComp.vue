@@ -4,18 +4,32 @@
             <span>Trending on Cardano</span>
             <img class="icon" src="@/assets/icons/hot.png" alt="">
         </div>
-        <div class="categories">
-            <div class="tag" v-for="(category, index) in categoryList" :key="index"
-                @click="searchCategory(category.name)">
 
-                <span class="image flex">
-                    <img :src="getURL(index)" alt="">
-                </span>
+        <div class="grid-container">
+            <div class="column first">
+                <div v-for="(category, index) in column1" :key="index" class="card"
+                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '70%' }"
+                    @click="searchCategory(category.name)">
+                    <h3>{{ category.name }}</h3>
+                </div>
+            </div>
+            <div class="column second">
+                <div v-for="(category, index) in column2" :key="index" class="card"
+                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '15%' }"
+                    @click="searchCategory(category.name)">
+                    <h3>{{ category.name }}</h3>
 
-                <span class="name">{{ category.name }}</span>
+                </div>
+            </div>
+            <div class="column third">
+                <div v-for="(category, index) in column3" :key="index" class="card">
+                    <h3>{{ category.name }}</h3>
 
+                </div>
             </div>
         </div>
+
+        
     </div>
 </template>
 
@@ -76,6 +90,12 @@ const searchCategory = (name) => {
         }
     })
 }
+
+const categoryArray = Object.values(categoryList.value);
+
+const column1 = categoryArray.slice(0, 3);
+const column2 = categoryArray.slice(3, 6);
+const column3 = categoryArray.slice(6, 9);
 </script>
 
 <style lang="css" scoped>
@@ -89,21 +109,10 @@ const searchCategory = (name) => {
 
 .title {
     width: inherit;
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     max-width: var(--body-a);
     font-weight: 600;
     margin-top: 2rem;
-}
-
-.categories {
-    width: inherit;
-    max-width: var(--body-a);
-    flex-wrap: wrap;
-    display: flex;
-    justify-content: flex-start;
-    border-radius: 0px;
-    margin-top: 1rem;
-    gap: 1rem;
 }
 
 .tag {
@@ -146,5 +155,62 @@ const searchCategory = (name) => {
 
 .icon {
     width: 34px;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100%;
+    max-width: var(--body-a);
+    height: 80vh;
+    margin-top: 1rem;
+}
+
+.column {
+    display: grid;
+    gap: 1rem;
+}
+
+.column:first-child {
+    grid-template-rows: 25% 50% 25%;
+}
+
+.column:nth-child(2) {
+    grid-template-rows: 37.5% 37.5% 25%;
+}
+
+.column:last-child {
+    grid-template-rows: 25% 50% 25%;
+}
+
+.card {
+    background: var(--background-a);
+    font-size: var(--text-size-3);
+    box-shadow: var(--shadow-b);
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border-radius: 6px;
+    color: var(--text-w);
+    font-weight: bold;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+
+    .column {
+        grid-template-rows: auto;
+    }
 }
 </style>

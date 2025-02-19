@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <ItemCard v-for="item, index in content" :key="index" :content="item" :style="{ minHeight: '231.09px', maxHeight: '100%' }"/>
+    <ItemCard v-for="item, index in content" :key="index" :content="item" :style="{ minHeight: '100%', maxHeight: '100%' }"/>
   </div>
 </template>
 
@@ -15,28 +15,25 @@ const props = defineProps(['content'])
 
 <style lang="css" scoped>
 .grid {
-  border-radius: 16px;
-  background: var(--background-a);
-  box-shadow: var(--shadow-b);
+  margin-top: 1rem; 
   max-width: var(--body-a);
-  padding: 1rem;
-  display: grid;
-  gap: 1rem;
-  row-gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-auto-rows: auto;
+  row-gap: 1.5rem;
+  display: grid;
   width: 100%;
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1230px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 }
 </style>
