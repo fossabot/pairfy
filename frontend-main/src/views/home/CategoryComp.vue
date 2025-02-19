@@ -1,10 +1,6 @@
 <template>
     <div class="category">
-        <div class="title flex">
-            <span>Trending on Cardano</span>
-            <img class="icon" src="@/assets/icons/hot.png" alt="">
-        </div>
-
+   
         <div class="grid-container">
             <div class="column first">
                 <div class="card" v-for="(category, index) in column1" :key="index" :style="{ background: category.background }"
@@ -37,6 +33,12 @@
                 </div>
             </div>
         </div>
+
+        <div class="title flex">
+            <span>Trending on Cardano</span>
+            <img class="icon" src="@/assets/icons/hot.png" alt="">
+        </div>
+
 
         <div class="horizontal flex">
             <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
@@ -152,9 +154,9 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .image {
-    border-radius: 6px;
+    border-radius: 50%;
     overflow: hidden;
-    width: 70px;
+    width: 100px;
 }
 
 .name {
@@ -231,7 +233,7 @@ const column4 = categoryArray.slice(9, 15);
 
 
 .legend {
-    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
     font-size: var(--text-size-4);
     white-space: break-spaces;
     word-break: break-word;
@@ -250,7 +252,7 @@ const column4 = categoryArray.slice(9, 15);
     display: flex;
     justify-content: center;
     border-radius: 0px;
-    margin: 3rem 0;
+    margin: 2rem 0;
     gap: 1rem;
 }
 

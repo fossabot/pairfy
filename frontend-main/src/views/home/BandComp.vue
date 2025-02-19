@@ -89,6 +89,7 @@ onBeforeUnmount(() => {
     max-width: var(--body-a);
     border-radius: 6px;
     overflow: hidden;
+    margin-top: 2rem;
     position: relative;
     display: flex;
     height: 33vh;
@@ -102,6 +103,7 @@ onBeforeUnmount(() => {
 }
 
 .band-item {
+    background-position-y: 50%;
     background-size: cover;
     width: inherit;
     height: inherit;

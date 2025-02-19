@@ -2,8 +2,8 @@
   <div class="body">
     <div class="container">
       <div class="top">
-        <CategoryComp />
         <BandComp />
+        <CategoryComp />
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">
@@ -488,7 +488,7 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 1rem;
+  padding-top: 0rem;
   padding-bottom: 200px;
   border-top-left-radius: 26px;
   border-top-right-radius: 26px;
