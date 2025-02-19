@@ -44,6 +44,8 @@
                     <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
+
+            
         </div>
 
 

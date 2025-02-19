@@ -23,7 +23,9 @@
   "3": {
     "name": "Books, Music & Movies",
     "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
-    "index": "3"
+    "index": "3",
+    "background": "initial",
+    "y": "20%"
   },
   "4": {
     "name": "Home & Garden",
