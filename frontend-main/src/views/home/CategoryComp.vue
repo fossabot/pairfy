@@ -160,10 +160,12 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .name {
+    font-size: var(--text-size-1);
     white-space: break-spaces;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
     text-align: center;
     word-break: break-word;
+    font-weight: 500;
     width: 80%;
 }
 
