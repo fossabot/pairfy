@@ -158,7 +158,11 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .name {
+    white-space: break-spaces;
     margin-top: 0.5rem;
+    text-align: center;
+    word-break: break-word;
+    width: 80%;
 }
 
 .icon {
