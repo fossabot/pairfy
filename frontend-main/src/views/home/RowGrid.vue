@@ -35,7 +35,7 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     width: 100%;
     display: flex;
     padding: 1rem;
-    border-radius: 0px;
+    border-radius: 16px;
     box-shadow: var(--shadow-b);
     align-items: flex-start;
     flex-direction: column;
@@ -58,7 +58,6 @@ const itemList = computed(() => props.content.slice(0, maxItems.value));
     display: grid;
     gap: 1rem;
     margin-top: 1rem;
-    border-radius: 16px;
     text-align: center;
 }
 

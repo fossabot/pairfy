@@ -23,16 +23,14 @@
 }
 
 .cart {
-    background: var(--black-a);
+    background: transparent;
     color: var(--text-w);
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     border-radius: 20px;
     justify-content: center;
     align-items: center;
     font-weight: 600;
-    padding: 0 0.5rem;
     display: flex;
-    height: 16px;
 }
 
 .text{

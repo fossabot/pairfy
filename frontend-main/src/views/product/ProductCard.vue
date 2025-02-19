@@ -25,14 +25,14 @@ const { getProductData } = productAPI();
 section {
     display: grid;
     grid-template-columns: 700px 1fr;
-    gap: 1rem;
+    gap: 0rem;
 }
 
 .card {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     padding-bottom: 50px;
 }
 

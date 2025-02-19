@@ -60,20 +60,20 @@ section {
 }
 
 .nav-item {
+    border: 1px solid transparent;
     border: none;
-    border-radius: 6px;
+    border-radius: 0px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;
     margin-bottom: 1rem;
-    width: 70px;
-    height: 70px;
-    border: 1px solid var(--border-a);
+    width: 60px;
+    height: 60px;
 }
 
 .nav-item.selected {
     border: none;
-    outline: 2px solid var(--text-a);
+    outline: 1px solid var(--text-a);
 }
 
 .nav-item img {

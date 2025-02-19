@@ -143,7 +143,6 @@ onBeforeUnmount(() => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--background-b);
 }
 
 .mask {
@@ -157,8 +156,6 @@ onBeforeUnmount(() => {
 }
 
 .container {
-    background: var(--background-a);
-    border: 1px solid var(--border-a);
     border-radius: 6px;
     flex-direction: column;
     max-width: var(--body-a);
@@ -168,8 +165,7 @@ onBeforeUnmount(() => {
     height: auto;
     z-index: 10;
     overflow: hidden;
-    padding: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .card-header {

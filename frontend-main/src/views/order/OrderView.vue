@@ -696,8 +696,9 @@ onUnmounted(() => {
     background: var(--background-a);
     box-shadow: var(--shadow-b);
     max-width: var(--body-a);
+    border-radius: 6px;
     min-height: 100vh;
-    padding: 1.5rem;
+    padding: 2rem;
     margin-top: 1rem;
     width: 100%;
 }

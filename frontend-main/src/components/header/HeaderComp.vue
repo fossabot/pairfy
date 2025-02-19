@@ -127,8 +127,8 @@ header {
     justify-content: center;
     align-items: center;
     font-size: var(--text-size-1);
-    background: var(--background-d);  
-    color: var(--text-a);
+    background: var(--primary-a);
+    color: var(--text-w);
 }
 
 .header{

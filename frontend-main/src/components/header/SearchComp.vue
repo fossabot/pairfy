@@ -1,7 +1,7 @@
 <template>
     <div class="search" :class="{ focus: isFocus }">
         <SelectorComp/>
-        <input v-model="searchInput" type="text" class="search-input" placeholder="Search Cardano"
+        <input v-model="searchInput" type="text" class="search-input" placeholder="Search"
             @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
         <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
             <i class="pi pi-search" />
@@ -62,7 +62,6 @@ onBeforeUnmount(() => {
     border-radius: 6px;
     overflow: hidden;
     background: var(--background-a);
-    box-shadow: var(--shadow-b);
 }
 
 .search.focus {
@@ -82,7 +81,7 @@ onBeforeUnmount(() => {
 }
 
 .search-input::placeholder {
-    color: var(--text-b);
+    color: var(--text-a);
     font-weight: 400;
     opacity: 0.8;
 }
@@ -96,8 +95,7 @@ onBeforeUnmount(() => {
     border-radius: 0 4px 4px 0;
     outline-offset: -1px;
     outline: 1px solid transparent;
-    background: transparent;
-    border-left: 1px solid var(--border-a);
+    background: var(--yellow-b);
 }
 
 .search-button i {

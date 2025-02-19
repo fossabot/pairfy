@@ -67,13 +67,13 @@
 
   --p-button-padding-y: 0.75rem !important;
 
-  --p-dialog-color: var(--text-b) !important;
+  --p-dialog-color: var(--text-a) !important;
 
   --p-tag-primary-background: var(--primary-a) !important;
 
   --p-dialog-border-radius: 12px !important;
 
-  --p-button-border-radius: 6px !important;
+  --p-button-border-radius: 999px !important;
 
   --p-rating-gap: 2px !important;
 
@@ -96,12 +96,11 @@
 
 :root {
   --primary-a: var(--blue-a);
-  --primary-b: var(--red-a);
+  --primary-b: rgb(255, 0, 170);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
   --background-c: var(--p-surface-50);
-  --background-d: var(--yellow-b);
 
   --text-a: #222;
   --text-b: #565959;
@@ -129,10 +128,10 @@
   --body-a: 1500px;
 
   --border-a: #e2e8f0;
-  --border-b: rgba(71, 77, 87, 0.1);
+  --border-b: rgba(255, 255, 255, 0.2);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
-  --shadow-b: 0 1px 2px 0 rgba(0,0,0,.12);
+  --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --red-a: #ff2e4d;
   --green-a: #10b981;
@@ -140,8 +139,8 @@
   --orange-b: #ff4500;
   --yellow-a: #fcbc05;
   --yellow-b: #ffe600;
-  --blue-a: #0866ff;
-  --blue-b: #0046be;
+  --blue-a: #0053e2;
+  --blue-b: #0866ff;
   --cyan-a: #60a3ff;
   --soft-red-a: rgba(255, 56, 92, 0.8);
   --soft-yellow-a: rgba(252, 188, 5, 0.3);
@@ -151,8 +150,8 @@
   --soft-blue-a: rgba(8, 102, 255, 0.1);
 
   --black-a: #000000;
-  --black-b: #10161E;
-  --black-c: #2A3038;
+  --black-b: #10161e;
+  --black-c: #2a3038;
 
   --pastel-red: #ff6b7d;
   --pastel-pink: #ffb3c1;

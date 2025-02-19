@@ -15,14 +15,13 @@ const props = defineProps(['content'])
 
 <style lang="css" scoped>
 .grid {
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
+  border-radius: 16px;
   background: var(--background-a);
   box-shadow: var(--shadow-b);
   max-width: var(--body-a);
   padding: 1rem;
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
   row-gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-rows: auto;
