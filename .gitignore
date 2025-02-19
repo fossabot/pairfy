@@ -1,6 +1,4 @@
 **/.DS_Store
-service-index/index.db
-service-index/index.db-shm
-service-index/index.db-wal
 secrets.sh
 search
+A/k8s-prod/metadata-secret.yaml
