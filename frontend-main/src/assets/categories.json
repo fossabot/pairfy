@@ -3,7 +3,7 @@
     "name": "Electronics & Digital Content",
     "keywords": "gadgets, smartphones, laptops, computers, software, electronics, tech, digital products, streaming, apps",
     "index": "0",
-    "background": "#A7C7FF",
+    "background": " #7FAAFF",
     "y": "59%"
   },
   "1": {
@@ -24,15 +24,15 @@
     "name": "Books, Music & Movies",
     "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
     "index": "3",
-    "background": "initial",
+    "background": "#A7C7FF",
     "y": "20%"
   },
   "4": {
     "name": "Home & Garden",
     "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, tools",
     "index": "4",
-    "background": "initial",
-    "y": "70%"
+    "background": "#FFF4A3",
+    "y": "40%"
   },
   "5": {
     "name": "Toys, Hobbies & Collectibles",

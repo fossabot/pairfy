@@ -44,12 +44,7 @@
                     <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
-
-            
         </div>
-
-
-
     </div>
 </template>
 
@@ -58,8 +53,8 @@ import categories from '@/assets/categories.json';
 import asset0 from "@/assets/icons/0.png";
 import asset1 from "@/assets/icons/1.png";
 import asset2 from "@/assets/icons/2.png";
-import asset3 from "@/assets/icons/3.jpeg";
-import asset4 from "@/assets/icons/4.jpeg";
+import asset3 from "@/assets/icons/3.png";
+import asset4 from "@/assets/icons/4.png";
 import asset5 from "@/assets/icons/5.png";
 import asset6 from "@/assets/icons/6.png";
 import asset7 from "@/assets/icons/7.jpeg";
