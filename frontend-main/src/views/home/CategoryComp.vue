@@ -239,7 +239,7 @@ const column4 = categoryArray.slice(9, 15);
 
 
 .legend {
-    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.2));
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
     font-size: var(--text-size-4);
     white-space: break-spaces;
     word-break: break-word;
