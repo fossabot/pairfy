@@ -159,6 +159,7 @@ onBeforeUnmount(() => {
 .container {
     background: var(--background-a);
     border: 1px solid var(--border-a);
+    border-radius: 6px;
     flex-direction: column;
     max-width: var(--body-a);
     position: relative;

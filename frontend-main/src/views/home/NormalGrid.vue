@@ -15,18 +15,18 @@ const props = defineProps(['content'])
 
 <style lang="css" scoped>
 .grid {
-  max-width: var(--body-a);
-  width: 100%;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
+  background: var(--background-a);
+  box-shadow: var(--shadow-b);
+  max-width: var(--body-a);
+  padding: 1rem;
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   row-gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-rows: auto;
-  padding: 1rem;
-  background: var(--background-a);
-  box-shadow: var(--shadow-b);
+  width: 100%;
 }
 
 @media (min-width: 768px) {

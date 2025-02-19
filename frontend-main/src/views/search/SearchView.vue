@@ -1,6 +1,6 @@
 <template>
-    <main>
-        <div class="body flex">
+    <div class="body">
+        <div class="container flex">
             <PanelComp />
             <div class="content">
                 <div class="banner flex">
@@ -23,7 +23,7 @@
 
             </div>
         </div>
-    </main>
+    </div>
 </template>
 
 <script setup>
@@ -304,18 +304,19 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-main {
+.body {
     justify-content: center;
     display: flex;
 }
 
-.body {
+.container {
     width: 100%;
     padding: 1.5rem;
     max-width: var(--body-a);
     align-items: flex-start;
     background: var(--background-a);
     border: 1px solid var(--border-a);
+    border-radius: 6px;
     margin-top: 1rem;
 }
 
