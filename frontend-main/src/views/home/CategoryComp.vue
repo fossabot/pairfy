@@ -163,7 +163,6 @@ const column4 = categoryArray.slice(9, 15);
     width: 34px;
 }
 
-
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -222,7 +221,8 @@ const column4 = categoryArray.slice(9, 15);
 
 
 .legend {
-
+    filter: drop-shadow(2px 4px 6px black);
+    font-size: var(--text-size-3);
 }
 
 .horizontal {
