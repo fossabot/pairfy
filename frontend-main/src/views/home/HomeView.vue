@@ -3,7 +3,7 @@
     <div class="container">
       <div class="top">
         <CategoryComp />
-        <BandComp />
+     
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">
@@ -23,7 +23,7 @@
 
 <script setup>
 import NormalGrid from '@/views/home/NormalGrid.vue'
-import BandComp from '@/views/home/BandComp.vue'
+
 import CategoryComp from '@/views/home/CategoryComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref, computed, reactive, onMounted } from 'vue'

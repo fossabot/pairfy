@@ -1,6 +1,6 @@
 <template>
     <div class="category">
-
+        <BandComp />
         <div class="grid-container">
             <div class="column first">
                 <div class="card" v-for="(category, index) in column1" :key="index"
@@ -33,6 +33,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="column four">
+                <div class="card" v-for="(category, index) in column4" :key="index"
+                    @click="searchCategory(category.name)">
+                    <div class="legend">{{ category.name }}</div>
+                    <div class="conta" :style="{ background: category.background }">
+                        <div class="mask"
+                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }" />
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="title flex">
@@ -52,6 +63,7 @@
 </template>
 
 <script setup>
+import BandComp from '@/views/home/BandComp.vue';
 import categories from '@/assets/categories.json';
 import asset0 from "@/assets/icons/0.png";
 import asset1 from "@/assets/icons/1.png";
@@ -70,6 +82,7 @@ import asset13 from "@/assets/icons/13.jpeg";
 import asset14 from "@/assets/icons/14.jpeg";
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
+
 
 const categoryList = ref(categories);
 
@@ -119,13 +132,14 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
-    background: var(--primary-a);
+    background: var(--background-b);
     flex-direction: column;
     justify-content: center;
+    color: var(--text-w);
     align-items: center;
+    position: relative;
     display: flex;
     width: 100%;
-    color: var(--text-w);
 }
 
 .title {
@@ -184,13 +198,14 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .grid-container {
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 2rem;
+    grid-template-columns: repeat(4, 1fr);
     display: grid;
     gap: 1rem;
     width: 100%;
     height: 100vh;
     max-width: var(--body-b);
+    margin-top: 300px;
+    z-index: 2;
 }
 
 .column {

@@ -1,6 +1,7 @@
 <template>
-    <div class="p-band flex">
+    <div class="cover flex">
         <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
+            <div class="mask"/>
             <div class="band-track" :style="trackStyle">
                 <div class="band-item" v-for="(item, index) in imageList" :key="index"
                     :style="{ backgroundImage: `url(${item.src})` }">
@@ -29,7 +30,7 @@ import banner2 from '@/assets/banner/2.png';
 
 const imageList = ref([
     {
-        src: banner1
+        src: banner2
     },
     {
         src: banner2
@@ -78,28 +79,29 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-
-.p-band{
+.cover {
     width: 100%;
     justify-content: center;
+    position: absolute;
+    z-index: 1;
+    top: 0;
 }
 
 .band {
-    box-shadow: var(--shadow-b);
-    max-width: var(--body-a);
-    border-radius: 6px;
     overflow: hidden;
-    margin-top: 2rem;
     position: relative;
     display: flex;
-    height: 25vh;
+    height: 768px;
     width: 100%;
+    max-width: calc(var(--body-b) + 2rem);
+
 }
 
 .band-track {
     display: flex;
     width: inherit;
     height: inherit;
+    
 }
 
 .band-item {
@@ -108,19 +110,21 @@ onBeforeUnmount(() => {
     width: inherit;
     height: inherit;
     flex: 0 0 100%;
+    
 }
 
 .band-arrow {
     background: rgba(0, 0, 0, 0.1);
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     position: absolute;
-    bottom: calc(100% / 2 - 1rem);
+    top: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    z-index: 4;
 }
 
 .band-arrow:hover {
@@ -136,13 +140,15 @@ onBeforeUnmount(() => {
 }
 
 .band-arrow i {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-5);
     color: var(--text-w);
+    font-weight: 300;
 }
 
 .band-dots {
     position: absolute;
     bottom: 10px;
+
     display: flex;
     justify-content: center;
     width: 100%;
@@ -155,9 +161,18 @@ onBeforeUnmount(() => {
     border: none;
     margin: 0 5px;
     cursor: pointer;
+    z-index: 4;
 }
 
 .band-dots button.active {
     background: #ffffff;
+}
+
+.mask{
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    position: absolute;
+    background: linear-gradient(0deg, var(--background-b) 0%, transparent 50%);
 }
 </style>

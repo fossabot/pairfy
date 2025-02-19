@@ -127,7 +127,7 @@ header {
     justify-content: center;
     align-items: center;
     font-size: var(--text-size-1);
-    background: var(--primary-a);
+    background: var(--black-b);
     color: var(--text-w);
 }
 

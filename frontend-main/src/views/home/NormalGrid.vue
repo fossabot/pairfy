@@ -32,7 +32,7 @@ const props = defineProps(['content', 'title'])
 }
 
 .grid {
-  max-width: var(--body-a);
+  max-width: var(--body-b);
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-auto-rows: auto;
   display: grid;
