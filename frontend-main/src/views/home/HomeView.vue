@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <div class="body">
+  <div class="body">
+    <div class="container">
       <div class="top">
         <CategoryComp />
         <BandComp />
@@ -10,6 +10,7 @@
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
             <NormalGrid :content="item" :title="index"/>
+            <Divider/>
           </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
@@ -17,7 +18,7 @@
       </div>
 
     </div>
-  </main>
+  </div>
 </template>
 
 <script setup>
@@ -438,7 +439,7 @@ const setCategoryRef = (el, category) => {
 </script>
 
 <style lang="css" scoped>
-main {
+.body {
   min-height: 100vh;
   display: grid;
   width: 100%;
@@ -487,6 +488,7 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 1rem;
   padding-bottom: 200px;
   border-top-left-radius: 26px;
   border-top-right-radius: 26px;

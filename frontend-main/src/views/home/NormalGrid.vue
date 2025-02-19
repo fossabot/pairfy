@@ -21,7 +21,7 @@ const props = defineProps(['content', 'title'])
 .box {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+
 }
 
 .title{
