@@ -199,8 +199,8 @@ const column4 = categoryArray.slice(9, 15);
     align-items: center;
     text-align: center;
     border-radius: 6px;
-    color: var(--text-w);
     font-weight: bold;
+    position: relative;
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -221,8 +221,15 @@ const column4 = categoryArray.slice(9, 15);
 
 
 .legend {
-    filter: drop-shadow(2px 4px 6px black);
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
+    white-space: break-spaces;
+    word-break: break-word;
+    color: var(--text-w);
+    position: absolute;
+    text-align: start;
+    left: 1rem;
+    top: 1rem;
+    width: 80%;
 }
 
 .horizontal {

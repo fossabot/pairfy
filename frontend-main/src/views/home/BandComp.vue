@@ -87,6 +87,7 @@ onBeforeUnmount(() => {
 }
 
 .band {
+    box-shadow: var(--shadow-b);
     max-width: var(--body-a);
     border-radius: 6px;
     margin-top: 1rem;
