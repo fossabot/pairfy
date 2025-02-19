@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
     box-shadow: var(--shadow-b);
     max-width: var(--body-a);
     border-radius: 6px;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     overflow: hidden;
     position: relative;
     display: flex;

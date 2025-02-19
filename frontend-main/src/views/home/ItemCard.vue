@@ -15,7 +15,7 @@
                 </div>
             </span>
 
-            <div class="shipping flex green">
+            <div class="shipping flex">
                 <span>Free shipping</span>
             </div>
 

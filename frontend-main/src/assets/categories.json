@@ -2,17 +2,23 @@
   "0": {
     "name": "Electronics & Digital Content",
     "keywords": "gadgets, smartphones, laptops, computers, software, electronics, tech, digital products, streaming, apps",
-    "index": "0"
+    "index": "0",
+    "background": "#A7C7FF",
+    "y": "59%"
   },
   "1": {
     "name": "Clothing & Fashion",
     "keywords": "apparel, fashion, clothes, outfits, trends, style, menswear, womenswear, accessories, shoes",
-    "index": "1"
+    "index": "1",
+    "background": "#C3B8FF",
+    "y": "50%"
   },
   "2": {
     "name": "Health & Beauty",
     "keywords": "skincare, makeup, personal care, beauty products, health, wellness, fitness, hair care, cosmetics, nutrition",
-    "index": "2"
+    "index": "2",
+    "background": "#FFC2E2",
+    "y": "20%"
   },
   "3": {
     "name": "Books, Music & Movies",
@@ -22,27 +28,37 @@
   "4": {
     "name": "Home & Garden",
     "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, tools",
-    "index": "4"
+    "index": "4",
+    "background": "initial",
+    "y": "70%"
   },
   "5": {
     "name": "Toys, Hobbies & Collectibles",
     "keywords": "toys, hobbies, action figures, collectibles, games, puzzles, model kits, figurines, arts and crafts, collecting",
-    "index": "5"
+    "index": "5",
+    "background": "#A8E6CF",
+    "y": "20%"
   },
   "6": {
     "name": "Sports & Outdoors & Entertainment",
     "keywords": "sports equipment, outdoor gear, fitness, exercise, hiking, camping, biking, sportswear, athletics, recreation",
-    "index": "6"
+    "index": "6",
+    "background": "#B3E5FC",
+    "y": "20%"
   },
   "7": {
     "name": "Grocery & Gourmet Food",
     "keywords": "food, gourmet, snacks, organic, groceries, beverages, kitchen essentials, meal kits, fresh produce, specialty foods",
-    "index": "7"
+    "index": "7",
+    "background": "initial",
+    "y": "50%"
   },
   "8": {
     "name": "Automotive & Industrial",
     "keywords": "cars, motorcycles, automotive parts, car accessories, tools, industrial equipment, mechanical, vehicle repair, motor parts, garage",
-    "index": "8"
+    "index": "8",
+    "background": "initial",
+    "y": "50%"
   },
   "9": {
     "name": "Office Supplies & Equipment",

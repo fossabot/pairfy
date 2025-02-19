@@ -4,7 +4,7 @@
             <span>Trending on Cardano</span>
             <img class="icon" src="@/assets/icons/hot.png" alt="">
         </div>
-        
+
 
         <div class="horizontal flex">
             <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
@@ -15,27 +15,33 @@
 
         <div class="grid-container">
             <div class="column first">
-                <div v-for="(category, index) in column1" :key="index" class="card"
-                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '70%' }"
+                <div class="card" v-for="(category, index) in column1" :key="index" :style="{ background: category.background }"
                     @click="searchCategory(category.name)">
+
+                    <div class="mask"
+                        :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }">
+                    </div>
                     <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
             <div class="column second">
-                <div v-for="(category, index) in column2" :key="index" class="card"
-                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '50%' }"
+                <div class="card" v-for="(category, index) in column2" :key="index" :style="{ background: category.background }"
                     @click="searchCategory(category.name)">
-                    <div class="legend">{{ category.name }}</div>
 
+                    <div class="mask"
+                        :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }">
+                    </div>
+                    <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
             <div class="column third">
-                <div v-for="(category, index) in column3" :key="index" class="card"
-                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '50%' }"
+                <div class="card" v-for="(category, index) in column3" :key="index" :style="{ background: category.background }"
                     @click="searchCategory(category.name)">
-                    
-                    <div class="legend">{{ category.name }}</div>
 
+                    <div class="mask"
+                        :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }">
+                    </div>
+                    <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
         </div>
@@ -47,13 +53,13 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import asset0 from "@/assets/icons/0.jpeg";
-import asset1 from "@/assets/icons/1.jpeg";
-import asset2 from "@/assets/icons/2.jpeg";
+import asset0 from "@/assets/icons/0.png";
+import asset1 from "@/assets/icons/1.png";
+import asset2 from "@/assets/icons/2.png";
 import asset3 from "@/assets/icons/3.jpeg";
 import asset4 from "@/assets/icons/4.jpeg";
-import asset5 from "@/assets/icons/5.jpeg";
-import asset6 from "@/assets/icons/6.jpeg";
+import asset5 from "@/assets/icons/5.png";
+import asset6 from "@/assets/icons/6.png";
 import asset7 from "@/assets/icons/7.jpeg";
 import asset8 from "@/assets/icons/8.jpeg";
 import asset9 from "@/assets/icons/9.jpeg";
@@ -179,7 +185,7 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .column:first-child {
-  grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
 }
 
 .column:nth-child(2) {
@@ -195,17 +201,21 @@ const column4 = categoryArray.slice(9, 15);
     font-size: var(--text-size-3);
     box-shadow: var(--shadow-b);
     justify-content: center;
-    display: flex;
     align-items: center;
     text-align: center;
     border-radius: 6px;
     font-weight: bold;
     position: relative;
-    background-size: cover;
-    background-repeat: no-repeat;
-
+    display: flex;
 }
 
+.mask{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .grid-container {
