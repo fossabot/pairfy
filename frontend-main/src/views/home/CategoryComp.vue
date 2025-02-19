@@ -5,14 +5,6 @@
             <img class="icon" src="@/assets/icons/hot.png" alt="">
         </div>
 
-
-        <div class="horizontal flex">
-            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
-                <img class="image" :src="getURL(item.index)" alt="">
-                <span class="name">{{ item.name }}</span>
-            </div>
-        </div>
-
         <div class="grid-container">
             <div class="column first">
                 <div class="card" v-for="(category, index) in column1" :key="index" :style="{ background: category.background }"
@@ -45,6 +37,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="horizontal flex">
+            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
+                <img class="image" :src="getURL(item.index)" alt="">
+                <span class="name">{{ item.name }}</span>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -152,7 +152,7 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .image {
-    border-radius: 50%;
+    border-radius: 6px;
     overflow: hidden;
     width: 70px;
 }
@@ -250,7 +250,7 @@ const column4 = categoryArray.slice(9, 15);
     display: flex;
     justify-content: center;
     border-radius: 0px;
-    margin-top: 1rem;
+    margin: 3rem 0;
     gap: 1rem;
 }
 
