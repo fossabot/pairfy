@@ -2,16 +2,14 @@
   <main>
     <div class="body">
       <div class="top">
-        <BandComp />
         <CategoryComp />
+        <BandComp />
       </div>
       <div class="bottom">
-        <NormalGrid :content="bestSellers" />
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-            <RowGrid :content="item" :title="index" />
-            <NormalGrid :content="item" />
+            <NormalGrid :content="item" :title="index"/>
           </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
@@ -388,8 +386,6 @@ const { isActive, pause, resume } = useIntersectionObserver(
   { root },
 )
 
-const bestSellers = computed(() => Object.values(feedData.value)[0]);
-
 const feedData = ref({
   "Best Sellers": products,
   "Electronics & Digital Content": products,
@@ -492,7 +488,6 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
   padding-bottom: 200px;
   border-top-left-radius: 26px;
   border-top-right-radius: 26px;

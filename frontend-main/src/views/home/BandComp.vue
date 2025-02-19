@@ -88,12 +88,12 @@ onBeforeUnmount(() => {
 
 .band {
     max-width: var(--body-a);
-    border-radius: 12px;
+    border-radius: 6px;
     margin-top: 1rem;
     overflow: hidden;
     position: relative;
     display: flex;
-    height: 360px;
+    height: 33vh;
     width: 100%;
 }
 

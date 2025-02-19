@@ -1,5 +1,18 @@
 <template>
     <div class="category">
+        <div class="title flex">
+            <span>Trending on Cardano</span>
+            <img class="icon" src="@/assets/icons/hot.png" alt="">
+        </div>
+        
+
+        <div class="horizontal flex">
+            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
+                <img class="image" :src="getURL(item.index)" alt="">
+                <span class="name">{{ item.name }}</span>
+            </div>
+        </div>
+
         <div class="grid-container">
             <div class="column first">
                 <div v-for="(category, index) in column1" :key="index" class="card"
@@ -27,18 +40,7 @@
             </div>
         </div>
 
-        <div class="title flex">
-            <span>Trending on Cardano</span>
-            <img class="icon" src="@/assets/icons/hot.png" alt="">
-        </div>
-        
 
-        <div class="horizontal flex">
-            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
-                <img class="image" :src="getURL(item.index)" alt="">
-                <span class="name">{{ item.name }}</span>
-            </div>
-        </div>
 
     </div>
 </template>
@@ -147,16 +149,11 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .image {
-    border-radius: 6px;
+    border-radius: 50%;
     overflow: hidden;
     width: 70px;
 }
 
-.image img {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-}
 
 .name {
     margin-top: 0.5rem;
