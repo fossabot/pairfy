@@ -1,35 +1,45 @@
 <template>
     <div class="category">
-        <div class="title flex">
-            <span>Trending on Cardano</span>
-            <img class="icon" src="@/assets/icons/hot.png" alt="">
-        </div>
-
         <div class="grid-container">
             <div class="column first">
                 <div v-for="(category, index) in column1" :key="index" class="card"
                     :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '70%' }"
                     @click="searchCategory(category.name)">
-                    <h3>{{ category.name }}</h3>
+                    <div class="legend">{{ category.name }}</div>
                 </div>
             </div>
             <div class="column second">
                 <div v-for="(category, index) in column2" :key="index" class="card"
-                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '15%' }"
+                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '50%' }"
                     @click="searchCategory(category.name)">
-                    <h3>{{ category.name }}</h3>
+                    <div class="legend">{{ category.name }}</div>
 
                 </div>
             </div>
             <div class="column third">
-                <div v-for="(category, index) in column3" :key="index" class="card">
-                    <h3>{{ category.name }}</h3>
+                <div v-for="(category, index) in column3" :key="index" class="card"
+                    :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: '50%' }"
+                    @click="searchCategory(category.name)">
+                    
+                    <div class="legend">{{ category.name }}</div>
 
                 </div>
             </div>
         </div>
 
+        <div class="title flex">
+            <span>Trending on Cardano</span>
+            <img class="icon" src="@/assets/icons/hot.png" alt="">
+        </div>
         
+
+        <div class="horizontal flex">
+            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
+                <img class="image" :src="getURL(item.index)" alt="">
+                <span class="name">{{ item.name }}</span>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -96,6 +106,7 @@ const categoryArray = Object.values(categoryList.value);
 const column1 = categoryArray.slice(0, 3);
 const column2 = categoryArray.slice(3, 6);
 const column3 = categoryArray.slice(6, 9);
+const column4 = categoryArray.slice(9, 15);
 </script>
 
 <style lang="css" scoped>
@@ -136,11 +147,9 @@ const column3 = categoryArray.slice(6, 9);
 }
 
 .image {
-    border-radius: 50%;
-    justify-content: center;
+    border-radius: 6px;
     overflow: hidden;
-    width: calc(70px - 0.25rem);
-    padding: 0.25rem;
+    width: 70px;
 }
 
 .image img {
@@ -150,7 +159,7 @@ const column3 = categoryArray.slice(6, 9);
 }
 
 .name {
-    margin: 0 1rem;
+    margin-top: 0.5rem;
 }
 
 .icon {
@@ -165,7 +174,7 @@ const column3 = categoryArray.slice(6, 9);
     width: 100%;
     max-width: var(--body-a);
     height: 80vh;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .column {
@@ -174,15 +183,15 @@ const column3 = categoryArray.slice(6, 9);
 }
 
 .column:first-child {
-    grid-template-rows: 25% 50% 25%;
+  grid-template-rows: 1fr 2fr 1fr;
 }
 
 .column:nth-child(2) {
-    grid-template-rows: 37.5% 37.5% 25%;
+    grid-template-rows: 1.5fr 1.5fr 1fr;
 }
 
 .column:last-child {
-    grid-template-rows: 25% 50% 25%;
+    grid-template-rows: 1fr 2fr 1fr;
 }
 
 .card {
@@ -198,7 +207,7 @@ const column3 = categoryArray.slice(6, 9);
     font-weight: bold;
     background-size: cover;
     background-repeat: no-repeat;
-    
+
 }
 
 /* Responsive adjustments */
@@ -212,5 +221,28 @@ const column3 = categoryArray.slice(6, 9);
     .column {
         grid-template-rows: auto;
     }
+}
+
+
+.legend {
+
+}
+
+.horizontal {
+    width: inherit;
+    max-width: var(--body-a);
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    border-radius: 0px;
+    margin-top: 1rem;
+    gap: 1rem;
+}
+
+.horizontal-item {
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
 }
 </style>
