@@ -118,10 +118,12 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
-    display: flex;
+    background: var(--primary-a);
     flex-direction: column;
     justify-content: center;
+    color: var(--text-w);
     align-items: center;
+    display: flex;
     width: 100%;
 }
 
@@ -156,7 +158,7 @@ const column4 = categoryArray.slice(9, 15);
 .image {
     border-radius: 50%;
     overflow: hidden;
-    width: 100px;
+    width: 150px;
 }
 
 .name {
@@ -166,6 +168,7 @@ const column4 = categoryArray.slice(9, 15);
     text-align: center;
     word-break: break-word;
     font-weight: 500;
+    height: 45px;
     width: 80%;
 }
 
@@ -210,6 +213,7 @@ const column4 = categoryArray.slice(9, 15);
     border-radius: 6px;
     font-weight: bold;
     position: relative;
+    overflow: hidden;
     display: flex;
 }
 
@@ -235,16 +239,19 @@ const column4 = categoryArray.slice(9, 15);
 
 
 .legend {
-    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.3));
+    filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.2));
     font-size: var(--text-size-4);
     white-space: break-spaces;
     word-break: break-word;
     color: var(--text-w);
     position: absolute;
     text-align: start;
+    border-radius: 6px;
+    font-weight: 600;
+    width: 50%;
     left: 1rem;
     top: 1rem;
-    width: 80%;
+ 
 }
 
 .horizontal {

@@ -1,6 +1,7 @@
 <template>
   <div class="box">
     <div class="title">{{ props.title }}</div>
+    <Divider/>
     <div class="grid">
       <ItemCard v-for="item, index in content" :key="index" :content="item"
         :style="{ minHeight: '100%', maxHeight: '100%' }" />
@@ -27,10 +28,10 @@ const props = defineProps(['content', 'title'])
 .title{
   font-size: var(--text-size-4);
   font-weight: 700;
+  margin-top: 2rem;
 }
 
 .grid {
-  margin-top: 1rem;
   max-width: var(--body-a);
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-auto-rows: auto;

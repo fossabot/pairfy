@@ -2,15 +2,15 @@
   <div class="body">
     <div class="container">
       <div class="top">
-        <BandComp />
         <CategoryComp />
+        <BandComp />
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
             <NormalGrid :content="item" :title="index"/>
-            <Divider/>
+         
           </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />

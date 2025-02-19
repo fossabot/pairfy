@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
     margin-top: 2rem;
     position: relative;
     display: flex;
-    height: 33vh;
+    height: 25vh;
     width: 100%;
 }
 

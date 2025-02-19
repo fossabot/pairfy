@@ -106,6 +106,6 @@ const onSelect = (id) => {
 .image img{
     width: 100%;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 6px;
 }
 </style>
