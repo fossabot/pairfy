@@ -34,10 +34,10 @@ const props = defineProps(['content', 'title'])
   max-width: var(--body-a);
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-auto-rows: auto;
-  row-gap: 1.5rem;
   display: grid;
   width: 100%;
-  gap: 1rem;
+  gap: 1.5rem;
+  row-gap: 1.5rem;
 }
 
 @media (min-width: 768px) {
