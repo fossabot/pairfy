@@ -132,10 +132,9 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
-    background: var(--primary-a);
     flex-direction: column;
     justify-content: center;
-    color: var(--text-w);
+    color: var(--text-a);
     align-items: center;
     position: relative;
     display: flex;
@@ -145,7 +144,7 @@ const column4 = categoryArray.slice(9, 15);
 .title {
     font-size: var(--text-size-3);
     max-width: var(--body-b);
-    font-weight: 600;
+    font-weight: bold;
     margin-top: 2rem;
     width: inherit;
 }
@@ -204,7 +203,7 @@ const column4 = categoryArray.slice(9, 15);
     width: 100%;
     height: 100vh;
     max-width: var(--body-b);
-    margin-top: 300px;
+    margin-top: 325px;
     z-index: 2;
 }
 

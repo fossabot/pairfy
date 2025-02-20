@@ -24,7 +24,7 @@
 
 .cart {
     background: transparent;
-    color: var(--text-w);
+    color: var(--text-a);
     font-size: var(--text-size-1);
     border-radius: 20px;
     justify-content: center;
