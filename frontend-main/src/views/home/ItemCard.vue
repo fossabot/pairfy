@@ -50,10 +50,12 @@ const onSelect = (id) => {
 <style lang="css" scoped>
 
 .card {
-    background: transparent;
+    background: var(--background-a);
+    box-shadow: var(--shadow-b);
+    border-radius: 0px;
     overflow: hidden;
     cursor: pointer;
-    border-radius: 0px;
+    padding: 1rem;
 }
 
 .body {

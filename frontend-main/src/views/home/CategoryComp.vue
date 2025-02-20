@@ -132,7 +132,6 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
-    background: var(--background-b);
     flex-direction: column;
     justify-content: center;
     color: var(--text-a);
@@ -153,7 +152,7 @@ const column4 = categoryArray.slice(9, 15);
 .legend {
     width: inherit;
     text-align: left;
-    color: var(--text-a);
+    color: var(--text-c);
 }
 
 .tag {
