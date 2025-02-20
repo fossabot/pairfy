@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
 }
 
 .band-arrow {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -146,7 +146,6 @@ onBeforeUnmount(() => {
 .band-dots {
     position: absolute;
     bottom: 10px;
-
     display: flex;
     justify-content: center;
     width: 100%;
@@ -171,6 +170,6 @@ onBeforeUnmount(() => {
     height: 100%;
     z-index: 3;
     position: absolute;
-    background: linear-gradient(0deg, var(--background-a) 0%, transparent 60%);
+    background: linear-gradient(0deg, var(--background-b) 0%, transparent 60%);
 }
 </style>

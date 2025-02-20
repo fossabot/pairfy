@@ -3,44 +3,44 @@
         <BandComp />
         <div class="grid-container">
             <div class="column first">
-                <div class="card" v-for="(category, index) in column1" :key="index"
-                    @click="searchCategory(category.name)">
-                    <div class="legend">{{ category.name }}</div>
-                    <div class="conta" :style="{ background: category.background }">
+                <div class="card" v-for="(item, index) in column1" :key="index"
+                    @click="searchCategory(item.name)">
+                    <div class="legend">{{ item.name }}</div>
+                    <div class="conta" :style="{ background: item.background }">
                         <div class="mask"
-                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }" />
+                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
             </div>
             <div class="column second">
-                <div class="card" v-for="(category, index) in column2" :key="index"
-                    @click="searchCategory(category.name)">
-                    <div class="legend">{{ category.name }}</div>
-                    <div class="conta" :style="{ background: category.background }">
+                <div class="card" v-for="(item, index) in column2" :key="index"
+                    @click="searchCategory(item.name)">
+                    <div class="legend">{{ item.name }}</div>
+                    <div class="conta" :style="{ background: item.background }">
                         <div class="mask"
-                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }" />
+                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
 
                 </div>
             </div>
             <div class="column third">
-                <div class="card" v-for="(category, index) in column3" :key="index"
-                    @click="searchCategory(category.name)">
-                    <div class="legend">{{ category.name }}</div>
-                    <div class="conta" :style="{ background: category.background }">
+                <div class="card" v-for="(item, index) in column3" :key="index"
+                    @click="searchCategory(item.name)">
+                    <div class="legend">{{ item.name }}</div>
+                    <div class="conta" :style="{ background: item.background }">
                         <div class="mask"
-                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }" />
+                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
             </div>
 
             <div class="column four">
-                <div class="card" v-for="(category, index) in column4" :key="index"
-                    @click="searchCategory(category.name)">
-                    <div class="legend">{{ category.name }}</div>
-                    <div class="conta" :style="{ background: category.background }">
+                <div class="card" v-for="(item, index) in column4" :key="index"
+                    @click="searchCategory(item.name)">
+                    <div class="legend">{{ item.name }}</div>
+                    <div class="conta" :style="{ background: item.background }">
                         <div class="mask"
-                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y, backgroundPositionX: category.x }" />
+                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
             </div>
@@ -132,6 +132,7 @@ const column4 = categoryArray.slice(9, 15);
 
 <style lang="css" scoped>
 .category {
+    background: var(--background-b);
     flex-direction: column;
     justify-content: center;
     color: var(--text-a);
@@ -181,16 +182,6 @@ const column4 = categoryArray.slice(9, 15);
     width: 150px;
 }
 
-.name {
-    font-size: var(--text-size-1);
-    white-space: break-spaces;
-    margin-top: 1rem;
-    text-align: center;
-    word-break: break-word;
-    font-weight: 500;
-    height: 45px;
-    width: 80%;
-}
 
 .icon {
     width: 34px;
@@ -203,7 +194,7 @@ const column4 = categoryArray.slice(9, 15);
     width: 100%;
     height: 100vh;
     max-width: var(--body-b);
-    margin-top: 325px;
+    margin-top: 350px;
     z-index: 2;
 }
 
@@ -277,7 +268,7 @@ const column4 = categoryArray.slice(9, 15);
     justify-content: center;
     border-radius: 0px;
     margin: 2rem 0;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .horizontal-item {
@@ -286,4 +277,15 @@ const column4 = categoryArray.slice(9, 15);
     flex-direction: column;
     display: flex;
 }
+
+.name {
+    font-size: var(--text-size-1);
+    white-space: break-spaces;
+    margin-top: 1rem;
+    text-align: center;
+    word-break: break-word;
+    font-weight: 500;
+    height: 45px;
+}
+
 </style>
