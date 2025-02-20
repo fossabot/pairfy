@@ -190,7 +190,7 @@ const column4 = categoryArray.slice(9, 15);
     display: grid;
     gap: 1rem;
     width: 100%;
-    height: 100vh;
+    height: 115vh;
     max-width: var(--body-a);
     margin-top: 350px;
     z-index: 2;
