@@ -1,5 +1,5 @@
 <template>
-    <div class="search" :class="{ focus: isFocus }">
+    <div class="search flex" :class="{ focus: isFocus }">
         <SelectorComp/>
         <input v-model="searchInput" type="text" class="search-input" placeholder="Search"
             @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
@@ -55,14 +55,12 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 .search {
-    display: flex;
-    align-items: center;
     width: 100%;
-    height: 46px;
-    border-radius: 6px;
+    height: 3rem;
     overflow: hidden;
-    background: var(--background-a);
+    border-radius: 6px;
     box-shadow: var(--shadow-b);
+    background: var(--background-a);
     border: 2px solid var(--primary-a);
 }
 

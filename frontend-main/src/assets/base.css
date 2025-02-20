@@ -61,7 +61,7 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--primary-a) !important;
+  --p-rating-icon-active-color: var(--primary-b) !important;
 
   --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
 
@@ -98,6 +98,7 @@
 
 :root {
   --primary-a: var(--red-a);
+  --primary-b: var(--blue-a);
 
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
