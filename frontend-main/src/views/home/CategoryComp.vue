@@ -278,7 +278,7 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .name {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-2);
     white-space: break-spaces;
     margin-top: 1rem;
     text-align: center;
