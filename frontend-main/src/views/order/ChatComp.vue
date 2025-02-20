@@ -293,7 +293,7 @@ onBeforeUnmount(() => {
     width: 100%;
     min-height: 700px;
     border: 2px solid var(--border-a);
-    border-radius: 20px;
+    border-radius: 12px;
     overflow: hidden;
     transition: 0.2s;
 }
