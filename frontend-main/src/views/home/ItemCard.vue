@@ -80,7 +80,9 @@ const onSelect = (id) => {
 
 .shipping {
     font-size: var(--text-size-1);
+    color: var(--green-a);
     margin-top: 0rem;
+    font-weight: 500;
 }
 
 .dollar {

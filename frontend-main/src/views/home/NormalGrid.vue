@@ -38,7 +38,7 @@ const props = defineProps(['content', 'title'])
   display: grid;
   width: 100%;
   gap: 1.5rem;
-  row-gap: 1.5rem;
+  row-gap: 2rem;
 }
 
 @media (min-width: 768px) {
