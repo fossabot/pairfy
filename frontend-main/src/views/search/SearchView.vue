@@ -313,7 +313,6 @@ onBeforeUnmount(() => {
     width: 100%;
     max-width: var(--body-a);
     align-items: flex-start;
-    background: var(--background-a);
     margin-top: 1rem;
 }
 
