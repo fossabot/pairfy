@@ -171,6 +171,6 @@ onBeforeUnmount(() => {
     height: 100%;
     z-index: 3;
     position: absolute;
-    background: linear-gradient(0deg, var(--background-a) 0%, transparent 70%);
+    background: linear-gradient(0deg, var(--background-a) 0%, transparent 60%);
 }
 </style>
