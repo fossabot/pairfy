@@ -78,6 +78,8 @@
   --p-rating-gap: 2px !important;
 
   --p-message-text-font-weight: 400 !important;
+
+  --p-divider-horizontal-margin: 1rem 0 !important;
 }
 
 @media (prefers-color-scheme: dark) {
