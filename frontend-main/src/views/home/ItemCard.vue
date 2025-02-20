@@ -93,10 +93,10 @@ const onSelect = (id) => {
 
 .tag {
     font-size: var(--text-size-1);
-    white-space: nowrap;
-    text-align: center;
     max-width: fit-content;
     display: inline-block;
+    white-space: nowrap;
+    text-align: center;
     border-radius: 0px;
     margin-left: 0.25rem;
     line-height: 14px;
@@ -110,6 +110,6 @@ const onSelect = (id) => {
 .image img{
     width: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 0px;
 }
 </style>
