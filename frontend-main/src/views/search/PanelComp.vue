@@ -158,16 +158,17 @@ label {
 }
 
 .panel {
-    width: 400px;
+    width: 300px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    color: var(--text-b);
 }
 
 .panel-row {
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .label {

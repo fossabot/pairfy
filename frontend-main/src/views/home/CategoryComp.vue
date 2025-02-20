@@ -224,6 +224,7 @@ const column4 = categoryArray.slice(9, 15);
     border-radius: 0px;
     font-weight: 700;
     overflow: hidden;
+    cursor: pointer;
     display: flex;
     padding: 1rem;
     width: 100%;

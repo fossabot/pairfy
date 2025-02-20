@@ -317,10 +317,14 @@ onBeforeUnmount(() => {
 }
 
 .content {
-    width: inherit;
-    display: flex;
+    border: 1px solid var(--border-a);
+    background: var(--background-a);
     flex-direction: column;
     min-height: 100vh;
+    padding: 1.5rem;
+    width: inherit;
+    display: flex;
+    
 }
 
 .banner {

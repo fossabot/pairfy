@@ -1,5 +1,5 @@
 <template>
-    <div class="tag flex" :class="{ contrast: type === 'contrast', discount: type === 'discount' }">
+    <div class="tag flex" :class="{ contrast: type === 'contrast', discount: type === 'discount', minimal: type === 'minimal' }">
         {{ props.tag }}
     </div>
 </template>

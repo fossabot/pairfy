@@ -28,8 +28,8 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="8.0000004"
-     inkscape:cx="68.562497"
-     inkscape:cy="15.374999"
+     inkscape:cx="62.062497"
+     inkscape:cy="14.874999"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="1920"
@@ -111,7 +111,7 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:17.3333px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.7px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:17.3333px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.7px;word-spacing:0px;display:inline;fill:#ff2e4d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
        x="-0.74666804"
        y="21.372976"
        id="text2-3-3"
@@ -121,8 +121,10 @@
          sodipodi:role="line"
          x="-0.74666804"
          y="21.372976"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3333px;font-family:manrope;-inkscape-font-specification:'manrope Bold';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-         id="tspan541421-5-5">adamarket</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3333px;font-family:manrope;-inkscape-font-specification:'manrope Bold';fill:#ff2e4d;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         id="tspan541421-5-5"><tspan
+   style="fill:#000000"
+   id="tspan147404">ada</tspan>market</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

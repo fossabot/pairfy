@@ -13,12 +13,17 @@
                 </span>
                 <span class="reviews">({{ content.reviews }} reviews) </span>
             </span>
-    
-            <span class="price">${{ formatPriceToUSD(content.price) }}</span>
 
-            <TagComp v-if="content.best_seller" tag="Best seller" type="contrast"  />
+            <div class="price flex">
+                <span> ${{ formatPriceToUSD(content.price) }} </span>
+                <TagComp v-if="content.discount" :tag="`-${content.discount_value}% OFF`" type="minimal" />
 
-            <TagComp v-if="content.discount" :tag="`-${content.discount_value}%`" type="contrast"  />
+            </div>
+
+
+            <TagComp v-if="content.best_seller" tag="Best seller" type="contrast" />
+
+
         </div>
     </div>
 </template>
@@ -37,7 +42,7 @@ const theRoute = useRoute();
 
 const props = defineProps(['content'])
 
-const rating = ref(props.content.rating);
+const rating = ref(4 || props.content.rating);
 
 const openProduct = (id) => {
     router.push({
@@ -92,19 +97,24 @@ const openProduct = (id) => {
 }
 
 .rating {
+    margin-top: 0.25rem;
     align-items: baseline;
 }
 
 .rating-value {
+    font-size: var(--text-size-1);
     margin-left: 0.5rem;
     font-weight: 500;
-    font-size: var(--text-size-1);
 }
 
 .price {
     font-size: var(--text-size-4);
+    margin-top: 0.25rem;
     font-weight: 600;
-    margin-top: 0rem;
+}
+
+.price span {
+    margin-right: 0.5rem;
 }
 
 .reviews {
