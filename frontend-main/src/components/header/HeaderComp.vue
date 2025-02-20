@@ -128,12 +128,12 @@ header {
     justify-content: center;
     align-items: center;
     font-size: var(--text-size-1);
-    background: var(--yellow-b);
-    border-bottom: 1px solid var(--border-b);
+    background: var(--background-a);
+    border-bottom: 1px solid var(--border-a);
 }
 
 .header{
-    padding: 0.5rem 0;
+    padding: 1rem 0;
 }
 
 

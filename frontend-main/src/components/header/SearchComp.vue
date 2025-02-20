@@ -63,10 +63,10 @@ onBeforeUnmount(() => {
     overflow: hidden;
     background: var(--background-a);
     box-shadow: var(--shadow-b);
+    border: 2px solid var(--primary-a);
 }
 
 .search.focus {
-    outline: 1px solid var(--black-a);
     background: var(--background-a);
 }
 
