@@ -40,10 +40,10 @@ section {
 .nav {
     justify-content: space-between;
     font-size: var(--text-size-0);
+    font-weight: 400;
+    cursor: pointer;
     width: inherit;
     color: inherit;
-    cursor: pointer;
-    font-weight: 400;
 }
 
 .price {

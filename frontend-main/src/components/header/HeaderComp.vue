@@ -123,13 +123,13 @@ onBeforeUnmount(() => {
 header {
     width: 100%;
     display: flex;
+    color: var(--text-a);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: var(--text-size-1);
     background: var(--yellow-b);
-    color: var(--text-a);
-    border-bottom: 1px solid var(--border-b);
+    border-bottom: 1px solid var(--border-a);
 }
 
 .header{
