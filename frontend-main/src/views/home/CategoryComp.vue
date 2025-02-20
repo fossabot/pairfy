@@ -40,7 +40,7 @@
                     <div class="legend">{{ category.name }}</div>
                     <div class="conta" :style="{ background: category.background }">
                         <div class="mask"
-                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y }" />
+                            :style="{ backgroundImage: `url(${getURL(category.index)})`, backgroundPositionY: category.y, backgroundPositionX: category.x }" />
                     </div>
                 </div>
             </div>

@@ -65,7 +65,10 @@
   "9": {
     "name": "Office Supplies & Equipment",
     "keywords": "office supplies, stationery, computers, office furniture, printers, desks, chairs, organization, business equipment, workplace",
-    "index": "9"
+    "index": "9",
+    "background": "initial",
+    "x": "50%",
+    "y": "50%"
   },
   "10": {
     "name": "Pet Supplies",
@@ -75,7 +78,10 @@
   "11": {
     "name": "Lights & Lighting",
     "keywords": "lighting, lamps, light bulbs, LED, chandeliers, home lighting, outdoor lights, ceiling lights, wall sconces, floor lamps",
-    "index": "11"
+    "index": "11",
+    "background": "initial",
+    "x": "50%",
+    "y": "20%"
   },
   "12": {
     "name": "Mother & Kids",
