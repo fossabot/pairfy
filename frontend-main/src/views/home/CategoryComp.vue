@@ -233,7 +233,7 @@ const column4 = categoryArray.slice(9, 15);
     align-items: center;
     text-align: center;
     border-radius: 0px;
-    font-weight: bold;
+    font-weight: 600;
     overflow: hidden;
     display: flex;
     padding: 1rem;
