@@ -5,7 +5,7 @@
             <ProgressSpinner v-if="isLoading" style="width: 1rem; height: 1rem" strokeWidth="5" fill="transparent"
                 animationDuration=".5s" aria-label="Custom ProgressSpinner" />
 
-            <span>Accept Order</span>
+            <span>Accept</span>
             <span v-if="pendingCountdown !== '00:00'">
                 {{ pendingCountdown }}
             </span>

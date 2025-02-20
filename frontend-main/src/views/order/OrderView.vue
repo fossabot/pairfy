@@ -314,7 +314,7 @@ const timeline = ref([
         title: "Created",
         subtitle: {
             buyer: "The seller has been notified to prepare your package.",
-            seller: `Please verify the payment and click the "Accept The Order" button.`
+            seller: `Please verify the payment and click the "Accept" button.`
         },
         completed: true,
         type: "box",
@@ -698,8 +698,8 @@ onUnmounted(() => {
     max-width: var(--body-a);
     border-radius: 6px;
     min-height: 100vh;
-    padding: 2rem;
     margin-top: 1rem;
+    padding: 1.5rem;
     width: 100%;
 }
 
