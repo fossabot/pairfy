@@ -142,7 +142,7 @@ const column4 = categoryArray.slice(9, 15);
 }
 
 .title {
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     max-width: var(--body-a);
     font-weight: bold;
     margin-top: 2rem;
