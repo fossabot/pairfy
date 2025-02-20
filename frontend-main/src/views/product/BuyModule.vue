@@ -322,7 +322,7 @@ const computedTotalFiat = computed(() => {
     return 0;
 })
 
-const productRating = ref(getProductData.value?.rating);
+const productRating = ref(getProductData.value.rating);
 
 const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";

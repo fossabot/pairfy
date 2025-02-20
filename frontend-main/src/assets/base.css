@@ -61,7 +61,7 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--text-a) !important;
+  --p-rating-icon-active-color: var(--primary-a) !important;
 
   --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
 
@@ -106,7 +106,6 @@
 
   --text-a: #222;
   --text-b: #565959;
-  --text-c: var(--logo-a);
   --text-w: #ffffff;
 
   --text-size-a: 0.833rem;
@@ -142,7 +141,7 @@
   --orange-b: #ff4500;
   --yellow-a: #fcbc05;
   --yellow-b: #FFEA00;
-  --blue-a: #0866ff;
+  --blue-a: #2280FF;
   --cyan-a: #60a3ff;
 
   --logo-a: #2648A4;

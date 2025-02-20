@@ -152,7 +152,6 @@ const column4 = categoryArray.slice(9, 15);
 .legend {
     width: inherit;
     text-align: left;
-    color: var(--text-c);
 }
 
 .tag {
