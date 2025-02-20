@@ -30,7 +30,7 @@ import banner2 from '@/assets/banner/2.png';
 
 const imageList = ref([
     {
-        src: banner2
+        src: banner1
     },
     {
         src: banner2
