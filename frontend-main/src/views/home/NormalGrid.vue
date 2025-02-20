@@ -22,13 +22,12 @@ const props = defineProps(['content', 'title'])
 .box {
   display: flex;
   flex-direction: column;
-
+  margin-bottom: 2rem;
 }
 
 .title{
   font-size: var(--text-size-4);
   font-weight: 700;
-  margin-top: 2rem;
 }
 
 .grid {
