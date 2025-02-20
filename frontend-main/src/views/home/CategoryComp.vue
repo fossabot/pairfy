@@ -144,7 +144,7 @@ const column4 = categoryArray.slice(9, 15);
 
 .title {
     font-size: var(--text-size-3);
-    max-width: var(--body-b);
+    max-width: var(--body-a);
     font-weight: bold;
     margin-top: 2rem;
     width: inherit;
@@ -193,7 +193,7 @@ const column4 = categoryArray.slice(9, 15);
     gap: 1rem;
     width: 100%;
     height: 100vh;
-    max-width: var(--body-b);
+    max-width: var(--body-a);
     margin-top: 350px;
     z-index: 2;
 }
@@ -262,7 +262,7 @@ const column4 = categoryArray.slice(9, 15);
 
 .horizontal {
     width: inherit;
-    max-width: var(--body-b);
+    max-width: var(--body-a);
     flex-wrap: wrap;
     display: flex;
     justify-content: center;
