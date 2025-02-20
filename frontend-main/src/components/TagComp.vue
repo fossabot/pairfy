@@ -1,5 +1,5 @@
 <template>
-    <div class="tag flex" :class="{ contrast: type === 'contrast', discount: type === 'discount', minimal: type === 'minimal' }">
+    <div class="tag flex" :class="{ contrast: type === 'contrast', discount: type === 'discount' }">
         {{ props.tag }}
     </div>
 </template>
@@ -27,7 +27,7 @@ const props = defineProps(['tag', 'type']);
 }
 
 .discount {
-    background: var(--primary-a);
-    color: var(--text-w);
+    background: transparent;
+    color: var(--green-a);
 }
 </style>

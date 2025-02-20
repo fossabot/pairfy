@@ -16,14 +16,11 @@
 
             <div class="price flex">
                 <span> ${{ formatPriceToUSD(content.price) }} </span>
-                <TagComp v-if="content.discount" :tag="`-${content.discount_value}% OFF`" type="minimal" />
-
+                <TagComp v-if="content.discount" :tag="`-${content.discount_value}% OFF`" type="discount" />
             </div>
 
 
             <TagComp v-if="content.best_seller" tag="Best seller" type="contrast" />
-
-
         </div>
     </div>
 </template>
