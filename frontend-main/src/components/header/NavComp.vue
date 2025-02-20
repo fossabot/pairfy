@@ -27,12 +27,12 @@
 <style lang="css" scoped>
 section {
     justify-content: center;   
-    height: 2.5rem;
+    height: 2rem;
     width: inherit;
 }
 
 .menu {
-    max-width: calc(var(--body-a) - 10rem);
+    max-width: calc(var(--body-a) - 4rem);
     color: inherit;
     width: 100%;
 }

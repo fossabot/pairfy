@@ -142,6 +142,9 @@
   --blue-a: #0866ff;
   --cyan-a: #60a3ff;
 
+  --logo-a: #2648A4;
+  --logo-b: var(--red-a);
+
   --soft-red-a: rgba(255, 56, 92, 0.8);
   --soft-yellow-a: rgba(252, 188, 5, 0.3);
   --soft-yellow-b: rgba(255, 230, 0, 0.2);
@@ -162,6 +165,7 @@
   --pastel-purple: #d7b3ff;
 
   /*
+INDIGO #2648A4
 #7FAAFF (Azul pastel)  
 #A7C7FF (Celeste pastel)  
 #C3B8FF (Lavanda pastel)  
