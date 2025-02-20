@@ -291,7 +291,7 @@ const orderTitle = computed(
 
 
         if (statusLog.value === 'pending') {
-            scheme.seller = "Please Verify and Accept, Time Remaining "
+            scheme.seller = "Please Verify, Time Remaining "
         }
 
         if (statusLog.value === 'locking') {
@@ -699,7 +699,7 @@ onUnmounted(() => {
     border-radius: 6px;
     min-height: 100vh;
     margin-top: 1rem;
-    padding: 1.5rem;
+    padding: 2rem;
     width: 100%;
 }
 
