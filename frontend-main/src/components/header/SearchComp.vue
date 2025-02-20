@@ -96,6 +96,7 @@ onBeforeUnmount(() => {
     color: var(--text-a);
     border-radius: 0 4px 4px 0;
     background: transparent;
+    border-left: 1px solid var(--border-a);
 }
 
 .search-button i {
