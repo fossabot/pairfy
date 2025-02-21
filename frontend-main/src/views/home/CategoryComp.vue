@@ -3,7 +3,7 @@
         <BandComp />
         <div class="category-grid">
             <div class="category-col first">
-                <div class="category-card" v-for="(item, index) in columnLeft" :key="index"
+                <div class="category-card" v-for="(item, index) in columnOne" :key="index"
                     @click="searchCategory(item.name)">
                     <div class="category-title">{{ item.name }}</div>
                     <div class="category-body" :style="{ background: item.background }">
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="category-col second">
-                <div class="category-card" v-for="(item, index) in columnCenter" :key="index"
+                <div class="category-card" v-for="(item, index) in columnTwo" :key="index"
                     @click="searchCategory(item.name)">
                     <div class="category-title">{{ item.name }}</div>
                     <div class="category-body" :style="{ background: item.background }">
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="category-col third">
-                <div class="category-card" v-for="(item, index) in columnRight" :key="index"
+                <div class="category-card" v-for="(item, index) in columnThree" :key="index"
                     @click="searchCategory(item.name)">
                     <div class="category-title">{{ item.name }}</div>
                     <div class="category-body" :style="{ background: item.background }">
@@ -35,7 +35,7 @@
             </div>
 
             <div class="category-col four">
-                <div class="category-card" v-for="(item, index) in columnBottom" :key="index"
+                <div class="category-card" v-for="(item, index) in columnFour" :key="index"
                     @click="searchCategory(item.name)">
                     <div class="category-title">{{ item.name }}</div>
                     <div class="category-body" :style="{ background: item.background }">
@@ -53,7 +53,7 @@
 
 
         <div class="banner flex">
-            <div class="banner-item" v-for="(item, index) in columnBottom" :key="index">
+            <div class="banner-item" v-for="(item, index) in columnFive" :key="index">
                 <img class="banner-image" :src="getURL(item.index)" alt="">
                 <span class="banner-name">{{ item.name }}</span>
             </div>
@@ -124,10 +124,11 @@ const searchCategory = (name) => {
 
 const categoryArray = Object.values(categoryList.value);
 
-const columnLeft = categoryArray.slice(0, 3);
-const columnCenter = categoryArray.slice(3, 6);
-const columnRight = categoryArray.slice(6, 9);
-const columnBottom = categoryArray.slice(9, 15);
+const columnOne = categoryArray.slice(0, 3);
+const columnTwo = categoryArray.slice(3, 6);
+const columnThree = categoryArray.slice(6, 9);
+const columnFour = categoryArray.slice(9, 12);
+const columnFive = categoryArray.slice(12, 15);
 </script>
 
 <style lang="css" scoped>
@@ -146,7 +147,7 @@ const columnBottom = categoryArray.slice(9, 15);
     display: grid;
     gap: 1rem;
     width: 100%;
-    height: 115vh;
+    height: 100vh;
     max-width: var(--body-a);
     max-height: var(--body-a);
     margin-top: 350px;
