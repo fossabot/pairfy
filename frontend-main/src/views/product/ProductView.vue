@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="container">
-            <HeadComp />  
+            <HeadComp />
             <ProductCard />
             <Divider />
             <DescriptionComp />
@@ -122,8 +122,9 @@ onBeforeUnmount(() => {
 .body {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    position: relative;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     background: var(--background-b);
 }
@@ -143,6 +144,4 @@ onBeforeUnmount(() => {
     margin-top: 2rem;
     padding: 1.5rem;
 }
-
-
 </style>

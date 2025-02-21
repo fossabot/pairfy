@@ -100,6 +100,7 @@ const keywordList = computed(() => {
 
 <style lang="css" scoped>
 .preview {
+    padding: 0 1rem;
     min-height: 400px;
 }
 

@@ -72,8 +72,8 @@ section {
 }
 
 .nav-item.selected {
+    outline: 2px solid var(--primary-b);
     border: none;
-    outline: 1px solid var(--text-a);
 }
 
 .nav-item img {
