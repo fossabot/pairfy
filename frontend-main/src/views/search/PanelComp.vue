@@ -158,11 +158,12 @@ label {
 }
 
 .panel {
-    width: 300px;
-    min-height: 100vh;
-    display: flex;
     flex-direction: column;
     color: var(--text-b);
+    margin-right: 1rem;
+    min-height: 100vh;
+    display: flex;
+    width: 300px;
 }
 
 .panel-row {

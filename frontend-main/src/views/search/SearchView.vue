@@ -328,8 +328,8 @@ onBeforeUnmount(() => {
 }
 
 .banner {
+    margin-bottom: 1rem;
     width: inherit;
-    padding: 1rem 0;
 }
 
 .selector {
