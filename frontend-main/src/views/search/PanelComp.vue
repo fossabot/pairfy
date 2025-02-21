@@ -160,22 +160,22 @@ label {
 .panel {
     flex-direction: column;
     color: var(--text-b);
-    margin-right: 1rem;
+    margin-right: 2rem;
     min-height: 100vh;
     display: flex;
     width: 300px;
 }
 
 .panel-row {
-    display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+    display: flex;
 }
 
 .label {
     font-size: var(--text-size-1);
-    font-weight: 700;
     margin-bottom: 0.25rem;
+    font-weight: 700;
 }
 
 .checkbox {

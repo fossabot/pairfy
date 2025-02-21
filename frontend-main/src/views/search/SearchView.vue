@@ -312,20 +312,18 @@ onBeforeUnmount(() => {
 .container {
     width: 100%;
     max-width: var(--body-a);
+    background: var(--background-a);
+    box-shadow: var(--shadow-b);
     align-items: flex-start;
     margin-top: 1rem;
+    padding: 1.5rem;
 }
 
 .content {
-    background: var(--background-a);
-    box-shadow: var(--shadow-b);
     flex-direction: column;
-    border-radius: 0px;
     min-height: 100vh;
-    padding: 1.5rem;
     width: inherit;
-    display: flex;
-    
+    display: flex;   
 }
 
 .banner {
