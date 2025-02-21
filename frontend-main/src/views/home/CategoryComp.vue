@@ -141,50 +141,6 @@ const columnBottom = categoryArray.slice(9, 15);
     width: 100%;
 }
 
-.title {
-    font-size: var(--text-size-4);
-    max-width: var(--body-a);
-    font-weight: bold;
-    margin-top: 2rem;
-    width: inherit;
-}
-
-.category-title {
-    width: inherit;
-    text-align: left;
-}
-
-.tag {
-    background: var(--background-a);
-    font-size: var(--text-size-1);
-    border-radius: 999px;
-    text-align: center;
-    transition: 0.2s;
-    cursor: pointer;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    align-items: center;
-    overflow: hidden;
-    color: var(--text-a);
-    font-weight: 400;
-    display: flex;
-}
-
-.tag:hover {
-    background: var(--background-c);
-}
-
-.banner-image {
-    border-radius: 50%;
-    overflow: hidden;
-    width: 150px;
-}
-
-
-.icon {
-    width: 34px;
-}
-
 .category-grid {
     grid-template-columns: repeat(4, 1fr);
     display: grid;
@@ -231,6 +187,11 @@ const columnBottom = categoryArray.slice(9, 15);
     width: 100%;
 }
 
+.category-title {
+    width: inherit;
+    text-align: left;
+}
+
 .category-body {
     margin-top: 0.5rem;
     width: inherit;
@@ -244,21 +205,23 @@ const columnBottom = categoryArray.slice(9, 15);
     background-repeat: no-repeat;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .category-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: auto;
-    }
-
-    .category-col {
-        grid-template-rows: auto;
-    }
+.title {
+    font-size: var(--text-size-4);
+    max-width: var(--body-a);
+    font-weight: bold;
+    margin-top: 2rem;
+    width: inherit;
 }
 
+.icon {
+    width: 34px;
+}
 
-
+.banner-image {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 150px;
+}
 
 .banner {
     width: inherit;
@@ -287,5 +250,20 @@ const columnBottom = categoryArray.slice(9, 15);
     font-weight: 500;
     height: 45px;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        height: auto;
+    }
+
+    .category-col {
+        grid-template-rows: auto;
+    }
+}
+
+
 
 </style>
