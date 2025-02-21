@@ -33,7 +33,7 @@
                     <Fluid>
                         <IftaLabel>
                             <Password v-model="loginForm.password" inputId="password" toggleMask :feedback="false"
-                                :inputStyle="{ fontSize: 'var(--text-size-a)' }" :invalid="loginFormErrors.password" />
+                                :inputStyle="{ fontSize: 'var(--text-size-1)' }" :invalid="loginFormErrors.password" />
                             <label for="password">Password</label>
 
                         </IftaLabel>
@@ -84,7 +84,7 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="registerForm.email" type="email" autofocus fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" placeholder="you@example.com" />
+                            style=" font-size: var(--text-size-1)" placeholder="you@example.com" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
@@ -92,7 +92,7 @@
                 <div class="username">
                     <IftaLabel>
                         <InputText id="username" v-model="registerForm.username" type="text" fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" v-keyfilter="/^[a-z0-9]+$/" />
+                            style=" font-size: var(--text-size-1)" v-keyfilter="/^[a-z0-9]+$/" />
                         <label for="username">Username</label>
                     </IftaLabel>
                 </div>
@@ -103,14 +103,14 @@
                         <IftaLabel>
 
                             <Password v-model="registerForm.password" inputId="password" toggleMask :feedback="true"
-                                :inputStyle="{ fontSize: 'var(--text-size-a)' }">
+                                :inputStyle="{ fontSize: 'var(--text-size-1)' }">
 
                                 <template #header>
-                                    <div style="font-size: var(--text-size-a);">Pick a password</div>
+                                    <div style="font-size: var(--text-size-1);">Pick a password</div>
                                 </template>
                                 <template #footer>
                                     <Divider />
-                                    <ul style="font-size: var(--text-size-a);">
+                                    <ul style="font-size: var(--text-size-1);">
                                         <li>At least one lowercase</li>
                                         <li>At least one uppercase</li>
                                         <li>At least one numeric</li>
@@ -128,7 +128,7 @@
 
                 <div class="country">
                     <Select v-model="registerForm.country" :options="countries" filter optionLabel="name"
-                        placeholder="Select a Country" fluid style='font-size: var(--text-size-a);'>
+                        placeholder="Select a Country" fluid style='font-size: var(--text-size-1);'>
                         <template #value="slotProps">
                             <div v-if="slotProps.value" class="country-item">
                                 <img :alt="slotProps.value.label" src="@/assets/flag_placeholder.png"
@@ -163,10 +163,10 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-a);" @click="doRegister" />
+                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-1);" @click="doRegister" />
                 </div>
 
-                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
+                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-1); margin-top: 2rem; "><b>or</b>
                 </Divider>
 
                 <div class="bottom">
@@ -186,17 +186,17 @@
                 <div class="email">
                     <IftaLabel>
                         <InputText id="email" v-model="recoveryForm.email" type="email" autofocus fluid variant="filled"
-                            style=" font-size: var(--text-size-a)" />
+                            style=" font-size: var(--text-size-1)" />
                         <label for="email">Email</label>
                     </IftaLabel>
                 </div>
 
 
                 <div class="control">
-                    <Button label="Submit" fluid style=" font-size: var(--text-size-a);" />
+                    <Button label="Submit" fluid style=" font-size: var(--text-size-1);" />
                 </div>
 
-                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-a); margin-top: 2rem; "><b>or</b>
+                <Divider layout="horizontal" fluid style=" font-size: var(--text-size-1); margin-top: 2rem; "><b>or</b>
                 </Divider>
 
                 <div class="bottom">
@@ -427,13 +427,13 @@ onBeforeUnmount(() => {
 }
 
 .title span:nth-child(1) {
-    font-size: var(--text-size-d);
+    font-size: var(--text-size-5);
     font-weight: 600;
 }
 
 .title span:nth-child(2) {
+    font-size: var(--text-size-1);
     color: var(--text-b);
-    font-size: var(--text-size-a);
 }
 
 .username {
@@ -452,7 +452,7 @@ onBeforeUnmount(() => {
     display: flex;
     justify-content: flex-end;
     color: var(--primary-a);
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     line-height: 3rem;
 }
 
@@ -467,7 +467,7 @@ onBeforeUnmount(() => {
 
 .terms span {
     margin-left: 1rem;
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     color: var(--text-b);
 }
 
@@ -476,14 +476,13 @@ onBeforeUnmount(() => {
 }
 
 .bottom {
-    font-size: var(--text-size-a);
+    font-size: var(--text-size-1);
     color: var(--text-b);
-    font-weight: 600;
     text-align: center;
 }
 
 .bottom span {
-    color: var(--primary-c);
+    color: var(--primary-a);
     margin-left: 0.5rem;
     cursor: pointer;
 }
