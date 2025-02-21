@@ -401,7 +401,6 @@ const getLabelColor = (status) => {
     height: 50px;
     border-radius: 4px;
     object-fit: contain;
-    border: 1px solid var(--border-a);
 }
 
 .arrow {
