@@ -2,8 +2,7 @@
   <div class="body">
     <div class="container">
       <div class="top">
-        <CategoryComp />
-     
+        <CategoryComp />    
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">

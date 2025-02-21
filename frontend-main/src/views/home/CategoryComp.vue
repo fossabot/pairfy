@@ -1,45 +1,45 @@
 <template>
     <div class="category">
         <BandComp />
-        <div class="grid-container">
-            <div class="column first">
-                <div class="card" v-for="(item, index) in column1" :key="index"
+        <div class="category-grid">
+            <div class="category-col first">
+                <div class="category-card" v-for="(item, index) in columnLeft" :key="index"
                     @click="searchCategory(item.name)">
-                    <div class="legend">{{ item.name }}</div>
-                    <div class="conta" :style="{ background: item.background }">
-                        <div class="mask"
+                    <div class="category-title">{{ item.name }}</div>
+                    <div class="category-body" :style="{ background: item.background }">
+                        <div class="category-image"
                             :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
             </div>
-            <div class="column second">
-                <div class="card" v-for="(item, index) in column2" :key="index"
+            <div class="category-col second">
+                <div class="category-card" v-for="(item, index) in columnCenter" :key="index"
                     @click="searchCategory(item.name)">
-                    <div class="legend">{{ item.name }}</div>
-                    <div class="conta" :style="{ background: item.background }">
-                        <div class="mask"
+                    <div class="category-title">{{ item.name }}</div>
+                    <div class="category-body" :style="{ background: item.background }">
+                        <div class="category-image"
                             :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
 
                 </div>
             </div>
-            <div class="column third">
-                <div class="card" v-for="(item, index) in column3" :key="index"
+            <div class="category-col third">
+                <div class="category-card" v-for="(item, index) in columnRight" :key="index"
                     @click="searchCategory(item.name)">
-                    <div class="legend">{{ item.name }}</div>
-                    <div class="conta" :style="{ background: item.background }">
-                        <div class="mask"
+                    <div class="category-title">{{ item.name }}</div>
+                    <div class="category-body" :style="{ background: item.background }">
+                        <div class="category-image"
                             :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
             </div>
 
-            <div class="column four">
-                <div class="card" v-for="(item, index) in column4" :key="index"
+            <div class="category-col four">
+                <div class="category-card" v-for="(item, index) in columnBottom" :key="index"
                     @click="searchCategory(item.name)">
-                    <div class="legend">{{ item.name }}</div>
-                    <div class="conta" :style="{ background: item.background }">
-                        <div class="mask"
+                    <div class="category-title">{{ item.name }}</div>
+                    <div class="category-body" :style="{ background: item.background }">
+                        <div class="category-image"
                             :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
                     </div>
                 </div>
@@ -52,10 +52,10 @@
         </div>
 
 
-        <div class="horizontal flex">
-            <div class="horizontal-item" v-for="(item, index) in column4" :key="index">
-                <img class="image" :src="getURL(item.index)" alt="">
-                <span class="name">{{ item.name }}</span>
+        <div class="banner flex">
+            <div class="banner-item" v-for="(item, index) in columnBottom" :key="index">
+                <img class="banner-image" :src="getURL(item.index)" alt="">
+                <span class="banner-name">{{ item.name }}</span>
             </div>
         </div>
 
@@ -124,10 +124,10 @@ const searchCategory = (name) => {
 
 const categoryArray = Object.values(categoryList.value);
 
-const column1 = categoryArray.slice(0, 3);
-const column2 = categoryArray.slice(3, 6);
-const column3 = categoryArray.slice(6, 9);
-const column4 = categoryArray.slice(9, 15);
+const columnLeft = categoryArray.slice(0, 3);
+const columnCenter = categoryArray.slice(3, 6);
+const columnRight = categoryArray.slice(6, 9);
+const columnBottom = categoryArray.slice(9, 15);
 </script>
 
 <style lang="css" scoped>
@@ -149,7 +149,7 @@ const column4 = categoryArray.slice(9, 15);
     width: inherit;
 }
 
-.legend {
+.category-title {
     width: inherit;
     text-align: left;
 }
@@ -174,7 +174,7 @@ const column4 = categoryArray.slice(9, 15);
     background: var(--background-c);
 }
 
-.image {
+.banner-image {
     border-radius: 50%;
     overflow: hidden;
     width: 150px;
@@ -185,7 +185,7 @@ const column4 = categoryArray.slice(9, 15);
     width: 34px;
 }
 
-.grid-container {
+.category-grid {
     grid-template-columns: repeat(4, 1fr);
     display: grid;
     gap: 1rem;
@@ -197,24 +197,24 @@ const column4 = categoryArray.slice(9, 15);
     z-index: 2;
 }
 
-.column {
+.category-col {
     display: grid;
     gap: 1rem;
 }
 
-.column:first-child {
+.category-col:first-child {
     grid-template-rows: 1fr 2fr 1fr;
 }
 
-.column:nth-child(2) {
+.category-col:nth-child(2) {
     grid-template-rows: 1.5fr 1.5fr 1fr;
 }
 
-.column:last-child {
+.category-col:last-child {
     grid-template-rows: 1fr 2fr 1fr;
 }
 
-.card {
+.category-card {
     background: var(--background-a);
     font-size: var(--text-size-3);
     box-shadow: var(--shadow-b);
@@ -231,13 +231,13 @@ const column4 = categoryArray.slice(9, 15);
     width: 100%;
 }
 
-.conta {
+.category-body {
     margin-top: 0.5rem;
     width: inherit;
     height: 100%;
 }
 
-.mask {
+.category-image {
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -246,13 +246,13 @@ const column4 = categoryArray.slice(9, 15);
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .grid-container {
+    .category-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         height: auto;
     }
 
-    .column {
+    .category-col {
         grid-template-rows: auto;
     }
 }
@@ -260,7 +260,7 @@ const column4 = categoryArray.slice(9, 15);
 
 
 
-.horizontal {
+.banner {
     width: inherit;
     max-width: var(--body-a);
     flex-wrap: wrap;
@@ -271,19 +271,19 @@ const column4 = categoryArray.slice(9, 15);
     gap: 2rem;
 }
 
-.horizontal-item {
+.banner-item {
     align-items: center;
     justify-content: center;
     flex-direction: column;
     display: flex;
 }
 
-.name {
+.banner-name {
     font-size: var(--text-size-2);
     white-space: break-spaces;
-    margin-top: 1rem;
-    text-align: center;
     word-break: break-word;
+    text-align: center;
+    margin-top: 1rem;
     font-weight: 500;
     height: 45px;
 }
