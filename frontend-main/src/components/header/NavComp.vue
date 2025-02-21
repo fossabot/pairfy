@@ -40,7 +40,7 @@ section {
 .nav {
     justify-content: space-between;
     font-size: var(--text-size-0);
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
     width: inherit;
     color: inherit;
