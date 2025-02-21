@@ -160,7 +160,7 @@ label {
 .panel {
     flex-direction: column;
     color: var(--text-b);
-    margin-right: 2rem;
+    margin-right: 1.5rem;
     min-height: 100vh;
     display: flex;
     width: 300px;
