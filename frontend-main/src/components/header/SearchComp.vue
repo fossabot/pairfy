@@ -87,14 +87,15 @@ onBeforeUnmount(() => {
 }
 
 .search-button {
-    padding: 0 1rem;
-    height: inherit;
+    border-left: 1px solid var(--border-a);
+    background: var(--primary-a);
+    height: calc(100% - 4px);
+    padding: 0 1.5rem;
     border: none;
     cursor: pointer;
-    color: var(--text-a);
-    border-radius: 0 4px 4px 0;
-    background: transparent;
-    border-left: 1px solid var(--border-a);
+    color: var(--text-w);
+    border-radius: 4px;
+    margin: 2px;
 }
 
 .search-button i {
