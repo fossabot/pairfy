@@ -403,6 +403,7 @@ const showError = (content) => {
 ::v-deep(.p-datatable-header) {
     background: transparent;
     border: none;
+    padding: 1rem 0;
 }
 
 ::v-deep(.p-datatable-header-cell) {
@@ -449,6 +450,7 @@ const showError = (content) => {
 
 .card-datatable {
     background: var(--background-a);
+    padding: 1rem;
 }
 
 .datatable-header {
