@@ -21,6 +21,10 @@
 
 
             <TagComp v-if="content.best_seller" tag="Best seller" type="contrast" />
+           
+            <div class="shipping flex">
+                <span>Free shipping</span>
+            </div>
         </div>
     </div>
 </template>
@@ -107,11 +111,11 @@ const openProduct = (id) => {
 .price {
     font-size: var(--text-size-4);
     margin-top: 0.25rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .price span {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
 }
 
 .reviews {
@@ -120,4 +124,12 @@ const openProduct = (id) => {
     font-weight: 400;
     color: var(--text-b);
 }
+
+.shipping {
+    font-size: var(--text-size-1);
+    color: var(--green-a);
+    margin-top: 0rem;
+    font-weight: 500;
+}
+
 </style>
