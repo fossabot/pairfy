@@ -406,7 +406,8 @@ validator statemachine(threadtoken: PolicyId, operator: VerificationKeyHash, sel
             
             //It contains threadtoken
             let must_be_policy = list.has(assets.policies(sm_input.output.value), threadtoken)
-
+            
+            //TO BUY ---- TO SELLER ---- TO TREASURY
             and {
               must_be_state?,
               must_be_signed?,
