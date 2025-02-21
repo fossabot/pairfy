@@ -1,46 +1,31 @@
 <template>
     <div class="body">
         <div class="container">
-            <div class="card-header">
-                <span @click="backRoute">Back</span>
-                <div class="flex">
-                    <i class="pi pi-angle-right" />
-                </div>
-                <span>Home</span>
-                <div class="flex">
-                    <i class="pi pi-angle-right" />
-                </div>
-                <span>Categories</span>
-                <div class="flex">
-                    <i class="pi pi-angle-right" />
-                </div>
-                <span>{{ getProductData?.category }}</span>
-            </div>
+            <HeadComp />  
             <ProductCard />
             <Divider />
-            <DescriptionModule />
+            <DescriptionComp />
         </div>
     </div>
 </template>
 
 <script setup>
-import gql from 'graphql-tag';
-import productAPI from '@/views/product/api/index';
-import DescriptionModule from '@/views/product/DescriptionModule.vue';
-import MiniGrid from '@/views/product/MiniGrid.vue';
+import DescriptionComp from '@/views/product/DescriptionComp.vue';
 import ProductCard from '@/views/product/ProductCard.vue';
+import HeadComp from '@/views/product/HeadComp.vue';
+import productAPI from '@/views/product/api/index';
+import gql from 'graphql-tag';
 import { onBeforeUnmount, ref, watch } from "vue";
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
 
+
 const toast = useToast();
 
-const { setProductData, getProductData } = productAPI();
+const route = useRoute();
 
-const route = useRoute()
-
-const router = useRouter()
+const { setProductData } = productAPI();
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -121,9 +106,6 @@ onGetProductError(error => {
     showError(error);
 })
 
-const backRoute = () => {
-    router.go(-1)
-}
 
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000, closable: true });
@@ -146,19 +128,9 @@ onBeforeUnmount(() => {
     background: var(--background-b);
 }
 
-.mask {
-    height: 150px;
-    width: inherit;
-    position: relative;
-    z-index: 1;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position-y: 15%;
-}
-
 .container {
     background: var(--background-a);
-    border: 1px solid var(--border-a);
+    box-shadow: var(--shadow-b);
     flex-direction: column;
     max-width: var(--body-a);
     position: relative;
@@ -172,17 +144,5 @@ onBeforeUnmount(() => {
     padding: 1.5rem;
 }
 
-.card-header {
-    display: flex;
-    align-items: center;
-    font-size: var(--text-size-0);
-    text-transform: capitalize;
-    border-bottom: none;
-    color: var(--text-b);
-}
 
-.card-header div {
-    margin: 0 0.5rem;
-    color: var(--text-b);
-}
 </style>

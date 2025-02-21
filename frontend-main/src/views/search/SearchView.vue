@@ -317,9 +317,10 @@ onBeforeUnmount(() => {
 }
 
 .content {
-    border: 1px solid var(--border-a);
     background: var(--background-a);
+    box-shadow: var(--shadow-b);
     flex-direction: column;
+    border-radius: 0px;
     min-height: 100vh;
     padding: 1.5rem;
     width: inherit;
