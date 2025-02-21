@@ -56,13 +56,13 @@ section {
 .nav {
     display: flex;
     flex-direction: column;
-    padding-left: 2px;
+    padding-right: 1rem;
 }
 
 .nav-item {
     border: 1px solid transparent;
     border: none;
-    border-radius: 0px;
+    border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;
