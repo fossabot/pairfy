@@ -76,7 +76,7 @@ const openProduct = (id) => {
 }
 
 .content {
-    max-width: 70%;
+    max-width: 75%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
