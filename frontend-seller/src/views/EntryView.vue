@@ -451,13 +451,12 @@ onBeforeUnmount(() => {
 .legend {
     display: flex;
     justify-content: flex-end;
-    color: var(--primary-a);
     font-size: var(--text-size-1);
+    color: var(--primary-a);
     line-height: 3rem;
 }
 
 .legend span {
-    font-weight: 600;
     cursor: pointer;
 }
 
