@@ -592,7 +592,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
     border: 1px solid var(--border-a);
     font-weight: 500;
@@ -603,7 +603,7 @@ a {
 }
 
 .payment-item.selected {
-    border: 1px solid var(--primary-a);
+    border: 1px solid var(--primary-b);
 }
 
 .payment-item.disabled {
