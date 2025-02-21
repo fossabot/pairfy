@@ -13,21 +13,7 @@
             </template>
         </Dialog>
 
-        <div class="entry-left">
-            <div class="card">
-                <div class="logo">
-                    <img src="@/assets/logo.svg" alt="">
-                </div>
-                <div class="logan">
-                    <span> Buy and sell products in Cardano ecosystem.</span>
-                </div>
-                <div class="subtext">
-                    <span>Discover the largest native P2P marketplace where you can trade everything with ADA.</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="entry-right">
+        <div class="entry-body">
             <!--////////////////////////////////////////////LOGIN////////////////////////////////////////////-->
             <div v-if="currentMode === 'login'" class="form">
                 <div class="title">
@@ -188,7 +174,9 @@
                 </div>
             </div>
             <!--////////////////////////////////////////////REGISTER////////////////////////////////////////////-->
+            
             <!--////////////////////////////////////////////RECOVER////////////////////////////////////////////-->
+           
             <div class="form" v-if="currentMode === 'recovery'">
                 <div class="title">
                     <span>Restore Your Account.</span>
@@ -322,7 +310,6 @@ const watchEnabledWallet = setInterval(() => updateEnabledWallet(), 1000);
 
 const selectWallet = async (e) => await walletClient().connect(e);
 
-
 const doLogin = async () => {
     if (!loginForm.value.email) {
         loginFormErrors.value.email = true
@@ -417,58 +404,20 @@ onBeforeUnmount(() => {
     height: 100vh;
 }
 
-.entry-left {
-    width: 30%;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.card {
+.entry-body {
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: var(--background-c);
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    padding: 3rem;
-}
-
-.logo {
-    padding: 1rem;
-}
-
-.logan {
-    font-weight: 600 !important;
-    font-size: var(--text-size-g);
-    padding: 1rem;
-    color: var(--text-w);
-    font-kerning: normal;
-    border-radius: 1rem;
-    margin-top: 2rem;
-
-}
-
-.subtext {
-    font-size: var(--text-size-d);
-    color: var(--text-w);
-    padding: 1rem;
-    margin-top: 1rem;
-}
-
-.entry-right {
-    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .form {
-    min-width: 325px;
+    background: var(--background-a);
+    box-shadow: var(--shadow-b);
+    min-width: 350px;
     min-height: 600px;
+    border-radius: 6px;
+    padding: 1.5rem;
 }
 
 .title {
@@ -502,7 +451,7 @@ onBeforeUnmount(() => {
 .legend {
     display: flex;
     justify-content: flex-end;
-    color: var(--primary-c);
+    color: var(--primary-a);
     font-size: var(--text-size-a);
     line-height: 3rem;
 }
