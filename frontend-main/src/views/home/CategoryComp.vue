@@ -128,7 +128,7 @@ const columnOne = categoryArray.slice(0, 3);
 const columnTwo = categoryArray.slice(3, 6);
 const columnThree = categoryArray.slice(6, 9);
 const columnFour = categoryArray.slice(9, 12);
-const columnFive = categoryArray.slice(12, 15);
+const columnFive = categoryArray.slice(9, 15);
 </script>
 
 <style lang="css" scoped>

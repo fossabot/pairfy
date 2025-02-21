@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
     border-left: 1px solid var(--border-a);
     background: var(--primary-a);
     height: calc(100% - 4px);
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
     border: none;
     cursor: pointer;
     color: var(--text-w);
