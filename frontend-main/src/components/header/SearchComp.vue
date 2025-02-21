@@ -59,7 +59,6 @@ onBeforeUnmount(() => {
     height: 3rem;
     overflow: hidden;
     border-radius: 6px;
-    box-shadow: var(--shadow-b);
     background: var(--background-a);
     border: 2px solid var(--primary-a);
 }

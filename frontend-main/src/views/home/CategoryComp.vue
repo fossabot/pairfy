@@ -192,6 +192,7 @@ const column4 = categoryArray.slice(9, 15);
     width: 100%;
     height: 115vh;
     max-width: var(--body-a);
+    max-height: var(--body-a);
     margin-top: 350px;
     z-index: 2;
 }
