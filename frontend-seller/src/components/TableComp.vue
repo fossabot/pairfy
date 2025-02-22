@@ -10,10 +10,12 @@
         </div>
       </div>
 
-      <div class="header-right">
-        <span>1-50 of 1,320</span>
+      <div class="header-right flex">
+        <div class="pagination flex">
+          <span>1-50 of 1,320</span>
 
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        </div>
 
         <button @click="prevPage" :disabled="currentPage === 1">
           <i class="pi pi-angle-left" />
@@ -137,10 +139,18 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .header .header-right button {
-  padding: 0.5rem 1rem;
-  background: transparent;
+  background: var(--background-a);
+  transition: 0.2s;
+  flex-direction: column;
+  padding: 0.75rem;
+  display: flex;
   border: none;
   cursor: pointer;
+  border-radius: 50%;
+}
+
+.header .header-right button:hover {
+  background: var(--background-b);
 }
 
 .search {
@@ -150,14 +160,17 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   padding: 0 1rem;
 }
 
-.search i {}
-
 .search input {
   background: transparent;
   padding: 0.75rem 1rem;
-  width: 300px;
+  min-width: 300px;
   border: none;
   outline: none;
+}
+
+.search input::placeholder {
+  color: var(--text-b);
+  font-size: var(--text-size-1);
 }
 
 .column {
@@ -226,5 +239,13 @@ tbody tr:nth-child(odd) {
 
 tbody tr:nth-child(even) {
   background: var(--background-a);
+}
+
+.pagination {
+
+}
+
+.pagination span{
+  margin: 0 0.5rem;
 }
 </style>
