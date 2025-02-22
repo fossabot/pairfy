@@ -62,13 +62,10 @@
 <script setup>
 import { ref, computed } from "vue";
 
-// Sample Data
-const products = ref([
-  { id: 1, name: "Laptop", price: 120, category: "Electronics" },
-  { id: 2, name: "Smartphone", price: 800, category: "Electronics" },
-  { id: 3, name: "Shoes", price: 100, category: "Fashion" },
-  { id: 4, name: "Watch", price: 200, category: "Accessories" },
-]);
+const props = defineProps(['items'])
+
+
+const items = computed(() => props.items)
 
 // Table Configuration
 const columns = ref([
@@ -80,12 +77,12 @@ const columns = ref([
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(0);
-const rowsPerPage = ref(4);
+const rowsPerPage = ref(15);
 const currentPage = ref(1);
 
 // Computed: Filtered & Sorted Data
 const filteredItems = computed(() => {
-  return products.value
+  return items.value
     .filter((product) =>
       Object.values(product).some((value) =>
         String(value).toLowerCase().includes(searchQuery.value.toLowerCase())
