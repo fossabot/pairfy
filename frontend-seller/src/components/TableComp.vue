@@ -2,15 +2,15 @@
   <div class="datatable">
     <!-- Search Input -->
 
-    <div class="datatable-head flex">
-      <div class="datatable-head-left">
-        <div class="datatable-head-search flex">
+    <div class="header flex">
+      <div class="header-left">
+        <div class="search flex">
           <i class="pi pi-search" />
           <input v-model="searchQuery" type="text" placeholder="Search" class="p-2 border rounded w-full mb-3" />
         </div>
       </div>
 
-      <div class="datatable-head-right">
+      <div class="header-right">
         <span>1-50 of 1,320</span>
 
         <span>Page {{ currentPage }} of {{ totalPages }}</span>
@@ -126,33 +126,33 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   border-radius: 12px;
 }
 
-.datatable-head {
+.header {
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
   padding: 1rem 1rem;
 }
 
-.datatable-head-right {
+.header-right {
   font-size: var(--text-size-0);
 }
 
-.datatable-head .datatable-head-right button {
+.header .header-right button {
   padding: 0.5rem 1rem;
   background: transparent;
   border: none;
   cursor: pointer;
 }
 
-.datatable-head-search {
+.search {
   background: var(--background-b);
   border: 1px solid transparent;
   border-radius: 999px;
   padding: 0 1rem;
 }
 
-.datatable-head-search i {}
+.search i {}
 
-.datatable-head-search input {
+.search input {
   background: transparent;
   padding: 0.75rem 1rem;
   width: 400px;
@@ -213,7 +213,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .row {
-  padding: 0.5rem 0 0.5rem 0;
+  padding: 1rem 0 1rem 0;
 }
 
 .rows {
@@ -221,10 +221,10 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #f9f9f9; /* Light gray */
+  background: var(--background-c);
 }
 
 tbody tr:nth-child(even) {
-  background-color: #ffffff; /* White */
+  background: var(--background-a);
 }
 </style>
