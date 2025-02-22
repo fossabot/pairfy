@@ -80,7 +80,7 @@ const columns = ref([
 
 const searchQuery = ref("");
 const sortField = ref(null);
-const sortOrder = ref(1);
+const sortOrder = ref(0);
 const rowsPerPage = ref(4);
 const currentPage = ref(1);
 
