@@ -1,6 +1,6 @@
 <template>
   <main>
-    <TableComp :columns="columns"        :items="items" />
+    <TableComp :columns="columns" :items="items" />
   </main>
 </template>
 
