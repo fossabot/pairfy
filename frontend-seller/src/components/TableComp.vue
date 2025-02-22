@@ -1,36 +1,61 @@
 <template>
-  <div class="p-datatable">
+  <div class="datatable">
     <!-- Search Input -->
 
-    <div class="p-datatable-pad flex">
-      <input v-model="searchQuery" type="text" placeholder="Search..." class="p-2 border rounded w-full mb-3" />
+    <div class="datatable-head flex">
+      <div class="datatable-head-left">
+        <div class="datatable-head-search flex">
+          <i class="pi pi-search" />
+          <input v-model="searchQuery" type="text" placeholder="Search" class="p-2 border rounded w-full mb-3" />
+        </div>
+      </div>
 
-      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <div class="datatable-head-right">
+        <span>1-50 of 1,320</span>
 
-      <button @click="prevPage" :disabled="currentPage === 1">
-        Prev
-      </button>
-      
-      <button @click="nextPage" :disabled="currentPage === totalPages">
-        Next
-      </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+        <button @click="prevPage" :disabled="currentPage === 1">
+          <i class="pi pi-angle-left" />
+        </button>
+
+        <button @click="nextPage" :disabled="currentPage === totalPages">
+          <i class="pi pi-angle-right" />
+        </button>
+      </div>
     </div>
 
     <!-- Table -->
-    <table class="w-full border-collapse border border-gray-300">
+    <table class="table">
       <thead>
-        <tr class="bg-gray-200">
-          <th v-for="column in columns" :key="column.field" @click="sortBy(column.field)"
-            class="border border-gray-300 p-2 cursor-pointer">
-            {{ column.label }} <span v-if="sortField === column.field">{{ sortOrder === 1 ? '▲' : '▼' }}</span>
+        <tr class="columns">
+          <th class="column" v-for="column in columns" :key="column.field" @click="sortBy(column.field)">
+
+            <div class="box">
+              <span class="label"> {{ column.label }}</span>
+
+              <div class="sort">
+
+                <span class="arrow up">
+
+                </span>
+
+                <span class="arrow down">
+
+                </span>
+
+              </div>
+
+            </div>
+
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in paginatedItems" :key="product.id" class="hover:bg-gray-100">
-          <td class="border border-gray-300 p-2">{{ product.name }}</td>
-          <td class="border border-gray-300 p-2">{{ formatCurrency(product.price) }}</td>
-          <td class="border border-gray-300 p-2">{{ product.category }}</td>
+        <tr v-for="product in paginatedItems" :key="product.id" class="rows">
+          <td class="row">{{ product.name }}</td>
+          <td class="row">{{ formatCurrency(product.price) }}</td>
+          <td class="row">{{ product.category }}</td>
         </tr>
       </tbody>
     </table>
@@ -50,7 +75,7 @@ const products = ref([
 
 // Table Configuration
 const columns = ref([
-  { label: "Product Name", field: "name" },
+  { label: "Name", field: "name" },
   { label: "Price", field: "price" },
   { label: "Category", field: "category" },
 ]);
@@ -104,22 +129,101 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 </script>
 
 <style scoped>
-.p-datatable {
+.datatable {
   background: var(--background-a);
-
+  font-size: var(--text-size-1);
+  flex-direction: column;
+  color: var(-text-a);
   border-radius: 12px;
+  padding: 0 1rem;
 }
 
-.p-datatable-pad {
+.datatable-head {
   border-top: 1px solid var(--border-a);
+  justify-content: space-between;
   height: 50px;
-
 }
 
-.p-datatable-pad button {
+.datatable-head-right {
+  font-size: var(--text-size-0);
+}
+
+.datatable-head .datatable-head-right button {
   padding: 0.5rem 1rem;
   background: transparent;
   border: none;
   cursor: pointer;
+}
+
+.datatable-head-search {
+  background: var(--background-b);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0 1rem;
+}
+
+.datatable-head-search i {}
+
+.datatable-head-search input {
+  background: transparent;
+  padding: 0.75rem 1rem;
+  border: none;
+  outline: none;
+}
+
+.column {
+  text-align: left;
+  padding: 0.5rem 0;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-radius: 2px;
+  margin: 1px;
+}
+
+.up {
+  border-bottom: 4px solid black;
+}
+
+.down {
+  border-top: 4px solid black;
+}
+
+.datatable-rows {
+  border-top: 1px solid var(--border-a);
+}
+
+.datatable-row {
+  padding: 0.5rem 0;
+}
+
+.table {
+  border-spacing: 0.5rem;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  margin-right: 0.25rem;
+}
+
+.sort {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  padding: 0.5rem 0;
+}
+
+.rows {
+  border-top: 1px solid var(--border-a);
 }
 </style>
