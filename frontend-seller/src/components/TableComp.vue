@@ -27,7 +27,6 @@
 
     <!-- Table -->
     <table class="table">
-      {{ sortOrder }}
       <thead>
         <tr class="columns">
           <th class="column" v-for="column in columns" :key="column.field" @click="sortBy(column.field)">
@@ -37,7 +36,7 @@
 
               <div class="sort">
 
-                <span class="arrow up" :class="{ enabled: sortOrder === 1 }"/>
+                <span class="arrow up" :class="{ enabled: sortOrder === 1 }" />
 
 
                 <span class="arrow down" :class="{ enabled: sortOrder === -1 }" />
@@ -131,15 +130,15 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   background: var(--background-a);
   font-size: var(--text-size-1);
   flex-direction: column;
+  box-shadow: var(--shadow-b);
   color: var(-text-a);
   border-radius: 12px;
-  padding: 0 1rem;
 }
 
 .datatable-head {
-  border-top: 1px solid var(--border-a);
+  border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
-  height: 50px;
+  padding: 1rem 1rem;
 }
 
 .datatable-head-right {
@@ -165,6 +164,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 .datatable-head-search input {
   background: transparent;
   padding: 0.75rem 1rem;
+  width: 400px;
   border: none;
   outline: none;
 }
@@ -185,11 +185,11 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   margin: 1px;
 }
 
-.arrow.up.enabled{
+.arrow.up.enabled {
   border-bottom: 4px solid red;
 }
 
-.arrow.down.enabled{
+.arrow.down.enabled {
   border-top: 4px solid red;
 }
 
@@ -203,7 +203,8 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 
 .table {
   border-spacing: 0.5rem;
-
+  font-size: var(--text-size-1);
+  padding: 1rem;
 }
 
 .box {
