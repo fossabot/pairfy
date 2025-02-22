@@ -219,7 +219,6 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .banner-image {
-    border: 1px solid var(--primary-a);
     border-radius: 50%;
     overflow: hidden;
     width: 150px;
