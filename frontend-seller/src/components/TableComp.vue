@@ -155,7 +155,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 .search input {
   background: transparent;
   padding: 0.75rem 1rem;
-  width: 400px;
+  width: 300px;
   border: none;
   outline: none;
 }
