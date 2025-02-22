@@ -1,6 +1,6 @@
 <template>
   <main>
-    <TableComp :items="items" />
+    <TableComp :columns="columns"        :items="items" />
   </main>
 </template>
 
@@ -24,21 +24,10 @@ const items = ref([
   { id: 4, name: "Watch", price: 200, category: "Accessories" },
 ]);
 
-const categories = ["Electronics", "Fashion", "Accessories", "Home", "Sports"];
+const columns = ref([
+  { label: "Name", field: "name" },
+  { label: "Price", field: "price" },
+  { label: "Category", field: "category" },
+]);
 
-const addRandomItem = () => {
-  const newItem = {
-    id: items.value.length + 1, // Increment ID
-    name: `Item ${items.value.length + 1}`, // Random name
-    price: Math.floor(Math.random() * 1000) + 50, // Random price between 50-1050
-    category: categories[Math.floor(Math.random() * categories.length)], // Random category
-  };
-  items.value.push(newItem);
-};
-
-let interval;
-
-onMounted(() => {
-  interval = setInterval(addRandomItem, 10000);
-});
 </script>

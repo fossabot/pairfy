@@ -62,17 +62,11 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const props = defineProps(['items'])
-
+const props = defineProps(['items', 'columns'])
 
 const items = computed(() => props.items)
 
-// Table Configuration
-const columns = ref([
-  { label: "Name", field: "name" },
-  { label: "Price", field: "price" },
-  { label: "Category", field: "category" },
-]);
+const columns = computed(() => props.columns);
 
 const searchQuery = ref("");
 const sortField = ref(null);
@@ -83,8 +77,8 @@ const currentPage = ref(1);
 // Computed: Filtered & Sorted Data
 const filteredItems = computed(() => {
   return items.value
-    .filter((product) =>
-      Object.values(product).some((value) =>
+    .filter((item) =>
+      Object.values(item).some((value) =>
         String(value).toLowerCase().includes(searchQuery.value.toLowerCase())
       )
     )
@@ -199,7 +193,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .table {
-  border-spacing: 0.5rem;
+  border-spacing: 0rem;
   font-size: var(--text-size-1);
   padding: 1rem;
 }
@@ -219,10 +213,18 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .row {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 0.5rem 0;
 }
 
 .rows {
   border-top: 1px solid var(--border-a);
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light gray */
+}
+
+tbody tr:nth-child(even) {
+  background-color: #ffffff; /* White */
 }
 </style>
