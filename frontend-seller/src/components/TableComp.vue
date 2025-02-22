@@ -27,6 +27,7 @@
 
     <!-- Table -->
     <table class="table">
+      {{ sortOrder }}
       <thead>
         <tr class="columns">
           <th class="column" v-for="column in columns" :key="column.field" @click="sortBy(column.field)">
@@ -36,13 +37,10 @@
 
               <div class="sort">
 
-                <span class="arrow up">
+                <span class="arrow up" :class="{ enabled: sortOrder === 1 }"/>
 
-                </span>
 
-                <span class="arrow down">
-
-                </span>
+                <span class="arrow down" :class="{ enabled: sortOrder === -1 }" />
 
               </div>
 
@@ -67,7 +65,7 @@ import { ref, computed } from "vue";
 
 // Sample Data
 const products = ref([
-  { id: 1, name: "Laptop", price: 1200, category: "Electronics" },
+  { id: 1, name: "Laptop", price: 120, category: "Electronics" },
   { id: 2, name: "Smartphone", price: 800, category: "Electronics" },
   { id: 3, name: "Shoes", price: 100, category: "Fashion" },
   { id: 4, name: "Watch", price: 200, category: "Accessories" },
@@ -83,7 +81,7 @@ const columns = ref([
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(1);
-const rowsPerPage = ref(2);
+const rowsPerPage = ref(4);
 const currentPage = ref(1);
 
 // Computed: Filtered & Sorted Data
@@ -173,7 +171,9 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 
 .column {
   text-align: left;
+  min-width: 100px;
   padding: 0.5rem 0;
+  cursor: pointer;
 }
 
 .arrow {
@@ -185,24 +185,25 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   margin: 1px;
 }
 
+.arrow.up.enabled{
+  border-bottom: 4px solid red;
+}
+
+.arrow.down.enabled{
+  border-top: 4px solid red;
+}
+
 .up {
-  border-bottom: 4px solid black;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.2);
 }
 
 .down {
-  border-top: 4px solid black;
-}
-
-.datatable-rows {
-  border-top: 1px solid var(--border-a);
-}
-
-.datatable-row {
-  padding: 0.5rem 0;
+  border-top: 4px solid rgba(0, 0, 0, 0.2);
 }
 
 .table {
   border-spacing: 0.5rem;
+
 }
 
 .box {
