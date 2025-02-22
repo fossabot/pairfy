@@ -9,9 +9,9 @@
 
 <style scoped>
 .box {
-  width: 500px;
-  height: 500px;
-  background: red;
+  width: 700px;
+  height: 700px;
+  background: rgba(22, 22, 22, 0.123);
 }
 </style>
 
