@@ -1,13 +1,16 @@
 <template>
   <main>
-    <TableComp :columns="columns" :items="items" :keys="[1, 2, 3]" :limit="2"
-    :count="1382" :images="true"  @onNext="handleOnNext"
-      >
+    <TableComp :columns="columns" :items="items" :keys="[1, 2, 3]" :limit="2" :count="1382" :images="true"
+      @onNext="handleOnNext">
 
       <template #image="{ item }">
         <div class="image">
           xxxxxxx
         </div>
+      </template>
+
+      <template #col-price="{ value }">
+        <span class="">${{ value }}</span>
       </template>
 
       <template #action="{ item }">

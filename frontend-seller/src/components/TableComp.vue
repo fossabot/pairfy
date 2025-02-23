@@ -58,10 +58,12 @@
             <slot name="image" :item="item" />
           </td>
 
-          <td class="row" v-for="(key, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
-            <span>{{ item[keys[index]] }}</span>
+          <td class="row" v-for="column in columns" :key="column.field">
+            <slot :name="`col-${column.field}`" :value="item[column.field]" :item="item">
+              {{ item[column.field] }}
+            </slot>
           </td>
-      
+
           <slot name="action" :item="item" />
         </tr>
       </tbody>
