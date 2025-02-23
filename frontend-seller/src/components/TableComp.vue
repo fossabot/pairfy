@@ -242,7 +242,7 @@ const nextPage = () => {
 }
 
 .label {
-  margin-right: 0.25rem;
+  margin-right: auto;
 }
 
 .sort {
