@@ -136,7 +136,6 @@ const nextPage = () => {
   emit('onNext', "434")
 };
 
-const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 </script>
 
 <style scoped>
@@ -145,7 +144,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   font-size: var(--text-size-1);
   box-shadow: var(--shadow-b);
   flex-direction: column;
-  color: var(-text-a);
+  color: var(--text-a); 
   border-radius: 12px;
   width: 100%;
 }
@@ -229,6 +228,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 
 .table {
   font-size: var(--text-size-0);
+  border-collapse: collapse;
   border-spacing: 0rem;
   width: inherit;
   padding: 1rem;
@@ -249,9 +249,11 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .row {
-  padding: 0.5rem 0rem;
-  padding-right: 1rem;
+  padding: 0.5rem;
   max-width: 20rem;
+  text-align: left;
+  padding-right: 1rem;
+  border-right: 1px solid var(--border-a);
 }
 
 .row.hidden {

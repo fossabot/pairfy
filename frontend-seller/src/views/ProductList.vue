@@ -28,7 +28,7 @@
                 <template #action="{ item }">
 
                     <div class="flex">
-                        <ButtonRounded>
+                        <ButtonRounded @click="beforeDeleteProduct(item)">
                             <template #content>
                                 <i class="pi pi-trash" />
                             </template>
