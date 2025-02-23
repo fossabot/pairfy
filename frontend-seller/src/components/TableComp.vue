@@ -246,7 +246,9 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .row {
-  padding: 1rem 0 1rem 0;
+  padding: 0.5rem 0rem;
+  padding-right: 1rem;
+  max-width: 300px;
 }
 
 .row.hidden {
