@@ -75,15 +75,13 @@
 import { ref, computed } from "vue";
 
 
-const props = defineProps(['items', 'columns', "keys", "limit", "count", "images"]);
+const props = defineProps(['items', 'columns', "limit", "count", "images"]);
 
 const emit = defineEmits(['onPrev', 'onNext']);
 
 const items = computed(() => props.items)
 
 const columns = computed(() => props.columns);
-
-const keys = computed(() => Object.keys(items.value[0]));
 
 const count = computed(() => props.count);
 

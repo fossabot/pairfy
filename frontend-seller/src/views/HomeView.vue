@@ -1,6 +1,6 @@
 <template>
   <main>
-    <TableComp :columns="columns" :items="items" :keys="[1, 2, 3]" :limit="2" :count="1382" :images="true"
+    <TableComp :columns="columns" :items="items" :limit="2" :count="1382" :images="true"
       @onNext="handleOnNext">
 
       <template #image="{ item }">
