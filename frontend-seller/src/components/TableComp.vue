@@ -38,10 +38,10 @@
 
               <div class="sort">
 
-                <span class="arrow up" :class="{ enabled: sortOrder === 1 }" />
+                <span class="arrow up" :class="{ enabled: sortOrder === 1 && sortField === column.field}" />
 
 
-                <span class="arrow down" :class="{ enabled: sortOrder === -1 }" />
+                <span class="arrow down" :class="{ enabled: sortOrder === -1 && sortField === column.field }" />
 
               </div>
 
