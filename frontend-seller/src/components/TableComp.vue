@@ -31,6 +31,8 @@
     <table class="table">
       <thead>
         <tr class="columns">
+          <th class="column" v-if="images" />
+
           <th class="column" v-for="column in columns" :key="column.field" @click="sortBy(column.field)">
 
             <div class="box">
@@ -52,10 +54,19 @@
       </thead>
       <tbody>
         <tr class="rows" v-for="item in paginatedItems" :key="item.id">
+          <td>
+            <slot name="image" :item="item" />
+          </td>
+
           <td class="row" v-for="(key, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
             <span>{{ item[keys[index]] }}</span>
           </td>
-          <slot name="action" :item="item"></slot>
+
+
+
+          <slot name="tag" :item="item" />
+
+          <slot name="action" :item="item" />
         </tr>
       </tbody>
     </table>
@@ -65,9 +76,10 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const emit = defineEmits(['onPrev', 'onNext'])
 
-const props = defineProps(['items', 'columns', "keys", "limit", "count"])
+const props = defineProps(['items', 'columns', "keys", "limit", "count", "images"]);
+
+const emit = defineEmits(['onPrev', 'onNext']);
 
 const items = computed(() => props.items)
 
