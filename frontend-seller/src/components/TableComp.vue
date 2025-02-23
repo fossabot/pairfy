@@ -51,10 +51,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in paginatedItems" :key="product.id" class="rows">
-          <td class="row">{{ product.name }}</td>
-          <td class="row">{{ formatCurrency(product.price) }}</td>
-          <td class="row">{{ product.category }}</td>
+        <tr class="rows" v-for="product in paginatedItems" :key="product.id">
+          <td class="row">{{ product[keys[0]] }} </td>
+          <td class="row">{{ product[keys[1]] }} </td>
+          <td class="row">{{ product[keys[2]] }} </td>
+          <td class="row">{{ product[keys[3]] }} </td>
+          <td class="row">{{ product[keys[4]] }} </td>
         </tr>
       </tbody>
     </table>
@@ -69,6 +71,8 @@ const props = defineProps(['items', 'columns'])
 const items = computed(() => props.items)
 
 const columns = computed(() => props.columns);
+
+const keys = computed(() => Object.keys(items.value[0]));
 
 const searchQuery = ref("");
 const sortField = ref(null);
@@ -186,16 +190,16 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
   margin: 1px;
 }
 
 .arrow.up.enabled {
-  border-bottom: 4px solid red;
+  border-bottom: 4px solid currentColor;
 }
 
 .arrow.down.enabled {
-  border-top: 4px solid red;
+  border-top: 4px solid currentColor;
 }
 
 .up {
@@ -243,11 +247,9 @@ tbody tr:nth-child(even) {
   background: var(--background-a);
 }
 
-.pagination {
+.pagination {}
 
-}
-
-.pagination span{
+.pagination span {
   margin: 0 0.5rem;
 }
 </style>

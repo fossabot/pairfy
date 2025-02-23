@@ -18,10 +18,10 @@ import { ref, onMounted } from "vue";
 
 
 const items = ref([
-  { id: 1, name: "Laptop", price: 120, category: "Electronics" },
-  { id: 2, name: "Smartphone", price: 800, category: "Electronics" },
-  { id: 3, name: "Shoes", price: 100, category: "Fashion" },
-  { id: 4, name: "Watch", price: 200, category: "Accessories" },
+  { id: 1, name: "Laptop", price: 120, category: "Electronics", created_at: 1 },
+  { id: 2, name: "Smartphone", price: 800, category: "Electronics", created_at: 2 },
+  { id: 3, name: "Shoes", price: 100, category: "Fashion", created_at: 3 },
+  { id: 4, name: "Watch", price: 200, category: "Accessories", created_at: 4 },
 ]);
 
 const columns = ref([
