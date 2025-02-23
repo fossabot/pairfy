@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -26,8 +26,15 @@
                 </template>
 
                 <template #action="{ item }">
-                    <Button icon="pi pi-trash" outlined size="small" rounded
-                        @click="beforeDeleteProduct(slotProps.data)" />
+
+                    <div class="flex">
+                        <ButtonRounded>
+                            <template #content>
+                                <i class="pi pi-trash" />
+                            </template>
+                        </ButtonRounded>
+                    </div>
+
                 </template>
 
             </TableComp>
@@ -38,6 +45,8 @@
 
 <script setup>
 import TableComp from '@/components/TableComp.vue';
+import ButtonRounded from '@/components/ButtonRounded.vue';
+import ImageComp from '@/components/ImageComp.vue';
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
 import { ref, computed, watch } from 'vue';
@@ -46,7 +55,6 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
-import ImageComp from '@/components/ImageComp.vue';
 
 const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
 

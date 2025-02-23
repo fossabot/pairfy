@@ -64,7 +64,10 @@
             </slot>
           </td>
 
-          <slot name="action" :item="item" />
+          <td class="row">
+            <slot name="action" :item="item" />
+          </td>
+
         </tr>
       </tbody>
     </table>
@@ -248,7 +251,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 .row {
   padding: 0.5rem 0rem;
   padding-right: 1rem;
-  max-width: 300px;
+  max-width: 20rem;
 }
 
 .row.hidden {
@@ -260,7 +263,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 tbody tr:nth-child(odd) {
-  background: var(--background-c);
+  background: var(--background-a);
 }
 
 tbody tr:nth-child(even) {
