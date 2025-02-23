@@ -146,6 +146,7 @@ const nextPage = () => {
   flex-direction: column;
   color: var(--text-a); 
   border-radius: 12px;
+  overflow: hidden;
   width: 100%;
 }
 
