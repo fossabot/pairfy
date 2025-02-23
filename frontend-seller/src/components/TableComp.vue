@@ -225,7 +225,7 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .table {
-  font-size: var(--text-size-1);
+  font-size: var(--text-size-0);
   border-spacing: 0rem;
   width: inherit;
   padding: 1rem;
