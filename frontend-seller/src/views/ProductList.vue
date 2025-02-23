@@ -27,10 +27,10 @@
 
                 <template #action="{ item }">
 
-                    <div class="flex">
+                    <div class="flex center">
                         <ButtonRounded @click="beforeDeleteProduct(item)">
                             <template #content>
-                                <i class="pi pi-trash" />
+                                <i class="pi pi-ellipsis-v" />
                             </template>
                         </ButtonRounded>
                     </div>

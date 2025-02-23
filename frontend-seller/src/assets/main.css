@@ -23,6 +23,10 @@
   align-items: center;
 }
 
+.center{
+  justify-content: center;
+}
+
 .p-dialog-header,
 .p-dialog-footer {
   padding: 1rem !important;
