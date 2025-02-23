@@ -61,11 +61,7 @@
           <td class="row" v-for="(key, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
             <span>{{ item[keys[index]] }}</span>
           </td>
-
-
-
-          <slot name="tag" :item="item" />
-
+      
           <slot name="action" :item="item" />
         </tr>
       </tbody>
