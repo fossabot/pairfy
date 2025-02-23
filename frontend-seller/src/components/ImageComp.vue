@@ -16,7 +16,10 @@ const imageUrl = computed(() => props.src)
 </script>
 
 <style lang="css" scoped>
-.container {}
+.container {
+    justify-content: center;
+    display: flex;
+}
 
 .image {
     background: var(--background-b);

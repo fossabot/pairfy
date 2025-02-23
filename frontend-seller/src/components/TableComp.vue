@@ -195,9 +195,10 @@ const nextPage = () => {
 }
 
 .column {
+  border-right: 1px solid var(--border-a);
   text-align: left;
   min-width: 100px;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   cursor: pointer;
 }
 
@@ -219,11 +220,11 @@ const nextPage = () => {
 }
 
 .up {
-  border-bottom: 4px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
 }
 
 .down {
-  border-top: 4px solid rgba(0, 0, 0, 0.2);
+  border-top: 4px solid rgba(0, 0, 0, 0.3);
 }
 
 .table {
@@ -253,7 +254,7 @@ const nextPage = () => {
   max-width: 20rem;
   text-align: left;
   padding-right: 1rem;
-  border-right: 1px solid var(--border-a);
+  border-left: 1px solid var(--border-a);
 }
 
 .row.hidden {
