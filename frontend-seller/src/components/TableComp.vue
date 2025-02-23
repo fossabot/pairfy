@@ -12,7 +12,7 @@
 
       <div class="header-right flex">
         <div class="pagination flex">
-          <span>1-50 of 1,320</span>
+          <span>1-50 of {{ count }}</span>
 
           <span>Page {{ currentPage }} of {{ totalPages }}</span>
         </div>
@@ -66,7 +66,7 @@ import { ref, computed } from "vue";
 
 const emit = defineEmits(['onPrev', 'onNext'])
 
-const props = defineProps(['items', 'columns', "keys"])
+const props = defineProps(['items', 'columns', "keys", "limit", "count"])
 
 const items = computed(() => props.items)
 
@@ -74,10 +74,12 @@ const columns = computed(() => props.columns);
 
 const keys = computed(() => Object.keys(items.value[0]));
 
+const count = computed(() => props.count);
+
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(0);
-const rowsPerPage = ref(2);
+const rowsPerPage = ref(props.limit || 5);
 const currentPage = ref(1);
 
 // Computed: Filtered & Sorted Data
@@ -96,6 +98,7 @@ const filteredItems = computed(() => {
 
 // Computed: Paginated Data
 const totalPages = computed(() => Math.ceil(filteredItems.value.length / rowsPerPage.value));
+
 const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * rowsPerPage.value;
   return filteredItems.value.slice(start, start + rowsPerPage.value);
