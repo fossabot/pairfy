@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -18,7 +18,7 @@
 
                 <template #image="{ item }">
 
-                    <img :src="buildImageUrl(item)" :alt="item.image" class="datatable-image" />
+                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '100px' }" />
                 </template>
 
                 <template #col-price="{ value }">
@@ -46,6 +46,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
+import ImageComp from '@/components/ImageComp.vue';
 
 const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
 
@@ -269,14 +270,4 @@ const getLabelColor = (status) => {
     align-items: center;
     justify-content: center;
 }
-
-.datatable-image {
-    background: var(--background-b);
-    width: 50px;
-    height: 50px;
-    border-radius: 4px;
-    object-fit: contain;
-}
-
-
 </style>
