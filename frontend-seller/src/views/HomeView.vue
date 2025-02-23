@@ -32,6 +32,5 @@ const columns = ref([
 
 const handleOnNext = (cursor) => {
   console.log(cursor)
-
 }
 </script>
