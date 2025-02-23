@@ -28,11 +28,8 @@
                 <template #action="{ item }">
 
                     <div class="flex center">
-                        <ButtonRounded @click="beforeDeleteProduct(item)">
-                            <template #content>
-                                <i class="pi pi-ellipsis-v" />
-                            </template>
-                        </ButtonRounded>
+                        <DottedMenu :value="dottedMenu" />
+
                     </div>
 
                 </template>
@@ -45,7 +42,7 @@
 
 <script setup>
 import TableComp from '@/components/TableComp.vue';
-import ButtonRounded from '@/components/ButtonRounded.vue';
+import DottedMenu from '@/components/DottedMenu.vue';
 import ImageComp from '@/components/ImageComp.vue';
 import gql from 'graphql-tag';
 import dayjs from 'dayjs';
@@ -237,6 +234,15 @@ const getLabelColor = (status) => {
     }
 };
 
+const dottedMenu = ref([
+    { label: "Delete Product", value: "delete" },
+    { label: "Edit Product", value: "edit" },
+    { label: "Open Page", value: "open" }
+])
+
+const handleOnNext = () => {
+
+}
 </script>
 
 
@@ -263,8 +269,8 @@ const getLabelColor = (status) => {
     font-weight: 600;
 }
 
-main{
-    padding: 1rem;
+main {
+    padding: 0.5rem;
 }
 
 .card {

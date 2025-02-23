@@ -123,6 +123,7 @@
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  --shadow-c: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   --red-a: #ff385c;
   --green-a: #10b981;
