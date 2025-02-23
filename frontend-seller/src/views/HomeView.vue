@@ -14,7 +14,7 @@ main {
 
 <script setup>
 import TableComp from '@/components/TableComp.vue';
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 
 const items = ref([
