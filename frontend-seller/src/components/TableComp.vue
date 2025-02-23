@@ -197,7 +197,7 @@ const nextPage = () => {
 .column {
   text-align: left;
   min-width: 100px;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
   cursor: pointer;
 }
 
