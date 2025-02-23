@@ -38,7 +38,7 @@
 
               <div class="sort">
 
-                <span class="arrow up" :class="{ enabled: sortOrder === 1 && sortField === column.field}" />
+                <span class="arrow up" :class="{ enabled: sortOrder === 1 && sortField === column.field }" />
 
 
                 <span class="arrow down" :class="{ enabled: sortOrder === -1 && sortField === column.field }" />
@@ -64,6 +64,8 @@
 <script setup>
 import { ref, computed } from "vue";
 
+const emit = defineEmits(['onPrev', 'onNext'])
+
 const props = defineProps(['items', 'columns', "keys"])
 
 const items = computed(() => props.items)
@@ -75,7 +77,7 @@ const keys = computed(() => Object.keys(items.value[0]));
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(0);
-const rowsPerPage = ref(15);
+const rowsPerPage = ref(2);
 const currentPage = ref(1);
 
 // Computed: Filtered & Sorted Data
@@ -115,6 +117,8 @@ const prevPage = () => {
 
 const nextPage = () => {
   if (currentPage.value < totalPages.value) currentPage.value++;
+
+  emit('onNext', "434")
 };
 
 const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
