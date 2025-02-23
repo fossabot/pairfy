@@ -52,11 +52,9 @@
       </thead>
       <tbody>
         <tr class="rows" v-for="product in paginatedItems" :key="product.id">
-          <td class="row">{{ product[keys[0]] }} </td>
-          <td class="row">{{ product[keys[1]] }} </td>
-          <td class="row">{{ product[keys[2]] }} </td>
-          <td class="row">{{ product[keys[3]] }} </td>
-          <td class="row">{{ product[keys[4]] }} </td>
+          <td class="row" v-for="(item, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
+            <span>{{ product[keys[index]] }}</span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -66,7 +64,7 @@
 <script setup>
 import { ref, computed } from "vue";
 
-const props = defineProps(['items', 'columns'])
+const props = defineProps(['items', 'columns', "keys"])
 
 const items = computed(() => props.items)
 
@@ -233,6 +231,10 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 
 .row {
   padding: 1rem 0 1rem 0;
+}
+
+.row.hidden {
+  display: none;
 }
 
 .rows {
