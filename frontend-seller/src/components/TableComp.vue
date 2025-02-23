@@ -79,7 +79,7 @@ const count = computed(() => props.count);
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(0);
-const rowsPerPage = ref(props.limit || 5);
+const rowsPerPage = ref(props.limit);
 const currentPage = ref(1);
 
 // Computed: Filtered & Sorted Data
