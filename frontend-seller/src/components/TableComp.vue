@@ -122,10 +122,11 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 .datatable {
   background: var(--background-a);
   font-size: var(--text-size-1);
-  flex-direction: column;
   box-shadow: var(--shadow-b);
+  flex-direction: column;
   color: var(-text-a);
   border-radius: 12px;
+  width: 100%;
 }
 
 .header {
@@ -206,8 +207,9 @@ const formatCurrency = (value) => new Intl.NumberFormat("en-US", { style: "curre
 }
 
 .table {
-  border-spacing: 0rem;
   font-size: var(--text-size-1);
+  border-spacing: 0rem;
+  width: inherit;
   padding: 1rem;
 }
 
