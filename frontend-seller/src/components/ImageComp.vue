@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :style="{ ...props.containerStyle }">
         <img class="image" :src="imageUrl" :alt="imageUrl" :style="{ ...props.imageStyle }" />
     </div>
 </template>

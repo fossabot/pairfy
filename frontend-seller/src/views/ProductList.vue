@@ -13,12 +13,12 @@
                 </template>
             </Dialog>
 
-            <TableComp :columns="columns" :items="products" :limit="2" :count="1382" :images="true"
+            <TableComp :columns="columns" :items="products" :limit="15" :count="1382" :images="true"
                 @onNext="handleOnNext">
 
                 <template #image="{ item }">
 
-                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '100px' }" />
+                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '60px' }" />
                 </template>
 
                 <template #col-price="{ value }">
