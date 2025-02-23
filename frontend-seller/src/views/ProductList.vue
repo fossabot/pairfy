@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -18,7 +18,7 @@
 
                 <template #image="{ item }">
 
-                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '60px' }" />
+                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
                 </template>
 
                 <template #col-price="{ value }">

@@ -54,7 +54,7 @@
       </thead>
       <tbody>
         <tr class="rows" v-for="item in paginatedItems" :key="item.id">
-          <td>
+          <td class="image">
             <slot name="image" :item="item" />
           </td>
 
@@ -144,7 +144,7 @@ const nextPage = () => {
   font-size: var(--text-size-1);
   box-shadow: var(--shadow-b);
   flex-direction: column;
-  color: var(--text-a); 
+  color: var(--text-a);
   border-radius: 12px;
   overflow: hidden;
   width: 100%;
@@ -278,5 +278,9 @@ tbody tr:nth-child(even) {
 
 .pagination span {
   margin: 0 0.5rem;
+}
+
+.image {
+  padding: 0.5rem;
 }
 </style>
