@@ -51,10 +51,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="rows" v-for="product in paginatedItems" :key="product.id">
-          <td class="row" v-for="(item, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
-            <span>{{ product[keys[index]] }}</span>
+        <tr class="rows" v-for="item in paginatedItems" :key="item.id">
+          <td class="row" v-for="(key, index) in keys.length" :class="{ hidden: !props.keys.includes(index) }">
+            <span>{{ item[keys[index]] }}</span>
           </td>
+          <slot name="action" :item="item"></slot>
         </tr>
       </tbody>
     </table>

@@ -1,9 +1,16 @@
 <template>
   <main>
-    <TableComp :columns="columns" :items="items" :keys="[1, 2, 3]" 
-     :limit="2" :count="1382" 
-    @onNext="handleOnNext" 
-    />
+    <TableComp :columns="columns" :items="items" :keys="[1, 2, 3]"
+    :limit="2" :count="1382" @onNext="handleOnNext">
+
+      <template #action="{ item }">
+        <button @click="handleClick(item)">
+          Click Me
+        </button>
+      </template>
+
+    </TableComp>
+
   </main>
 </template>
 
