@@ -1,6 +1,6 @@
 <template>
     <div class="button">
-        <span class="cart">3</span>
+        <span class="cart">0</span>
 
         <img class="icon" src="@/assets/icons/cart.svg" alt=""> 
     </div>
