@@ -84,7 +84,6 @@ export function applyDiscount(price, discount, isPercentage = true) {
   return formatUSD(result)
 }
 
-
 export function getDiscount(price, discount, isPercentage = true) {
   if (typeof price !== "number" || price < 0) {
       throw new Error("Invalid price: must be a non-negative number.");
@@ -106,4 +105,13 @@ export function getDiscount(price, discount, isPercentage = true) {
   const result = Number(discountAmount.toFixed(2)); 
 
   return formatUSD(result)
+}
+
+export function reduceArrayByIndex(data, index) {
+  const result = data.reduce((acc, item) => {
+      acc[item[index]] = item;
+      return acc;
+  }, {});
+
+  return result
 }

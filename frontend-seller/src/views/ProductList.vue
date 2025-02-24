@@ -82,7 +82,7 @@ import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 
-const { getDiscount, applyDiscount, formatSKU, convertDate, formatUSD } = inject('utils')
+const { reduceArrayByIndex, getDiscount, applyDiscount, formatSKU, convertDate, formatUSD } = inject('utils')
 
 const toast = useToast();
 
@@ -152,18 +152,9 @@ const columns = ref([
     { label: "Paused", field: "paused" },
 ]);
 
-function reduceArray(data) {
-    const result = data.reduce((acc, item) => {
-        acc[item.id] = item;
-        return acc;
-    }, {});
-
-    return result
-}
-
 const unwatchProductResult = watch(getProductsResult, value => {
     if (value) {
-        const reduce = reduceArray(value.getProducts.products);
+        const reduce = reduceArrayByIndex(value.getProducts.products, "id");
 
         for (const [key, value] of Object.entries(reduce)) {
             productsTemp.value[key] = value;
