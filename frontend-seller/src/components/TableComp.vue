@@ -12,7 +12,7 @@
 
       <div class="header-right flex">
         <div class="pagination flex">
-          <span>1-50 of {{ count }}</span>
+          <span>{{ range }} of {{ count }}</span>
 
           <span>Page {{ currentPage }} of {{ totalPages }}</span>
         </div>
@@ -58,7 +58,8 @@
             <slot name="image" :item="item" />
           </td>
 
-          <td class="row" v-for="column in columns" :key="column.field" :style="{ maxWidth: columnWidths[column.field] || 'auto' }">
+          <td class="row" v-for="column in columns" :key="column.field"
+            :style="{ maxWidth: columnWidths[column.field] || 'auto' }">
             <slot :name="`col-${column.field}`" :value="item[column.field]" :item="item">
               {{ item[column.field] }}
             </slot>
@@ -88,11 +89,17 @@ const columns = computed(() => props.columns);
 
 const count = computed(() => props.count);
 
+
+
 const searchQuery = ref("");
 const sortField = ref(null);
 const sortOrder = ref(0);
 const rowsPerPage = ref(props.limit);
 const currentPage = ref(1);
+
+
+
+
 
 // Computed: Filtered & Sorted Data
 const filteredItems = computed(() => {
@@ -115,6 +122,31 @@ const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * rowsPerPage.value;
   return filteredItems.value.slice(start, start + rowsPerPage.value);
 });
+
+const range = computed(() => {
+
+  const getRange = (totalElements, elementsPerPage, currentPage) => {
+    if (currentPage < 1) currentPage = 1;
+
+    const totalPages = Math.ceil(totalElements / elementsPerPage);
+
+    if (currentPage > totalPages) currentPage = totalPages;
+
+    const start = (currentPage - 1) * elementsPerPage + 1;
+    
+    let end = start + elementsPerPage - 1;
+
+    if (end > totalElements) end = totalElements;
+
+    return `${start} - ${end}`;
+  }
+
+  return `${getRange(count.value, rowsPerPage.value, currentPage.value)}`
+});
+
+
+
+
 
 // Methods
 const sortBy = (field) => {
