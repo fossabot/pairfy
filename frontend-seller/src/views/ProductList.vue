@@ -37,7 +37,7 @@
                 <template #col-discount="{ item }">
                     <div class="tags">
                         <span>{{ `-${item.discount_value} %` }}</span>
-                        <span>{{ `-${getDiscount(item.price, item.discount_value)}` }}</span>
+                        <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
                         <span>
                             <MiniSwitch :modelValue="item.discount"/>
                         </span>
