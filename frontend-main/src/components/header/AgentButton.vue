@@ -1,12 +1,12 @@
 <template>
 
     <template v-if="getCurrentUser">
-        <div class="card">
+        <div class="card flex">
 
             <NotificationComp />
 
             <div class="card-button flex" @click="togglePanel(true)">
-                <i class="pi pi-bars" />
+                <img class="icon" src="@/assets/icons/menu.svg" alt=""> 
             </div>
         </div>
     </template>
@@ -30,10 +30,9 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 .card {
     justify-content: space-between;
     border: 1px solid var(--border-b);
-    padding: 0.75rem 1rem; 
+    padding: 0.5rem 1rem;
     border-radius: 999px;
-    display: flex;
-    align-items: center;
+    height: 48px;
 }
 
 .card-address {
@@ -60,6 +59,9 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     cursor: pointer;
     padding: 0 1.5rem;
     height: 44px;
-
 }
+
+.icon{
+    width: 1.5rem;
+} 
 </style>

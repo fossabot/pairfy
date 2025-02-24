@@ -1,7 +1,8 @@
 <template>
     <div class="button">
-        <span class="cart">0</span>
-        <span class="text">Items</span>
+        <span class="cart">3</span>
+
+        <img class="icon" src="@/assets/icons/cart.svg" alt=""> 
     </div>
 </template>
 
@@ -13,9 +14,10 @@
 .button {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     font-weight: 600;
     margin: auto;
-    justify-content: center;
+    position: relative;
 }
 
 .button span {
@@ -23,20 +25,21 @@
 }
 
 .cart {
+    font-size: var(--text-size-2);
+    color: var(--primary-a);
     background: transparent;
-    color: var(--text-a);
-    font-size: var(--text-size-1);
-    border-radius: 20px;
     justify-content: center;
     align-items: center;
-    font-weight: 600;
+    border-radius: 20px;
+    position: absolute;
+    font-weight: 700;
     display: flex;
+    right: -5px;
+    top: 2px;
+    left: 2px;
 }
 
-.text{
-    background: transparent;
-    font-size: var(--text-size-0);
-    font-weight: 500;
-    margin-top: 0.25rem;
+.icon{
+    width: 2.5rem;
 }
 </style>
