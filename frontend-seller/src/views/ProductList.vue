@@ -31,7 +31,7 @@
                 </template>
 
                 <template #col-price="{ item }">
-                    {{ applyDiscount(item.price, item.discount_value) }}
+                    {{ applyDiscount(item.discount, item.price, item.discount_value) }}
                 </template>
 
                 <template #col-discount="{ item }">
