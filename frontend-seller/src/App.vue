@@ -19,10 +19,11 @@ import dashboardAPI from '@/views/api/index';
 import { RouterView } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { provide } from 'vue';
+import { walletClient } from "@/api/wallet";
 import { ApolloClients } from '@vue/apollo-composable';
 import { productClient, gatewayClient, notificationClient } from './graphql/index';
-import { formatWithDots, reduceByLength, formatCurrency } from "./utils/index"
-import { walletClient } from "@/api/wallet";
+import { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate } from "./utils/index"
+
 
 provide(ApolloClients, {
   default: productClient,
@@ -34,7 +35,9 @@ provide(ApolloClients, {
 provide('utils', {
   formatWithDots,
   reduceByLength,
-  formatCurrency
+  formatCurrency,
+  formatSKU,
+  convertDate
 });
 
 const toast = useToast();

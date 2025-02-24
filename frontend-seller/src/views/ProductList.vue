@@ -34,6 +34,10 @@
                     <span class="">${{ value }}</span>
                 </template>
 
+                <template #col-created_at="{ value }">
+                    {{ convertDate(value, 'YYYY-MM-DD') }}
+                </template>
+
                 <template #action="{ item }">
 
                     <div class="flex center">
@@ -53,7 +57,6 @@ import TableComp from '@/components/TableComp.vue';
 import DottedMenu from '@/components/DottedMenu.vue';
 import ImageComp from '@/components/ImageComp.vue';
 import gql from 'graphql-tag';
-import dayjs from 'dayjs';
 import { ref, computed, watch } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
@@ -61,7 +64,7 @@ import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 
-const { formatWithDots, reduceByLength, formatCurrency } = inject('utils')
+const { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate } = inject('utils')
 
 const toast = useToast();
 
@@ -190,17 +193,7 @@ const onDeleteConfirmed = () => {
     deleteProductDialog.value = false;
 }
 
-function formatSKU (value) {
-    if (value) {
-        return value.split(":")[0]
-    }
-};
 
-const convertDate = (timestamp) => {
-    const date = dayjs(parseInt(timestamp));
-
-    return date.format('YYYY-MM-DD');
-}
 
 const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]

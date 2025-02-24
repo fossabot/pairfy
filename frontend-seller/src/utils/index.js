@@ -1,4 +1,5 @@
-// utils.js
+import dayjs from 'dayjs'
+
 export function formatWithDots(str, reduce) {
   const len = str.length
 
@@ -27,7 +28,7 @@ export function reduceByLength(input, maxLength) {
 }
 
 export function formatCurrency(value, type_) {
-  let type = type_ || 'USD';
+  let type = type_ || 'USD'
 
   if (value) {
     let result = value.toLocaleString('en-US', {
@@ -37,4 +38,18 @@ export function formatCurrency(value, type_) {
 
     return result + ' ' + type
   }
+}
+
+export function formatSKU(value) {
+  if (value) {
+    return value.split(':')[0]
+  }
+}
+
+export function convertDate(timestamp, format) {
+  console.log(timestamp);
+
+  const date = dayjs(parseInt(timestamp))
+
+  return date.format(format ? format : 'YYYY-MM-DD')
 }
