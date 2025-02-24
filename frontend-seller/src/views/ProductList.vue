@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -14,7 +14,7 @@
             </Dialog>
 
             <TableComp :columns="columns" :items="products" :limit="15" :count="1382" :images="true"
-                @onNext="handleOnNext">
+                :columnWidths="{ id: '8rem' }" @onNext="handleOnNext">
 
                 <template #image="{ item }">
 

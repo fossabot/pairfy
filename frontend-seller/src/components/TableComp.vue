@@ -58,7 +58,7 @@
             <slot name="image" :item="item" />
           </td>
 
-          <td class="row" v-for="column in columns" :key="column.field">
+          <td class="row" v-for="column in columns" :key="column.field" :style="{ maxWidth: columnWidths[column.field] || 'auto' }">
             <slot :name="`col-${column.field}`" :value="item[column.field]" :item="item">
               {{ item[column.field] }}
             </slot>
@@ -78,7 +78,7 @@
 import { ref, computed } from "vue";
 
 
-const props = defineProps(['items', 'columns', "limit", "count", "images"]);
+const props = defineProps(['items', 'columns', "limit", "count", "images", "columnWidths"]);
 
 const emit = defineEmits(['onPrev', 'onNext']);
 
