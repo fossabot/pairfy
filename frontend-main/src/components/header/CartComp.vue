@@ -35,7 +35,7 @@
     font-weight: 700;
     display: flex;
     right: -5px;
-    top: 2px;
+    top: 3px;
     left: 2px;
 }
 
