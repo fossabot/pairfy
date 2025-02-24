@@ -13,7 +13,7 @@
                 </template>
             </Dialog>
 
-            <TableComp :columns="columns" :items="products" :limit="16" :count="productCount" :images="true"
+            <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
                 :columnWidths="{ id: '8rem', category: '8rem' }" @onNext="handleOnNext">
 
                 <template #image="{ item }">
