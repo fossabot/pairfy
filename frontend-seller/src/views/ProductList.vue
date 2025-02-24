@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -274,15 +274,15 @@ main {
 
 .tags-box.disabled {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 .tags span {
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .tags .discount {
-    color: var(--red-a);
+    color: var(--green-a);
     font-weight: 600;
 }
 </style>
