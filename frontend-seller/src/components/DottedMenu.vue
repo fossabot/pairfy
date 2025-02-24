@@ -26,7 +26,7 @@ const emit = defineEmits(['onSelected']);
 const visible = ref(false);
 
 const onClick = () => {
-    visible.value = true
+    visible.value = !visible.value
 }
 
 const overlayRef = ref(null);
