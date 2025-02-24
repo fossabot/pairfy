@@ -36,12 +36,14 @@
 
                 <template #col-discount="{ item }">
                     <div class="tags">
-                        <span>{{ `-${item.discount_value} %` }}</span>
-                        <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+                        <div class="tags-box flex" :class="{ disabled: false }">
+                            <span class="discount">{{ `-${item.discount_value}%` }}</span>
+                            <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+                        </div>
                         <span>
-                            <MiniSwitch :modelValue="item.discount"/>
+                            <MiniSwitch :modelValue="item.discount" />
                         </span>
-                    </div>                  
+                    </div>
                 </template>
 
                 <template #col-created_at="{ value }">
@@ -264,10 +266,23 @@ main {
     justify-content: center;
 }
 
-.tags {
+.tags-box {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 }
 
-.discount {}
+.tags-box.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.tags span {
+    margin-bottom: 4px; 
+}
+
+.tags .discount {
+    color: var(--red-a);
+    font-weight: 600;
+}
 </style>

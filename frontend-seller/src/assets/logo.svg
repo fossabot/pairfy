@@ -28,13 +28,13 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="8.0000002"
-     inkscape:cx="45.687499"
+     inkscape:cx="26.249999"
      inkscape:cy="3.4999999"
-     inkscape:window-width="1920"
-     inkscape:window-height="1048"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1489"
+     inkscape:window-height="778"
+     inkscape:window-x="2119"
+     inkscape:window-y="258"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:pageshadow="2"
      showguides="false"
@@ -111,17 +111,17 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-style:italic;font-variant:normal;font-weight:600;font-stretch:normal;font-size:17.3333px;line-height:0;font-family:'IBM Plex Sans';-inkscape-font-specification:'IBM Plex Sans Semi-Bold Italic';letter-spacing:-0.74px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
-       x="-1.213331"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3333px;line-height:0;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';letter-spacing:-0.8px;word-spacing:0px;display:inline;fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+       x="-0.98176891"
        y="21.479977"
        id="text2-3-3"
        inkscape:export-filename="/home/debian/Documents/GitHub/core/frontend-main/src/assets/logo-white.png"
        inkscape:export-xdpi="121.6"
        inkscape:export-ydpi="121.6"><tspan
          sodipodi:role="line"
-         x="-1.213331"
+         x="-0.98176891"
          y="21.479977"
-         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:17.3333px;font-family:Manrope;-inkscape-font-specification:'Manrope Ultra-Bold';fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3333px;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#ff385c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke markers fill"
          id="tspan541421-5-5">Pairfy</tspan></text>
   </g>
   <g
