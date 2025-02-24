@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -36,7 +36,7 @@
 
                 <template #col-discount="{ item }">
                     <div class="tags">
-                        <div class="tags-box flex" :class="{ disabled: !false }">
+                        <div class="tags-box flex" :class="{ disabled: !item.discount_value }">
                             <span class="discount">{{ `${item.discount_value}%` }}</span>
                             <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
                         </div>
@@ -89,7 +89,9 @@ const toast = useToast();
 const router = useRouter();
 
 const queryOptions = {
-    fetchPolicy: "cache-first"
+    pollInterval: 1_500,
+    fetchPolicy: "cache-first",
+    clientId: 'product'
 }
 
 const variablesRef = ref({
