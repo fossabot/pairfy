@@ -5,8 +5,10 @@
 
             <NotificationComp />
 
+            <CartComp style="margin: 0 2rem" />
+
             <div class="card-button flex" @click="togglePanel(true)">
-                <img class="icon" src="@/assets/icons/menu.svg" alt=""> 
+                <img class="icon" src="@/assets/icons/menu.svg" alt="">
             </div>
         </div>
     </template>
@@ -21,6 +23,7 @@
 <script setup>
 import headerAPI from "@/components/header/api/index";
 import NotificationComp from "./NotificationComp.vue";
+import CartComp from "./CartComp.vue";
 
 const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
@@ -42,7 +45,6 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 .card-button {
     cursor: pointer;
-    margin-left: 3rem;
 }
 
 .card-button i {
@@ -61,7 +63,7 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
     height: 44px;
 }
 
-.icon{
+.icon {
     width: 1.5rem;
-} 
+}
 </style>

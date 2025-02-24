@@ -4,7 +4,7 @@
 
         <div class="card-image" @click="toggle">
             <OverlayBadge value="1" severity="danger" id="notifications">
-                <i class="pi pi-bell" />
+                <img class="icon" src="@/assets/icons/user.svg" alt="">  
             </OverlayBadge>
         </div>
 
@@ -319,4 +319,8 @@ const onHandleClick = (notification) => {
     min-height: 300px;
     color: var(--text-b);
 }
+
+.icon{
+    width: 1.5rem;
+} 
 </style>

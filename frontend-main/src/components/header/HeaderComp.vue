@@ -13,8 +13,6 @@
             </div>
             <div class="header-col right">
 
-                <CartComp />
-
                 <AgentButton />
 
             </div>
@@ -33,7 +31,6 @@ import LocationComp from '@/components/header/LocationComp.vue';
 import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
-import CartComp from "@/components/header/CartComp.vue";
 import NavComp from "@/components/header/NavComp.vue";
 import PriceBar from "@/components/header/PriceBar.vue";
 import { useQuery } from '@vue/apollo-composable';
