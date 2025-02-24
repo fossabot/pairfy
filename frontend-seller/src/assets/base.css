@@ -90,7 +90,7 @@
   --background-a: #ffffff;
   --background-b: var(--p-surface-100);
   --background-bs: red;
-  --background-c: var(--p-surface-50);
+  --background-c: var(--p-surface-200);
 
 
   --text-a: #222;
@@ -139,6 +139,8 @@
   --soft-yellow-b: rgba(255, 230, 0, 0.3);
   --soft-white-a: rgba(255, 255, 255, 0.1);
   --soft-cyan-a: rgba(96, 163, 255, 0.2);
+
+  --black-a: #000000; 
 }
 
 @media (prefers-color-scheme: dark) {

@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -35,12 +35,13 @@
                 </template>
 
                 <template #col-discount="{ item }">
-                    <div class="tags" v-if="item.discount">
+                    <div class="tags">
                         <span>{{ `-${item.discount_value} %` }}</span>
                         <span>{{ `-${getDiscount(item.price, item.discount_value)}` }}</span>
-                    </div>
-
-                    <div v-else>-</div>
+                        <span>
+                            <MiniSwitch :modelValue="item.discount"/>
+                        </span>
+                    </div>                  
                 </template>
 
                 <template #col-created_at="{ value }">
@@ -70,6 +71,7 @@ import TableComp from '@/components/TableComp.vue';
 import DottedMenu from '@/components/DottedMenu.vue';
 import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
+import MiniSwitch from '@/components/MiniSwitch.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
