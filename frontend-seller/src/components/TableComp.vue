@@ -142,10 +142,9 @@ const nextPage = () => {
 .datatable {
   background: var(--background-a);
   font-size: var(--text-size-1);
-  box-shadow: var(--shadow-b);
   flex-direction: column;
   color: var(--text-a);
-  border-radius: 12px;
+  border-radius: 0px;
   overflow: hidden;
   width: 100%;
 }
@@ -197,9 +196,8 @@ const nextPage = () => {
 
 .column {
   border-right: 1px solid var(--border-a);
-  text-align: left;
-  min-width: 100px;
   padding: 1rem 0.5rem;
+  text-align: left;
   cursor: pointer;
 }
 

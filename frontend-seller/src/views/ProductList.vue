@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -38,6 +38,10 @@
                     {{ convertDate(value, 'YYYY-MM-DD') }}
                 </template>
 
+                <template #col-paused="{ value }">
+                    <SwitchComp :modelValue="value == 0" @onPaused="" />
+                </template>
+
                 <template #action="{ item }">
 
                     <div class="flex center">
@@ -63,6 +67,7 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
+import SwitchComp from '@/components/SwitchComp.vue';
 
 const { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate } = inject('utils')
 
@@ -276,12 +281,13 @@ const handleDottedMenu = (event, value) => {
 }
 
 main {
-    padding: 0.5rem;
+    padding: 0.25rem;
 }
 
 .card {
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--border-a);
 }
 
 .card-message {

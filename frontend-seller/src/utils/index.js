@@ -47,8 +47,6 @@ export function formatSKU(value) {
 }
 
 export function convertDate(timestamp, format) {
-  console.log(timestamp);
-
   const date = dayjs(parseInt(timestamp))
 
   return date.format(format ? format : 'YYYY-MM-DD')
