@@ -219,11 +219,11 @@ const goBack = () => {
     router.go(-1)
 }
 
-const editProduct = (event) => {
+const editProduct = (id) => {
     router.push({
         name: 'edit-product',
         params: {
-            id: event.data.id
+            id
         }
     })
 }
@@ -254,7 +254,13 @@ const handleDottedMenu = (event, value) => {
     console.log(event, value.id);
 
     if (event === 'delete') {
-        beforeDeleteProduct(value)
+        beforeDeleteProduct(value);
+        return;
+    }
+
+    if (event === 'edit') {
+        editProduct(value.id);
+        return;
     }
 }
 
