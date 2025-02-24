@@ -6,7 +6,7 @@
             </template>
         </ButtonRounded>
         <div class="overlay" v-if="visible">
-            <div class="overlay-item flex" v-for="item in props.value" :key="item.label"
+            <div class="overlay-item flex" v-for="item in props.options" :key="item.label"
                 @click="onSelected(item.value)">
                 {{ item.label }}
             </div>
@@ -19,7 +19,7 @@ import ButtonRounded from '@/components/ButtonRounded.vue';
 import { onClickOutside } from "@vueuse/core";
 import { ref } from 'vue';
 
-const props = defineProps(['value'])
+const props = defineProps(['options', 'value'])
 
 const emit = defineEmits(['onSelected']);
 
@@ -36,7 +36,8 @@ onClickOutside(overlayRef, () => {
 });
 
 const onSelected = (value) => {
-    emit('onSelected', value)
+
+    emit('onSelected', value, props.value)
 }
 </script>
 

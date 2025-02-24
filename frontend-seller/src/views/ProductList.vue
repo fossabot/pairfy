@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -28,8 +28,7 @@
                 <template #action="{ item }">
 
                     <div class="flex center">
-                        <DottedMenu :value="dottedMenu" />
-
+                        <DottedMenu :options="dottedMenuOptions" :value="item" @onSelected="handleDottedMenu" />                      
                     </div>
 
                 </template>
@@ -234,7 +233,7 @@ const getLabelColor = (status) => {
     }
 };
 
-const dottedMenu = ref([
+const dottedMenuOptions = ref([
     { label: "Delete Product", value: "delete" },
     { label: "Edit Product", value: "edit" },
     { label: "Open Page", value: "open" }
@@ -243,6 +242,11 @@ const dottedMenu = ref([
 const handleOnNext = () => {
 
 }
+
+const handleDottedMenu = (event, value) => {
+    console.log(event, value.id);
+}
+
 </script>
 
 
