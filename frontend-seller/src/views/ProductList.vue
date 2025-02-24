@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -89,8 +89,6 @@ const toast = useToast();
 const router = useRouter();
 
 const queryOptions = {
-    pollInterval: 1_500,
-    fetchPolicy: "cache-first",
     clientId: 'product'
 }
 
@@ -100,7 +98,7 @@ const variablesRef = ref({
     }
 })
 
-const { result: getProductsResult, onError: onGetProductsError } = useQuery(gql`
+const { result: getProductsResult, onError: onGetProductsError, refetch: getProductsRefetch } = useQuery(gql`
 query($getProductsVariable: GetProductsInput!){
     getProducts(getProductsInput: $getProductsVariable){
         products {
