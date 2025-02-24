@@ -21,7 +21,7 @@ import { useToast } from "primevue/usetoast";
 import { provide } from 'vue';
 import { walletClient } from "@/api/wallet";
 import { ApolloClients } from '@vue/apollo-composable';
-import { productClient, gatewayClient, notificationClient } from './graphql/index.js';
+import { productClient, gatewayClient, notificationClient } from './graphql/index';
 import { reduceArrayByIndex, getDiscount, applyDiscount, formatWithDots, reduceByLength, formatCurrency, formatUSD, formatSKU, convertDate } from "./utils/index"
 
 
