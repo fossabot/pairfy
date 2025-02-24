@@ -14,7 +14,7 @@
             </Dialog>
 
             <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
-                :columnWidths="{ id: '8rem', category: '8rem' }" @onNext="handleOnNext">
+                :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                 <template #image="{ item }">
 
@@ -22,8 +22,8 @@
                 </template>
 
 
-                <template #col-id="{ value }">
-                    {{ value }}
+                <template #col-id="{ value, item }">
+                    {{ value }} {{ item.created_at }}
                 </template>
 
                 <template #col-sku="{ value }">
@@ -75,7 +75,7 @@ import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 import MiniSwitch from '@/components/MiniSwitch.vue';
 import gql from 'graphql-tag';
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
@@ -89,7 +89,7 @@ const toast = useToast();
 const router = useRouter();
 
 const queryOptions = {
-    pollInterval: 1500,
+    fetchPolicy: "cache-first"
 }
 
 const variablesRef = ref({
@@ -129,17 +129,17 @@ onGetProductsError(error => {
     showError("The connection to the server has failed, please try again later.");
 })
 
-const updateCursor = () => {
+const updateCursor = (cursor) => {
     variablesRef.value = {
         getProductsVariable: {
-            cursor: getProductsResult.value?.getProducts.cursor
+            cursor
         }
     }
 }
 
-const productsTemp = ref([]);
+const productsTemp = ref({});
 
-const products = computed(() => productsTemp.value);
+const products = computed(() => Object.values(productsTemp.value));
 
 const columns = ref([
     { label: "ID", field: "id" },
@@ -152,18 +152,42 @@ const columns = ref([
     { label: "Paused", field: "paused" },
 ]);
 
-const watchProductResult = watch(getProductsResult, value => {
+function reduceArray(data) {
+    const result = data.reduce((acc, item) => {
+        acc[item.id] = item;
+        return acc;
+    }, {});
+
+    return result
+}
+
+const unwatchProductResult = watch(getProductsResult, value => {
     if (value) {
-        productsTemp.value.push(...value.getProducts.products)
+        const reduce = reduceArray(value.getProducts.products);
+
+        for (const [key, value] of Object.entries(reduce)) {
+            productsTemp.value[key] = value;
+        }
+
     }
 }, { immediate: true })
 
 const productCount = computed(() => getProductsResult.value?.getProducts.count);
 
-
 const deleteProductDialog = ref(false);
 
 const selectedProduct = ref(null);
+
+const handleOnPrev = (event) => {
+    console.log(event.created_at)
+
+    updateCursor(event.created_at)
+}
+
+const handleOnNext = (event) => {
+    console.log(event.created_at)
+    updateCursor(event.created_at)
+}
 
 const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
     mutation($deleteProductVariable: DeleteProductInput!){
@@ -216,10 +240,6 @@ const dottedMenuOptions = ref([
     { label: "Open Page", value: "open" }
 ])
 
-const handleOnNext = (event) => {
-    updateCursor()
-}
-
 const handleDottedMenu = (event, value) => {
     console.log(event, value.id);
 
@@ -241,6 +261,10 @@ const showSuccess = (content) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
+
+onBeforeUnmount(() => {
+    unwatchProductResult()
+})
 </script>
 
 

@@ -133,7 +133,7 @@ const range = computed(() => {
     if (currentPage > totalPages) currentPage = totalPages;
 
     const start = (currentPage - 1) * elementsPerPage + 1;
-    
+
     let end = start + elementsPerPage - 1;
 
     if (end > totalElements) end = totalElements;
@@ -160,12 +160,14 @@ const sortBy = (field) => {
 
 const prevPage = () => {
   if (currentPage.value > 1) currentPage.value--;
+
+  emit('onPrev', paginatedItems.value[0])
 };
 
 const nextPage = () => {
   if (currentPage.value < totalPages.value) currentPage.value++;
 
-  emit('onNext', items.value[items.value.length - 1])
+  emit('onNext', paginatedItems.value[paginatedItems.value.length - 1])
 };
 
 </script>
