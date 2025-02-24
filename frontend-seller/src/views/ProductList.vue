@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -21,6 +21,15 @@
                     <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
                 </template>
 
+
+                <template #col-id="{ value }">
+                    {{ value }}
+                </template>
+
+                <template #col-sku="{ value }">
+                    {{ formatSKU(value) }}
+                </template>
+
                 <template #col-price="{ value }">
                     <span class="">${{ value }}</span>
                 </template>
@@ -28,7 +37,7 @@
                 <template #action="{ item }">
 
                     <div class="flex center">
-                        <DottedMenu :options="dottedMenuOptions" :value="item" @onSelected="handleDottedMenu" />                      
+                        <DottedMenu :options="dottedMenuOptions" :value="item" @onSelected="handleDottedMenu" />
                     </div>
 
                 </template>
@@ -181,7 +190,7 @@ const onDeleteConfirmed = () => {
     deleteProductDialog.value = false;
 }
 
-const formatSKU = (value) => {
+function formatSKU (value) {
     if (value) {
         return value.split(":")[0]
     }
