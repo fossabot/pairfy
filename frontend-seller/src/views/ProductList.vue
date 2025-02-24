@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -252,34 +252,16 @@ const handleOnNext = () => {
 
 const handleDottedMenu = (event, value) => {
     console.log(event, value.id);
+
+    if (event === 'delete') {
+        beforeDeleteProduct(value)
+    }
 }
 
 </script>
 
 
 <style scoped>
-::v-deep(.p-datatable-header) {
-    background: transparent;
-    border: none;
-    padding: 1rem 0;
-}
-
-::v-deep(.p-datatable-header-cell) {
-    background: transparent;
-    border: 1px solid var(--border-a);
-    border-left: none;
-    color: var(--text-a);
-}
-
-::v-deep(.p-datatable-paginator-bottom) {
-    border: none;
-    padding: 0.2rem;
-}
-
-::v-deep(.p-datatable-column-title) {
-    font-weight: 600;
-}
-
 main {
     padding: 0.25rem;
 }
