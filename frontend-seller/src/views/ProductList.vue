@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -30,8 +30,17 @@
                     {{ formatSKU(value) }}
                 </template>
 
-                <template #col-price="{ value }">
-                    {{ formatUSD(value) }}
+                <template #col-price="{ item }">
+                    {{ applyDiscount(item.price, item.discount_value) }}
+                </template>
+
+                <template #col-discount="{ item }">
+                    <div class="tags" v-if="item.discount">
+                        <span>{{ `-${item.discount_value} %` }}</span>
+                        <span>{{ `-${getDiscount(item.price, item.discount_value)}` }}</span>
+                    </div>
+
+                    <div v-else>-</div>
                 </template>
 
                 <template #col-created_at="{ value }">
@@ -60,6 +69,7 @@
 import TableComp from '@/components/TableComp.vue';
 import DottedMenu from '@/components/DottedMenu.vue';
 import ImageComp from '@/components/ImageComp.vue';
+import SwitchComp from '@/components/SwitchComp.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
@@ -67,26 +77,12 @@ import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
-import SwitchComp from '@/components/SwitchComp.vue';
 
-const { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate, formatUSD } = inject('utils')
+const { getDiscount, applyDiscount, formatSKU, convertDate, formatUSD } = inject('utils')
 
 const toast = useToast();
 
 const router = useRouter();
-
-const navItems = ref([
-    { label: 'Dashboard' },
-    { label: 'Product List' }
-]);
-
-const showSuccess = (content) => {
-    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
-};
-
-const showError = (content) => {
-    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
-};
 
 const queryOptions = {
     pollInterval: 1500,
@@ -152,8 +148,7 @@ const columns = ref([
     { label: "Paused", field: "paused" },
 ]);
 
-
-watch(getProductsResult, value => {
+const watchProductResult = watch(getProductsResult, value => {
     if (value) {
         productsTemp.value.push(...value.getProducts.products)
     }
@@ -161,16 +156,10 @@ watch(getProductsResult, value => {
 
 const productCount = computed(() => getProductsResult.value?.getProducts.count);
 
-const dt = ref();
 
 const deleteProductDialog = ref(false);
 
 const selectedProduct = ref(null);
-
-
-const filters = ref({
-    'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
 
 const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
     mutation($deleteProductVariable: DeleteProductInput!){
@@ -198,8 +187,6 @@ const onDeleteConfirmed = () => {
     deleteProductDialog.value = false;
 }
 
-
-
 const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
@@ -210,15 +197,6 @@ const beforeDeleteProduct = (data) => {
     deleteProductDialog.value = true;
 };
 
-const exportCSV = () => {
-    dt.value.exportCSV();
-};
-
-
-const goBack = () => {
-    router.go(-1)
-}
-
 const editProduct = (id) => {
     router.push({
         name: 'edit-product',
@@ -227,18 +205,6 @@ const editProduct = (id) => {
         }
     })
 }
-
-const getLabelColor = (status) => {
-    switch (status) {
-        case 1:
-            return 'warn';
-        case 0:
-            return 'success';
-
-        default:
-            return null;
-    }
-};
 
 const dottedMenuOptions = ref([
     { label: "Delete Product", value: "delete" },
@@ -264,6 +230,13 @@ const handleDottedMenu = (event, value) => {
     }
 }
 
+const showSuccess = (content) => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
+};
+
+const showError = (content) => {
+    toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
+};
 </script>
 
 
@@ -288,4 +261,11 @@ main {
     align-items: center;
     justify-content: center;
 }
+
+.tags {
+    display: flex;
+    flex-direction: column;
+}
+
+.discount {}
 </style>

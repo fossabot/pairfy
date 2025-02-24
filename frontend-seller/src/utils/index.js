@@ -41,12 +41,12 @@ export function formatCurrency(value, type_) {
 }
 
 export function formatUSD(amount) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(amount)
 }
 
 export function formatSKU(value) {
@@ -59,4 +59,51 @@ export function convertDate(timestamp, format) {
   const date = dayjs(parseInt(timestamp))
 
   return date.format(format ? format : 'YYYY-MM-DD')
+}
+
+export function applyDiscount(price, discount, isPercentage = true) {
+  if (typeof price !== 'number' || price < 0) {
+    throw new Error('Invalid price: must be a non-negative number.')
+  }
+  if (typeof discount !== 'number' || discount < 0) {
+    throw new Error('Invalid discount: must be a non-negative number.')
+  }
+
+  let finalPrice
+
+  if (isPercentage) {
+    if (discount > 100) discount = 100
+    finalPrice = price * (1 - discount / 100)
+  } else {
+    if (discount > price) discount = price
+    finalPrice = price - discount
+  }
+
+  const result = Number(finalPrice.toFixed(2));
+
+  return formatUSD(result)
+}
+
+
+export function getDiscount(price, discount, isPercentage = true) {
+  if (typeof price !== "number" || price < 0) {
+      throw new Error("Invalid price: must be a non-negative number.");
+  }
+  if (typeof discount !== "number" || discount < 0) {
+      throw new Error("Invalid discount: must be a non-negative number.");
+  }
+
+  let discountAmount;
+  
+  if (isPercentage) {
+      if (discount > 100) discount = 100; 
+      discountAmount = price * (discount / 100);
+  } else {
+      if (discount > price) discount = price; 
+      discountAmount = discount;
+  }
+
+  const result = Number(discountAmount.toFixed(2)); 
+
+  return formatUSD(result)
 }

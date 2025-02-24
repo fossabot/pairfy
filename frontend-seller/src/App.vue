@@ -22,7 +22,7 @@ import { provide } from 'vue';
 import { walletClient } from "@/api/wallet";
 import { ApolloClients } from '@vue/apollo-composable';
 import { productClient, gatewayClient, notificationClient } from './graphql/index';
-import { formatWithDots, reduceByLength, formatCurrency, formatUSD, formatSKU, convertDate } from "./utils/index"
+import { getDiscount, applyDiscount, formatWithDots, reduceByLength, formatCurrency, formatUSD, formatSKU, convertDate } from "./utils/index"
 
 
 provide(ApolloClients, {
@@ -38,7 +38,9 @@ provide('utils', {
   formatCurrency,
   formatSKU,
   convertDate,
-  formatUSD
+  formatUSD,
+  applyDiscount,
+  getDiscount
 });
 
 const toast = useToast();
