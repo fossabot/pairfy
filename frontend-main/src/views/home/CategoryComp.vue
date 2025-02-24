@@ -150,7 +150,7 @@ const columnFive = categoryArray.slice(9, 15);
     height: 100vh;
     max-width: var(--body-a);
     max-height: var(--body-a);
-    margin-top: 350px;
+    margin-top: 1rem;
     z-index: 2;
 }
 
@@ -179,7 +179,7 @@ const columnFive = categoryArray.slice(9, 15);
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 16px;
     font-weight: 700;
     overflow: hidden;
     cursor: pointer;
@@ -194,6 +194,8 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-body {
+    border-radius: 16px;
+    overflow: hidden;
     margin-top: 0.5rem;
     width: inherit;
     height: 100%;
@@ -264,7 +266,4 @@ const columnFive = categoryArray.slice(9, 15);
         grid-template-rows: auto;
     }
 }
-
-
-
 </style>

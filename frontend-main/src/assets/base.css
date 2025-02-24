@@ -61,7 +61,7 @@
 
   --p-icon-size: var(--text-size-2) !important;
 
-  --p-rating-icon-active-color: var(--primary-b) !important;
+  --p-rating-icon-active-color: var(--black-a) !important;
 
   --p-rating-icon-color: rgba(100, 116, 139, 0.5) !important;
 
@@ -127,7 +127,7 @@
   --text-size-7: 56px;
   --text-size-8: 84px;
 
-  --body-a: 1500px;
+  --body-a: 1400px;
 
   --border-a: #e2e8f0;
   --border-b: rgba(0, 0, 0, 0.1);

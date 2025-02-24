@@ -1,7 +1,6 @@
 <template>
     <div class="cover flex">
         <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
-            <div class="mask"/>
             <div class="band-track" :style="trackStyle">
                 <div class="band-item" v-for="(item, index) in imageList" :key="index"
                     :style="{ backgroundImage: `url(${item.src})` }">
@@ -82,7 +81,6 @@ onBeforeUnmount(() => {
 .cover {
     width: 100%;
     justify-content: center;
-    position: absolute;
     z-index: 1;
     top: 0;
 }
@@ -91,9 +89,11 @@ onBeforeUnmount(() => {
     overflow: hidden;
     position: relative;
     display: flex;
-    height: 768px;
+    height: 360px;
     width: 100%;
-    max-width: calc(var(--body-a) + 2rem);
+    margin-top: 1rem;
+    border-radius: 16px;
+    max-width: var(--body-a);
 }
 
 .band-track {
@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
 }
 
 .band-item {
-    background-position-y: 50%;
+    background-position-y: -30%;
     background-size: cover;
     width: inherit;
     height: inherit;
@@ -166,11 +166,4 @@ onBeforeUnmount(() => {
     background: #ffffff;
 }
 
-.mask{
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    position: absolute;
-    background: linear-gradient(0deg, var(--background-b) 0%, transparent 60%);
-}
 </style>
