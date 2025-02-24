@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
     height: 60px;
     border-radius: 50%;
     position: absolute;
-    top: 120px;
+    top: calc(50% - 30px);
     display: flex;
     align-items: center;
     justify-content: center;
