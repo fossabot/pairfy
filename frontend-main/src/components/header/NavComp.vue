@@ -27,28 +27,23 @@
 <style lang="css" scoped>
 section {
     justify-content: center;   
-    height: 2.5rem;
+    height: 2.75rem;
     width: inherit;
 }
 
 .menu {
-    max-width: calc(var(--body-a) - 4rem);
+    max-width: calc(var(--body-a)  - 2rem);
     color: inherit;
     width: 100%;
 }
 
 .nav {
     justify-content: space-between;
-    font-size: var(--text-size-0);
-    font-weight: 500;
+    font-size: var(--text-size-1);
+    font-weight: 400;
     cursor: pointer;
     width: inherit;
     color: inherit;
-}
-
-.price {
-    white-space: nowrap;
-    font-weight: 500;
 }
 
 .arrow i {
