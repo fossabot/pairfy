@@ -26,7 +26,7 @@ const props = defineProps(['content', 'title'])
 }
 
 .title{
-  font-size: var(--text-size-3);
+  font-size: var(--text-size-4);
   color: var(--primary-a);
   font-weight: 700;
 }
@@ -38,7 +38,7 @@ const props = defineProps(['content', 'title'])
   display: grid;
   width: 100%;
   gap: 1rem;
-  row-gap: 2rem;
+  row-gap: 1rem;
 }
 
 @media (min-width: 768px) {

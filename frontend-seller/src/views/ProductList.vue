@@ -14,7 +14,7 @@
             </Dialog>
 
             <TableComp :columns="columns" :items="products" :limit="15" :count="1382" :images="true"
-                :columnWidths="{ id: '8rem' }" @onNext="handleOnNext">
+                :columnWidths="{ id: '8rem', category: '8rem' }" @onNext="handleOnNext">
 
                 <template #image="{ item }">
 
@@ -31,7 +31,7 @@
                 </template>
 
                 <template #col-price="{ value }">
-                    <span class="">${{ value }}</span>
+                    {{ formatUSD(value) }}
                 </template>
 
                 <template #col-created_at="{ value }">
@@ -69,7 +69,7 @@ import { useRouter } from 'vue-router';
 import { inject } from 'vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 
-const { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate } = inject('utils')
+const { formatWithDots, reduceByLength, formatCurrency, formatSKU, convertDate, formatUSD } = inject('utils')
 
 const toast = useToast();
 

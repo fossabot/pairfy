@@ -40,6 +40,15 @@ export function formatCurrency(value, type_) {
   }
 }
 
+export function formatUSD(amount) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount);
+}
+
 export function formatSKU(value) {
   if (value) {
     return value.split(':')[0]
