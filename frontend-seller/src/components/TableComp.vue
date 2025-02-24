@@ -165,7 +165,7 @@ const prevPage = () => {
 const nextPage = () => {
   if (currentPage.value < totalPages.value) currentPage.value++;
 
-  emit('onNext', "434")
+  emit('onNext', items.value[items.value.length - 1])
 };
 
 </script>

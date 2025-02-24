@@ -216,8 +216,8 @@ const dottedMenuOptions = ref([
     { label: "Open Page", value: "open" }
 ])
 
-const handleOnNext = () => {
-
+const handleOnNext = (event) => {
+    updateCursor()
 }
 
 const handleDottedMenu = (event, value) => {
@@ -278,7 +278,7 @@ main {
 }
 
 .tags span {
-    margin-bottom: 4px; 
+    margin-bottom: 4px;
 }
 
 .tags .discount {
