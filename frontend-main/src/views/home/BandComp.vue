@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
     height: 360px;
     width: 100%;
     margin-top: 1rem;
-    border-radius: 16px;
+    border-radius: 12px;
     max-width: var(--body-a);
 }
 

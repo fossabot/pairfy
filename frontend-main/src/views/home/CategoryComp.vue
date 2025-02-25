@@ -179,7 +179,7 @@ const columnFive = categoryArray.slice(9, 15);
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 16px;
+    border-radius: 12px;
     font-weight: 700;
     overflow: hidden;
     cursor: pointer;
