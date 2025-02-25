@@ -31,8 +31,7 @@ const toggle = () => {
 
 <style lang="css" scoped>
 .switch {
-    border: 1px solid var(--border-a);
-    background: var(--background-c);
+    background: var(--primary-a);
     transition: background 0.3s;
     justify-content: flex-start;
     border-radius: 99px;
@@ -42,6 +41,7 @@ const toggle = () => {
     cursor: pointer;
     outline: none;
     display: flex;
+    border: none;
     height: 1rem;
     width: 2rem;
 }
