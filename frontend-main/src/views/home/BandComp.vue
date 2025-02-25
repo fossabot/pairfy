@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
 }
 
 .band-item {
-    background-position-y: -30%;
+    background-position-y: 50%;
     background-size: cover;
     width: inherit;
     height: inherit;
