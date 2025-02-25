@@ -39,11 +39,11 @@
 
   --p-tag-font-weight: 400 !important;
 
-  --p-badge-min-width: 15px !important;
+  --p-badge-min-width: 17px !important;
 
-  --p-badge-height: 15px !important;
+  --p-badge-height: 16px !important;
 
-  --p-overlaybadge-outline-width: 0px !important;
+  --p-overlaybadge-outline-width: 1px !important;
 
   --p-dialog-title-font-weight: 700 !important;
 

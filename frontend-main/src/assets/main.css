@@ -109,11 +109,16 @@
 .p-overlaybadge {
   position: relative;
   align-items: center;
+  justify-content: center;
   display: flex;
+  text-align: center;
 }
 
 .p-badge{
-  font-size: 9px !important;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 8px !important;
 }
 
 .best{

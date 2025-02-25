@@ -37,7 +37,7 @@
     "index": "4",
     "background": "#FFF4A3",
     "x": "50%",
-    "y": "40%"
+    "y": "50%"
   },
   "5": {
     "name": "Toys, Hobbies & Collectibles",
@@ -45,7 +45,7 @@
     "index": "5",
     "background": "#A8E6CF",
     "x": "50%",
-    "y": "20%"
+    "y": "30%"
   },
   "6": {
     "name": "Sports & Outdoors & Entertainment",

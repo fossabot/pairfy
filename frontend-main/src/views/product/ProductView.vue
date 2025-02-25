@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
     height: auto;
     z-index: 10;
     overflow: hidden;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     padding: 1.5rem;
 }
 </style>

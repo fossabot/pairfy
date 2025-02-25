@@ -33,7 +33,7 @@ const props = defineProps(['content', 'title'])
 
 .grid {
   max-width: var(--body-a);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   grid-auto-rows: auto;
   display: grid;
   width: 100%;
@@ -43,13 +43,13 @@ const props = defineProps(['content', 'title'])
 
 @media (min-width: 768px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 }
 
 @media (min-width: 1230px) {
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   }
 }
 </style>
