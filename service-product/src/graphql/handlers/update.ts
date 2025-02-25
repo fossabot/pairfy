@@ -15,46 +15,33 @@ export const updateProduct = async (_: any, args: any, context: any) => {
 
     await connection.beginTransaction();
 
-    const productData = {
-      name: params.name,
-      price: params.price,
-      model: params.model,
-      brand: params.brand,
-      features: params.features,
-      category: params.category,
-      keywords: params.keywords,
-      bullet_list: params.bullet_list,
-      paused: params.paused,
-      color: params.color,
-      color_name: params.color_name,
-      variations: params.variations,
-      quality: params.quality,
-      image_set: params.image_set,
-      video_set: params.video_set,
-      discount: params.discount,
-      discount_value: params.discount_value,
-      shipping_weight: params.shipping_weight,
-      shipping_length: params.shipping_length,
-      shipping_width: params.shipping_width,
-      shipping_height: params.shipping_height,
-      shipping_city: params.shipping_city,
-      shipping_postal: params.shipping_postal,
-      shipping_instructions: params.shipping_instructions,
-      shipping_fragile: params.shipping_fragile,
-      updated_at: getCurrentTimestamp()
-    };
+    const productData: any = {};
+
+    const productId: string = params.id;
+
+    for (const key in params) {
+      productData[key] = params[key];
+    }
+
+    delete productData["id"];
+
+    productData["updated_at"] = getCurrentTimestamp();
 
     const fields = Object.keys(productData)
       .map((key) => `${key} = ?`)
       .join(", ");
 
-    const values = [...Object.values(productData), params.id, SELLER.id];
+    const values = [...Object.values(productData), productId, SELLER.id];
 
     const updateScheme = `
         UPDATE products
         SET ${fields}, schema_v = schema_v + 1
         WHERE id = ? AND seller_id = ?
         `;
+
+    console.log(values);
+
+    console.log(updateScheme);
 
     const [updated] = await connection.execute(updateScheme, values);
 
@@ -66,13 +53,13 @@ export const updateProduct = async (_: any, args: any, context: any) => {
 
     const [products] = await connection.execute(
       `SELECT * FROM products WHERE id = ?`,
-      [params.id]
+      [productId]
     );
 
     if (products.length === 0) {
       throw new Error("INTERNAL_ERROR");
     }
-    
+
     const PRODUCT = formatProduct(products[0]);
 
     const eventId = PRODUCT.id + "-" + PRODUCT.schema_v;

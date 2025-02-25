@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                    }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -17,12 +17,10 @@
                 :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                 <template #image="{ item }">
-
                     <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
                 </template>
 
-
-                <template #col-id="{ value, item }">
+                <template #col-id="{ value }">
                     {{ value }}
                 </template>
 
@@ -34,14 +32,15 @@
                     {{ applyDiscount(item.discount, item.price, item.discount_value) }}
                 </template>
 
-                <template #col-discount="{ item }">
+                <template #col-discount="{ value, item }">
                     <div class="tags">
-                        <div class="tags-box flex" :class="{ disabled: !item.discount_value }">
-                            <span class="discount">{{ `${item.discount_value}%` }}</span>
+                        <div class="tags-box flex" :class="{ disabled: !value }">
+                         
+                            <span class="discount">{{ `-${item.discount_value}%` }}</span>
                             <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
                         </div>
                         <span>
-                            <MiniSwitch :modelValue="item.discount" :value="item" @onChange="handleDiscount" />
+                            <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
                         </span>
                     </div>
                 </template>
@@ -50,8 +49,8 @@
                     {{ convertDate(value, 'YYYY-MM-DD') }}
                 </template>
 
-                <template #col-paused="{ value, item }">
-                    <SwitchComp :modelValue="value == 0" :value="item" @onChange="handlePaused" />
+                <template #col-paused="{ value, item }">                
+                    <SwitchComp :modelValue="value == 1" :value="item" @onChange="handlePaused" />
                 </template>
 
                 <template #action="{ item }">
@@ -194,8 +193,12 @@ const { mutate: deleteProduct, onError: onErrorDeleteProduct, onDone: onDeletePr
         deleteProduct(deleteProductInput: $deleteProductVariable){
             success
         }
-}
-`)
+    }
+`,
+    {
+        clientId: 'product'
+    }
+)
 
 onErrorDeleteProduct(error => {
     showError(error);
@@ -220,6 +223,39 @@ const deleteProductConfirmation = () => {
     productsTemp.value = []
     deleteProductDialog.value = false;
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+const { mutate: updateProduct, onError: onErrorUpdateProduct, onDone: onUpdateProduct } = useMutation(gql`
+    mutation($updateProductVariable: UpdateProductInput!){
+        updateProduct(updateProductInput: $updateProductVariable){
+            success
+        }
+    }
+`,
+    {
+        clientId: 'product'
+    }
+)
+
+onErrorUpdateProduct(error => {
+    showError(error);
+})
+
+onUpdateProduct(result => {
+    showSuccess("The product has been updated successfully.");
+    getProductsRefetch()
+})
+
+const beforeUpdateProduct = (id, change) => {
+    updateProduct({
+        "updateProductVariable": {
+            "id": id,
+            ...change
+        }
+    })
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -250,12 +286,16 @@ const handleDottedMenu = (event, value) => {
     }
 }
 
-const handleDiscount = (event, value) => {
-    console.log(event, value.id);
+const handleDiscount = (bool, value) => {
+    console.log(bool, value.id);
+
+    beforeUpdateProduct(value.id, { discount: bool });
 }
 
-const handlePaused = (event, value) => {
-    console.log(event, value.id);
+const handlePaused = (bool, value) => {
+    console.log(bool, value.id);
+
+    beforeUpdateProduct(value.id, { paused: bool === true ? 1 : 0 });
 }
 
 const showSuccess = (content) => {
@@ -310,7 +350,7 @@ main {
 }
 
 .tags .discount {
-    color: var(--green-a);
-    font-weight: 400;
+    color: var(--green-a); 
+    font-weight: 500;
 }
 </style>
