@@ -1,69 +1,73 @@
 <template>
     <main>
-        <div class="card">
-            <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm" :modal="true"
-                :draggable="false">
-                <div class="card-message flex">
-                    <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
-                </div>
-                <template #footer>
-                    <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
-                    <Button label="Yes" @click="deleteProductConfirmation" style="color: var(--text-w)" />
-                </template>
-            </Dialog>
-
-            <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
-                :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
-
-                <template #image="{ item }">
-                    <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
-                </template>
-
-                <template #col-id="{ value }">
-                    {{ value }}
-                </template>
-
-                <template #col-sku="{ value }">
-                    {{ formatSKU(value) }}
-                </template>
-
-                <template #col-price="{ item }">
-                    {{ applyDiscount(item.discount, item.price, item.discount_value) }}
-                </template>
-
-                <template #col-discount="{ value, item }">
-                    <div class="tags">
-                        <div class="tags-box flex" :class="{ disabled: !value }">
-                         
-                            <span class="discount">{{ `-${item.discount_value}%` }}</span>
-                            <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+        <CarpetComp :tabs="['Product List', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
+            <template #content="{ index }">
+               
+                <div class="card" v-if="index === 0">
+                    <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm"
+                        :modal="true" :draggable="false">
+                        <div class="card-message flex">
+                            <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
+                            }}</b>?</span>
                         </div>
-                        <span>
-                            <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
-                        </span>
-                    </div>
-                </template>
+                        <template #footer>
+                            <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
+                            <Button label="Yes" @click="deleteProductConfirmation" style="color: var(--text-w)" />
+                        </template>
+                    </Dialog>
 
-                <template #col-created_at="{ value }">
-                    {{ convertDate(value, 'YYYY-MM-DD') }}
-                </template>
+                    <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
+                        :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
 
-                <template #col-paused="{ value, item }">                
-                    <SwitchComp :modelValue="value == 1" :value="item" @onChange="handlePaused" />
-                </template>
+                        <template #image="{ item }">
+                            <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
+                        </template>
 
-                <template #action="{ item }">
+                        <template #col-id="{ value }">
+                            {{ value }}
+                        </template>
 
-                    <div class="flex center">
-                        <DottedMenu :options="dottedMenuOptions" :value="item" @onSelected="handleDottedMenu" />
-                    </div>
+                        <template #col-sku="{ value }">
+                            {{ formatSKU(value) }}
+                        </template>
 
-                </template>
+                        <template #col-price="{ item }">
+                            {{ applyDiscount(item.discount, item.price, item.discount_value) }}
+                        </template>
 
-            </TableComp>
+                        <template #col-discount="{ value, item }">
+                            <div class="tags">
+                                <div class="tags-box flex" :class="{ disabled: !value }">
 
-        </div>
+                                    <span class="discount">{{ `-${item.discount_value}%` }}</span>
+                                    <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+                                </div>
+                                <span>
+                                    <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
+                                </span>
+                            </div>
+                        </template>
+
+                        <template #col-created_at="{ value }">
+                            {{ convertDate(value, 'YYYY-MM-DD') }}
+                        </template>
+
+                        <template #col-paused="{ value, item }">
+                            <SwitchComp :modelValue="value == 1" :value="item" @onChange="handlePaused" />
+                        </template>
+
+                        <template #action="{ item }">
+
+                            <div class="flex center">
+                                <DottedMenu :options="dottedMenuOptions" :value="item" @onSelected="handleDottedMenu" />
+                            </div>
+
+                        </template>
+
+                    </TableComp>
+                </div>
+            </template>
+        </CarpetComp>
     </main>
 </template>
 
@@ -73,6 +77,7 @@ import DottedMenu from '@/components/DottedMenu.vue';
 import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 import MiniSwitch from '@/components/MiniSwitch.vue';
+import CarpetComp from "@/components/CarpetComp.vue";
 import gql from 'graphql-tag';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
@@ -320,7 +325,6 @@ main {
 .card {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-a);
 }
 
 .card-message {
@@ -350,7 +354,7 @@ main {
 }
 
 .tags .discount {
-    color: var(--green-a); 
+    color: var(--green-a);
     font-weight: 500;
 }
 </style>

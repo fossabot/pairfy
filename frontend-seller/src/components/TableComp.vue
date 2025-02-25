@@ -178,20 +178,31 @@ const nextPage = () => {
   font-size: var(--text-size-1);
   flex-direction: column;
   color: var(--text-a);
-  border-radius: 0px;
+  border-radius: 6px;
   transition: 0.2s;
   overflow: hidden;
   width: 100%;
 }
 
 .header {
+  width: inherit;
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
-  padding: 1rem 1rem;
+  padding: 0.75rem 1rem;
+}
+
+.header-left {
+  width: 50%;
 }
 
 .header-right {
+  width: 50%;
+}
+
+.pagination {
   font-size: var(--text-size-0);
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .header .header-right button {
@@ -211,7 +222,7 @@ const nextPage = () => {
 .search {
   background: var(--background-b);
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 6px;
   padding: 0 1rem;
 }
 
@@ -219,6 +230,7 @@ const nextPage = () => {
   background: transparent;
   padding: 0.75rem 1rem;
   min-width: 300px;
+  width: 80%;
   border: none;
   outline: none;
 }

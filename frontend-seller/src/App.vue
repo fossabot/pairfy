@@ -90,7 +90,6 @@ startWalletService()
 }
 
 .header {
-  background: var(--background-a);
   border-bottom: 1px solid var(--border-a);
   padding: 0 1rem;
 }
