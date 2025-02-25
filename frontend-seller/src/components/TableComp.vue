@@ -179,6 +179,7 @@ const nextPage = () => {
   flex-direction: column;
   color: var(--text-a);
   border-radius: 0px;
+  transition: 0.2s;
   overflow: hidden;
   width: 100%;
 }
@@ -195,7 +196,6 @@ const nextPage = () => {
 
 .header .header-right button {
   background: var(--background-a);
-  transition: 0.2s;
   flex-direction: column;
   padding: 0.75rem;
   display: flex;
