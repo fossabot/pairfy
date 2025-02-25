@@ -10,10 +10,11 @@ import { ref, computed } from "vue";
 
 const props = defineProps({
     modelValue: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    value: Object
 });
 
-const emit = defineEmits(["onPaused"]);
+const emit = defineEmits(["onChange"]);
 
 const isChecked = ref(props.modelValue);
 
@@ -24,7 +25,7 @@ const toggle = () => {
 
     isChecked.value = !isChecked.value;
 
-    emit("onPaused")
+    emit("onChange", isChecked.value, props.value)
 };
 </script>
 

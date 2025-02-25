@@ -5,7 +5,7 @@
                 :draggable="false">
                 <div class="card-message flex">
                     <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                    }}</b>?</span>
+                            }}</b>?</span>
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -23,7 +23,7 @@
 
 
                 <template #col-id="{ value, item }">
-                    {{ value }} {{ item.created_at }}
+                    {{ value }}
                 </template>
 
                 <template #col-sku="{ value }">
@@ -41,7 +41,7 @@
                             <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
                         </div>
                         <span>
-                            <MiniSwitch :modelValue="item.discount" />
+                            <MiniSwitch :modelValue="item.discount" :value="item" @onChange="handleDiscount" />
                         </span>
                     </div>
                 </template>
@@ -50,8 +50,8 @@
                     {{ convertDate(value, 'YYYY-MM-DD') }}
                 </template>
 
-                <template #col-paused="{ value }">
-                    <SwitchComp :modelValue="value == 0" @onPaused="" />
+                <template #col-paused="{ value, item }">
+                    <SwitchComp :modelValue="value == 0" :value="item" @onChange="handlePaused" />
                 </template>
 
                 <template #action="{ item }">
@@ -243,6 +243,14 @@ const handleDottedMenu = (event, value) => {
         editProduct(value.id);
         return;
     }
+}
+
+const handleDiscount = (event, value) => {
+    console.log(event, value.id);
+}
+
+const handlePaused = (event, value) => {
+    console.log(event, value.id);
 }
 
 const showSuccess = (content) => {
