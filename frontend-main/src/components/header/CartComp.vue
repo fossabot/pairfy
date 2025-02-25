@@ -1,6 +1,6 @@
 <template>
     <div class="button">
-        <OverlayBadge value="1" severity="danger" id="notifications"> 
+        <OverlayBadge value="0" severity="danger" id="notifications"> 
         <img class="icon" src="@/assets/icons/cart.svg" alt=""> 
     </OverlayBadge>
     </div>
