@@ -9,7 +9,7 @@
                 </div>
                 <template #footer>
                     <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
-                    <Button label="Yes" @click="onDeleteConfirmed" style="color: var(--text-w)" />
+                    <Button label="Yes" @click="deleteProductConfirmation" style="color: var(--text-w)" />
                 </template>
             </Dialog>
 
@@ -77,7 +77,6 @@ import MiniSwitch from '@/components/MiniSwitch.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
-import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
@@ -87,6 +86,12 @@ const { reduceArrayByIndex, getDiscount, applyDiscount, formatSKU, convertDate, 
 const toast = useToast();
 
 const router = useRouter();
+
+const dottedMenuOptions = ref([
+    { label: "Delete Product", value: "delete" },
+    { label: "Edit Product", value: "edit" },
+    { label: "Open Page", value: "open" }
+])
 
 const queryOptions = {
     clientId: 'product'
@@ -98,7 +103,7 @@ const variablesRef = ref({
     }
 })
 
-const { result: getProductsResult, onError: onGetProductsError, refetch: getProductsRefetch } = useQuery(gql`
+const { result: getProductsResult, onError: onErrorGetProducts, refetch: getProductsRefetch } = useQuery(gql`
 query($getProductsVariable: GetProductsInput!){
     getProducts(getProductsInput: $getProductsVariable){
         products {
@@ -125,7 +130,7 @@ query($getProductsVariable: GetProductsInput!){
     queryOptions
 );
 
-onGetProductsError(error => {
+onErrorGetProducts(error => {
     showError("The connection to the server has failed, please try again later.");
 })
 
@@ -152,6 +157,7 @@ const columns = ref([
     { label: "Paused", field: "paused" },
 ]);
 
+
 const unwatchProductResult = watch(getProductsResult, value => {
     if (value) {
         const reduce = reduceArrayByIndex(value.getProducts.products, "id");
@@ -177,10 +183,13 @@ const handleOnPrev = (event) => {
 
 const handleOnNext = (event) => {
     console.log(event.created_at)
+
     updateCursor(event.created_at)
 }
 
-const { mutate: sendDeleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
+//////////////////////////////////////////////////////////////////////////////////////
+
+const { mutate: deleteProduct, onError: onErrorDeleteProduct, onDone: onDeleteProduct } = useMutation(gql`
     mutation($deleteProductVariable: DeleteProductInput!){
         deleteProduct(deleteProductInput: $deleteProductVariable){
             success
@@ -196,8 +205,14 @@ onDeleteProduct(result => {
     showSuccess("The product has been deleted successfully.");
 })
 
-const onDeleteConfirmed = () => {
-    sendDeleteProduct({
+const beforeDeleteProduct = (data) => {
+    selectedProduct.value = data;
+
+    deleteProductDialog.value = true;
+};
+
+const deleteProductConfirmation = () => {
+    deleteProduct({
         "deleteProductVariable": {
             "id": selectedProduct.value.id
         }
@@ -206,15 +221,11 @@ const onDeleteConfirmed = () => {
     deleteProductDialog.value = false;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+
 const buildImageUrl = (data) => {
     return data.media_url + data.image_path + data.image_set.split(",")[0]
 }
-
-const beforeDeleteProduct = (data) => {
-    selectedProduct.value = data;
-
-    deleteProductDialog.value = true;
-};
 
 const editProduct = (id) => {
     router.push({
@@ -224,12 +235,6 @@ const editProduct = (id) => {
         }
     })
 }
-
-const dottedMenuOptions = ref([
-    { label: "Delete Product", value: "delete" },
-    { label: "Edit Product", value: "edit" },
-    { label: "Open Page", value: "open" }
-])
 
 const handleDottedMenu = (event, value) => {
     console.log(event, value.id);
