@@ -1,6 +1,6 @@
 <template>
     <main>
-        <CarpetComp :tabs="['Product inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
+        <CarpetComp :tabs="['Product Inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
             <template #content="{ index }">
 
                 <div class="card" v-if="index === 0">
