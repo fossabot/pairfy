@@ -163,7 +163,7 @@ label {
     min-height: 100vh;
     display: flex;
     width: 325px;
-}
+} 
 
 .panel-row {
     flex-direction: column;
