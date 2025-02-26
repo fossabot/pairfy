@@ -32,15 +32,15 @@ section {
 }
 
 .menu {
-    max-width: calc(var(--body-a)  - 2rem);
+    max-width: calc(var(--body-a)  - 4rem);
     color: inherit;
     width: 100%;
 }
 
 .nav {
     justify-content: space-between;
-    font-size: var(--text-size-1);
-    font-weight: 400;
+    font-size: var(--text-size-0);
+    font-weight: 500;
     cursor: pointer;
     width: inherit;
     color: inherit;

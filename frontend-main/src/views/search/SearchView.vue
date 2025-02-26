@@ -315,6 +315,7 @@ onBeforeUnmount(() => {
     background: var(--background-a);
     box-shadow: var(--shadow-b);
     align-items: flex-start;
+    border-radius: 6px;
     margin-top: 1rem;
     padding: 1.5rem;
 }
