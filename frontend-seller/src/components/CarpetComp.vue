@@ -7,13 +7,12 @@
                     :class="{ enabled: activeTab === index }" @click="onSelect(index)">
 
                     <div class="icon flex">
-                        <i class="pi" :class="props.icons[index]"/>
+                        <i class="pi" :class="props.icons[index]" />
                     </div>
                     <span> {{ item }}</span>
                 </div>
             </div>
-
-
+       
             <slot name="content" :index="activeTab"></slot>
         </div>
     </div>

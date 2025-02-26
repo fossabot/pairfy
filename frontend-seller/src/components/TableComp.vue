@@ -178,7 +178,6 @@ const nextPage = () => {
   font-size: var(--text-size-1);
   flex-direction: column;
   color: var(--text-a);
-  border-radius: 6px;
   transition: 0.2s;
   overflow: hidden;
   width: 100%;
@@ -188,7 +187,7 @@ const nextPage = () => {
   width: inherit;
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
 }
 
 .header-left {

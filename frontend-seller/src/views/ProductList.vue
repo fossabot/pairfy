@@ -1,20 +1,27 @@
 <template>
     <main>
-        <CarpetComp :tabs="['Product List', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
+        <CarpetComp :tabs="['Product inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
             <template #content="{ index }">
-               
+
                 <div class="card" v-if="index === 0">
                     <Dialog v-model:visible="deleteProductDialog" :style="{ width: '450px' }" header="Confirm"
                         :modal="true" :draggable="false">
                         <div class="card-message flex">
                             <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                            }}</b>?</span>
+                                    }}</b>?</span>
                         </div>
                         <template #footer>
                             <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
                             <Button label="Yes" @click="deleteProductConfirmation" style="color: var(--text-w)" />
                         </template>
                     </Dialog>
+
+                    <div class="control flex">
+                        <button class="flex">
+                            <i class="pi pi-plus"></i>
+                            <span>Create</span>
+                        </button>
+                    </div>
 
                     <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
                         :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
@@ -356,5 +363,28 @@ main {
 .tags .discount {
     color: var(--green-a);
     font-weight: 500;
+}
+
+.control {
+    background: var(--background-a);
+    border-bottom: 1px solid var(--border-a);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    padding: 0.75rem;
+}
+
+.control button {
+    background: var(--green-a);
+    padding: 0.75rem 1rem;
+    color: var(--text-w);
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.control button span {
+    font-size: var(--text-size-1);
+    margin-left: 0.5rem;
+    font-weight: 600;
 }
 </style>
