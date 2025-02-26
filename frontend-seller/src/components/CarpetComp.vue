@@ -48,8 +48,8 @@ const onSelect = (index) => {
 }
 
 .tab {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     background: var(--background-b);
     font-size: var(--text-size-2);
     justify-content: flex-start;
