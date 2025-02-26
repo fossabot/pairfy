@@ -5,7 +5,7 @@
         </div>
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 60) }}</span>
+            <span class="title">{{ reduceByLength(props.content.name, 40) }}</span>
 
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
