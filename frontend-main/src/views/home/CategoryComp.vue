@@ -145,7 +145,7 @@ const columnFive = categoryArray.slice(9, 15);
 .category-grid {
     grid-template-columns: repeat(4, 1fr);
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
     width: 100%;
     height: 100vh;
     max-width: var(--body-a);
@@ -156,7 +156,7 @@ const columnFive = categoryArray.slice(9, 15);
 
 .category-col {
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
 }
 
 .category-col:first-child {

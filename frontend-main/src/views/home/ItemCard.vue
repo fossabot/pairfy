@@ -51,7 +51,6 @@ const onSelect = (id) => {
 
 .card {
     background: var(--background-a);
-    box-shadow: var(--shadow-b);
     border-radius: 12px; 
     overflow: hidden;
     cursor: pointer;
