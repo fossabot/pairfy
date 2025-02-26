@@ -31,7 +31,7 @@ const toggle = () => {
 
 <style lang="css" scoped>
 .switch {
-    background: var(--primary-a);
+    background: var(--background-d);
     transition: background 0.3s;
     justify-content: flex-start;
     border-radius: 99px;
@@ -47,7 +47,7 @@ const toggle = () => {
 }
 
 .switch-on {
-    background: var(--background-c);
+    background: var(--primary-a)
 }
 
 .switch-thumb {

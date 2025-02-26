@@ -88,10 +88,9 @@
   --primary-a: var(--blue-a);
 
   --background-a: #ffffff;
-  --background-b: var(--p-surface-100);
-  --background-bs: red;
-  --background-c: var(--p-surface-200);
-  --background-d: var(--p-surface-50);
+  --background-b: #f1f5f9;
+  --background-c: #EEF2F6;
+  --background-d: #E4E8EC;
 
 
   --text-a: #222;

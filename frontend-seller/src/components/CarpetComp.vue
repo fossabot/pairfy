@@ -41,7 +41,7 @@ const onSelect = (index) => {
 }
 
 .body {
-    background: var(--background-c);
+    background: var(--background-d);
     flex-direction: column;
     padding: 0.25rem;
     width: inherit;
@@ -51,9 +51,10 @@ const onSelect = (index) => {
 .tab {
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
-    background: var(--background-d);
+    background: var(--background-b);
     font-size: var(--text-size-2);
     justify-content: flex-start;
+    box-shadow: var(--shadow-c);
     font-weight: 600;
     cursor: pointer;
     margin-top: 0.5rem;
