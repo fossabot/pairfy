@@ -157,7 +157,7 @@ onBeforeUnmount(() => {
 }
 
 .block-item.active {
-    border: 1px solid var(--border-b);
+    border: 1px solid var(--primary-a);
 }
 
 .block-item img {
