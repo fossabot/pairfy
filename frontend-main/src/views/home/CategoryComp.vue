@@ -53,7 +53,8 @@
 
 
         <div class="banner flex">
-            <div class="banner-item" v-for="(item, index) in columnFive" :key="index">
+            <div class="banner-item" v-for="(item, index) in columnFive" :key="index"
+                @click="searchCategory(item.name)">
                 <img class="banner-image" :src="getURL(item.index)" alt="">
                 <span class="banner-name">{{ item.name }}</span>
             </div>
@@ -145,7 +146,7 @@ const columnFive = categoryArray.slice(9, 15);
 .category-grid {
     grid-template-columns: repeat(4, 1fr);
     display: grid;
-    gap: 0.75rem;
+    gap: 1rem;
     width: 100%;
     height: 100vh;
     max-width: var(--body-a);
@@ -156,7 +157,7 @@ const columnFive = categoryArray.slice(9, 15);
 
 .category-col {
     display: grid;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .category-col:first-child {
@@ -238,9 +239,10 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .banner-item {
-    align-items: center;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
+    cursor: pointer;
     display: flex;
 }
 
