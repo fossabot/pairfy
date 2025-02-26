@@ -184,10 +184,10 @@ const nextPage = () => {
 }
 
 .header {
-  width: inherit;
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
   padding: 0.75rem;
+  width: inherit;
 }
 
 .header-left {
@@ -221,7 +221,7 @@ const nextPage = () => {
 .search {
   background: var(--background-b);
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 999px;
   padding: 0 1rem;
 }
 
