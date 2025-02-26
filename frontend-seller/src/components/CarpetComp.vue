@@ -41,7 +41,7 @@ const onSelect = (index) => {
 }
 
 .body {
-    background: var(--background-d);
+    background: var(--background-c);
     flex-direction: column;
     padding: 0.25rem;
     width: inherit;
