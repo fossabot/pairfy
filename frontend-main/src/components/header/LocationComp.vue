@@ -65,7 +65,7 @@
             <i class="pi pi-map-marker" />
         </div>
         <div class="box">
-            <span class="flex">Deliver to
+            <span class="flex">
                 <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
                     :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
@@ -178,12 +178,11 @@ onBeforeUnmount(() => {
 }
 
 .icon i {
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-2);
 }
 
 .box {
     display: flex;
-    flex-direction: column;
 }
 
 .box span img {

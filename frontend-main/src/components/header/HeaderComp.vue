@@ -5,16 +5,12 @@
         <div class="header">
             <div class="header-col left">
                 <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
-
-                <LocationComp />
             </div>
             <div class="header-col center">
                 <SearchComp />
             </div>
             <div class="header-col right">
-
                 <AgentButton />
-
             </div>
         </div>
 
@@ -27,7 +23,7 @@
 <script setup>
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
-import LocationComp from '@/components/header/LocationComp.vue';
+
 import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
@@ -141,7 +137,7 @@ header {
 
 .header {
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 20% 60% 20%;
     max-width: var(--body-a);
     width: 100%;
 }
