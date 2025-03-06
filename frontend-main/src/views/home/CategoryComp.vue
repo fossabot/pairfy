@@ -1,60 +1,18 @@
 <template>
     <div class="category">
-       <BandComp/>
         <div class="category-grid">
-            <div class="category-col first">
-                <div class="category-card" v-for="(item, index) in columnOne" :key="index"
-                    @click="searchCategory(item.name)">
-                    <div class="category-title">{{ item.name }}</div>
-                    <div class="category-body" :style="{ background: item.background }">
-                        <div class="category-image"
-                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
-                    </div>
-                </div>
+            <div class="category-col">
+               
             </div>
-            <div class="category-col second">
-                <div class="category-card" v-for="(item, index) in columnTwo" :key="index"
-                    @click="searchCategory(item.name)">
-                    <div class="category-title">{{ item.name }}</div>
-                    <div class="category-body" :style="{ background: item.background }">
-                        <div class="category-image"
-                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
-                    </div>
+            <div class="category-col">
+                <BandComp/>
+            </div>
+            <div class="category-col">
 
-                </div>
-            </div>
-            <div class="category-col third">
-                <div class="category-card" v-for="(item, index) in columnThree" :key="index"
-                    @click="searchCategory(item.name)">
-                    <div class="category-title">{{ item.name }}</div>
-                    <div class="category-body" :style="{ background: item.background }">
-                        <div class="category-image"
-                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
-                    </div>
-                </div>
             </div>
 
-            <div class="category-col four">
-                <div class="category-card" v-for="(item, index) in columnFour" :key="index"
-                    @click="searchCategory(item.name)">
-                    <div class="category-title">{{ item.name }}</div>
-                    <div class="category-body" :style="{ background: item.background }">
-                        <div class="category-image"
-                            :style="{ backgroundImage: `url(${getURL(item.index)})`, backgroundPositionY: item.y, backgroundPositionX: item.x }" />
-                    </div>
-                </div>
-            </div>
         </div>
 
-
-
-        <div class="banner flex">
-            <div class="banner-item" v-for="(item, index) in columnFive" :key="index"
-                @click="searchCategory(item.name)">
-                <img class="banner-image" :src="getURL(item.index)" alt="">
-                <span class="banner-name">{{ item.name }}</span>
-            </div>
-        </div>
 
     </div>
 </template>
@@ -134,30 +92,31 @@ const columnFive = categoryArray.slice(9, 15);
     justify-content: center;
     color: var(--text-a);
     align-items: center;
-    position: relative;
     display: flex;
     width: 100%;
 }
 
 .category-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 3fr 1fr;
+    margin-top: 1rem;
     display: grid;
+    z-index: 2;
     gap: 1rem;
     width: 100%;
-    height: 100vh;
     max-width: var(--body-a);
     max-height: var(--body-a);
-    margin-top: 1rem;
-    z-index: 2;
 }
 
 .category-col {
+    border-radius: 12px;
     display: grid;
     gap: 1rem;
 }
 
 .category-col:first-child {
     grid-template-rows: 1fr 2fr 1fr;
+    background: var(--primary-a);
 }
 
 .category-col:nth-child(2) {
@@ -166,6 +125,7 @@ const columnFive = categoryArray.slice(9, 15);
 
 .category-col:last-child {
     grid-template-rows: 1fr 2fr 1fr;
+    background: var(--background-b);
 }
 
 .category-card {
@@ -205,42 +165,6 @@ const columnFive = categoryArray.slice(9, 15);
     background-repeat: no-repeat;
 }
 
-.banner-image {
-    border-radius: 50%;
-    overflow: hidden;
-    width: 150px;
-}
-
-.banner {
-    background: var(--background-a);
-    border-top-right-radius: 24px;
-    border-top-left-radius: 24px;
-    justify-content: center;
-    margin-top: 1rem;
-    padding: 2rem 0;
-    flex-wrap: wrap;
-    width: inherit;
-    display: flex;
-    gap: 2rem;
-}
-
-.banner-item {
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    display: flex;
-}
-
-.banner-name {
-    font-size: var(--text-size-2);
-    white-space: break-spaces;
-    word-break: break-word;
-    text-align: center;
-    margin-top: 1rem;
-    font-weight: 500;
-    height: 45px;
-}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

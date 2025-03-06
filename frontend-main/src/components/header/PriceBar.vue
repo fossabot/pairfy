@@ -28,10 +28,10 @@ const { formatPriceToUSD } = inject('utils');
 
 <style lang="css" scoped>
 .bar {
-    border-bottom: 1px solid var(--border-b);
+    justify-content: center;
     width: inherit;
     height: 2rem;
-    justify-content: center;
+    
 }
 
 .bar-body {

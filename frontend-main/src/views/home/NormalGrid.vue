@@ -40,7 +40,7 @@ const props = defineProps(['content', 'title'])
   display: grid;
   width: 100%;
   gap: 1rem;
-  row-gap: 1rem;
+  row-gap: 2rem;
 }
 
 .icon {

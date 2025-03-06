@@ -58,7 +58,7 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 3rem;
     overflow: hidden;
-    border-radius: 6px;
+    border-radius: 12px;
     background: var(--background-a);
     border: 2px solid var(--primary-a);
 }
@@ -88,12 +88,12 @@ onBeforeUnmount(() => {
 .search-button {
     border-left: 1px solid var(--border-a);
     background: var(--primary-a);
-    height: calc(100% - 4px);
-    padding: 0 1.25rem;
-    border: none;
-    cursor: pointer;
+    border-radius: calc(12px - 4px);
+    height: calc(100%  - 4px);
     color: var(--text-w);
-    border-radius: 4px;
+    padding: 0 1.25rem;
+    cursor: pointer;
+    border: none;
     margin: 2px;
 }
 

@@ -439,6 +439,7 @@ const setCategoryRef = (el, category) => {
 
 <style lang="css" scoped>
 .body {
+  background: var(--background-a);
   min-height: 100vh;
   display: grid;
   width: 100%;
@@ -475,7 +476,6 @@ section.visible {
 }
 
 .top {
-  background: var(--background-a);
   min-height: 300px;
   justify-content: center;
   flex-direction: column;
@@ -484,7 +484,6 @@ section.visible {
 }
 
 .bottom {
-  background: var(--background-a);
   display: flex;
   flex-direction: column;
   justify-content: center;
