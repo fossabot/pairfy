@@ -213,14 +213,13 @@ const columnFive = categoryArray.slice(9, 15);
 
 .banner {
     background: var(--background-a);
-    border-top-right-radius: 12px;
-    border-top-left-radius: 12px;
+    border-top-right-radius: 24px;
+    border-top-left-radius: 24px;
     justify-content: center;
-    width: inherit;
-    max-width: var(--body-a);
-    padding: 2rem 0;
     margin-top: 1rem;
+    padding: 2rem 0;
     flex-wrap: wrap;
+    width: inherit;
     display: flex;
     gap: 2rem;
 }
