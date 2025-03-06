@@ -115,16 +115,16 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-col:first-child {
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr;
     background: var(--primary-a);
 }
 
 .category-col:nth-child(2) {
-    grid-template-rows: 1.5fr 1.5fr 1fr;
+    grid-template-rows: 1.5fr 1.5fr;
 }
 
 .category-col:last-child {
-    grid-template-rows: 1fr 2fr 1fr;
+    grid-template-rows: 1fr 2fr;
     background: var(--background-b);
 }
 

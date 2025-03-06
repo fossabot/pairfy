@@ -412,6 +412,8 @@ Object.keys(feedData.value).forEach((category) => {
   visibilityMap[category] = false;
 });
 
+visibilityMap["Best Sellers"] = true;
+
 const setCategoryRef = (el, category) => {
   if (el) {
     categoryRefs.value[category] = el;
