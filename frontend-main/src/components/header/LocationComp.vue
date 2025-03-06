@@ -69,6 +69,7 @@
                 <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
                     :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
+            <span class="separator">|</span>
             <span>{{ getLocationData?.name }}</span>
         </div>
     </div>
@@ -173,8 +174,8 @@ onBeforeUnmount(() => {
 }
 
 .icon {
-    width: 30px;
     height: inherit;
+    margin-right: 0.5rem;
 }
 
 .icon i {
@@ -185,9 +186,6 @@ onBeforeUnmount(() => {
     display: flex;
 }
 
-.box span img {
-    margin-left: 0.5rem;
-}
 
 .box span:nth-child(1) {
     font-size: var(--text-size-0);
@@ -203,7 +201,6 @@ onBeforeUnmount(() => {
 
 .flag {
     width: 1.5rem;
-    margin-right: 1rem;
 }
 
 .flag-mini {
@@ -229,5 +226,10 @@ onBeforeUnmount(() => {
 
 .dialog-header i {
     margin-left: 0.5rem;
+}
+
+.separator {
+    color: var(--text-b);
+    margin: 0 0.5rem;
 }
 </style>

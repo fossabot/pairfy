@@ -2,7 +2,9 @@
   <div class="box">
     <div class="title flex">
       <span>{{ props.title }}</span>
-      <img class="icon" src="@/assets/icons/hot.png" alt="">
+      <div class="icon flex">
+        <img src="@/assets/icons/hot.png" alt="">
+      </div>
     </div>
     <Divider />
     <div class="grid">
@@ -44,7 +46,18 @@ const props = defineProps(['content', 'title'])
 }
 
 .icon {
-    width: 34px;
+  background: var(--pastel-barely-blush);
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  padding: 0.5rem;
+  display: flex;
+  width: 3rem;
+}
+
+.icon img {
+  width: 2rem;
 }
 
 @media (min-width: 768px) {
