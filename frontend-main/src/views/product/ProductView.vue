@@ -126,7 +126,6 @@ onBeforeUnmount(() => {
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    background: var(--background-b);
 }
 
 .container {

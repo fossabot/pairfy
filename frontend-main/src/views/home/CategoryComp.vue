@@ -1,6 +1,6 @@
 <template>
     <div class="category">
-        <BandComp />
+       
         <div class="category-grid">
             <div class="category-col first">
                 <div class="category-card" v-for="(item, index) in columnOne" :key="index"
@@ -46,10 +46,6 @@
             </div>
         </div>
 
-        <div class="title flex">
-            <span>Trending on Cardano</span>
-            <img class="icon" src="@/assets/icons/hot.png" alt="">
-        </div>
 
 
         <div class="banner flex">
@@ -209,18 +205,6 @@ const columnFive = categoryArray.slice(9, 15);
     background-repeat: no-repeat;
 }
 
-.title {
-    font-size: var(--text-size-4);
-    max-width: var(--body-a);
-    font-weight: bold;
-    margin-top: 2rem;
-    width: inherit;
-}
-
-.icon {
-    width: 34px;
-}
-
 .banner-image {
     border-radius: 50%;
     overflow: hidden;
@@ -228,13 +212,16 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .banner {
+    background: var(--background-a);
+    border-top-right-radius: 12px;
+    border-top-left-radius: 12px;
+    justify-content: center;
     width: inherit;
     max-width: var(--body-a);
+    padding: 2rem 0;
+    margin-top: 1rem;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
-    border-radius: 0px;
-    margin: 2rem 0;
     gap: 2rem;
 }
 

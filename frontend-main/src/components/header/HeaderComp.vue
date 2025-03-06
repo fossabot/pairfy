@@ -126,7 +126,7 @@ header {
     align-items: center;
     font-size: var(--text-size-1);
     background: var(--background-a);
-    border-bottom: 1px solid var(--border-a);
+    box-shadow: var(--shadow-b);
 }
 
 .header{

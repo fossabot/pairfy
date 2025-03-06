@@ -51,10 +51,8 @@ const onSelect = (id) => {
 
 .card {
     background: var(--background-a);
-    border-radius: 12px; 
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
 }
 
 .body {
