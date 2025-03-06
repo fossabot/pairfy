@@ -1,7 +1,10 @@
 <template>
   <div class="box">
-    <div class="title">{{ props.title }}</div>
-    <Divider/>
+    <div class="title flex">
+      <span>{{ props.title }}</span>
+      <img class="icon" src="@/assets/icons/hot.png" alt="">
+    </div>
+    <Divider />
     <div class="grid">
       <ItemCard v-for="item, index in content" :key="index" :content="item"
         :style="{ minHeight: '100%', maxHeight: '100%' }" />
@@ -25,7 +28,7 @@ const props = defineProps(['content', 'title'])
   margin-bottom: 2rem;
 }
 
-.title{
+.title {
   font-size: var(--text-size-4);
   font-weight: 700;
 }
@@ -38,6 +41,10 @@ const props = defineProps(['content', 'title'])
   width: 100%;
   gap: 1rem;
   row-gap: 1rem;
+}
+
+.icon {
+    width: 34px;
 }
 
 @media (min-width: 768px) {
