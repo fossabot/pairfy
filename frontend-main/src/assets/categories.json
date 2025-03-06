@@ -3,7 +3,7 @@
     "name": "Electronics & Digital Content",
     "keywords": "gadgets, smartphones, laptops, computers, software, electronics, tech, digital products, streaming, apps",
     "index": "0",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "55%"
   },
@@ -11,7 +11,7 @@
     "name": "Clothing & Fashion",
     "keywords": "apparel, fashion, clothes, outfits, trends, style, menswear, womenswear, accessories, shoes",
     "index": "1",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -19,7 +19,7 @@
     "name": "Health & Beauty",
     "keywords": "skincare, makeup, personal care, beauty products, health, wellness, fitness, hair care, cosmetics, nutrition",
     "index": "2",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "20%"
   },
@@ -27,7 +27,7 @@
     "name": "Books, Music & Movies",
     "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
     "index": "3",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "20%"
   },
@@ -35,7 +35,7 @@
     "name": "Home & Garden",
     "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, tools",
     "index": "4",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -43,7 +43,7 @@
     "name": "Toys, Hobbies & Collectibles",
     "keywords": "toys, hobbies, action figures, collectibles, games, puzzles, model kits, figurines, arts and crafts, collecting",
     "index": "5",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "30%"
   },
@@ -51,7 +51,7 @@
     "name": "Sports & Outdoors & Entertainment",
     "keywords": "sports equipment, outdoor gear, fitness, exercise, hiking, camping, biking, sportswear, athletics, recreation",
     "index": "6",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -59,7 +59,7 @@
     "name": "Grocery & Gourmet Food",
     "keywords": "food, gourmet, snacks, organic, groceries, beverages, kitchen essentials, meal kits, fresh produce, specialty foods",
     "index": "7",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -67,7 +67,7 @@
     "name": "Automotive & Industrial",
     "keywords": "cars, motorcycles, automotive parts, car accessories, tools, industrial equipment, mechanical, vehicle repair, motor parts, garage",
     "index": "8",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -75,7 +75,7 @@
     "name": "Office Supplies & Equipment",
     "keywords": "office supplies, stationery, computers, office furniture, printers, desks, chairs, organization, business equipment, workplace",
     "index": "9",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "60%"
   },
@@ -83,7 +83,7 @@
     "name": "Pet Supplies",
     "keywords": "pets, pet food, pet toys, dog accessories, cat supplies, pet grooming, pet health, aquarium, pet training, animal care",
     "index": "10",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -91,7 +91,7 @@
     "name": "Lights & Lighting",
     "keywords": "lighting, lamps, light bulbs, LED, chandeliers, home lighting, outdoor lights, ceiling lights, wall sconces, floor lamps",
     "index": "11",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "10%"
   },
@@ -99,7 +99,7 @@
     "name": "Mother & Kids",
     "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care",
     "index": "12",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -107,7 +107,7 @@
     "name": "Shoes & Accessories",
     "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
     "index": "13",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   },
@@ -115,7 +115,7 @@
     "name": "Art & NFT's",
     "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
     "index": "14",
-    "background": "var(--background-b)",
+    "background": "var(--background-a)",
     "x": "50%",
     "y": "50%"
   }

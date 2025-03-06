@@ -1,6 +1,6 @@
 <template>
     <div class="category">
-       
+       <BandComp/>
         <div class="category-grid">
             <div class="category-col first">
                 <div class="category-card" v-for="(item, index) in columnOne" :key="index"
@@ -169,7 +169,7 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-card {
-    background: var(--background-a);
+    background: var(--background-b);
     font-size: var(--text-size-3);
     box-shadow: var(--shadow-b);
     justify-content: center;

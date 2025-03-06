@@ -475,6 +475,7 @@ section.visible {
 }
 
 .top {
+  background: var(--background-a);
   min-height: 300px;
   justify-content: center;
   flex-direction: column;
