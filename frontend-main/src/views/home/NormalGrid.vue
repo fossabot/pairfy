@@ -27,7 +27,6 @@ const props = defineProps(['content', 'title'])
 
 .title{
   font-size: var(--text-size-4);
-  color: var(--primary-a);
   font-weight: 700;
 }
 

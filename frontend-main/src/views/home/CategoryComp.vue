@@ -195,7 +195,7 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-body {
-    border-radius: 0px;
+    border-radius: 12px;
     overflow: hidden;
     margin-top: 0.5rem;
     width: inherit;
