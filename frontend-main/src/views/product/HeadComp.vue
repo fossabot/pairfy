@@ -24,7 +24,6 @@ const { getProductData } = productAPI();
     background: var(--background-b);
     font-size: var(--text-size-0);
     text-transform: capitalize;
-    border-radius: 6px;
     padding: 1rem;
 }
 
