@@ -118,7 +118,7 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-col:first-child {
-    grid-template-rows: 3fr 0fr;
+    grid-template-rows: auto;
 }
 
 .category-col:nth-child(2) {

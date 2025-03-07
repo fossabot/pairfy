@@ -85,8 +85,8 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 .cover {
-    width: 100%;
     justify-content: center;
+    width: 100%;
     z-index: 1;
     top: 0;
 }
@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
     overflow: hidden;
     position: relative;
     display: flex;
-    height: 300px;
+    height: 100%;
     width: 100%;
     border-radius: 12px;
     max-width: var(--body-a);
