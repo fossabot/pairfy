@@ -1,15 +1,17 @@
 <template>
     <div class="preview" v-if="getProductData">
 
-        <div class="preview-name">
-            {{ getProductData.name }}
-        </div>
-
         <div class="preview-model">
             <span>Model {{ getProductData.model }} <span>
                 </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
             <span class="gray"> +{{ getProductData.sold }} Sold</span>
         </div>
+
+
+        <div class="preview-name">
+            {{ getProductData.name }}
+        </div>
+
 
         <Divider />
 
@@ -107,6 +109,7 @@ const keywordList = computed(() => {
 .preview-name {
     font-size: var(--text-size-4);
     line-height: 2.25rem;
+    margin-top: 1rem;
     font-weight: 500;
 }
 
@@ -130,7 +133,6 @@ const keywordList = computed(() => {
 
 .preview-model {
     font-size: var(--text-size-0);
-    margin-top: 1rem;
     display: flex;
 }
 
