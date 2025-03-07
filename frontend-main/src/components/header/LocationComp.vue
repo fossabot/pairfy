@@ -61,15 +61,16 @@
     </Dialog>
 
     <div class="location flex" @click="dialogVisible = true">
-        <div class="icon flex">
-            <i class="pi pi-map-marker" />
-        </div>
+
         <div class="box">
             <span class="flex">
                 <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
                     :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
             <span class="separator">|</span>
+            <div class="icon flex">
+                <i class="pi pi-map-marker" />
+            </div>
             <span>{{ getLocationData?.name }}</span>
         </div>
     </div>
@@ -169,8 +170,8 @@ onBeforeUnmount(() => {
     color: inherit;
     white-space: nowrap;
     text-align: start;
-    margin: 0 auto;
     cursor: pointer;
+    margin-right: auto;
 }
 
 .icon {
