@@ -6,6 +6,7 @@
             </div>
             <div class="category-col">
                 <BandComp/>
+                <GridComp />
             </div>
             <div class="category-col">
 
@@ -20,6 +21,7 @@
 <script setup>
 import CategoryComp from '@/views/home/CategoryComp.vue';
 import BandComp from '@/views/home/BandComp.vue';
+import GridComp from '@/views/home/GridComp.vue';
 import categories from '@/assets/categories.json';
 import asset0 from "@/assets/icons/0.png";
 import asset1 from "@/assets/icons/1.png";
@@ -38,6 +40,7 @@ import asset13 from "@/assets/icons/13.jpeg";
 import asset14 from "@/assets/icons/14.jpeg";
 import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
+
 
 
 const categoryList = ref(categories);
