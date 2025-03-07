@@ -158,31 +158,22 @@
   --black-b: #10161e;
   --black-c: #2a3038;
 
-  --pastel-coral: #ff7a86;
-  --pastel-rosy-blush: #ff8f99;
-  --pastel-peach-rose: #ffa4ad;
-  --pastel-soft-petal-pink: #ffbac2;
-  --pastel-gentle-cherry-blossom: #ffcfd6;
-  --pastel-misty-rose: #ffe4ea;
-  --pastel-faded-watermelon: #ff99a8;
-  --pastel-pale-strawberry: #ffb0b9;
-  --pastel-dreamy-pink: #ffd3d7;
-  --pastel-barely-blush: #ffe8eb;
+  --pastel-1: #FF6680;  /* Light Pastel Red */
+  --pastel-2: #FF8099;  /* Soft Coral Pink */
+  --pastel-3: #FF99B3;  /* Peachy Pink */
+  --pastel-4: #FFB3C7;  /* Blush Pink */
+  --pastel-5: #FFCCD9;  /* Baby Pink */
+  --pastel-6: #FFE6EC;  /* Very Light Pink */
 
-  /*
-
-#7FAAFF (Azul pastel)  
-#A7C7FF (Celeste pastel)  
-#C3B8FF (Lavanda pastel)  
-#D6C2FF (Lila pastel)  
-#FFC2E2 (Rosa pastel)  
-#FFB6A3 (Coral pastel)  
-#FFDAC1 (Durazno pastel)  
-#FFF4A3 (Amarillo pastel)  
-#A8E6CF (Turquesa pastel)  
-#B3E5FC (Verde menta pastel)  
-
-  */
+/* Complementary Pastel Colors */
+--pastel-yellow: #FFEB99;  /* Soft Peach Yellow */
+--pastel-orange: #FFC299;  /* Light Apricot */
+--pastel-mint: #A8E6CF;  /* Mint Green */
+--pastel-blue: #A3D8FF;  /* Soft Baby Blue */
+--pastel-lavender: #C8A2C8;  /* Lavender Purple */
+--pastel-lilac: #E0BBE4;  /* Lilac */
+--pastel-teal: #B3E6E0;  /* Soft Teal */
+--pastel-cream: #FFF5E1;  /* Cream White */
 }
 
 *,
