@@ -64,9 +64,11 @@ const openProduct = (id) => {
 }
 
 .preview {
+    background: var(--background-b);
+    border-radius: 12px;
     overflow: hidden;
-    width: 220px;
     height: 220px;
+    width: 220px;
 }
 
 .image {

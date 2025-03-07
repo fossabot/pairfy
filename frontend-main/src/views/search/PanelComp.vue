@@ -162,7 +162,7 @@ label {
     margin-right: 1.5rem;
     min-height: 100vh;
     display: flex;
-    width: 325px;
+    width: 350px;
 } 
 
 .panel-row {
