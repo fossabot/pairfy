@@ -23,8 +23,8 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import banner1 from '@/assets/banner/1.png';
-import banner2 from '@/assets/banner/2.png';
+import banner1 from '@/assets/banner/1.webp';
+import banner2 from '@/assets/banner/2.webp';
 
 
 const imageList = ref([
