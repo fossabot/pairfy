@@ -135,7 +135,7 @@
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
-  --red-a: #ff0036;
+  --red-a: #ff2e4d;
   --green-a: #10b981;
   --orange-a: #ff7733;
   --orange-b: #ff4500;
@@ -147,33 +147,29 @@
   --logo-a: #2648A4;
   --logo-b: var(--red-a);
 
-  --soft-red-a: rgba(255, 56, 92, 0.8);
-  --soft-yellow-a: rgba(252, 188, 5, 0.3);
-  --soft-yellow-b: rgba(255, 230, 0, 0.2);
-  --soft-white-a: rgba(255, 255, 255, 0.1);
-  --soft-cyan-a: rgba(96, 163, 255, 0.1);
-  --soft-blue-a: rgba(8, 102, 255, 0.1);
+  --soft-red-a: green;
+  --soft-yellow-a: green;
+  --soft-yellow-b: green;
+  --soft-white-a: green;
+  --soft-cyan-a: green;
+  --soft-blue-a: green;
 
   --black-a: #000000;
   --black-b: #10161e;
   --black-c: #2a3038;
 
-  --pastel-1: #FF6680;  /* Light Pastel Red */
-  --pastel-2: #FF8099;  /* Soft Coral Pink */
-  --pastel-3: #FF99B3;  /* Peachy Pink */
-  --pastel-4: #FFB3C7;  /* Blush Pink */
-  --pastel-5: #FFCCD9;  /* Baby Pink */
-  --pastel-6: #FFE6EC;  /* Very Light Pink */
-
-/* Complementary Pastel Colors */
---pastel-yellow: #FFEB99;  /* Soft Peach Yellow */
---pastel-orange: #FFC299;  /* Light Apricot */
---pastel-mint: #A8E6CF;  /* Mint Green */
---pastel-blue: #A3D8FF;  /* Soft Baby Blue */
---pastel-lavender: #C8A2C8;  /* Lavender Purple */
---pastel-lilac: #E0BBE4;  /* Lilac */
---pastel-teal: #B3E6E0;  /* Soft Teal */
---pastel-cream: #FFF5E1;  /* Cream White */
+ 
+    --pastel-primary: #ffb3c1; /* Pastel Pink */
+    --pastel-secondary: #ff9999; /* Soft Coral */
+    --pastel-tertiary: #ffccd5; /* Light Blush */
+    --pastel-accent: #ffc2c7; /* Peachy Pink */
+  
+    --pastel-mint: #b8f2e6; /* Pastel Mint */
+    --pastel-lavender: #e6ccff; /* Lavender Blush */
+    --pastel-blue: #c2e7ff; /* Baby Blue */
+    --pastel-lilac: #d4b8f2; /* Soft Lilac */
+  
+  
 }
 
 *,
