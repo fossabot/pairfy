@@ -38,16 +38,9 @@ import asset11 from "@/assets/icons/11.jpeg";
 import asset12 from "@/assets/icons/12.jpeg";
 import asset13 from "@/assets/icons/13.jpeg";
 import asset14 from "@/assets/icons/14.jpeg";
-import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 
-
-
 const categoryList = ref(categories);
-
-const route = useRoute();
-
-const router = useRouter();
 
 const assets = ref({
     0: asset0,
@@ -71,15 +64,7 @@ const getURL = (index) => {
     return assets.value[index]
 }
 
-const searchCategory = (name) => {
-    router.push({
-        name: 'search',
-        params: route.params,
-        query: {
-            k: name
-        }
-    })
-}
+
 
 const categoryArray = Object.values(categoryList.value);
 

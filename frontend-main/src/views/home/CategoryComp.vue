@@ -1,7 +1,7 @@
 <template>
     <div class="panel">
 
-        <div class="panel-item flex" v-for="item, index in categoryList" :key="index">
+        <div class="panel-item flex" v-for="item, index in categoryList" :key="index" @click="searchCategory(item.name)">
 
             <div class="image flex">
                 <template v-if="index == 0">
@@ -80,11 +80,24 @@
 
 <script setup>
 import categories from '@/assets/categories.json';
-import icon0 from '@/assets/icons/0.svg';
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 
 const categoryList = ref(categories)
 
+const router = useRouter();
+
+const route = useRoute();
+
+const searchCategory = (name) => {
+    router.push({
+        name: 'search',
+        params: route.params,
+        query: {
+            k: name
+        }
+    })
+}
 </script>
 
 <style lang="css" scoped>
@@ -92,6 +105,7 @@ const categoryList = ref(categories)
     background: var(--primary-a);
     padding: 1rem 0.5rem;
     border-radius: 12px;
+    transition: 0.2s;
     height: 100%;
 
 }
