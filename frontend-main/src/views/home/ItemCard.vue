@@ -15,10 +15,6 @@
                 </div>
             </span>
 
-            <div class="shipping flex">
-                <span>Free shipping</span>
-            </div>
-
         </div>
     </div>
 </template>
@@ -75,13 +71,6 @@ const onSelect = (id) => {
     color: var(--primary-a);
     margin-top: 0rem;
     font-weight: 600;
-}
-
-.shipping {
-    font-size: var(--text-size-1);
-    color: var(--green-a);
-    margin-top: 0rem;
-    font-weight: 500;
 }
 
 .dollar {
