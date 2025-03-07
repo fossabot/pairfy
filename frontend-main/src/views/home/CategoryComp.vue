@@ -114,7 +114,6 @@ const searchCategory = (name) => {
     font-size: var(--text-size-0);
     color: var(--text-w);
     border-radius: 6px;
-    margin: 0.25rem 0;
     padding: 0.5rem;
     cursor: default;
 }
