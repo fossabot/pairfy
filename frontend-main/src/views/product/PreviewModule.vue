@@ -12,11 +12,8 @@
             {{ getProductData.name }}
         </div>
 
-
-        <Divider />
-
         <div class="preview-price flex">
-            <div>US $</div>
+            <div>$</div>
             <span>
                 {{ formatCurrency(
                     applyDiscount(getProductData.discount,
@@ -56,7 +53,7 @@
             <label> {{ getProductData.quality }}</label>
         </div>
 
-        <div class="preview-about">About this item</div>
+        <div class="preview-about">All about this product</div>
         <ul class="preview-bullet">
             <li v-for="item in bulletList" :key="item">{{ item }}</li>
         </ul>
@@ -118,9 +115,9 @@ const keywordList = computed(() => {
 }
 
 .preview-price {
-    margin-top: 1rem;
-    font-weight: 500;
     font-size: var(--text-size-5);
+    margin-top: 1rem;
+    font-weight: 400;
 }
 
 .preview-price div {
@@ -143,7 +140,7 @@ const keywordList = computed(() => {
 .preview-about {
     margin-top: 1rem;
     font-weight: 600;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-1);
 }
 
 .preview-bullet {
