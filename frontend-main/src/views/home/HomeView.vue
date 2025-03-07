@@ -447,7 +447,7 @@ const setCategoryRef = (el, category) => {
 }
 
 section.visible {
-  animation: slideUp 0.5s ease-out;
+  animation: slideUp 0.2s ease-out;
 }
 
 @keyframes slideUp {
