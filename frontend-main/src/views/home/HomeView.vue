@@ -23,7 +23,7 @@
 <script setup>
 import NormalGrid from '@/views/home/NormalGrid.vue'
 
-import CategoryComp from '@/views/home/CategoryComp.vue'
+import CategoryComp from '@/views/home/BannerComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref, computed, reactive, onMounted } from 'vue'
 
