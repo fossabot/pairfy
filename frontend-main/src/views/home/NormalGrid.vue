@@ -46,7 +46,7 @@ const props = defineProps(['content', 'title'])
 }
 
 .icon {
-  background: var(--pastel-barely-blush);
+  background: var(--pastel-6);
   justify-content: center;
   align-items: center;
   margin-left: 0.5rem;
