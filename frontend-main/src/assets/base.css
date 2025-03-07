@@ -140,12 +140,9 @@
   --orange-a: #ff7733;
   --orange-b: #ff4500;
   --yellow-a: #fcbc05;
-  --yellow-b: #FFEA00;
-  --blue-a: #2280FF;
+  --yellow-b: #ffea00;
+  --blue-a: #2280ff;
   --cyan-a: #60a3ff;
-
-  --logo-a: #2648A4;
-  --logo-b: var(--red-a);
 
   --soft-red-a: green;
   --soft-yellow-a: green;
@@ -158,18 +155,15 @@
   --black-b: #10161e;
   --black-c: #2a3038;
 
- 
-    --pastel-primary: #ffb3c1; /* Pastel Pink */
-    --pastel-secondary: #ff9999; /* Soft Coral */
-    --pastel-tertiary: #ffccd5; /* Light Blush */
-    --pastel-accent: #ffc2c7; /* Peachy Pink */
-  
-    --pastel-mint: #b8f2e6; /* Pastel Mint */
-    --pastel-lavender: #e6ccff; /* Lavender Blush */
-    --pastel-blue: #c2e7ff; /* Baby Blue */
-    --pastel-lilac: #d4b8f2; /* Soft Lilac */
-  
-  
+  --pastel-primary: #ffb3c1; /* Pastel Pink */
+  --pastel-secondary: #ff9999; /* Soft Coral */
+  --pastel-tertiary: #ffccd5; /* Light Blush */
+  --pastel-accent: #ffc2c7; /* Peachy Pink */
+
+  --pastel-mint: #b8f2e6; /* Pastel Mint */
+  --pastel-lavender: #e6ccff; /* Lavender Blush */
+  --pastel-blue: #c2e7ff; /* Baby Blue */
+  --pastel-lilac: #d4b8f2; /* Soft Lilac */
 }
 
 *,
