@@ -5,7 +5,7 @@
         </div>
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 50) }}</span>
+            <span class="title">{{ reduceByLength(props.content.name, 40) }}</span>
 
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
@@ -72,8 +72,8 @@ const onSelect = (id) => {
 
 .price {
     font-size: var(--text-size-3);
+    color: var(--primary-a);
     margin-top: 0rem;
-    color: var(--text-a);
     font-weight: 600;
 }
 
@@ -90,9 +90,9 @@ const onSelect = (id) => {
 
 .tag {
     font-size: var(--text-size-1);
-    color: var(--primary-a);
     max-width: fit-content;
     display: inline-block;
+    color: var(--green-a);
     white-space: nowrap;
     text-align: center;
     border-radius: 0px;
