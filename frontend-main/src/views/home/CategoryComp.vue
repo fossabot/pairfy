@@ -115,8 +115,7 @@ const searchCategory = (name) => {
     color: var(--text-w);
     border-radius: 6px;
     padding: 0.5rem;
-    cursor: pointer;
-
+    cursor: default;
 }
 
 .panel-item:hover {
