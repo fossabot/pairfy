@@ -441,7 +441,6 @@ const setCategoryRef = (el, category) => {
 
 <style lang="css" scoped>
 .body {
-  background: var(--background-a);
   min-height: 100vh;
   display: grid;
   width: 100%;
