@@ -24,12 +24,10 @@ const { getProductData } = productAPI();
     font-size: var(--text-size-0);
     text-transform: capitalize;
     border-bottom: none;
-    color: var(--text-b);
 }
 
 .card-header div {
     margin: 0 0.5rem;
-    color: var(--text-b);
 }
 
 </style>
