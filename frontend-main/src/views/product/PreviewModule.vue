@@ -129,9 +129,9 @@ const keywordList = computed(() => {
 }
 
 .preview-model {
-    display: flex;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-0);
     margin-top: 1rem;
+    display: flex;
 }
 
 .preview-model span {

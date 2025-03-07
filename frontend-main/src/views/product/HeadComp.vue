@@ -21,9 +21,11 @@ const { getProductData } = productAPI();
 
 <style lang="css" scoped>
 .card-header {
+    background: var(--background-b);
     font-size: var(--text-size-0);
     text-transform: capitalize;
-    border-bottom: none;
+    border-radius: 6px;
+    padding: 1rem;
 }
 
 .card-header div {

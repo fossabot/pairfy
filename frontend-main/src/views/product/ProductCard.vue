@@ -32,8 +32,9 @@ section {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
-    margin-top: 1.5rem;
     padding-bottom: 50px;
+    margin-top: 1rem;
+
 }
 
 

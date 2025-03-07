@@ -122,25 +122,20 @@ onBeforeUnmount(() => {
 .body {
     width: 100%;
     display: flex;
-    position: relative;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
 
 .container {
-    background: var(--background-a);
-    box-shadow: var(--shadow-b);
     flex-direction: column;
     max-width: var(--body-a);
-    position: relative;
-    border-radius: 6px;
+    margin-top: 1rem;
+    overflow: hidden;
     display: flex;
     width: 100%;
     height: auto;
     z-index: 10;
-    overflow: hidden;
-    margin-top: 1.5rem;
-    padding: 1.5rem;
+    padding: 2px; 
 }
 </style>
