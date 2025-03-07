@@ -2,7 +2,7 @@
     <div class="category">
         <div class="category-grid">
             <div class="category-col">
-               
+               <CategoryComp />
             </div>
             <div class="category-col">
                 <BandComp/>
@@ -18,6 +18,7 @@
 </template>
 
 <script setup>
+import CategoryComp from '@/views/home/CategoryComp.vue';
 import BandComp from '@/views/home/BandComp.vue';
 import categories from '@/assets/categories.json';
 import asset0 from "@/assets/icons/0.png";
@@ -109,14 +110,12 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-col {
-    border-radius: 12px;
     display: grid;
     gap: 1rem;
 }
 
 .category-col:first-child {
-    grid-template-rows: 1fr 2fr;
-    background: var(--primary-a);
+    grid-template-rows: 3fr 0fr;
 }
 
 .category-col:nth-child(2) {
