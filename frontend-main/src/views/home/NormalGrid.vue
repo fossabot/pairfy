@@ -41,7 +41,7 @@ const props = defineProps(['content', 'title'])
   grid-auto-rows: auto;
   display: grid;
   width: 100%;
-  gap: 1rem;
+  gap: 1.5rem;
   row-gap: 1.5rem;
 }
 
