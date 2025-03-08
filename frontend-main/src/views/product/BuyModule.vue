@@ -206,7 +206,7 @@
 
             <div class="card-terms-box">
                 <span class="term-title">
-                    <i class="pi pi-exclamation-circle" />
+              
                     Purchase Protection.
                 </span>
                 <span> Receive the product you expected or get your money back.</span>
@@ -630,15 +630,6 @@ a {
     margin-top: 1rem;
     height: 80px;
     box-sizing: border-box;
-}
-
-.card-terms-icon {
-    width: 50px;
-    display: flex;
-    align-items: flex-start;
-    height: inherit;
-    position: relative;
-    padding-top: 4px;
 }
 
 .card-terms-box {
