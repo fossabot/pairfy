@@ -74,11 +74,11 @@ const gridData = ref([
         items: [
             {
                 image: image6,
-                price: 34.00
+                price: 14.00
             },
             {
                 image: image2,
-                price: 23.00
+                price: 33.00
             }
         ]
     },
@@ -91,11 +91,11 @@ const gridData = ref([
         items: [
             {
                 image: image1,
-                price: 34.00
+                price: 30.00
             },
             {
                 image: image2,
-                price: 23.00
+                price: 25.00
             }
         ]
     },
