@@ -71,7 +71,7 @@ const onSelect = (id) => {
 .price {
     font-size: var(--text-size-3);
     color: var(--text-a);
-    margin-top: 0.5rem;
+    margin-top: 0.25rem;
     font-weight: 400;
 }
 
