@@ -103,7 +103,7 @@
 
 .item-head .title {
     font-size: var(--text-size-2);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .item-head .arrow {
