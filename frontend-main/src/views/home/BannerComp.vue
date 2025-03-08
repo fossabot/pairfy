@@ -31,7 +31,7 @@ import GridComp from '@/views/home/GridComp.vue';
 }
 
 .category-grid {
-    grid-template-columns: 1.1fr 3.5fr 1.1fr;
+    grid-template-columns: 1fr 3.5fr 1fr;
     margin-top: 1rem;
     display: grid;
     z-index: 2;
@@ -55,8 +55,8 @@ import GridComp from '@/views/home/GridComp.vue';
 }
 
 .category-col:last-child {
-    grid-template-rows: 1fr 2fr;
     background: var(--background-b);
+    grid-template-rows: 1fr 2fr;
 }
 
 /* Responsive adjustments */

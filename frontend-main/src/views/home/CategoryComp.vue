@@ -113,7 +113,6 @@ const searchCategory = (name) => {
 .panel-item {
     font-size: var(--text-size-0);
     color: var(--text-w);
-    white-space: nowrap;
     border-radius: 6px;
     padding: 0.5rem;
     cursor: default;
