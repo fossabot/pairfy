@@ -11,7 +11,7 @@
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}%</span>
+                    <span>-{{ props.content.discount_value }}% OFF</span>
                 </div>
             </span>
 
@@ -82,11 +82,12 @@ const onSelect = (id) => {
     max-width: fit-content;
     display: inline-block;
     color: var(--green-a);
+    margin-left: 0.25rem;
     white-space: nowrap;
     text-align: center;
     border-radius: 0px;
-    margin-left: 0.25rem;
     line-height: 14px;
+    font-weight: 500;
     padding: 4px 4px;
 }
 
