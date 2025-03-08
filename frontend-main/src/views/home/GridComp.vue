@@ -14,31 +14,31 @@
                     <div class="grid-item">
                         <img class="grid-image" :src="image1" alt="">
                         <div class="grid-price">
-                            <span>$35</span>
+                            <span>$35.00</span>
                         </div>
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" :src="image2" alt="">
                         <div class="grid-price">
-                            <span>$23</span>
+                            <span>$23.00</span>
                         </div>
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" :src="image3" alt="">
                         <div class="grid-price">
-                            <span>$10</span>
+                            <span>$10.00</span>
                         </div>
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" :src="image4" alt="">
                         <div class="grid-price">
-                            <span>$60</span>
+                            <span>$60.00</span>
                         </div>
                     </div>
                     <div class="grid-item">
                         <img class="grid-image" :src="image5" alt="">
                         <div class="grid-price">
-                            <span>$45</span>
+                            <span>$45.00</span>
                         </div>
                     </div>
                 </div>
