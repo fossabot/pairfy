@@ -48,6 +48,11 @@
 
             </div>
         </div>
+
+
+
+
+        
         <div class="box">
             <div class="box-head flex">
                 <div class="title flex">
@@ -161,10 +166,10 @@ import { ref } from 'vue';
     font-size: var(--text-size-0);
     background: var(--red-a);
     color: var(--text-w);
-    margin-left: 0.5rem;
+    margin-left: 0.75rem;
     border-radius: 6px;
     font-weight: 400;
-    padding: 4px 4px;
+    padding: 2px 4px;
 }
 
 .box-head .title {
