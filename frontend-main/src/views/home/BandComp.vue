@@ -23,12 +23,19 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import banner2 from '@/assets/banner/2.webp';
+import banner1 from '@/assets/banner/1.png';
+import banner2 from '@/assets/banner/2.png';
+import banner3 from '@/assets/banner/3.png';
 
 const imageList = ref([
-
+    {   
+        src: banner1
+    },
     {
         src: banner2
+    },
+    {
+        src: banner3
     },
 ])
 
@@ -88,6 +95,7 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 12px;
     max-width: var(--body-a);
+    box-shadow: var(--shadow-b);
 }
 
 .band-track {
@@ -98,6 +106,7 @@ onBeforeUnmount(() => {
 }
 
 .band-item {
+    background-repeat: no-repeat;
     background-position-y: 50%;
     background-size: cover;
     width: inherit;
