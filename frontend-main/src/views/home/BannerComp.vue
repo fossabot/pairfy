@@ -1,36 +1,37 @@
 <template>
-    <div class="category">
-        <div class="category-grid">
-            <div class="category-col">
-               <CategoryComp />
+    <div class="banner">
+        <div class="banner-grid">
+            <div class="banner-col">
+               <LeftPanel />
             </div>
-            <div class="category-col">
+            <div class="banner-col">
                 <BandComp/>
                 <GridComp />
             </div>
-            <div class="category-col">
-
+            <div class="banner-col">
+                <RightPanel />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import CategoryComp from '@/views/home/CategoryComp.vue';
+import LeftPanel from '@/views/home/LeftPanel.vue';
 import BandComp from '@/views/home/BandComp.vue';
 import GridComp from '@/views/home/GridComp.vue';
+import RightPanel from '@/views/home/RightPanel.vue';
 
 </script>
 
 <style lang="css" scoped>
-.category {
+.banner {
     flex-direction: column;
     align-items: center;
     display: flex;
     width: 100%;
 }
 
-.category-grid {
+.banner-grid {
     grid-template-columns: 1fr 3.5fr 1fr;
     margin-top: 1rem;
     display: grid;
@@ -41,33 +42,32 @@ import GridComp from '@/views/home/GridComp.vue';
     max-height: var(--body-a);
 }
 
-.category-col {
+.banner-col {
     display: grid;
     gap: 1rem;
 }
 
-.category-col:first-child {
+.banner-col:first-child {
     grid-template-rows: auto;
 }
 
-.category-col:nth-child(2) {
+.banner-col:nth-child(2) {
     grid-template-rows: 1.5fr 1.5fr;
 }
 
-.category-col:last-child {
-    background: var(--background-b);
-    grid-template-rows: 1fr 2fr;
+.banner-col:last-child {
+    grid-template-rows: auto;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
-    .category-grid {
+    .banner-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         height: auto;
     }
 
-    .category-col {
+    .banner-col {
         grid-template-rows: auto;
     }
 }
