@@ -155,11 +155,16 @@
   --black-b: #10161e;
   --black-c: #2a3038;
 
+  --complementary: #00d1b2; /* Direct complementary (cyan-teal) */
+  --complementary-light: #66e3d0; /* Lighter version */
+  --complementary-dark: #009f8a; /* Darker version */
+  --complementary-muted: #33c4a1; /* Muted version */
+
+
   --pastel-primary: #ffb3c1; /* Pastel Pink */
   --pastel-secondary: #ff9999; /* Soft Coral */
   --pastel-tertiary: #ffccd5; /* Light Blush */
   --pastel-accent: #ffc2c7; /* Peachy Pink */
-
   --pastel-mint: #b8f2e6; /* Pastel Mint */
   --pastel-lavender: #e6ccff; /* Lavender Blush */
   --pastel-blue: #c2e7ff; /* Baby Blue */
