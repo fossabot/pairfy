@@ -86,8 +86,7 @@ const columnFive = categoryArray.slice(9, 15);
 }
 
 .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-columns: 1fr 3.5fr 1fr;
+    grid-template-columns: 1.1fr 3.5fr 1.1fr;
     margin-top: 1rem;
     display: grid;
     z-index: 2;
