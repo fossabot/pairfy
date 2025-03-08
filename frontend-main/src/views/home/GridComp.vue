@@ -176,7 +176,7 @@ import { ref } from 'vue';
 }
 
 .grid-image {
-    height: 70px;
+    height: 75px;
 }
 
 .grid-price {
@@ -185,7 +185,7 @@ import { ref } from 'vue';
     align-items: center;
     width: inherit;
     display: flex;
-    height: 30px;
+    height: 25px;
 }
 
 @media (max-width: 768px) {
