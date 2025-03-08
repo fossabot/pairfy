@@ -176,12 +176,10 @@ import { ref } from 'vue';
 }
 
 .grid-image {
-
     height: 70px;
 }
 
 .grid-price {
-   
     color: var(--primary-a);
     justify-content: center;
     align-items: center;
