@@ -16,7 +16,7 @@
                     <div class="grid-item" v-for="sub in item.items" :key="sub">
                         <img class="grid-image" :src="sub.image" alt="">
                         <div class="grid-price">
-                            <span>$ {{ formatPriceToUSD(sub.price) }}</span>
+                            <span style="margin-top: auto;">${{ formatPriceToUSD(sub.price) }}</span>
                         </div>
                     </div>
                 </div>
@@ -216,7 +216,7 @@ const gridData = ref([
 }
 
 .grid-image {
-    height: 75px;
+    height: 70px;
 }
 
 .grid-price {
@@ -225,7 +225,7 @@ const gridData = ref([
     align-items: center;
     width: inherit;
     display: flex;
-    height: 25px;
+    height: 30px;
 }
 
 @media (max-width: 768px) {
