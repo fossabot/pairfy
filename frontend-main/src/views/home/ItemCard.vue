@@ -70,7 +70,7 @@ const onSelect = (id) => {
     font-size: var(--text-size-3);
     color: var(--text-a);
     margin-top: 0.5rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .dollar {
