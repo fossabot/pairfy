@@ -203,13 +203,13 @@
         </div>
 
         <div class="card-terms flex">
-            <div class="card-terms-icon">
-                <span>✓</span>
-                <i class="pi pi-shield" />
-            </div>
+
             <div class="card-terms-box">
-                <span class="term-title">Purchase Protection.</span> Receive the product you expected or get your money
-                back.
+                <span class="term-title">
+                    <i class="pi pi-exclamation-circle" />
+                    Purchase Protection.
+                </span>
+                <span> Receive the product you expected or get your money back.</span>
             </div>
         </div>
     </div>
@@ -636,17 +636,9 @@ a {
     width: 50px;
     display: flex;
     align-items: flex-start;
-    color: var(--text-b);
     height: inherit;
     position: relative;
     padding-top: 4px;
-}
-
-.card-terms-icon span {
-    position: absolute;
-    right: 11px;
-    top: 3px;
-    font-size: 10px;
 }
 
 .card-terms-box {
