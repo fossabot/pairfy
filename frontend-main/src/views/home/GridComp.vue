@@ -2,7 +2,10 @@
     <div class="container">
         <div class="box">
             <div class="box-head flex">
-                <div class="title">Top best sellers of the week</div>
+                <div class="title flex">
+                    <span>Top best sellers of the week</span>
+                    <span class="tag">-50% Deals</span>
+                </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -47,7 +50,10 @@
         </div>
         <div class="box">
             <div class="box-head flex">
-                <div class="title">Supplies for your work</div>
+                <div class="title flex">
+                    <span>Supplies for your work</span>
+                    <span></span>
+                </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -59,7 +65,10 @@
         </div>
         <div class="box">
             <div class="box-head flex">
-                <div class="title">Create your gaming station</div>
+                <div class="title flex">
+                    <span>Create your gaming station</span>
+                    <span></span>
+                </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -71,7 +80,10 @@
         </div>
         <div class="box">
             <div class="box-head flex">
-                <div class="title">Gym accessories</div>
+                <div class="title flex">
+                    <span>Gym accessories</span>
+                    <span></span>
+                </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -83,7 +95,10 @@
         </div>
         <div class="box">
             <div class="box-head flex">
-                <div class="title">Decorate your room</div>
+                <div class="title flex">
+                    <span>Decorate your room</span>
+                    <span></span>
+                </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -140,6 +155,16 @@ import { ref } from 'vue';
     justify-content: space-between;
     padding: 0.75rem 0;
     width: inherit;
+}
+
+.box-head .tag {
+    font-size: var(--text-size-0);
+    background: var(--red-a);
+    color: var(--text-w);
+    margin-left: 0.5rem;
+    border-radius: 6px;
+    font-weight: 400;
+    padding: 4px 4px;
 }
 
 .box-head .title {
