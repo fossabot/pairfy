@@ -14,9 +14,9 @@ export function formatWithDots(str, reduce) {
   return start + '...' + end
 }
 
-export function reduceByLength(input, length) {
+export function reduceByLength(input, length, suffix) {
   if (input.length > length) {
-    return input.slice(0, length) + '...'
+    return input.slice(0, length) + suffix || '...'
   }
 
   return input

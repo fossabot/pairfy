@@ -5,7 +5,7 @@
         </div>
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 40) }}</span>
+            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span> 
 
             <span class="price flex">
                 <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
@@ -60,16 +60,16 @@ const onSelect = (id) => {
 
 .title {
     font-size: var(--text-size-1);
+    text-overflow: ellipsis;
     margin-top: 0.25rem;
     overflow: hidden;
-    text-overflow: ellipsis;
-
+    font-weight: 600;
 }
 
 .price {
     font-size: var(--text-size-3);
-    color: var(--text-a);
-    margin-top: 0rem;
+    color: var(--primary-a);
+    margin-top: 0.5rem;
     font-weight: 600;
 }
 
