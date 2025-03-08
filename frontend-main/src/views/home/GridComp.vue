@@ -2,7 +2,7 @@
     <div class="container">
         <div class="item">
             <div class="item-head flex">
-                <div class="title">Free shipping</div>
+                <div class="title">Top best sellers of the week</div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -14,7 +14,7 @@
         </div>
         <div class="item">
             <div class="item-head flex">
-                <div class="title">Free shipping</div>
+                <div class="title">Supplies for your work</div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -26,7 +26,7 @@
         </div>
         <div class="item">
             <div class="item-head flex">
-                <div class="title">Free shipping</div>
+                <div class="title">Create your gaming station</div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -38,7 +38,7 @@
         </div>
         <div class="item">
             <div class="item-head flex">
-                <div class="title">Free shipping</div>
+                <div class="title">Gym accessories</div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
@@ -50,7 +50,7 @@
         </div>
         <div class="item">
             <div class="item-head flex">
-                <div class="title">Free shipping</div>
+                <div class="title">Decorate your room</div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
                 </div>
