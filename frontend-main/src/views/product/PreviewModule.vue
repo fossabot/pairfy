@@ -2,9 +2,9 @@
     <div class="preview" v-if="getProductData">
 
         <div class="preview-model">
-            <span>Model {{ getProductData.model }} <span>
-                </span> SKU {{ getProductData.sku.split(":")[0] }} </span>
-            <span class="gray"> +{{ getProductData.sold }} Sold</span>
+            <span>Model {{ getProductData.model }} </span>
+            <span> SKU {{ getProductData.sku.split(":")[0] }} </span>
+            <span> +{{ getProductData.sold }} Sold</span>
         </div>
 
 
@@ -130,6 +130,7 @@ const keywordList = computed(() => {
 
 .preview-model {
     font-size: var(--text-size-0);
+    color: var(--text-b);
     display: flex;
 }
 
