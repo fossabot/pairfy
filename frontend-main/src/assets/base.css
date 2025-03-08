@@ -136,6 +136,7 @@
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --red-a: #ff2e4d;
+  --red-alpha: rgba(255, 46, 77, 0.1);
   --green-a: #10b981;
   --orange-a: #ff7733;
   --orange-b: #ff4500;

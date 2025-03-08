@@ -174,11 +174,11 @@ const gridData = ref([
 
 .box-head .tag {
     font-size: var(--text-size-0);
-    background: var(--red-a);
-    color: var(--text-w);
+    background: var(--red-alpha);
+    color: var(--primary-a);
     margin-left: 0.75rem;
     border-radius: 6px;
-    font-weight: 400;
+    font-weight: 600;
     padding: 2px 4px;
 }
 
@@ -217,6 +217,7 @@ const gridData = ref([
 }
 
 .grid-image {
+    background: var(--background-a);
     height: 70px;
 }
 
