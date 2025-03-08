@@ -1,10 +1,10 @@
 <template>
     <div class="container">
-        <div class="box">
+        <div class="box" v-for="(item, index) in gridData" :key="index">
             <div class="box-head flex">
                 <div class="title flex">
-                    <span>Top best sellers of the week</span>
-                    <span class="tag">-50% Deals</span>
+                    <span>{{ item.title }}</span>
+                    <span class="tag" v-if="item.tag">{{ item.tag_value }}</span>
                 </div>
                 <div class="arrow">
                     <i class="pi pi-angle-right" />
@@ -12,105 +12,14 @@
             </div>
 
             <div class="box-content">
-
                 <div class="grid one">
-                    <div class="grid-item">
-                        <img class="grid-image" :src="image1" alt="">
+                    <div class="grid-item" v-for="sub in item.items" :key="sub">
+                        <img class="grid-image" :src="sub.image" alt="">
                         <div class="grid-price">
-                            <span>$35.00</span>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <img class="grid-image" :src="image2" alt="">
-                        <div class="grid-price">
-                            <span>$23.00</span>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <img class="grid-image" :src="image3" alt="">
-                        <div class="grid-price">
-                            <span>$10.00</span>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <img class="grid-image" :src="image4" alt="">
-                        <div class="grid-price">
-                            <span>$60.00</span>
-                        </div>
-                    </div>
-                    <div class="grid-item">
-                        <img class="grid-image" :src="image5" alt="">
-                        <div class="grid-price">
-                            <span>$45.00</span>
+                            <span>$ {{ formatPriceToUSD(sub.price) }}</span>
                         </div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-
-
-
-
-        
-        <div class="box">
-            <div class="box-head flex">
-                <div class="title flex">
-                    <span>Supplies for your work</span>
-                    <span></span>
-                </div>
-                <div class="arrow">
-                    <i class="pi pi-angle-right" />
-                </div>
-            </div>
-
-            <div class="box-content">
-
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-head flex">
-                <div class="title flex">
-                    <span>Create your gaming station</span>
-                    <span></span>
-                </div>
-                <div class="arrow">
-                    <i class="pi pi-angle-right" />
-                </div>
-            </div>
-
-            <div class="box-content">
-
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-head flex">
-                <div class="title flex">
-                    <span>Gym accessories</span>
-                    <span></span>
-                </div>
-                <div class="arrow">
-                    <i class="pi pi-angle-right" />
-                </div>
-            </div>
-
-            <div class="box-content">
-
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-head flex">
-                <div class="title flex">
-                    <span>Decorate your room</span>
-                    <span></span>
-                </div>
-                <div class="arrow">
-                    <i class="pi pi-angle-right" />
-                </div>
-            </div>
-
-            <div class="box-content">
-
             </div>
         </div>
     </div>
@@ -122,9 +31,110 @@ import image2 from '@/assets/icons/1.png'
 import image3 from '@/assets/icons/2.png'
 import image4 from '@/assets/icons/3.png'
 import image5 from '@/assets/icons/5.png'
+import image6 from '@/assets/icons/6.png'
+import { ref, inject } from 'vue';
 
-import { ref } from 'vue';
+const { formatPriceToUSD } = inject('utils');
 
+const gridData = ref([
+    {
+        title: "Top best sellers of the week",
+        tag: true,
+        tag_value: "-50% Deals",
+        tag_color: 'var(--primary-a)',
+        items: [
+            {
+                image: image1,
+                price: 34.00
+            },
+            {
+                image: image2,
+                price: 23.00
+            },
+            {
+                image: image3,
+                price: 10.00
+            },
+            {
+                image: image4,
+                price: 60.00
+            },
+            {
+                image: image5,
+                price: 45.00
+            }
+        ]
+    },
+
+    {
+        title: "Supplies for your work",
+        tag: false,
+        tag_value: "",
+        tag_color: '',
+        items: [
+            {
+                image: image6,
+                price: 34.00
+            },
+            {
+                image: image2,
+                price: 23.00
+            }
+        ]
+    },
+
+    {
+        title: "Create your gaming station",
+        tag: false,
+        tag_value: "",
+        tag_color: '',
+        items: [
+            {
+                image: image1,
+                price: 34.00
+            },
+            {
+                image: image2,
+                price: 23.00
+            }
+        ]
+    },
+
+    {
+        title: "Gym accessories",
+        tag: false,
+        tag_value: "",
+        tag_color: '',
+        items: [
+            {
+                image: image1,
+                price: 34.00
+            },
+            {
+                image: image2,
+                price: 23.00
+            }
+        ]
+    },
+
+    {
+        title: "Decorate your room",
+        tag: false,
+        tag_value: "",
+        tag_color: '',
+        items: [
+            {
+                image: image1,
+                price: 34.00
+            },
+            {
+                image: image2,
+                price: 23.00
+            }
+        ]
+    },
+
+])
 
 </script>
 

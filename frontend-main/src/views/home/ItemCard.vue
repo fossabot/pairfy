@@ -8,7 +8,9 @@
             <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span> 
 
             <span class="price flex">
-                <span class="dollar">$</span>{{ formatPriceToUSD(props.content.price) }}
+                <span class="dollar">$</span>
+                
+                {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
                     <span>-{{ props.content.discount_value }}% OFF</span>
