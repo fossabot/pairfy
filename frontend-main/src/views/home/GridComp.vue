@@ -197,8 +197,9 @@ const gridData = ref([
 }
 
 .grid {
-    display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+    display: flex;
     padding: 0rem;
     gap: 1rem;
 }
