@@ -217,7 +217,6 @@ const gridData = ref([
 }
 
 .grid-image {
-    background: var(--background-a);
     height: 70px;
 }
 
