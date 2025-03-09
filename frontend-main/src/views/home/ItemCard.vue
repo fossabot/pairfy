@@ -47,12 +47,8 @@ const onSelect = (id) => {
 
 <style lang="css" scoped>
 .card {
-    border: 1px solid var(--border-a);
-    background: var(--background-a);
-    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
 }
 
 .image {
@@ -62,7 +58,7 @@ const onSelect = (id) => {
 .image img {
     width: 100%;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 16px;
 }
 
 .body {
