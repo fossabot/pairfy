@@ -6,12 +6,15 @@
                 Blackday countdown
             </div>
 
+            <CounterComp />
 
         </div>
     </div>
 </template>
 
 <script setup>
+
+import CounterComp from '@/views/home/CounterComp.vue';
 
 </script>
 
