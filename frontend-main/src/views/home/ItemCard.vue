@@ -61,18 +61,18 @@ const onSelect = (id) => {
 }
 
 .title {
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-2);
     text-overflow: ellipsis;
     margin-top: 0.25rem;
     overflow: hidden;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .price {
     font-size: var(--text-size-3);
     color: var(--text-a);
     margin-top: 0.25rem;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .dollar {
