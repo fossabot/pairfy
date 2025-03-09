@@ -55,10 +55,6 @@ const gridData = ref([
             {
                 image: image4,
                 price: 60.00
-            },
-            {
-                image: image5,
-                price: 45.00
             }
         ]
     },
@@ -210,8 +206,8 @@ const gridData = ref([
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    width: 95px;
-    height: 95px;
+    width: auto;
+    height: 120px;
     display: flex;
     font-weight: bold;
     border-radius: 12px;
