@@ -206,8 +206,8 @@ const gridData = ref([
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    width: 100px;
-    height: 100px;
+    width: 95px;
+    height: 95px;
     display: flex;
     font-weight: bold;
     border-radius: 12px;
