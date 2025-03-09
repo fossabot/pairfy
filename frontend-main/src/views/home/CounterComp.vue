@@ -74,7 +74,8 @@ onUnmounted(() => {
 
 <style scoped>
 .card {
-  border: 1px solid var(--border-a);
+  background: var(--primary-a);
+  color: var(--text-w);
   border-radius: 12px;
   padding: 1rem;
 }
