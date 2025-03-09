@@ -13,7 +13,7 @@
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}% OFF</span>
+                    <span>-{{ props.content.discount_value }}% Deal</span>
                 </div>
             </span>
 
@@ -48,9 +48,21 @@ const onSelect = (id) => {
 <style lang="css" scoped>
 
 .card {
+    border: 1px solid var(--border-a);
     background: var(--background-a);
     overflow: hidden;
     cursor: pointer;
+    padding: 1rem;
+}
+
+.image {
+    overflow: hidden;
+}
+
+.image img{
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0px;
 }
 
 .body {
@@ -61,7 +73,7 @@ const onSelect = (id) => {
 }
 
 .title {
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-1);
     text-overflow: ellipsis;
     margin-top: 0.25rem;
     overflow: hidden;
@@ -94,13 +106,5 @@ const onSelect = (id) => {
     padding: 4px 4px;
 }
 
-.image {
-    overflow: hidden;
-}
 
-.image img{
-    width: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-}
 </style>
