@@ -77,7 +77,7 @@ const gridData = ref([
                 price: 14.00
             },
             {
-                image: image2,
+                image: "https://pairfy.dev/api/media/get-image/eCwHCU7DTA8SUJzffCcq.png",
                 price: 33.00
             }
         ]
@@ -90,11 +90,11 @@ const gridData = ref([
         tag_color: '',
         items: [
             {
-                image: image1,
+                image: "https://pairfy.dev/api/media/get-image/EYnWXKToEZdXrLpS4ndD.png",
                 price: 30.00
             },
             {
-                image: image2,
+                image: "https://pairfy.dev/api/media/get-image/GS7FdubBSzrf0fYIDwBm.png",
                 price: 25.00
             }
         ]
@@ -107,11 +107,11 @@ const gridData = ref([
         tag_color: '',
         items: [
             {
-                image: image1,
+                image: "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
                 price: 34.00
             },
             {
-                image: image2,
+                image: "https://pairfy.dev/api/media/get-image/EHngUJ00z9eKcNt1mQJN.png",
                 price: 23.00
             }
         ]
@@ -124,11 +124,11 @@ const gridData = ref([
         tag_color: '',
         items: [
             {
-                image: image1,
+                image: "https://pairfy.dev/api/media/get-image/foFlPCtW9AKPtc3WeJRV.png",
                 price: 34.00
             },
             {
-                image: image2,
+                image: "https://pairfy.dev/api/media/get-image/6G2IzvMxpvsCjpdaf3iM.png",
                 price: 23.00
             }
         ]
