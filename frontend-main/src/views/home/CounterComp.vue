@@ -75,7 +75,7 @@ onUnmounted(() => {
 .box {
   background: var(--black-a);
   color: var(--text-w);
-  border-radius: 12px;  
+  border-radius: 6px;  
   text-align: center;
   padding: 0.25rem;
   min-width: 50px;
