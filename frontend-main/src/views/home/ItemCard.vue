@@ -1,15 +1,15 @@
 <template>
     <div class="card" @click="onSelect(props.content.id)">
-        <div class="image" >
-            <img :src="props.content.image" :style="{ ...props.style }" alt="" >
+        <div class="image">
+            <img :src="props.content.image" :style="{ ...props.style }" alt="">
         </div>
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span> 
+            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span>
 
             <span class="price flex">
                 <span class="dollar">$</span>
-                
+
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
@@ -40,13 +40,12 @@ const onSelect = (id) => {
             ...theRoute.params,
             id
         }
-       
+
     })
 }
 </script>
 
 <style lang="css" scoped>
-
 .card {
     border: 1px solid var(--border-a);
     background: var(--background-a);
@@ -60,7 +59,7 @@ const onSelect = (id) => {
     overflow: hidden;
 }
 
-.image img{
+.image img {
     width: 100%;
     object-fit: cover;
     border-radius: 0px;
@@ -94,18 +93,16 @@ const onSelect = (id) => {
 
 .tag {
     font-size: var(--text-size-1);
-    background: var(--primary-a);
+    background: transparent;
+    color: var(--primary-a);
     max-width: fit-content;
     display: inline-block;
-    color: var(--text-w);
     margin-left: 0.5rem;
     white-space: nowrap;
     text-align: center;
     border-radius: 4px;
     line-height: 14px;
-    font-weight: 400;
+    font-weight: 500;
     padding: 4px 4px;
 }
-
-
 </style>
