@@ -150,7 +150,7 @@ const gridData = ref([
     border-radius: 12px;
     align-items: center;
     text-align: center;
-    padding: 0 1rem;
+    padding: 1rem;
     display: flex;
     width: 100%;
 }
@@ -165,7 +165,7 @@ const gridData = ref([
 
 .box-head {
     justify-content: space-between;
-    padding: 0.75rem 0;
+   
     width: inherit;
 }
 
@@ -189,15 +189,19 @@ const gridData = ref([
 }
 
 .box-content {
+ 
+    justify-content: center;
+    align-items: flex-end;
     width: inherit;
+    display: flex;
     height: 100%;
 }
 
 .grid {
     justify-content: space-around;
     flex-wrap: wrap;
+    width: inherit;
     display: flex;
-    padding: 0rem;
     gap: 1rem;
 }
 
