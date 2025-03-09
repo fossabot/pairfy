@@ -13,7 +13,7 @@
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}% OFF</span>
+                    <span>-{{ props.content.discount_value }}% Deal</span>
                 </div>
             </span>
 
@@ -81,15 +81,16 @@ const onSelect = (id) => {
 
 .tag {
     font-size: var(--text-size-1);
+    background: var(--primary-a);
     max-width: fit-content;
     display: inline-block;
-    color: var(--green-a);
-    margin-left: 0.25rem;
+    color: var(--text-w);
+    margin-left: 0.5rem;
     white-space: nowrap;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 4px;
     line-height: 14px;
-    font-weight: 500;
+    font-weight: 400;
     padding: 4px 4px;
 }
 
@@ -100,6 +101,6 @@ const onSelect = (id) => {
 .image img{
     width: 100%;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 16px;
 }
 </style>
