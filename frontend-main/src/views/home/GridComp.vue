@@ -144,11 +144,9 @@ const gridData = ref([
 }
 
 .box {
-    background: var(--background-b);
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-radius: 12px;
     text-align: center;
     padding: 0 1rem;
     display: flex;
@@ -214,7 +212,6 @@ const gridData = ref([
 }
 
 .grid-image {
-    background: var(--background-a);
     width: 100%;
     height: 100%;
 }
