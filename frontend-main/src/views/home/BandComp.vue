@@ -99,7 +99,6 @@ onBeforeUnmount(() => {
     width: 100%;
     border-radius: 12px;
     max-width: var(--body-a);
-    box-shadow: var(--shadow-b);
 }
 
 .band-track {
