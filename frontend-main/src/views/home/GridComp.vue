@@ -15,9 +15,6 @@
                 <div class="grid one">
                     <div class="grid-item" v-for="sub in item.items" :key="sub">
                         <img class="grid-image" :src="sub.image" alt="">
-                        <div class="grid-price">
-                            <span style="margin-top: auto;">${{ formatPriceToUSD(sub.price) }}</span>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -197,7 +194,7 @@ const gridData = ref([
 }
 
 .grid {
-    justify-content: center;
+    justify-content: flex-start;
     flex-wrap: wrap;
     display: flex;
     padding: 0rem;
@@ -217,17 +214,11 @@ const gridData = ref([
 }
 
 .grid-image {
-    height: 70px;
+    background: var(--background-a);
+    width: 100%;
+    height: 100%;
 }
 
-.grid-price {
-    color: var(--primary-a);
-    justify-content: center;
-    align-items: center;
-    width: inherit;
-    display: flex;
-    height: 30px;
-}
 
 @media (max-width: 768px) {
     .container {
