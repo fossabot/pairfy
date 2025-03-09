@@ -13,7 +13,7 @@
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}% Deal</span>
+                    <span>-{{ props.content.discount_value }}% OFF</span>
                 </div>
             </span>
 
