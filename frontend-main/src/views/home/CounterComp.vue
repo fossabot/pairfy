@@ -1,16 +1,22 @@
 <template>
-  <div class="countdown">
-    <div class="box">
-      <span>{{ timeLeft.days }}</span> <small>Days</small>
+  <div class="card">
+    <div class="title">
+      Blackday countdown
     </div>
-    <div class="box">
-      <span>{{ timeLeft.hours }}</span> <small>Hrs</small>
-    </div>
-    <div class="box">
-      <span>{{ timeLeft.minutes }}</span> <small>Mins</small>
-    </div>
-    <div class="box">
-      <span>{{ timeLeft.seconds }}</span> <small>Secs</small>
+
+    <div class="clock">
+      <div class="box">
+        <span>{{ timeLeft.days }}</span> <small>Days</small>
+      </div>
+      <div class="box">
+        <span>{{ timeLeft.hours }}</span> <small>Hrs</small>
+      </div>
+      <div class="box">
+        <span>{{ timeLeft.minutes }}</span> <small>Mins</small>
+      </div>
+      <div class="box">
+        <span>{{ timeLeft.seconds }}</span> <small>Secs</small>
+      </div>
     </div>
   </div>
 </template>
@@ -21,7 +27,7 @@ import { ref, watch, onUnmounted } from "vue";
 const props = defineProps({
   targetTimestamp: {
     type: Number,
-    default: Date.now()  + 7900000000
+    default: Date.now() + 7900000000
   }
 });
 
@@ -56,7 +62,7 @@ function startCountdown() {
   }, 1000);
 }
 
-// Start countdown & watch for prop changes
+// Start clock & watch for prop changes
 watch(() => props.targetTimestamp, startCountdown, { immediate: true });
 
 onUnmounted(() => {
@@ -67,7 +73,13 @@ onUnmounted(() => {
 
 
 <style scoped>
-.countdown {
+.card {
+  border: 1px solid var(--border-a);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.clock {
   display: flex;
   gap: 1rem;
 }
@@ -75,7 +87,7 @@ onUnmounted(() => {
 .box {
   background: var(--black-a);
   color: var(--text-w);
-  border-radius: 6px;  
+  border-radius: 6px;
   text-align: center;
   padding: 0.25rem;
   min-width: 50px;
@@ -89,5 +101,11 @@ onUnmounted(() => {
 small {
   display: block;
   font-size: 10px;
+}
+
+.title {
+  font-size: var(--text-size-2);
+  margin-bottom: 1rem;
+  font-weight: 700;
 }
 </style>
