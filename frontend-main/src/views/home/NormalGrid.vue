@@ -6,7 +6,7 @@
         <img src="@/assets/icons/hot.png" alt="">
       </div>
     </div>
-    <Divider />
+
     <div class="grid">
       <ItemCard v-for="item, index in content" :key="index" :content="item"
         :style="{ minHeight: '100%', maxHeight: '100%' }" />
@@ -27,12 +27,13 @@ const props = defineProps(['content', 'title'])
 .box {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
+ 
 }
 
 .title {
   font-size: var(--text-size-4);
   font-weight: 700;
+  margin: 1rem 0;
 }
 
 .grid {
