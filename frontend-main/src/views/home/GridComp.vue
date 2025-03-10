@@ -100,7 +100,7 @@ const gridData = ref([
         tag_color: '',
         items: [
             {
-                image: "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
+                image: image5,
                 price: 34.00
             },
             {
