@@ -21,7 +21,7 @@ const chartContainer = ref(null);
 
 onMounted(() => {
     if (chartContainer.value) {
-        const chart = echarts.init(chartContainer.value, null, { width: 250, height: 250 });
+        const chart = echarts.init(chartContainer.value, null, { width: 230, height: 230 });
         chart.setOption({
             grid: {
                 left: 0,

@@ -88,8 +88,9 @@ onUnmounted(() => {
 }
 
 .clock {
+  justify-content: space-between;
   display: flex;
-  gap: 1rem;
+  gap: 0rem;
 }
 
 .box {
