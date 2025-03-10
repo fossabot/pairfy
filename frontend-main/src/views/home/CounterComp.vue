@@ -112,7 +112,7 @@ small {
 }
 
 .title {
-  font-size: var(--text-size-2);
+  font-size: var(--text-size-3);
   margin-bottom: 1rem;
   font-weight: 700;
 }

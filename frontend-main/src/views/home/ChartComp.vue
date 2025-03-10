@@ -8,7 +8,7 @@
         </div>
 
         <div class="legend">
-            x
+            
         </div>
     </div>
 </template>
@@ -27,7 +27,7 @@ onMounted(() => {
                 left: 0,
                 right: 0,
                 top: 20,
-                bottom: 20,
+                bottom: 0,
                 containLabel: true,
             },
             xAxis: {
@@ -35,7 +35,8 @@ onMounted(() => {
                 data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
                 axisLine: { show: false },
                 splitLine: { show: false },
-                axisLabel: { color: '#ffffff' },
+                axisLabel: { color: 'transparent' },
+                axisTick: { show: false },
             },
             yAxis: {
                 type: 'value',
@@ -43,8 +44,8 @@ onMounted(() => {
                 axisLine: { show: false },
                 splitLine: { show: false },
                 axisLabel: {
-                    color: '#ffffff',
-                    formatter: (value) => `${value / 1000}k`,
+                    color: '#222',
+                    formatter: (value) => `${value / 1000}k ₳`,
                 }
             },
             series: [
@@ -53,9 +54,10 @@ onMounted(() => {
                     type: 'line',
                     smooth: true,
                     lineStyle: {
-                        color: '#ffffff',
+                        color: '#ff2e4d',
                         width: 2,
                     },
+                    symbol: 'none',
                 },
             ],
         });
@@ -65,7 +67,8 @@ onMounted(() => {
 
 <style scoped>
 .stats {
-    background: var(--primary-a);
+    border: 1px solid var(--border-a); 
+    background: transparent;
     border-radius: 12px;
     margin-top: 1rem;
     padding: 1rem;
@@ -74,7 +77,6 @@ onMounted(() => {
 
 .title {
     font-size: var(--text-size-2);
-    color: var(--text-w);
     margin-bottom: 1rem;
     font-weight: 700;
 
