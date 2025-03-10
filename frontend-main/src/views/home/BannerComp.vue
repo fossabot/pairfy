@@ -56,7 +56,7 @@ import RightPanel from '@/views/home/RightPanel.vue';
 }
 
 .banner-col:last-child {
-    grid-template-rows: auto;
+    grid-template-rows: auto; 
 }
 
 

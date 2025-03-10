@@ -1,20 +1,19 @@
 <template>
     <div class="panel">
-        <div class="panel-head">
-            <CounterComp />
-        </div>
+        <CounterComp />
+        <ChartComp />
     </div>
 </template>
 
 <script setup>
-
 import CounterComp from '@/views/home/CounterComp.vue';
+import ChartComp from '@/views/home/ChartComp.vue';
 
 </script>
 
 <style lang="css" scoped>
 .panel {
     transition: 0.2s;
-    height: 100%;
+    height: auto;
 }
 </style>
