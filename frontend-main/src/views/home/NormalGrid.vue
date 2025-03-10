@@ -33,7 +33,7 @@ const props = defineProps(['content', 'title'])
 .title {
   font-size: var(--text-size-4);
   font-weight: 700;
-  margin: 1rem 0;
+  margin: 2rem 0;
 }
 
 .grid {

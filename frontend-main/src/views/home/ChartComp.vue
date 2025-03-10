@@ -6,6 +6,10 @@
         <div class="chart">
             <div ref="chartContainer" class="chart"></div>
         </div>
+
+        <div class="legend">
+            x
+        </div>
     </div>
 </template>
 
@@ -19,6 +23,13 @@ onMounted(() => {
     if (chartContainer.value) {
         const chart = echarts.init(chartContainer.value, null, { width: 250, height: 250 });
         chart.setOption({
+            grid: {
+                left: 0,
+                right: 0,
+                top: 20,
+                bottom: 20,
+                containLabel: true,
+            },
             xAxis: {
                 type: 'category',
                 data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -56,19 +67,22 @@ onMounted(() => {
 .stats {
     background: var(--primary-a);
     border-radius: 12px;
-    padding: 1rem;
     margin-top: 1rem;
+    padding: 1rem;
+    
 }
 
 .title {
     font-size: var(--text-size-2);
+    color: var(--text-w);
     margin-bottom: 1rem;
     font-weight: 700;
-    color: var(--text-w);
+
 }
 
 .chart {
-    width: 100%;
-    height: 200px;
+    
 }
+
+
 </style>
