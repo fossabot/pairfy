@@ -2,7 +2,7 @@
   <div class="card">
     <div class="title flex">
       <span>Blackday countdown</span>
-      <span style="margin-left: 0.5rem;">
+      <span style="margin-left: 0.5rem; line-height: 0;">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
           class="lucide lucide-flame">
