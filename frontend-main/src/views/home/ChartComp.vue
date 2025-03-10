@@ -58,7 +58,7 @@ onMounted(() => {
                     type: 'line',
                     smooth: true,
                     lineStyle: {
-                        color: '#ff2e4d',
+                        color: '#222',
                         width: 2,
                     },
                     symbol: 'none',
