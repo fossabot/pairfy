@@ -1,7 +1,7 @@
 <template>
     <div class="stats">
         <div class="title">
-            Blackday Liquidity
+            Blackday liquidity
         </div>
         <div class="chart">
             <div ref="chartContainer" class="chart"></div>
