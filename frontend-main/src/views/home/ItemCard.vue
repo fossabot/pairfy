@@ -5,7 +5,7 @@
         </div>
 
         <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span>
+            <span class="title">{{ `${reduceByLength(props.content.name, 40, '')}...` }}</span>
 
             <span class="price flex">
                 <span class="dollar">$</span>
@@ -13,7 +13,7 @@
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}% Deal</span>
+                    <span>-{{ props.content.discount_value }}%</span>
                 </div>
             </span>
 
@@ -58,7 +58,7 @@ const onSelect = (id) => {
 .image img {
     width: 100%;
     object-fit: cover;
-    border-radius: 16px;
+    border-radius: 0px;
 }
 
 .body {
@@ -78,7 +78,7 @@ const onSelect = (id) => {
 
 .price {
     font-size: var(--text-size-3);
-    color: var(--text-a);
+    color: var(--primary-a);
     margin-top: 0.25rem;
     font-weight: 600;
 }
@@ -90,13 +90,13 @@ const onSelect = (id) => {
 .tag {
     font-size: var(--text-size-1);
     background: transparent;
-    color: var(--primary-a);
     max-width: fit-content;
     display: inline-block;
+    color: var(--text-b);
     margin-left: 0.5rem;
     white-space: nowrap;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 0px;
     line-height: 14px;
     font-weight: 500;
     padding: 4px 4px;
