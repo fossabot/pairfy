@@ -140,8 +140,7 @@ const gridData = ref([
 }
 
 .box {
-    background: var(--background-a);
-    box-shadow: var(--shadow-b);
+    border: 1px solid var(--border-a);
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -207,7 +206,7 @@ const gridData = ref([
     overflow: hidden;
     width: auto;
     display: flex;
-    height: 136px;
+    height: 130px;
     font-weight: bold;
     border-radius: 6px;
 }

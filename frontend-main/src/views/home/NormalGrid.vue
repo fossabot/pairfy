@@ -37,8 +37,6 @@ const props = defineProps(['content', 'title'])
 }
 
 .grid {
-  background: var(--background-a);
-  box-shadow: var(--shadow-a);
   max-width: var(--body-a);
   grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
   grid-auto-rows: auto;
@@ -47,7 +45,6 @@ const props = defineProps(['content', 'title'])
   width: 100%;
   gap: 1rem;
   row-gap: 2rem;
-  padding: 1rem;
 }
 
 .icon {
