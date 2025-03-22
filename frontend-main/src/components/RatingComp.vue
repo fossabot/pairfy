@@ -8,7 +8,7 @@
         height="14"
         viewBox="0 0 24 24"
         :fill="index <= rating ? 'black' : 'none'"
-        stroke="var(--text-b)"
+        :stroke="index <= rating ? 'black' : 'var(--text-b)'"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
