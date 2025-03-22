@@ -117,9 +117,10 @@ header {
     width: 100%;
     display: flex;
     align-items: center;
-    color: var(--text-a);
+    color: var(--text-w);
     flex-direction: column;
     justify-content: center;
+    background: var(--black-a);
     font-size: var(--text-size-1);
     border-bottom: 1px solid var(--border-a);
 }

@@ -60,11 +60,11 @@ onBeforeUnmount(() => {
     overflow: hidden;
     border-radius: 5px;
     background: var(--background-a);
-    outline: 1px solid var(--primary-a);
+   
 }
 
 .search.focus {
-    background: var(--background-a);
+    outline: 1px solid var(--primary-a);
 }
 
 .search-input {
