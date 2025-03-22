@@ -12,16 +12,6 @@
             {{ getProductData.name }}
         </div>
 
-        <div class="preview-price flex">
-            <div>$</div>
-            <span>
-                {{ formatCurrency(
-                    applyDiscount(getProductData.discount,
-                        getProductData.price,
-                        getProductData.discount_value)
-                ) }}
-            </span>
-        </div>
 
         <div class="preview-discount" v-if="getProductData.discount">
             <TagComp :tag="`- ${getProductData.discount_value}%`" type="contrast" />
@@ -35,7 +25,18 @@
                 applyDiscount(getProductData.discount,
                     getProductData.price,
                     getProductData.discount_value), getADAprice)} ADA`" type="" />
+        </div>
 
+
+        <div class="preview-price flex">
+            <div>$</div>
+            <span>
+                {{ formatCurrency(
+                    applyDiscount(getProductData.discount,
+                        getProductData.price,
+                        getProductData.discount_value)
+                ) }}
+            </span>
         </div>
 
         <Divider />
@@ -115,7 +116,7 @@ const keywordList = computed(() => {
 }
 
 .preview-price {
-    font-size: var(--text-size-5);
+    font-size: var(--text-size-6);
     margin-top: 1rem;
     font-weight: 400;
 }

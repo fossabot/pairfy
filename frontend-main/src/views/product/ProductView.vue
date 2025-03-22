@@ -10,16 +10,15 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag';
 import DescriptionComp from '@/views/product/DescriptionComp.vue';
 import ProductCard from '@/views/product/ProductCard.vue';
 import HeadComp from '@/views/product/HeadComp.vue';
 import productAPI from '@/views/product/api/index';
-import gql from 'graphql-tag';
 import { onBeforeUnmount, ref, watch } from "vue";
-import { useRoute } from 'vue-router';
 import { useQuery } from '@vue/apollo-composable'
 import { useToast } from "primevue/usetoast";
-
+import { useRoute } from 'vue-router';
 
 const toast = useToast();
 
