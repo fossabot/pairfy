@@ -104,7 +104,7 @@ const searchCategory = (name) => {
 .panel {
     background: var(--primary-a);
     padding: 1rem 0.5rem;
-    border-radius: 12px;
+    border-radius: 6px;
     transition: 0.2s;
     height: 100%;
 
