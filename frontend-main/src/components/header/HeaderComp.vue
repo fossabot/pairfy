@@ -117,10 +117,9 @@ header {
     width: 100%;
     display: flex;
     align-items: center;
-    color: var(--text-w);
+    color: var(--text-a);
     flex-direction: column;
     justify-content: center;
-    background: var(--black-b);
     font-size: var(--text-size-1);
     border-bottom: 1px solid var(--border-a);
 }
@@ -136,10 +135,11 @@ header {
 }
 
 .header {
-    display: grid;
     grid-template-columns: 20% 60% 20%;
     max-width: var(--body-a);
+    display: grid;
     width: 100%;
+    
 }
 
 .header-col {
