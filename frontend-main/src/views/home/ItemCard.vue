@@ -5,16 +5,20 @@
         </div>
 
         <div class="body">
-            <span class="title">{{ `${reduceByLength(props.content.name, 40, '')}...` }}</span>
+            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span>
 
-            <span class="price flex">
+            <span class="price">
                 <span class="dollar">$</span>
 
                 {{ formatPriceToUSD(props.content.price) }}
 
                 <div class="tag" v-if="props.content.discount">
-                    <span>-{{ props.content.discount_value }}%</span>
+                    <span style="text-decoration: line-through;">$24</span>
                 </div>
+            </span>
+
+            <span class="rating">
+                <RatingComp :rating="4"/>
             </span>
 
         </div>
@@ -22,8 +26,9 @@
 </template>
 
 <script setup>
-import { inject, ref } from 'vue';
+import RatingComp from '@/components/RatingComp.vue';
 import { useRouter, useRoute } from 'vue-router';
+import { inject, ref } from 'vue';
 
 const { formatPriceToUSD, reduceByLength } = inject('utils');
 
@@ -74,9 +79,12 @@ const onSelect = (id) => {
     margin-top: 0rem;
     overflow: hidden;
     font-weight: 400;
+    height: 23px;
 }
 
 .price {
+    display: flex;
+    align-items: baseline;
     font-size: var(--text-size-3);
     color: var(--primary-a);
     margin-top: 0rem;
@@ -93,12 +101,9 @@ const onSelect = (id) => {
     max-width: fit-content;
     display: inline-block;
     color: var(--text-b);
-    margin-left: 0.5rem;
     white-space: nowrap;
+    margin-left: 0.5rem;
     text-align: center;
-    border-radius: 0px;
-    line-height: 14px;
-    font-weight: 500;
-    padding: 4px 4px;
+    font-weight: 400;
 }
 </style>
