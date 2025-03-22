@@ -133,17 +133,18 @@ const gridData = ref([
 
 <style lang="css" scoped>
 .container {
-    display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(150px, auto);
+    background: var(--background-a);
+    box-shadow: var(--shadow-b);
+    border-radius: 12px;
+    display: grid;
     gap: 1rem;
 }
 
 .box {
-    border: 1px solid var(--border-a);
     justify-content: center;
     flex-direction: column;
-    border-radius: 12px;
     align-items: center;
     text-align: center;
     padding: 1rem;
@@ -161,7 +162,6 @@ const gridData = ref([
 
 .box-head {
     justify-content: space-between;
-   
     width: inherit;
 }
 
@@ -185,7 +185,6 @@ const gridData = ref([
 }
 
 .box-content {
- 
     justify-content: center;
     align-items: flex-end;
     width: inherit;
@@ -194,7 +193,7 @@ const gridData = ref([
 }
 
 .grid {
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     width: inherit;
     display: flex;

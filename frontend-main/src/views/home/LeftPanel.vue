@@ -111,7 +111,7 @@ const searchCategory = (name) => {
 }
 
 .panel-item {
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     color: var(--text-w);
     border-radius: 6px;
     margin: 0.25rem 0;
