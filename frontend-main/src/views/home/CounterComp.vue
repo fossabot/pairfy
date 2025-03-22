@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onUnmounted } from "vue";
+import { ref, watch, onUnmounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   targetTimestamp: {
@@ -70,20 +70,23 @@ function startCountdown() {
   }, 1000);
 }
 
-// Start clock & watch for prop changes
-watch(() => props.targetTimestamp, startCountdown, { immediate: true });
+
+const unwatchClock = watch(() => props.targetTimestamp, startCountdown, { immediate: true });
 
 onUnmounted(() => {
   clearInterval(interval);
 });
+
+onBeforeUnmount(() => {
+  unwatchClock()
+})
 </script>
 
 
 
 <style scoped>
 .card {
-  background: var(--background-a);
-  box-shadow: var(--shadow-b);
+  border: 1px solid var(--border-a);
   border-radius: 6px;
   padding: 1rem;
 }
