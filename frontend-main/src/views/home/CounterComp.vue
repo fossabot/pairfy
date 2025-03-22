@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
 
 .box span {
   font-size: var(--text-size-1);
-  font-weight: bold;
+  font-weight: 600;
 }
 
 small {
@@ -119,6 +119,6 @@ small {
 .title {
   font-size: var(--text-size-3);
   margin-bottom: 1rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 </style>

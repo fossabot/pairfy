@@ -76,6 +76,7 @@ const onSelect = (id) => {
 .title {
     font-size: var(--text-size-1);
     text-overflow: ellipsis;
+    color: var(--text-b);
     margin-top: 0rem;
     overflow: hidden;
     font-weight: 400;

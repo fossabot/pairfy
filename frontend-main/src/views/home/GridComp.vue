@@ -176,7 +176,7 @@ const gridData = ref([
 
 .box-head .title {
     font-size: var(--text-size-3);
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .box-head .arrow {
