@@ -136,8 +136,7 @@ const gridData = ref([
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: minmax(150px, auto);
     background: var(--background-a);
-    box-shadow: var(--shadow-b);
-    border-radius: 12px;
+    border-radius: 0px;
     display: grid;
     gap: 1rem;
 }
