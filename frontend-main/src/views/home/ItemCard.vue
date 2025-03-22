@@ -47,11 +47,8 @@ const onSelect = (id) => {
 
 <style lang="css" scoped>
 .card {
-    background: var(--background-a);
-    box-shadow: var(--shadow-b);
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
 }
 
 .image {
