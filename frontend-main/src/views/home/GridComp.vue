@@ -176,7 +176,7 @@ const gridData = ref([
 }
 
 .box-head .title {
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
     font-weight: 700;
 }
 
@@ -201,13 +201,13 @@ const gridData = ref([
 }
 
 .grid-item {
-    flex-direction: column;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     overflow: hidden;
     width: auto;
-    height: 120px;
     display: flex;
+    height: 136px;
     font-weight: bold;
     border-radius: 6px;
 }
