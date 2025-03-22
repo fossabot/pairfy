@@ -41,20 +41,20 @@ const gridData = ref([
         tag_color: 'var(--primary-a)',
         items: [
             {
-                image: image1,
+                image: "https://pairfy.dev/api/media/get-image/foFlPCtW9AKPtc3WeJRV.png",
                 price: 34.00
             },
             {
-                image: image2,
+                image: "https://pairfy.dev/api/media/get-image/6G2IzvMxpvsCjpdaf3iM.png",
                 price: 23.00
             },
             {
-                image: image3,
-                price: 10.00
+                image: "https://pairfy.dev/api/media/get-image/ysM6s6PSmFrtiFv7E46m.png",
+                price: 34.00
             },
             {
-                image: image4,
-                price: 60.00
+                image: "https://pairfy.dev/api/media/get-image/GS7FdubBSzrf0fYIDwBm.png",
+                price: 23.00
             }
         ]
     },
@@ -66,7 +66,7 @@ const gridData = ref([
         tag_color: '',
         items: [
             {
-                image: image6,
+                image: 'https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png',
                 price: 14.00
             },
             {
