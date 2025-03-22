@@ -133,7 +133,7 @@
   --border-b: rgba(0, 0, 0, 0.1);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
-  --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+  --shadow-b: 0 1px 2px 0 rgba(0,0,0,.12);
 
   --red-a: #ff2e4d;
   --red-alpha: rgba(255, 46, 77, 0.1);
@@ -213,6 +213,7 @@ body {
   font-family: 'IBM Plex Sans', serif;
   font-family: 'Open Sans', serif;
   font-family: 'Inter', serif;
+  font-family: system-ui,-apple-system,BlinkMacSystemFont,\.SFNSText-Regular,Helvetica,Arial,sans-serif;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;
