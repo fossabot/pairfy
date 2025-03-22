@@ -48,12 +48,9 @@ const props = defineProps(['content', 'title'])
 }
 
 .icon {
-  background: var(--background-b);
   justify-content: center;
   align-items: center;
-  margin-left: 0.5rem;
   border-radius: 50%;
-  padding: 0.5rem;
   display: flex;
   width: 3rem;
 }
