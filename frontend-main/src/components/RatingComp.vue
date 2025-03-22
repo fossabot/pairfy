@@ -8,7 +8,7 @@
         height="14"
         viewBox="0 0 24 24"
         :fill="index <= rating ? 'black' : 'none'"
-        stroke="currentColor"
+        stroke="var(--text-b)"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -32,9 +32,7 @@
   </script>
   
   <style scoped>
-  .flex {
-    display: flex;
-  }
+
   .space-x-1 > * + * {
     margin-left: 4px;
   }
