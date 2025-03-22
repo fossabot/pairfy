@@ -116,12 +116,12 @@ onBeforeUnmount(() => {
 header {
     width: 100%;
     display: flex;
-    color: var(--text-a);
+    align-items: center;
+    color: var(--text-w);
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    background: var(--black-b);
     font-size: var(--text-size-1);
-    background: var(--background-a);
     border-bottom: 1px solid var(--border-a);
 }
 
