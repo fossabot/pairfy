@@ -1,7 +1,7 @@
 <template>
     <section class="flex">
         <div class="menu">
-            <div class="nav flex">
+            <div class="menu-nav flex">
                 <span>Best Sellers</span>
                 <span>Discounts</span>
                 <span>Rewards</span>
@@ -37,7 +37,7 @@ section {
     width: 100%;
 }
 
-.nav {
+.menu-nav {
     justify-content: space-between;
     font-size: var(--text-size-1);
     font-weight: 400;
@@ -46,7 +46,31 @@ section {
     color: inherit;
 }
 
-.arrow i {
-    font-size: var(--text-size-2);
+/* Default styles apply to all devices */
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) { 
+  /* Styles for small phones */
 }
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) { 
+  /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) { 
+  /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) { 
+  /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) { 
+  /* Styles for large screens */
+}
+
 </style>
