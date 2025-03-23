@@ -5,16 +5,34 @@
             <input v-model="searchInput" type="text" class="search-input" placeholder="Search" @focus="isFocus = true"
                 @blur="isFocus = false" @keydown.enter="handleSearch">
             <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-search">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                </svg>
             </button>
         </div>
 
         <div class="search-filter">
             <div class="search-filter-button">
-                Filter
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-funnel">
+                    <path
+                        d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
+                </svg>
+
+                <span>Filter</span>
             </div>
             <div class="search-filter-button">
-                Category
+                <span>Category</span>
+
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-chevron-down">
+                    <path d="m6 9 6 6 6-6" />
+                </svg>
             </div>
             <div class="search-filter-button">
                 Price
@@ -134,7 +152,7 @@ onBeforeUnmount(() => {
 .search-filter-button {
     background: var(--background-b);
     font-size: var(--text-size-0);
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1rem;
     color: var(--text-b);
     line-height: initial;
     border-radius: 99px;
