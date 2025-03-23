@@ -18,7 +18,7 @@
             </span>
 
             <span class="rating">
-                <RatingComp :rating="4"/>
+                <RatingComp :rating="4" />
             </span>
 
         </div>
@@ -78,9 +78,11 @@ const onSelect = (id) => {
     text-overflow: ellipsis;
     color: var(--text-b);
     margin-top: 0rem;
-    overflow: hidden;
     font-weight: 400;
     height: 23px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .price {

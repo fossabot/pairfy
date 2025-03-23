@@ -2,14 +2,14 @@
   <div class="body">
     <div class="container">
       <div class="top">
-        <BannerComp />    
+        <BannerComp />
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-            <NormalGrid :content="item" :title="index"/>
-         
+            <NormalGrid :content="item" :title="index" />
+
           </section>
 
           <span class="target" :class="{ 'visible': visibilityMap[index] }" :ref="el => setCategoryRef(el, index)" />
@@ -22,10 +22,15 @@
 
 <script setup>
 import NormalGrid from '@/views/home/NormalGrid.vue'
-
 import BannerComp from '@/views/home/BannerComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref, computed, reactive, onMounted } from 'vue'
+import image1 from '@/assets/icons/0.png'
+import image2 from '@/assets/icons/1.png'
+import image3 from '@/assets/icons/2.png'
+import image4 from '@/assets/icons/3.png'
+import image5 from '@/assets/icons/5.png'
+import image6 from '@/assets/icons/6.png'
 
 const products = [
   {
@@ -37,7 +42,7 @@ const products = [
     "model": "WJ391",
     "price": 6,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/6G2IzvMxpvsCjpdaf3iM.png",
+    "image": image1,
     "keywords": "pen,cheap,colors",
     "rating": 0,
     "reviews": 0,
@@ -56,7 +61,7 @@ const products = [
     "model": "MI002",
     "price": 10,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/HlzKVAdcziueoffal9Vt.png",
+    "image": image2,
     "keywords": "motarro,desk,organizer",
     "rating": 0,
     "reviews": 0,
@@ -75,7 +80,7 @@ const products = [
     "model": "black",
     "price": 25,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
+    "image": image3,
     "keywords": "chair,headrest,ergonomic,pillow",
     "rating": 0,
     "reviews": 0,
@@ -94,7 +99,7 @@ const products = [
     "model": "S16990",
     "price": 10,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/r9EjWo689BgXC6vWUstj.png",
+    "image": image4,
     "keywords": "plastic,holder,paper",
     "rating": 0,
     "reviews": 0,
@@ -113,7 +118,7 @@ const products = [
     "model": "Beige",
     "price": 15,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/EHngUJ00z9eKcNt1mQJN.png",
+    "image": image5,
     "keywords": "pen,holder,desk",
     "rating": 0,
     "reviews": 0,
@@ -132,7 +137,7 @@ const products = [
     "model": "GUIG018",
     "price": 380,
     "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/eCwHCU7DTA8SUJzffCcq.png",
+    "image": image6,
     "keywords": "ergonomic,modern,stainless,comfortable,minimalist",
     "rating": 0,
     "reviews": 0,
@@ -490,8 +495,4 @@ section.visible {
   align-items: center;
   padding-bottom: 200px;
 }
-
-
-
-
 </style>
