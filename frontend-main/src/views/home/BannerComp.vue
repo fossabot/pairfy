@@ -64,19 +64,8 @@ import RightPanel from '@/views/home/RightPanel.vue';
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .banner-grid {
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .banner-column.left {
+    .banner {
         display: none;
-    }
-    
-    .banner-column.right{
-        display: flex;
-        flex-direction: column;
     }
 
 

@@ -477,7 +477,6 @@ section.visible {
 }
 
 .top {
-  min-height: 300px;
   justify-content: center;
   flex-direction: column;
   align-items: center;

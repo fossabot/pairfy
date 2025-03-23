@@ -1,6 +1,6 @@
 <template>
-    <div class="cover flex">
-        <div class="band" @mouseover="pauseBand" @mouseleave="startBand">
+    <div class="band-wrap flex">
+        <div class="band-body" @mouseover="pauseBand" @mouseleave="startBand">
             <div class="band-track" :style="trackStyle">
                 <div class="band-item" v-for="(item, index) in imageList" :key="index"
                     :style="{ backgroundImage: `url(${item.src})` }">
@@ -80,14 +80,14 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-.cover {
+.band-wrap {
     justify-content: center;
     width: 100%;
     z-index: 1;
     top: 0;
 }
 
-.band {
+.band-body {
     width: 100%;
     height: 100%;
     display: flex;
@@ -171,8 +171,13 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
+    .band-wrap {
+        padding: 1rem;  
+        height: 20vh;
+    }
+
     .band-item {
-        background-size: contain;
+        
     }
 }
 
