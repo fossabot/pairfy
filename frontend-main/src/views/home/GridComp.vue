@@ -217,19 +217,4 @@ const gridData = ref([
 }
 
 
-@media (max-width: 768px) {
-    .container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .item:nth-child(1) {
-        grid-column: span 1;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-}
 </style>
