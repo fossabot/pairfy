@@ -98,8 +98,7 @@ onBeforeUnmount(() => {
 }
 
 .box {
-  background: var(--primary-a);
-  color: var(--text-w);
+  background: var(--background-b);
   border-radius: 12px;
   text-align: center;
   padding: 0.25rem;
@@ -108,7 +107,7 @@ onBeforeUnmount(() => {
 
 .box span {
   font-size: var(--text-size-1);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 small {
