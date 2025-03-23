@@ -16,26 +16,30 @@
 
         <div class="search-filter">
             <div class="search-filter-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-funnel"><path d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z"/></svg>
+                <svg style="margin-right: 0.25rem" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-funnel">
+                    <path
+                        d="M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" />
+                </svg>
 
                 <span>Filter</span>
             </div>
             <div class="search-filter-button">
                 <span>Category</span>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-chevron-down">
+                <svg style="margin-left: 0.25rem" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
                 </svg>
             </div>
             <div class="search-filter-button">
-                <span> Order by</span>
+                <span>Order by</span>
 
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-chevron-down">
+                <svg style="margin-left: 0.25rem" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="lucide lucide-chevron-down">
                     <path d="m6 9 6 6 6-6" />
                 </svg>
             </div>
@@ -154,11 +158,12 @@ onBeforeUnmount(() => {
 .search-filter-button {
     background: var(--background-b);
     font-size: var(--text-size-0);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     color: var(--text-b);
     line-height: initial;
     border-radius: 99px;
     align-items: center;
+    white-space: nowrap;
     font-weight: 600;
     display: flex;
 }
