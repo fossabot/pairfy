@@ -1,11 +1,28 @@
 <template>
-    <div class="search flex" :class="{ focus: isFocus }">
-        <SelectorComp />
-        <input v-model="searchInput" type="text" class="search-input" placeholder="Search" @focus="isFocus = true"
-            @blur="isFocus = false" @keydown.enter="handleSearch">
-        <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
-            <i class="pi pi-search" />
-        </button>
+    <div class="search-wrap column">
+        <div class="search flex" :class="{ focus: isFocus }">
+            <SelectorComp />
+            <input v-model="searchInput" type="text" class="search-input" placeholder="Search" @focus="isFocus = true"
+                @blur="isFocus = false" @keydown.enter="handleSearch">
+            <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
+                <i class="pi pi-search" />
+            </button>
+        </div>
+
+        <div class="filter">
+            <div class="filter-button">
+                filter
+            </div>
+            <div class="filter-button">
+                Category
+            </div>
+            <div class="filter-button">
+                Price
+            </div>
+            <div class="filter-button">
+                Price
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,8 +71,13 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-.search {
+.search-wrap {
+    margin-top: 0.5rem;
     width: 100%;
+}
+
+.search {
+    width: inherit;
     height: 3rem;
     overflow: hidden;
     border-radius: 5px;
@@ -66,7 +88,7 @@ onBeforeUnmount(() => {
 .search.focus {}
 
 .search-input {
-    width: 100%;
+    width: inherit;
     height: inherit;
     border: none;
     outline: none;
@@ -103,6 +125,22 @@ onBeforeUnmount(() => {
 }
 
 
+.filter {
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    display: none;
+}
+
+.filter-button {
+    background: var(--background-b);
+    font-size: var(--text-size-0);
+    padding: 0.25rem 1rem;
+    line-height: initial;
+    border-radius: 99px;
+    align-items: center;
+    display: flex;
+}
+
 
 /* Default styles apply to all devices */
 
@@ -111,6 +149,11 @@ onBeforeUnmount(() => {
     .search {
         height: 2.5rem;
     }
+
+    .filter {
+        display: flex;
+    }
+
 }
 
 /* Large phones and small tablets (481px - 767px) */

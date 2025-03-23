@@ -10,6 +10,11 @@
   align-items: center;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 .red {
   color: var(--red-a);
 }
@@ -18,19 +23,19 @@
   color: var(--green-a);
 }
 
-.gray{
+.gray {
   color: var(--text-b);
 }
 
-.cyan{
+.cyan {
   color: var(--cyan-a);
 }
 
-.blue{ 
+.blue {
   color: var(--blue-a);
 }
 
-.primary{ 
+.primary {
   color: var(--blue-a);
 }
 
@@ -72,19 +77,20 @@
   text-align: start;
 }
 
-.p-message-icon{
+.p-message-icon {
   font-size: var(--text-size-b) !important;
-} 
-
-.p-drawer-header{
-  padding: 1rem 1.5rem !important; 
 }
 
-.p-drawer-title{
+.p-drawer-header {
+  padding: 1rem 1.5rem !important;
+}
+
+.p-drawer-title {
   font-size: var(--text-size-c) !important;
 }
 
-.p-inputtext, .p-textarea{
+.p-inputtext,
+.p-textarea {
   font-size: var(--text-size-1) !important;
 }
 
@@ -97,11 +103,11 @@
   font-size: var(--text-size-0);
 }
 
-.p-overflow-hidden{
+.p-overflow-hidden {
   padding-right: 15px !important;
 }
 
-.p-overlay-mask{
+.p-overlay-mask {
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
 }
@@ -114,13 +120,13 @@
   text-align: center;
 }
 
-.p-badge{
+.p-badge {
   display: flex;
   text-align: center;
   justify-content: center;
   font-size: 8px !important;
 }
 
-.best{
+.best {
   background: var(--background-c);
 }

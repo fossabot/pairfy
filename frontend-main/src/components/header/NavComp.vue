@@ -25,9 +25,12 @@
 
 <style lang="css" scoped>
 section {
+  border-bottom: 1px solid var(--border-a);
+  border-top: 1px solid var(--border-a);
   justify-content: center;
   height: 2.75rem;
   width: inherit;
+
 }
 
 .menu {
