@@ -62,12 +62,12 @@
 
     <div class="location flex" @click="dialogVisible = true">
 
-        <div class="box">
+        <div class="box flex">
             <span class="flex">
                 <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
                     :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
-            <span class="separator">|</span>
+            <span class="separator" />
             <div class="icon flex">
                 <i class="pi pi-map-marker" />
             </div>
@@ -166,7 +166,6 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 .location {
-    height: 42px;
     color: inherit;
     white-space: nowrap;
     text-align: start;
@@ -230,7 +229,36 @@ onBeforeUnmount(() => {
 }
 
 .separator {
-    color: var(--text-b);
-    margin: 0 0.5rem;
+    background: var(--text-b);
+    margin: 0 1rem;
+    height: 1rem; 
+    width: 1px;
+}
+
+/* Default styles apply to all devices */
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) {
+    /* Styles for small phones */
+}
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
 }
 </style>
