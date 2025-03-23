@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
     height: 3rem;
     width: inherit;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 12px;
     background: var(--background-a);
     outline: 1px solid var(--primary-a);
 }
@@ -131,6 +131,7 @@ onBeforeUnmount(() => {
 
 .search-button {
     border-left: 1px solid var(--border-a);
+    border-radius: 0px 4px 4px 0px;
     background: var(--primary-a);
     color: var(--text-w);
     padding: 0 1.25rem;

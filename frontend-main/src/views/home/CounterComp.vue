@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
 }
 
 .box {
-  background: var(--black-a);
+  background: var(--primary-a);
   color: var(--text-w);
   border-radius: 12px;
   text-align: center;
