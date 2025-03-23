@@ -3,13 +3,13 @@
         <DrawerComp />
         <PriceBar />
         <div class="header">
-            <div class="header-col left">
+            <div class="header-column left">
                 <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
             </div>
-            <div class="header-col center">
+            <div class="header-column center">
                 <SearchComp />
             </div>
-            <div class="header-col right">
+            <div class="header-column right">
                 <AgentButton />
             </div>
         </div>
@@ -23,7 +23,6 @@
 <script setup>
 import gql from 'graphql-tag';
 import headerAPI from "@/components/header/api/index";
-
 import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
@@ -77,7 +76,7 @@ const watchRoute = watch(
 const { setADAprice } = headerAPI();
 
 const queryOptions = {
-    pollInterval: 60000,
+    pollInterval: 60_000,
     clientId: 'query'
 }
 
@@ -142,17 +141,17 @@ header {
     
 }
 
-.header-col {
+.header-column {
     text-align: center;
     display: flex;
     align-items: center;
 }
 
-.header-col.right {
+.header-column.right {
     justify-content: flex-end;
 }
 
-.header-col.left {
+.header-column.left {
     justify-content: flex-start;
 }
 
