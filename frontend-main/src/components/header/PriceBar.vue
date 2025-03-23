@@ -33,7 +33,6 @@ const { formatPriceToUSD } = inject('utils');
     justify-content: center;
     width: inherit;
     height: 2rem;
-
 }
 
 .bar-content {
@@ -64,6 +63,9 @@ const { formatPriceToUSD } = inject('utils');
 }
 
 @media (max-width: 480px) {
+    .bar {
+        border-bottom: 1px solid var(--border-a);
+    }
 
     .bar-price,
     .bar-wallet {
@@ -71,7 +73,6 @@ const { formatPriceToUSD } = inject('utils');
     }
 
     .bar-content {
-        border-bottom: 1px solid var(--border-a);
         max-width: 100%;
         padding: 0 1rem;
     }
