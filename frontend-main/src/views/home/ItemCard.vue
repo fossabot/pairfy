@@ -51,6 +51,10 @@ const onSelect = (id) => {
 </script>
 
 <style lang="css" scoped>
+span{
+    line-height: 1.5rem; 
+}
+
 .card {
     overflow: hidden;
     cursor: pointer;
@@ -79,7 +83,6 @@ const onSelect = (id) => {
     color: var(--text-b);
     margin-top: 0rem;
     font-weight: 400;
-    height: 23px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -92,6 +95,7 @@ const onSelect = (id) => {
     color: var(--primary-a);
     margin-top: 0rem;
     font-weight: 600;
+   
 }
 
 .dollar {
@@ -108,5 +112,8 @@ const onSelect = (id) => {
     margin-left: 0.5rem;
     text-align: center;
     font-weight: 400;
+}
+
+.rating{
 }
 </style>
