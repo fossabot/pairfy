@@ -171,14 +171,7 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .band-wrap {
-        padding: 1rem;  
-        height: 20vh;
-    }
 
-    .band-item {
-        
-    }
 }
 
 /* Large phones and small tablets (481px - 767px) */
