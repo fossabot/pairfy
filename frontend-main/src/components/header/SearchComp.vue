@@ -1,8 +1,8 @@
 <template>
     <div class="search flex" :class="{ focus: isFocus }">
-        <SelectorComp/>
-        <input v-model="searchInput" type="text" class="search-input" placeholder="Search"
-            @focus="isFocus = true" @blur="isFocus = false" @keydown.enter="handleSearch">
+        <SelectorComp />
+        <input v-model="searchInput" type="text" class="search-input" placeholder="Search" @focus="isFocus = true"
+            @blur="isFocus = false" @keydown.enter="handleSearch">
         <button class="search-button flex" :class="{ focus: isFocus }" @click="handleSearch">
             <i class="pi pi-search" />
         </button>
@@ -63,9 +63,7 @@ onBeforeUnmount(() => {
     outline: 1px solid var(--primary-a);
 }
 
-.search.focus {
- 
-}
+.search.focus {}
 
 .search-input {
     width: 100%;
@@ -105,4 +103,33 @@ onBeforeUnmount(() => {
 }
 
 
+
+/* Default styles apply to all devices */
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) {
+    .search {
+        height: 2.5rem;
+    }
+}
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
+}
 </style>
