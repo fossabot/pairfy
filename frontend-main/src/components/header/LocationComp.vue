@@ -194,7 +194,6 @@ onBeforeUnmount(() => {
     display: flex;
 }
 
-
 .box span:nth-child(1) {
     font-size: var(--text-size-0);
 }
