@@ -25,8 +25,6 @@
 
 <style lang="css" scoped>
 section {
-  border-bottom: 1px solid var(--border-a);
-  border-top: 1px solid var(--border-a);
   justify-content: center;
   height: 2.75rem;
   width: inherit;
@@ -57,30 +55,10 @@ section {
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
   section {
-    height: initial;
-  }
-
-  .menu {
-    color: var(--text-b);
-    overflow-x: scroll;
-    padding: 0 1rem;
-    overflow: auto;
-    /* Permite el scroll */
-    -ms-overflow-style: none;
-    /* Oculta scrollbar en IE y Edge */
-    scrollbar-width: none;
-    /* Oculta scrollbar en Firefox */
-  }
-
-  .menu::-webkit-scrollbar {
     display: none;
-    /* Oculta scrollbar en Chrome, Safari y Edge */
   }
 
-  .menu-nav span {
-    padding: 0.5rem 0;
-    margin-right: 1rem;
-  }
+
 }
 
 /* Large phones and small tablets (481px - 767px) */

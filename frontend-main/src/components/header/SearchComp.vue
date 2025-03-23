@@ -140,7 +140,7 @@ onBeforeUnmount(() => {
 
 .search-filter {
     justify-content: space-between;
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
     display: none;
 }
 

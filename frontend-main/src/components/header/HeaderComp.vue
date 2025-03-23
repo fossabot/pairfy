@@ -120,6 +120,7 @@ header {
     flex-direction: column;
     justify-content: center;
     font-size: var(--text-size-1);
+    border-bottom: 1px solid var(--border-a);
 }
 
 .header {
@@ -157,6 +158,17 @@ header {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
+
+    header {
+        border: none;
+    }
+
+    .header {
+        padding: initial;
+        max-width: initial;
+        display: flex;
+    }
+
     .header-column.left {
         display: none;
     }
@@ -169,17 +181,10 @@ header {
         padding: 0 1rem;
     }
 
-    .header {
-        padding: initial;
-        max-width: initial;
-        display: flex;
-    }
 }
 
 /* Large phones and small tablets (481px - 767px) */
-@media (min-width: 481px) and (max-width: 767px) {
-    /* Styles for larger phones */
-}
+@media (min-width: 481px) and (max-width: 767px) {}
 
 /* Tablets (768px - 1024px) */
 @media (min-width: 768px) and (max-width: 1024px) {
