@@ -172,6 +172,7 @@ header {
     }
 
     .header {
+        padding: 0.5rem 0;
         max-width: initial;
         display: flex;
     }
