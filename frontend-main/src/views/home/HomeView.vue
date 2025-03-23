@@ -2,7 +2,7 @@
   <div class="body">
     <div class="container">
       <div class="top">
-        <CategoryComp />    
+        <BannerComp />    
       </div>
       <div class="bottom">
         <template v-for="(item, index) in feedData" :key="index">
@@ -23,7 +23,7 @@
 <script setup>
 import NormalGrid from '@/views/home/NormalGrid.vue'
 
-import CategoryComp from '@/views/home/BannerComp.vue'
+import BannerComp from '@/views/home/BannerComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref, computed, reactive, onMounted } from 'vue'
 

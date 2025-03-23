@@ -1,14 +1,14 @@
 <template>
     <div class="banner">
         <div class="banner-grid">
-            <div class="banner-col">
-               <LeftPanel />
+            <div class="banner-column left">
+                <LeftPanel />
             </div>
-            <div class="banner-col">
-                <BandComp/>
+            <div class="banner-column center">
+                <BandComp />
                 <GridComp />
             </div>
-            <div class="banner-col">
+            <div class="banner-column right">
                 <RightPanel />
             </div>
         </div>
@@ -42,33 +42,63 @@ import RightPanel from '@/views/home/RightPanel.vue';
     max-height: var(--body-a);
 }
 
-.banner-col {
+.banner-column {
     display: grid;
     gap: 1rem;
 }
 
-.banner-col:first-child {
+.banner-column:first-child {
     grid-template-rows: auto;
 }
 
-.banner-col:nth-child(2) {
+.banner-column:nth-child(2) {
     grid-template-rows: 0.75fr 1fr;
 }
 
-.banner-col:last-child {
-    grid-template-rows: auto; 
+.banner-column:last-child {
+    grid-template-rows: auto;
 }
 
 
-@media (max-width: 768px) {
+/* Default styles apply to all devices */
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) {
     .banner-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-        height: auto;
+        display: flex;
+        flex-direction: column;
     }
 
-    .banner-col {
-        grid-template-rows: auto;
+
+    .banner-column.left {
+        display: none;
     }
+    
+    .banner-column.right{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+}
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
 }
 </style>

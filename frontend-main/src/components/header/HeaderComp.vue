@@ -172,7 +172,9 @@ header {
     }
 
     .header {
-        padding: 0.5rem 0;
+        padding: initial;
+        padding-top: 0.5rem; 
+        padding-bottom: 0.5rem;
         max-width: initial;
         display: flex;
     }
