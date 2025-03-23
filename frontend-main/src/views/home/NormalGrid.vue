@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="normal">
     <div class="title flex">
       <span>{{ props.title }}</span>
       <div class="icon flex">
@@ -24,7 +24,7 @@ const props = defineProps(['content', 'title'])
 </script>
 
 <style lang="css" scoped>
-.box {
+.normal {
   display: flex;
   flex-direction: column;
 
@@ -59,15 +59,39 @@ const props = defineProps(['content', 'title'])
   width: 2rem;
 }
 
-@media (min-width: 768px) {
+
+@media (max-width: 480px) {
+  .title{
+    font-size: var(--text-size-3);
+  }
+  .normal {
+    padding: 0.5rem;
+  }
+
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    row-gap: 1rem;
   }
 }
 
-@media (min-width: 1230px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-  }
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) {
+  /* Styles for large screens */
 }
 </style>

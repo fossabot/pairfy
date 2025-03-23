@@ -65,6 +65,7 @@ const { formatPriceToUSD } = inject('utils');
 @media (max-width: 480px) {
     .bar {
         border-bottom: 1px solid var(--border-a);
+        height: 2.5rem;
     }
 
     .bar-price,
