@@ -27,7 +27,6 @@ const props = defineProps(['content', 'title'])
 .normal {
   display: flex;
   flex-direction: column;
-
 }
 
 .title {
@@ -61,11 +60,13 @@ const props = defineProps(['content', 'title'])
 
 
 @media (max-width: 480px) {
-  .title{
-    font-size: var(--text-size-3);
-  }
   .normal {
-    padding: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .title {
+    font-size: var(--text-size-3);
+    margin: 1rem 0;
   }
 
   .grid {
