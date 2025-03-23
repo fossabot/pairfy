@@ -4,7 +4,7 @@
         <PriceBar />
         <div class="header">
             <div class="header-column left">
-                <img class="brand" src="@/assets/logo-white.svg" alt="" @click="toHome">
+                <img class="brand" src="@/assets/icon.jpeg" alt="" @click="toHome">
             </div>
             <div class="header-column center">
                 <SearchComp />
@@ -129,7 +129,7 @@ header {
 
 .brand {
     cursor: pointer;
-    height: 46px;
+    height: 3rem;
 }
 
 .header {
