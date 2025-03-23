@@ -144,7 +144,7 @@ const gridData = ref([
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    border-radius: 16px;
+    border-radius: 12px;
     text-align: center;
     padding: 1rem;
     display: flex;
