@@ -1,6 +1,6 @@
 <template>
-    <div class="search-wrap column">
-        <div class="search flex" :class="{ focus: isFocus }">
+    <div class="search column">
+        <div class="search-bar flex" :class="{ focus: isFocus }">
             <SelectorComp />
             <input v-model="searchInput" type="text" class="search-input" placeholder="Search" @focus="isFocus = true"
                 @blur="isFocus = false" @keydown.enter="handleSearch">
@@ -9,17 +9,17 @@
             </button>
         </div>
 
-        <div class="filter">
-            <div class="filter-button">
+        <div class="search-filter">
+            <div class="search-filter-button">
                 filter
             </div>
-            <div class="filter-button">
+            <div class="search-filter-button">
                 Category
             </div>
-            <div class="filter-button">
+            <div class="search-filter-button">
                 Price
             </div>
-            <div class="filter-button">
+            <div class="search-filter-button">
                 Price
             </div>
         </div>
@@ -71,21 +71,21 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="css" scoped>
-.search-wrap {
+.search {
     margin-top: 0.5rem;
     width: 100%;
 }
 
-.search {
-    width: inherit;
+.search-bar {
     height: 3rem;
+    width: inherit;
     overflow: hidden;
     border-radius: 5px;
     background: var(--background-a);
     outline: 1px solid var(--primary-a);
 }
 
-.search.focus {}
+.search-bar.focus {}
 
 .search-input {
     width: inherit;
@@ -125,13 +125,13 @@ onBeforeUnmount(() => {
 }
 
 
-.filter {
+.search-filter {
     justify-content: space-between;
     padding: 0.5rem 0;
     display: none;
 }
 
-.filter-button {
+.search-filter-button {
     background: var(--background-b);
     font-size: var(--text-size-0);
     padding: 0.25rem 1rem;
@@ -146,11 +146,11 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .search {
+    .search-bar {
         height: 2.5rem;
     }
 
-    .filter {
+    .search-filter {
         display: flex;
     }
 
