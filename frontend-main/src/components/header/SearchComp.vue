@@ -11,7 +11,7 @@
 
         <div class="search-filter">
             <div class="search-filter-button">
-                filter
+                Filter
             </div>
             <div class="search-filter-button">
                 Category
@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
 
 .search-filter {
     justify-content: space-between;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
     display: none;
 }
 
