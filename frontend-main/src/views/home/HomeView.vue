@@ -8,7 +8,7 @@
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-            <NormalGrid :content="item" :title="index" :disableTitle="index === 0" />
+            <NormalGrid :content="item" :title="index" :visibleTitle="index !== 'Best Sellers'" />
 
           </section>
 
