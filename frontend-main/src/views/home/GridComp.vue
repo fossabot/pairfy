@@ -23,11 +23,11 @@
 </template>
 
 <script setup>
-import image1 from '@/assets/icons/a.png'
-import image2 from '@/assets/icons/b.png'
-import image3 from '@/assets/icons/c.png'
-import image4 from '@/assets/icons/d.png'
-import image5 from '@/assets/icons/e.png'
+import image1 from '@/assets/icons/0.png'
+import image2 from '@/assets/icons/1.png'
+import image3 from '@/assets/icons/2.png'
+import image4 from '@/assets/icons/3.png'
+import image5 from '@/assets/icons/4.png'
 import { ref, inject } from 'vue';
 
 const { formatPriceToUSD } = inject('utils');
