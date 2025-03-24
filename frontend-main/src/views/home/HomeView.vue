@@ -502,7 +502,7 @@ section.visible {
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
   .bottom {
-    padding-top: 1rem;
+    padding-top: 0rem;
   }
 }
 

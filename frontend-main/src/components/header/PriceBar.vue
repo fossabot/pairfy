@@ -1,7 +1,10 @@
 <template>
     <div class="bar flex">
         <div class="bar-content flex">
+            
             <LocationComp />
+            <LogoComp/>
+            
             <span class="bar-price">Blackdays: 1.000.000 ADA</span>
             <span class="bar-price">Volume 24h: 253.894 ADA</span>
             <span class="bar-price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
@@ -22,6 +25,7 @@
 import LocationComp from '@/components/header/LocationComp.vue';
 import headerAPI from "@/components/header/api/index";
 import { inject } from 'vue';
+import LogoComp from '../LogoComp.vue';
 
 const { getADAprice, getCurrentUser } = headerAPI();
 
