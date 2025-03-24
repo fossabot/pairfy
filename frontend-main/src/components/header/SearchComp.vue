@@ -96,7 +96,6 @@ onBeforeUnmount(() => {
 
 <style lang="css" scoped>
 .search {
-    margin-top: 0.5rem;
     width: 100%;
 }
 
@@ -174,6 +173,10 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
+    .search{
+        margin-top: 0.5rem; 
+    }
+     
     .search-bar {
         height: 2.5rem;
     }

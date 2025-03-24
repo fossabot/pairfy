@@ -3,14 +3,14 @@
         <DrawerComp />
         <PriceBar />
         <div class="header">
-            <div class="header-column left">
+            <div class="header-column left flex">
                 <img class="brand" src="@/assets/icon.jpeg" alt="" @click="toHome">
                 <img class="brand" src="@/assets/logo.png" alt="" @click="toHome"> 
             </div>
-            <div class="header-column center">
+            <div class="header-column center flex">
                 <SearchComp />
             </div>
-            <div class="header-column right">
+            <div class="header-column right flex">
                 <AgentButton />
             </div>
         </div>
