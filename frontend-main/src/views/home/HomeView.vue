@@ -8,7 +8,7 @@
         <template v-for="(item, index) in feedData" :key="index">
 
           <section v-if="visibilityMap[index]" :class="{ 'visible': visibilityMap[index] }">
-            <NormalGrid :content="item" :title="index" />
+            <NormalGrid :content="item" :title="index" :disableTitle="index === 0" />
 
           </section>
 
@@ -25,11 +25,11 @@ import NormalGrid from '@/views/home/NormalGrid.vue'
 import BannerComp from '@/views/home/BannerComp.vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import { ref, computed, reactive, onMounted } from 'vue'
-import image1 from '@/assets/icons/0.png'
-import image2 from '@/assets/icons/1.png'
-import image3 from '@/assets/icons/2.png'
-import image4 from '@/assets/icons/3.png'
-import image5 from '@/assets/icons/5.png'
+import image1 from '@/assets/icons/a.png'
+import image2 from '@/assets/icons/b.png'
+import image3 from '@/assets/icons/c.png'
+import image4 from '@/assets/icons/d.png'
+import image5 from '@/assets/icons/e.png'
 import image6 from '@/assets/icons/6.png'
 
 const products = [
@@ -493,6 +493,7 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 3rem;
   padding-bottom: 200px;
 }
 </style>

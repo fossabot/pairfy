@@ -1,6 +1,6 @@
 <template>
   <div class="normal">
-    <div class="title flex">
+    <div class="title flex" v-if="disableTitle">
       <span>{{ props.title }}</span>
       <div class="icon flex">
         <img src="@/assets/icons/hot.png" alt="">
@@ -18,7 +18,7 @@
 import ItemCard from '@/views/home/ItemCard.vue';
 import { ref } from 'vue';
 
-const props = defineProps(['content', 'title'])
+const props = defineProps(['content', 'title', 'disableTitle'])
 
 
 </script>
