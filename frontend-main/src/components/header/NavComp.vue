@@ -43,7 +43,7 @@ section {
 }
 
 .menu-nav {
-  font-size: var(--text-size-2);
+  font-size: var(--text-size-1);
   white-space: nowrap;
   font-weight: 400;
   cursor: pointer;
