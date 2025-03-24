@@ -205,9 +205,9 @@ const gridData = ref([
     overflow: hidden;
     width: auto;
     display: flex;
-    height: 130px;
+    height: 120px;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 12px;
 }
 
 .grid-image {

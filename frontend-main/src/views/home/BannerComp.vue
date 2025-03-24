@@ -52,7 +52,7 @@ import RightPanel from '@/views/home/RightPanel.vue';
 }
 
 .banner-column:nth-child(2) {
-    grid-template-rows: 1fr 1.5fr;
+    grid-template-rows: 0.75fr 1fr;
 }
 
 .banner-column:last-child {
