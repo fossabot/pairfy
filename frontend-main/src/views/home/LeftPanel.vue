@@ -223,7 +223,7 @@ svg {
     border-radius: 6px;
     padding: 0.75rem 0.5rem;
     cursor: pointer;
-    width: 90%;
+    width: 95%;
 }
 
 .panel-item:hover {
