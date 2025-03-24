@@ -206,7 +206,7 @@ const searchCategory = (name) => {
 
 <style lang="css" scoped>
 svg {
-    width: 2rem !important;
+    width: 1.5rem !important;
 }
 
 .panel {
@@ -223,6 +223,7 @@ svg {
     border-radius: 6px;
     padding: 0.75rem 0;
     cursor: pointer;
+    width: 90%;
 }
 
 .panel-item:hover {
@@ -235,7 +236,6 @@ svg {
     margin-left: 0.5rem;
     white-space: nowrap;
     overflow: hidden;
-    width: 80%;
 }
 
 .panel-image svg {
