@@ -32,7 +32,7 @@ section {
 }
 
 .menu {
-  max-width: calc(var(--body-a) - 2rem);
+  max-width: calc(var(--body-a) - 1rem);
   color: inherit;
   width: 100%;
 }
