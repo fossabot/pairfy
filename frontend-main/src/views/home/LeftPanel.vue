@@ -210,7 +210,7 @@ svg {
 }
 
 .panel {
-    background: var(--primary-a);
+    border: 1px solid var(--border-a);
     border-radius: 12px;
     transition: 0.2s;
     padding: 0.5rem;
@@ -219,9 +219,9 @@ svg {
 
 .panel-item {
     font-size: var(--text-size-1);
-    color: var(--text-w);
-    border-radius: 6px;
     padding: 0.75rem 0.5rem;
+    color: var(--text-a);
+    border-radius: 6px;
     cursor: pointer;
     width: 95%;
 }
