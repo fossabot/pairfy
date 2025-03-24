@@ -213,7 +213,7 @@ svg {
     background: var(--primary-a);
     border-radius: 12px;
     transition: 0.2s;
-    padding: 1rem;
+    padding: 0.5rem;
     height: 100%;
 }
 
@@ -221,7 +221,7 @@ svg {
     font-size: var(--text-size-1);
     color: var(--text-w);
     border-radius: 6px;
-    padding: 0.75rem 0;
+    padding: 0.75rem 0.5rem;
     cursor: pointer;
     width: 90%;
 }
