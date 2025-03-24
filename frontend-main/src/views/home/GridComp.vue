@@ -160,6 +160,7 @@ const gridData = ref([
 
 .box-head {
     justify-content: space-between;
+    line-height: initial;
     width: inherit;
 }
 
@@ -207,7 +208,6 @@ const gridData = ref([
     display: flex;
     height: 120px;
     font-weight: bold;
-    border-radius: 12px;
 }
 
 .grid-image {
