@@ -173,11 +173,12 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .search{
-        margin-top: 0.5rem; 
+    .search {
+        margin-top: 0.5rem;
     }
-     
+
     .search-bar {
+        border-radius: 6px;
         height: 2.5rem;
     }
 
