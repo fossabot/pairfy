@@ -5,7 +5,7 @@
         <div class="header">
             <div class="header-column left flex">
                 <img class="brand" src="@/assets/icon.jpeg" alt="" @click="toHome">
-                <img class="brand" src="@/assets/mini-logo.svg" alt="" @click="toHome" style="padding-left: 1rem;"> 
+                <img class="brand" src="@/assets/mini-logo.svg" alt="" @click="toHome" style="padding-left: 0.5rem;"> 
             </div>
             <div class="header-column center flex">
                 <SearchComp />
@@ -130,7 +130,7 @@ header {
 
 .brand {
     cursor: pointer;
-    height: 3rem;
+    height: 2rem;
 }
 
 .header {
