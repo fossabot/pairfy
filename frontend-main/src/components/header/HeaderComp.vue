@@ -134,7 +134,7 @@ header {
 }
 
 .header {
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 15% 70% 15%;
     max-width: var(--body-a);
     display: grid;
     width: 100%;
