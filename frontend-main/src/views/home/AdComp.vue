@@ -10,6 +10,7 @@
 
 <style lang="css" scoped>
 .card {
+    background: var(--purple-a); 
     box-sizing: border-box;
     border-radius: 12px;
     overflow: hidden;
