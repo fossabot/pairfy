@@ -120,12 +120,13 @@
   --text-size-0: 13px;
   --text-size-1: 14px;
   --text-size-2: 16px;
-  --text-size-3: 20px;
-  --text-size-4: 24px;
-  --text-size-5: 28px;
-  --text-size-6: 40px;
-  --text-size-7: 56px;
-  --text-size-8: 84px;
+  --text-size-3: 18px;
+  --text-size-4: 20px;
+  --text-size-5: 24px;
+  --text-size-6: 28px;
+  --text-size-7: 40px;
+  --text-size-8: 56px;
+  --text-size-9: 84px;
 
   --body-a: 1500px;
 
