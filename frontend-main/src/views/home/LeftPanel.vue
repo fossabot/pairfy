@@ -221,7 +221,7 @@ svg {
     color: var(--text-a);
     border-radius: 6px;
     padding: 0.75rem 0;
-    cursor: default;
+    cursor: pointer;
 }
 
 .panel-item:hover {
