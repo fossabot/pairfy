@@ -206,19 +206,20 @@ const searchCategory = (name) => {
 
 <style lang="css" scoped>
 svg {
-    stroke: var(--primary-a);
     width: 2rem !important;
 }
 
 .panel {
-    background: var(--background-a);
+    background: var(--primary-a);
+    border-radius: 12px;
     transition: 0.2s;
+    padding: 1rem;
     height: 100%;
 }
 
 .panel-item {
     font-size: var(--text-size-1);
-    color: var(--text-a);
+    color: var(--text-w);
     border-radius: 6px;
     padding: 0.75rem 0;
     cursor: pointer;
