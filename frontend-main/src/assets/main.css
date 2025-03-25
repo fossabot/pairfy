@@ -1,6 +1,7 @@
 @import './base.css';
 
 #app {
+  background: var(--background-a); 
   font-weight: normal;
   width: 100%;
 }
