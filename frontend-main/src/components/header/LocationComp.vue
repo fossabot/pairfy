@@ -246,7 +246,10 @@ onBeforeUnmount(() => {
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    /* Styles for small phones */
+    .location{
+        margin: initial;
+        margin-left: auto;
+    }
 }
 
 /* Large phones and small tablets (481px - 767px) */

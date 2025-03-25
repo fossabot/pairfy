@@ -1,9 +1,9 @@
 <template>
     <div class="bar flex">
         <div class="bar-content flex">
-            
-            <LocationComp />
+
             <LogoComp/>
+            <LocationComp />
             
             <span class="bar-price">Discount Liquidity: 1.000.000 ADA</span>
             <span class="bar-price">Volume 24h: 253.894 ADA</span>
@@ -79,7 +79,7 @@ const { formatPriceToUSD } = inject('utils');
 
     .bar-content {
         max-width: 100%;
-        padding: 0 1rem;
+        padding: 0 0.5rem;
     }
 }
 
