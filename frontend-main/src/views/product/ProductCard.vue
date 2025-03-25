@@ -1,10 +1,7 @@
 <template>
     <div class="p-card" v-if="getProductData">
-        <section>
-            <MediaModule />
-            <PreviewModule />
-        </section>
-
+        <MediaModule />
+        <PreviewModule />
         <BuyModule />
     </div>
 
@@ -25,10 +22,9 @@ const { getProductData } = productAPI();
 </script>
 
 <style lang="css" scoped>
-section {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+.p-card {
+    align-items: center;
+    display: flex;
 }
 
 .p-card-loader {
@@ -36,15 +32,5 @@ section {
     justify-content: center;
     align-items: center;
     height: 50vh;
-}
-
-
-.p-card {
-    display: grid;
-    grid-template-columns: 80% 20%;
-    box-sizing: border-box;
-    padding-bottom: 50px;
-    margin-top: 1rem;
-
 }
 </style>
