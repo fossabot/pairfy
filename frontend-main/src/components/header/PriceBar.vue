@@ -5,7 +5,7 @@
             <LocationComp />
             <LogoComp/>
             
-            <span class="bar-price">Blackdays: 1.000.000 ADA</span>
+            <span class="bar-price">Discount Liquidity: 1.000.000 ADA</span>
             <span class="bar-price">Volume 24h: 253.894 ADA</span>
             <span class="bar-price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
             <span class="bar-price">IUSD 1.0</span>
