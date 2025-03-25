@@ -97,11 +97,12 @@
 }
 
 :root {
-  --primary-a: var(--orange-a);  
+  --primary-a: var(--orange-a);
   --primary-b: var(--blue-a);
 
   --background-a: #faf9f5;
   --background-b: var(--p-surface-100);
+  --background-w: #ffffff;
 
   --background-c: red;
 
@@ -135,7 +136,7 @@
   --border-b: rgba(0, 0, 0, 0.1);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
-  --shadow-b: 0 1px 2px 0 rgba(0,0,0,.12);
+  --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --red-a: #ff2e4d;
   --red-alpha: rgba(255, 46, 77, 0.1);
@@ -156,9 +157,8 @@
   --soft-blue-a: green;
 
   --black-a: #000000;
-  --black-b: #181A20;
+  --black-b: #181a20;
   --black-c: green;
-
 
   --complementary-main: #00d1b2; /* Teal (Direct Complementary) */
   --complementary-light: #66e3d0; /* Lighter Teal */
@@ -178,7 +178,6 @@
   --complementary-primary-dark: #cc243e; /* Darker Red-Pink */
   --complementary-primary-muted: #e6395f; /* Muted Red-Pink */
 
-  
   --pastel-primary: #ffb3c1; /* Pastel Pink */
   --pastel-secondary: #ff9999; /* Soft Coral */
   --pastel-tertiary: #ffccd5; /* Light Blush */
@@ -216,7 +215,14 @@ body {
   font-family: 'IBM Plex Sans', serif;
   font-family: 'Open Sans', serif;
   font-family: 'Inter', serif;
-  font-family: system-ui,-apple-system,BlinkMacSystemFont,\.SFNSText-Regular,Helvetica,Arial,sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    \.SFNSText-Regular,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;

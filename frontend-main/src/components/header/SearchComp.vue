@@ -104,7 +104,7 @@ onBeforeUnmount(() => {
     width: inherit;
     overflow: hidden;
     border-radius: 12px;
-    background: var(--background-a);
+    background: var(--background-w);
     outline: 1px solid var(--primary-a);
 }
 
