@@ -106,9 +106,9 @@ const keywordList = computed(() => {
 }
 
 .preview-name {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-5);
     line-height: 2.25rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .preview-rating {

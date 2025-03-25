@@ -10,7 +10,7 @@
 
         <div class="p-media-image">
             <Image :src="productImageList[selectedImageIndex]" alt="Image"
-                :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '500px', borderRadius: '6px' }"
+                :imageStyle="{ width: '100%',  borderRadius: '6px' }"
                 previewIcon="pi-search" preview />
         </div>
 
@@ -82,7 +82,8 @@ const selectImage = (index) => {
 
 .p-media-image {
     justify-content: center;
-    align-items: flex-start;
+    min-width: 500px;
+    max-width: 500px;
     min-height: 500px;
     max-height: 500px;
     display: flex;
