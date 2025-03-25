@@ -133,7 +133,7 @@ header {
 }
 
 .header {
-    grid-template-columns: 10% 80% 10%;
+    grid-template-columns: 13% 74% 13%;
     max-width: var(--body-a);
     display: grid;
     width: 100%;

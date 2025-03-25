@@ -347,7 +347,7 @@ onBeforeUnmount(() => {
 }
 
 .search-bottom{
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
     min-height: 50vh;
