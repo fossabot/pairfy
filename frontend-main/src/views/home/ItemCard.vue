@@ -1,29 +1,29 @@
 <template>
-    <div class="card" @click="onSelect(props.content.id)">
-        <div class="image">
-            <img :src="props.content.image" :style="{ ...props.style }" alt="">
+    <div class="p-product" @click="onSelect(props.data.id)">
+        <div class="p-product-image">
+            <img :src="props.data.image" :style="{ ...props.style }" alt="">
         </div>
 
-        <div class="body">
-            <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span>
+        <div class="p-product-body">
+            <span class="p-product-title">{{ reduceByLength(props.data.name, 40, '') }}</span>
 
-            <span class="price">
+            <span class="p-product-price">
                 <span>
                     {{
-                        `$${formatPriceToUSD(applyDiscount(props.content.discount,
-                            props.content.price,
-                            props.content.discount_value))}`
+                        `$${formatPriceToUSD(applyDiscount(props.data.discount,
+                            props.data.price,
+                            props.data.discount_value))}`
                     }}
 
                 </span>
 
-                <span class="tag" v-if="props.content.discount" style="text-decoration: line-through;">
-                    {{ formatPriceToUSD(props.content.price) }}
+                <span class="p-product-tag" v-if="props.data.discount" style="text-decoration: line-through;">
+                    {{ formatPriceToUSD(props.data.price) }}
                 </span>
 
             </span>
 
-            <span class="rating">
+            <span class="p-product-rating">
                 <RatingComp :rating="4" />
             </span>
 
@@ -34,11 +34,11 @@
 <script setup>
 import RatingComp from '@/components/RatingComp.vue';
 import { useRouter, useRoute } from 'vue-router';
-import { inject, ref } from 'vue';
+import { inject } from 'vue';
 
 const { formatPriceToUSD, reduceByLength, applyDiscount } = inject('utils');
 
-const props = defineProps(['content', 'style'])
+const props = defineProps(['data', 'style'])
 
 const theRoute = useRoute();
 
@@ -61,29 +61,29 @@ span {
     line-height: 1.5rem;
 }
 
-.card {
+.p-product {
     overflow: hidden;
     cursor: pointer;
 }
 
-.image {
+.p-product-image {
     overflow: hidden;
 }
 
-.image img {
+.p-product-image img {
     width: 100%;
     object-fit: cover;
     border-radius: 0px;
 }
 
-.body {
+.p-product-body {
     padding: 0rem;
     display: flex;
     flex-direction: column;
     font-size: var(--text-size-1);
 }
 
-.title {
+.p-product-title {
     font-size: var(--text-size-1);
     text-overflow: ellipsis;
     color: var(--text-b);
@@ -94,7 +94,7 @@ span {
     text-overflow: ellipsis;
 }
 
-.price {
+.p-product-price {
     font-size: var(--text-size-3);
     color: var(--orange-a);
     align-items: baseline;
@@ -103,11 +103,8 @@ span {
     display: flex;
 }
 
-.dollar {
-    margin-right: 2px;
-}
 
-.tag {
+.p-product-tag {
     font-size: var(--text-size-1);
     background: transparent;
     max-width: fit-content;
@@ -119,5 +116,7 @@ span {
     font-weight: 400;
 }
 
-.rating {}
+.p-product-rating {
+
+}
 </style>

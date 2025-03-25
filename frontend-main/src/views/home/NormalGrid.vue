@@ -8,7 +8,7 @@
     </div>
 
     <div class="grid">
-      <ItemCard v-for="item, index in content" :key="index" :content="item"
+      <ItemCard v-for="item, index in content" :key="index" :data="item"
         :style="{ minHeight: '100%', maxHeight: '100%' }" />
     </div>
   </div>
