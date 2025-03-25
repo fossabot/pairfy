@@ -211,7 +211,6 @@ svg {
 
 .panel {
     background: var(--earthy-brown);
-   
     border-radius: 12px;
     transition: 0.2s;
     padding: 0.5rem;
