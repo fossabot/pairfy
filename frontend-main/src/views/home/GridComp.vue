@@ -140,6 +140,7 @@ const gridData = ref([
 
 .box {
     border: 1px solid var(--border-a);
+    background: var(--background-w);
     justify-content: center;
     flex-direction: column;
     align-items: center;

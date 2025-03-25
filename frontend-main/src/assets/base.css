@@ -106,6 +106,27 @@
 
   --background-c: red;
 
+  /* Neutrales y Complementarios */
+  --cream: #faf9f5;
+  --soft-beige: #ede8dd;
+  --warm-taupe: #c4b8a8;
+  --earthy-brown: #8d7760;
+  --deep-espresso: #5b4632;
+
+  /* Análogos (Tonos Suaves y Cálidos) */
+  --warm-white: #fdfbf6;
+  --sand-beige: #ede5d5;
+  --muted-gold: #d6c49b;
+  --olive-green: #b2a37c;
+  --warm-gray: #a09283;
+
+  /* Acentos (Colores de Contraste) */
+  --terracotta: #d68a5d;
+  --soft-sage-green: #a8b8a0;
+  --dusty-blue: #a5b4c6;
+  --muted-lavender: #b8a8c4;
+  --deep-teal: #2f5d62;
+
   --text-a: #3d3929;
   --text-b: #565959;
   --text-w: #ffffff;

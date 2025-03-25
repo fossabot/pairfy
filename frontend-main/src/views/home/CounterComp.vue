@@ -86,6 +86,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .card {
+  background: var(--soft-beige);
   border: 1px solid var(--border-a);
   border-radius: 12px;
   padding: 1rem;
