@@ -56,14 +56,15 @@
         </div>
 
         <div class="preview-about">All about this product</div>
+
         <ul class="preview-bullet">
             <li v-for="item in bulletList" :key="item">{{ item }}</li>
         </ul>
 
-        <div class="preview-keywords">
-            <Tag severity="secondary" style="margin-right: 1rem;" v-for="item in keywordList" :key="item">
+        <div class="preview-keywords flex"> 
+            <div v-for="item in keywordList" :key="item">
                 <span>{{ item }}</span>
-            </Tag>
+            </div>
         </div>
     </div>
 
@@ -201,6 +202,12 @@ span {
     margin-top: 1rem;
 }
 
+.preview-keywords div{
+    background: var(--background-b);
+    padding: 0.25rem 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 12px;
+}
 
 
 </style>
