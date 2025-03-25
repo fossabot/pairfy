@@ -7,7 +7,7 @@
             <span class="brand">{{ content.brand }}</span>
             <span class="title" @click="openProduct(content.id)">{{ content.name }}</span>
             <span class="rating flex">
-                <Rating v-model="rating" :stars="5" readonly />
+                <RatingComp :rating="4" />
                 <span class="rating-value">
                     {{ content.rating }}
                 </span>
@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+import RatingComp from '@/components/RatingComp.vue';
 import TagComp from '@/components/TagComp.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ref, inject } from 'vue';
