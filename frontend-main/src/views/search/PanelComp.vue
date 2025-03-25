@@ -21,7 +21,8 @@
                 <label for="used"> Used </label>
             </span>
             <span class="checkbox flex">
-                <Checkbox binary trueValue="Refurbished" :falseValue="null" v-model="condition" inputId="refurbished" size="small" />
+                <Checkbox binary trueValue="Refurbished" :falseValue="null" v-model="condition" inputId="refurbished"
+                    size="small" />
                 <label for="refurbished"> Refurbished </label>
             </span>
         </div>
@@ -163,7 +164,7 @@ label {
     min-height: 100vh;
     display: flex;
     width: 350px;
-} 
+}
 
 .panel-row {
     flex-direction: column;
@@ -212,5 +213,33 @@ label {
 
 .message i {
     font-size: inherit;
+}
+
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) {
+    .panel {
+        display: none;
+    }
+}
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
 }
 </style>

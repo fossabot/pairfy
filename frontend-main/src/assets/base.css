@@ -100,8 +100,8 @@
   --primary-a: var(--orange-a);
   --primary-b: var(--blue-a);
 
-  --background-a: #faf9f5;
-  --background-b: var(--p-surface-100);
+  --background-a: var(--cream);
+  --background-b: var(--soft-beige);
   --background-w: #ffffff;
 
   --background-c: red;
