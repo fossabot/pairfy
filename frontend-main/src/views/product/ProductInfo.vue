@@ -136,6 +136,20 @@ span {
     font-weight: 400;
 }
 
+.preview-last {
+    font-size: var(--text-size-4);
+    text-decoration: line-through;
+    margin-left: 0.5rem;
+    font-weight: 300;
+}
+
+.preview-tag {
+    font-size: var(--text-size-4);
+    margin-left: 0.5rem; 
+    color: var(--red-a);
+    font-weight: 300;
+}
+
 
 .preview-model {
     font-size: var(--text-size-0);
@@ -187,18 +201,6 @@ span {
     margin-top: 1rem;
 }
 
-.preview-last {
-    font-size: var(--text-size-4);
-    text-decoration: line-through;
-    margin-left: 0.5rem;
-    font-weight: 300;
-}
 
-.preview-tag {
-    font-size: var(--text-size-4);
-    margin-left: 0.5rem; 
-    color: var(--red-a);
-    font-weight: 300;
-}
 
 </style>
