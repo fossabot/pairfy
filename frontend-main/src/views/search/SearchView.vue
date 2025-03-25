@@ -3,24 +3,29 @@
         <div class="container flex">
             <PanelComp />
             <div class="content">
-                <div class="banner flex">
+                <div class="search-top flex">
                     <div class="counter">
                         1-{{ productData.length }} of over {{ productData.length }} results for <span>"{{ searchKey
-                            }}"</span>
+                        }}"</span>
                     </div>
                     <Select class="selector" v-model="selectedSort" :options="sortOptions" optionLabel="name"
                         placeholder="Sort by" checkmark :highlightOnSelect="false" @change="onSortChange"
                         size="small" />
                 </div>
 
-                <template v-if="loading">
-                    <Skeleton v-for="item in 5" :key="item" width="100%" height="220px" style="margin: 0.5rem 0;" />
-                </template>
+                <div class="search-bottom">
+                    <template v-if="loading">
+                        <div class="search-loader">
+                            <LoadingComp />
+                        </div>
+                      
+                    </template>
 
-                <template v-else>
-                    <CardComp v-for="(item, index) in productData" :key="index" :content="item._source" />
-                </template>
+                    <template v-else>
+                        <CardComp v-for="(item, index) in productData" :key="index" :content="item._source" />
+                    </template>
 
+                </div>
             </div>
         </div>
     </div>
@@ -33,6 +38,7 @@ import CardComp from '@/views/search/CardComp.vue';
 import { useQuery } from '@vue/apollo-composable'
 import { useRouter, useRoute } from 'vue-router';
 import { ref, watch, onBeforeUnmount, reactive, inject } from 'vue';
+import LoadingComp from '@/components/LoadingComp.vue';
 
 const { randomString } = inject('utils');
 
@@ -320,10 +326,10 @@ onBeforeUnmount(() => {
     flex-direction: column;
     min-height: 100vh;
     width: inherit;
-    display: flex;   
+    display: flex;
 }
 
-.banner {
+.search-top {
     margin-bottom: 1rem;
     width: inherit;
 }
@@ -338,5 +344,16 @@ onBeforeUnmount(() => {
 
 .counter span {
     font-weight: 600;
+}
+
+.search-bottom{
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 50vh;
+    display: flex;
+}
+
+.search-loader{
+    margin: auto;
 }
 </style>

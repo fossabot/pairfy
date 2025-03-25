@@ -95,7 +95,7 @@ const openProduct = (id) => {
 .title {
     margin-top: 0.5rem;
     text-transform: capitalize;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-3);
     cursor: pointer;
 }
 
