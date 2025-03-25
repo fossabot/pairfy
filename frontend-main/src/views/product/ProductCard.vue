@@ -1,12 +1,15 @@
 <template>
-    <Skeleton v-if="!getProductData" width="100%" height="500px" style="margin-top:1rem" />
-    <div class="card" v-if="getProductData">
+    <div class="p-card" v-if="getProductData">
         <section>
             <MediaModule />
             <PreviewModule />
         </section>
-        
+
         <BuyModule />
+    </div>
+
+    <div class="p-card-loader" v-else>
+        <LoadingComp />
     </div>
 </template>
 
@@ -15,9 +18,9 @@ import MediaModule from './MediaModule.vue';
 import PreviewModule from './PreviewModule.vue';
 import productAPI from '@/views/product/api/index';
 import BuyModule from "@/views/product/BuyModule.vue"
+import LoadingComp from '@/components/LoadingComp.vue';
 
 const { getProductData } = productAPI();
-
 
 </script>
 
@@ -28,7 +31,15 @@ section {
     gap: 1rem;
 }
 
-.card {
+.p-card-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+
+.p-card {
     display: grid;
     grid-template-columns: 80% 20%;
     box-sizing: border-box;
@@ -36,6 +47,4 @@ section {
     margin-top: 1rem;
 
 }
-
-
 </style>
