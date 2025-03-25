@@ -1,5 +1,4 @@
 <template>
-
     <template v-if="getCurrentUser">
         <div class="card flex">
 
@@ -8,15 +7,24 @@
             <CartComp style="margin: 0 2rem" />
 
             <div class="card-button flex" @click="togglePanel(true)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-menu">
+                    <line x1="4" x2="20" y1="12" y2="12" />
+                    <line x1="4" x2="20" y1="6" y2="6" />
+                    <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
             </div>
         </div>
     </template>
 
     <template v-else>
-        <div class="wallet flex" @click="togglePanel(true)">
-            Connect
-        </div>
+        <ButtonComp data="Connect" @click="togglePanel(true)"
+            :style="{
+            'color': 'var(--text-w)',
+            'border': 'none',
+            'background': 'var(--primary-a)'
+            }" />
     </template>
 </template>
 
@@ -24,6 +32,7 @@
 import headerAPI from "@/components/header/api/index";
 import NotificationComp from "./NotificationComp.vue";
 import CartComp from "./CartComp.vue";
+import ButtonComp from "../ButtonComp.vue";
 
 const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
@@ -50,17 +59,4 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 .card-button i {
     font-size: var(--text-size-3);
 }
-
-.wallet {
-    font-size: var(--text-size-1);
-    background: var(--primary-a);
-    justify-content: center;
-    color: var(--text-w);
-    border-radius: 12px;
-    padding: 0 1.5rem;
-    font-weight: 500;
-    cursor: pointer;
-    height: 3rem;
-}
-
 </style>

@@ -1,0 +1,27 @@
+<template>
+    <div class="p-buttonx" :style="{ ...props.style }">
+        {{ props.data }}
+    </div>
+</template>
+
+<script setup>
+const props = defineProps(['data', 'style'])
+</script>
+
+<style lang="css" scoped>
+.p-buttonx {
+    font-size: var(--text-size-1);
+    background: var(--primary-a);
+    align-items: center;
+    border-radius: 12px;
+    padding: 0 1.5rem;
+    cursor: pointer;
+    display: flex;
+    border: none;
+    height: 3rem;
+}
+
+.p-buttonx:hover {
+    opacity: 0.9;
+}
+</style>
