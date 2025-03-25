@@ -115,6 +115,7 @@ span {
     font-size: var(--text-size-5);
     line-height: 2.25rem;
     font-weight: 400;
+    width: 80%;
 }
 
 .preview-rating {

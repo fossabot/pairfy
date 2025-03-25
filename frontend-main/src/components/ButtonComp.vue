@@ -12,6 +12,8 @@ const props = defineProps(['data', 'style'])
 .p-buttonx {
     font-size: var(--text-size-1);
     background: var(--primary-a);
+    justify-content: center;
+    color: var(--text-w);
     align-items: center;
     border-radius: 12px;
     padding: 0 1.5rem;

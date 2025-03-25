@@ -19,12 +19,7 @@
     </template>
 
     <template v-else>
-        <ButtonComp data="Connect" @click="togglePanel(true)"
-            :style="{
-            'color': 'var(--text-w)',
-            'border': 'none',
-            'background': 'var(--primary-a)'
-            }" />
+        <ButtonComp data="Connect" @click="togglePanel(true)" />
     </template>
 </template>
 

@@ -191,16 +191,22 @@
                 </template>
             </InputNumber>
 
-            <Button label="Buy Now" fluid @click="onBuyProduct()" style="color: var(--text-w);"
-                :disabled="getProductData.available < 1" />
-            <Button label="Add To Cart" fluid variant="outlined" severity="secondary" />
+            <ButtonComp data="Buy Now" @click="onBuyProduct()" :disabled="getProductData.available < 1" :style="{
+                'background': 'var(--primary-a)'
+            }" />
+
+            <ButtonComp data="Add To Cart" :style="{
+                'color': 'var(--text-a)',
+                'border': '1px solid var(--border-a)',
+                'background': 'transparent'
+            }" />
         </div>
 
         <div class="card-terms flex">
 
             <div class="card-terms-box">
                 <span class="term-title">
-              
+
                     Purchase Protection.
                 </span>
                 <span> Receive the product you expected or get your money back.</span>
@@ -214,6 +220,7 @@ import gql from 'graphql-tag';
 import dayjs from 'dayjs';
 import productAPI from '@/views/product/api/index';
 import headerAPI from "@/components/header/api/index";
+import ButtonComp from '@/components/ButtonComp.vue';
 import { ref, computed, inject } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
