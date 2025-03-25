@@ -90,8 +90,8 @@ span{
 
 .price {
     font-size: var(--text-size-3);
+    color: var(--orange-a);
     align-items: baseline;
-    color: var(--primary-a);
     margin-top: 0rem;
     font-weight: 600;
     display: flex;

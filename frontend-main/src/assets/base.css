@@ -97,7 +97,7 @@
 }
 
 :root {
-  --primary-a: var(--orange-a);
+  --primary-a: var(--terracotta);
   --primary-b: var(--blue-a);
 
   --background-a: var(--cream);
