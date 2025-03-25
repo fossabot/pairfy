@@ -87,7 +87,6 @@ onBeforeUnmount(() => {
 <style scoped>
 .card {
   border: 1px solid var(--border-a);
-  background: var(--black-b);
   border-radius: 12px;
   padding: 1rem;
 }
@@ -118,7 +117,7 @@ small {
 
 .title {
   font-size: var(--text-size-3);
-  color: var(--text-w);
+  color: var(--text-a);
   margin-bottom: 1rem;
   font-weight: 600;
 }
