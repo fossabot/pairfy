@@ -1,7 +1,7 @@
 <template>
     <div class="p-card" v-if="getProductData">
-        <MediaModule />
-        <PreviewModule />
+        <ProductMedia />
+        <ProductInfo />
         <BuyModule />
     </div>
 
@@ -11,11 +11,11 @@
 </template>
 
 <script setup>
-import MediaModule from './MediaModule.vue';
-import PreviewModule from './PreviewModule.vue';
 import productAPI from '@/views/product/api/index';
 import BuyModule from "@/views/product/BuyModule.vue"
 import LoadingComp from '@/components/LoadingComp.vue';
+import ProductMedia from '@/views/product/ProductMedia.vue';
+import ProductInfo from './ProductInfo.vue';
 
 const { getProductData } = productAPI();
 
