@@ -1,16 +1,16 @@
 <template>
-    <div class="media">
+    <div class="p-media">
         <section v-if="getProductData">
-            <div class="nav">
-                <div class="nav-item flex" :class="{ selected: selectedImageIndex === index }"
+            <div class="p-media-nav">
+                <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
                     v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
                     @mouseover="selectImage(index)">
                     <img :src="item" alt="item">
                 </div>
             </div>
 
-            <div class="media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '600px', maxHeight: '600px', borderRadius: '6px' }"
+            <div class="p-media-image">
+                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '500px', borderRadius: '6px' }"
                     previewIcon="pi-search" preview />
             </div>
         </section>
@@ -53,39 +53,39 @@ section {
     display: flex;
 }
 
-.nav {
+.p-media-nav {
     display: flex;
     flex-direction: column;
     padding-right: 1rem;
 }
 
-.nav-item {
+.p-media-nav-item {
     border: 1px solid var(--border-a);  
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
     justify-content: center;
     margin-bottom: 1rem;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
 }
 
-.nav-item.selected {
-    outline: 1px solid var(--primary-b);
+.p-media-nav-item.selected {
+    outline: 2px solid var(--primary-b);
   
 }
 
-.nav-item img {
+.p-media-nav-item img {
     width: 100%;
     height: 100%;
     object-fit: fill;
 }
 
-.media-image {
+.p-media-image {
     justify-content: center;
     align-items: flex-start;
-    min-height: 600px;
-    max-height: 600px;
+    min-height: 500px;
+    max-height: 500px;
     display: flex;
     width: 100%;
 }
