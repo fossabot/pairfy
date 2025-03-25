@@ -4,7 +4,7 @@
         <PriceBar />
         <div class="header">
             <div class="header-column left flex">
-                <img class="brand" src="@/assets/icon.jpeg" alt="" @click="toHome">
+                <img class="brand" src="@/assets/logo.svg" alt="" @click="toHome">
             </div>
             <div class="header-column center flex">
                 <SearchComp />
@@ -133,7 +133,7 @@ header {
 }
 
 .header {
-    grid-template-columns: 15% 70% 15%;
+    grid-template-columns: 10% 80% 10%;
     max-width: var(--body-a);
     display: grid;
     width: 100%;

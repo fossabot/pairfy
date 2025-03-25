@@ -26,7 +26,7 @@
 <style lang="css" scoped>
 section {
   justify-content: center;
-  height: 2.75rem;
+  height: 2.5rem;
   width: inherit;
 
 }

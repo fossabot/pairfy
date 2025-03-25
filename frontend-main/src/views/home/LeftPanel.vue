@@ -212,7 +212,7 @@ svg {
 
 .panel {
     background: var(--background-b);
-    border-radius: 0px;
+    border-radius: 12px;
     transition: 0.2s;
     padding: 0.5rem;
     height: 100%;
