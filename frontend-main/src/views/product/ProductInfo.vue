@@ -8,32 +8,25 @@
 
         <div class="preview-model">
             <span>Model {{ getProductData.model }} </span>
+            <span>|</span>
             <span> SKU {{ getProductData.sku.split(":")[0] }} </span>
-            <span> +{{ getProductData.sold }} Sold</span>
+            <span>|</span>
+            <span>+{{ getProductData.sold }} Sold</span>
         </div>
 
         <div class="preview-rating flex">
             <span>4.3</span>
-            <span><RatingComp :rating="4" /></span>
+            <span>
+                <RatingComp :rating="4" />
+            </span>
             <span>433 ratings</span>
         </div>
 
         <Divider />
 
-        <div class="preview-discount" v-if="getProductData.discount">
-            <TagComp :tag="`- ${getProductData.discount_value}%`" type="contrast" />
-
-            <TagComp :tag="`${formatCurrency(getProductData.price)} USD`" type=""
-                style="margin: 0 1rem; text-decoration: line-through;" />
-
-            <TagComp :tag="`${convertUSDToADA(
-                applyDiscount(getProductData.discount,
-                    getProductData.price,
-                    getProductData.discount_value), getADAprice)} ADA`" type="" />
-        </div>
-
-
         <div class="preview-price flex">
+            <span class="preview-tag">-32%</span>
+
             <span>
                 {{ `$${formatPriceToUSD(getProductData.price)}` }}
             </span>
@@ -132,20 +125,19 @@ span {
 
 .preview-rating span:nth-child(3) {
     margin-left: 0.5rem;
-} 
+}
 
 .preview-price {
     font-size: var(--text-size-6);
+    align-items: baseline;
     margin-top: 1rem;
     font-weight: 400;
 }
 
-.preview-price div {
-    margin-right: 0.25rem;
-}
-
-.preview-discount {
-    margin-top: 1rem;
+.preview-tag {
+    margin-right: 0.5rem;
+    color: var(--red-a);
+    font-weight: 300;
 }
 
 .preview-model {
