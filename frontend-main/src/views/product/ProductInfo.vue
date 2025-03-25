@@ -206,7 +206,7 @@ span {
     background: var(--background-b);
     padding: 0.25rem 0.5rem;
     margin-right: 0.5rem;
-    border-radius: 12px;
+    border-radius: 4px;
 }
 
 
