@@ -10,7 +10,7 @@
 
         <div class="p-media-image">
             <Image :src="productImageList[selectedImageIndex]" alt="Image"
-                :imageStyle="{ width: '100%',  borderRadius: '6px' }"
+                :imageStyle="{ width: '100%',  borderRadius: '6px', objectFit: 'contain' }"
                 previewIcon="pi-search" preview />
         </div>
 
