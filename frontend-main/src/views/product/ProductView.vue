@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="container">
-            <HeadComp />
+            <ProductHead />
             <ProductCard />
             <Divider />
             <DescriptionComp />
@@ -13,7 +13,7 @@
 import gql from 'graphql-tag';
 import DescriptionComp from '@/views/product/DescriptionComp.vue';
 import ProductCard from '@/views/product/ProductCard.vue';
-import HeadComp from '@/views/product/ProductHead.vue';
+import ProductHead from '@/views/product/ProductHead.vue';
 import productAPI from '@/views/product/api/index';
 import { onBeforeUnmount, ref, watch } from "vue";
 import { useQuery } from '@vue/apollo-composable'
