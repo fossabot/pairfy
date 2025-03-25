@@ -12,8 +12,10 @@
             <span> +{{ getProductData.sold }} Sold</span>
         </div>
 
-        <div class="preview-rating">
-            <RatingComp :rating="4" />
+        <div class="preview-rating flex">
+            <span>4.3</span>
+            <span><RatingComp :rating="4" /></span>
+            <span>433 ratings</span>
         </div>
 
         <Divider />
@@ -30,7 +32,7 @@
                     getProductData.discount_value), getADAprice)} ADA`" type="" />
         </div>
 
-        
+
         <div class="preview-price flex">
             <span>
                 {{ `$${formatPriceToUSD(getProductData.price)}` }}
@@ -44,7 +46,7 @@
             </span>
         </div>
 
-     
+
         <div class="preview-color flex ">
             <span>Color</span>
             <span>:</span>
@@ -105,6 +107,10 @@ const keywordList = computed(() => {
 </script>
 
 <style lang="css" scoped>
+span {
+    line-height: initial;
+}
+
 .preview {
     padding: 0 1rem;
     min-height: 400px;
@@ -119,6 +125,14 @@ const keywordList = computed(() => {
 .preview-rating {
     margin-top: 1rem;
 }
+
+.preview-rating span:nth-child(1) {
+    margin-right: 0.5rem;
+}
+
+.preview-rating span:nth-child(3) {
+    margin-left: 0.5rem;
+} 
 
 .preview-price {
     font-size: var(--text-size-6);
