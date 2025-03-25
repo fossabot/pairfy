@@ -38,7 +38,7 @@
                 }}
             </span>
 
-            <span class="preview-tag">-32%</span>
+            <span class="preview-tag">{{ `-${getProductData.discount_value}%` }}</span>
         </div>
 
 
@@ -109,7 +109,6 @@ span {
 
 .preview {
     padding: 0 1rem;
-    min-height: 400px;
 }
 
 .preview-name {

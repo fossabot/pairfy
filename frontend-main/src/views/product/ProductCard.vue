@@ -2,7 +2,7 @@
     <div class="p-card" v-if="getProductData">
         <ProductMedia />
         <ProductInfo />
-        <BuyModule />
+        <ProductBuy />
     </div>
 
     <div class="p-card-loader" v-else>
@@ -12,7 +12,7 @@
 
 <script setup>
 import productAPI from '@/views/product/api/index';
-import BuyModule from "@/views/product/BuyModule.vue"
+import ProductBuy from "@/views/product/ProductBuy.vue"
 import LoadingComp from '@/components/LoadingComp.vue';
 import ProductMedia from '@/views/product/ProductMedia.vue';
 import ProductInfo from './ProductInfo.vue';

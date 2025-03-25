@@ -166,12 +166,6 @@
             <span>{{ getStockLabel(getProductData.available) }}</span>
         </div>
 
-        <div class="card-rating flex">
-            <Rating v-model="productRating" :stars="5" readonly />
-            <span>{{ getProductData.rating }}</span>
-            <div class="reviews">{{ getProductData.reviews }} reviews</div>
-        </div>
-
         <div class="card-full flex green">
             <span>free shipping</span>
         </div>
@@ -322,7 +316,6 @@ const computedTotalFiat = computed(() => {
     return 0;
 })
 
-const productRating = ref(getProductData.value.rating);
 
 const getStockLabel = (readyStock) => {
     return readyStock > 0 ? "In Stock" : "Out Stock";
@@ -454,7 +447,8 @@ a {
     display: flex;
     flex-direction: column;
     padding: 1rem;
-    width: 275px;
+    width: 250px;
+    min-width: 250px;
     margin-left: auto;
     border-radius: 6px;
     max-height: 600px;
@@ -479,15 +473,6 @@ a {
     font-weight: 700;
 }
 
-.card-rating {
-    margin-bottom: 1rem;
-}
-
-.card-rating span {
-    margin-left: 0.5rem;
-    font-size: var(--text-size-2);
-    font-weight: 600;
-}
 
 .card-stock {
     font-size: var(--text-size-2);
@@ -523,12 +508,6 @@ a {
 
 .card-full i {
     margin: 0 0.25rem;
-}
-
-.reviews {
-    font-size: var(--text-size-0);
-    margin-left: 0.5rem;
-    text-decoration: underline;
 }
 
 .dialog-values {
