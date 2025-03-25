@@ -17,7 +17,7 @@
 
                 </span>
 
-                <span class="p-product-tag" v-if="props.data.discount" style="text-decoration: line-through;">
+                <span class="p-product-last" v-if="props.data.discount" style="text-decoration: line-through;">
                     {{ formatPriceToUSD(props.data.price) }}
                 </span>
 
@@ -104,7 +104,7 @@ span {
 }
 
 
-.p-product-tag {
+.p-product-last {
     font-size: var(--text-size-1);
     background: transparent;
     max-width: fit-content;

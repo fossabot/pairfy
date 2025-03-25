@@ -12,15 +12,17 @@
             <span> +{{ getProductData.sold }} Sold</span>
         </div>
 
+        <div class="preview-rating">
+            <RatingComp :rating="4" />
+        </div>
 
+        <Divider />
 
         <div class="preview-discount" v-if="getProductData.discount">
             <TagComp :tag="`- ${getProductData.discount_value}%`" type="contrast" />
 
-
             <TagComp :tag="`${formatCurrency(getProductData.price)} USD`" type=""
                 style="margin: 0 1rem; text-decoration: line-through;" />
-
 
             <TagComp :tag="`${convertUSDToADA(
                 applyDiscount(getProductData.discount,
@@ -28,20 +30,21 @@
                     getProductData.discount_value), getADAprice)} ADA`" type="" />
         </div>
 
-
+        
         <div class="preview-price flex">
-            <div>$</div>
             <span>
-                {{ formatCurrency(
-                    applyDiscount(getProductData.discount,
-                        getProductData.price,
-                        getProductData.discount_value)
-                ) }}
+                {{ `$${formatPriceToUSD(getProductData.price)}` }}
+            </span>
+
+            <span class="preview-last">
+                {{ formatPriceToUSD(applyDiscount(getProductData.discount,
+                    getProductData.price,
+                    getProductData.discount_value))
+                }}
             </span>
         </div>
 
-        <Divider />
-
+     
         <div class="preview-color flex ">
             <span>Color</span>
             <span>:</span>
@@ -73,9 +76,11 @@
 import headerAPI from '@/components/header/api';
 import TagComp from '@/components/TagComp.vue';
 import productAPI from '@/views/product/api/index';
+import RatingComp from '@/components/RatingComp.vue';
+
 import { inject, computed } from 'vue';
 
-const { formatCurrency, applyDiscount, convertUSDToADA } = inject('utils');
+const { formatCurrency, applyDiscount, convertUSDToADA, formatPriceToUSD } = inject('utils');
 
 const { getADAprice } = headerAPI();
 
@@ -177,5 +182,12 @@ const keywordList = computed(() => {
 
 .preview-keywords {
     margin-top: 1rem;
+}
+
+.preview-last {
+    text-decoration: line-through;
+    font-weight: 300;
+    margin-left: 0.5rem;
+    font-size: var(--text-size-4);
 }
 </style>
