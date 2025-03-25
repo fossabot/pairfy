@@ -25,7 +25,7 @@
         <Divider />
 
         <div class="preview-price flex">
-            <span class="preview-tag">-32%</span>
+  
 
             <span>
                 {{ `$${formatPriceToUSD(getProductData.price)}` }}
@@ -37,6 +37,8 @@
                     getProductData.discount_value))
                 }}
             </span>
+
+            <span class="preview-tag">-32%</span>
         </div>
 
 
@@ -134,11 +136,6 @@ span {
     font-weight: 400;
 }
 
-.preview-tag {
-    margin-right: 0.5rem;
-    color: var(--red-a);
-    font-weight: 300;
-}
 
 .preview-model {
     font-size: var(--text-size-0);
@@ -191,9 +188,17 @@ span {
 }
 
 .preview-last {
-    text-decoration: line-through;
-    font-weight: 300;
-    margin-left: 0.5rem;
     font-size: var(--text-size-4);
+    text-decoration: line-through;
+    margin-left: 0.5rem;
+    font-weight: 300;
 }
+
+.preview-tag {
+    font-size: var(--text-size-4);
+    margin-left: 0.5rem; 
+    color: var(--red-a);
+    font-weight: 300;
+}
+
 </style>
