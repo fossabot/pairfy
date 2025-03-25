@@ -207,7 +207,7 @@ const searchCategory = (name) => {
 <style lang="css" scoped>
 svg {
     width: 1.5rem !important;
-    stroke: var(--primary-a);
+ 
 }
 
 .panel {
