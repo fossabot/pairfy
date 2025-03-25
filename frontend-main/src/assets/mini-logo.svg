@@ -30,7 +30,7 @@
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="1080"
      inkscape:window-maximized="1"
      inkscape:current-layer="g28" />
   <defs
@@ -59,13 +59,13 @@
      transform="translate(0,1.5)">
     <text
        xml:space="preserve"
-       style="font-size:15.8514px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.356657px;stroke-width:0.396284"
+       style="font-size:15.8514px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.356657px;stroke-width:0.396284;fill:#ff441f;fill-opacity:1"
        x="21.017578"
        y="10.401448"
        id="text3040"><tspan
          sodipodi:role="line"
          id="tspan3038"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#ff5f1a;fill-opacity:1;stroke-width:0.396284"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#ff441f;fill-opacity:1;stroke-width:0.396284"
          x="21.017578"
          y="10.401448">Pairfy</tspan></text>
     <image
