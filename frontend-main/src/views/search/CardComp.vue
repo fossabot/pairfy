@@ -60,8 +60,8 @@ const openProduct = (id) => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem 0;
     border-top: 1px solid var(--border-a);
+    padding: 1rem;
 }
 
 .preview {
@@ -83,7 +83,6 @@ const openProduct = (id) => {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 220px;
     padding: 0 1rem;
 }
 
@@ -133,6 +132,47 @@ const openProduct = (id) => {
     color: var(--green-a);
     margin-top: 0rem;
     font-weight: 500;
+}
+
+
+/* Default styles apply to all devices */
+
+/* Small phones (up to 480px) */
+@media (max-width: 480px) { 
+  .preview{
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    min-height: 100px;
+  }
+
+  .title{
+    font-size: var(--text-size-1);
+  }
+
+  .content{
+    max-width: 100%;
+  }
+}
+
+/* Large phones and small tablets (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) { 
+  /* Styles for larger phones */
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) { 
+  /* Styles for tablets */
+}
+
+/* Laptops and small desktops (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) { 
+  /* Styles for laptops */
+}
+
+/* Large desktops (1441px and up) */
+@media (min-width: 1441px) { 
+  /* Styles for large screens */
 }
 
 </style>

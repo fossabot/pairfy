@@ -331,6 +331,7 @@ onBeforeUnmount(() => {
 
 .search-top {
     margin-bottom: 1rem;
+    padding: 0 1rem;
     width: inherit;
 }
 
