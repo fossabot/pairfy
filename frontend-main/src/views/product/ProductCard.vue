@@ -23,8 +23,9 @@ const { getProductData } = productAPI();
 
 <style lang="css" scoped>
 .p-card {
-    align-items: center;
     display: flex;
+    align-items: flex-start;
+    margin-top: 1rem;
 }
 
 .p-card-loader {

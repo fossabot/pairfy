@@ -1,19 +1,18 @@
 <template>
-    <div class="p-media">
-        <section v-if="getProductData">
-            <div class="p-media-nav">
-                <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
-                    v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
-                    @mouseover="selectImage(index)">
-                    <img :src="item" alt="item">
-                </div>
+    <div class="p-media" v-if="getProductData">
+        <div class="p-media-nav">
+            <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
+                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
+                @mouseover="selectImage(index)">
+                <img :src="item" alt="item">
             </div>
+        </div>
 
-            <div class="p-media-image">
-                <Image :src="productImageList[selectedImageIndex]" alt="Image" :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '500px', borderRadius: '6px' }"
-                    previewIcon="pi-search" preview />
-            </div>
-        </section>
+        <div class="p-media-image">
+            <Image :src="productImageList[selectedImageIndex]" alt="Image"
+                :imageStyle="{ width: '100%', maxWidth: '500px', maxHeight: '500px', borderRadius: '6px' }"
+                previewIcon="pi-search" preview />
+        </div>
 
     </div>
 </template>
@@ -49,7 +48,7 @@ const selectImage = (index) => {
 </script>
 
 <style lang="css" scoped>
-section {
+.p-media{
     display: flex;
 }
 
@@ -60,7 +59,7 @@ section {
 }
 
 .p-media-nav-item {
-    border: 1px solid var(--border-a);  
+    border: 1px solid var(--border-a);
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -72,7 +71,7 @@ section {
 
 .p-media-nav-item.selected {
     outline: 2px solid var(--primary-b);
-  
+
 }
 
 .p-media-nav-item img {
