@@ -108,14 +108,14 @@ span {
 }
 
 .preview {
-    padding: 0 1rem;
+    padding: 0 2rem;
 }
 
 .preview-name {
     font-size: var(--text-size-5);
     line-height: 2.25rem;
     font-weight: 400;
-    width: 80%;
+    width: 90%;
 }
 
 .preview-rating {
