@@ -46,7 +46,7 @@ export function applyDiscount(active, originalPrice, discountPercent) {
 
   const discountedPrice = originalPrice - discountAmount
 
-  return Math.round(discountedPrice)
+  return Math.ceil(discountedPrice)
 }
 
 /**

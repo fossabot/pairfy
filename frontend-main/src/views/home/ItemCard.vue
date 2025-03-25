@@ -8,13 +8,19 @@
             <span class="title">{{ reduceByLength(props.content.name, 40, '') }}</span>
 
             <span class="price">
-                <span class="dollar">$</span>
+                <span>
+                    {{
+                        `$${formatPriceToUSD(applyDiscount(props.content.discount,
+                            props.content.price,
+                            props.content.discount_value))}`
+                    }}
 
-                {{ formatPriceToUSD(props.content.price) }}
+                </span>
 
-                <div class="tag" v-if="props.content.discount">
-                    <span style="text-decoration: line-through;">$24</span>
-                </div>
+                <span class="tag" v-if="props.content.discount" style="text-decoration: line-through;">
+                    {{ formatPriceToUSD(props.content.price) }}
+                </span>
+
             </span>
 
             <span class="rating">
@@ -30,7 +36,7 @@ import RatingComp from '@/components/RatingComp.vue';
 import { useRouter, useRoute } from 'vue-router';
 import { inject, ref } from 'vue';
 
-const { formatPriceToUSD, reduceByLength } = inject('utils');
+const { formatPriceToUSD, reduceByLength, applyDiscount } = inject('utils');
 
 const props = defineProps(['content', 'style'])
 
@@ -51,8 +57,8 @@ const onSelect = (id) => {
 </script>
 
 <style lang="css" scoped>
-span{
-    line-height: 1.5rem; 
+span {
+    line-height: 1.5rem;
 }
 
 .card {
@@ -113,6 +119,5 @@ span{
     font-weight: 400;
 }
 
-.rating{
-}
+.rating {}
 </style>
