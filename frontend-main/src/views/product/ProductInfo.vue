@@ -193,9 +193,9 @@ span {
 }
 
 .preview-color div {
+    border-radius: 50%;
     width: 15px;
     height: 15px;
-    border-radius: 50%;
 }
 
 .preview-keywords {
