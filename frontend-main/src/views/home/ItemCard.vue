@@ -89,13 +89,12 @@ span{
 }
 
 .price {
-    display: flex;
-    align-items: baseline;
     font-size: var(--text-size-3);
-    color: var(--primary-a);
+    align-items: baseline;
+    color: var(--text-a);
     margin-top: 0rem;
     font-weight: 600;
-   
+    display: flex;
 }
 
 .dollar {

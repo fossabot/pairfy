@@ -165,8 +165,8 @@ const gridData = ref([
 }
 
 .box-head .tag {
+    background: var(--purple-alpha);
     font-size: var(--text-size-0);
-    background: var(--red-alpha);
     color: var(--primary-a);
     margin-left: 0.75rem;
     border-radius: 6px;

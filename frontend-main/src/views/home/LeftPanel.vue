@@ -207,11 +207,12 @@ const searchCategory = (name) => {
 <style lang="css" scoped>
 svg {
     width: 1.5rem !important;
+    stroke: var(--primary-a);
 }
 
 .panel {
-    border: 1px solid var(--border-a);
-    border-radius: 12px;
+    background: var(--background-b);
+    border-radius: 0px;
     transition: 0.2s;
     padding: 0.5rem;
     height: 100%;
@@ -227,8 +228,8 @@ svg {
 }
 
 .panel-item:hover {
-    background: var(--background-b);
-    color: var(--text-a);
+    background: var(--primary-a);
+    color: var(--text-w);
 }
 
 .panel-label {
