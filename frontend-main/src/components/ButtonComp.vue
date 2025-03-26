@@ -17,6 +17,7 @@ const props = defineProps(['data', 'style'])
     align-items: center;
     border-radius: 12px;
     padding: 0 1.5rem;
+    font-weight: 500;
     cursor: pointer;
     display: flex;
     border: none;
