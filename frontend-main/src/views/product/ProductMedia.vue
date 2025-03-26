@@ -10,8 +10,8 @@
 
         <div class="p-media-image">
             <Image :src="productImageList[selectedImageIndex]" alt="Image"
-                :imageStyle="{ width: '100%',  borderRadius: '6px', objectFit: 'contain' }"
-                previewIcon="pi-search" preview />
+                :imageStyle="{ width: '100%', borderRadius: '6px', objectFit: 'contain' }" previewIcon="pi-search"
+                preview />
         </div>
 
     </div>
@@ -48,15 +48,15 @@ const selectImage = (index) => {
 </script>
 
 <style lang="css" scoped>
-.p-media{
+.p-media {
     display: flex;
 }
 
 .p-media-nav {
     flex-direction: column;
     padding-right: 1rem;
+    padding-left: 2px;
     display: flex;
-    padding: 2px; 
 }
 
 .p-media-nav-item {
@@ -98,30 +98,29 @@ const selectImage = (index) => {
 /* Default styles apply to all devices */
 
 /* Small phones (up to 480px) */
-@media (max-width: 480px) { 
-.p-media{
-    display: none; 
-}
+@media (max-width: 480px) {
+    .p-media {
+        display: none;
+    }
 }
 
 /* Large phones and small tablets (481px - 767px) */
-@media (min-width: 481px) and (max-width: 767px) { 
-  /* Styles for larger phones */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
 }
 
 /* Tablets (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) { 
-  /* Styles for tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
 }
 
 /* Laptops and small desktops (1025px - 1440px) */
-@media (min-width: 1025px) and (max-width: 1440px) { 
-  /* Styles for laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
 }
 
 /* Large desktops (1441px and up) */
-@media (min-width: 1441px) { 
-  /* Styles for large screens */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
 }
-
 </style>
