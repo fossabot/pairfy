@@ -1,17 +1,20 @@
 <template>
     <div class="p-media" v-if="getProductData">
+
+
+        <div class="p-media-image">
+            <Image :src="productImageList[selectedImageIndex]" alt="Image"
+                :imageStyle="{ width: '100%', borderRadius: '6px', objectFit: 'contain' }" previewIcon="pi-search"
+                preview />
+        </div>
+
+
         <div class="p-media-nav">
             <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
                 v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
                 @mouseover="selectImage(index)">
                 <img :src="item" alt="item">
             </div>
-        </div>
-
-        <div class="p-media-image">
-            <Image :src="productImageList[selectedImageIndex]" alt="Image"
-                :imageStyle="{ width: '100%', borderRadius: '6px', objectFit: 'contain' }" previewIcon="pi-search"
-                preview />
         </div>
 
     </div>
@@ -49,20 +52,20 @@ const selectImage = (index) => {
 
 <style lang="css" scoped>
 .p-media {
-    display: flex;
+    width: 100%;
+    display: none;
+    align-items: center;
 }
 
 .p-media-nav {
-    flex-direction: column;
-    padding-right: 1rem;
-    padding-left: 2px;
+    margin: 1rem;
     display: flex;
 }
 
 .p-media-nav-item {
     border: 1px solid var(--border-a);
     justify-content: center;
-    margin-bottom: 1rem;
+    margin: 2px;
     border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
@@ -82,10 +85,10 @@ const selectImage = (index) => {
 
 .p-media-image {
     justify-content: center;
-    min-width: 500px;
-    max-width: 500px;
-    min-height: 500px;
-    max-height: 500px;
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 300px;
+    max-height: 300px;
     display: flex;
     width: 100%;
 }
@@ -99,7 +102,9 @@ const selectImage = (index) => {
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
     .p-media {
-        display: none;
+        flex-direction: column;
+        display: flex;
+   
     }
 }
 
