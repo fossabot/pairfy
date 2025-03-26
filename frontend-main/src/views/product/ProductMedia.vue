@@ -53,9 +53,10 @@ const selectImage = (index) => {
 }
 
 .p-media-nav {
-    display: flex;
     flex-direction: column;
     padding-right: 1rem;
+    display: flex;
+    padding: 2px; 
 }
 
 .p-media-nav-item {
