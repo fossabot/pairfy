@@ -35,8 +35,8 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .card {
+    border: 1px solid var(--border-a);
     justify-content: space-between;
-    border: 1px solid var(--border-b);
     padding: 0.5rem 1rem;
     border-radius: 999px;
     height: 48px;
