@@ -49,8 +49,6 @@ import RightPanel from '@/views/home/RightPanel.vue';
 
 .banner-column:first-child {
     grid-template-rows: auto;
-    width: 275px;
-    max-width: 275px;
 }
 
 .banner-column:nth-child(2) {
@@ -59,8 +57,6 @@ import RightPanel from '@/views/home/RightPanel.vue';
 
 .banner-column:last-child {
     grid-template-rows: auto;
-    width: 275px;
-    max-width: 275px;
 }
 
 

@@ -234,7 +234,6 @@ svg {
 .panel-label {
     text-overflow: ellipsis;
     margin-left: 0.5rem;
-    white-space: nowrap;
     overflow: hidden;
 }
 
