@@ -32,7 +32,7 @@ import RightPanel from '@/views/home/RightPanel.vue';
 }
 
 .banner-grid {
-    grid-template-columns: 1fr 3.5fr 1fr;
+    grid-template-columns: 1fr auto 1fr;
     margin-top: 1rem;
     display: grid;
     z-index: 2;
