@@ -1,8 +1,9 @@
+import database from "../database";
 import { Request, Response } from "express";
-import DB from "../db";
 import { adminMiddleWare } from "../utils/admin";
 import { adminRequired } from "../utils/admin-required";
-import { _ } from "../utils/pino";
+import { logger } from "../utils";
+
 
 const deleteUserMiddlewares: any = [adminMiddleWare, adminRequired];
 
@@ -11,7 +12,7 @@ const deleteUserHandler = async (req: Request, res: Response) => {
     let params = req.body;
 
     try {
-        connection = await DB.client.getConnection();
+        connection = await database.client.getConnection();
 
         await connection.beginTransaction();
 
@@ -27,13 +28,17 @@ const deleteUserHandler = async (req: Request, res: Response) => {
 
         res.status(200).send({ success: true });
     } catch (err) {
-        await connection.rollback();
+        logger.error(err);
 
-        _.error(err);
+        if (connection){
+            await connection.rollback();
+        }
 
         res.status(404).send({ success: false });
     } finally {
-        connection.release();
+        if(connection){
+            connection.release();
+        }
     }
 };
 

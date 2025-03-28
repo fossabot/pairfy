@@ -1,8 +1,9 @@
-import compression from "compression";
-import DB from "./db";
 import * as route from "./routes";
-import { catcher, check, checkpoint } from "./pod/index";
+import compression from "compression";
+import database from "./database";
+import { catchError } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
+import { logger } from "./utils";
 import { app } from "./app";
 
 const main = async () => {
@@ -55,16 +56,6 @@ const main = async () => {
       throw new Error("DATABASE_NAME error");
     }
 
-    DB.connect({
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT) || 3306,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME
-    });
-
-    checkpoint("ready");
-
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -73,10 +64,18 @@ const main = async () => {
       "uncaughtException",
       "unhandledRejection",
       "SIGHUP",
-      "SIGCONT"
+      "SIGCONT",
     ];
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+    errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
+
+    database.connect({
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT) || 3306,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+    });
 
     app.post(
       "/api/user/login-user",
@@ -102,12 +101,9 @@ const main = async () => {
       route.currentUserHandler
     );
 
-    app.get(
-      "/api/user/logout",
-      route.logoutHandler
-    );
+    app.get("/api/user/logout", route.logoutHandler);
 
-    app.get("/api/user/health", (req, res) => {
+    app.get("/api/user/ping", (req, res) => {
       res.status(200).send("Test OK");
     });
 
@@ -118,10 +114,17 @@ const main = async () => {
     app.use(errorMiddleware as any);
 
     app.use(compression());
+
+    const port = process.env.EXPRESS_PORT || "8000";
+
+    const timeout = process.env.EXPRESS_TIMEOUT || "5000";
+
+    const server = app.listen(port, () => logger.info(`ServerStart:${port}`));
+
+    server.setTimeout(parseInt(timeout));
   } catch (e) {
-    catcher(e);
+    catchError(e);
   }
-  check();
 };
 
 main();

@@ -1,24 +1,27 @@
+import database from "../database";
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
+import { UserToken, userMiddleware } from "../utils/user";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
 import { createToken } from "../utils/token";
-import { UserToken, userMiddleware } from "../utils/user";
-import { _ } from "../utils/pino";
 import { getPubKeyHash } from "../utils/crypto";
 import { getUsername } from "../utils/nano";
-import DB from "../db";
+import { logger } from "../utils";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
 const loginUserMiddlewares: any = [userMiddleware];
 
 const loginUserHandler = async (req: Request, res: Response) => {
+  
   let connection = null;
-  let params = req.body;
-
-  console.log(params);
 
   try {
+
+    let params = req.body;
+
+    console.log(params);
+
     const address = Cardano.Address.from_hex(params.address);
 
     const address32: string = address.to_bech32();
@@ -40,7 +43,7 @@ const loginUserHandler = async (req: Request, res: Response) => {
       throw new BadRequestError("AUTH_FAILED");
     }
 
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     await connection.beginTransaction();
 
@@ -81,7 +84,8 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     await connection.execute(schemeData, schemeValue);
 
-    ///////////////////////////////////7
+   ///////////////////////////////////////////////////////////////////
+
     const [rows] = await connection.execute(
       "SELECT * FROM users WHERE pubkeyhash = ?",
       [pubkeyhash]
@@ -114,10 +118,13 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, data: userData });
   } catch (err) {
+
     if (connection) {
       await connection.rollback();
     }
-    _.error(err);
+
+    logger.error(err);
+
   } finally {
     if (connection) {
       connection.release();
