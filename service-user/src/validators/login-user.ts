@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Request, Response, NextFunction } from 'express';
 import { BadRequestError } from '../errors';
 
-// Zod schema
+
 const schema = z.object({
   signature: z.object({
     key: z.string()
@@ -19,7 +19,7 @@ const schema = z.object({
     .min(64, 'Address too short')
     .max(512, 'Address too long'),
   terms_accepted: z.literal(true)
-}).strict(); // No extra keys allowed
+}).strict();
 
 // Middleware
 export const loginUserMiddleware = (
