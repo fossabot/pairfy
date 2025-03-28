@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { _ } from "./pino";
 import jwt from "jsonwebtoken";
+import { logger } from ".";
 
 interface UserToken {
   pubkeyhash: string;
@@ -40,7 +40,7 @@ const userMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     req.userData = scheme;
   } catch (err) {
-    _.error(err);
+    logger.error(err);
   }
 
   next();

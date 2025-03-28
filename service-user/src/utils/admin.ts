@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { _ } from "./pino";
 import jwt from "jsonwebtoken";
+import { logger } from ".";
 
 interface AdminToken {
   id: string;
@@ -37,7 +37,7 @@ const adminMiddleWare = (req: Request, res: Response, next: NextFunction) => {
 
     req.adminData = scheme;
   } catch (err) {
-    _.error(err);
+    logger.error(err);
   }
 
   next();
