@@ -30,7 +30,7 @@ export const loginUserMiddleware = (
   const result = schema.safeParse(req.body);
 
   if (!result.success) {
-    throw new BadRequestError("WrongParams");
+    throw new BadRequestError("WrongParams" + result.error.flatten());
   }
 
   next();
