@@ -7,10 +7,11 @@ import { createToken } from "../utils/token";
 import { getPubKeyHash } from "../utils/crypto";
 import { getUsername } from "../utils/nano";
 import { logger } from "../utils";
+import { loginUserMiddleware } from "../validators/login-user";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
-const loginUserMiddlewares: any = [userMiddleware];
+const loginUserMiddlewares: any = [userMiddleware, loginUserMiddleware];
 
 const loginUserHandler = async (req: Request, res: Response) => {
   
