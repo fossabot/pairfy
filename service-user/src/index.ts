@@ -1,8 +1,8 @@
 import * as route from "./routes";
 import compression from "compression";
 import database from "./database";
-import { catchError } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
+import { catchError } from "./pod/index";
 import { logger } from "./utils";
 import { app } from "./app";
 
@@ -83,14 +83,6 @@ const main = async () => {
       route.loginUserMiddlewares,
 
       route.loginUserHandler
-    );
-
-    app.post(
-      "/api/user/delete-user",
-
-      route.deleteUserMiddlewares,
-
-      route.deleteUserHandler
     );
 
     app.get(

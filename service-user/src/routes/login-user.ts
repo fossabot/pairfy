@@ -9,17 +9,14 @@ import { getPubKeyHash } from "../utils/crypto";
 import { getUsername } from "../utils/nano";
 import { logger } from "../utils";
 
-
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
 const loginUserMiddlewares: any = [userMiddleware, loginUserMiddleware];
 
 const loginUserHandler = async (req: Request, res: Response) => {
-  
   let connection = null;
 
   try {
-
     let params = req.body;
 
     console.log(params);
@@ -42,7 +39,7 @@ const loginUserHandler = async (req: Request, res: Response) => {
     );
 
     if (!verifySignature) {
-      throw new BadRequestError("AUTH_FAILED");
+      throw new BadRequestError("CredentialError");
     }
 
     connection = await database.client.getConnection();
@@ -86,7 +83,7 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     await connection.execute(schemeData, schemeValue);
 
-   ///////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     const [rows] = await connection.execute(
       "SELECT * FROM users WHERE pubkeyhash = ?",
@@ -120,13 +117,11 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, data: userData });
   } catch (err) {
+    logger.error(err);
 
     if (connection) {
       await connection.rollback();
     }
-
-    logger.error(err);
-
   } finally {
     if (connection) {
       connection.release();
