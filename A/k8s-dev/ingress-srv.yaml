@@ -29,11 +29,11 @@ spec:
                 name: frontend-main
                 port:
                   number: 8000
-          - path: /api/seller/?(.*)
+          - path: /api/location/?(.*)
             pathType: ImplementationSpecific
             backend:
               service:
-                name: service-seller
+                name: service-location
                 port:
                   number: 8000
           - path: /api/user/?(.*)
@@ -41,6 +41,13 @@ spec:
             backend:
               service:
                 name: service-user
+                port:
+                  number: 8000              
+          - path: /api/seller/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-seller
                 port:
                   number: 8000
           - path: /api/gemini/?(.*)
@@ -106,13 +113,6 @@ spec:
                 name: service-session
                 port:
                   number: 3000
-          - path: /api/location/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: service-location
-                port:
-                  number: 8000
           - path: /api/mediator/?(.*)
             pathType: ImplementationSpecific
             backend:

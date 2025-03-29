@@ -10,28 +10,35 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "pairfy.io"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "pairfy.store"
     nginx.ingress.kubernetes.io/cors-expose-headers: "Set-Cookie"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      more_set_headers "X-Frame-Options: Deny";
-      more_set_headers "X-XSS-Protection: 1; mode=block";
-      more_set_headers "X-Content-Type-Options: nosniff";
-      more_set_headers "Cache-Control: must-revalidate";
-      more_set_headers Content-Security-Policy "base-uri 'self'; default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; upgrade-insecure-requests";
-    
 
 
 spec:
   rules:
-    - host: pairfy.io
+    - host: pairfy.store
       http:
         paths:
           - path: /?(.*)
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: frontend-main
+                port:
+                  number: 8000
+          - path: /api/location/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-location
+                port:
+                  number: 8000                  
+          - path: /api/user/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: service-user
                 port:
                   number: 8000
