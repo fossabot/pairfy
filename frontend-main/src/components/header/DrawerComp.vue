@@ -108,12 +108,11 @@ const onLogin = async () => {
             signature,
             address,
             terms_accepted: true,
+            country: "COCA"
         })
     )
-        .then(() => {
-            togglePanel(false);
-            location.reload();
-        })
+        .then(() => togglePanel(false))
+        .then(() => location.reload())
         .catch((err) => console.error(err));
 };
 

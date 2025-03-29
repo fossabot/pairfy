@@ -2,10 +2,10 @@ import database from "../database";
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import { loginUserMiddleware } from "../validators/login-user";
 import { UserToken, userMiddleware } from "../utils/user";
+import { getPubKeyHash } from "../utils/crypto";
+import { createToken } from "../utils/token";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
-import { createToken } from "../utils/token";
-import { getPubKeyHash } from "../utils/crypto";
 import { getUsername } from "../utils/nano";
 import { logger } from "../utils";
 
@@ -20,6 +20,8 @@ const loginUserHandler = async (req: Request, res: Response) => {
     let params = req.body;
 
     console.log(params);
+
+    console.log(req.publicAddress, req.ip);
 
     const address = Cardano.Address.from_hex(params.address);
 
@@ -48,8 +50,6 @@ const loginUserHandler = async (req: Request, res: Response) => {
 
     const username = getUsername();
 
-    const country = "server";
-
     const schemeData = `
     INSERT INTO users (
       pubkeyhash,
@@ -75,9 +75,9 @@ const loginUserHandler = async (req: Request, res: Response) => {
       pubkeyhash,
       username,
       address32,
-      country,
+      params.country,
       params.terms_accepted,
-      "192.168.1.1",
+      req.publicAddress,
       0,
     ];
 
