@@ -103,13 +103,25 @@ const selectWallet = async (e) => {
 };
 
 const onLogin = async () => {
-    await signMessage().then(([signature, address]) =>
-        loginUser({
+    await signMessage().then(([signature, address]) => {
+
+        let locationData = localStorage.getItem('location')
+
+        if (!locationData) {
+            throw new Error('noLocationData')
+        }
+
+        let parsedData = JSON.parse(locationData)
+
+        return loginUser({
             signature,
             address,
             terms_accepted: true,
-            country: "CU"
+            country: parsedData.country
         })
+
+
+    }
     )
         .then(() => togglePanel(false))
         .then(() => location.reload())
