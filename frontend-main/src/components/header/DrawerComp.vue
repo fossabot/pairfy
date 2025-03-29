@@ -108,7 +108,7 @@ const onLogin = async () => {
             signature,
             address,
             terms_accepted: true,
-            country: "COCA"
+            country: "CU"
         })
     )
         .then(() => togglePanel(false))
