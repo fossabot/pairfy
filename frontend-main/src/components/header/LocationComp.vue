@@ -3,7 +3,13 @@
         <template #header>
             <span class="dialog-header flex">
                 Deliver to
-                <i class="pi pi-map-marker" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-map-pin">
+                    <path
+                        d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                    <circle cx="12" cy="10" r="3" />
+                </svg>
             </span>
         </template>
         <div class="body">
@@ -17,7 +23,7 @@
                     <Select v-model="selectedCountry" :options="countriesOptions" filter optionLabel="name" fluid
                         id="country" scrollHeight="30rem" @change="onCountrychange">
                         <template #value="slotProps">
-                            <div v-if="slotProps.value" class="item flex">
+                            <div class="location-select-item flex" v-if="slotProps.value">
                                 <img :alt="slotProps.value.code" src="@/assets/flag_placeholder.png"
                                     :class="`flag flag-${slotProps.value.code.toLowerCase()}`" />
                                 <div>{{ slotProps.value.name }}</div>
@@ -27,7 +33,7 @@
                             </span>
                         </template>
                         <template #option="slotProps">
-                            <div class="flex">
+                            <div class="location-select-item flex">
                                 <img :alt="slotProps.option.label" src="@/assets/flag_placeholder.png"
                                     :class="`flag flag-${slotProps.option.code.toLowerCase()}`" />
                                 <div>{{ slotProps.option.name }}</div>
@@ -62,13 +68,16 @@
 
     <div class="location flex" @click="dialogVisible = true">
 
-        <div class="box flex">
-            <span class="flex">
+        <div class="location-box flex">
+
+            <span class="location-flag flex">
                 <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
                     :class="`flag flag-${getLocationData?.country.toLowerCase()} flag-mini`" />
             </span>
-            <span class="separator" />
-            <div class="icon flex">
+
+            <span class="location-separator" />
+
+            <div class="location-icon flex">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-map-pin">
@@ -79,7 +88,7 @@
                 <label for="">
                     {{ getLocationData?.name }}
                 </label>
-            </div> 
+            </div>
 
         </div>
     </div>
@@ -182,23 +191,23 @@ onBeforeUnmount(() => {
     margin-right: auto;
 }
 
-.icon {
+.location-icon {
     height: inherit;
 }
 
-.icon label {
+.location-icon label {
     margin-left: 0.5rem;
 }
 
-.box {
+.location-box {
     display: flex;
 }
 
-.box span:nth-child(1) {
+.location-box span:nth-child(1) {
     font-size: var(--text-size-0);
 }
 
-.box span:nth-child(2) {
+.location-box span:nth-child(2) {
     font-size: var(--text-size-0);
 }
 
@@ -231,22 +240,24 @@ onBeforeUnmount(() => {
     padding: 0.5rem 0;
 }
 
-.dialog-header i {
+.dialog-header svg {
     margin-left: 0.5rem;
 }
 
-.separator {
+.location-separator {
     background: var(--text-b);
     margin: 0 1rem;
     height: 1rem;
     width: 1px;
 }
 
-/* Default styles apply to all devices */
+.location-select-item img {
+    margin-right: 0.5rem;
+}
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .location{
+    .location {
         margin: initial;
         margin-left: auto;
     }
