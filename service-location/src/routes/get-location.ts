@@ -5,10 +5,15 @@ const getLocation = async (req: Request, res: Response) => {
   try {
     console.log(req.publicAddress, req.ip);
 
-    const getLocation = await geoAPI.get(`178.238.11.6?token=f76c9e2af54296`);
+    const currentIP =
+      process.env.ENV_MODE === "dev" ? process.env.DEV_IP : req.publicAddress;
+
+    const geoQuery = `${currentIP}?token=${process.env.GEO_TOKEN as string}`;
+
+    const getLocation = await geoAPI.get(geoQuery);
 
     if (getLocation.status !== 200) {
-      throw new Error("INTERNAL_ERROR");
+      throw new Error("locationError");
     }
 
     console.log(getLocation.data);
@@ -19,12 +24,10 @@ const getLocation = async (req: Request, res: Response) => {
       city,
       region,
       country,
-      postal
+      postal,
     };
 
-    res
-      .status(200)
-      .send({ success: true, payload: payload });
+    res.status(200).send({ success: true, payload: payload });
   } catch (err: any) {
     res.status(404).send({ success: false });
   }

@@ -1,12 +1,15 @@
 import compression from "compression";
 import * as route from "./routes";
-import { app } from "./app";
 import { catcher, check, checkpoint } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
-
+import { app } from "./app";
 
 const main = async () => {
   try {
+    if (!process.env.ENV_MODE) {
+      throw new Error("ENV_MODE error");
+    }
+
     if (!process.env.POD_TIMEOUT) {
       throw new Error("POD_TIMEOUT error");
     }
@@ -21,6 +24,14 @@ const main = async () => {
 
     if (!process.env.CORS_DOMAINS) {
       throw new Error("CORS_DOMAINS error");
+    }
+
+    if (!process.env.DEV_IP) {
+      throw new Error("DEV_IP error");
+    }
+
+    if (!process.env.GEO_TOKEN) {
+      throw new Error("GEO_TOKEN error");
     }
 
     checkpoint("ready");
@@ -44,7 +55,7 @@ const main = async () => {
       route.getLocation
     );
 
-    app.get("/api/session/healthcheck", (req, res) => {
+    app.get("/api/location/ping", (req, res) => {
       res.status(200).json({ status: "Test OK" });
     });
 
