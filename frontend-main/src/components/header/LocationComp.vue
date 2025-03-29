@@ -104,7 +104,7 @@ const selectedCity = ref(null);
 
 const selectedPostal = ref(null);
 
-const watchLocation = watch(getLocationData, (data) => {
+const unwatchLocation = watch(getLocationData, (data) => {
     if (data) {
         selectedCountry.value = { name: data.name, code: data.country }
 
@@ -121,11 +121,11 @@ const countriesOptions = ref([
 ]);
 
 const disableSave = computed(() => {
-    if (selectedCountry.value.code === 'US' || selectedCountry.value.code === 'CO') {
-        return false
+    if (selectedCountry.value.code !== 'US' && selectedCountry.value.code !== 'CO') {
+        return true
     }
 
-    return true
+    return false
 })
 
 const onCountrychange = () => {
@@ -169,7 +169,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-    watchLocation()
+    unwatchLocation()
 })
 </script>
 
