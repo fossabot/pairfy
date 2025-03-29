@@ -1,10 +1,16 @@
 const currentSeller = (state, data) => {
-  localStorage.setItem('authToken', data.token)
+  if (data?.token) {
+    localStorage.setItem('authToken', data)
+  }
+
   state.sellerData = data
 }
 
 const currentUser = (state, data) => {
-  localStorage.setItem('authToken', data.token)
+  if (data?.token) {
+    localStorage.setItem('authToken', data)
+  }
+
   state.userData = data
 }
 
@@ -28,4 +34,12 @@ const setupLucid = (state, data) => {
 const setADAprice = (state, data) => {
   state.ADAprice = data
 }
-export { setLocation, currentUser, connectWallet, togglePanel, currentSeller, setupLucid, setADAprice }
+export {
+  setLocation,
+  currentUser,
+  connectWallet,
+  togglePanel,
+  currentSeller,
+  setupLucid,
+  setADAprice,
+}
