@@ -80,9 +80,10 @@ span {
 }
 
 .p-product-image img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .p-product-body {
