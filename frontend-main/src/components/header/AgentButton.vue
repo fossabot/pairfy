@@ -35,10 +35,9 @@ const { togglePanel, getCurrentUser, setADAprice } = headerAPI();
 
 <style lang="css" scoped>
 .card {
-
     justify-content: space-between;
-    padding: 0rem 1rem;
     border-radius: 999px;
+    padding: 0rem 1rem;
     height: 3rem;
 }
 
