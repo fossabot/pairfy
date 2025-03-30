@@ -36,14 +36,11 @@ const props = defineProps(['content', 'title', 'visibleTitle'])
 }
 
 .grid {
-  max-width: var(--body-a);
-  grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-  grid-auto-rows: auto;
-  border-radius: 0px;
   display: grid;
-  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
-  row-gap: 2rem;
+  justify-content: center;
+  max-width: var(--body-a);
 }
 
 .icon {

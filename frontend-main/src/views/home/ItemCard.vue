@@ -62,8 +62,17 @@ span {
 }
 
 .p-product {
+    background: var(--background-w);
+    box-shadow: var(--shadow-b);
+    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
+    padding: 1rem;
+    display: flex;
+    min-height: 300px;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease;
 }
 
 .p-product-image {
@@ -116,7 +125,5 @@ span {
     font-weight: 400;
 }
 
-.p-product-rating {
-
-}
+.p-product-rating {}
 </style>

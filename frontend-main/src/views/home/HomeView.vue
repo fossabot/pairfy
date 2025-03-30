@@ -21,367 +21,38 @@
 </template>
 
 <script setup>
+import gql from 'graphql-tag'
 import NormalGrid from '@/views/home/NormalGrid.vue'
 import BannerComp from '@/views/home/BannerComp.vue'
+import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
-import { ref, computed, reactive, onMounted } from 'vue'
-import image1 from '@/assets/icons/a.png'
-import image2 from '@/assets/icons/b.png'
-import image3 from '@/assets/icons/c.png'
-import image4 from '@/assets/icons/d.png'
-import image5 from '@/assets/icons/e.png'
-import image6 from '@/assets/icons/6.png'
-
-const products = [
-  {
-    "id": "PPHKOYV4P73AWQZ19",
-    "name": "10 Colors Ballpoint Pen Cartoon Bear 0.5mm Colorful Ink Gel Pens Silicone Kawaii Pens School Office Supplies Korean Stationery",
-    "sku": "OSE1:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "happy bear",
-    "model": "WJ391",
-    "price": 6,
-    "quality": "New",
-    "image": image1,
-    "keywords": "pen,cheap,colors",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PE4544UPQ54AXKHPG",
-    "name": "MOTARRO 1Pcs Pencil Holder Office Desk Metal Mesh Square Round Pen Pot Cup Case Container Organiser Durable Pencil Case",
-    "sku": "OSE2:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Motarro",
-    "model": "MI002",
-    "price": 10,
-    "quality": "New",
-    "image": image2,
-    "keywords": "motarro,desk,organizer",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 25,
-    "best_seller": false,
-    "sold": 0,
-    "available": 15
-  },
-  {
-    "id": "PHRS3RR1FVYEEZ3XF",
-    "name": "Ergonomic Office Chair Headrest Attachment Universal, Sponge Head Pillow Adjustable Height & Angle, Upholstered Headrest GZ",
-    "sku": "OSE10:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "cosseal brand",
-    "model": "black",
-    "price": 25,
-    "quality": "New",
-    "image": image3,
-    "keywords": "chair,headrest,ergonomic,pillow",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "P7KC6OL9SAL9KZQZL",
-    "name": "Mr.paper 6 Styles Plastic Stackable Foldable Stationary Holder Simple Cute Student Office Desktop Storage Stationery Organizer",
-    "sku": "OSE4:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Mr Paper",
-    "model": "S16990",
-    "price": 10,
-    "quality": "New",
-    "image": image4,
-    "keywords": "plastic,holder,paper",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PDZF2MAK72SIZRHFN",
-    "name": "Large Capacity Desk Accessories 306 ° Rotation Cute Pen Holder Stationery Organizer Pencil Storage Office School Supplies",
-    "sku": "OSE11:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Generic",
-    "model": "Beige",
-    "price": 15,
-    "quality": "New",
-    "image": image5,
-    "keywords": "pen,holder,desk",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PB7SC0I5QDZ8NXWYW",
-    "name": "Home Office Chair Ergonomic Desk Chairs Mesh Computer with Lumbar Support Armrest Rolling Swivel Adjustable Black",
-    "sku": "OSE8:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Generic",
-    "model": "OC-H03 Black",
-    "price": 65,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/EYnWXKToEZdXrLpS4ndD.png",
-    "keywords": "chair,desk,lumbar,ergonomic,office",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PUKN3FBHY2QM9P6NC",
-    "name": "JFLEGAL Thailand Natural Latex Cushion Relieve Sore Buttocks Cushions Washable Square Office Chair Cushion Cojines Silla Cojin",
-    "sku": "OSE7:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Jflegal",
-    "model": "Pillow009",
-    "price": 80,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/foFlPCtW9AKPtc3WeJRV.png",
-    "keywords": "latex,pillow,chair",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "P4NIUNK1RFGA4DLCN",
-    "name": "GUIG Modern Simple Beam Split Foot Metal Computer Chair Comfortable Sedentary Bedroom Office Study Study Home Chair Hot New",
-    "sku": "OSE12:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "GUIG",
-    "model": "GUIG018",
-    "price": 380,
-    "quality": "New",
-    "image": image6,
-    "keywords": "ergonomic,modern,stainless,comfortable,minimalist",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-
-  {
-    "id": "PBQPGB8QQSO6RS1L8",
-    "name": "Kawaii Retractable Eraser Cute Cat Korean Stationery Rubber Drawing Erasers Children's school supplies Office",
-    "sku": "OSE3:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Twingo",
-    "model": "A579",
-    "price": 10,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/x64Z578clxGQ7bBP2Ox6.png",
-    "keywords": "korean,rubber,drawing",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PAM67L6URR96DLF4A",
-    "name": "LINE B5 Notepad Diary Ivory 100GSM Innovation Trend Portable Edition Solid Color 5 Colors Office & School Notepad Supplies",
-    "sku": "OSE6:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "line",
-    "model": "GX1863",
-    "price": 15,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/ZYBCDGPrMbpH3nMlcSyJ.png",
-    "keywords": "notes,writing,pen",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PQKBN332GOXPQLLC3",
-    "name": "Large Capacity Pencil Case Cute Student Pencil Cases Big Pen Bag Case Storage Box Boy Girl Kid Office School Stationery Supplies",
-    "sku": "OSE5:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "angoo",
-    "model": "C",
-    "price": 15,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/ysM6s6PSmFrtiFv7E46m.png",
-    "keywords": "pencil,bag,case",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "P5MGVNGLY292PLO8L",
-    "name": "Pen Holder Wooden Container Desk Solid Tabletop Stationery Finishing Storage Office",
-    "sku": "OSE9:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Generic",
-    "model": "Wood",
-    "price": 15,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/mQlGDLjDfyTRIIUjk0um.png",
-    "keywords": "pen,wood,desk,rhombus",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PO3M1IB9S9D4GQW2Y",
-    "name": "Adjustable Laptop Desk Stand Portable Aluminum Ergonomic Lapdesk For TV Bed Sofa PC Notebook Table Desk Stand With Mouse Pad",
-    "sku": "OSE13:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "dook",
-    "model": "DNZ-white",
-    "price": 50,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/tdRKA75BBKjbdNM709cT.png",
-    "keywords": "laptop,stand,adjustable,ergonomic",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PYXIIFM85A75ITGHX",
-    "name": "AULA F75 Mechanical Keyboard 2.4G Wireless/Bluetooth/Wired RGB PBT 75% Layout OEM Profile Gasket Customized Pc Gaming Keyboard",
-    "sku": "OSE14:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "AULA",
-    "model": "F75 green",
-    "price": 155,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
-    "keywords": "Wireless,Mechanical,RGB,Gaming ",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PGE5BCNCSYMTWYE85",
-    "name": "USB C Hub USB Hub 3.0, VIENON Aluminum 7 in 1 USB Extender, USB Splitter with 1 X USB 3.0, 4 X USB 2.0 and 2 X USB C Ports",
-    "sku": "OSE15:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "Generic",
-    "model": "7 in 1 A With C",
-    "price": 15,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/GS7FdubBSzrf0fYIDwBm.png",
-    "keywords": "USB Hub,Multiport,OTG,Expander",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "P0KFD2M8OIX2HABBO",
-    "name": "NIERBO HDMI 2.1 Cable HDMI Cord 8K 60Hz 4K 120Hz 48Gbps EARC ARC HDCP Ultra High Speed HDR for HD TV Laptop Projector PS4 PS5 - 2m",
-    "sku": "OSE16:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "NIERBO",
-    "model": "2m",
-    "price": 15,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/LuxmkXXQ2Kl6OcqEhJiY.png",
-    "keywords": "8K HDMI Cable,Ultra High-Speed,HDR Compatible, Gaming Ready",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PYSAH65O94UAZT8DW",
-    "name": "Xiaomi 200000mAh 120W Power Bank Super Fast Charging Battery High Capacity Digital Display Power Bank For iPhone Samsung Huawei",
-    "sku": "OSE18:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "MIJIA",
-    "model": "1410",
-    "price": 40,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/1bI1dFljxh7wF1jliwsZ.png",
-    "keywords": "Power Bank,Fast Charging,High Capacity,Portable",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  },
-  {
-    "id": "PARWXFG1EAF42ENY5",
-    "name": "AJAZZ AK820 Mechanical Keyboard Multifunctional Knob Gaming Keyboard Wired Connect PC Keyboard",
-    "sku": "OSE17:687609784237305307",
-    "category": "Office Supplies & Equipment",
-    "brand": "AJAZZ",
-    "model": "AK820Pro Gift Gray",
-    "price": 123,
-    "quality": "New",
-    "image": "https://pairfy.dev/api/media/get-image/ZgLbbrPMuyvRJAzHCvaE.png",
-    "keywords": "Mechanical,Keyboard,RGB Backlight,PBT Keycaps,Wired",
-    "rating": 0,
-    "reviews": 0,
-    "discount": true,
-    "discount_value": 10,
-    "best_seller": false,
-    "sold": 0,
-    "available": 0
-  }
-];
+import { useQuery } from '@vue/apollo-composable'
 
 
 const root = ref(null)
 const target = ref(null)
 const isVisible = ref(false)
+
+
+const feedData = ref({});
+
+const { result } = useQuery(gql`
+      query getFeed {
+        getFeed 
+      }
+    `)
+
+watch(result, value => {
+
+  if (value.getFeed) {
+    feedData.value = JSON.parse(value.getFeed);
+
+    console.log(feedData.value)
+  }
+
+})
+
+
 
 const { isActive, pause, resume } = useIntersectionObserver(
   target,
@@ -391,23 +62,7 @@ const { isActive, pause, resume } = useIntersectionObserver(
   { root },
 )
 
-const feedData = ref({
-  "Best Sellers": products,
-  "Electronics & Digital Content": products,
-  "Clothing & Fashion": products,
-  "Health & Beauty": products,
-  "Books, Music & Movies": products,
-  "Home & Garden": products,
-  "Toys, Hobbies & Collectibles": products,
-  "Sports & Outdoors & Entertainment": products,
-  "Grocery & Gourmet Food": products,
-  "Automotive & Industrial": products,
-  "Office Supplies & Equipment": products,
-  "Pet Supplies": products,
-  "Lights & Lighting": products,
-  "Mother & Kids": products,
-  "Shoes": products
-});
+
 
 const categoryRefs = ref({}); // Store refs for categories
 
