@@ -5,10 +5,7 @@
 </template>
 
 <script setup>
-import LeftPanel from '@/views/home/LeftPanel.vue';
 import BandComp from '@/views/home/BandComp.vue';
-import GridComp from '@/views/home/GridComp.vue';
-import RightPanel from '@/views/home/RightPanel.vue';
 
 </script>
 
