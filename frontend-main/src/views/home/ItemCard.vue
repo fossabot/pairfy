@@ -80,7 +80,7 @@ span {
     max-height: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
-    border-radius: var(--radius-a); 
+    border-radius: var(--radius-a);
 
 }
 
@@ -102,10 +102,9 @@ span {
 }
 
 .p-product-price {
-    font-size: var(--text-size-3);
-    color: var(--earthy-brown);
+    font-size: var(--text-size-4);
     align-items: baseline;
-    margin-top: 0rem;
+    margin: 0.25rem 0;
     font-weight: 600;
     display: flex;
 }
