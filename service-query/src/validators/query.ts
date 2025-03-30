@@ -47,8 +47,8 @@ export const searchProductInputSchema = z.object({
     price: priceFilterInputSchema,
     sort: sortInputSchema,
     tag: z.string()
-      .max(50, 'Tag too long')
-      .regex(/^[a-zA-Z0-9]+$/, 'Invalid tag format')
-      .optional()
+    .min(2, 'Tag is too short')
+    .max(32, 'Tag is too long')
+    .regex(/^[a-z0-9-_]+$/, 'Tag must be lowercase and contain only letters, numbers, hyphens or underscores')
   });
   
