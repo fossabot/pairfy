@@ -1,5 +1,5 @@
-import { searchProduct } from "./product/search.js";
-import { getProduct } from "./product/page.js";
+import { searchProduct } from "./product/searchProduct.js";
+import { getProduct } from "./product/getProduct.js";
 import { getAssetPrice } from "./price/index.js";
 
 
