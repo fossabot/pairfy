@@ -159,7 +159,7 @@
   --body-a: 1500px;
 
   --border-a: rgba(135, 134, 127, 0.25);
-  --border-b: red;
+  --border-b: var(--warm-taupe);
 
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);

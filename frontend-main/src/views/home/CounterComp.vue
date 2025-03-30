@@ -86,8 +86,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .card {
-  background: var(--background-w);
-  border: 1px solid var(--border-a);
+  background: var(--background-b);
   border-radius: 12px;
   padding: 1rem;
 }
@@ -99,7 +98,7 @@ onBeforeUnmount(() => {
 }
 
 .box {
-  background: var(--background-b);
+  background: var(--background-w);
   border-radius: 12px;
   text-align: center;
   padding: 0.25rem;

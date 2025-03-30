@@ -106,7 +106,7 @@ span {
 
 .p-product-price {
     font-size: var(--text-size-3);
-    color: var(--orange-a);
+    color: var(--earthy-brown);
     align-items: baseline;
     margin-top: 0rem;
     font-weight: 600;

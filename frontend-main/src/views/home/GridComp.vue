@@ -64,7 +64,7 @@ const gridData = ref([
         tag_value: "",
         tag_color: '',
         items: [
-        {
+            {
                 image: image1,
                 price: 34.00
             },
@@ -139,8 +139,7 @@ const gridData = ref([
 }
 
 .box {
-    border: 1px solid var(--border-a);
-    background: var(--background-w);
+    background: var(--background-b);
     justify-content: center;
     flex-direction: column;
     align-items: center;
@@ -216,6 +215,4 @@ const gridData = ref([
     height: 100%;
     width: 100%;
 }
-
-
 </style>
