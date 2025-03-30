@@ -1,6 +1,8 @@
+import { getProductInputSchema } from "../../validators/query.js";
 import { searchClient } from "../../elastic/index.js";
 import { database } from "../../database/client.js";
 import { logger } from "../../utils/index.js";
+import { GraphQLError } from "graphql";
 
 const searchIndex = async (id: string) => {
   let result: any = [];
@@ -18,7 +20,6 @@ const searchIndex = async (id: string) => {
     });
 
     result = response.hits.hits;
-
   } catch (err) {
     logger.error(err);
   } finally {
@@ -30,13 +31,36 @@ const getProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
-    const params = args.getProductInput;
+    const parsedParams: any = getProductInputSchema.safeParse(
+      args.getProductInput
+    );
+
+    console.log(parsedParams);
+
+    if (!parsedParams.success) {
+      const fieldErrors = parsedParams.error.flatten().fieldErrors;
+
+      logger.warn("Zod validation failed", {
+        path: "searchProduct",
+        input: parsedParams,
+        errors: fieldErrors,
+      });
+
+      throw new GraphQLError("Validation Error", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+          validationErrors: fieldErrors,
+        },
+      });
+    }
+
+    //////////////////////////////////////////////////
 
     connection = await database.client.getConnection();
 
     const [product] = await connection.execute(
       "SELECT * FROM products WHERE id = ?",
-      [params.id]
+      [parsedParams.id]
     );
 
     if (!product.length) {
@@ -68,14 +92,21 @@ const getProduct = async (_: any, args: any, context: any) => {
 
     return {
       success: true,
-      payload,
+      payload: payload,
     };
   } catch (err: any) {
+    logger.error(err);
+
     if (connection) {
       await connection.rollback();
     }
 
-    throw new Error(err.message);
+    throw new GraphQLError(
+      "Something went wrong while searching for products.",
+      {
+        extensions: { code: "INTERNAL_SERVER_ERROR" },
+      }
+    );
   } finally {
     if (connection) {
       connection.release();
