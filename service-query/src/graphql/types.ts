@@ -96,13 +96,13 @@ input SortInput {
 
 input SearchProductInput {
   text: String!
-  sku: StringFilterInput
-  brand: StringFilterInput
-  model: StringFilterInput
-  category: StringFilterInput
-  quality: StringFilterInput
-  discount: BooleanFilterInput
-  best_seller: BooleanFilterInput
+  sku: StringFilterInput!
+  brand: StringFilterInput!
+  model: StringFilterInput!
+  category: StringFilterInput!
+  quality: StringFilterInput!
+  discount: BooleanFilterInput!
+  best_seller: BooleanFilterInput!
   price: PriceFilterInput!
   sort: SortInput!
   tag: String!

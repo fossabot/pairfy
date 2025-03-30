@@ -1,5 +1,7 @@
 import { logger } from "../../utils/index.js";
 import { searchClient } from "../../elastic/index.js";
+import { searchProductInputSchema } from "@/validators/mutations.js";
+import { GraphQLError } from "graphql";
 
 const processQueryParams = (query: any): any => {
   const must: any = [
@@ -32,7 +34,7 @@ const processQueryParams = (query: any): any => {
     const categories = query.category.value.split(",");
 
     should = categories.map((category: string) => ({
-      term: { category }
+      term: { category },
     }));
 
     minimum_should_match = 1;
@@ -84,8 +86,8 @@ const processQueryParams = (query: any): any => {
         must,
         should,
         minimum_should_match,
-        filter
-      }
+        filter,
+      },
     },
     sort,
     size: 30,
@@ -117,11 +119,33 @@ const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
 
-    const search = await searchIndex(params);
+    const parsed = searchProductInputSchema.safeParse(params);
+
+    if (!parsed.success) {
+      const fieldErrors = parsed.error.flatten().fieldErrors;
+
+      logger.warn("Validation failed:", fieldErrors);
+
+      throw new GraphQLError("Validation Error", {
+        extensions: {
+          code: "BAD_USER_INPUT",
+          validationErrors: fieldErrors,
+        },
+      });
+    }
+
+    const search = await searchIndex(parsed.data);
 
     return search;
   } catch (err: any) {
     logger.error(err);
+
+    throw new GraphQLError(
+      "Something went wrong while searching for products.",
+      {
+        extensions: { code: "INTERNAL_SERVER_ERROR" },
+      }
+    );
   }
 };
 
