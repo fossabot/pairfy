@@ -56,15 +56,17 @@ const getProduct = async (_: any, args: any, context: any) => {
 
     //////////////////////////////////////////////////
 
+    const params = parsedParams.data;
+
     connection = await database.client.getConnection();
 
     const [product] = await connection.execute(
       "SELECT * FROM products WHERE id = ?",
-      [parsedParams.id]
+      [params.id]
     );
 
     if (!product.length) {
-      throw new Error("ProductExistence");
+      throw new Error("ProductExistenceError");
     }
 
     const PRODUCT = product[0];
