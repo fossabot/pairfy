@@ -1,6 +1,6 @@
-import { redisClient } from "../../database/redis";
+import { redisClient } from "../../database/redis.js";
+import { logger } from "../../utils/index.js";
 import { GraphQLError } from 'graphql';
-import { logger } from "../../utils";
 
 const getFeed = async () => {
   try {
