@@ -62,12 +62,8 @@ span {
 }
 
 .p-product {
-    background: var(--background-w);
-    box-shadow: var(--shadow-b);
-    border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
     display: flex;
     min-height: 300px;
     flex-direction: column;
@@ -84,6 +80,8 @@ span {
     max-height: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
+    border-radius: var(--radius-a); 
+
 }
 
 .p-product-body {
@@ -95,8 +93,7 @@ span {
 
 .p-product-title {
     font-size: var(--text-size-1);
-    text-overflow: ellipsis;
-    color: var(--text-b);
+    color: var(--text-a);
     margin-top: 0rem;
     font-weight: 400;
     overflow: hidden;
