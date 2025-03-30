@@ -79,8 +79,10 @@ onBeforeUnmount(() => {
 .band-wrap {
     justify-content: center;
     width: 100%;
+    height: 400px;
     z-index: 1;
     top: 0;
+    margin-top: 1rem;
 }
 
 .band-body {
@@ -89,7 +91,7 @@ onBeforeUnmount(() => {
     display: flex;
     overflow: hidden;
     position: relative;
-    border-radius: 12px;
+    border-radius: var(--radius-a);
     max-width: var(--body-a);
 }
 
@@ -166,9 +168,7 @@ onBeforeUnmount(() => {
 
 
 /* Small phones (up to 480px) */
-@media (max-width: 480px) {
-
-}
+@media (max-width: 480px) {}
 
 /* Large phones and small tablets (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {

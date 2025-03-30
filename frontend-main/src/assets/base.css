@@ -97,45 +97,6 @@
 }
 
 :root {
-  --primary-a: var(--sunset-orange);
-  --primary-b: var(--blue-a);
-
-  --background-a: var(--cream);
-  --background-b: var(--soft-beige);
-  --background-w: #ffffff;
-
-  --background-c: red;
-
-  /* Neutrales y Complementarios */
-  --cream: #faf9f5;
-  --soft-beige: #ede8dd;
-  --warm-taupe: #c4b8a8;
-  --earthy-brown: #8d7760;
-  --deep-espresso: #5b4632;
-
-  /* Análogos (Tonos Suaves y Cálidos) */
-  --warm-white: #fdfbf6;
-  --sand-beige: #ede5d5;
-  --muted-gold: #d6c49b;
-  --olive-green: #b2a37c;
-  --warm-gray: #a09283;
-
-  /* Acentos (Colores de Contraste) */
-  --terracotta: #d68a5d;
-  --soft-sage-green: #a8b8a0;
-  --dusty-blue: #a5b4c6;
-  --muted-lavender: #b8a8c4;
-  --deep-teal: #2f5d62;
-
-  --sunset-orange: #e07a5f;
-
-  --cream-yellow: #F4C773;
-  --vibran-yellow: #FFC83D;
-
-  --text-a: #3d3929;
-  --text-b: #565959;
-  --text-w: #ffffff;
-
   --text-size-a: 0.833rem;
   --text-size-b: 1rem;
   --text-size-c: 1.2rem;
@@ -145,7 +106,7 @@
   --text-size-g: 2.488rem;
   --text-size-h: 2.986rem;
 
-  --text-size-0: 13px;
+  --text-size-0: 12px;
   --text-size-1: 14px;
   --text-size-2: 16px;
   --text-size-3: 18px;
@@ -158,60 +119,21 @@
 
   --body-a: 1500px;
 
-  --border-a: rgba(135, 134, 127, 0.25);
-  --border-b: var(--warm-taupe);
-
   --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
-  --red-a: #ff2e4d;
-  --red-alpha: rgba(255, 46, 77, 0.1);
-  --green-a: #10b981;
-  --orange-a: #FF6A3D;
-  --orange-b: green;
-  --yellow-a: #fcbc05;
-  --yellow-b: #ffea00;
-  --blue-a: #2280ff;
-  --cyan-a: #60a3ff;
-  --purple-a: #635bff;
+  --background-a: #ffffff;
+  --background-b: #f5f5f7;
 
-  --soft-red-a: green;
-  --soft-yellow-a: green;
-  --soft-yellow-b: green;
-  --soft-white-a: green;
-  --soft-cyan-a: green;
-  --soft-blue-a: green;
+  --text-a: #1d1d1f;
+  --text-b: #86868b;
+  --text-w: #ffffff;
 
-  --black-a: #000000;
-  --black-b: #181a20;
-  --black-c: green;
+  --border-a: #d8d8d8;
 
-  --complementary-main: #00d1b2; /* Teal (Direct Complementary) */
-  --complementary-light: #66e3d0; /* Lighter Teal */
-  --complementary-dark: #009f8a; /* Darker Teal */
-  --complementary-muted: #33c4a1; /* Muted Teal */
+  --primary-a: #0071e3;
 
-  /* Triadic Colors */
-  --complementary-triadic-1: #2eff4d; /* Lime Green */
-  --complementary-triadic-2: #4d2eff; /* Violet-Blue */
-
-  /* Analogous Colors */
-  --complementary-analogous-1: #ff4d2e; /* Orange-Red */
-  --complementary-analogous-2: #ff2eff; /* Magenta-Pink */
-
-  /* Shades & Tints */
-  --complementary-primary-light: #ff6b7b; /* Lighter Red-Pink */
-  --complementary-primary-dark: #cc243e; /* Darker Red-Pink */
-  --complementary-primary-muted: #e6395f; /* Muted Red-Pink */
-
-  --pastel-primary: #ffb3c1; /* Pastel Pink */
-  --pastel-secondary: #ff9999; /* Soft Coral */
-  --pastel-tertiary: #ffccd5; /* Light Blush */
-  --pastel-accent: #ffc2c7; /* Peachy Pink */
-  --pastel-mint: #b8f2e6; /* Pastel Mint */
-  --pastel-lavender: #e6ccff; /* Lavender Blush */
-  --pastel-blue: #c2e7ff; /* Baby Blue */
-  --pastel-lilac: #d4b8f2; /* Soft Lilac */
+  --radius-a: 18px;
 }
 
 *,
@@ -238,18 +160,7 @@ body {
     color 0.5s,
     background-color 0.5s;
   line-height: 1.6;
-  font-family: 'IBM Plex Sans', serif;
-  font-family: 'Open Sans', serif;
-  font-family: 'Inter', serif;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    \.SFNSText-Regular,
-    Helvetica,
-    Arial,
-    sans-serif;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-variation-settings: 'wdth' 100;
   font-style: normal;

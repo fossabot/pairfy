@@ -28,8 +28,8 @@
      units="px"
      height="48px"
      inkscape:zoom="1.4823794"
-     inkscape:cx="98.827604"
-     inkscape:cy="48.570563"
+     inkscape:cx="97.478419"
+     inkscape:cy="45.872197"
      inkscape:window-width="1488"
      inkscape:window-height="778"
      inkscape:window-x="432"
@@ -44,13 +44,13 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-size:10.5833px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.238125px;stroke-width:0.264583;fill:#3d3929;fill-opacity:1"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.238125px;fill:#3d3929;fill-opacity:1;stroke-width:0.264583"
        x="16.988056"
        y="9.3236275"
        id="text3040"><tspan
          sodipodi:role="line"
          id="tspan3038"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#3d3929;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#1d1d1f;fill-opacity:1;stroke-width:0.264583"
          x="16.988056"
          y="9.3236275">Pairfy</tspan></text>
     <image

@@ -1,17 +1,6 @@
 <template>
     <div class="banner">
-        <div class="banner-grid">
-            <div class="banner-column left">
-                <LeftPanel />
-            </div>
-            <div class="banner-column center">
-                <BandComp />
-                <GridComp />
-            </div>
-            <div class="banner-column right">
-                <RightPanel />
-            </div>
-        </div>
+        <BandComp />
     </div>
 </template>
 

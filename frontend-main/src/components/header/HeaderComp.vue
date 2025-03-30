@@ -120,7 +120,6 @@ header {
     flex-direction: column;
     justify-content: center;
     font-size: var(--text-size-1);
-    border-bottom: 1px solid var(--border-a);
 }
 
 .header {
