@@ -49,5 +49,6 @@ export const searchProductInputSchema = z.object({
     tag: z.string()
       .max(50, 'Tag too long')
       .regex(/^[a-zA-Z0-9]+$/, 'Invalid tag format')
+      .optional()
   });
   

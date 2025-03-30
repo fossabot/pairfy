@@ -1,6 +1,6 @@
 import { logger } from "../../utils/index.js";
 import { searchClient } from "../../elastic/index.js";
-import { searchProductInputSchema } from "@/validators/mutations.js";
+import { searchProductInputSchema } from "../../validators/query.js";
 import { GraphQLError } from "graphql";
 
 const processQueryParams = (query: any): any => {
