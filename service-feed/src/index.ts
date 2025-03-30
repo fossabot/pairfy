@@ -51,9 +51,7 @@ const main = async () => {
       })
     );
 
-    ///////////////////////////////////////////////////////////
-
-    logger.info("ONLINE");
+    //////////////////////////////////////////////////////////////////////////////////////////////77
 
     const categoryList: string[] = [
       "Best Sellers",
@@ -71,7 +69,7 @@ const main = async () => {
       "Lights & Lighting",
       "Mother & Kids",
       "Shoes",
-      "Art & NFT's"
+      "Art & NFT's",
     ];
 
     const categories: Record<string, any[]> = categoryList.reduce(
@@ -83,6 +81,8 @@ const main = async () => {
     );
 
     while (true) {
+      logger.info("Iteration");
+
       const bestKey = `feed:Best Sellers`;
 
       await redisClient.client.del(bestKey);
