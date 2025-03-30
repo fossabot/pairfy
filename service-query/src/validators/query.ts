@@ -10,7 +10,7 @@ export const getProductInputSchema = z.object({
 
 export const stringFilterInputSchema = z.object({
   enabled: z.boolean(),
-  value: z.string().max(100).optional(),
+  value: z.string().max(100),
 });
 
 export const booleanFilterInputSchema = z.object({
@@ -28,15 +28,21 @@ export const priceFilterInputSchema = z.object({
   value: priceRangeInputSchema,
 });
 
+export const sortFieldSchema = z.object({
+  enabled: z.boolean(),
+  value: z.enum(['asc', 'desc'])
+});
+
+
 export const sortInputSchema = z.object({
-  price: stringFilterInputSchema,
-  rating: stringFilterInputSchema,
-  reviews: stringFilterInputSchema,
-  discount_value: stringFilterInputSchema,
+  price: sortFieldSchema,
+  rating: sortFieldSchema,
+  reviews: sortFieldSchema,
+  discount_value: sortFieldSchema
 });
 
 export const searchProductInputSchema = z.object({
-    text: z.string().max(300, 'Search text too long'),
+    text: z.string().min(1, 'Search text is required').max(300, 'Search text too long'),
     sku: stringFilterInputSchema,
     brand: stringFilterInputSchema,
     model: stringFilterInputSchema,

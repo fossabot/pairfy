@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: locust-master
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: locust-master
