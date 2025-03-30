@@ -109,6 +109,7 @@ input SearchProductInput {
 } 
 
 type Query {
+  getFeed: String!
   getProduct(getProductInput: GetProductInput!): GetProductResponse!
   searchProduct(searchProductInput: SearchProductInput!): [SearchProductResponse]!
   getAssetPrice: Float!

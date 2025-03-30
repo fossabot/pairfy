@@ -5,7 +5,7 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { catcher, checkRedis, errorEvents, logger } from "./utils/index.js";
-import { assets, products } from "./graphql/resolvers.js";
+import { assets, feed, products } from "./graphql/resolvers.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { redisClient } from "./database/redis.js";
@@ -19,6 +19,7 @@ const resolvers = {
   Query: {
     ...products.Query,
     ...assets.Query,
+    ...feed.Query
   },
 };
 
