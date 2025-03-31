@@ -196,6 +196,7 @@
             }" />
 
             <ButtonComp data="Add To Cart" :style="{
+                'color': 'var(--text-a)',
                 'border': '1px solid var(--border-a)',
                 'background': 'transparent'
             }" />
