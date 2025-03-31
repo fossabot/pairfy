@@ -132,10 +132,20 @@
   --border-a: #d8d8d8;
   --border-b: #86868b;
 
-  --primary-a: #0866ff;
+  --primary-a: var(--blue-a);
 
   --radius-a: 18px;
   --radius-b: 12px;
+
+  --blue-a: #0866ff;
+  --blue-b: #08b2ff;
+  --blue-c: #0822ff;
+
+  --orange-a: #ff9908;
+  --green-a: #00C851;
+  --pink-a: #ff08b2;
+  --yellow-a: #ffa508;
+  --red-a: #ff5208;
 }
 
 *,

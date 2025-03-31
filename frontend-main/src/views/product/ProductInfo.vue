@@ -114,7 +114,7 @@ span {
 .preview-name {
     font-size: var(--text-size-5);
     line-height: 2.25rem;
-    font-weight: 400;
+    font-weight: 500;
     width: 90%;
 }
 
