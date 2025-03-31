@@ -1,39 +1,29 @@
 <template>
-    <div class="flex space-x-1">
-      <svg
-        v-for="index in 5"
-        :key="index"
-        xmlns="http://www.w3.org/2000/svg"
-        width="14px"
-        height="14px"
-        viewBox="0 0 24 24"
-        :fill="index <= rating ? 'var(--primary-a)' : 'none'"
-        :stroke="index <= rating ? 'var(--primary-a)' : 'var(--border-a)'"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-star"
+  <div class="flex space-x-1">
+    <svg v-for="index in 5" :key="index" width="14px" height="14px" viewBox="0 0 24 24" 
+      xmlns="http://www.w3.org/2000/svg"
+      :fill="index <= rating ? 'var(--primary-a)' : 'none'"
+      :stroke="index <= rating ? 'none' : 'var(--border-a)'"
+      
       >
-        <path
-          d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"
-        />
-      </svg>
-    </div>
-  </template>
-  
-  <script setup>
-  defineProps({
-    rating: {
-      type: Number,
-      required: true,
-      default: 4,
-    },
-  });
-  </script>
-  
-  <style scoped>
+      <path
+        d="M12 2.5C12.3 2.5 12.6 2.7 12.7 2.9L15.1 8.3L21 9.1C21.6 9.2 21.9 9.9 21.5 10.4L17.3 14.8L18.3 20.6C18.4 21.2 17.8 21.7 17.3 21.4L12 18.4L6.7 21.4C6.2 21.7 5.6 21.2 5.7 20.6L6.7 14.8L2.5 10.4C2.1 9.9 2.4 9.2 3 9.1L8.9 8.3L11.3 2.9C11.4 2.7 11.7 2.5 12 2.5Z" />
+    </svg>
+  </div>
+</template>
 
-  .space-x-1 > * + * {
-    margin-left: 4px;
-  }
-  </style>
+<script setup>
+defineProps({
+  rating: {
+    type: Number,
+    required: true,
+    default: 4,
+  },
+});
+</script>
+
+<style scoped>
+.space-x-1>*+* {
+  margin-left: 1px;
+}
+</style>
