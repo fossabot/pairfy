@@ -22,11 +22,7 @@
             <span>433 ratings</span>
         </div>
 
-        <Divider />
-
         <div class="preview-price flex">
-  
-
             <span>
                 {{ `$${formatPriceToUSD(getProductData.price)}` }}
             </span>
@@ -146,8 +142,8 @@ span {
 
 .preview-tag {
     font-size: var(--text-size-4);
+    color: var(--green-a);
     margin-left: 0.5rem; 
-    color: var(--red-a);
     font-weight: 300;
 }
 
