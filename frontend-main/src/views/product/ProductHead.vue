@@ -22,6 +22,7 @@ const { getProductData } = productAPI();
 <style lang="css" scoped>
 .p-head {
     background: var(--background-b);
+    border-radius: var(--radius-b);
     font-size: var(--text-size-0);
     text-transform: capitalize;
     padding: 1rem;

@@ -196,7 +196,6 @@
             }" />
 
             <ButtonComp data="Add To Cart" :style="{
-                'color': 'var(--text-a)',
                 'border': '1px solid var(--border-a)',
                 'background': 'transparent'
             }" />
@@ -450,14 +449,14 @@ a {
 
 .card {
     border: 1px solid var(--border-a);
+    border-radius: var(--radius-b);
+    flex-direction: column;
     min-height: 100px;
     display: flex;
-    flex-direction: column;
     padding: 1rem;
     width: 250px;
     min-width: 250px;
     margin-left: auto;
-    border-radius: 6px;
     max-height: 600px;
 }
 
@@ -468,8 +467,8 @@ a {
 
 .card-brand {
     font-size: var(--text-size-1);
-    margin-bottom: 1rem;
     text-transform: capitalize;
+    margin-bottom: 1rem;
     font-weight: 700;
 }
 
