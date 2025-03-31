@@ -114,7 +114,7 @@ span {
 .preview-name {
     font-size: var(--text-size-5);
     line-height: 2.25rem;
-    font-weight: 500;
+    font-weight: 400;
     width: 90%;
 }
 
@@ -131,7 +131,7 @@ span {
 }
 
 .preview-price {
-    font-size: var(--text-size-6);
+    font-size: var(--text-size-7);
     align-items: baseline;
     margin-top: 1rem;
     font-weight: 400;
