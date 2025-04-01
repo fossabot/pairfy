@@ -7,6 +7,12 @@
         <div class="p-product-body">
             <span class="p-product-title">{{ reduceByLength(props.data.name, 40, '') }}</span>
 
+            <span class="p-product-rating flex">
+                <RatingComp :rating="4" />
+
+                <span>4.3</span>
+            </span>
+
             <span class="p-product-price">
                 <span>
                     {{
@@ -23,9 +29,6 @@
 
             </span>
 
-            <span class="p-product-rating">
-                <RatingComp :rating="4" />
-            </span>
 
         </div>
     </div>
@@ -123,4 +126,10 @@ span {
 }
 
 .p-product-rating {}
+
+.p-product-rating span {
+    color: var(--text-b);
+    margin-left: 0.5rem;
+    font-weight: 500;
+}
 </style>
