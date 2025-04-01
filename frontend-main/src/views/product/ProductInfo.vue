@@ -45,12 +45,6 @@
             <div :style="{ backgroundColor: `#${getProductData.color}` }" />
         </div>
 
-        <div class="preview-condition flex">
-            <span>Condition</span>
-            <span>:</span>
-            <label> {{ getProductData.quality }}</label>
-        </div>
-
         <div class="preview-about">All about this product</div>
 
         <ul class="preview-bullet">
@@ -159,15 +153,15 @@ span {
 }
 
 .preview-about {
+    font-size: var(--text-size-1);
     margin-top: 1rem;
     font-weight: 600;
-    font-size: var(--text-size-1);
 }
 
 .preview-bullet {
-    margin-top: 1rem;
     font-size: var(--text-size-1);
     padding-left: 1rem;
+    margin-top: 1rem;
 }
 
 .preview-bullet li {
@@ -175,14 +169,12 @@ span {
     padding-left: 10px;
 }
 
-.preview-color,
-.preview-condition {
-    margin-top: 1rem;
+.preview-color{
     text-transform: capitalize;
+    margin-top: 1rem;
 }
 
-.preview-color label,
-.preview-condition label {
+.preview-color label {
     font-weight: 600;
     margin: 0 0.5rem;
 }
