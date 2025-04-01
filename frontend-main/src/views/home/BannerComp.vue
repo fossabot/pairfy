@@ -1,5 +1,5 @@
 <template>
-    <div class="banner">
+    <div class="p-banner">
         <BandComp />
     </div>
 </template>
@@ -10,14 +10,15 @@ import BandComp from '@/views/home/BandComp.vue';
 </script>
 
 <style lang="css" scoped>
-.banner {
+.p-banner {
+    background: var(--background-b);
     flex-direction: column;
     align-items: center;
     display: flex;
     width: 100%;
 }
 
-.banner-grid {
+.p-banner-grid {
     grid-template-columns: 1fr auto 1fr;
     margin-top: 1rem;
     display: grid;
@@ -28,20 +29,20 @@ import BandComp from '@/views/home/BandComp.vue';
     max-height: var(--body-a);
 }
 
-.banner-column {
+.p-banner-column {
     display: grid;
     gap: 1rem;
 }
 
-.banner-column:first-child {
+.p-banner-column:first-child {
     grid-template-rows: auto;
 }
 
-.banner-column:nth-child(2) {
+.p-banner-column:nth-child(2) {
     grid-template-rows: 0.75fr 1fr;
 }
 
-.banner-column:last-child {
+.p-banner-column:last-child {
     grid-template-rows: auto;
 }
 
@@ -50,7 +51,7 @@ import BandComp from '@/views/home/BandComp.vue';
 
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
-    .banner {
+    .p-banner {
         display: none;
     }
 
