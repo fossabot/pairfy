@@ -1,11 +1,13 @@
 <template>
     <div class="p-banner">
         <BandComp />
+        <CategoryComp />
     </div>
 </template>
 
 <script setup>
 import BandComp from '@/views/home/BandComp.vue';
+import CategoryComp from './CategoryComp.vue';
 
 </script>
 
