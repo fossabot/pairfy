@@ -25,14 +25,14 @@
      showgrid="false"
      units="px"
      height="48px"
-     inkscape:zoom="11.859035"
-     inkscape:cx="161.01648"
-     inkscape:cy="30.10363"
-     inkscape:window-width="1488"
-     inkscape:window-height="778"
-     inkscape:window-x="191"
-     inkscape:window-y="131"
-     inkscape:window-maximized="0"
+     inkscape:zoom="2.096401"
+     inkscape:cx="128.07664"
+     inkscape:cy="9.0631516"
+     inkscape:window-width="1920"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
@@ -42,12 +42,12 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-size:10.6248px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.23906px;fill:#0866ff;fill-opacity:0.5;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
+       style="font-size:10.6248px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.23906px;fill:#000000;fill-opacity:0.5;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
        x="18.098206"
        y="9.4636803"
        id="text3040"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#0866ff;fill-opacity:1;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#000000;fill-opacity:1;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
          x="18.098206"
          y="9.4636803"
          id="tspan13110">Pairfy</tspan></text>
