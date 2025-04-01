@@ -48,7 +48,7 @@ function goToCategory(category) {
 .grid-item {
     background: white;
     border-radius: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-b);
     padding: 16px;
     text-align: center;
     cursor: pointer;

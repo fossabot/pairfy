@@ -13,7 +13,6 @@ import CategoryComp from './CategoryComp.vue';
 
 <style lang="css" scoped>
 .p-banner {
-    background: var(--background-b);
     flex-direction: column;
     align-items: center;
     display: flex;
