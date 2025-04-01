@@ -35,7 +35,7 @@ function goToCategory(category) {
 .p-category{
     width: 100%;
     max-width: var(--body-a);
-    padding: 1rem;
+    padding: 1rem 0;
 
 }
 
