@@ -37,6 +37,7 @@
             <span class="preview-tag">{{ `-${getProductData.discount_value}%` }}</span>
         </div>
 
+        <Divider />
 
         <div class="preview-color flex ">
             <span>Color</span>
@@ -51,7 +52,7 @@
             <li v-for="item in bulletList" :key="item">{{ item }}</li>
         </ul>
 
-        <div class="preview-keywords flex"> 
+        <div class="preview-keywords flex">
             <div v-for="item in keywordList" :key="item">
                 <span>{{ item }}</span>
             </div>
@@ -104,7 +105,7 @@ span {
 .preview-name {
     font-size: var(--text-size-5);
     line-height: 2.25rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .preview-rating {
@@ -136,7 +137,7 @@ span {
 .preview-tag {
     font-size: var(--text-size-4);
     color: var(--green-a);
-    margin-left: 0.5rem; 
+    margin-left: 0.5rem;
     font-weight: 300;
 }
 
@@ -169,7 +170,7 @@ span {
     padding-left: 10px;
 }
 
-.preview-color{
+.preview-color {
     text-transform: capitalize;
     margin-top: 1rem;
 }
@@ -189,7 +190,7 @@ span {
     margin-top: 1rem;
 }
 
-.preview-keywords div{
+.preview-keywords div {
     background: var(--background-b);
     padding: 0.25rem 0.5rem;
     margin-right: 0.5rem;
@@ -199,30 +200,29 @@ span {
 /* Default styles apply to all devices */
 
 /* Small phones (up to 480px) */
-@media (max-width: 480px) { 
+@media (max-width: 480px) {
     .preview {
-    padding: 0 1rem;
-}
+        padding: 0 1rem;
+    }
 }
 
 /* Large phones and small tablets (481px - 767px) */
-@media (min-width: 481px) and (max-width: 767px) { 
-  /* Styles for larger phones */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for larger phones */
 }
 
 /* Tablets (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) { 
-  /* Styles for tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
 }
 
 /* Laptops and small desktops (1025px - 1440px) */
-@media (min-width: 1025px) and (max-width: 1440px) { 
-  /* Styles for laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for laptops */
 }
 
 /* Large desktops (1441px and up) */
-@media (min-width: 1441px) { 
-  /* Styles for large screens */
+@media (min-width: 1441px) {
+    /* Styles for large screens */
 }
-
 </style>
