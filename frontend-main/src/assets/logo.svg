@@ -27,11 +27,11 @@
      height="48px"
      inkscape:zoom="2.096401"
      inkscape:cx="128.07664"
-     inkscape:cy="9.0631516"
+     inkscape:cy="7.1551197"
      inkscape:window-width="1920"
      inkscape:window-height="1048"
      inkscape:window-x="0"
-     inkscape:window-y="1080"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
@@ -42,14 +42,25 @@
      id="layer1">
     <text
        xml:space="preserve"
-       style="font-size:10.6248px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.23906px;fill:#1573ff;fill-opacity:0;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
-       x="18.098206"
-       y="9.4636803"
+       style="font-size:10.6248px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.15875px;fill:#1573ff;fill-opacity:0;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
+       x="-0.60179532"
+       y="10.146942"
        id="text3040"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#1573ff;fill-opacity:0;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
-         x="18.098206"
-         y="9.4636803"
-         id="tspan13110">Pairfy</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#1573ff;fill-opacity:1;stroke-width:0.211667;stroke-miterlimit:4;stroke-dasharray:none"
+         x="-0.60179532"
+         y="10.146942"
+         id="tspan13110">Pair<tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt Bold';fill:#28c76f;fill-opacity:1"
+   id="tspan15311">fy</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.5833px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';stroke-width:0.264583"
+       x="48.527615"
+       y="16.411993"
+       id="text5743"><tspan
+         sodipodi:role="line"
+         id="tspan5741"
+         style="stroke-width:0.264583"></tspan></text>
   </g>
 </svg>
