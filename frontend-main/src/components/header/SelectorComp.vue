@@ -13,7 +13,9 @@
 
 <style lang="css" scoped>
 .selector {
-    border-right: 1px solid var(--border-a);
+    border-bottom-left-radius: inherit;
+    border: 1px solid var(--border-a);
+    border-top-left-radius: inherit;
     background: var(--background-b);
     font-size: var(--text-size-0);
     height: inherit;

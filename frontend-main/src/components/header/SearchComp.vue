@@ -104,15 +104,16 @@ onBeforeUnmount(() => {
     width: inherit;
     overflow: hidden;
     border-radius: var(--radius-b);
-    outline: 1px solid var(--border-a);
 }
 
 .search-input {
+    border: 1px solid var(--border-a);
     font-size: var(--text-size-1);
+    border-right: none;
+    border-left: none;
     color: inherit;
     width: inherit;
     height: inherit;
-    border: none;
     outline: none;
     font-family: inherit;
     background: inherit;
