@@ -149,7 +149,7 @@ section.visible {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 0rem;
   padding-bottom: 200px;
 }
 

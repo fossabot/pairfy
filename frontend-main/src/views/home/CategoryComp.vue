@@ -35,8 +35,7 @@ function goToCategory(category) {
 .p-category{
     width: 100%;
     max-width: var(--body-a);
-    padding: 1rem 0;
-
+    margin-top: 1rem;
 }
 
 .grid {
@@ -46,7 +45,6 @@ function goToCategory(category) {
 }
 
 .grid-item {
-    background: white;
     border-radius: 16px;
     box-shadow: var(--shadow-b);
     padding: 16px;
