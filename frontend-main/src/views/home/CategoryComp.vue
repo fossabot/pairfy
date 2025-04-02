@@ -14,7 +14,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import image0 from '@/assets/items/laptop.png'
+import image0 from '@/assets/icons/0.png'
 import image1 from '@/assets/items/clothes.png'
 
 const router = useRouter()
