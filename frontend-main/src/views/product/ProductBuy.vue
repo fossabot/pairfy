@@ -162,7 +162,7 @@
             <span>{{ getProductData.brand }}</span>
         </div>
 
-        <div class="card-stock" :class="{ red: getProductData.available < 1 }">
+        <div class="card-stock" :class="{ gray: getProductData.available < 1 }">
             <span>{{ getStockLabel(getProductData.available) }}</span>
         </div>
 
