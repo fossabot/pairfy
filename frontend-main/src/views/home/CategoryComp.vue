@@ -14,12 +14,14 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import image0 from '@/assets/items/laptop.png'
+import image1 from '@/assets/items/clothes.png'
 
 const router = useRouter()
 
 const categories = [
-    { id: 1, name: 'Electronics', icon: 'https://img.icons8.com/ios/100/laptop.png' },
-    { id: 2, name: 'Clothing', icon: 'https://img.icons8.com/ios/100/clothes.png' },
+    { id: 1, name: 'Electronics', icon: image0 },
+    { id: 2, name: 'Clothing', icon: image1 },
     { id: 3, name: 'Books', icon: 'https://img.icons8.com/ios/100/books.png' },
     { id: 4, name: 'Shoes', icon: 'https://img.icons8.com/ios/100/shoes.png' },
     { id: 5, name: 'Beauty', icon: 'https://img.icons8.com/ios/100/edit.png' },
@@ -34,8 +36,8 @@ function goToCategory(category) {
 <style scoped>
 .p-category{
     width: 100%;
-    max-width: var(--body-a);
     margin-top: 1rem;
+    max-width: var(--body-a);
 }
 
 .grid {
@@ -45,16 +47,16 @@ function goToCategory(category) {
 }
 
 .grid-item {
-    border-radius: 16px;
+    transition: box-shadow 0.2s ease;
+    border-radius: var(--radius-a);
     box-shadow: var(--shadow-b);
-    padding: 16px;
     text-align: center;
     cursor: pointer;
-    transition: box-shadow 0.2s ease;
+    padding: 1rem;
 }
 
 .grid-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-a);
 }
 
 .icon {
