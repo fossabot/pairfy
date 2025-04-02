@@ -18,12 +18,12 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const categories = [
-    { id: 1, name: 'Electronics', icon: 'https://img.icons8.com/ios/100/baby.png' },
-    { id: 2, name: 'Clothing', icon: 'https://img.icons8.com/ios/100/baby.png' },
-    { id: 3, name: 'Books', icon: 'https://img.icons8.com/ios/100/baby.png' },
-    { id: 4, name: 'Shoes', icon: 'https://img.icons8.com/ios/100/baby.png' },
-    { id: 5, name: 'Beauty', icon: 'https://img.icons8.com/ios/100/baby.png' },
-    { id: 6, name: 'Home', icon: 'https://img.icons8.com/ios/100/baby.png' },
+    { id: 1, name: 'Electronics', icon: 'https://img.icons8.com/ios/100/laptop.png' },
+    { id: 2, name: 'Clothing', icon: 'https://img.icons8.com/ios/100/clothes.png' },
+    { id: 3, name: 'Books', icon: 'https://img.icons8.com/ios/100/books.png' },
+    { id: 4, name: 'Shoes', icon: 'https://img.icons8.com/ios/100/shoes.png' },
+    { id: 5, name: 'Beauty', icon: 'https://img.icons8.com/ios/100/edit.png' },
+    { id: 6, name: 'Home', icon: 'https://img.icons8.com/ios/100/home.png' },
 ]
 
 function goToCategory(category) {
