@@ -1,21 +1,21 @@
 <template>
-    <div class="bar flex">
-        <div class="bar-content flex">
+    <div class="p-bar flex">
+        <div class="p-bar-content flex">
 
-            <LogoComp/>
+            <LogoComp />
             <LocationComp />
-            
-            <span class="bar-price">Discount Liquidity: 1.000.000 ADA</span>
-            <span class="bar-price">Volume 24h: 253.894 ADA</span>
-            <span class="bar-price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
-            <span class="bar-price">IUSD 1.0</span>
-            <span class="bar-price">USDM 1.0</span>
-            <span class="bar-price">USDA 1.0</span>
-            <div class="bar-wallet flex" v-if="getCurrentUser">
+
+            <span class="p-bar-price">Discount Liquidity: 1.000.000 ADA</span>
+            <span class="p-bar-price">Volume 24h: 253.894 ADA</span>
+            <span class="p-bar-price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
+            <span class="p-bar-price">IUSD 1.0</span>
+            <span class="p-bar-price">USDM 1.0</span>
+            <span class="p-bar-price">USDA 1.0</span>
+            <div class="p-bar-wallet flex" v-if="getCurrentUser">
                 <span>
                     <i class="pi pi-wallet" />
                 </span>
-                <span class="bar-address">{{ getCurrentUser.address.slice(0, 20) }}</span>
+                <span class="p-bar-address">{{ getCurrentUser.address.slice(0, 20) }}</span>
             </div>
         </div>
     </div>
@@ -33,51 +33,53 @@ const { formatPriceToUSD } = inject('utils');
 </script>
 
 <style lang="css" scoped>
-.bar {
+.p-bar {
     justify-content: center;
+    color: var(--text-w);
+    background: black;
     width: inherit;
     height: 2rem;
 }
 
-.bar-content {
+.p-bar-content {
     justify-content: flex-end;
     max-width: var(--body-a);
     width: 100%;
 }
 
-.bar-price,
-.bar-address {
+.p-bar-price,
+.p-bar-address {
     font-size: var(--text-size-0);
     font-weight: 400;
     margin-left: 2rem;
 }
 
-.bar-wallet {
+.p-bar-wallet {
     font-weight: 400;
     margin-left: 2rem;
 }
 
-.bar-wallet i {
+.p-bar-wallet i {
     font-size: var(--text-size-0);
     margin-right: 0.5rem;
 }
 
-.bar-address {
+.p-bar-address {
     margin: initial;
 }
 
 @media (max-width: 480px) {
-    .bar {
+    .p-bar {
         border-bottom: 1px solid var(--border-a);
         height: 2.5rem;
     }
 
-    .bar-price,
-    .bar-wallet {
+    .p-bar-price,
+    .p-bar-wallet {
         display: none;
     }
 
-    .bar-content {
+    .p-bar-content {
         max-width: 100%;
         padding: 0 0.5rem;
     }
