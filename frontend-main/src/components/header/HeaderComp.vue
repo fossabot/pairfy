@@ -127,7 +127,6 @@ header {
 
 .brand {
     cursor: pointer;
-    height: 2rem;
 }
 
 .header {
