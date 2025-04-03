@@ -23,6 +23,7 @@ import image7 from '@/assets/icons/7.png'
 import image8 from '@/assets/icons/8.png'
 import image10 from '@/assets/icons/10.png'
 import image11 from '@/assets/icons/11.png'
+import image12 from '@/assets/icons/12.png'
 import image13 from '@/assets/icons/13.png'
 import image14 from '@/assets/icons/14.png'
 
@@ -38,6 +39,7 @@ categories.value[7].icon = image7
 categories.value[8].icon = image8
 categories.value[10].icon = image10 
 categories.value[11].icon = image11 
+categories.value[12].icon = image12
 
 categories.value[13].icon = image13
 categories.value[14].icon = image14
