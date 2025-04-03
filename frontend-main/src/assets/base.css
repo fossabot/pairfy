@@ -134,12 +134,13 @@
 
   --primary-a: var(--blue-a);
 
-  --radius-a: 18px;
+  --radius-a: 16px;
   --radius-b: 8px;
 
   --blue-a: #1573FF;
   --green-a: #28C76F;
   --orange-a: #FF8C15;
+  --yellow-a: #FFC800;
   
 }
 
