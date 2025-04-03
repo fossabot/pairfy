@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="p-counter">
     <div class="title flex">
       <span>Blackday countdown</span>
       <span style="margin-left: 0.5rem; line-height: 0;">
@@ -85,10 +85,11 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-.card {
+.p-counter {
   background: var(--background-b);
   border-radius: 12px;
   padding: 1rem;
+
 }
 
 .clock {
