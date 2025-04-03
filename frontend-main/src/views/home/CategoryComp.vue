@@ -67,9 +67,8 @@ function goToCategory(category) {
 }
 
 .icon {
-    width: 64px;
-    height: 64px;
+    width: 5rem;
+    height: 5rem;
     object-fit: contain;
 }
-
 </style>
