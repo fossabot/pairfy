@@ -2,9 +2,12 @@
     <div class="p-category">
         <div class="category-grid">
             <div class="grid">
-                <div v-for="category in categories" :key="category.index" class="grid-item"
-                    @click="goToCategory(category)">
-                    <img :src="category.icon" :alt="category.name" class="icon" />
+                <div class="grid-item" v-for="category in categories" :key="category.index"
+                    @click="goToCategory(category)" @mouseover="showModal(category.index)" @mouseleave="hideModal">
+                    <img class="icon" :src="category.icon" :alt="category.name" />
+                    <div class="modal flex" v-if="activeIndex === category.index">
+                        {{ category.name }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -39,22 +42,32 @@ const categories = ref(categoryList)
 categories.value[0].icon = image0
 categories.value[1].icon = image1
 categories.value[2].icon = image2
-categories.value[3].icon = image3 
+categories.value[3].icon = image3
 categories.value[4].icon = image4
 categories.value[5].icon = image5
 categories.value[6].icon = image6
 categories.value[7].icon = image7
 categories.value[8].icon = image8
 categories.value[9].icon = image9
-categories.value[10].icon = image10 
-categories.value[11].icon = image11 
+categories.value[10].icon = image10
+categories.value[11].icon = image11
 categories.value[12].icon = image12
 
 categories.value[13].icon = image13
 categories.value[14].icon = image14
 
+const activeIndex = ref(0);
+
 function goToCategory(category) {
     router.push({ name: 'CategoryPage', params: { slug: category.name.toLowerCase() } })
+}
+
+function showModal(index) {
+    activeIndex.value = index;
+};
+
+function hideModal() {
+    activeIndex.value = null;
 }
 </script>
 
@@ -74,7 +87,8 @@ function goToCategory(category) {
 .grid-item {
     transition: box-shadow 0.2s ease;
     background: var(--background-a);
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-a);
+    position: relative;
     text-align: center;
     cursor: pointer;
     padding: 1rem;
@@ -88,5 +102,34 @@ function goToCategory(category) {
     width: 5rem;
     height: 5rem;
     object-fit: contain;
+}
+
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease-in-out;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.3s forwards;
+    font-size: var(--text-size-0);
+    justify-content: center;
+    color: var(--text-w);
+    font-style: italic;
+    text-align: center;
+    position: absolute;
+    font-weight: 500;
+    border-radius: 0;
+    padding: 1rem;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 </style>
