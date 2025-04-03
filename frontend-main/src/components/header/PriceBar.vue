@@ -12,10 +12,32 @@
             <span class="p-bar-price">USDM 1.0</span>
             <span class="p-bar-price">USDA 1.0</span>
             <div class="p-bar-wallet flex" v-if="getCurrentUser">
-                <span>
-                    <i class="pi pi-wallet" />
+                <span class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-wallet-cards-icon lucide-wallet-cards">
+                        <rect width="18" height="18" x="3" y="3" rx="2" />
+                        <path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2" />
+                        <path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21" />
+                    </svg>
                 </span>
-                <span class="p-bar-address">{{ getCurrentUser.address.slice(0, 20) }}</span>
+                <span style="margin-left: 0.5rem;">{{ getCurrentUser.address.slice(0, 20) }}</span>
+            </div>
+
+            <div class="p-bar-network flex">
+                <span class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-down-up-icon lucide-arrow-down-up">
+                        <path d="m3 16 4 4 4-4" />
+                        <path d="M7 20V4" />
+                        <path d="m21 8-4-4-4 4" />
+                        <path d="M17 4v16" />
+                    </svg>
+                </span>
+                <span style="margin-left: 0.5rem;">
+                    Cardano Mainnet
+                </span>
             </div>
         </div>
     </div>
@@ -48,24 +70,11 @@ const { formatPriceToUSD } = inject('utils');
 }
 
 .p-bar-price,
-.p-bar-address {
+.p-bar-wallet,
+.p-bar-network {
     font-size: var(--text-size-0);
-    font-weight: 400;
     margin-left: 2rem;
-}
-
-.p-bar-wallet {
     font-weight: 400;
-    margin-left: 2rem;
-}
-
-.p-bar-wallet i {
-    font-size: var(--text-size-0);
-    margin-right: 0.5rem;
-}
-
-.p-bar-address {
-    margin: initial;
 }
 
 @media (max-width: 480px) {
