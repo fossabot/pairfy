@@ -18,6 +18,7 @@ import { ref } from 'vue';
 
 import image0 from '@/assets/icons/0.png'
 import image1 from '@/assets/icons/1.png'
+import image2 from '@/assets/icons/2.png'
 import image4 from '@/assets/icons/4.png'
 import image5 from '@/assets/icons/5.png'
 import image6 from '@/assets/icons/6.png'
@@ -36,7 +37,7 @@ const categories = ref(categoryList)
 
 categories.value[0].icon = image0
 categories.value[1].icon = image1
-
+categories.value[2].icon = image2
 categories.value[4].icon = image4
 categories.value[5].icon = image5
 categories.value[6].icon = image6
