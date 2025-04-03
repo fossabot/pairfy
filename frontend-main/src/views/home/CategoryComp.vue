@@ -19,6 +19,7 @@ import { ref } from 'vue';
 import image0 from '@/assets/icons/0.png'
 import image1 from '@/assets/icons/1.png'
 import image4 from '@/assets/icons/4.png'
+import image6 from '@/assets/icons/6.png'
 import image7 from '@/assets/icons/7.png'
 import image8 from '@/assets/icons/8.png'
 import image9 from '@/assets/icons/9.png'
@@ -36,6 +37,7 @@ categories.value[0].icon = image0
 categories.value[1].icon = image1
 
 categories.value[4].icon = image4
+categories.value[6].icon = image6
 categories.value[7].icon = image7
 categories.value[8].icon = image8
 categories.value[9].icon = image9
