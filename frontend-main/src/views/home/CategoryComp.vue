@@ -2,10 +2,9 @@
     <div class="p-category">
         <div class="category-grid">
             <div class="grid">
-                <div v-for="category in categories" :key="category.id" class="grid-item"
+                <div v-for="category in categories" :key="category.index" class="grid-item"
                     @click="goToCategory(category)">
                     <img :src="category.icon" :alt="category.name" class="icon" />
-                    <p class="label">{{ category.name }}</p>
                 </div>
             </div>
         </div>
@@ -13,20 +12,19 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
+import categoryList from '@/assets/categories.json';
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+
 import image0 from '@/assets/icons/0.png'
-import image1 from '@/assets/items/clothes.png'
+import image1 from '@/assets/icons/1.png'
 
 const router = useRouter()
 
-const categories = [
-    { id: 1, name: 'Electronics', icon: image0 },
-    { id: 2, name: 'Clothing', icon: image1 },
-    { id: 3, name: 'Books', icon: 'https://img.icons8.com/ios/100/books.png' },
-    { id: 4, name: 'Shoes', icon: 'https://img.icons8.com/ios/100/shoes.png' },
-    { id: 5, name: 'Beauty', icon: 'https://img.icons8.com/ios/100/edit.png' },
-    { id: 6, name: 'Home', icon: 'https://img.icons8.com/ios/100/home.png' },
-]
+const categories = ref(categoryList)
+
+categories.value[0].icon = image0
+categories.value[1].icon = image1
 
 function goToCategory(category) {
     router.push({ name: 'CategoryPage', params: { slug: category.name.toLowerCase() } })
@@ -34,7 +32,7 @@ function goToCategory(category) {
 </script>
 
 <style scoped>
-.p-category{
+.p-category {
     width: 100%;
     margin-top: 1rem;
     max-width: var(--body-a);
@@ -43,7 +41,7 @@ function goToCategory(category) {
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 16px;
+    gap: 1rem;
 }
 
 .grid-item {
@@ -63,11 +61,6 @@ function goToCategory(category) {
     width: 64px;
     height: 64px;
     object-fit: contain;
-    margin-bottom: 8px;
 }
 
-.label {
-    font-size: 14px;
-    font-weight: 500;
-}
 </style>
