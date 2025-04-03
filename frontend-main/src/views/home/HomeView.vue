@@ -138,9 +138,11 @@ section.visible {
 }
 
 .top {
+  background: linear-gradient(135deg, #1573FF 0%, #001E6C 100%);
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding: 1rem 0;
   display: flex;
 }
 

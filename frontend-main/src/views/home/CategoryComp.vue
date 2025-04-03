@@ -55,7 +55,7 @@ function goToCategory(category) {
 .grid-item {
     transition: box-shadow 0.2s ease;
     background: var(--background-a);
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-a);
     box-shadow: var(--shadow-b);
     text-align: center;
     cursor: pointer;

@@ -4,7 +4,7 @@
 
         </div>
         <div class="grid-item">
-            <CounterComp />
+         <CounterComp/>
         </div>
     </div>
 </template>
@@ -17,9 +17,10 @@ import CounterComp from './CounterComp.vue';
 
 <style scoped>
 .grid-container {
+    width: 100%;
+    max-width: var(--body-a);
     display: grid;
     grid-template-columns: 1fr;
-    height: 10rem;
     padding: 1rem 0;
     gap: 1rem;
 }

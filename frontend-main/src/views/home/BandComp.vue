@@ -82,7 +82,6 @@ onBeforeUnmount(() => {
     height: 25rem;
     z-index: 1;
     top: 0;
-    margin-top: 1rem;
 }
 
 .band-body {
