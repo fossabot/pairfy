@@ -138,7 +138,7 @@ section.visible {
 }
 
 .top {
-  background: linear-gradient(135deg, var(--primary-a) 0%, var(--primary-b) 100%);
+  background: var(--primary-a);
   justify-content: center;
   flex-direction: column;
   align-items: center;

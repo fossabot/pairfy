@@ -132,15 +132,13 @@
   --border-a: #d8d8d8;
   --border-b: #86868b;
 
-  --primary-a: var(--green-a);
-  --primary-b: var(--green-a);
+  --primary-a: var(--orange-a);
 
   --radius-a: 16px;
   --radius-b: 8px;
 
   --blue-a: #1573ff;
   --green-a: #28c76f;
-  --green-b: #28c76f;
   --orange-a: #ff8c15;
   --yellow-a: #ffc800;
 }
