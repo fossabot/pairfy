@@ -57,8 +57,6 @@ const { formatPriceToUSD } = inject('utils');
 <style lang="css" scoped>
 .p-bar {
     justify-content: center;
-    color: var(--text-w);
-    background: black;
     width: inherit;
     height: 2rem;
 }
