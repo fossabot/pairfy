@@ -138,6 +138,7 @@ section.visible {
 }
 
 .top {
+  background: var(--primary-a);
   justify-content: center;
   flex-direction: column;
   align-items: center;
