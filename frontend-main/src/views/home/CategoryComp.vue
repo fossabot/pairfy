@@ -18,6 +18,7 @@ import { ref } from 'vue';
 
 import image0 from '@/assets/icons/0.png'
 import image1 from '@/assets/icons/1.png'
+import image4 from '@/assets/icons/4.png'
 import image13 from '@/assets/icons/13.png'
 import image14 from '@/assets/icons/14.png'
 
@@ -27,6 +28,8 @@ const categories = ref(categoryList)
 
 categories.value[0].icon = image0
 categories.value[1].icon = image1
+
+categories.value[4].icon = image4
 
 categories.value[13].icon = image13
 categories.value[14].icon = image14
@@ -51,7 +54,8 @@ function goToCategory(category) {
 
 .grid-item {
     transition: box-shadow 0.2s ease;
-    border-radius: var(--radius-a);
+    background: var(--background-a);
+    border-radius: var(--radius-b);
     box-shadow: var(--shadow-b);
     text-align: center;
     cursor: pointer;
