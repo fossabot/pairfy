@@ -26,10 +26,10 @@ import CounterComp from './CounterComp.vue';
 
 .grid-item {
     background: var(--background-b);
+    align-items: center;
+    display: flex;
     padding: 1rem;
     width: 100%;
-    display: flex;
-    align-items: center;
 }
 
 
