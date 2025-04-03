@@ -70,10 +70,10 @@ function goToCategory(category) {
 }
 
 .grid-item {
+    border: 1px solid var(--border-a);
     transition: box-shadow 0.2s ease;
     background: var(--background-a);
     border-radius: var(--radius-b);
-    box-shadow: var(--shadow-b);
     text-align: center;
     cursor: pointer;
     padding: 1rem;

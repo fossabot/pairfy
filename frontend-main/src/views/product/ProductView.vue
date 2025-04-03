@@ -127,9 +127,8 @@ onBeforeUnmount(() => {
 }
 
 .container {
-    flex-direction: column;
     max-width: var(--body-a);
-    margin-top: 1rem;
+    flex-direction: column;
     overflow: hidden;
     display: flex;
     width: 100%;
