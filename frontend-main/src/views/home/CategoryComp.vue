@@ -85,8 +85,8 @@ function hideModal() {
 }
 
 .grid-item {
+    border: 1px solid var(--border-a);
     transition: box-shadow 0.2s ease;
-    background: var(--background-b);
     border-radius: var(--radius-a);
     position: relative;
     text-align: center;
@@ -119,7 +119,7 @@ function hideModal() {
     font-weight: 500;
     border-radius: 0;
     padding: 1rem;
-    width: 100%;
+    width: calc(100% + 1px);
     height: 100%;
     left: 50%;
     top: 50%;
