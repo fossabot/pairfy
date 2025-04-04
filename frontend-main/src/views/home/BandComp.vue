@@ -28,7 +28,7 @@ import banner2 from '@/assets/banner/2.png';
 
 const imageList = ref([
     {
-        src: "https://i02.appmifile.com/853_operator_co/28/03/2025/d328fb99459ef27afbbb3a46076edc10.jpg?thumb=1&w=2560&f=webp&q=85"
+        src: banner1
     },
     {
         src: banner2
@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 }
 
 .band-dots button.active {
-    background: var(--primary-a);
+    background: #ffffff;
 }
 
 
