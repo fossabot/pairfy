@@ -66,7 +66,7 @@ const openProduct = (id) => {
 
 .preview {
     background: var(--background-b);
-    border-radius: 12px;
+    border-radius: var(--radius-b);
     overflow: hidden;
     height: 220px;
     width: 220px;
