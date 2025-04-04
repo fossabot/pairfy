@@ -59,7 +59,7 @@ categories.value[14].icon = image14
 const activeIndex = ref(0);
 
 function goToCategory(category) {
-    router.push({ name: 'CategoryPage', params: { slug: category.name.toLowerCase() } })
+    router.push({ name: 'search', query: { k: category.name.toLowerCase() } })
 }
 
 function showModal(index) {
@@ -112,6 +112,7 @@ function hideModal() {
     animation: fadeIn 0.3s forwards;
     font-size: var(--text-size-0);
     justify-content: center;
+    width: calc(100% + 1px);
     color: var(--text-w);
     font-style: italic;
     text-align: center;
@@ -119,7 +120,6 @@ function hideModal() {
     font-weight: 500;
     border-radius: 0;
     padding: 1rem;
-    width: calc(100% + 1px);
     height: 100%;
     left: 50%;
     top: 50%;
