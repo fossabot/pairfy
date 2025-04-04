@@ -86,10 +86,11 @@ function hideModal() {
 
 .grid-item {
     transition: box-shadow 0.2s ease;
-    background: var(--background-a);
+    background: var(--background-b);
     border-radius: var(--radius-a);
     position: relative;
     text-align: center;
+    overflow: hidden;
     cursor: pointer;
     padding: 1rem;
 }
@@ -105,7 +106,7 @@ function hideModal() {
 }
 
 .modal {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
     transition: opacity 0.3s ease-in-out;
     transform: translate(-50%, -50%);
     animation: fadeIn 0.3s forwards;
@@ -119,8 +120,9 @@ function hideModal() {
     border-radius: 0;
     padding: 1rem;
     width: 100%;
-    top: 50%;
+    height: 100%;
     left: 50%;
+    top: 50%;
 }
 
 @keyframes fadeIn {
