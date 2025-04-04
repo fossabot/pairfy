@@ -311,18 +311,18 @@ export  const MyPreset = definePreset(Lara, {
         iconSize: "1rem",
         anchorGutter: "2px",
         primary: {
-            50:  "#fef8f5",  // Very light, almost white  
-            100: "#fce2d3",  // Soft peach  
-            200: "#f7c9ae",  // Light warm orange  
-            300: "#f2b08a",  // Muted orange-pink  
-            400: "#ea976b",  // Warm earthy orange  
-            500: "#d68a5d",  // **Base Color** (Primary)  
-            600: "#b87450",  // Deeper, strong orange-brown  
-            700: "#945d42",  // Darker, closer to burnt sienna  
-            800: "#704634",  // Deep brownish-orange  
-            900: "#4c2f25",  // Very dark, strong contrast  
-            950: "#2f1c16"   // Almost black, great for text  
-        },
+            50:  "#fff7f0",  // Very light hint of orange  
+            100: "#ffe1cc",  // Pale peach-orange  
+            200: "#ffc199",  // Soft pastel orange  
+            300: "#ffa366",  // Mellow orange  
+            400: "#ff8540",  // Bright, lighter than base  
+            500: "#ff6700",  // **Base Color** (Vivid orange)  
+            600: "#e65700",  // Deeper, bolder orange  
+            700: "#bf4700",  // Burnt orange  
+            800: "#993800",  // Strong, earthy orange-brown  
+            900: "#732900",  // Very dark orange-brown  
+            950: "#401500"   // Nearly black with orange undertone  
+          },
         formField: {
             paddingX: "0.75rem",
             paddingY: "0.625rem",
