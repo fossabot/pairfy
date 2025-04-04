@@ -28,7 +28,7 @@ import banner2 from '@/assets/banner/2.png';
 
 const imageList = ref([
     {
-        src: banner1
+        src: "https://i02.appmifile.com/853_operator_co/28/03/2025/d328fb99459ef27afbbb3a46076edc10.jpg?thumb=1&w=2560&f=webp&q=85"
     },
     {
         src: banner2
@@ -78,8 +78,9 @@ onBeforeUnmount(() => {
 <style lang="css" scoped>
 .band-wrap {
     justify-content: center;
+    max-width: var(--body-a);
+    height: 25rem; 
     width: 100%;
-    height: 25rem;
     z-index: 1;
     top: 0;
 }
@@ -90,8 +91,7 @@ onBeforeUnmount(() => {
     display: flex;
     overflow: hidden;
     position: relative;
-    border-radius: var(--radius-a);
-    max-width: var(--body-a);
+    border-radius: var(--radius-b);
 }
 
 .band-track {
@@ -108,7 +108,6 @@ onBeforeUnmount(() => {
     width: inherit;
     height: inherit;
     flex: 0 0 100%;
-
 }
 
 .band-arrow {
@@ -152,7 +151,7 @@ onBeforeUnmount(() => {
 }
 
 .band-dots button {
-    width: 10px;
+    width: 3rem;
     height: 3px;
     background: rgba(255, 255, 255, 0.5);
     border: none;
@@ -162,7 +161,7 @@ onBeforeUnmount(() => {
 }
 
 .band-dots button.active {
-    background: #ffffff;
+    background: var(--primary-a);
 }
 
 

@@ -85,9 +85,9 @@ function hideModal() {
 }
 
 .grid-item {
-    border: 1px solid var(--border-a);
     transition: box-shadow 0.2s ease;
     border-radius: var(--radius-a);
+    background: var(--background-b);
     position: relative;
     text-align: center;
     overflow: hidden;
