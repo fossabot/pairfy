@@ -110,7 +110,7 @@ function hideModal() {
     transition: opacity 0.3s ease-in-out;
     transform: translate(-50%, -50%);
     animation: fadeIn 0.3s forwards;
-    font-size: var(--text-size-0);
+    font-size: var(--text-size-1);
     justify-content: center;
     width: calc(100% + 1px);
     color: var(--text-w);
