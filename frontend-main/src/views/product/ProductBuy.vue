@@ -148,8 +148,7 @@
                         </div>
 
                         <div class="dialog-control">
-                            <Button label="Buy" @click="onBuyHandle" style="color: var(--text-w);" :loading="isLoading"
-                                fluid />
+                            <ButtonComp data="Payment" @click="onBuyHandle" :loading="isLoading" />
                         </div>
                     </div>
                 </div>
