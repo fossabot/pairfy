@@ -1,5 +1,5 @@
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
-import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
+import { chunkMetadata, encryptMetadata } from "../../lib/metadata.js";
 import { getContractFee, getContractPrice } from "../../lib/index.js";
 import { pendingEndpointSchema } from "../../validators/orders.js";
 import { UserToken } from "../../middleware/agent.js";

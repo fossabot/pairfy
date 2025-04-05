@@ -1,5 +1,5 @@
 import { shippingTransactionBuilder } from "../../contracts/builders/shipping.js";
-import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
+import { chunkMetadata, encryptMetadata } from "../../lib/metadata.js";
 import { SellerToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 

@@ -1,4 +1,4 @@
-import { decryptMetadata } from "../../blockchain/metadata.js";
+import { decryptMetadata } from "../../lib/metadata.js";
 import { SellerToken, UserToken } from "../../middleware/agent.js";
 import { database } from "../../database/client.js";
 
