@@ -37,8 +37,6 @@
             <span class="preview-tag">{{ `-${getProductData.discount_value}%` }}</span>
         </div>
 
-        <Divider />
-
         <div class="preview-color flex ">
             <span>Color</span>
             <span>:</span>
