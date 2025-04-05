@@ -14,7 +14,7 @@
         </template>
         <div class="body">
             <Message severity="secondary">
-                Hello Cardano Community, currently there is only logistics for the USA.
+                Welcome Cardano community! Currently there is only logistics for the USA.
                 The other countries will be added progressively.
             </Message>
 
