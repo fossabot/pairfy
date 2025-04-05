@@ -71,7 +71,7 @@ const selectImage = (index) => {
 }
 
 .p-media-nav-item.selected {
-    outline: 2px solid var(--primary-a);
+    outline: 1px solid var(--primary-a);
 }
 
 .p-media-nav-item img {
