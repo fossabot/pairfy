@@ -13,14 +13,6 @@
                                 Shipping Address
                             </div>
 
-                            <div class="dialog-country flex">
-                                <img :alt="getLocationData?.country" src="@/assets/flag_placeholder.png"
-                                    :class="`flag flag-${getLocationData?.country.toLowerCase()}`" />
-
-                                <span>{{ getLocationData?.name }}, {{ getLocationData?.country }}</span>
-                            </div>
-
-
                             <div class="dialog-input">
                                 <IftaLabel>
                                     <InputText id="city" v-model="orderForm.city" fluid placeholder="Miami, Florida"
@@ -594,17 +586,6 @@ a {
 
 .dialog-message {
     margin-top: 1rem;
-}
-
-.dialog-country {
-    margin-top: 1rem;
-}
-
-.dialog-country span {
-    font-size: var(--text-size-2);
-    color: var(--text-a);
-    font-weight: 500;
-    margin-left: 1rem;
 }
 
 .card-terms {
