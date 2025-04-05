@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="dialog-control">
-                            <ButtonComp data="Payment" @click="onBuyHandle" :loading="isLoading" />
+                            <ButtonComp data="Buy" @click="onBuyHandle" :loading="isLoading" />
                         </div>
                     </div>
                 </div>
@@ -281,6 +281,8 @@ const onBuyHandle = () => {
     console.log(orderForm.value);
 
     const orderData = JSON.stringify(orderForm.value);
+
+    console.log(orderData)
 
     const data = Buffer.from(orderData).toString('base64');
 
