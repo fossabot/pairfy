@@ -279,14 +279,8 @@ const onBuyHandle = () => {
     }
 
     console.log(orderForm.value);
-
-    const orderData = JSON.stringify(orderForm.value);
-
-    console.log(orderData)
-
-    const data = Buffer.from(orderData).toString('base64');
-
-    onConfirmedBuy(data);
+    
+    onConfirmedBuy(orderForm.value);
 }
 
 const selectedQuantity = ref(1);

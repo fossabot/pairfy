@@ -1,26 +1,58 @@
-import { getContractFee, getContractPrice } from "../../lib/index.js";
-import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
 import { pendingTransactionBuilder } from "../../contracts/builders/pending.js";
+import { chunkMetadata, encryptMetadata } from "../../blockchain/metadata.js";
+import { getContractFee, getContractPrice } from "../../lib/index.js";
+import { pendingEndpointSchema } from "../../validators/orders.js";
 import { UserToken } from "../../middleware/agent.js";
-import { database } from "../../database/client.js";
 import { redisClient } from "../../database/redis.js";
+import { database } from "../../database/client.js";
+import { GraphQLError } from "graphql";
 
 const pendingEndpoint = async (_: any, args: any, context: any) => {
   if (!context.userData) {
-    throw new Error("CREDENTIALS");
-  }
-
-  const params = args.pendingEndpointInput;
-
-  console.log(params);
-
-  const productUnits = params.product_units;
-
-  if (productUnits <= 0) {
-    throw new Error("NO_UNITS");
+    throw new GraphQLError("pendingEndpointCredentials", {
+      extensions: {
+        code: "UNAUTHENTICATED",
+        http: {
+          status: 401,
+        },
+        message: "userData",
+      },
+    });
   }
 
   const USER = context.userData as UserToken;
+
+  console.log(args.pendingEndpointInput);
+
+  const validateParams = pendingEndpointSchema.safeParse(
+    args.pendingEndpointInput
+  );
+
+  if (!validateParams.success) {
+    throw new GraphQLError("pendingEndpointParams", {
+      extensions: {
+        code: "BAD_USER_INPUT",
+        message: validateParams.error.flatten(),
+        http: {
+          status: 400,
+        },
+      },
+    });
+  }
+
+  const params = validateParams.data;
+
+  if (params.product_units <= 0) {
+    throw new GraphQLError("pendingEndpointParams", {
+      extensions: {
+        code: "BAD_USER_INPUT",
+        http: {
+          status: 400,
+        },
+        message: "product_units",
+      },
+    });
+  }
 
   let connection = null;
 
@@ -60,18 +92,34 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
     );
 
     if (!products.length) {
-      throw new Error("NO_PRODUCT");
+      throw new GraphQLError("pendingEndpointDatabase", {
+        extensions: {
+          code: "NOT_FOUND",
+          http: {
+            status: 404,
+          },
+          message: "Product Id",
+        },
+      });
     }
 
-    const RESULT = products[0];
+    const QUERY = products[0];
 
-    if (!RESULT.seller_pubkeyhash) {
-      throw new Error("NO_SELLER_PKH");
+    if (!QUERY.seller_pubkeyhash) {
+      throw new GraphQLError("pendingEndpointDatabase", {
+        extensions: {
+          code: "NOT_FOUND",
+          http: {
+            status: 404,
+          },
+          message: "Seller PubKeyHash",
+        },
+      });
     }
 
     await connection.beginTransaction();
-    
-    ///////////////////////////////////////////////////
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const PGPVersion = "1.0";
 
@@ -80,14 +128,17 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
       version: PGPVersion,
     };
 
-    const encrypted = await encryptMetadata(JSON.stringify(externalData), PGPVersion);
+    const encrypted = await encryptMetadata(
+      JSON.stringify(externalData),
+      PGPVersion
+    );
 
     const metadata = {
       version: PGPVersion,
       msg: chunkMetadata(encrypted, 64),
     };
 
-    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const getADAPrice = await redisClient.client.get("price:ADAUSDT");
 
@@ -97,66 +148,67 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
 
     const ADAUSD = parseFloat(getADAPrice);
 
-    ///////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const contractPrice: number = await getContractPrice(
-      RESULT.product_discount,
-      RESULT.product_discount_value,
-      RESULT.product_price,
-      productUnits,
+      QUERY.product_discount,
+      QUERY.product_discount_value,
+      QUERY.product_price,
+      params.product_units,
       ADAUSD
     );
 
     const contractFee: number = await getContractFee(contractPrice);
 
-    const operator = "a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141"
-    //////////////////////////////////////////////
+    const operator = "a239e6c2bbd6a9f3249d65afef89c28e1471ed07c529ec06848cc141";
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const BUILDER = await pendingTransactionBuilder(
       operator,
       USER.address,
-      RESULT.seller_pubkeyhash,
+      QUERY.seller_pubkeyhash,
       BigInt(contractPrice),
       BigInt(contractFee),
       metadata
     );
 
-    //////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const orderData = {
       id: BUILDER.threadTokenPolicyId,
-      country: RESULT.product_country,
-      seller_id: RESULT.seller_id,
+      country: QUERY.product_country,
+      seller_id: QUERY.seller_id,
       buyer_pubkeyhash: USER.pubkeyhash,
-      seller_pubkeyhash: RESULT.seller_pubkeyhash,
+      seller_pubkeyhash: QUERY.seller_pubkeyhash,
       buyer_address: USER.address,
-      seller_address: RESULT.seller_address,
+      seller_address: QUERY.seller_address,
       buyer_username: USER.username,
       ada_price: ADAUSD,
       contract_address: BUILDER.stateMachineAddress,
       contract_params: BUILDER.serializedParams,
       contract_price: contractPrice,
       contract_fee: contractFee,
-      contract_units: productUnits,
-      product_id: RESULT.product_id,
-      product_name: RESULT.product_name,
-      product_price: RESULT.product_price,
-      product_sku: RESULT.product_sku,
-      product_model: RESULT.product_model,
-      product_brand: RESULT.product_brand,
-      product_features: RESULT.product_features,
-      product_bullet_list: RESULT.product_bullet_list,
-      product_discount: RESULT.product_discount,
-      product_discount_value: RESULT.product_discount_value,
-      product_media_url: RESULT.product_media_url,
-      product_image_path: RESULT.product_image_path,
-      product_video_path: RESULT.product_video_path,
-      product_image_set: RESULT.product_image_set,
-      product_video_set: RESULT.product_video_set,
+      contract_units: params.product_units,
+      product_id: QUERY.product_id,
+      product_name: QUERY.product_name,
+      product_price: QUERY.product_price,
+      product_sku: QUERY.product_sku,
+      product_model: QUERY.product_model,
+      product_brand: QUERY.product_brand,
+      product_features: QUERY.product_features,
+      product_bullet_list: QUERY.product_bullet_list,
+      product_discount: QUERY.product_discount,
+      product_discount_value: QUERY.product_discount_value,
+      product_media_url: QUERY.product_media_url,
+      product_image_path: QUERY.product_image_path,
+      product_video_path: QUERY.product_video_path,
+      product_image_set: QUERY.product_image_set,
+      product_video_set: QUERY.product_video_set,
       watch_until: BUILDER.watchUntil,
       pending_until: BUILDER.pendingUntil,
       shipping_until: BUILDER.shippingUntil,
-      expire_until: BUILDER.expireUntil
+      expire_until: BUILDER.expireUntil,
     };
 
     console.log(orderData);
@@ -186,7 +238,11 @@ const pendingEndpoint = async (_: any, args: any, context: any) => {
       await connection.rollback();
     }
 
-    throw new Error(err.message);
+    if (err instanceof GraphQLError) throw err;
+
+    throw new GraphQLError("pendingEndpointError", {
+      extensions: { code: "INTERNAL_SERVER_ERROR" },
+    });
   } finally {
     if (connection) {
       connection.release();

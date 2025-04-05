@@ -193,10 +193,18 @@ type CollectEndpointResponse {
   payload: CborPayload!
 }
 
+type PendingEndpointData {
+  city: String!
+  address: String!
+  receiver: String!
+  postal: String!
+  other: String!
+}
+
 input PendingEndpointInput {
   product_id: String!
   product_units: Int!
-  data: String!
+  data: PendingEndpointData!
 } 
 
 input CancelEndpointInput {
