@@ -193,7 +193,7 @@ type CollectEndpointResponse {
   payload: CborPayload!
 }
 
-type PendingEndpointData {
+input PendingEndpointData {
   city: String!
   address: String!
   receiver: String!
