@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-// No script logic needed
+
 </script>
 
 <style scoped>
