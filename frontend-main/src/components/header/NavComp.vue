@@ -51,6 +51,6 @@
 }
 
 .p-nav-list li a:hover {
-  color: #000;
+  color: var(--text-a);
 }
 </style>
