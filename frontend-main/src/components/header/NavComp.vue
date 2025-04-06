@@ -34,7 +34,7 @@
 }
 
 .p-nav-list {
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
   justify-content: flex-start;
   max-width: var(--body-a);
   padding: 0.75rem 0.5rem;
