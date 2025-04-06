@@ -14,7 +14,7 @@
             </div>
         </div>
 
-
+        <NavComp />
 
     </header>
 
@@ -27,9 +27,11 @@ import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import PriceBar from "@/components/header/PriceBar.vue";
+import NavComp from "@/components/header/NavComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
+
 
 
 const route = useRoute()
