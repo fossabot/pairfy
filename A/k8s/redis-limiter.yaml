@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: redis-ingress-pvc
+  name: redis-limiter-pvc
   namespace: default
 spec:
   accessModes:
@@ -16,35 +16,35 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-ingress
+  name: redis-limiter
   namespace: default
   labels:
-    app: redis-ingress
+    app: redis-limiter
 spec:
   type: ClusterIP
   ports:
     - port: 6379
       targetPort: 6379
   selector:
-    app: redis-ingress
+    app: redis-limiter
 
 ---
 
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: redis-ingress
+  name: redis-limiter
   namespace: default
 spec:
-  serviceName: "redis-ingress"
+  serviceName: "redis-limiter"
   replicas: 1
   selector:
     matchLabels:
-      app: redis-ingress
+      app: redis-limiter
   template:
     metadata:
       labels:
-        app: redis-ingress
+        app: redis-limiter
     spec:
       containers:
         - name: redis
@@ -52,12 +52,12 @@ spec:
           ports:
             - containerPort: 6379
           volumeMounts:
-            - name: redis-ingress-data
+            - name: redis-limiter-data
               mountPath: /data
           command: [ "redis-server", "--appendonly", "yes" ]
   volumeClaimTemplates:
     - metadata:
-        name: redis-ingress-data
+        name: redis-limiter-data
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: standard
