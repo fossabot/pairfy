@@ -45,12 +45,12 @@
 }
 
 .p-nav-list li a {
-  transition: color 0.2s ease;
+  transition: 0.2s ease;
   text-decoration: none;
-  color: var(--text-b);
+  font-weight: 400;
 }
 
 .p-nav-list li a:hover {
-  color: var(--text-a);
+  font-weight: 500;
 }
 </style>
