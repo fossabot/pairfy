@@ -28,6 +28,8 @@ type Product {
     video_set: String!
     discount: Boolean!
     discount_value: Int!
+    shipping_city: String!
+    shipping_postal: String!
     created_at: String!
     rating: Float!
     reviews: Int!

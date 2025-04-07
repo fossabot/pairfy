@@ -207,17 +207,17 @@
 </template>
 
 <script setup>
-import gql from 'graphql-tag';
 import dayjs from 'dayjs';
+import gql from 'graphql-tag';
 import productAPI from '@/views/product/api/index';
 import headerAPI from "@/components/header/api/index";
 import ButtonComp from '@/components/ButtonComp.vue';
-import { ref, computed, inject } from "vue";
+import { ref, computed, inject, watch, onBeforeUnmount } from "vue";
 import { useMutation } from '@vue/apollo-composable';
 import { useToast } from "primevue/usetoast";
 import { balanceTx } from "@/api/wallet";
 import { useRouter } from 'vue-router';
-import { Buffer } from 'buffer'
+
 
 const { applyDiscount, convertUSDToADA } = inject('utils');
 
@@ -227,11 +227,7 @@ const toast = useToast();
 
 const { togglePanel, getADAprice, getCurrentUser, getLocationData } = headerAPI();
 
-const { getProductData, getArrivalDate, getArrivalData } = productAPI();
-
-getArrivalDate({
-    "origin": "Bogotá, Cundinamarca, CO"
-})
+const { getProductData,  getArrivalData } = productAPI();
 
 const orderForm = ref({
     city: getLocationData.value?.city || null,
@@ -271,7 +267,7 @@ const onBuyHandle = () => {
     }
 
     console.log(orderForm.value);
-    
+
     onConfirmedBuy(orderForm.value);
 }
 
@@ -427,6 +423,10 @@ const showSuccess = (title, content) => {
 const showError = (content) => {
     toast.add({ severity: 'error', summary: 'Error Message', detail: content, life: 3000 });
 };
+
+onBeforeUnmount(() => {
+
+})
 
 </script>
 
