@@ -8,13 +8,20 @@ on:
       - 'A/**'
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - uses: digitalocean/action-doctl@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up DigitalOcean CLI
+        uses: digitalocean/action-doctl@v3
         with:
           token: ${{ secrets.MARKETPLACE_CLOUD_API }}
-      - run: doctl kubernetes cluster kubeconfig save do-nyc3-marketplace-k8
-      - run: kubectl apply -f A/k8s-prod
-      
+
+      - name: Set up kubeconfig
+        run: doctl kubernetes cluster kubeconfig save do-nyc3-marketplace-k8
+
+      - name: Deploy manifests to Kubernetes
+        run: kubectl apply -f A/k8s-prod
