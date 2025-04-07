@@ -17,6 +17,10 @@ metadata:
 
 
 spec:
+  tls:
+    - hosts:
+        - pairfy.store
+      secretName: cloudflare-origin-cert
   rules:
     - host: pairfy.store
       http:
