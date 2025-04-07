@@ -11,7 +11,7 @@ const HOST = baseURL[env]
 
 const domains = {
   dev: 'pairfy.dev',
-  prod: 'paify.store',
+  prod: 'pairfy.store',
 }
 
 const domain = domains[env]
