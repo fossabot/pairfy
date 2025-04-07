@@ -123,6 +123,9 @@ const main = async () => {
           `/maps/api/distancematrix/json?${matrixParams.toString()}`
         );
 
+
+        console.log(getDuration);
+
         if (getDuration.status !== 200) {
           throw new Error("INTERNAL_ERROR");
         }
