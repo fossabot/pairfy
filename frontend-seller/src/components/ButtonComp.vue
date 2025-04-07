@@ -14,11 +14,11 @@ const props = defineProps(['data', 'style'])
 
 <style lang="css" scoped>
 .p-buttonx {
-    border: 1px solid var(--primary-b);
+    border: 1px solid var(--primary-a);
     font-size: var(--text-size-0);
     background: transparent;
     justify-content: center;
-    color: var(--primary-b);
+    color: var(--primary-a);
     align-items: center;
     border-radius: 4px;
     font-weight: 500;
