@@ -56,7 +56,7 @@
                                         {{ `-${item.discount_value}%` }}
                                     </span>
 
-                                    <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+                                    <span>{{ `-${getDiscount(item.price, item.discount_value)}` }}</span>
                                 </div>
                                 <span>
                                     <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
