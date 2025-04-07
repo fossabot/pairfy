@@ -1,6 +1,6 @@
 <template>
     <main>
-        <CarpetComp :tabs="['Product Inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
+        <CarpetComp :tabs="['Inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
             <template #content="{ index }">
 
                 <div class="card" v-if="index === 0">
@@ -326,7 +326,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 main {
-    padding: 0.25rem;
+    padding: 0.5rem;
 }
 
 .card {
@@ -335,8 +335,8 @@ main {
 }
 
 .card-message {
-    line-height: 1.75rem;
     font-size: var(--text-size-2);
+    line-height: 1.75rem;
 }
 
 .datatable-header {
@@ -353,7 +353,7 @@ main {
 
 .tags-box.disabled {
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.5;
 }
 
 .tags span {

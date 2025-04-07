@@ -85,62 +85,46 @@
 }
 
 :root {
-  --primary-a: var(--blue-a);
-
-  --background-a: #ffffff;
-  --background-b: #f1f5f9;
-  --background-c: #EEF2F6;
-  --background-d: #E4E8EC;
-
-
-  --text-a: #222;
-  --text-b: #565959;
-  --text-w: #ffffff;
-
-  --text-size-a: 0.833rem;
-  --text-size-b: 1rem;
-  --text-size-c: 1.2rem;
-  --text-size-d: 1.44rem;
-  --text-size-e: 1.728rem;
-  --text-size-f: 2.074rem;
-  --text-size-g: 2.488rem;
-  --text-size-h: 2.986rem;
-
-  --text-size-0: 13px;
-  --text-size-1: 14px;
-  --text-size-2: 16px;
-  --text-size-3: 20px;
-  --text-size-4: 24px;
-  --text-size-5: 28px;
-  --text-size-6: 40px;
-  --text-size-7: 56px;
-  --text-size-8: 84px;
-
-  --body-a: 1600px;
   
-  --border-a: #e2e8f0;
-  --border-b: #474d57;
-
-  --shadow-a: 0 2px 24px rgba(24, 32, 82, 0.05);
-  --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
-  --shadow-c: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-  --red-a: #ff385c;
-  --green-a: #10b981;
-  --orange-a: #FF7733;
-  --orange-b: #ff4500;
-  --yellow-a: #fcbc05;
-  --yellow-b: #ffe600;
-  --blue-a: #0866ff;
-  --cyan-a: #60a3ff;
-  --soft-red-a: rgba(255, 56, 92, 0.3);
-  --soft-blue-a: rgba(8, 102, 255, 0.1);
-  --soft-yellow-a: rgba(252, 188, 5, 0.3);
-  --soft-yellow-b: rgba(255, 230, 0, 0.3);
-  --soft-white-a: rgba(255, 255, 255, 0.1);
-  --soft-cyan-a: rgba(96, 163, 255, 0.2);
-
-  --black-a: #000000; 
+    --text-size-0: 13px;
+    --text-size-1: 14px;
+    --text-size-2: 16px;
+    --text-size-3: 18px;
+    --text-size-4: 20px;
+    --text-size-5: 24px;
+    --text-size-6: 28px;
+    --text-size-7: 40px;
+    --text-size-8: 56px;
+    --text-size-9: 84px;
+  
+    --body-a: 1500px;
+  
+    --shadow-a: 0 2px 24px rgba(0, 0, 0, 0.1);
+    --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
+    
+    --background-a: #ffffff;
+    --background-b: #f1f5f9;
+    --background-c: #EEF2F6;
+    --background-d: #E4E8EC;
+  
+    --text-a: #1d1d1f;
+    --text-b: #86868b;
+    --text-w: #ffffff;
+  
+    --border-a: #d8d8d8;
+    --border-b: #86868b;
+  
+    --primary-a: var(--orange-a);
+    --primary-b:#2C3E50;
+  
+    --radius-a: 16px;
+    --radius-b: 8px;
+    --radius-c: 999px;
+  
+    --blue-a: #1573ff;
+    --green-a: #28c76f;
+    --orange-a: #ff6700;
+    --yellow-a: #ffc800;
 }
 
 @media (prefers-color-scheme: dark) {

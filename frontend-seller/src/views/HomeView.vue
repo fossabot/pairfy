@@ -1,7 +1,7 @@
 <template>
   <main>
 
-    <CarpetComp :tabs="['Product List', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']" />
+ 
 
   </main>
 </template>
@@ -15,9 +15,6 @@ main {
 
 
 <script setup>
-import CarpetComp from "@/components/CarpetComp.vue";
-import { ref } from "vue";
-
 
 
 

@@ -33,7 +33,7 @@ const onSelect = (index) => {
 <style lang="css" scoped>
 .carpet {
     border: 1px solid var(--border-a);
-    border-radius: 6px;
+    border-radius: var(--radius-b);
     overflow: hidden;
     transition: 0.2s;
     width: 100%;
@@ -53,7 +53,7 @@ const onSelect = (index) => {
     background: var(--background-b);
     font-size: var(--text-size-2);
     justify-content: flex-start;
-    box-shadow: var(--shadow-c);
+    box-shadow: var(--shadow-a); 
     font-weight: 600;
     cursor: pointer;
     margin-top: 0.5rem;
