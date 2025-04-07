@@ -28,7 +28,7 @@ jobs:
         run: docker push pairfy/frontend-main
 
       - name: Set up DigitalOcean CLI
-        uses: digitalocean/action-doctl@v3
+        uses: digitalocean/action-doctl@v2.3.0
         with:
           token: ${{ secrets.MARKETPLACE_CLOUD_API }}
 
