@@ -3,7 +3,7 @@ name: deploy-kubemanifest
 on:
   push:
     branches:
-      - main
+      - prod
     paths:
       - 'A/**'
 
