@@ -123,5 +123,3 @@ app.directive('ripple', Ripple)
 app.directive('tooltip', Tooltip)
 
 app.mount('#app')
-
-//end-code
