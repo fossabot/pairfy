@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - prod
-    paths:
-      - 'A/**'
 
 jobs:
   deploy:
@@ -21,7 +19,7 @@ jobs:
           token: ${{ secrets.MARKETPLACE_CLOUD_API }}
 
       - name: Set up kubeconfig
-        run: doctl kubernetes cluster kubeconfig save marketplace-k8
+        run: doctl kubernetes cluster kubeconfig save do-nyc3-marketplace-k8
 
       - name: Deploy manifests to Kubernetes
         run: kubectl apply -f A/k8s-prod
