@@ -3,7 +3,7 @@ import { geoAPI } from "../api";
 
 const getLocation = async (req: Request, res: Response) => {
   try {
-    console.log(req.publicAddress, req.ip);
+    console.log(req.publicAddress);
 
     const currentIP =
       process.env.ENV_MODE === "dev" ? process.env.DEV_IP : req.publicAddress;
