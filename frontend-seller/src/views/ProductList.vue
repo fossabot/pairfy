@@ -44,9 +44,12 @@
 
                         <template #col-discount="{ value, item }">
                             <div class="tags">
-                                <div class="tags-box flex" :class="{ disabled: !value }">
+                                <div class="tags-box flex">
 
-                                    <span class="discount">{{ `-${item.discount_value}%` }}</span>
+                                    <span class="discount" :class="{ disabled: !value }">
+                                        {{ `-${item.discount_value}%` }}
+                                    </span>
+
                                     <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
                                 </div>
                                 <span>
@@ -351,10 +354,6 @@ main {
     align-items: flex-start;
 }
 
-.tags-box.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-}
 
 .tags span {
     margin-bottom: 3px;
@@ -362,7 +361,11 @@ main {
 
 .tags .discount {
     color: var(--green-a);
-    font-weight: 500;
+
+}
+
+.tags .discount.disabled{
+    color: var(--text-b);
 }
 
 .control {
