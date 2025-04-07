@@ -32,7 +32,6 @@ const onSelect = (index) => {
 
 <style lang="css" scoped>
 .carpet {
-    border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
     overflow: hidden;
     transition: 0.2s;

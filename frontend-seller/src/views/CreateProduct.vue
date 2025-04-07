@@ -740,6 +740,10 @@ const showError = (content) => {
     background: transparent;
 }
 
+main{
+    padding: 0.5rem;
+}
+
 .card {
     display: flex;
     flex-direction: column;
