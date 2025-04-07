@@ -1,0 +1,28 @@
+name: frontend-main
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend-main/**'
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          node-version: 19
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.MARKETPLACE_DOCKER_USER }}
+          password: ${{ secrets.MARKETPLACE_DOCKER_PASSWORD }}    
+      - run: cd frontend-main && docker build -t pairfy/frontend-main .    
+      - run: docker push pairfy/frontend-main
+      - uses: digitalocean/action-doctl@v2.3.0
+        with:
+          token: ${{ secrets.MARKETPLACE_CLOUD_API }}
+      - run: doctl kubernetes cluster kubeconfig save do-nyc3-marketplace-k8
+      - run: kubectl rollout restart deployment frontend-main
+
