@@ -52,6 +52,7 @@ query ($getProductVariable: GetProductInput!) {
             color
             color_name
             quality
+            country
             media_url
             image_path
             image_set
