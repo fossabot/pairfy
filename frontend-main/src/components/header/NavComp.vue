@@ -37,11 +37,11 @@
   font-size: var(--text-size-1);
   justify-content: flex-start;
   max-width: var(--body-a);
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 0rem;
   list-style: none;
   margin: 0 auto;
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .p-nav-list li a {
