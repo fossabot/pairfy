@@ -17,10 +17,16 @@
                     </Dialog>
 
                     <div class="control flex">
-                        <button class="flex">
-                            <i class="pi pi-plus"></i>
-                            <span>Create</span>
-                        </button>
+                        <ButtonComp data="Create" @click="handleRoute('create-product')">
+                            <template #icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+                                    <path d="M5 12h14" />
+                                    <path d="M12 5v14" />
+                                </svg>
+                            </template>
+                        </ButtonComp>
                     </div>
 
                     <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
@@ -88,12 +94,14 @@ import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 import MiniSwitch from '@/components/MiniSwitch.vue';
 import CarpetComp from "@/components/CarpetComp.vue";
+import ButtonComp from '@/components/ButtonComp.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
+
 
 const { reduceArrayByIndex, getDiscount, applyDiscount, formatSKU, convertDate, formatUSD } = inject('utils')
 
@@ -313,6 +321,13 @@ const handlePaused = (bool, value) => {
     beforeUpdateProduct(value.id, { paused: bool === true ? 1 : 0 });
 }
 
+
+const handleRoute = (e) => {
+    router.push({
+        name: e
+    })
+}
+
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
@@ -364,16 +379,16 @@ main {
 
 }
 
-.tags .discount.disabled{
+.tags .discount.disabled {
     color: var(--text-b);
 }
 
 .control {
-    background: var(--background-a);
     border-bottom: 1px solid var(--border-a);
-    border-top-left-radius: 6px;
+    background: var(--background-a);
     border-top-right-radius: 6px;
-    padding: 0.75rem;
+    border-top-left-radius: 6px;
+    padding: 1rem;
 }
 
 .control button {
