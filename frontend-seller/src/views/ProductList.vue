@@ -8,7 +8,7 @@
                         :modal="true" :draggable="false">
                         <div class="card-message flex">
                             <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                                    }}</b>?</span>
+                            }}</b>?</span>
                         </div>
                         <template #footer>
                             <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -30,7 +30,7 @@
                     </div>
 
                     <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
-                        :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
+                        :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                         <template #image="{ item }">
                             <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
@@ -45,7 +45,9 @@
                         </template>
 
                         <template #col-price="{ item }">
-                            {{ applyDiscount(item.discount, item.price, item.discount_value) }}
+                            <span>{{ applyDiscount(item.discount, item.price, item.discount_value) }}</span>
+
+                            <span v-if="item.discount">{{ ` (-${getDiscount(item.price, item.discount_value)})` }}</span>
                         </template>
 
                         <template #col-discount="{ value, item }">
@@ -56,7 +58,7 @@
                                         {{ `-${item.discount_value}%` }}
                                     </span>
 
-                                    <span>{{ `-${getDiscount(item.price, item.discount_value)}` }}</span>
+
                                 </div>
                                 <span>
                                     <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
