@@ -14,4 +14,6 @@ RUN npm run build
 
 EXPOSE 8000
 
-CMD ["sh", "-c", "npm run database && npm start"]
+RUN npm run database
+
+CMD ["sh", "-c", "npm start"]
