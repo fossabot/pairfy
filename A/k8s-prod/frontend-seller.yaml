@@ -19,6 +19,11 @@ spec:
           image: pairfy/frontend-seller
           ports:
             - containerPort: 3000
+          env:
+            - name: NUXT_SERVICE_SELLER_BASE
+              value: http://service-seller.default.svc.cluster.local:8000/api
+            - name: NUXT_SERVICE_PRODUCT_BASE
+              value: http://service-product.default.svc.cluster.local:8000/api  
           readinessProbe:
             httpGet:
               path: /

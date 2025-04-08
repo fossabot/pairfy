@@ -1,168 +1,177 @@
 apiVersion: skaffold/v2alpha3
 kind: Config
-deploy:
-  statusCheckDeadlineSeconds: 540
-  kubectl:
-    manifests:
-      - ./A/k8s/*
-      - ./A/k8s-dev/*             
+
 build:
   local:
     useDockerCLI: true
     push: false
     concurrency: 0
   tagPolicy:
-    sha256: {}    
-  artifacts:    
+    sha256: {}
+  artifacts:
     - image: pairfy/frontend-main
       context: frontend-main
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .           
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/frontend-seller
       context: frontend-seller
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .              
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-seller
       context: service-seller
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .              
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-gemini
       context: service-gemini
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .     
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-matrix
       context: service-matrix
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                                
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-product
       context: service-product
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .    
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-gateway
       context: service-gateway
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                       
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-media
       context: service-media
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                       
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-user
       context: service-user
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .       
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-chat
       context: service-chat
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                                 
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-query
       context: service-query
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                         
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-location
       context: service-location
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .            
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/base-publisher
       context: base-publisher
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .   
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/base-consumer
       context: base-consumer
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .   
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-state
       context: service-state
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .      
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-price
       context: service-price
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .   
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-notification
       context: service-notification
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                                       
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/testing
       context: testing
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .                   
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
     - image: pairfy/service-feed
       context: service-feed
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: 'src/**/*.ts'
-            dest: .             
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .
+
+deploy:
+  statusCheckDeadlineSeconds: 540
+  kubectl:
+    manifests:
+      - ./A/k8s/*
+      - ./A/k8s-dev/*
+
+portForward:
+  - resourceType: service
+    resourceName: service-seller
+    namespace: default
+    port: 8000
+    localPort: 8000
