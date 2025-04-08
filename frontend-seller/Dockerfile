@@ -5,7 +5,7 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install dependencies
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm ci --prefer-offline --no-audit
 
 # Copy the rest of the source code
