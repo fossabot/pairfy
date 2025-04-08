@@ -20,6 +20,7 @@ spec:
   tls:
     - hosts:
         - pairfy.store
+        - '*.pairfy.store'
       secretName: cloudflare-origin-cert
   rules:
     - host: pairfy.store
@@ -44,5 +45,15 @@ spec:
             backend:
               service:
                 name: service-user
+                port:
+                  number: 8000
+    - host: s.pairfy.dev
+      http:
+        paths:
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frontend-seller
                 port:
                   number: 8000
