@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <h1>Welcome to the homepage</h1>
-
-    <ButtonSolid label="Click me" size="large" />
-
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
+
 
 <script setup>
 
