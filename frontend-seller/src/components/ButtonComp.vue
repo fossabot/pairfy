@@ -15,17 +15,15 @@ const props = defineProps(['data', 'style', 'icon'])
 <style lang="css" scoped>
 .p-solidbutton {
     border: 1px solid var(--primary-a);
+    border-radius: var(--radius-b);
     font-size: var(--text-size-0);
     background: var(--primary-a);
     justify-content: center;
     color: var(--text-w);
-    align-items: center;
-    border-radius: 4px;
     font-weight: 500;
     padding: 0 1rem;
     cursor: pointer;
-    height: 2.5rem;
-    display: flex;
+    height: 2.75rem;
 }
 
 .p-solidbutton:hover {
