@@ -100,12 +100,12 @@ const main = async () => {
     );
 
     app.get(
-      "/api/seller/logout",
+      "/api/seller/logout-seller",
 
       route.logoutHandler
     );
 
-    app.get("/api/seller/healthcheck", (req, res) => {
+    app.get("/api/seller/ping", (req, res) => {
       res.status(200).send('Test OK');
     });
 
