@@ -10,7 +10,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "pairfy.store"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://pairfy.store,https://s.pairfy.store"
     nginx.ingress.kubernetes.io/cors-expose-headers: "Set-Cookie"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
