@@ -53,7 +53,7 @@ spec:
             - name: TOKEN_EXPIRATION
               value: "7d"
             - name: CORS_DOMAINS
-              value: "s.pairfy.store"                           
+              value: "https://s.pairfy.store"                           
           resources:
             limits:
               memory: "500Mi"
