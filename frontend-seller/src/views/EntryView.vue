@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-1);" @click="doRegister" />
+                    <ButtonComp data="Sign Up" @click="doRegister" :icon="false" /> 
                 </div>
 
                 <Divider layout="horizontal" fluid style=" font-size: var(--text-size-1); margin-top: 2rem; "><b>or</b>
