@@ -47,7 +47,7 @@ spec:
                 name: service-user
                 port:
                   number: 8000
-    - host: s.pairfy.dev
+    - host: s.pairfy.store
       http:
         paths:
           - path: /?(.*)
