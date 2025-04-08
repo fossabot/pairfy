@@ -38,6 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
   const fetchProfile = async () => {
     try {
       const data = await $fetch('/api/seller/current-seller', {
+        method: 'GET',
         credentials: 'include'
       })
 
@@ -55,7 +56,7 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = async () => {
     try {
       await $fetch('/api/seller/logout', {
-        method: 'POST',
+        method: 'GET',
         credentials: 'include'
       })
     } catch {

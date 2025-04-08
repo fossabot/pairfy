@@ -51,9 +51,7 @@ spec:
             - name: DATABASE_USER
               value: marketplace 
             - name: TOKEN_EXPIRATION
-              value: "7d"
-            - name: CORS_DOMAINS
-              value: "https://s.pairfy.store"                           
+              value: "7d"                      
           resources:
             limits:
               memory: "500Mi"
