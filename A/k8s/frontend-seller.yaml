@@ -17,7 +17,6 @@ spec:
       containers:
         - name: frontend-seller
           image: pairfy/frontend-seller
-          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           readinessProbe:
