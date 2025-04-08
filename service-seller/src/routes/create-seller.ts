@@ -1,4 +1,4 @@
-import DB from "../db";
+import DB from "../database";
 import { hashPassword } from "../utils/password";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";

@@ -1,5 +1,5 @@
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
-import database from "../db";
+import database from "../database";
 import { BadRequestError } from "../errors";
 import { comparePassword } from "../utils/password";
 import { Request, Response } from "express";
