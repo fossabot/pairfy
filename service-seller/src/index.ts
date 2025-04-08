@@ -20,10 +20,6 @@ const main = async () => {
       throw new Error("EXPRESS_TIMEOUT error");
     }
 
-    if (!process.env.CORS_DOMAINS) {
-      throw new Error("CORS_DOMAINS error");
-    }
-
     if (!process.env.AGENT_JWT_KEY) {
       throw new Error("AGENT_JWT_KEY error");
     }
