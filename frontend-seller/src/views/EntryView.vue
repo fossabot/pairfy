@@ -231,7 +231,6 @@ const loginFormErrors = ref({
 });
 
 const countries = ref([
-    { name: 'Colombia', code: 'CO' },
     { name: 'United States', code: 'US' }
 ]);
 
@@ -413,10 +412,10 @@ onBeforeUnmount(() => {
 
 .form {
     background: var(--background-a);
+    border-radius: var(--radius-a);
     box-shadow: var(--shadow-b);
     min-width: 350px;
     min-height: 600px;
-    border-radius: 6px;
     padding: 1.5rem;
 }
 
