@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --prefer-offline --no-audit
 
-# Copy the rest of the source code
+# Copy the rest of the source code.
 COPY . .
 
 # Build the app
