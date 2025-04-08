@@ -1,5 +1,5 @@
 <template>
-    <div class="p-buttonx flex" :style="{ ...props.style }">
+    <div class="p-outlinedbutton flex" :style="{ ...props.style }">
         <div class="p-icon flex">
             <slot name="icon"></slot>
         </div>
@@ -13,7 +13,7 @@ const props = defineProps(['data', 'style'])
 </script>
 
 <style lang="css" scoped>
-.p-buttonx {
+.p-outlinedbutton {
     border: 1px solid var(--primary-a);
     font-size: var(--text-size-0);
     background: transparent;
@@ -28,7 +28,7 @@ const props = defineProps(['data', 'style'])
     display: flex;
 }
 
-.p-buttonx:hover {
+.p-outlinedbutton:hover {
     opacity: 0.9;
 }
 
