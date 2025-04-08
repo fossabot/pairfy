@@ -17,7 +17,7 @@
                     </Dialog>
 
                     <div class="control flex">
-                        <ButtonComp data="Create" @click="handleRoute('create-product')">
+                        <ButtonOutlined data="Create" @click="handleRoute('create-product')">
                             <template #icon>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -26,7 +26,7 @@
                                     <path d="M12 5v14" />
                                 </svg>
                             </template>
-                        </ButtonComp>
+                        </ButtonOutlined>
                     </div>
 
                     <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
@@ -96,7 +96,7 @@ import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 import MiniSwitch from '@/components/MiniSwitch.vue';
 import CarpetComp from "@/components/CarpetComp.vue";
-import ButtonComp from '@/components/ButtonComp.vue';
+import ButtonOutlined from '@/components/ButtonOutlined.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';

@@ -1,6 +1,6 @@
 <template>
-    <div class="p-solidbutton flex" :style="{ ...props.style }">
-        <div v-if="icon" class="p-icon flex">
+    <div class="p-buttonx flex" :style="{ ...props.style }">
+        <div class="p-icon flex">
             <slot name="icon"></slot>
         </div>
 
@@ -9,16 +9,16 @@
 </template>
 
 <script setup>
-const props = defineProps(['data', 'style', 'icon'])
+const props = defineProps(['data', 'style'])
 </script>
 
 <style lang="css" scoped>
-.p-solidbutton {
+.p-buttonx {
     border: 1px solid var(--primary-a);
     font-size: var(--text-size-0);
-    background: var(--primary-a);
+    background: transparent;
     justify-content: center;
-    color: var(--text-w);
+    color: var(--primary-a);
     align-items: center;
     border-radius: 4px;
     font-weight: 500;
@@ -28,11 +28,11 @@ const props = defineProps(['data', 'style', 'icon'])
     display: flex;
 }
 
-.p-solidbutton:hover {
+.p-buttonx:hover {
     opacity: 0.9;
 }
 
 .p-icon {
-    margin-right: 0.25rem;
+    margin-right: 0.25rem
 }
 </style>

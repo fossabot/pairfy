@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Login" fluid @click="doLogin" style="color: var(--text-w);" />
+                    <ButtonComp data="Login" @click="doLogin" :icon="false" /> 
                 </div>
 
                 <Divider layout="horizontal" fluid style="margin-top: 2rem; "><b>or</b></Divider>
@@ -215,6 +215,7 @@ import { ref, watch, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { signMessage, walletClient } from "@/api/wallet";
+import ButtonComp from '@/components/ButtonComp.vue';
 
 const toast = useToast();
 
