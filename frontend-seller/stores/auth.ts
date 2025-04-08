@@ -6,19 +6,17 @@ export const useAuthStore = defineStore('auth', () => {
   const loading = ref(false)
   const error = ref<string | null>(null)
 
-  /**
-   * Log in the seller by calling the Nuxt internal API proxy.
-   * This will forward the credentials to the backend and return the cookie.
-   */
+  const config = useRuntimeConfig()
+
   const login = async (credentials: { email: string; password: string }) => {
     loading.value = true
     error.value = null
 
     try {
-      await $fetch('/api/seller/login', {
+      await $fetch(`${config.serviceSellerBase}/seller/login-seller`, {
         method: 'POST',
         body: credentials,
-        credentials: 'include' // ✅ important for session cookie
+        credentials: 'include' // aún necesario si backend devuelve cookie de sesión
       })
 
       await fetchProfile()
@@ -31,13 +29,10 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  /**
-   * Fetch the current seller profile using the session cookie.
-   * Works during SSR or client-side.
-   */
   const fetchProfile = async () => {
+
     try {
-      const data = await $fetch('/api/seller/current-seller', {
+      const data = await $fetch(`${config.serviceSellerBase}/seller/current-seller`, {
         method: 'GET',
         credentials: 'include'
       })
@@ -50,17 +45,14 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  /**
-   * Logout the user by calling the internal backend endpoint.
-   */
   const logout = async () => {
     try {
-      await $fetch('/api/seller/logout', {
+      await $fetch(`${config.serviceSellerBase}/seller/logout-seller`, {
         method: 'GET',
         credentials: 'include'
       })
     } catch {
-      // even if logout fails, clear local state
+      // si falla, igual se limpia
     }
 
     isAuthenticated.value = false

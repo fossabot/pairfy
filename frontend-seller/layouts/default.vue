@@ -1,35 +1,49 @@
 <!-- layouts/default.vue -->
 <template>
-    <div class="layout">
-      <aside class="sidebar">
-        <nav>
-          <NuxtLink to="/">🏠 Home</NuxtLink><br />
-          <NuxtLink to="/dashboard">📊 Dashboard</NuxtLink><br />
-          <NuxtLink to="/settings">⚙️ Settings</NuxtLink>
-        </nav>
-      </aside>
-  
-      <main class="content">
-        <slot />
-      </main>
-    </div>
-  </template>
-  
-  <style scoped>
-  .layout {
-    display: flex;
-    height: 100vh;
-  }
-  .sidebar {
-    width: 220px;
-    background-color: #1e1e2f;
-    color: white;
-    padding: 20px;
-  }
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  </style>
-  
+  <div class="layout">
+    <aside class="sidebar">
+      <nav>
+        <NuxtLink to="/">🏠 Home</NuxtLink><br />
+        <NuxtLink to="/dashboard">📊 Dashboard</NuxtLink><br />
+        <NuxtLink to="/settings">⚙️ Settings</NuxtLink>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <slot />
+    </main>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { useAuthStore } from '@/stores/auth'
+
+// ✅ Llamar el store normalmente
+const auth = useAuthStore()
+
+// ✅ Cargar el perfil del usuario logueado SOLO en SSR
+if (import.meta.server) {
+  await auth.fetchProfile()
+}
+</script>
+
+
+<style scoped>
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #1e1e2f;
+  color: white;
+  padding: 20px;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+</style>
