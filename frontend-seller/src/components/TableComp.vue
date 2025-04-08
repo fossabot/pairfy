@@ -221,7 +221,7 @@ const nextPage = () => {
 .search {
   background: var(--background-b);
   border: 1px solid transparent;
-  border-radius: 999px;
+  border-radius: 6px;
   padding: 0 1rem;
 }
 

@@ -82,10 +82,10 @@ const selectImage = (index) => {
 
 .p-media-image {
     justify-content: center;
-    min-width: 600px;
-    max-width: 600px;
-    min-height: 600px;
-    max-height: 600px;
+    min-width: 550px;
+    max-width: 550px;
+    min-height: 550px;
+    max-height: 550px;
     display: flex;
     width: 100%;
 }

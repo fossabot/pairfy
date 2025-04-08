@@ -3,7 +3,7 @@ import { catcher, check, checkpoint } from "./pod/index";
 import { NotFoundError, errorMiddleware } from "./errors";
 import { app } from "./app";
 import compression from "compression";
-import DB from "./db";
+import DB from "./database";
 
 
 const main = async () => {

@@ -4,9 +4,7 @@
     <NavMenu v-if="getUserData" />
 
     <div class="body-content">
-      <div class="header">
-        <img class="logo" src="@/assets/logo.svg" alt="">
-      </div>
+      <HeaderComp/>
       <RouterView />
     </div>
   </div>
@@ -14,7 +12,8 @@
 </template>
 
 <script setup>
-import NavMenu from './components/NavMenu.vue'
+import HeaderComp from '@/components/HeaderComp.vue';
+import NavMenu from '@/components/NavMenu.vue';
 import dashboardAPI from '@/views/api/index';
 import { RouterView } from 'vue-router';
 import { useToast } from "primevue/usetoast";
@@ -89,13 +88,5 @@ startWalletService()
   overflow-x: hidden;
 }
 
-.header {
-  border-bottom: 1px solid var(--border-a);
-  background: var(--background-a);
-  padding: 0 1rem;
-}
 
-.logo {
-  height: 2.5rem;
-}
 </style>

@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Login" fluid @click="doLogin" style="color: var(--text-w);" />
+                    <ButtonComp data="Login" @click="doLogin" :icon="false" /> 
                 </div>
 
                 <Divider layout="horizontal" fluid style="margin-top: 2rem; "><b>or</b></Divider>
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="control">
-                    <Button label="Sign Up" fluid style=" font-size: var(--text-size-1);" @click="doRegister" />
+                    <ButtonComp data="Sign Up" @click="doRegister" :icon="false" /> 
                 </div>
 
                 <Divider layout="horizontal" fluid style=" font-size: var(--text-size-1); margin-top: 2rem; "><b>or</b>
@@ -215,6 +215,7 @@ import { ref, watch, onBeforeUnmount } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useToast } from "primevue/usetoast";
 import { signMessage, walletClient } from "@/api/wallet";
+import ButtonComp from '@/components/ButtonComp.vue';
 
 const toast = useToast();
 
@@ -231,7 +232,6 @@ const loginFormErrors = ref({
 });
 
 const countries = ref([
-    { name: 'Colombia', code: 'CO' },
     { name: 'United States', code: 'US' }
 ]);
 
@@ -413,10 +413,10 @@ onBeforeUnmount(() => {
 
 .form {
     background: var(--background-a);
+    border-radius: var(--radius-a);
     box-shadow: var(--shadow-b);
     min-width: 350px;
     min-height: 600px;
-    border-radius: 6px;
     padding: 1.5rem;
 }
 

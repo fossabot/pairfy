@@ -91,7 +91,7 @@ onBeforeUnmount(() => {
     display: flex;
     overflow: hidden;
     position: relative;
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-a);
 }
 
 .band-track {

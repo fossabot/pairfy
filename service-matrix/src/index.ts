@@ -91,11 +91,13 @@ const main = async () => {
 
         const origin = params.origin;
 
-        const publicAddress = "201.236.225.20";
+        const publicAddress = "50.73.157.178";
 
         const getLocation = await geoAPI.get(
           `${publicAddress}?token=f76c9e2af54296`
         );
+
+        console.log(getLocation);
 
         if (getLocation.status !== 200) {
           throw new Error("INTERNAL_ERROR");
@@ -121,6 +123,9 @@ const main = async () => {
           `/maps/api/distancematrix/json?${matrixParams.toString()}`
         );
 
+
+        console.log(getDuration);
+
         if (getDuration.status !== 200) {
           throw new Error("INTERNAL_ERROR");
         }
@@ -139,7 +144,7 @@ const main = async () => {
                 distance: element.distance.text,
                 duration: element.duration.value,
                 country,
-                city
+                city,
               },
             };
 

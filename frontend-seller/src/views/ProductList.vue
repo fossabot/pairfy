@@ -1,6 +1,6 @@
 <template>
     <main>
-        <CarpetComp :tabs="['Product Inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
+        <CarpetComp :tabs="['Inventory', 'Statistics']" :icons="['pi-clipboard', 'pi-gauge']">
             <template #content="{ index }">
 
                 <div class="card" v-if="index === 0">
@@ -8,7 +8,7 @@
                         :modal="true" :draggable="false">
                         <div class="card-message flex">
                             <span v-if="selectedProduct">Are you sure you want to delete: <b>{{ selectedProduct.name
-                                    }}</b>?</span>
+                            }}</b>?</span>
                         </div>
                         <template #footer>
                             <Button label="No" variant="outlined" @click="deleteProductDialog = false" />
@@ -17,14 +17,20 @@
                     </Dialog>
 
                     <div class="control flex">
-                        <button class="flex">
-                            <i class="pi pi-plus"></i>
-                            <span>Create</span>
-                        </button>
+                        <ButtonOutlined data="Create" @click="handleRoute('create-product')">
+                            <template #icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-plus-icon lucide-plus">
+                                    <path d="M5 12h14" />
+                                    <path d="M12 5v14" />
+                                </svg>
+                            </template>
+                        </ButtonOutlined>
                     </div>
 
                     <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
-                        :columnWidths="{ id: '7rem', category: '8rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
+                        :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }" @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                         <template #image="{ item }">
                             <ImageComp :src="buildImageUrl(item)" :imageStyle="{ width: '50px', height: '50px' }" />
@@ -39,15 +45,20 @@
                         </template>
 
                         <template #col-price="{ item }">
-                            {{ applyDiscount(item.discount, item.price, item.discount_value) }}
+                            <span>{{ applyDiscount(item.discount, item.price, item.discount_value) }}</span>
+
+                            <span v-if="item.discount">{{ ` (-${getDiscount(item.price, item.discount_value)})` }}</span>
                         </template>
 
                         <template #col-discount="{ value, item }">
                             <div class="tags">
-                                <div class="tags-box flex" :class="{ disabled: !value }">
+                                <div class="tags-box flex">
 
-                                    <span class="discount">{{ `-${item.discount_value}%` }}</span>
-                                    <span>{{ `${getDiscount(item.price, item.discount_value)}` }}</span>
+                                    <span class="discount" :class="{ disabled: !value }">
+                                        {{ `-${item.discount_value}%` }}
+                                    </span>
+
+
                                 </div>
                                 <span>
                                     <MiniSwitch :modelValue="value" :value="item" @onChange="handleDiscount" />
@@ -85,12 +96,14 @@ import ImageComp from '@/components/ImageComp.vue';
 import SwitchComp from '@/components/SwitchComp.vue';
 import MiniSwitch from '@/components/MiniSwitch.vue';
 import CarpetComp from "@/components/CarpetComp.vue";
+import ButtonOutlined from '@/components/ButtonOutlined.vue';
 import gql from 'graphql-tag';
 import { ref, computed, watch, onBeforeUnmount } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { inject } from 'vue';
+
 
 const { reduceArrayByIndex, getDiscount, applyDiscount, formatSKU, convertDate, formatUSD } = inject('utils')
 
@@ -310,6 +323,13 @@ const handlePaused = (bool, value) => {
     beforeUpdateProduct(value.id, { paused: bool === true ? 1 : 0 });
 }
 
+
+const handleRoute = (e) => {
+    router.push({
+        name: e
+    })
+}
+
 const showSuccess = (content) => {
     toast.add({ severity: 'success', summary: 'Success Message', detail: content, life: 5000 });
 };
@@ -326,7 +346,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 main {
-    padding: 0.25rem;
+    padding: 0.5rem;
 }
 
 .card {
@@ -335,8 +355,8 @@ main {
 }
 
 .card-message {
-    line-height: 1.75rem;
     font-size: var(--text-size-2);
+    line-height: 1.75rem;
 }
 
 .datatable-header {
@@ -351,10 +371,6 @@ main {
     align-items: flex-start;
 }
 
-.tags-box.disabled {
-    pointer-events: none;
-    opacity: 0.3;
-}
 
 .tags span {
     margin-bottom: 3px;
@@ -362,15 +378,19 @@ main {
 
 .tags .discount {
     color: var(--green-a);
-    font-weight: 500;
+
+}
+
+.tags .discount.disabled {
+    color: var(--text-b);
 }
 
 .control {
-    background: var(--background-a);
     border-bottom: 1px solid var(--border-a);
-    border-top-left-radius: 6px;
+    background: var(--background-a);
     border-top-right-radius: 6px;
-    padding: 0.75rem;
+    border-top-left-radius: 6px;
+    padding: 1rem;
 }
 
 .control button {

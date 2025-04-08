@@ -24,7 +24,7 @@ const toast = useToast();
 
 const route = useRoute();
 
-const { setProductData } = productAPI();
+const { setProductData, getArrivalDate } = productAPI();
 
 const queryVariablesRef = ref({
     "getProductVariable": {
@@ -52,6 +52,7 @@ query ($getProductVariable: GetProductInput!) {
             color
             color_name
             quality
+            country
             media_url
             image_path
             image_set
@@ -98,6 +99,10 @@ const unwatchRoute = watch(
 const unwatchGetProduct = watch(getProductResult, value => {
     if (value) {
         setProductData(value.getProduct.payload)
+
+        getArrivalDate({
+            "origin": "Bogotá, Cundinamarca, CO"
+        })
     }
 })
 
