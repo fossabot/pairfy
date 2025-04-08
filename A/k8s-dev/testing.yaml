@@ -63,7 +63,7 @@ kind: Deployment
 metadata:
   name: locust-worker
 spec:
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: locust-worker
