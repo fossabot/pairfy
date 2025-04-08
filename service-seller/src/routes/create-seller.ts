@@ -33,19 +33,21 @@ const createSellerHandler = async (req: Request, res: Response) => {
       username,
       email,
       password_hash,
+      verified,
       country,
       terms_accepted,
       avatar_base,
       avatar_path,
       public_ip,
       schema_v
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const schemeValue = [
       getSellerId(),
       params.username,
       params.email,
       password,
+      true,
       params.country.code,
       params.terms_accepted,
       "https://example.com",
