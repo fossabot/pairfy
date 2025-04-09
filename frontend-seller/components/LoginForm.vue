@@ -60,7 +60,8 @@ const login = async () => {
 
 <style scoped>
 form {
-  display: flex;
   flex-direction: column;
+  display: flex;
+  
 }
 </style>

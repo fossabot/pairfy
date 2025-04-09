@@ -39,5 +39,6 @@ const mode = ref('login') // 'login', 'register', 'recovery'
   border-radius: var(--radius-b);
   box-shadow: var(--shadow-b);
   padding: 1rem;
+  width: 300px;
 }
 </style>

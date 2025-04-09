@@ -48,3 +48,8 @@ body {
   --orange-a: #ff6700;
   --yellow-a: #ffc800;
 }
+
+:root {
+  --input-radius: 8px;
+  --button-radius: 12px;
+}
