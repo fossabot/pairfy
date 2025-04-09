@@ -13,18 +13,22 @@ export const useAuthStore = defineStore("auth", () => {
     error.value = null;
 
     try {
-      await $fetch(`${config.serviceSellerBase}/seller/login-seller`, {
-        method: "POST",
-        body: credentials,
-        credentials: "include"
-      });
+      const data = await $fetch(
+        `${config.serviceSellerBase}/seller/login-seller`,
+        {
+          method: "POST",
+          body: credentials,
+          credentials: "include",
+        }
+      );
+ 
+      console.log(data)
 
       await fetchProfile();
       isAuthenticated.value = true;
     } catch (err: any) {
-      console.error(err)
-      error.value = err.data?.message || "Login failed";
       isAuthenticated.value = false;
+      throw err;
     } finally {
       loading.value = false;
     }
