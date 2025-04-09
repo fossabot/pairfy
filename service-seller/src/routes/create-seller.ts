@@ -6,7 +6,7 @@ import {
 import { hashPassword } from "../utils/password";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
-import { getSellerId } from "../utils/nano";
+import { getEventId, getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
@@ -27,14 +27,9 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const username = getUsername();
 
-    const token = createToken({
-      source: "createSeller",
-      entity: "SELLER",
-      email: params.email,
-      username,
-    });
-
     const password = await hashPassword(params.password);
+
+    const sellerId = getSellerId();
 
     const schemeData = `
     INSERT INTO sellers (
@@ -52,7 +47,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const schemeValue = [
-      getSellerId(),
+      sellerId,
       username,
       params.email,
       password,
@@ -68,6 +63,40 @@ const createSellerHandler = async (req: Request, res: Response) => {
     console.log(schemeValue);
 
     await connection.execute(schemeData, schemeValue);
+    
+    const token = createToken({
+      source: "createSeller",
+      entity: "SELLER",
+      email: params.email,
+      username,
+    });
+
+    const eventPayload = {
+      email: params.email,
+      token,
+    };
+
+    const eventSchema = `
+      INSERT INTO events (
+        id,
+        source,
+        type,
+        data,
+        agent_id,
+        spec_version
+      ) VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const eventValue = [
+      getEventId(),
+      "service-seller",
+      "CreateSeller",
+      JSON.stringify(eventPayload),
+      sellerId,
+      0,
+    ];
+
+    await connection.execute(eventSchema, eventValue);
 
     await connection.commit();
 
