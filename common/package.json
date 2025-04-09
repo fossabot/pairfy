@@ -1,0 +1,32 @@
+{
+  "name": "@pairfy/common",
+  "version": "1.0.8",
+  "description": "Common shared package",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "sql"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pub": "npm run build && npm version patch && npm publish --access=public"
+  },
+  "keywords": [
+    "sql",
+    "typescript",
+    "shared",
+    "microservices",
+    "utilities"
+  ],
+  "author": "rey-sudo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pairfy/core.git"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "^5.0.0"
+  }
+}
