@@ -45,6 +45,15 @@ const mode = ref('login') // 'login', 'register', 'recovery'
   height: 100%;
 }
 
+.entry-form {
+  background: var(--background-a);
+  border-radius: var(--radius-b);
+  box-shadow: var(--shadow-b);
+  margin-top: 4rem;
+  padding: 1.5rem;
+  width: 300px;
+}
+
 .entry-form-image {
   display: flex;
   justify-content: center;
@@ -58,14 +67,5 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 .entry-form-content {
   flex-direction: column;
   display: flex;
-}
-
-.entry-form {
-  background: var(--background-a);
-  border-radius: var(--radius-b);
-  box-shadow: var(--shadow-b);
-  margin-top: 4rem;
-  padding: 1.5rem;
-  width: 300px;
 }
 </style>
