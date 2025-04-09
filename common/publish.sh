@@ -10,5 +10,5 @@ if npm view $(node -p "require('./common/package.json').name")@$CURRENT_VERSION 
   echo "🟡 Ya está publicada la versión $CURRENT_VERSION. Saltando publicación."
 else
   echo "🚀 Publicando versión $CURRENT_VERSION..."
-  npm run publish
+  npm run pub
 fi

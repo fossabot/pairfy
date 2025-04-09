@@ -16,7 +16,8 @@
     "dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
     "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest"
+    "test:ci": "jest",
+    "postinstall": "echo '✅ common' && npm install @pairfy/common@latest --verbose"
   },
   "jest": {
     "preset": "ts-jest",
