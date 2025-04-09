@@ -95,12 +95,19 @@ watch(() => props.modelValue, (val) => {
 }
 
 .error-text {
-    color: red;
     animation: fadeIn 0.2s ease-in-out;
+    font-size: var(--text-size-0);
+    margin-top: 0.5rem;
+    color: red;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 </style>
