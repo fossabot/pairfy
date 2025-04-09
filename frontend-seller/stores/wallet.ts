@@ -39,20 +39,39 @@ export const useWalletStore = defineStore("wallet", () => {
   };
 
   const connect = async (name: string) => {
+    const { $connector } = getContext();
+
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        await $connector.connect(name, "testnet", async () => {
+          walletApi.value = await window.cardano[name].enable();
+
+          if (import.meta.client) {
+            localStorage.setItem("enabled-wallet", name);
+          }
+
+          console.log("WALLET_ENABLED", name);
+
+          connected.value = true;
+          walletName.value = name;
+
+          resolve();
+        });
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
+  const sign = async () => {
     try {
-      const { $connector } = getContext();
+      if (!walletApi.value) {
+        throw new Error("WalletNotEnabled");
+      }
 
-      await $connector.connect(name, "testnet", async () => { //env variable
-        walletApi.value = await window.cardano[name].enable();
-
-        if (import.meta.client) {
-          localStorage.setItem("enabled-wallet", name);
-        }
-
-        console.log("SIGNATURE " + (await signMessage()));
-      });
-    } catch (err) {
-      console.error("❌ Error conectando wallet:", err);
+      return await signMessage();
+    } catch (err: any) {
+      throw err;
     }
   };
 
@@ -69,6 +88,7 @@ export const useWalletStore = defineStore("wallet", () => {
     walletApi,
     walletName,
     connect,
+    sign,
     disconnect,
   };
 });

@@ -24,16 +24,17 @@ const email = ref('')
 const password = ref('')
 
 
-
-const walletApi = ref(null);
-
-
-
-
 const connectWallet = async (name) => {
   //$wallet.connect('wallet', 'lace')
 
-  await wallet.connect('lace')
+  try {
+    await wallet.connect('lace')
+    await wallet.sign()
+
+  } catch (err) {
+    console.error(err);
+
+  }
 }
 
 
