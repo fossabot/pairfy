@@ -7,9 +7,14 @@ export const useWalletStore = defineStore("wallet", () => {
   const address = ref<string | null>(null);
   const walletApi = ref<any>(null);
   const walletName = ref<string | null>(null);
- 
-  const getContext = () => useNuxtApp()
 
+  const getContext = () => useNuxtApp();
+
+  const getMessage = () => {
+    const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE"; //env variable
+
+    return Buffer.from(message, "utf8").toString("hex");
+  };
 
   const getAddress = async () => {
     if (!walletApi.value) {
@@ -19,12 +24,6 @@ export const useWalletStore = defineStore("wallet", () => {
     const address = await walletApi.value.getUsedAddresses();
 
     return address[0];
-  };
-
-  const getMessage = () => {
-    const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
-
-    return Buffer.from(message, "utf8").toString("hex");
   };
 
   const signMessage = async () => {
@@ -41,11 +40,9 @@ export const useWalletStore = defineStore("wallet", () => {
 
   const connect = async (name: string) => {
     try {
+      const { $connector } = getContext();
 
-      const { $connector } = getContext()
-
-      await $connector.connect(name, "testnet", async () => {
-
+      await $connector.connect(name, "testnet", async () => { //env variable
         walletApi.value = await window.cardano[name].enable();
 
         if (import.meta.client) {
@@ -54,7 +51,6 @@ export const useWalletStore = defineStore("wallet", () => {
 
         console.log("SIGNATURE " + (await signMessage()));
       });
-      
     } catch (err) {
       console.error("❌ Error conectando wallet:", err);
     }
