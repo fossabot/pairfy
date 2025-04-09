@@ -4,11 +4,16 @@
 
     <InputPassword v-model="password" @valid="onValidPassword" />
 
-    <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onTermsAccepted"
-      label="I have read the "
-      :link="{ label: 'terms of use and privacy policy', href: '/terms' }"
-      :required="true"
-      />
+
+    <InputSelect v-model="country" label="Country" :options="[
+      { label: 'Colombia', code: 'CO' },
+      { label: 'Argentina', code: 'AR' },
+      { label: 'México', code: 'MX' }
+    ]" :required="true" @valid="onValidCountry" />
+
+
+    <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
+      :link="{ label: 'terms of use and privacy policy', href: '/terms' }" :required="true" />
 
 
     <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" />
@@ -38,7 +43,7 @@ const onValidPassword = (event) => {
   passwordValid.value = event
 }
 
-const onTermsAccepted = (event) => {
+const onValidTerms = (event) => {
   console.log("termshandler", event)
   termsValid.value = event
 }

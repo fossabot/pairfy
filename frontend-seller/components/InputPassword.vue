@@ -1,6 +1,6 @@
 <template>
     <div class="p-InputPassword">
-        <p class="title-text">Password</p>
+        <label class="title-text">Password</label>
         <div class="p-InputPassword-wrap">
             <input ref="inputRef" :type="isVisible ? 'text' : 'password'" :value="modelValue" @input="onInput"
                 placeholder="Enter your password" class="p-InputPassword-input"
