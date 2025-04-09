@@ -1,6 +1,8 @@
 <template>
   <form class="p-loginform" @submit.prevent="login">
-    <input v-model="email" type="email" placeholder="Email" required />
+    <InputEmail v-model="email" :focus="true" />
+    <p>Correo capturado: {{ email }}</p>
+
     <input v-model="password" type="password" placeholder="Password" required />
 
     <ButtonSolid type="button" label="Lace" @click="connectWallet('lace')" />
@@ -58,7 +60,6 @@ const login = async () => {
 
 <style scoped>
 form {
-  background: red;
   display: flex;
   flex-direction: column;
 }
