@@ -67,9 +67,12 @@ const connectWallet = async (name) => {
 
   try {
     await wallet.connect('lace')
+
     const [signature, address] = await wallet.sign()
 
-    console.log("SIGNED", signature, address)
+    const response = await auth.login({ email: email.value, password: password.value, signature, address })
+
+    console.log(response)
 
   } catch (err) {
     console.error(err);
@@ -77,21 +80,6 @@ const connectWallet = async (name) => {
   }
 }
 
-
-
-const login = async () => {
-  try {
-    console.log('Logging in', email.value, password.value)
-
-    await auth.login({ email: email.value, password: password.value })
-    // Puedes redirigir si quieres:
-    // const router = useRouter()
-    // router.push('/')
-  } catch (err) {
-    console.error('Login failed:', err)
-    // Mostrar errores en pantalla, opcional
-  }
-}
 
 
 </script>
