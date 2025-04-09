@@ -29,13 +29,6 @@ if (import.meta.server) {
 
 
 <style scoped>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-
 .layout {
   display: flex;
   height: 100vh;

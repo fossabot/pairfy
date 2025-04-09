@@ -8,51 +8,24 @@ export const useAuthStore = defineStore("auth", () => {
 
   const config = useRuntimeConfig();
 
-  const login = async (credentials: {
-    email: string;
-    password: string;
-    signature: string;
-    address: string;
-  }) => {
+  console.log('💡 NUXT_SERVICE_SELLER_BASE:', process.env.NUXT_SERVICE_SELLER_BASE)
+
+  const login = async (credentials: { email: string; password: string }) => {
     loading.value = true;
+    error.value = null;
 
     try {
-      const response: any = await $fetch("/api/seller/login-seller", {
+      await $fetch(`${config.serviceSellerBase}/seller/login-seller`, {
         method: "POST",
         body: credentials,
-        credentials: "include",
+        credentials: "include", // aún necesario si backend devuelve cookie de sesión
       });
-
-      console.log(response.data);
 
       await fetchProfile();
       isAuthenticated.value = true;
     } catch (err: any) {
+      error.value = err.data?.message || "Login failed";
       isAuthenticated.value = false;
-      throw err;
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const register = async (credentials: {
-    email: string;
-    password: string;
-    terms_accepted: boolean;
-  }) => {
-    loading.value = true;
-
-    try {
-      const response: any = await $fetch("/api/seller/create-seller", {
-        method: "POST",
-        body: credentials
-      });
-
-      console.log(response.data);
-      
-
-    } catch (err: any) {
-      throw err;
     } finally {
       loading.value = false;
     }
@@ -99,7 +72,6 @@ export const useAuthStore = defineStore("auth", () => {
     loading,
     error,
     login,
-    register,
     logout,
     fetchProfile,
   };

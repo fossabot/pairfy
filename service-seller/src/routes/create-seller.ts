@@ -1,28 +1,37 @@
 import DB from "../database";
+import {
+  validateRegistration,
+  RegistrationInput,
+} from "../validators/create-seller";
 import { hashPassword } from "../utils/password";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
 import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
+import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
 
-const createSellerMiddlewares: any = [];
+const createSellerMiddlewares: any = [validateRegistration];
 
 const createSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
 
-  const params = req.body;
+  const params = req.body as RegistrationInput;
+
+  console.log(params);
 
   try {
     connection = await DB.client.getConnection();
 
     await connection.beginTransaction();
 
+    const username = getUsername();
+
     const token = createToken({
       source: "createSeller",
       entity: "SELLER",
       email: params.email,
-      username: params.username,
+      username,
     });
 
     const password = await hashPassword(params.password);
@@ -44,17 +53,19 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const schemeValue = [
       getSellerId(),
-      params.username,
+      username,
       params.email,
       password,
       true,
-      params.country.code,
+      params.country,
       params.terms_accepted,
       "https://example.com",
       "/avatar.jpg",
-      "192.168.1.1",
+      req.publicAddress,
       0,
     ];
+
+    console.log(schemeValue);
 
     await connection.execute(schemeData, schemeValue);
 
