@@ -13,7 +13,7 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import { useWalletStore } from '@/stores/wallet'
-import { Buffer } from 'buffer'
+
 
 const { $wallet } = useNuxtApp()
 
@@ -23,51 +23,17 @@ const wallet = useWalletStore()
 const email = ref('')
 const password = ref('')
 
-const { $connector, $csl, $lucid } = useNuxtApp();
+
 
 const walletApi = ref(null);
 
 
-const getAddress = async () => {
-  if (!walletApi.value) {
-    await reconnect()
-  }
 
-  const address = await walletApi.value.getUsedAddresses()
-
-  return address[0]
-}
-
-const getMessage = () => {
-  const message = 'SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE'
-
-  return Buffer.from(message, 'utf8').toString('hex')
-}
-
-const signMessage = async () => {
-  if (!walletApi.value) {
-    return
-  }
-
-  const address = await getAddress()
-
-  const signature = await walletApi.value.signData(address, getMessage())
-
-  return [signature, address]
-}
 
 const connectWallet = async (name) => {
   //$wallet.connect('wallet', 'lace')
-  await $connector.connect(name, "testnet", async () => {
-    walletApi.value = await window.cardano[name].enable();
 
-    localStorage.setItem("enabled-wallet", name);
-
-
-    console.log("SIGNATURE " + await signMessage());
-  });
-
-  wallet.connect('lace')
+  await wallet.connect('lace')
 }
 
 

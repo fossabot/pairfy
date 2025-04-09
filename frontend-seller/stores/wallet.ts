@@ -1,16 +1,60 @@
 // stores/wallet.ts
 import { defineStore } from "pinia";
+import { Buffer } from "buffer";
 
 export const useWalletStore = defineStore("wallet", () => {
   const connected = ref(false);
   const address = ref<string | null>(null);
   const walletApi = ref<any>(null);
   const walletName = ref<string | null>(null);
+ 
+  const getContext = () => useNuxtApp()
 
-  const connect = (name: string) => {
+
+  const getAddress = async () => {
+    if (!walletApi.value) {
+      return;
+    }
+
+    const address = await walletApi.value.getUsedAddresses();
+
+    return address[0];
+  };
+
+  const getMessage = () => {
+    const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
+
+    return Buffer.from(message, "utf8").toString("hex");
+  };
+
+  const signMessage = async () => {
+    if (!walletApi.value) {
+      return;
+    }
+
+    const address = await getAddress();
+
+    const signature = await walletApi.value.signData(address, getMessage());
+
+    return [signature, address];
+  };
+
+  const connect = async (name: string) => {
     try {
-      console.log(name);
-      connected.value = true;
+
+      const { $connector } = getContext()
+
+      await $connector.connect(name, "testnet", async () => {
+
+        walletApi.value = await window.cardano[name].enable();
+
+        if (import.meta.client) {
+          localStorage.setItem("enabled-wallet", name);
+        }
+
+        console.log("SIGNATURE " + (await signMessage()));
+      });
+      
     } catch (err) {
       console.error("❌ Error conectando wallet:", err);
     }
