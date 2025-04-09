@@ -4,6 +4,9 @@
 
     <InputPassword v-model="password" @valid="onValidPassword" />
 
+    <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onTermsAccepted"
+      label="I have read the terms of use and privacy policy." :required="true" />
+
 
     <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" />
   </form>
@@ -16,6 +19,7 @@ const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const terms = ref(false)
 
 const emailValid = ref(false)
 const passwordValid = ref(false)
@@ -31,7 +35,12 @@ const onValidPassword = (event) => {
   passwordValid.value = event
 }
 
-const disableSubmit = computed(() => !emailValid.value || !passwordValid.value)
+const onTermsAccepted = (event) => {
+  console.log("termshandler", event)
+  termsValid.value = event
+}
+
+const disableSubmit = computed(() => !emailValid.value || !passwordValid.value || !termsValid.value)
 
 
 const register = async () => {
@@ -56,6 +65,12 @@ form {
 
 .p-RegisterForm-button {
   margin-bottom: 0.5rem;
-  margin-top: 1rem;
+}
+
+.p-RegisterForm-terms {
+  font-family: var(--text-size-0);
+  color: var(--text-b);
+  margin: 1rem 0;
+
 }
 </style>

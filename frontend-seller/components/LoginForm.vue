@@ -12,11 +12,7 @@
 
       <div class="p-LoginForm-wallet" />
       <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
+
     </div>
 
   </form>
