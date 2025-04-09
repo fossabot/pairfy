@@ -13,16 +13,13 @@ export const useAuthStore = defineStore("auth", () => {
     error.value = null;
 
     try {
-      const data = await $fetch(
-        `${config.serviceSellerBase}/seller/login-seller`,
-        {
-          method: "POST",
-          body: credentials,
-          credentials: "include",
-        }
-      );
- 
-      console.log(data)
+      const data = await $fetch("/api/seller/login-seller", {
+        method: "POST",
+        body: credentials,
+        credentials: "include",
+      });
+
+      console.log(data);
 
       await fetchProfile();
       isAuthenticated.value = true;
