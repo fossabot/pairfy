@@ -57,7 +57,7 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 .entry-form-image {
   justify-content: center;
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .entry-form-image img {
@@ -78,7 +78,7 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 .entry-form-switcher button {
   background: transparent;
   color: var(--primary-a);
-  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   border: none;
 }

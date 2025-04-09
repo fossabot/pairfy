@@ -1,11 +1,11 @@
 <template>
   <form class="p-RegisterForm" @submit.prevent="register">
-    <InputEmail v-model="email" :focus="true" @valid="onValidEmail" />
+    <InputEmail class="p-RegisterForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
-    <InputPassword v-model="password" @valid="onValidPassword" />
+    <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />
 
 
-    <InputSelect v-model="country" label="Country" :options="[
+    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="[
       { label: 'Colombia', code: 'CO' },
       { label: 'Argentina', code: 'AR' },
       { label: 'México', code: 'MX' }
@@ -27,10 +27,12 @@ const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const country = ref('')
 const terms = ref(false)
 
 const emailValid = ref(false)
 const passwordValid = ref(false)
+const countryValid = ref(false)
 const termsValid = ref(false)
 
 const onValidEmail = (event) => {
@@ -43,12 +45,17 @@ const onValidPassword = (event) => {
   passwordValid.value = event
 }
 
+const onValidCountry = (event) => {
+  console.log("countryHandler", event)
+  countryValid.value = event
+}
+
 const onValidTerms = (event) => {
   console.log("termshandler", event)
   termsValid.value = event
 }
 
-const disableSubmit = computed(() => !emailValid.value || !passwordValid.value || !termsValid.value)
+const disableSubmit = computed(() => !emailValid.value || !passwordValid.value || !termsValid.value || !countryValid.value)
 
 
 const register = async () => {
@@ -72,13 +79,18 @@ form {
 }
 
 .p-RegisterForm-button {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .p-RegisterForm-terms {
   font-family: var(--text-size-0);
   color: var(--text-b);
-  margin: 1rem 0;
+  margin-bottom: 1rem;
+}
 
+.p-RegisterForm-email,
+.p-RegisterForm-password,
+.p-RegisterForm-select {
+  margin-bottom: 1rem;
 }
 </style>

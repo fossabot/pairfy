@@ -1,8 +1,8 @@
 <template>
   <form class="p-LoginForm" @submit.prevent="connectWallet">
-    <InputEmail v-model="email" :focus="true" @valid="onValidEmail" />
+    <InputEmail class="p-LoginForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
-    <InputPassword v-model="password" @valid="onValidPassword" />
+    <InputPassword class="p-LoginForm-password" v-model="password" @valid="onValidPassword" />
 
     <div class="p-LoginForm-wallets">
       <button class="p-LoginForm-wallet" type="submit" v-for="wallet in walletImages" :key="wallet.name"
@@ -91,7 +91,7 @@ form {
   grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
   gap: 8px;
   justify-content: center;
-  padding: 1rem 0;
+  margin-bottom: 1rem;
 }
 
 .p-LoginForm-wallet {
@@ -108,6 +108,10 @@ form {
 
 .p-LoginForm-wallet img {
   width: 1.5rem;
+}
 
+.p-LoginForm-email,
+.p-LoginForm-password {
+  margin-bottom: 1rem;
 }
 </style>
