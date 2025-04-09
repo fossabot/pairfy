@@ -57,7 +57,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       params.terms_accepted,
       "https://example.com",
       "/avatar.jpg",
-      "192.168.1.1",
+      req.publicAddress,
       0,
     ];
 
