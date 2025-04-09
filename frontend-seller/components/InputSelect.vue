@@ -90,7 +90,7 @@ onMounted(() => {
   border-radius: var(--input-radius, 8px);
   outline: none;
   appearance: none;
-  background-color: white;
+  background: var(--background-a);
 }
 
 .p-InputSelect-select.is-invalid {

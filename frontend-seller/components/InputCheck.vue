@@ -98,8 +98,8 @@ onMounted(() => {
 }
 
 .p-InputCheck-box {
-  width: 20px;
-  height: 20px;
+  width: 1rem;
+  height: 1rem;
   border: 2px solid var(--border-a, #ccc);
   border-radius: 4px;
   position: relative;
@@ -114,8 +114,8 @@ onMounted(() => {
 .p-InputCheck-input:checked+.p-InputCheck-box::after {
   content: '✓';
   position: absolute;
-  top: -1px;
-  left: 4px;
+  top: -2px;
+  left: 2px;
   font-size: 16px;
   color: white;
 }
