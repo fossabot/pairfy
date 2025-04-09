@@ -6,6 +6,6 @@ declare module '#app' {
   interface NuxtApp {
     $lucid: Lucid
     $csl: typeof CSL
-    $walletConnector: Connector
+    $connector: Connector
   }
 }

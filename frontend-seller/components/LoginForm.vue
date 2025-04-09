@@ -3,7 +3,7 @@
     <input v-model="email" type="email" placeholder="Email" required />
     <input v-model="password" type="password" placeholder="Password" required />
 
-    <ButtonSolid  type="button" label="Lace" @click="connectWallet" />
+    <ButtonSolid type="button" label="Lace" @click="connectWallet('lace')" />
 
     <button type="submit">Login</button>
   </form>
@@ -12,31 +12,65 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth'
-
-const { $connector, $csl, $lucid } = useNuxtApp()
+import { useWalletStore } from '@/stores/wallet'
+import { Buffer } from 'buffer'
 
 const { $wallet } = useNuxtApp()
 
 const auth = useAuthStore()
+const wallet = useWalletStore()
 
 const email = ref('')
 const password = ref('')
 
-const connect = async (walletName) => {
-  await $connector.connect(walletName, 'testnet', async () => {
-    enabledWalletAPI = await window.cardano[walletName].enable()
+const { $connector, $csl, $lucid } = useNuxtApp();
 
-    localStorage.setItem('enabled-wallet', walletName)
+const walletApi = ref(null);
 
-    console.log('ENABLED ' + walletName)
-  })
+
+const getAddress = async () => {
+  if (!walletApi.value) {
+    await reconnect()
+  }
+
+  const address = await walletApi.value.getUsedAddresses()
+
+  return address[0]
 }
 
-const connectWallet = () => {
+const getMessage = () => {
+  const message = 'SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE'
+
+  return Buffer.from(message, 'utf8').toString('hex')
+}
+
+const signMessage = async () => {
+  if (!walletApi.value) {
+    return
+  }
+
+  const address = await getAddress()
+
+  const signature = await walletApi.value.signData(address, getMessage())
+
+  return [signature, address]
+}
+
+const connectWallet = async (name) => {
   //$wallet.connect('wallet', 'lace')
+  await $connector.connect(name, "testnet", async () => {
+    walletApi.value = await window.cardano[name].enable();
 
-  connect('lace')
+    localStorage.setItem("enabled-wallet", name);
+
+
+    console.log("SIGNATURE " + await signMessage());
+  });
+
+  wallet.connect('lace')
 }
+
+
 
 const login = async () => {
   try {
