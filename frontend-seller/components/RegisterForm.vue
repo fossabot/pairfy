@@ -9,7 +9,7 @@
 
 
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
-      :link="{ label: 'terms of use and privacy policy', href: '/terms' }" :required="true" />
+      :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
 
 
     <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" />
