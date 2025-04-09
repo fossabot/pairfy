@@ -34,9 +34,11 @@ const onValidPassword = (event) => {
 const disableSubmit = computed(() => !emailValid.value || !passwordValid.value)
 
 
-const register = () => {
+const register = async () => {
   try {
     console.log('Credentials', emailValid.value, passwordValid.value)
+
+    await auth.register({ email: email.value, password: password.value, terms_accepted: true, country: 'US' })
   } catch (err) {
     console.error(err)
   }

@@ -4,6 +4,7 @@ import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
 import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
+import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
 
 const createSellerMiddlewares: any = [];
@@ -13,16 +14,20 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
   const params = req.body;
 
+  console.log(params);
+
   try {
     connection = await DB.client.getConnection();
 
     await connection.beginTransaction();
 
+    const username = getUsername();
+
     const token = createToken({
       source: "createSeller",
       entity: "SELLER",
       email: params.email,
-      username: params.username,
+      username,
     });
 
     const password = await hashPassword(params.password);
@@ -44,11 +49,11 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const schemeValue = [
       getSellerId(),
-      params.username,
+      username,
       params.email,
       password,
       true,
-      params.country.code,
+      params.country,
       params.terms_accepted,
       "https://example.com",
       "/avatar.jpg",

@@ -45,8 +45,7 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const response: any = await $fetch("/api/seller/create-seller", {
         method: "POST",
-        body: credentials,
-        credentials: "include",
+        body: credentials
       });
 
       console.log(response.data);
