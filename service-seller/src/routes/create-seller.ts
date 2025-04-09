@@ -1,4 +1,8 @@
 import DB from "../database";
+import {
+  validateRegistration,
+  RegistrationInput,
+} from "../validators/create-seller";
 import { hashPassword } from "../utils/password";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
@@ -7,12 +11,12 @@ import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
 
-const createSellerMiddlewares: any = [];
+const createSellerMiddlewares: any = [validateRegistration];
 
 const createSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
 
-  const params = req.body;
+  const params = req.body as RegistrationInput;
 
   console.log(params);
 
@@ -61,7 +65,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       0,
     ];
 
-    console.log(schemeValue)
+    console.log(schemeValue);
 
     await connection.execute(schemeData, schemeValue);
 
