@@ -4,18 +4,19 @@
 
     <InputPassword v-model="password" @valid="onValidPassword" />
 
-    <div class="grid-container">
-      <button class="grid-item"  type="submit" v-for="wallet in walletImages" :key="wallet.name">
+    <div class="p-loginform-wallets">
+      <button class="p-loginform-wallet" type="submit" v-for="wallet in walletImages" :key="wallet.name"
+        @click="connectWallet(wallet.name)">
         <img :src="wallet.src" :alt="wallet.name" />
       </button>
 
-      <div class="grid-item" />
-      <div class="grid-item" />
-      <div class="grid-item" />
-      <div class="grid-item" />
-      <div class="grid-item" />
-      <div class="grid-item" />
-      <div class="grid-item" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
+      <div class="p-loginform-wallet" />
     </div>
 
   </form>
@@ -101,7 +102,7 @@ form {
   display: flex;
 }
 
-.grid-container {
+.p-loginform-wallets {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 8px;
@@ -109,7 +110,7 @@ form {
   padding: 1rem 0;
 }
 
-.grid-item {
+.p-loginform-wallet {
   width: 50px;
   height: 50px;
   color: white;
@@ -122,7 +123,7 @@ form {
   border: 1px solid var(--border-a);
 }
 
-.grid-item img {
+.p-loginform-wallet img {
   width: 1.5rem;
 
 }

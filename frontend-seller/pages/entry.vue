@@ -48,7 +48,7 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 .entry-form {
   background: var(--background-a);
   border-radius: var(--radius-b);
-  box-shadow: var(--shadow-b);
+  box-shadow: var(--shadow-a);
   margin-top: 4rem;
   padding: 1.5rem;
   width: 300px;
