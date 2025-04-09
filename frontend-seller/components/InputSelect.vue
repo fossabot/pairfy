@@ -85,26 +85,42 @@ onMounted(() => {
 }
 
 .p-InputSelect-select {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border-a, #ccc);
-  border-radius: var(--input-radius, 8px);
-  outline: none;
-  appearance: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: var(--text-size-0);
   background: var(--background-a);
+  border: 1px solid var(--border-a);
+  border-radius: var(--input-radius);
+  padding: 0.75rem 1rem;
+  color: var(--text-b);
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+
+}
+
+.p-InputSelect-select:focus {
+  border-color: var(--primary-a);
+
 }
 
 .p-InputSelect-select.is-invalid {
   border-color: red;
 }
 
+.placeholder-option {
+  color: var(--text-b);
+}
+
 .title-text {
   font-size: var(--text-size-1);
+  margin-bottom: 0.75rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+
 }
 
 .error-text {
-  font-size: var(--text-size-0, 12px);
+  font-size: var(--text-size-0);
   animation: fadeIn 0.2s ease-in-out;
   margin-top: 0.5rem;
   color: red;
