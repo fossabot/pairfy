@@ -14,9 +14,9 @@
         <RecoveryForm v-if="mode === 'recovery'" />
 
         <div class="entry-form-switcher">
-          <button @click="mode = 'login'">Login</button>
-          <button @click="mode = 'register'">Register</button>
-          <button @click="mode = 'recovery'">Recovery</button>
+          <button @click="mode = 'login'">I already have an account.</button>
+          <button @click="mode = 'register'">Create a new account.</button>
+          <button @click="mode = 'recovery'">Recover password.</button>
         </div>
       </div>
 
@@ -67,5 +67,19 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 .entry-form-content {
   flex-direction: column;
   display: flex;
+}
+
+.entry-form-switcher {
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+}
+
+.entry-form-switcher button {
+  background: transparent;
+  color: var(--primary-a);
+  line-height: 1.5rem;
+  cursor: pointer;
+  border: none;
 }
 </style>

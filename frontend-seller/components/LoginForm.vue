@@ -4,9 +4,20 @@
 
     <InputPassword v-model="password" @valid="onValidPassword" />
 
-    <ButtonSolid type="button" label="Lace" @click="connectWallet('lace')" />
+    <div class="grid-container">
+      <button class="grid-item"  type="submit" v-for="wallet in walletImages" :key="wallet.name">
+        <img :src="wallet.src" :alt="wallet.name" />
+      </button>
 
-    <button type="submit">Login</button>
+      <div class="grid-item" />
+      <div class="grid-item" />
+      <div class="grid-item" />
+      <div class="grid-item" />
+      <div class="grid-item" />
+      <div class="grid-item" />
+      <div class="grid-item" />
+    </div>
+
   </form>
 </template>
 
@@ -14,6 +25,24 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import { useWalletStore } from '@/stores/wallet'
+import eternl from '@/assets/wallets/eternl.png'
+import lace from '@/assets/wallets/lace.svg'
+import nami from '@/assets/wallets/nami.svg'
+
+const walletMap = {
+  eternl,
+  lace,
+  nami
+}
+
+const config = useRuntimeConfig()
+
+const validWallets = config.public.validWallets
+
+const walletImages = validWallets.map(name => ({
+  name,
+  src: walletMap[name] ?? ''
+}))
 
 
 const { $wallet } = useNuxtApp()
@@ -70,5 +99,31 @@ form {
   overflow: hidden;
   max-width: 100%;
   display: flex;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  gap: 8px;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.grid-item {
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border-a);
+}
+
+.grid-item img {
+  width: 1.5rem;
+
 }
 </style>
