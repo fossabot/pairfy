@@ -1,3 +1,4 @@
+
 export const wallet = {
   get(key) {
     if (import.meta.client) {

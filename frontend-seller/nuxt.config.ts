@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
+import wasm from 'vite-plugin-wasm'
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
@@ -14,5 +15,8 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/main.css'  // global CSS
   ],
-  modules: ['@pinia/nuxt']
+  modules: ['@pinia/nuxt'],
+  vite: {
+    plugins: [wasm()]
+  }
 })

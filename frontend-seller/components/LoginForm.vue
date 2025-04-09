@@ -3,8 +3,6 @@
     <input v-model="email" type="email" placeholder="Email" required />
     <input v-model="password" type="password" placeholder="Password" required />
 
-
-
     <ButtonSolid  type="button" label="Lace" @click="connectWallet" />
 
     <button type="submit">Login</button>
