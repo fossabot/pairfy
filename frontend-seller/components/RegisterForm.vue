@@ -7,7 +7,6 @@
 
     <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="countries" :required="true" @valid="onValidCountry" />
 
-
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
       :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
 
@@ -47,6 +46,7 @@ const onValidPassword = (event) => {
 const onValidCountry = (event) => {
   console.log("countryHandler", event)
   countryValid.value = event
+  console.log(country)
 }
 
 const onValidTerms = (event) => {
@@ -61,7 +61,7 @@ const register = async () => {
   try {
     console.log('Credentials', emailValid.value, passwordValid.value)
 
-    await auth.register({ email: email.value, password: password.value, terms_accepted: true, country: 'US' })
+    await auth.register({ email: email.value, password: password.value, terms_accepted: terms.value, country: country.value })
   } catch (err) {
     console.error(err)
   }

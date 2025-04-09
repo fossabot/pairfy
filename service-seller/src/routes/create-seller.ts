@@ -61,6 +61,8 @@ const createSellerHandler = async (req: Request, res: Response) => {
       0,
     ];
 
+    console.log(schemeValue)
+
     await connection.execute(schemeData, schemeValue);
 
     await connection.commit();
