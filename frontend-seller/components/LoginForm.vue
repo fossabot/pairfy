@@ -1,22 +1,22 @@
 <template>
-  <form class="p-loginform" @submit.prevent="connectWallet">
+  <form class="p-LoginForm" @submit.prevent="connectWallet">
     <InputEmail v-model="email" :focus="true" @valid="onValidEmail" />
 
     <InputPassword v-model="password" @valid="onValidPassword" />
 
-    <div class="p-loginform-wallets">
-      <button class="p-loginform-wallet" type="submit" v-for="wallet in walletImages" :key="wallet.name"
+    <div class="p-LoginForm-wallets">
+      <button class="p-LoginForm-wallet" type="submit" v-for="wallet in walletImages" :key="wallet.name"
         @click="connectWallet(wallet.name)">
         <img :src="wallet.src" :alt="wallet.name" />
       </button>
 
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
-      <div class="p-loginform-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" />
     </div>
 
   </form>
@@ -92,7 +92,7 @@ form {
   display: flex;
 }
 
-.p-loginform-wallets {
+.p-LoginForm-wallets {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   gap: 8px;
@@ -100,7 +100,7 @@ form {
   padding: 1rem 0;
 }
 
-.p-loginform-wallet {
+.p-LoginForm-wallet {
   width: 50px;
   height: 50px;
   color: white;
@@ -113,7 +113,7 @@ form {
   border: 1px solid var(--border-a);
 }
 
-.p-loginform-wallet img {
+.p-LoginForm-wallet img {
   width: 1.5rem;
 
 }
