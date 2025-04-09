@@ -22,6 +22,13 @@ if (import.meta.server) {
 
 
 <style scoped>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+
 .layout-entry {
   background: var(--background-b);
   display: flex;

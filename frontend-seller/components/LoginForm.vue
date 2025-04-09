@@ -1,9 +1,8 @@
 <template>
   <form class="p-loginform" @submit.prevent="login">
-    <InputEmail v-model="email" :focus="true" />
-    <p>Correo capturado: {{ email }}</p>
+    <InputEmail v-model="email" :focus="true" @valid="onValidEmail" />
 
-    <input v-model="password" type="password" placeholder="Password" required />
+    <InputPassword v-model="password" @valid="onValidPassword" />
 
     <ButtonSolid type="button" label="Lace" @click="connectWallet('lace')" />
 
@@ -25,6 +24,13 @@ const wallet = useWalletStore()
 const email = ref('')
 const password = ref('')
 
+const onValidEmail = (event) => {
+  console.log("emailhandler", event)
+}
+
+const onValidPassword = (event) => {
+  console.log("passwordhandler", event)
+}
 
 const connectWallet = async (name) => {
   //$wallet.connect('wallet', 'lace')
@@ -61,7 +67,8 @@ const login = async () => {
 <style scoped>
 form {
   flex-direction: column;
+  overflow: hidden;
+  max-width: 100%;
   display: flex;
-  
 }
 </style>

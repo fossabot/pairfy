@@ -20,7 +20,7 @@ const props = defineProps({
         default: false
     }
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'valid'])
 
 const inputRef = ref(null)
 const errorMessage = ref('')
@@ -48,22 +48,28 @@ const onInput = (e) => {
 const validateEmail = (email) => {
     if (!email) {
         errorMessage.value = 'Email is required.'
+        emit('valid', false)
+        return false
     }
 
     else if (email.length > 254) {
         errorMessage.value = 'Email max length.'
+        emit('valid', false)
+        return false
     }
 
     else if (!emailRegex.test(email)) {
         errorMessage.value = 'The email is not valid.'
-    } else {
-        errorMessage.value = ''
+        emit('valid', false)
+        return false
     }
+
+    errorMessage.value = ''
+    emit('valid', true)
+    return true
 }
 
-watch(() => props.modelValue, (val) => {
-    validateEmail(val)
-}, { immediate: true })
+
 </script>
 
 <style scoped>
