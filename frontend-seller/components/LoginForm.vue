@@ -1,5 +1,5 @@
 <template>
-  <form class="p-loginform" @submit.prevent="login">
+  <form class="p-loginform" @submit.prevent="connectWallet">
     <InputEmail v-model="email" :focus="true" @valid="onValidEmail" />
 
     <InputPassword v-model="password" @valid="onValidPassword" />
@@ -67,7 +67,9 @@ const connectWallet = async (name) => {
 
   try {
     await wallet.connect('lace')
-    await wallet.sign()
+    const [signature, address] = await wallet.sign()
+
+    console.log("SIGNED", signature, address)
 
   } catch (err) {
     console.error(err);
