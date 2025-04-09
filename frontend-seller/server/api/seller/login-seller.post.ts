@@ -1,6 +1,5 @@
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
-  console.log('🧪 config.serviceSellerBase:', config.serviceSellerBase)
 
   const body = await readBody(event)
 
