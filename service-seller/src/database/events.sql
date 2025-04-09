@@ -1,14 +1,14 @@
-create table if not exists events(
-  id varchar(100) not null,
-  source varchar(50) not null,
-  type varchar(100) not null,
-  published boolean default false,
-  data mediumtext not null,
-  agent_id varchar(200) default null,
-  spec_version int unsigned not null,
-  created_at timestamp default current_timestamp,
-  primary key(id),
-  INDEX idx_id_published (id,published),
+CREATE TABLE IF NOT EXISTS events (
+  id CHAR(100) NOT NULL,
+  source VARCHAR(50) NOT NULL,
+  type VARCHAR(100) NOT NULL,
+  published BOOLEAN NOT NULL DEFAULT FALSE,
+  data JSON NOT NULL,
+  agent_id VARCHAR(200) DEFAULT NULL,
+  spec_version INT UNSIGNED NOT NULL CHECK (spec_version > 0),
+  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+  PRIMARY KEY (id),
+  INDEX idx_published (published),
   INDEX idx_created_at (created_at)
 ) ENGINE=InnoDB;
-
