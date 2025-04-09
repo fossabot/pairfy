@@ -8,6 +8,8 @@ RUN ls
 
 RUN npm install --verbose
 
+RUN rm -f package-lock.json
+
 COPY . .
 
 RUN npm run build
