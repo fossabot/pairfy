@@ -5,11 +5,7 @@
     <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />
 
 
-    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="[
-      { label: 'Colombia', code: 'CO' },
-      { label: 'Argentina', code: 'AR' },
-      { label: 'México', code: 'MX' }
-    ]" :required="true" @valid="onValidCountry" />
+    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="countries" :required="true" @valid="onValidCountry" />
 
 
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
@@ -24,6 +20,9 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 const auth = useAuthStore()
+
+const countries = ref([{ label: 'United States', code: 'US' }])
+
 
 const email = ref('')
 const password = ref('')
