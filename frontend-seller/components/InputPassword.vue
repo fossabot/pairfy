@@ -1,12 +1,31 @@
 <template>
     <div class="p-InputPassword">
         <p class="title-text">Password</p>
-        <div class="input-wrapper">
+        <div class="p-InputPassword-wrap">
             <input ref="inputRef" :type="isVisible ? 'text' : 'password'" :value="modelValue" @input="onInput"
                 placeholder="Enter your password" class="p-InputPassword-input"
                 :class="{ 'is-invalid': errorMessage }" />
-            <button type="button" class="toggle-btn" @click="toggleVisibility">
-                {{ isVisible ? '🙈' : '👁️' }}
+
+            <button class="toggle-btn" type="button" @click="toggleVisibility">
+
+
+                <svg v-if="!isVisible" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-eye-icon lucide-eye">
+                    <path
+                        d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-eye-closed-icon lucide-eye-closed">
+                    <path d="m15 18-.722-3.25" />
+                    <path d="M2 8a10.645 10.645 0 0 0 20 0" />
+                    <path d="m20 15-1.726-2.05" />
+                    <path d="m4 15 1.726-2.05" />
+                    <path d="m9 18 .722-3.25" />
+                </svg>
             </button>
         </div>
         <p v-if="errorMessage" class="error-text">{{ errorMessage }}</p>
@@ -92,7 +111,7 @@ const validatePassword = (password) => {
     max-width: 300px;
 }
 
-.input-wrapper {
+.p-InputPassword-wrap {
     position: relative;
 }
 
@@ -115,12 +134,14 @@ const validatePassword = (password) => {
 }
 
 .toggle-btn {
-    position: absolute;
-    top: 50%;
-    right: 0.75rem;
     transform: translateY(-50%);
     background: transparent;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    top: 50%;
     border: none;
+    right: 0.75rem;
     font-size: 1.1rem;
     cursor: pointer;
 }
