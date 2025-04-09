@@ -9,3 +9,10 @@ declare module '#app' {
     $connector: Connector
   }
 }
+
+
+declare global {
+  interface Window {
+    cardano?: any
+  }
+}
