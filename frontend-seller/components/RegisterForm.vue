@@ -5,7 +5,10 @@
     <InputPassword v-model="password" @valid="onValidPassword" />
 
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onTermsAccepted"
-      label="I have read the terms of use and privacy policy." :required="true" />
+      label="I have read the "
+      :link="{ label: 'terms of use and privacy policy', href: '/terms' }"
+      :required="true"
+      />
 
 
     <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" />
