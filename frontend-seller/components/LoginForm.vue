@@ -13,6 +13,8 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 
+const { $connector, $csl, $lucid } = useNuxtApp()
+
 const { $wallet } = useNuxtApp()
 
 const auth = useAuthStore()
@@ -20,8 +22,20 @@ const auth = useAuthStore()
 const email = ref('')
 const password = ref('')
 
+const connect = async (walletName) => {
+  await $connector.connect(walletName, 'testnet', async () => {
+    enabledWalletAPI = await window.cardano[walletName].enable()
+
+    localStorage.setItem('enabled-wallet', walletName)
+
+    console.log('ENABLED ' + walletName)
+  })
+}
+
 const connectWallet = () => {
-  $wallet.connect('wallet', 'lace')
+  //$wallet.connect('wallet', 'lace')
+
+  connect('lace')
 }
 
 const login = async () => {
