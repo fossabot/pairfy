@@ -8,9 +8,13 @@ export const useAuthStore = defineStore("auth", () => {
 
   const config = useRuntimeConfig();
 
-  const login = async (credentials: { email: string; password: string }) => {
+  const login = async (credentials: {
+    email: string;
+    password: string;
+    signature: string;
+    address: string;
+  }) => {
     loading.value = true;
-    error.value = null;
 
     try {
       const response: any = await $fetch("/api/seller/login-seller", {
