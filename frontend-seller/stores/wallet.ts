@@ -4,7 +4,6 @@ import { Buffer } from "buffer";
 
 export const useWalletStore = defineStore("wallet", () => {
   const connected = ref(false);
-  const address = ref<string | null>(null);
   const walletApi = ref<any>(null);
   const walletName = ref<string | null>(null);
 
@@ -77,14 +76,12 @@ export const useWalletStore = defineStore("wallet", () => {
 
   const disconnect = () => {
     connected.value = false;
-    address.value = null;
     walletApi.value = null;
     walletName.value = null;
   };
 
   return {
     connected,
-    address,
     walletApi,
     walletName,
     connect,
