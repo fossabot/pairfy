@@ -35,6 +35,30 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const register = async (credentials: {
+    email: string;
+    password: string;
+    terms_accepted: boolean;
+  }) => {
+    loading.value = true;
+
+    try {
+      const response: any = await $fetch("/api/seller/create-seller", {
+        method: "POST",
+        body: credentials,
+        credentials: "include",
+      });
+
+      console.log(response.data);
+      
+
+    } catch (err: any) {
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
   const fetchProfile = async () => {
     if (!import.meta.server) return;
 
@@ -76,6 +100,7 @@ export const useAuthStore = defineStore("auth", () => {
     loading,
     error,
     login,
+    register,
     logout,
     fetchProfile,
   };

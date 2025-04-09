@@ -19,6 +19,7 @@ const password = ref('')
 
 const emailValid = ref(false)
 const passwordValid = ref(false)
+const termsValid = ref(false)
 
 const onValidEmail = (event) => {
   console.log("emailhandler", event)
@@ -34,9 +35,13 @@ const disableSubmit = computed(() => !emailValid.value || !passwordValid.value)
 
 
 const register = () => {
-  console.log('Credentials', emailValid.value, passwordValid.value)
-
+  try {
+    console.log('Credentials', emailValid.value, passwordValid.value)
+  } catch (err) {
+    console.error(err)
+  }
 }
+
 </script>
 
 <style scoped>
