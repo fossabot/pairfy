@@ -17,6 +17,9 @@ export default defineNuxtConfig({
   ],
   modules: ['@pinia/nuxt'],
   vite: {
-    plugins: [wasm()]
+    plugins: [wasm()],
+    build: {
+      target: 'esnext' 
+    }
   }
 })
