@@ -1,6 +1,6 @@
 <template>
     <div class="p-InputEmail">
-        <p class="title-text">Email</p>
+        <label for="email" class="title-text">Email</label>
         <input ref="inputRef" type="email" :value="modelValue" @input="onInput" placeholder="example@gmail.com"
             class="p-InputEmail-input" :class="{ 'is-invalid': errorMessage }" />
         <p v-if="errorMessage" class="error-text">{{ errorMessage }}</p>
@@ -95,8 +95,12 @@ watch(() => props.modelValue, (val) => {
 }
 
 .error-text {
-    font-size: var(--text-size-0);
-    margin-top: 0.5rem;
     color: red;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 </style>
