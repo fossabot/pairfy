@@ -107,7 +107,7 @@ form {
 }
 
 .p-LoginForm-wallet img {
-  width: 1.5rem;
+  width: 1.25rem;
 }
 
 .p-LoginForm-email,
