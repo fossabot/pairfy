@@ -37,19 +37,17 @@ const walletMap = {
 }
 
 const config = useRuntimeConfig()
+const { $wallet } = useNuxtApp()
+const auth = useAuthStore()
+const wallet = useWalletStore()
+
 
 const validWallets = config.public.validWallets
-
 const walletImages = validWallets.map(name => ({
   name,
   src: walletMap[name] ?? ''
 }))
 
-
-const { $wallet } = useNuxtApp()
-
-const auth = useAuthStore()
-const wallet = useWalletStore()
 
 const email = ref('')
 const password = ref('')
@@ -103,7 +101,6 @@ form {
 .p-LoginForm-wallet {
   width: 50px;
   height: 50px;
-  color: white;
   font-weight: bold;
   display: flex;
   border-radius: 8px;

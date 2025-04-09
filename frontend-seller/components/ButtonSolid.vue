@@ -1,16 +1,25 @@
 <!-- components/ResizableButton.vue -->
 <template>
-  <button class="p-buttonsolid" :class="sizeClass" @click="$emit('click')">
+  <button class="p-ButtonSolid" :class="[{ disabled }, sizeClass]" @click="$emit('click')" :disabled="disabled">
     {{ label }}
   </button>
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
-  size?: 'mini' | 'mid' | 'large',
-  label: String
-}>()
-
+const props = defineProps({
+  size: {
+    type: String as PropType<'mini' | 'mid' | 'large'>,
+    default: 'mid'
+  },
+  label: {
+    type: String,
+    required: true
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  }
+})
 defineEmits(['click'])
 
 const sizeClass = computed(() => {
@@ -26,18 +35,22 @@ const sizeClass = computed(() => {
 </script>
 
 <style scoped>
-.p-buttonsolid {
-  background-color: #0070f3;
-  color: white;
-  border: none;
-  border-radius: 6px;
+.p-ButtonSolid {
+  transition: background-color 0.2s ease;
+  border-radius: var(--button-radius);
+  background: var(--primary-a);
+  color: var(--text-w);
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  border: none;
 }
 
-.p-buttonsolid:hover {
-  background-color: #0059c1;
+.p-ButtonSolid:hover {
+  opacity: 0.9;
+}
+
+.p-ButtonSolid.disabled {
+  pointer-events: none;
 }
 
 .btn-mini {
@@ -46,8 +59,8 @@ const sizeClass = computed(() => {
 }
 
 .btn-mid {
-  padding: 8px 16px;
-  font-size: 14px;
+  font-size: var(--text-size-1);
+  padding: 0.75rem 1rem;
 }
 
 .btn-large {
