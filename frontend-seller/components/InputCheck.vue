@@ -1,11 +1,11 @@
 <template>
   <div class="p-InputCheck">
-    <label class="checkbox-wrapper">
-      <input ref="checkboxRef" type="checkbox" :checked="modelValue" @change="onChange" class="checkbox-input" />
-      <span class="checkbox-box"></span>
-      <span class="checkbox-label">{{ label }}
+    <label class="p-InputCheck-wrap">
+      <input class="p-InputCheck-input" ref="checkboxRef" type="checkbox" :checked="modelValue" @change="onChange"  />
+      <span class="p-InputCheck-box"></span>
+      <span class="p-InputCheck-label">{{ label }}
 
-        <a class="checkbox-link" v-if="link" :href="link.href" target="_blank" rel="noopener">
+        <a class="p-InputCheck-link" v-if="link" :href="link.href" target="_blank" rel="noopener">
           {{ link.label }}
         </a>
 
@@ -85,7 +85,7 @@ onMounted(() => {
   gap: 0.5rem;
 }
 
-.checkbox-wrapper {
+.p-InputCheck-wrap {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -93,11 +93,11 @@ onMounted(() => {
   user-select: none;
 }
 
-.checkbox-input {
+.p-InputCheck-input {
   display: none;
 }
 
-.checkbox-box {
+.p-InputCheck-box {
   width: 20px;
   height: 20px;
   border: 2px solid var(--border-a, #ccc);
@@ -106,12 +106,12 @@ onMounted(() => {
   background-color: white;
 }
 
-.checkbox-input:checked+.checkbox-box {
+.p-InputCheck-input:checked+.p-InputCheck-box {
   background-color: var(--primary-a, #3498db);
   border-color: var(--primary-a, #3498db);
 }
 
-.checkbox-input:checked+.checkbox-box::after {
+.p-InputCheck-input:checked+.p-InputCheck-box::after {
   content: '✓';
   position: absolute;
   top: -1px;
@@ -120,7 +120,7 @@ onMounted(() => {
   color: white;
 }
 
-.checkbox-label {
+.p-InputCheck-label {
   font-size: var(--text-size-0);
 }
 
@@ -140,7 +140,7 @@ onMounted(() => {
   }
 }
 
-.checkbox-link {
+.p-InputCheck-link {
   text-decoration: underline;
   color: var(--text-a);
   font-size: inherit;

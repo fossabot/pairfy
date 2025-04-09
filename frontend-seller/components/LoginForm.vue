@@ -88,15 +88,15 @@ form {
 
 .p-LoginForm-wallets {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(3rem, 1fr));
   gap: 8px;
   justify-content: center;
   padding: 1rem 0;
 }
 
 .p-LoginForm-wallet {
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   font-weight: bold;
   display: flex;
   border-radius: 8px;
