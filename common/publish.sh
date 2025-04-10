@@ -18,19 +18,12 @@ fi
 
 # Verificar si la versión ya está publicada
 if npm view $PACKAGE_NAME@$CURRENT_VERSION > /dev/null 2>&1; then
-  echo "🟡 La versión $CURRENT_VERSION ya está publicada. Incrementando versión..."
-
-  cd $PACKAGE_DIR
-
-  # Puedes cambiar esto por 'minor' o 'major' si lo deseas
-  npm version patch --no-git-tag-version
-
-  NEW_VERSION=$(node -p "require('./package.json').version")
-  echo "🚀 Publicando nueva versión $NEW_VERSION..."
-  npm publish --access public
+  echo "🟡 La versión $CURRENT_VERSION ya está publicada."
 
 else
   echo "🚀 Publicando versión $CURRENT_VERSION..."
+
   cd $PACKAGE_DIR
-  npm publish --access public
+
+  npm run pub
 fi
