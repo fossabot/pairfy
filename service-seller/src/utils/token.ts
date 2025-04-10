@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 
-function createToken(params: object) {
+function createToken(params: object, expires?: string) {
   const secretKey: jwt.Secret = process.env.AGENT_JWT_KEY as string;
 
-  const expirationTime: any = process.env.TOKEN_EXPIRATION as string;
+  const defaultTime: any = process.env.TOKEN_EXPIRATION as string;
 
   const options: jwt.SignOptions = {
-    expiresIn: expirationTime,
+    expiresIn: expires || defaultTime,
   };
 
   return jwt.sign(params, secretKey, options);

@@ -10,7 +10,7 @@ import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
-import { createEvent } from "@pairfy/common";
+import { createEvent, createSeller } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -20,8 +20,6 @@ const createSellerHandler = async (req: Request, res: Response) => {
   const params = req.body as RegistrationInput;
 
   console.log(params);
-
-
 
   try {
     connection = await DB.client.getConnection();
@@ -34,56 +32,58 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const sellerId = getSellerId();
 
-    const schemeData = `
-    INSERT INTO sellers (
-      id,
-      username,
-      email,
-      password_hash,
-      verified,
-      country,
-      terms_accepted,
-      avatar_base,
-      avatar_path,
-      public_ip,
-      schema_v
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const timestamp = Date.now();
 
-    const schemeValue = [
-      sellerId,
-      username,
-      params.email,
-      password,
-      true,
-      params.country,
-      params.terms_accepted,
-      "https://example.com",
-      "/avatar.jpg",
-      req.publicAddress,
-      0,
-    ];
+    const token = createToken(
+      {
+        source: "service-seller",
+        entity: "SELLER",
+        email: params.email,
+        username: username,
+      },
+      "1h"
+    );
 
-    console.log(schemeValue);
-
-    await connection.execute(schemeData, schemeValue);
-
-    const token = createToken({
-      source: "createSeller",
-      entity: "SELLER",
+    const emailScheme = {
       email: params.email,
-      username,
-    });
-
-    const eventPayload = {
-      email: params.email,
-      token,
+      token: token,
     };
+
+    const productScheme = {
+      id: sellerId,
+      username: username,
+      email: params.email,
+      password_hash: password,
+      verified: false,
+      country: params.country,
+      terms_accepted: params.terms_accepted,
+      avatar_base: "https://example.com",
+      avatar_path: "/avatar.jpg",
+      public_ip: req.publicAddress,
+      created_at: timestamp,
+      updated_at: timestamp,
+      schema_v: 0,
+    };
+
+    console.log(productScheme);
+
+    await createSeller(connection, productScheme);
 
     await createEvent(
       connection,
+      timestamp,
       "service-seller",
       "CreateSeller",
-      JSON.stringify(eventPayload),
+      JSON.stringify(productScheme),
+      sellerId
+    );
+
+    await createEvent(
+      connection,
+      timestamp,
+      "service-seller",
+      "CreateSellerEmail",
+      JSON.stringify(emailScheme),
       sellerId
     );
 
@@ -91,11 +91,11 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     res.status(200).send({ success: true, message: "Successfully registered" });
   } catch (err) {
+    _.error(err);
+
     if (connection) {
       await connection.rollback();
     }
-
-    _.error(err);
 
     throw new BadRequestError("Invalid username or email");
   } finally {

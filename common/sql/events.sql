@@ -5,8 +5,9 @@ CREATE TABLE IF NOT EXISTS events (
   published BOOLEAN NOT NULL DEFAULT FALSE,
   data MEDIUMTEXT NOT NULL,
   agent_id VARCHAR(200) DEFAULT NULL,
+  created_at BIGINT UNSIGNED NOT NULL,
+  updated_at BIGINT UNSIGNED NOT NULL,
   spec_version INT UNSIGNED NOT NULL,
-  created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   
   PRIMARY KEY (id),
   INDEX idx_published (published),

@@ -5,6 +5,7 @@ const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 26);
 
 export async function createEvent(
   connection: Connection,
+  timestamp: number,
   source: string,
   type: string,
   data: string,
@@ -17,14 +18,13 @@ export async function createEvent(
       type,
       data,
       agent_id,
+      created_at,
+      updated_at,
       spec_version
-    ) VALUES (?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  const values = [getEventId(), source, type, data, agentId, 0];
+  const values = [getEventId(), source, type, data, agentId, timestamp, timestamp, 0];
 
   return await connection.execute(sql, values);
 }
-
-
-//end
