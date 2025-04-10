@@ -34,7 +34,7 @@ spec:
             - name: STREAM_LIST
               value: service-seller
             - name: FILTER_SUBJECTS
-              value: CreateEmail                            
+              value: "service-seller.CreateEmail"                            
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
