@@ -122,7 +122,7 @@ const main = async () => {
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     
-    const filterSubjects: string[] = process.env.FILTER_SUBJECTS
+    const filterSubjects: any = process.env.FILTER_SUBJECTS
     ? process.env.FILTER_SUBJECTS.split(",").map(subject => subject.trim())
     : [];
   
