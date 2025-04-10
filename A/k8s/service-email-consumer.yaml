@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-email-consumer
+spec:
+  selector:
+    matchLabels:
+      role: service-email-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: service-email-consumer
+    spec:
+      terminationGracePeriodSeconds: 15
+      containers:
+        - name: service-email-consumer
+          image: pairfy/base-consumer
+          ports:
+            - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_TIMEOUT
+              value: "120000"
+            - name: SERVICE_NAME
+              value: service-email
+            - name: CONSUMER_GROUP
+              value: service-email-group
+            - name: DURABLE_NAME
+              value: service-email-consumer
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password
+            - name: DATABASE_NAME
+              value: service_email
+            - name: DATABASE_USER
+              value: marketplace
+            - name: STREAM_LIST
+              value: service-seller
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"

@@ -1,13 +1,12 @@
-import express from "express";
-import { catcher, checkDatabase, logger } from "./utils/index.js";
-import { database } from "./database/client.js";
-import { connect } from "@nats-io/transport-node";
 import {
   AckPolicy,
   DeliverPolicy,
   jetstreamManager,
   ReplayPolicy,
 } from "@nats-io/jetstream";
+import { catchError, disableConnections, logger } from "./utils/index.js";
+import { connect } from "@nats-io/transport-node";
+import { database } from "./database/client.js";
 
 const main = async () => {
   try {
@@ -67,14 +66,6 @@ const main = async () => {
       throw new Error("ELASTIC_KEY error");
     }
 
-    const MODU = await import(
-      `./handlers/${process.env.SERVICE_NAME}/index.js`
-    );
-
-    const app = express();
-
-    const port = 3000;
-
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -90,19 +81,17 @@ const main = async () => {
       process.on(e, (err) => disableConnections(e, err))
     );
 
-    app.get("/healthz", (req, res) => {
-      res.status(200).send("OK");
-    });
-
-    app.listen(port, () => {
-      console.log(`Server running on port ${port}`);
-    });
+    const MODU = await import(
+      `./handlers/${process.env.SERVICE_NAME}/index.js`
+    );
 
     /////////////////////////////////////////////////////////////////////////
+    
+    const databasePort = parseInt(process.env.DATABASE_PORT);
 
     database.connect({
       host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT) || 3306,
+      port: databasePort,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
@@ -116,8 +105,6 @@ const main = async () => {
       supportBigNumbers: true,
       bigNumberStrings: true,
     });
-
-    checkDatabase(database);
 
     const natsClient = await connect({
       name: process.env.POD_NAME as string,
@@ -136,30 +123,10 @@ const main = async () => {
 
     const streamList = process.env.STREAM_LIST.split(",");
 
-    async function disableConnections(signal: any, error: any) {
-      logger.error(error);
-
-      database.client.pool.config.connectionLimit = 0;
-
-      try {
-        await natsClient.drain();
-        await natsClient.close();
-        await database.client.end();
-      } catch (err) {
-        console.log(err);
-      }
-
-      setTimeout(() => {
-        console.log("EXIT", signal);
-        process.exit(1);
-      }, 30_000);
-    }
-
-    ////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     try {
       streamList.forEach(async (stream) => {
-
         await jetStreamManager.consumers.add(stream, {
           durable_name: process.env.DURABLE_NAME,
           deliver_group: process.env.CONSUMER_GROUP,
@@ -193,17 +160,19 @@ const main = async () => {
               await message.nak(30_000);
             }
           } else {
-            console.log(`EMPTY`);
+            console.log(`EmptyQueue`);
           }
         }
       });
     } catch (err) {
-      disableConnections("WORKER", err);
+      logger.error(err);
+      disableConnections(database, natsClient);
     }
 
-    logger.info("ONLINE");
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
   } catch (err) {
-    catcher(err);
+    catchError(err);
   }
 };
 
