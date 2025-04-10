@@ -10,6 +10,7 @@ import { getEventId, getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
+import { createEvent } from "./createEvent";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -63,7 +64,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
     console.log(schemeValue);
 
     await connection.execute(schemeData, schemeValue);
-    
+
     const token = createToken({
       source: "createSeller",
       entity: "SELLER",
@@ -76,27 +77,13 @@ const createSellerHandler = async (req: Request, res: Response) => {
       token,
     };
 
-    const eventSchema = `
-      INSERT INTO events (
-        id,
-        source,
-        type,
-        data,
-        agent_id,
-        spec_version
-      ) VALUES (?, ?, ?, ?, ?, ?)
-    `;
-
-    const eventValue = [
-      getEventId(),
+    await createEvent(
+      connection,
       "service-seller",
       "CreateSeller",
       JSON.stringify(eventPayload),
-      sellerId,
-      0,
-    ];
-
-    await connection.execute(eventSchema, eventValue);
+      sellerId
+    );
 
     await connection.commit();
 
