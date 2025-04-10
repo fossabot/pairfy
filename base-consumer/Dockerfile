@@ -1,12 +1,12 @@
 FROM node:lts
 
-
 WORKDIR /app
 
 
 COPY package*.json ./
 
-RUN ls
+
+COPY src/handlers/service-email/package.json ./src/handlers/service-email/
 
 RUN npm install
 
@@ -16,8 +16,7 @@ COPY . .
 
 RUN npm run build
 
-
 EXPOSE 4000
 
-# Run the built JavaScript code
+
 CMD ["npm", "start"]

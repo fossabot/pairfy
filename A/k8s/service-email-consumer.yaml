@@ -34,7 +34,12 @@ spec:
             - name: STREAM_LIST
               value: service-seller
             - name: FILTER_SUBJECTS
-              value: "service-seller.CreateEmail"                            
+              value: "service-seller.CreateEmail"      
+            - name: RESEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: resend-api-secret
+                  key: key              
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
