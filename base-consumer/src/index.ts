@@ -21,7 +21,7 @@ const main = async () => {
     if (!process.env.STREAM_LIST) {
       throw new Error("STREAM_LIST error");
     }
-    
+
     if (!process.env.FILTER_SUBJECTS) {
       throw new Error("FILTER_SUBJECTS error");
     }
@@ -61,7 +61,6 @@ const main = async () => {
     if (!process.env.DATABASE_NAME) {
       throw new Error("DATABASE_NAME error");
     }
-
 
     const errorEvents: string[] = [
       "exit",
@@ -121,11 +120,13 @@ const main = async () => {
     const streamList = process.env.STREAM_LIST.split(",");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     const filterSubjects: any = process.env.FILTER_SUBJECTS
-    ? process.env.FILTER_SUBJECTS.split(",").map(subject => subject.trim())
-    : [];
-  
+      ? process.env.FILTER_SUBJECTS.split(",").map((subject) => subject.trim())
+      : [];
+
+    console.log(filterSubjects);
+
     try {
       streamList.forEach(async (stream) => {
         await jetStreamManager.consumers.add(stream, {
@@ -144,14 +145,11 @@ const main = async () => {
 
         console.log(consumerInfo);
 
-        const consumer = await jetStream.consumers.get(
-          stream,
-
-          {
-            name_prefix: process.env.DURABLE_NAME as string,
-            filter_subjects: [filterSubjects],
-          }
-        );
+        const consumer = await jetStream.consumers.get(stream, {
+          filter_subjects: filterSubjects.filter((item: string) =>
+            item.startsWith(stream)
+          ),
+        });
 
         while (true) {
           const message = await consumer.next();
