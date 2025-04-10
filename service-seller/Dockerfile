@@ -6,6 +6,8 @@ COPY package.json .
 
 RUN ls
 
+RUN rm -f package-lock.json
+
 RUN npm install --verbose --no-package-lock
 
 COPY . .

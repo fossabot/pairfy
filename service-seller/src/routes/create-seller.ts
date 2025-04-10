@@ -6,11 +6,12 @@ import {
 import { hashPassword } from "../utils/password";
 import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
-import { getEventId, getSellerId } from "../utils/nano";
+import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
 import { createEvent } from "./createEvent";
+import { loadSql } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -20,6 +21,8 @@ const createSellerHandler = async (req: Request, res: Response) => {
   const params = req.body as RegistrationInput;
 
   console.log(params);
+
+  console.log(loadSql("events.sql"));
 
   try {
     connection = await DB.client.getConnection();
