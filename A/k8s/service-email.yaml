@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-email
+  template:
+    metadata:
+      labels:
+        role: service-email
+    spec:
+      containers:
+        - name: service-email
+          image: pairfy/service-email
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name                                                                                                                         
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password   
+            - name: DATABASE_NAME
+              value: service_email      
+            - name: DATABASE_USER
+              value: marketplace                  
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-email
+spec:
+  selector:
+    role: service-email
+  ports:
+    - name: service-email
+      protocol: TCP
+      port: 8000
+      targetPort: 8000

@@ -1,0 +1,20 @@
+{
+    "name": "service-email",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "node dist/index.js",
+        "dev": "ts-node src/index.ts",
+        "database": "node setup.cjs"
+    },
+    "dependencies": {
+        "@pairfy/common": "^1.0.40",
+        "mysql2": "^3.14.0"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.0"
+    }
+}

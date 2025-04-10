@@ -7,7 +7,7 @@
 set -euo pipefail
 
 PACKAGE_NAME="@pairfy/common"
-TARGET_DIRS=("service-seller")
+TARGET_DIRS=("service-seller" "service-email")
 
 echo "📦 Fetching the latest version of $PACKAGE_NAME from NPM..."
 LATEST_VERSION=$(npm show "$PACKAGE_NAME" version)
