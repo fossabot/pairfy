@@ -1,27 +1,63 @@
 #!/bin/bash
+
+#chmod +x skaffold.sh
+
 ./common/publish.sh
+
 echo "⏳ SLEEP ..."
+
 sleep 15
 
 set -euo pipefail
 
-TARGET_DIR="service-seller"  
+PACKAGE_NAME="@pairfy/common"
+TARGET_DIRS=("service-seller")
 
-echo "📦 Buscando última versión de @pairfy/common..."
-LATEST_VERSION=$(npm show @pairfy/common version)
+echo "📦 Fetching the latest version of $PACKAGE_NAME from NPM..."
+LATEST_VERSION=$(npm show "$PACKAGE_NAME" version)
 
-echo "📁 Entrando a ./$TARGET_DIR..."
-cd "$TARGET_DIR"
+if [[ -z "$LATEST_VERSION" ]]; then
+  echo "❌ Failed to get version for $PACKAGE_NAME"
+  exit 1
+fi
 
-echo "🔄 Instalando @pairfy/common@$LATEST_VERSION dentro de $TARGET_DIR..."
-npm install @pairfy/common@$LATEST_VERSION
+echo "📌 Latest available version: $LATEST_VERSION"
+echo
 
-echo "✅ @pairfy/common actualizado a la versión $LATEST_VERSION en $TARGET_DIR"
+for dir in "${TARGET_DIRS[@]}"; do
+  echo "📁 Checking ./$dir..."
 
-cd - > /dev/null  
+  if [[ ! -f "$dir/package.json" ]]; then
+    echo "⚠️ No package.json found in $dir — skipping..."
+    continue
+  fi
+
+  # Get currently installed version (if any)
+  INSTALLED_VERSION=$(jq -r ".dependencies[\"$PACKAGE_NAME\"] // empty" "$dir/package.json")
+
+  # Remove ^ if present
+  INSTALLED_VERSION_CLEAN="${INSTALLED_VERSION/#^/}"
+
+  if [[ "$INSTALLED_VERSION_CLEAN" == "$LATEST_VERSION" ]]; then
+    echo "✅ $PACKAGE_NAME is already at the latest version ($LATEST_VERSION) in $dir — skipping."
+    echo
+    continue
+  fi
+
+  echo "🔄 Updating $PACKAGE_NAME from $INSTALLED_VERSION_CLEAN → $LATEST_VERSION in $dir..."
+  (
+    cd "$dir"
+    npm install "$PACKAGE_NAME@$LATEST_VERSION"
+  )
+  echo "✅ Updated in $dir"
+  echo
+done
+
+echo "🎉 Done: updates were applied where needed."
+
 
 
 skaffold dev
 
-#chmod +x skaffold.sh
+
 
