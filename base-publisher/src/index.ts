@@ -5,7 +5,6 @@ import {
   StorageType,
 } from "@nats-io/jetstream";
 import { catchError, errorEvents, logger, sleep } from "./utils/index.js";
-import { watchDatabase } from "./database/ping.js";
 import { database } from "./database/client.js";
 import { connect } from "@nats-io/transport-node";
 
@@ -77,8 +76,6 @@ const main = async () => {
       supportBigNumbers: true,
       bigNumberStrings: true,
     });
-
-    watchDatabase();
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
