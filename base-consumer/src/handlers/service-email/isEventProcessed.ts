@@ -11,7 +11,7 @@ export async function isEventProcessed(
   );
 
   if (findProcessed.length > 0) {
-    logger.info("EventProcessed");
+    logger.info("EventRepeated");
 
     return true;
   } else {

@@ -1,3 +1,4 @@
+import { logger } from "../../utils/index.js";
 import { Connection } from "mysql2/promise";
 
 export async function consumedEvent(
@@ -6,7 +7,7 @@ export async function consumedEvent(
   seq: number
 ) {
   const [result] = await connection.execute(
-    "INSERT INTO processed (id, seq, type, processed, created_at) VALUES (?, ?, ?, ?)",
+    "INSERT INTO processed (id, seq, type, processed, created_at) VALUES (?, ?, ?, ?, ?)",
     [event.id, seq, event.type, true, Date.now()]
   );
 
@@ -15,4 +16,6 @@ export async function consumedEvent(
   if(!check){
     throw new Error("consumedEventError");
   }
+
+  logger.info("consumedEvent");
 }

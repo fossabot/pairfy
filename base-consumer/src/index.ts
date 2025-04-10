@@ -146,6 +146,7 @@ const main = async () => {
         console.log(consumerInfo);
 
         const consumer = await jetStream.consumers.get(stream, {
+          name_prefix: process.env.DURABLE_NAME as string,
           filter_subjects: filterSubjects.filter((item: string) =>
             item.startsWith(stream)
           ),
