@@ -4,8 +4,9 @@ import {
   RetentionPolicy,
   StorageType,
 } from "@nats-io/jetstream";
-import { catcher, errorEvents, logger, sleep } from "./utils/index.js";
-import { database } from "./db/client.js";
+import { catchError, errorEvents, logger, sleep } from "./utils/index.js";
+import { watchDatabase } from "./database/ping.js";
+import { database } from "./database/client.js";
 import { connect } from "@nats-io/transport-node";
 
 const main = async () => {
@@ -18,8 +19,12 @@ const main = async () => {
       throw new Error("POD_TIMEOUT error");
     }
 
-    if (!process.env.DATABASE_USER) {
-      throw new Error("DATABASE_USER error");
+    if (!process.env.DATABASE_HOST) {
+      throw new Error("DATABASE_HOST error");
+    }
+
+    if (!process.env.DATABASE_PORT) {
+      throw new Error("DATABASE_PORT error");
     }
 
     if (!process.env.DATABASE_PASSWORD) {
@@ -28,6 +33,10 @@ const main = async () => {
 
     if (!process.env.DATABASE_NAME) {
       throw new Error("DATABASE_NAME error");
+    }
+
+    if (!process.env.DATABASE_USER) {
+      throw new Error("DATABASE_USER error");
     }
 
     if (!process.env.STREAM_NAME) {
@@ -46,13 +55,15 @@ const main = async () => {
       throw new Error("QUERY_LIMIT error");
     }
 
+    errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
+
+    const databasePort = parseInt(process.env.DATABASE_PORT);
+
     const queryLimit = parseInt(process.env.QUERY_LIMIT);
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
-
     database.connect({
-      host: "mysql",
-      port: 3306,
+      host: process.env.DATABASE_HOST,
+      port: databasePort,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
@@ -67,28 +78,7 @@ const main = async () => {
       bigNumberStrings: true,
     });
 
-    async function healthCheck() {
-      let connection = null;
-      try {
-        connection = await database.client.getConnection();
-
-        await connection.ping();
-
-        console.log("Database Online");
-      } catch (err) {
-        logger.error("Database Error", err);
-
-        if (connection) {
-          await connection.rollback();
-        }
-      } finally {
-        if (connection) {
-          connection.release();
-        }
-      }
-    }
-
-    setInterval(healthCheck, 30000);
+    watchDatabase();
 
     const natsClient = await connect({
       name: process.env.POD_NAME,
@@ -120,13 +110,13 @@ const main = async () => {
 
     const jetStream = jetStreamManager.jetstream();
 
-    logger.info("ONLINE");
-
     let connection: any = null;
 
     while (true) {
+      console.log("Iteration");
+
       await sleep(parseInt(process.env.QUERY_INTERVAL));
-      
+
       try {
         connection = await database.client.getConnection();
 
@@ -140,45 +130,49 @@ const main = async () => {
           [false, queryLimit]
         );
 
-        const queryLength = findEvents.length;
+        if (findEvents.length < 1) continue;
 
-        console.log(queryLength);
+        console.log("Publishing: " + findEvents.length);
 
-        if (queryLength < 1) continue;
-        
-        for (const event of findEvents) {
+        for (const EVENT of findEvents) {
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
           try {
-            ///////////////////////////////////////////////////////////////////
             await connection.beginTransaction();
 
             const [updateEvent] = await connection.execute(
               "UPDATE events SET published = ? WHERE id = ?",
-              [true, event.id]
+              [true, EVENT.id]
             );
 
             if (updateEvent.affectedRows !== 1) {
-              throw new Error("UPDATE_EVENT");
+              throw new Error("updateEventError");
             }
 
-            const payload = JSON.stringify(event);
+            const eventSubject = process.env.STREAM_NAME + "." + EVENT.type;
 
-            const subject = process.env.STREAM_NAME + "." + event.type;
+            const eventData = JSON.stringify(EVENT);
 
-            const published = await jetStream.publish(subject, payload, {
-              msgID: event.id,
-            });
+            const publishEvent = await jetStream.publish(
+              eventSubject,
+              eventData,
+              {
+                msgID: EVENT.id,
+              }
+            );
 
-            if (!published.seq) {
-              throw new Error("PUBLISHING");
+            if (!publishEvent.seq) {
+              throw new Error("eventPublishError");
             }
 
             await connection.commit();
-            ///////////////////////////////////////////////////////////////////
           } catch (err) {
-            console.log(err);
+            logger.error(err);
 
             continue;
           }
+
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
       } catch (err: any) {
         logger.error(err);
@@ -193,7 +187,7 @@ const main = async () => {
       }
     }
   } catch (err) {
-    catcher(err);
+    catchError(err);
   }
 };
 

@@ -4,10 +4,6 @@
 
 ./common/publish.sh
 
-echo "⏳ SLEEP ..."
-
-sleep 15
-
 set -euo pipefail
 
 PACKAGE_NAME="@pairfy/common"

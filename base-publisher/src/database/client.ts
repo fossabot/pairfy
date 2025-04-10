@@ -19,4 +19,4 @@ class DatabaseWrap {
 
 const database = new DatabaseWrap();
 
-export { database }
+export { database, DatabaseWrap }

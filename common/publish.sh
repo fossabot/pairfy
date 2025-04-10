@@ -24,10 +24,19 @@ if npm view $PACKAGE_NAME@$CURRENT_VERSION > /dev/null 2>&1; then
 
   npm run pub
 
+  echo "⏳ SLEEP ..."
+
+  sleep 15
+
 else
   echo "🚀 Publicando versión $CURRENT_VERSION..."
 
   cd $PACKAGE_DIR
 
   npm run pub
+  
+  echo "⏳ SLEEP ..."
+
+  sleep 15
+
 fi
