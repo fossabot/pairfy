@@ -20,6 +20,10 @@ fi
 if npm view $PACKAGE_NAME@$CURRENT_VERSION > /dev/null 2>&1; then
   echo "🟡 La versión $CURRENT_VERSION ya está publicada."
 
+  cd $PACKAGE_DIR
+
+  npm run pub
+
 else
   echo "🚀 Publicando versión $CURRENT_VERSION..."
 
