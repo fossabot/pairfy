@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS events (
   agent_id VARCHAR(200) DEFAULT NULL,
   spec_version INT UNSIGNED NOT NULL,
   created_at DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  
   PRIMARY KEY (id),
   INDEX idx_published (published),
   INDEX idx_created_at (created_at)

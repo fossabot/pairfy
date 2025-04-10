@@ -10,8 +10,7 @@ import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
-import { createEvent } from "./createEvent";
-import { loadSql } from "@pairfy/common";
+import { createEvent } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -22,7 +21,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
   console.log(params);
 
-  console.log(loadSql("events.sql"));
+
 
   try {
     connection = await DB.client.getConnection();

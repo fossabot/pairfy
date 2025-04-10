@@ -1,5 +1,7 @@
 import { Connection } from "mysql2/promise";
-import { getEventId } from "../utils/nano";
+import { customAlphabet } from "nanoid";
+
+const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 26);
 
 export async function createEvent(
   connection: Connection,
@@ -23,3 +25,6 @@ export async function createEvent(
 
   return await connection.execute(sql, values);
 }
+
+
+//end
