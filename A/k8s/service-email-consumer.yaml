@@ -18,14 +18,6 @@ spec:
           image: pairfy/base-consumer
           ports:
             - containerPort: 3000
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
           env:
             - name: POD_NAME
               valueFrom:
@@ -39,6 +31,10 @@ spec:
               value: service-email-group
             - name: DURABLE_NAME
               value: service-email-consumer
+            - name: STREAM_LIST
+              value: service-seller
+            - name: FILTER_SUBJECTS
+              value: CreateEmail                            
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
@@ -58,8 +54,6 @@ spec:
               value: service_email
             - name: DATABASE_USER
               value: marketplace
-            - name: STREAM_LIST
-              value: service-seller
           resources:
             limits:
               memory: "500Mi"

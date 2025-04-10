@@ -21,6 +21,10 @@ const main = async () => {
     if (!process.env.STREAM_LIST) {
       throw new Error("STREAM_LIST error");
     }
+    
+    if (!process.env.FILTER_SUBJECTS) {
+      throw new Error("FILTER_SUBJECTS error");
+    }
 
     if (!process.env.SERVICE_NAME) {
       throw new Error("SERVICE_NAME error");
@@ -58,6 +62,7 @@ const main = async () => {
       throw new Error("DATABASE_NAME error");
     }
 
+
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -78,7 +83,7 @@ const main = async () => {
     );
 
     /////////////////////////////////////////////////////////////////////////
-    
+
     const databasePort = parseInt(process.env.DATABASE_PORT);
 
     database.connect({
@@ -116,7 +121,11 @@ const main = async () => {
     const streamList = process.env.STREAM_LIST.split(",");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
-
+    
+    const filterSubjects: string[] = process.env.FILTER_SUBJECTS
+    ? process.env.FILTER_SUBJECTS.split(",").map(subject => subject.trim())
+    : [];
+  
     try {
       streamList.forEach(async (stream) => {
         await jetStreamManager.consumers.add(stream, {
@@ -137,7 +146,11 @@ const main = async () => {
 
         const consumer = await jetStream.consumers.get(
           stream,
-          process.env.DURABLE_NAME as string
+
+          {
+            name_prefix: process.env.DURABLE_NAME as string,
+            filter_subjects: [filterSubjects],
+          }
         );
 
         while (true) {
@@ -162,7 +175,6 @@ const main = async () => {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
-
   } catch (err) {
     catchError(err);
   }

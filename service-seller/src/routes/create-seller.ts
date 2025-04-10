@@ -45,6 +45,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
     );
 
     const emailScheme = {
+      type: 'register:seller',
       email: params.email,
       token: token,
     };
@@ -82,7 +83,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       connection,
       timestamp,
       "service-seller",
-      "CreateSellerEmail",
+      "CreateEmail",
       JSON.stringify(emailScheme),
       sellerId
     );

@@ -6,8 +6,8 @@ export async function consumedEvent(
   seq: number
 ) {
   const [result] = await connection.execute(
-    "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
-    [event.id, seq, event.type, true]
+    "INSERT INTO processed (id, seq, type, processed, created_at) VALUES (?, ?, ?, ?)",
+    [event.id, seq, event.type, true, Date.now()]
   );
 
   const check = "affectedRows" in result && result.affectedRows === 1
