@@ -1,4 +1,4 @@
-import { isEventProcessed } from "./isEventProcessed.js";
+import { isProcessedEvent } from "./isProcessedEvent.js";
 import { database } from "../../database/client.js";
 import { consumedEvent } from "./processEvent.js";
 import { logger } from "../../utils/index.js";
@@ -12,7 +12,7 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
   try {
     connection = await database.client.getConnection();
 
-    const isProcessed = await isEventProcessed(connection, event.id);
+    const isProcessed = await isProcessedEvent(connection, event.id);
 
     if (isProcessed) {
       return Promise.resolve(true);

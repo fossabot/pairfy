@@ -1,7 +1,7 @@
 import { logger } from "../../utils/index.js";
 import { Connection, RowDataPacket } from "mysql2/promise";
 
-export async function isEventProcessed(
+export async function isProcessedEvent(
   connection: Connection,
   id: string
 ): Promise<boolean> {
@@ -11,7 +11,7 @@ export async function isEventProcessed(
   );
 
   if (findProcessed.length > 0) {
-    logger.info("EventRepeated");
+    logger.info("eventRepeated");
 
     return true;
   } else {
