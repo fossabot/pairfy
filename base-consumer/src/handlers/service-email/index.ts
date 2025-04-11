@@ -1,8 +1,7 @@
-import { isProcessedEvent } from "./isProcessedEvent.js";
 import { database } from "../../database/client.js";
-import { consumedEvent } from "./processEvent.js";
 import { logger } from "../../utils/index.js";
 import { sendEmail } from "./send-email.js";
+import { isProcessedEvent, consumedEvent } from '@pairfy/common'
 
 const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
   let response = null;

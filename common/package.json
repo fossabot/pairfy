@@ -1,6 +1,6 @@
 {
   "name": "@pairfy/common",
-  "version": "1.0.43",
+  "version": "1.0.50",
   "description": "Common shared package",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -28,10 +28,12 @@
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@types/pino": "^7.0.4",
     "typescript": "^5.0.0"
   },
   "dependencies": {
     "mysql2": "^3.14.0",
-    "nanoid": "^5.1.5"
+    "nanoid": "^5.1.5",
+    "pino": "^9.6.0"
   }
 }
