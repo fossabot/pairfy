@@ -19,4 +19,3 @@ __exportStar(require("./createSeller"), exports);
 __exportStar(require("./isProcessedEvent"), exports);
 __exportStar(require("./consumedEvent"), exports);
 __exportStar(require("./loadSql"), exports);
-//end
