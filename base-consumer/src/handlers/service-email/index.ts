@@ -2,7 +2,7 @@ import { isProcessedEvent } from "./isProcessedEvent.js";
 import { database } from "../../database/client.js";
 import { consumedEvent } from "./processEvent.js";
 import { logger } from "../../utils/index.js";
-import { sendEmail } from "./sendEmail.js";
+import { sendEmail } from "./send-email.js";
 
 const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -24,7 +24,7 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
 
     ///////////////////////////////////////////////////////
 
-    await sendEmail(dataParsed.type, dataParsed.email);
+    await sendEmail(dataParsed.type, dataParsed.email, dataParsed);
 
     console.log("EMAIL_SEND");
 
