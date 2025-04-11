@@ -13,6 +13,8 @@ const verifySellerHandler = asyncHandler(async (req, res) => {
 
   console.log(sellerData);
 
+  
+
   return res.status(200).json({
     success: true,
     data: {
