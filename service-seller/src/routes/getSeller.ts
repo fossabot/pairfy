@@ -1,16 +1,19 @@
 import { Connection, RowDataPacket } from "mysql2/promise";
+import { ApiError, ERROR_CODES } from "../common/errorHandler";
 
-export async function getSellerById(
+export async function getSellerByEmail(
   connection: Connection,
-  id: string
+  email: string
 ): Promise<any> {
   const [rows] = await connection.execute<RowDataPacket[]>(
-    `SELECT * FROM sellers WHERE id = ?`,
-    [id]
+    `SELECT * FROM sellers WHERE email = ?`,
+    [email]
   );
 
   if (rows.length === 0) {
-    throw new Error("getSellerByIdError");
+    throw new ApiError(400, "Seller not found", {
+      code: ERROR_CODES.NOT_FOUND
+    });
   }
 
   return rows[0]

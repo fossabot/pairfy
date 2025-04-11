@@ -41,7 +41,7 @@ import LoginForm from '~/components/LoginForm.vue'
 import VerifyForm from '~/components/VerifyForm.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
 import { useAuthStore } from '@/stores/auth'
-import ToastComp from "@/components/ToastComp.vue";
+
 
 const toastRef: any = ref(null);
 
@@ -82,7 +82,7 @@ onMounted(async () => {
   if (mode === 'verify' && token) {
     try {
       await auth.verify({ token })
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
 
       displayMessage(err, 'error', 200000)

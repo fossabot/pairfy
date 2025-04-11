@@ -92,7 +92,9 @@ export const useAuthStore = defineStore("auth", () => {
       });
 
     } catch (err: any) {
-      throw err.response._data.data;
+    
+      throw err
+
     } finally {
       loading.value = false;
     }

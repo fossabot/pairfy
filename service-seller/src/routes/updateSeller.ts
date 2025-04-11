@@ -1,8 +1,10 @@
 import mysql from "mysql2/promise";
-import { ApiError } from "../common/errorHandler";
+import { ApiError, ERROR_CODES } from "../common/errorHandler";
 
 export const updateSeller = async (
   connection: mysql.Connection,
+  id: string,
+  schema_v: number,
   payload: any
 ) => {
   const fields = Object.keys(payload)
@@ -15,7 +17,7 @@ export const updateSeller = async (
     WHERE id = ? AND schema_v = ?
     `;
 
-  const values = [...Object.values(payload), payload.id, payload.schema_v - 1];
+  const values = [...Object.values(payload), id, schema_v];
 
   const [rows] = await connection.execute<mysql.ResultSetHeader>(
     sql,
@@ -24,8 +26,8 @@ export const updateSeller = async (
 
   if (rows.affectedRows !== 1) {
     throw new ApiError(409, "Update failed: version mismatch or not found", {
-        code: "UPDATE_CONFLICT",
-        details: { id: payload.id },
+        code: ERROR_CODES.UPDATE_CONFLICT,
+        details: { id: id },
       });
   }
 };
