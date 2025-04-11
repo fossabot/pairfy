@@ -91,10 +91,7 @@ export const useAuthStore = defineStore("auth", () => {
         body: credentials
       });
 
-      console.log(response.data);
-
     } catch (err: any) {
-   
       throw err.response._data.data;
     } finally {
       loading.value = false;
@@ -108,7 +105,7 @@ export const useAuthStore = defineStore("auth", () => {
         credentials: "include",
       });
     } catch {
-      // si falla, igual se limpia
+
     }
 
     isAuthenticated.value = false;
