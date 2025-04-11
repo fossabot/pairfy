@@ -1,26 +1,28 @@
 import { verifySellerValidator } from "../validators/verify-seller";
-import { asyncHandler } from "../common";
+
+import { ApiError, asyncHandler, ERROR_CODES } from "../common/errorHandler";
 
 const verifySellerMiddlewares: any = [];
 
 const verifySellerHandler = asyncHandler(async (req, res) => {
-
   const { token } = verifySellerValidator.parse(req.body);
 
-  const isValid = token === "123456";
+  console.log(token);
+
+  const isValid = true;
 
   if (!isValid) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    throw new ApiError(401, "token authentication error", {
+      code: ERROR_CODES.INVALID_SIGNATURE,
+    });
   }
 
   return res.status(200).json({
+    success: true,
     data: {
       message: "Token verified successfully",
-      sellerId: 42,
     },
   });
-
-
 });
 
 export { verifySellerMiddlewares, verifySellerHandler };

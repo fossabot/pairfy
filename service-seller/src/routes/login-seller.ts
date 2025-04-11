@@ -1,12 +1,12 @@
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import database from "../database";
-import { BadRequestError } from "../errors";
 import { comparePassword } from "../utils/password";
 import { Request, Response } from "express";
 import { SellerToken, sellerMiddleware } from "../utils/seller";
 import { createToken } from "../utils/token";
 import { getPubKeyHash } from "../utils/blockchain";
 import { _ } from "../utils/pino";
+import { ApiError, ERROR_CODES } from "../common/errorHandler";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
@@ -36,7 +36,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (!verifySignature) {
-      throw new BadRequestError("AUTH_FAILED");
+      throw new ApiError(401, "signature error", { code: ERROR_CODES.INVALID_SIGNATURE });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     _.error(err);
 
-    throw new BadRequestError(err.message);
+    throw new ApiError(401, "authentication failed", { code: ERROR_CODES.INVALID_CREDENTIALS });
   } finally {
     if (connection) {
       connection.release();

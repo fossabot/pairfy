@@ -4,13 +4,14 @@ import {
   RegistrationInput,
 } from "../validators/create-seller";
 import { hashPassword } from "../utils/password";
-import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
 import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { getUsername } from "../utils/names";
 import { _ } from "../utils/pino";
 import { createEvent, createSeller } from "@pairfy/common";
+
+import { ApiError, ERROR_CODES } from "../common/errorHandler";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -98,7 +99,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       await connection.rollback();
     }
 
-    throw new BadRequestError("Invalid username or email");
+    throw new ApiError(401, "Invalid Credentials", { code: ERROR_CODES.INVALID_CREDENTIALS });
   } finally {
     if (connection) {
       connection.release();
