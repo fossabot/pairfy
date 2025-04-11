@@ -1,12 +1,12 @@
 <template>
-    <div class="toast-container">
+    <div class="p-ToastComp-container">
       <transition-group name="toast" tag="div">
         <div
           v-for="toast in toasts"
           :key="toast.id"
-          :class="['toast', toast.type]"
+          :class="['p-ToastComp', toast.type]"
         >
-          <span class="toast-message">{{ toast.message }}</span>
+          <span class="p-ToastComp-message">{{ toast.message }}</span>
 
           
           <button class="close-btn" @click="removeToast(toast.id)">×</button>
@@ -20,7 +20,7 @@
   const toasts = ref<{ id: number; message: string; type: string }[]>([]);
   let counter = 0;
   
-  // Show a new toast
+
   function showToast(
     message: string,
     type: "success" | "error" | "info" | "default" = "default",
@@ -32,7 +32,7 @@
     setTimeout(() => removeToast(id), duration);
   }
   
-  // Remove a toast manually
+
   function removeToast(id: number) {
     toasts.value = toasts.value.filter((t) => t.id !== id);
   }
@@ -41,7 +41,7 @@
   </script>
   
   <style scoped>
-  .toast-container {
+  .p-ToastComp-container {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -51,7 +51,7 @@
     gap: 12px;
   }
   
-  .toast {
+  .p-ToastComp {
     position: relative;
     min-width: 240px;
     max-width: 320px;
@@ -66,24 +66,24 @@
     gap: 8px;
   }
   
-  .toast.success {
+  .p-ToastComp.success {
     background-color: #e6f4ea;
     color: #216e39;
   }
-  .toast.error {
+  .p-ToastComp.error {
     background-color: #fdecea;
     color: #b91c1c;
   }
-  .toast.info {
+  .p-ToastComp.info {
     background-color: #e8f1fb;
     color: #1e3a8a;
   }
-  .toast.default {
+  .p-ToastComp.default {
     background-color: #f3f4f6;
     color: #374151;
   }
   
-  .toast-message {
+  .p-ToastComp-message {
     flex: 1;
     overflow-wrap: break-word;
   }
@@ -100,12 +100,12 @@
   }
   
   /* Transition */
-  .toast-enter-active,
-  .toast-leave-active {
+  .p-ToastComp-enter-active,
+  .p-ToastComp-leave-active {
     transition: all 0.3s ease;
   }
-  .toast-enter-from,
-  .toast-leave-to {
+  .p-ToastComp-enter-from,
+  .p-ToastComp-leave-to {
     opacity: 0;
     transform: translateY(-10px);
   }
