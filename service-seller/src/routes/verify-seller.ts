@@ -1,6 +1,6 @@
-import { verifySellerValidator } from "../validators/verify-seller";
-
 import { ApiError, asyncHandler, ERROR_CODES } from "../common/errorHandler";
+import { verifySellerValidator } from "../validators/verify-seller";
+import { verifyToken } from "../utils/token";
 
 const verifySellerMiddlewares: any = [];
 
@@ -9,13 +9,9 @@ const verifySellerHandler = asyncHandler(async (req, res) => {
 
   console.log(token);
 
-  const isValid = true;
+  const sellerData = verifyToken(token, process.env.AGENT_JWT_KEY as string);
 
-  if (!isValid) {
-    throw new ApiError(401, "token authentication error", {
-      code: ERROR_CODES.INVALID_SIGNATURE,
-    });
-  }
+  console.log(sellerData);
 
   return res.status(200).json({
     success: true,

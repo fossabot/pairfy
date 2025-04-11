@@ -73,7 +73,11 @@ onMounted(async () => {
   const token = route.query.t?.toString()
 
   if (mode === 'verify' && token) {
-    await auth.verify({ token })
+    try {
+      await auth.verify({ token })
+    } catch (err) {
+      console.error(err)
+    }
   }
 })
 </script>
