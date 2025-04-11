@@ -94,7 +94,8 @@ export const useAuthStore = defineStore("auth", () => {
       console.log(response.data);
 
     } catch (err: any) {
-      throw err;
+   
+      throw err.response._data.data;
     } finally {
       loading.value = false;
     }

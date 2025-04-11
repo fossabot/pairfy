@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 
 export const ERROR_CODES = {
-
   BAD_REQUEST: "BAD_REQUEST",
   UNAUTHORIZED: "UNAUTHORIZED",
   FORBIDDEN: "FORBIDDEN",
@@ -78,14 +77,14 @@ const normalizeError = (err: unknown): ApiError => {
     return new ApiError(500, err.message || "Internal error", {
       code: "INTERNAL_ERROR",
       details: { stack: err.stack },
-      isOperational: false, 
+      isOperational: false,
     });
   }
 
   return new ApiError(500, "Unknown internal error", {
     code: "INTERNAL_ERROR",
     details: { raw: err },
-    isOperational: false, 
+    isOperational: false,
   });
 };
 
@@ -99,10 +98,11 @@ export const errorHandler = (
 
   res.setHeader("Content-Type", "application/json");
 
-
   if (!normalized.isOperational) {
     console.error("Unexpected error:", normalized);
   }
+
+  console.log(normalized);
 
   return res.status(normalized.statusCode).json({
     status: normalized.statusCode,

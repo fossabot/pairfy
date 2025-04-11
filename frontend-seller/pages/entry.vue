@@ -1,6 +1,9 @@
 <!-- pages/login.vue -->
 <template>
   <div class="entry">
+
+    <ToastComp ref="toastRef" />
+
     <div class="entry-form">
 
       <div class="entry-form-image">
@@ -38,6 +41,13 @@ import LoginForm from '~/components/LoginForm.vue'
 import VerifyForm from '~/components/VerifyForm.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
 import { useAuthStore } from '@/stores/auth'
+import ToastComp from "@/components/ToastComp.vue";
+
+const toastRef: any = ref(null);
+
+const displayMessage = (message: any, type: any, duration: any) => {
+  toastRef.value?.showToast(message, type, duration) 
+}
 
 const auth = useAuthStore()
 
@@ -58,15 +68,12 @@ const views: any = {
 
 const route = useRoute()
 
-
 const currentView = computed(() => {
   const m = route.query.m?.toString() || 'login'
   return m in views ? m : 'login'
 })
 
-
 const currentComponent = computed(() => views[currentView.value])
-
 
 onMounted(async () => {
   const mode = route.query.m?.toString()
@@ -77,6 +84,8 @@ onMounted(async () => {
       await auth.verify({ token })
     } catch (err) {
       console.error(err)
+
+      displayMessage(err, 'error', 200000)
     }
   }
 })
