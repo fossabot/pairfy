@@ -25,8 +25,9 @@
     "emitDecoratorMetadata": true                   // Enable metadata for decorators
   },
   "include": [
-    "src/**/*",                                     // Include all TypeScript files in the 'src' folder
-    "types/**/*"                                    // Include custom types (if any)
+    "src/**/*",
+    "types/**/*",
+    "handlers/**/*"
   ],
   "exclude": [
     "node_modules",                                 // Exclude 'node_modules'
