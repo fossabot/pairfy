@@ -55,10 +55,10 @@
     position: relative;
     min-width: 240px;
     max-width: 320px;
-    padding: 12px 16px 12px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
+    padding: 1rem;
+    border-radius: var(--radius-b);
+    box-shadow: var(--shadow-b);
+    font-size: var(--text-size-1);
     font-weight: 500;
     display: flex;
     justify-content: space-between;
