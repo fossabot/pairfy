@@ -83,7 +83,7 @@ onMounted(async () => {
     try {
       await auth.verify({ token })
     } catch (err: any) {
-      console.error(err)
+      console.error("FINAL", err)
 
       displayMessage(err, 'error', 200000)
     }

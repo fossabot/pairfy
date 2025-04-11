@@ -45,12 +45,10 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const response: any = await $fetch("/api/seller/create-seller", {
         method: "POST",
-        body: credentials
+        body: credentials,
       });
 
       console.log(response.data);
-      
-
     } catch (err: any) {
       throw err;
     } finally {
@@ -79,22 +77,20 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-
-  const verify = async (credentials: {
-    token: string;
-  }) => {
+  const verify = async (credentials: { token: string }) => {
     loading.value = true;
 
     try {
       const response: any = await $fetch("/api/seller/verify-seller", {
         method: "POST",
-        body: credentials
+        body: credentials,
+        async onResponseError({ response }) {
+          console.log("TEST2", JSON.stringify(response._data.message))
+          throw new Error(JSON.stringify(response._data.message));
+        }
       });
-
     } catch (err: any) {
-    
-      throw err
-
+      throw err;
     } finally {
       loading.value = false;
     }
@@ -106,9 +102,7 @@ export const useAuthStore = defineStore("auth", () => {
         method: "GET",
         credentials: "include",
       });
-    } catch {
-
-    }
+    } catch {}
 
     isAuthenticated.value = false;
     seller.value = null;
