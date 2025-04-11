@@ -18,10 +18,10 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth'
 
-// ✅ Llamar el store normalmente
+
 const auth = useAuthStore()
 
-// ✅ Cargar el perfil del usuario logueado SOLO en SSR
+
 if (import.meta.server) {
   await auth.fetchProfile()
 }

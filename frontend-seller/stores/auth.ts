@@ -79,6 +79,27 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+
+  const verify = async (credentials: {
+    token: string;
+  }) => {
+    loading.value = true;
+
+    try {
+      const response: any = await $fetch("/api/seller/verify-seller", {
+        method: "POST",
+        body: credentials
+      });
+
+      console.log(response.data);
+
+    } catch (err: any) {
+      throw err;
+    } finally {
+      loading.value = false;
+    }
+  };
+
   const logout = async () => {
     try {
       await $fetch(`${config.serviceSellerBase}/seller/logout-seller`, {
@@ -101,6 +122,7 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     register,
     logout,
+    verify,
     fetchProfile,
   };
 });

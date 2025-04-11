@@ -37,6 +37,9 @@ import RegisterForm from '~/components/RegisterForm.vue'
 import LoginForm from '~/components/LoginForm.vue'
 import VerifyForm from '~/components/VerifyForm.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
 
 
 definePageMeta({
@@ -63,6 +66,16 @@ const currentView = computed(() => {
 
 
 const currentComponent = computed(() => views[currentView.value])
+
+
+onMounted(async () => {
+  const mode = route.query.m?.toString()
+  const token = route.query.t?.toString()
+
+  if (mode === 'verify' && token) {
+    await auth.verify({ token })
+  }
+})
 </script>
 
 <style scoped>
