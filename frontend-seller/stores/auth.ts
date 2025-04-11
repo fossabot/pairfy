@@ -82,7 +82,7 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
 
     try {
-      const response: any = await ofetch("/api/seller/verify-seller", {
+      const response: any = await $fetch("/api/seller/verify-seller", {
         method: "POST",
         body: credentials,
         async onResponseError({ response }) {

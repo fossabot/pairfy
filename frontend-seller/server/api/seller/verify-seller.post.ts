@@ -1,4 +1,3 @@
-import { ofetch } from "ofetch";
 import { throwRemoteError } from "~/server/utils/fetch";
 
 export default defineEventHandler(async (event) => {
@@ -7,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   try {
-    const response = await ofetch(
+    const response = await $fetch(
       `${config.serviceSellerBase}/seller/verify-seller`,
       {
         method: "POST",
