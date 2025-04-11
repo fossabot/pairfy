@@ -1,3 +1,4 @@
+import { ofetch } from "ofetch";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", () => {
@@ -81,16 +82,17 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
 
     try {
-      const response: any = await $fetch("/api/seller/verify-seller", {
+      const response: any = await ofetch("/api/seller/verify-seller", {
         method: "POST",
         body: credentials,
         async onResponseError({ response }) {
-          console.log("TEST2", JSON.stringify(response._data.message))
-          throw new Error(JSON.stringify(response._data.message));
+          console.log("TEST2", response._data);
+          throw new Error(JSON.stringify(response._data));
         }
       });
     } catch (err: any) {
-      throw err;
+      console.log("TEST3", JSON.stringify(err))
+      throw new Error(err);
     } finally {
       loading.value = false;
     }
