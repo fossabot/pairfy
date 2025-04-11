@@ -86,12 +86,10 @@ export const useAuthStore = defineStore("auth", () => {
         method: "POST",
         body: credentials,
         async onResponseError({ response }) {
-          console.log("TEST2", response._data.data);
           throw new Error(JSON.stringify(response._data.data));
         }
       });
     } catch (err: any) {
-      console.log("TEST3", JSON.stringify(err))
       throw new Error(err.message);
     } finally {
       loading.value = false;
