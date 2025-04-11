@@ -9,14 +9,21 @@
 
 
       <div class="entry-form-content">
-        <LoginForm v-if="mode === 'login'" />
-        <RegisterForm v-if="mode === 'register'" />
-        <RecoveryForm v-if="mode === 'recovery'" />
+
+        <component :is="currentComponent" />
 
         <div class="entry-form-switcher">
-          <button @click="mode = 'login'">I already have an account.</button>
-          <button @click="mode = 'register'">Create a new account.</button>
-          <button @click="mode = 'recovery'">Recover password.</button>
+
+          <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
+            <button @click="mode = 'login'">I already have an account.</button>
+          </NuxtLink>
+          <NuxtLink :to="{ path: '/entry', query: { m: 'register' } }">
+            <button @click="mode = 'register'">Create a new account.</button>
+          </NuxtLink>
+          <NuxtLink :to="{ path: '/entry', query: { m: 'recovery' } }">
+            <button @click="mode = 'recovery'">Recover password.</button>
+          </NuxtLink>
+
         </div>
       </div>
 
@@ -24,17 +31,38 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import miImagen from '@/assets/brand/icon.png'
-import { ref } from 'vue'
+import RegisterForm from '~/components/RegisterForm.vue'
+import LoginForm from '~/components/LoginForm.vue'
+import VerifyForm from '~/components/VerifyForm.vue'
+import RecoveryForm from '~/components/RecoveryForm.vue'
+
 
 definePageMeta({
   layout: 'entry'
 })
 
-const mode = ref('login') // 'login', 'register', 'recovery'
+const mode = ref('login')
 
 
+const views: any = {
+  login: LoginForm,
+  register: RegisterForm,
+  recovery: RecoveryForm,
+  verify: VerifyForm
+} as const
+
+const route = useRoute()
+
+
+const currentView = computed(() => {
+  const m = route.query.m?.toString() || 'login'
+  return m in views ? m : 'login'
+})
+
+
+const currentComponent = computed(() => views[currentView.value])
 </script>
 
 <style scoped>
