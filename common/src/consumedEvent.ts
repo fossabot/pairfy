@@ -1,4 +1,4 @@
-import { logger } from "../utils/index.js";
+import { logger } from "./logger.js";
 import { Connection } from "mysql2/promise";
 
 export async function consumedEvent(
