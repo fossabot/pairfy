@@ -14,10 +14,6 @@ const main = async () => {
       throw new Error("POD_NAME error");
     }
 
-    if (!process.env.POD_TIMEOUT) {
-      throw new Error("POD_TIMEOUT error");
-    }
-
     if (!process.env.STREAM_LIST) {
       throw new Error("STREAM_LIST error");
     }
@@ -61,7 +57,8 @@ const main = async () => {
     if (!process.env.DATABASE_NAME) {
       throw new Error("DATABASE_NAME error");
     }
-
+    
+ 
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -76,6 +73,7 @@ const main = async () => {
     errorEvents.forEach((e: string) =>
       process.on(e, (err) => disableConnections(e, err))
     );
+
 
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`

@@ -8,8 +8,11 @@ export async function sendEmail(type: string, to: string, payload: any) {
   let template: string = "";
 
   if (type === "register:seller") {
-    subject = "Pairfy email confirmation."
-    template = generateRegistrationEmail({ name: "Seller", verifyUrl: "https://x.com/explore" });
+    subject = "Pairfy email confirmation.";
+    template = generateRegistrationEmail({
+      name: "Seller",
+      verifyUrl: `${process.env.HANDLER_URL_SELLER}/entry?m=verify&t=${payload.token}`,
+    });
   }
 
   const { data, error } = await resend.emails.send({
