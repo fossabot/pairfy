@@ -47,7 +47,7 @@ export class ApiError extends Error {
   constructor(
     statusCode: number,
     message: string,
-    options?: { code?: string; details?: unknown, isOperational?: boolean }
+    options?: { code?: string; details?: unknown; isOperational?: boolean }
   ) {
     super(message);
     this.name = new.target.name;
@@ -69,6 +69,7 @@ const normalizeError = (err: unknown): ApiError => {
     return new ApiError(400, "Validation error", {
       code: "VALIDATION_ERROR",
       details: err.flatten(),
+      isOperational: true,
     });
   }
 
@@ -76,15 +77,16 @@ const normalizeError = (err: unknown): ApiError => {
     return new ApiError(500, err.message || "Internal error", {
       code: "INTERNAL_ERROR",
       details: { stack: err.stack },
+      isOperational: false, 
     });
   }
 
-  return new ApiError(500, "Internal server error", {
+  return new ApiError(500, "Unknown internal error", {
     code: "INTERNAL_ERROR",
     details: { raw: err },
+    isOperational: false, 
   });
 };
-
 
 export const errorHandler = (
   err: unknown,
@@ -95,6 +97,12 @@ export const errorHandler = (
   const normalized = normalizeError(err);
 
   res.setHeader("Content-Type", "application/json");
+
+
+  if (!normalized.isOperational) {
+    console.error("Unexpected error:", normalized);
+  }
+
   return res.status(normalized.statusCode).json({
     status: normalized.statusCode,
     message: normalized.message,
@@ -102,7 +110,6 @@ export const errorHandler = (
     details: normalized.details ?? null,
   });
 };
-
 
 export const asyncHandler =
   (fn: (...args: any[]) => Promise<any>) =>
