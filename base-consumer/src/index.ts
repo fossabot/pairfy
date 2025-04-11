@@ -4,7 +4,7 @@ import {
   jetstreamManager,
   ReplayPolicy,
 } from "@nats-io/jetstream";
-import { catchError, disableConnections, logger } from "./utils/index.js";
+import { catchError, checkHandlerVariables, disableConnections, logger } from "./utils/index.js";
 import { connect } from "@nats-io/transport-node";
 import { database } from "./database/client.js";
 
@@ -57,8 +57,9 @@ const main = async () => {
     if (!process.env.DATABASE_NAME) {
       throw new Error("DATABASE_NAME error");
     }
-    
- 
+
+    checkHandlerVariables();
+
     const errorEvents: string[] = [
       "exit",
       "SIGINT",
@@ -73,7 +74,6 @@ const main = async () => {
     errorEvents.forEach((e: string) =>
       process.on(e, (err) => disableConnections(e, err))
     );
-
 
     const MODU = await import(
       `./handlers/${process.env.SERVICE_NAME}/index.js`
