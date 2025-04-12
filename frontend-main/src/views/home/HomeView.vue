@@ -141,7 +141,6 @@ section.visible {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0;
   display: flex;
 }
 

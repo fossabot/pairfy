@@ -16,6 +16,7 @@ import BandComp from '@/views/home/BandComp.vue';
 .p-banner {
     flex-direction: column;
     align-items: center;
+    margin-top: 1rem;
     display: flex;
     width: 100%;
 }
