@@ -80,7 +80,7 @@ function hideModal() {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     gap: 1rem;
 }
 
@@ -100,8 +100,8 @@ function hideModal() {
 }
 
 .icon {
-    width: 10rem;
-    height: 10rem;
+    width: 7.5rem;
+    height: 7.5rem;
     object-fit: contain;
 }
 
