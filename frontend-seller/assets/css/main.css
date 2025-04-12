@@ -37,7 +37,7 @@ body {
   --border-a: #d8d8d8;
   --border-b: #86868b;
 
-  --primary-a: var(--orange-a);
+  --primary-a: var(--red-a);
   --primary-b: var(--gray-a);
 
   --radius-a: 4px;
@@ -45,11 +45,13 @@ body {
   --radius-c: 16px;
   --radius-d: 24px;
 
-  --blue-a: #1573ff;
-  --gray-a: #2c3e50;
-  --green-a: #28c76f;
-  --orange-a: #ff6700;
-  --yellow-a: #ffc800;
+  --red-a:     #ff2e4d;
+  --yellow-a:  #ffc94d;
+  --blue-a:    #4d9aff;
+  --green-a:   #4dff95;
+  --orange-a:  #ff814d;
+  --purple-a:  #b84dff;
+  --pink-a:    #ff6f92;
 }
 
 :root {
