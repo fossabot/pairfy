@@ -139,11 +139,13 @@
   --radius-b: 8px;
   --radius-c: 999px;
   
-  --red-a: #ff2e4d;
-  --blue-a: #2563eb;
-  --green-a: #28c76f;
-  --orange-a: #ff6700;
-  --yellow-a: #ffc800;
+  --red-a:     #ff2e4d;
+  --yellow-a:  #ffc94d;
+  --blue-a:    #4d9aff;
+  --green-a:   #4dff95;
+  --orange-a:  #ff814d;
+  --purple-a:  #b84dff;
+  --pink-a:    #ff6f92;
 }
 
 *,
