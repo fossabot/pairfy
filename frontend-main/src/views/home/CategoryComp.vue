@@ -100,8 +100,8 @@ function hideModal() {
 }
 
 .icon {
-    width: 7.5rem;
-    height: 7.5rem;
+    width: 6rem;
+    height: 6rem;
     object-fit: contain;
 }
 
