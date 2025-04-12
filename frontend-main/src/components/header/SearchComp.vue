@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
     height: 3rem;
     width: inherit;
     overflow: hidden;
-    border-radius: var(--radius-b);
+    border-radius: 12px;
 }
 
 .search-input {

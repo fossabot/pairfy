@@ -82,7 +82,7 @@ function hideModal() {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     gap: 1rem;
 }
 
@@ -94,7 +94,12 @@ function hideModal() {
     text-align: center;
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
 
 .grid-item:hover {
