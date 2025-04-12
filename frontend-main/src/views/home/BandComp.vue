@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
 .band-wrap {
     justify-content: center;
     max-width: var(--body-a);
-    height: 25rem; 
+    height: 24rem; 
     width: 100%;
     z-index: 1;
     top: 0;
