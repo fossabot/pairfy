@@ -58,7 +58,7 @@ const goItem = (index) => {
 };
 
 const startBand = () => {
-    interval.value = setInterval(nextItem, 5000);
+    interval.value = setInterval(nextItem, 6000);
 };
 
 const pauseBand = () => {
