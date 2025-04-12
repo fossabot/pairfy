@@ -26,7 +26,7 @@
      units="px"
      height="48px"
      inkscape:zoom="4.192802"
-     inkscape:cx="64.753833"
+     inkscape:cx="64.276825"
      inkscape:cy="17.649295"
      inkscape:window-width="1708"
      inkscape:window-height="822"
@@ -70,16 +70,5 @@
          style="stroke-width:0.264583"
          x="48.527615"
          y="16.411993" /></text>
-    <text
-       xml:space="preserve"
-       style="font-size:3.52778px;line-height:1.25;font-family:'Inter 28pt';-inkscape-font-specification:'Inter 28pt';letter-spacing:-0.185208px;stroke-width:0.264583"
-       x="-0.13608135"
-       y="12.58438"
-       id="text2435"><tspan
-         sodipodi:role="line"
-         id="tspan2433"
-         style="font-size:3.52778px;stroke-width:0.264583"
-         x="-0.13608135"
-         y="12.58438">cardano</tspan></text>
   </g>
 </svg>
