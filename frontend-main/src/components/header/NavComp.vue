@@ -38,6 +38,7 @@
   justify-content: flex-start;
   max-width: var(--body-a);
   padding: 0.75rem 0rem;
+  font-weight: 300;
   list-style: none;
   margin: 0 auto;
   display: flex;
@@ -47,7 +48,6 @@
 .p-nav-list li a {
   transition: 0.2s ease;
   text-decoration: none;
-  font-weight: 400;
 }
 
 .p-nav-list li a:hover {
