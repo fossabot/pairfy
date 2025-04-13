@@ -1,7 +1,7 @@
 <template>
     <div class="p-category">
         <div class="category-title">
-            Categories
+            All Categories
         </div>
         <div class="category-grid">
             <div class="grid">
