@@ -4,7 +4,7 @@
         <PriceBar />
         <div class="header">
             <div class="header-column left flex">
-                <img class="brand" src="@/assets/brand/logo.png" alt="" @click="toHome"> 
+                <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome"> 
             </div>
             <div class="header-column center flex">
                 <SearchComp />
