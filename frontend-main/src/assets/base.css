@@ -173,8 +173,9 @@ body {
     background-color 0.5s;
   line-height: 1.6;
   font-family: 'Inter', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-optical-sizing: auto;
-  font-variation-settings: 'wdth' 100;
+
   font-style: normal;
   font-size: var(--text-size-1);
   text-rendering: optimizeLegibility;

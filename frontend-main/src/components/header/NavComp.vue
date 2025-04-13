@@ -38,7 +38,7 @@
   max-width: var(--body-a);
   justify-content: center;
   border-radius: 12px;
-  font-weight: 400;
+  font-weight: 600;
   list-style: none;
   margin: 0 auto;
   padding: 1rem;
@@ -52,6 +52,6 @@
 }
 
 .p-nav-list li a:hover {
-  font-weight: 500;
+  color: var(--primary-a);
 }
 </style>
