@@ -29,18 +29,19 @@
 
 <style scoped>
 .p-nav {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   width: 100%;
 }
 
 .p-nav-list {
+  background: var(--background-b);
   font-size: var(--text-size-1);
-  justify-content: flex-start;
   max-width: var(--body-a);
-  padding: 0.75rem 0rem;
+  justify-content: center;
+  border-radius: 12px;
   font-weight: 400;
   list-style: none;
   margin: 0 auto;
+  padding: 1rem;
   display: flex;
   gap: 2rem;
 }
