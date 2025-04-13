@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import miImagen from '@/assets/brand/icon.png'
+import miImagen from '@/assets/brand/icon.svg'
 import RegisterForm from '~/components/RegisterForm.vue'
 import LoginForm from '~/components/LoginForm.vue'
 import VerifyForm from '~/components/VerifyForm.vue'

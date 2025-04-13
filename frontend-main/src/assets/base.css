@@ -133,21 +133,20 @@
   --border-b: #86868b;
 
   --primary-a: var(--blue-a);
-  --primary-b:#2C3E50;
+
 
   --radius-a: 16px;
   --radius-b: 8px;
   --radius-c: 999px;
   
-  --red-a:     #ff2e4d;
-  --yellow-a:  #ffc94d;
-  
-  --blue-a:    #2563eb;
 
-  --green-a:   #4dff95;
-  --orange-a:  #ff814d;
-  --purple-a:  #b84dff;
-  --pink-a:    #ff6f92;
+  --blue-a:    #2563eb;
+  --red-a: #ef4444;
+  --yellow-a: #facc15;
+  --green-a: #22c55e;
+  --orange-a: #f97316;
+  --purple-a: #8b5cf6;
+  --pink-a: #ec4899;
 }
 
 *,

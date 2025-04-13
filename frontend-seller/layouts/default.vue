@@ -42,8 +42,8 @@ if (import.meta.server) {
 }
 
 .sidebar {
+  background: var(--primary-b);
   width: 220px;
-  background-color: #1e1e2f;
   color: white;
   padding: 20px;
 }
