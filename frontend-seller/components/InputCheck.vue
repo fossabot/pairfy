@@ -144,6 +144,5 @@ onMounted(() => {
   text-decoration: underline;
   color: var(--text-a);
   font-size: inherit;
-  font-weight: 500;
 }
 </style>

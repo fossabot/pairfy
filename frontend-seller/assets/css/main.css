@@ -56,6 +56,6 @@ body {
 }
 
 :root {
-  --input-radius: 8px;
-  --button-radius: 8px;
+  --input-radius: 6px;
+  --button-radius: 6px;
 }
