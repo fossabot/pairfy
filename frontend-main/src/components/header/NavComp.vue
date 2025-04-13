@@ -38,7 +38,7 @@
   justify-content: flex-start;
   max-width: var(--body-a);
   padding: 0.75rem 0rem;
-  font-weight: 300;
+  font-weight: 400;
   list-style: none;
   margin: 0 auto;
   display: flex;
