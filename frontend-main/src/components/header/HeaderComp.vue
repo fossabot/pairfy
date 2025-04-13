@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <NavComp />
+
 
     </header>
 
@@ -27,7 +27,6 @@ import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import PriceBar from "@/components/header/PriceBar.vue";
-import NavComp from "@/components/header/NavComp.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'
@@ -132,7 +131,7 @@ header {
 }
 
 .header {
-    grid-template-columns: 13% 74% 13%;
+    grid-template-columns: 15% 70% 15%;
     max-width: var(--body-a);
     display: grid;
     width: 100%;

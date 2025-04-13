@@ -7,7 +7,6 @@
 
 <script setup>
 import CategoryComp from '@/views/home/CategoryComp.vue';
-import TwoColumns from '@/views/home/TwoColumns.vue';
 import BandComp from '@/views/home/BandComp.vue';
 
 </script>

@@ -1,190 +1,198 @@
 <template>
-    <div class="band-wrap flex">
-        <div class="band-body" @mouseover="pauseBand" @mouseleave="startBand">
-            <div class="band-track" :style="trackStyle">
-                <div class="band-item" v-for="(item, index) in imageList" :key="index"
-                    :style="{ backgroundImage: `url(${item.src})` }">
+    <section class="banner">
+        <div class="overlay">
+            <!-- Header -->
+            <div class="banner-header">
+                <div class="left">
+                    <h1><span class="bold">Cardano</span>
+                        <span class="light">Marketplace</span>
+                    </h1>
+                    <ul class="features">
+                        <li>✔ Community-governed</li> 
+                        <li>✔ Stablecoin payments</li>
+                        <li>✔ Free shipping</li>
+                    </ul>
+                    <button class="shop-button">Shop now</button>
+                </div>
+                <div class="right">
+                    <p><strong>5M+</strong> Factory direct supply</p>
+                    <p><strong>10</strong> Local warehouses worldwide</p>
+                    <p><strong>20M+</strong> Value dropshipping items</p>
+                    <p><strong>24H</strong> Personalized sourcing service</p>
                 </div>
             </div>
-            <div class="band-arrow left" @click="prevItem">
-                <i class="pi pi-angle-left" />
-            </div>
-            <div class="band-arrow right" @click="nextItem">
-                <i class="pi pi-angle-right" />
-            </div>
 
-            <div class="band-dots">
-                <button v-for="(image, index) in imageList" :key="index" :class="{ active: currentIndex === index }"
-                    @click="goItem(index)"></button>
+            <!-- Product Sections -->
+            <div class="products">
+                <div class="category">
+                    <h2>Liquidity for discounts</h2>
+                    <div class="cards">
+                        <ProductCard img="eyelashes.png" title="$1.04 each, ≥3 pcs" />
+                        <ProductCard img="earring.png" title="$1.00 each, ≥3 pcs" />
+                    </div>
+                </div>
+                <div class="category">
+                    <h2>Fast delivery</h2>
+                    <div class="cards">
+                        <ProductCard img="dji.png" title="$0.99 Ships in 2 days" oldPrice="$1.23" />
+                        <ProductCard img="brass.png" title="$0.99 Ships in 2 days" oldPrice="$1.71" />
+                    </div>
+                </div>
+                <div class="category">
+                    <h2>Buy again</h2>
+                    <div class="cards">
+                        <ProductCard img="meete.png" title="$4.24 each, ≥3 pcs" />
+                        <ProductCard img="laser.png" title="$63.88" oldPrice="$68.88" />
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import banner1 from '@/assets/banner/1.png';
-import banner2 from '@/assets/banner/2.png';
-
-const imageList = ref([
-    {
-        src: banner1
-    },
-    {
-        src: banner2
-    }
-])
-
-const currentIndex = ref(0);
-
-const interval = ref(null);
-
-const trackStyle = computed(() => ({
-    transform: `translateX(-${currentIndex.value * 100}%)`,
-    transition: 'transform 0.5s ease'
-}));
-
-const nextItem = () => {
-    currentIndex.value = (currentIndex.value + 1) % imageList.value.length;
-};
-
-const prevItem = () => {
-    currentIndex.value =
-        (currentIndex.value - 1 + imageList.value.length) % imageList.value.length;
-};
-
-const goItem = (index) => {
-    currentIndex.value = index;
-};
-
-const startBand = () => {
-    interval.value = setInterval(nextItem, 6000);
-};
-
-const pauseBand = () => {
-    clearInterval(interval.value);
-};
-
-onMounted(() => {
-    startBand();
-});
-
-onBeforeUnmount(() => {
-    clearInterval(interval.value);
-});
 
 </script>
 
-<style lang="css" scoped>
-.band-wrap {
-    justify-content: center;
-    max-width: var(--body-a);
-    height: 24rem; 
-    width: 100%;
-    z-index: 1;
-    top: 0;
-}
-
-.band-body {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    overflow: hidden;
-    position: relative;
+<style scoped>
+.banner {
+    background: var(--primary-a);
     border-radius: 12px;
-}
-
-.band-track {
-    display: flex;
-    width: inherit;
-    height: inherit;
-
-}
-
-.band-item {
-    background-repeat: no-repeat;
-    background-position-y: 50%;
-    background-size: cover;
-    width: inherit;
-    height: inherit;
-    flex: 0 0 100%;
-}
-
-.band-arrow {
-    background: rgba(0, 0, 0, 0.3);
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    position: absolute;
-    top: calc(50% - 30px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 4;
-}
-
-.band-arrow:hover {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.band-arrow.left {
-    left: 1rem;
-}
-
-.band-arrow.right {
-    right: 1rem;
-}
-
-.band-arrow i {
-    font-size: var(--text-size-5);
     color: var(--text-w);
+    width: 100%;
+    max-width: var(--body-a);
+    padding: 1rem;
+}
+
+.overlay {
+    padding: 40px 20px;
+}
+
+.banner-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto 40px auto;
+}
+
+.left {
+    max-width: 600px;
+}
+
+.left h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.left .bold {
+    font-weight: bold;
+}
+
+.left .light {
     font-weight: 300;
 }
 
-.band-dots {
-    justify-content: center;
-    position: absolute;
-    display: flex;
-    bottom: 10px;
-    width: 100%;
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
 }
 
-.band-dots button {
-    width: 3rem;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.5);
+.features li {
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.shop-button {
+    background: white;
+    color: black;
+    padding: 10px 20px;
+    font-weight: bold;
     border: none;
-    margin: 0 5px;
+    border-radius: 4px;
     cursor: pointer;
-    z-index: 4;
 }
 
-.band-dots button.active {
-    background: #ffffff;
+.shop-button:hover {
+    background: #f0f0f0;
 }
 
-
-/* Small phones (up to 480px) */
-@media (max-width: 480px) {}
-
-/* Large phones and small tablets (481px - 767px) */
-@media (min-width: 481px) and (max-width: 767px) {
-    /* Styles for larger phones */
+.right {
+    text-align: right;
+    font-size: 14px;
+    max-width: 400px;
+    margin-top: 20px;
 }
 
-/* Tablets (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
-    /* Styles for tablets */
+.right p {
+    margin: 6px 0;
 }
 
-/* Laptops and small desktops (1025px - 1440px) */
-@media (min-width: 1025px) and (max-width: 1440px) {
-    /* Styles for laptops */
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    background: white;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: black;
+    border-radius: 10px;
 }
 
-/* Large desktops (1441px and up) */
-@media (min-width: 1441px) {
-    /* Styles for large screens */
+.category {
+    flex: 1 1 300px;
+}
+
+.category h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: bold;
+}
+
+.cards {
+    display: flex;
+    gap: 16px;
+}
+
+.product-card {
+    width: 48%;
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.product-card .title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.product-card .old {
+    font-size: 12px;
+    color: gray;
+    text-decoration: line-through;
+}
+
+@media (max-width: 768px) {
+    .banner-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .right {
+        text-align: left;
+    }
+
+    .cards {
+        flex-direction: column;
+    }
+
+    .product-card {
+        width: 100%;
+    }
 }
 </style>

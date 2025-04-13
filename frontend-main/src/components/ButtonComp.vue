@@ -10,7 +10,7 @@ const props = defineProps(['data', 'style'])
 
 <style lang="css" scoped>
 .p-buttonx {
-    border-radius: 999px;
+    border-radius: 12px;
     font-size: var(--text-size-1);
     background: var(--primary-a);
     justify-content: center;
