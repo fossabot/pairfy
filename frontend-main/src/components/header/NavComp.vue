@@ -38,7 +38,7 @@
   max-width: var(--body-a);
   justify-content: center;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: 500;
   list-style: none;
   margin: 0 auto;
   padding: 1rem;
