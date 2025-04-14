@@ -13,6 +13,8 @@ Using a Cardano smart contract provides the benefit of being able to use **_ADA_
 - Liquidity pool to return fees to users.
 - Use of Cardano Network – Midnight Network.
 - Any member of the community can be a seller.
+- Community repository of products and templates.
+- Seller incentive program.
 - Open-source development.
 
 #### Competitive factors
