@@ -10,7 +10,7 @@ export async function sendEmail(type: string, to: string, payload: any) {
   if (type === "register:seller") {
     subject = "Pairfy email confirmation.";
     template = generateRegistrationEmail({
-      name: "Seller",
+      name: payload.username,
       verifyUrl: `${process.env.HANDLER_URL_SELLER}/entry?m=verify&t=${payload.token}`,
     });
   }

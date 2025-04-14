@@ -7,11 +7,9 @@ import { hashPassword } from "../utils/password";
 import { Request, Response } from "express";
 import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
-import { getUsername } from "../utils/names";
-import { _ } from "../utils/pino";
 import { createEvent, createSeller } from "@pairfy/common";
-
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { _ } from "../utils/pino";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -27,8 +25,6 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    const username = getUsername();
-
     const password = await hashPassword(params.password);
 
     const sellerId = getSellerId();
@@ -40,20 +36,21 @@ const createSellerHandler = async (req: Request, res: Response) => {
         source: "service-seller",
         entity: "SELLER",
         email: params.email,
-        username: username,
+        username: params.username
       },
       "1h"
     );
 
     const emailScheme = {
       type: 'register:seller',
+      username: params.username,
       email: params.email,
       token: token,
     };
 
     const productScheme = {
       id: sellerId,
-      username: username,
+      username: params.username,
       email: params.email,
       password_hash: password,
       verified: false,

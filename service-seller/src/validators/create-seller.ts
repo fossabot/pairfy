@@ -1,28 +1,36 @@
-import { z } from 'zod';
-import { Request, Response, NextFunction } from 'express';
+import { z } from "zod";
+import { Request, Response, NextFunction } from "express";
 
-// OWASP regex for email and password
-const emailRegex = /^(?=.{1,254}$)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const emailRegex =
+  /^(?=.{1,254}$)[a-zA-Z0-9._%+-]{1,64}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,64}$/;
 
-// Define the Zod schema
+const usernameRegex = /^[a-zA-Z0-9]*$/;
+
 const registrationSchema = z.object({
   email: z.string().regex(emailRegex, {
-    message: 'Invalid email format (OWASP-compliant)',
+    message: "Invalid email format (OWASP-compliant)",
   }),
+
+  username: z
+    .string()
+    .min(5, "Username must be at least 5 characters.")
+    .max(20, "Username must be at most 20 characters.")
+    .regex(usernameRegex, "Only letters and numbers are allowed."),
 
   password: z.string().regex(passwordRegex, {
     message:
-      'Password must be 8–64 characters and include lowercase, uppercase, number, and special character',
+      "Password must be 8–64 characters and include lowercase, uppercase, number, and special character",
   }),
 
   terms_accepted: z.literal(true).refine((val) => val === true, {
-    message: 'Terms must be accepted',
+    message: "Terms must be accepted",
   }),
 
   country: z
     .string()
-    .length(2, 'Country must be a valid ISO 3166-1 alpha-2 code')
+    .length(2, "Country must be a valid ISO 3166-1 alpha-2 code")
     .toUpperCase(), // Optional: auto-convert to uppercase
 });
 

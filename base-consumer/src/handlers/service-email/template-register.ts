@@ -20,7 +20,7 @@ export function generateRegistrationEmail({
   <body style="font-family:Arial, sans-serif; background-color:#f6f6f6; padding:20px; margin:0;">
     <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:12px; overflow:hidden; box-shadow:0 0 8px rgba(0,0,0,0.05);">
       <tr>
-        <td style="background-color:#ff6700; padding: 30px 20px; text-align:center;">
+        <td style="background-color:#2563eb; padding: 30px 20px; text-align:center;">
           <h1 style="color:#ffffff; margin:0;">Welcome to Pairfy!</h1>
         </td>
       </tr>
@@ -34,7 +34,7 @@ export function generateRegistrationEmail({
             To get started, confirm your email address by clicking the button below:
           </p>
           <p style="text-align:center; margin:30px 0;">
-            <a href="${verifyUrl}" style="background-color:#ff6700; color:#fff; padding:12px 24px; border-radius:8px; text-decoration:none; display:inline-block; font-weight:bold; font-size: 14px;">
+            <a href="${verifyUrl}" style="background-color:#2563eb; color:#fff; padding:12px 24px; border-radius:8px; text-decoration:none; display:inline-block; font-weight:bold; font-size: 14px;">
               Confirm Email
             </a>
           </p>
