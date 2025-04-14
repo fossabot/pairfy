@@ -10,7 +10,6 @@ import { ApiError, errorHandler } from "./common/errorHandler";
 const main = async () => {
   try {
     const requiredEnvVars = [
-      "POD_TIMEOUT",
       "EXPRESS_PORT",
       "EXPRESS_TIMEOUT",
       "AGENT_JWT_KEY",
@@ -20,7 +19,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "SESSION_SECRET"
+      "ADMIN_SESSION_SECRET"
     ];
     
     for (const key of requiredEnvVars) {

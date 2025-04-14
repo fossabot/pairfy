@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import Redis from 'ioredis';
 import jwt from 'jsonwebtoken';
 
-const redis = new Redis();
+const redis = new Redis('redis://redis-limiter:6379');
 
 const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 20;
