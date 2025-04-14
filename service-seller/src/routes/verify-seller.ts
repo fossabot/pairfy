@@ -4,8 +4,8 @@ import { verifyToken } from "../utils/token";
 import { updateSeller } from "./updateSeller";
 import { getSellerByEmail } from "./getSellerByEmail";
 import { Request, Response } from "express";
-import { _ } from "../utils/pino";
 import database from "../database";
+import logger from "../utils/logger";
 
 const verifySellerMiddlewares: any = [];
 
@@ -44,7 +44,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err: any) {
-    _.error(err);
+    logger.error(err);
 
     if (connection) {
       await connection.rollback();

@@ -11,7 +11,8 @@ import { createEvent, createSeller } from "@pairfy/common";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
 import { getSellerByEmail } from "./getSellerByEmail";
 import { getSellerByUsername } from "./getSellerByUsername";
-import { _ } from "../utils/pino";
+import logger from "../utils/logger";
+
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -127,14 +128,13 @@ const createSellerHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    _.error(err);
+    logger.error(err);
 
     if (connection) {
       await connection.rollback();
     }
 
     throw err;
-    
   } finally {
     if (connection) {
       connection.release();
