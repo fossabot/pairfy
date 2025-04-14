@@ -35,6 +35,8 @@ divided by 100 ADA (discount per order).
 discount_per_order = 100 ADA
 
 1_000_000 ADA / discount_per_order = 10_000 discounts
+
+Beneficiaries: 10_000 users
 ```
 
 This means that 10,000 buy orders will have a discount of 100 ADA.
@@ -53,7 +55,7 @@ discount_per_order = 200 ADA
 Original Iphone 17 price = 1000USD
 Price with discount applied = 800USD
 
-Beneficiaries: 2_500 people
+Beneficiaries: 2_500 users 
 
 ```
 
