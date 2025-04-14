@@ -50,14 +50,15 @@ discount_per_order = 200 ADA
 
 500_000 ADA / discount_per_order = 2_500 discounts
 
--Original Iphone 17 price: 1000USD
--Discount Applied:  800USD
--Beneficiaries: 2_500 people
+Original Iphone 17 price = 1000USD
+Price with discount applied = 800USD
+
+Beneficiaries: 2_500 people
 
 ```
 
 
-
+The community can vote to set the pool cap and the `discount_per_order` value.
 
 
 
