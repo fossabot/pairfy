@@ -2,14 +2,17 @@ import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import { json, urlencoded } from "body-parser";
+import { json } from "body-parser";
 import { getPublicAddress } from "./utils/address";
+import { rateLimiter } from "./common/rateLimiter";
 
 const app = express();
 
 const sessionOptions: object = {
-  maxAge: 168 * 60 * 60 * 1000,
-  signed: false,
+  name: 'session',
+  keys: [process.env.ADMIN_SESSION_SECRET as string],
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  signed: true,
   secure: true,
   httpOnly: true,
   sameSite: "none", 
@@ -21,10 +24,10 @@ app.use(helmet());
 
 app.use(getPublicAddress);
 
-app.use(urlencoded({ extended: true, parameterLimit: 15 }));
-
-app.use(json({ limit: 5000000 }));
+app.use(json({ limit: '5mb' }));
 
 app.use(cookieSession(sessionOptions));
+
+app.use(rateLimiter)
 
 export { app };

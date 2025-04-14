@@ -1,11 +1,11 @@
 import * as route from "./routes";
 import database from "./database";
 import compression from "compression";
-import { ApiError, errorHandler } from "./common/errorHandler";
+import logger from "./utils/logger";
 import { catchError } from "./utils";
 import { app } from "./app";
-import logger from "./utils/logger";
 
+import { ApiError, errorHandler } from "./common/errorHandler";
 
 const main = async () => {
   try {
@@ -20,6 +20,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
+      "SESSION_SECRET"
     ];
     
     for (const key of requiredEnvVars) {
@@ -50,7 +51,7 @@ const main = async () => {
     ];
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
-
+    
     app.post(
       "/api/seller/create-seller",
 

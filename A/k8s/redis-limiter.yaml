@@ -37,7 +37,7 @@ metadata:
   namespace: default
 spec:
   serviceName: "redis-limiter"
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: redis-limiter
