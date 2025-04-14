@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { _ } from "./pino";
+import logger from "./logger";
 
 
 interface SellerToken {
@@ -44,7 +44,7 @@ const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     req.sellerData = scheme;
   } catch (err) {
-    _.error(err);
+    logger.error(err);
   }
 
   next();

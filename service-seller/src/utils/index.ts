@@ -1,7 +1,7 @@
-import { _ } from "./pino";
+import logger from "./logger";
 
 const catchError = (error?: any) => {
-  _.error(`EXIT=>${error}`);
+  logger.error(`EXIT=>${error}`);
 
   return process.exit(1);
 };

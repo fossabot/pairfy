@@ -4,7 +4,7 @@ import compression from "compression";
 import { ApiError, errorHandler } from "./common/errorHandler";
 import { catchError } from "./utils";
 import { app } from "./app";
-import { _ } from "./utils/pino";
+import logger from "./utils/logger";
 
 
 const main = async () => {
@@ -104,7 +104,7 @@ const main = async () => {
     app.use(compression());
 
     app.listen(process.env.EXPRESS_PORT, () =>
-      _.info(`express server listening in ${process.env.EXPRESS_PORT}`)
+      logger.info(`express server listening in ${process.env.EXPRESS_PORT}`)
     );
 
   } catch (e) {
