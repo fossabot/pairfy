@@ -1,5 +1,5 @@
 import * as route from "./routes";
-import DB from "./database";
+import database from "./database";
 import compression from "compression";
 import { ApiError, errorHandler } from "./common/errorHandler";
 import { catchError } from "./utils";
@@ -30,7 +30,7 @@ const main = async () => {
 
     const databasePort = parseInt(process.env.DATABASE_PORT as string)
 
-    DB.connect({
+    database.connect({
       host: process.env.DATABASE_HOST,
       port: databasePort,
       user: process.env.DATABASE_USER,

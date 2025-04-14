@@ -5,7 +5,7 @@ import { updateSeller } from "./updateSeller";
 import { getSellerByEmail } from "./getSellerByEmail";
 import { Request, Response } from "express";
 import { _ } from "../utils/pino";
-import DB from "../database";
+import database from "../database";
 
 const verifySellerMiddlewares: any = [];
 
@@ -17,7 +17,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
     const sellerToken = verifyToken(token, process.env.AGENT_JWT_KEY as string);
 
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     ///////////////////////////////////////////////////////////////////////////////////
 

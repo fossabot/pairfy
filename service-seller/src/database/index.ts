@@ -17,6 +17,6 @@ class DatabaseWrap {
   }
 }
 
-const DB = new DatabaseWrap();
+const database = new DatabaseWrap();
 
-export default DB;
+export default database;

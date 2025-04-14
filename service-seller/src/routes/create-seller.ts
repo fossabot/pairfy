@@ -1,4 +1,4 @@
-import DB from "../database";
+import database from "../database";
 import {
   validateRegistration,
   RegistrationInput,
@@ -23,7 +23,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
   console.log(params);
 
   try {
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     const isEmailDuplicated = await getSellerByEmail(connection, params.email);
 
