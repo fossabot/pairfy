@@ -4,13 +4,13 @@ Pairfy is a decentralized application for trading physical products. It uses the
 Each purchase of a product is managed by a separate smart contract which contains a state machine login page that ensures secure and efficient trading.
 
 Cardano's E-UTXO model provides atomic and deterministic security for transactions and contract state changes.
-Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a means of payment, and even any **_stablecoin_** and **_native asset_**.
+Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a form of payment, and even any **_stablecoin_** and **_native asset_**.
 
 #### Differential factors
 
 - High transparency, community-governed.
 - Use of smart contract throughout the trade.
-- Liquidity pool to return fees to users.
+- Discount liquidity pool to return fees to users.
 - Use of Cardano Network – Midnight Network.
 - Any member of the community can be a seller.
 - Community repository of products and templates.
