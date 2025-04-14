@@ -38,11 +38,9 @@ discount_per_order = 100 ADA
 ```
 
 This means that 10,000 buy orders will have a discount of 100 ADA.
-Which for products over $100 represents a pretty substantial discount.
+Which for products over $100 represents a pretty substantial discount. 
+A very generous discount is a good incentive to encourage traditional market buyers to migrate to the Cardano ecosystem.
 
-A very generous discount is more than enough to encourage traditional market buyers to migrate to the Cardano ecosystem.
-This feature is quite aggressive, a discount that no traditional platform can offer,
-so the jurisdictional regulations must be studied with the community to comply with them and avoid unfair competition.
 
 _Here's another example with an iPhone:_
 
