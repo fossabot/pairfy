@@ -1,5 +1,6 @@
 <template>
   <form class="p-RegisterForm" @submit.prevent="register">
+    <ToastComp ref="toastRef" />
 
     <InputEmail class="p-RegisterForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
@@ -9,8 +10,8 @@
     <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />
 
 
-    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="countries" :required="true" placeholder="Select Country..."
-      @valid="onValidCountry" />
+    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="countries" :required="true"
+      placeholder="Select Country..." @valid="onValidCountry" />
 
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
       :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
@@ -26,8 +27,13 @@ import { useAuthStore } from '@/stores/auth'
 import InputAlphaNumeric from './InputAlphaNumeric.vue'
 const auth = useAuthStore()
 
-const countries = ref([{ label: 'United States', code: 'US' }])
+const toastRef = ref(null);
 
+const displayMessage = (message, type, duration) => {
+  toastRef.value?.showToast(message, type, duration)
+}
+
+const countries = ref([{ label: 'United States', code: 'US' }])
 
 const email = ref('')
 const username = ref('')
@@ -59,7 +65,6 @@ const onValidPassword = (event) => {
 const onValidCountry = (event) => {
   console.log("countryHandler", event)
   countryValid.value = event
-  console.log(country)
 }
 
 const onValidTerms = (event) => {
@@ -72,11 +77,14 @@ const disableSubmit = computed(() => !emailValid.value || !usernameValid.value |
 
 const register = async () => {
   try {
-    console.log('Credentials', { email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
+    //console.log('Credentials', { email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
 
-    await auth.register({ email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
+    const response = await auth.register({ email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
+
+    displayMessage(response.data.message, 'info', 100_000)
   } catch (err) {
     console.error(err)
+    displayMessage(err, 'error', 150_000)
   }
 }
 

@@ -47,11 +47,14 @@ export const useAuthStore = defineStore("auth", () => {
       const response: any = await $fetch("/api/seller/create-seller", {
         method: "POST",
         body: credentials,
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
       });
 
-      console.log(response.data);
+      return response;
     } catch (err: any) {
-      throw err;
+      throw new Error(err.message);
     } finally {
       loading.value = false;
     }
@@ -87,7 +90,7 @@ export const useAuthStore = defineStore("auth", () => {
         body: credentials,
         async onResponseError({ response }) {
           throw new Error(JSON.stringify(response._data.data));
-        }
+        },
       });
     } catch (err: any) {
       throw new Error(err.message);

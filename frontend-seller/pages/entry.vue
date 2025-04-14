@@ -34,18 +34,18 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import miImagen from '@/assets/brand/icon.svg'
 import RegisterForm from '~/components/RegisterForm.vue'
 import LoginForm from '~/components/LoginForm.vue'
-import VerifyForm from '~/components/VerifyForm.vue'
+import VerifyForm from '~/components/VerifyView.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
 import { useAuthStore } from '@/stores/auth'
 
 
-const toastRef: any = ref(null);
+const toastRef = ref(null);
 
-const displayMessage = (message: any, type: any, duration: any) => {
+const displayMessage = (message, type, duration) => {
   toastRef.value?.showToast(message, type, duration) 
 }
 
@@ -59,12 +59,12 @@ definePageMeta({
 const mode = ref('login')
 
 
-const views: any = {
+const views = {
   login: LoginForm,
   register: RegisterForm,
   recovery: RecoveryForm,
-  verify: VerifyForm
-} as const
+  verify: VerifyForm 
+} 
 
 const route = useRoute()
 
@@ -82,7 +82,7 @@ onMounted(async () => {
   if (mode === 'verify' && token) {
     try {
       await auth.verify({ token })
-    } catch (err: any) {
+    } catch (err) {
       console.error("FINAL", err)
 
       displayMessage(err, 'error', 200000)

@@ -31,13 +31,14 @@ const registrationSchema = z.object({
   country: z
     .string()
     .length(2, "Country must be a valid ISO 3166-1 alpha-2 code")
-    .toUpperCase(), // Optional: auto-convert to uppercase
+    .toUpperCase()
+    .refine((val) => val === "US", {
+      message: "Country must be 'US'",
+    }),
 });
 
-// Infer the validated type (for controllers, etc.)
 export type RegistrationInput = z.infer<typeof registrationSchema>;
 
-// Middleware function for Express
 export const validateRegistration = (
   req: Request,
   res: Response,

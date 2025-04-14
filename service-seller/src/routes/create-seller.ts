@@ -9,6 +9,8 @@ import { getSellerId } from "../utils/nano";
 import { createToken } from "../utils/token";
 import { createEvent, createSeller } from "@pairfy/common";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { getSellerByEmail } from "./getSellerByEmail";
+import { getSellerByUsername } from "./getSellerByUsername";
 import { _ } from "../utils/pino";
 
 const createSellerMiddlewares: any = [validateRegistration];
@@ -23,26 +25,50 @@ const createSellerHandler = async (req: Request, res: Response) => {
   try {
     connection = await DB.client.getConnection();
 
+    const isEmailDuplicated = await getSellerByEmail(connection, params.email);
+
+    if (isEmailDuplicated) {
+      throw new ApiError(400, "Invalid email or username", {
+        code: ERROR_CODES.BAD_REQUEST,
+      });
+    }
+
+    const isUsernameDuplicated = await getSellerByUsername(
+      connection,
+      params.username
+    );
+
+    if (isUsernameDuplicated) {
+      throw new ApiError(
+        400,
+        `The username ${params.username} is already in use.`,
+        {
+          code: ERROR_CODES.BAD_REQUEST,
+        }
+      );
+    }
+    ///////////////////////////////////////////////////////////////////////////////////
+
     await connection.beginTransaction();
+
+    const timestamp = Date.now();
 
     const password = await hashPassword(params.password);
 
     const sellerId = getSellerId();
-
-    const timestamp = Date.now();
 
     const token = createToken(
       {
         source: "service-seller",
         entity: "SELLER",
         email: params.email,
-        username: params.username
+        username: params.username,
       },
       "1h"
     );
 
     const emailScheme = {
-      type: 'register:seller',
+      type: "register:seller",
       username: params.username,
       email: params.email,
       token: token,
@@ -66,7 +92,11 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     console.log(productScheme);
 
-    await createSeller(connection, productScheme);
+    await createSeller(connection, productScheme).catch((err: any) => {
+      throw new ApiError(500, "Internal error, please try again later.", {
+        code: ERROR_CODES.INTERNAL_ERROR,
+      });
+    });
 
     await createEvent(
       connection,
@@ -88,7 +118,14 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     await connection.commit();
 
-    res.status(200).send({ success: true, message: "Successfully registered" });
+    ///////////////////////////////////////////////////////////////////////////////////
+
+    res.status(200).send({
+      success: true,
+      data: {
+        message: 'Please check your email in the "all" or "spam" folder.',
+      },
+    });
   } catch (err) {
     _.error(err);
 
@@ -96,7 +133,8 @@ const createSellerHandler = async (req: Request, res: Response) => {
       await connection.rollback();
     }
 
-    throw new ApiError(401, "Invalid Credentials", { code: ERROR_CODES.INVALID_CREDENTIALS });
+    throw err;
+    
   } finally {
     if (connection) {
       connection.release();

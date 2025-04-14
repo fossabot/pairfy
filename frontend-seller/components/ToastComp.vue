@@ -1,6 +1,6 @@
 <template>
     <div class="p-ToastComp-container">
-      <transition-group name="toast" tag="div">
+      <transition-group name="p-ToastComp" tag="div">
         <div
           v-for="toast in toasts"
           :key="toast.id"
@@ -9,7 +9,7 @@
           <span class="p-ToastComp-message">{{ toast.message }}</span>
 
           
-          <button class="close-btn" @click="removeToast(toast.id)">×</button>
+       
 
         </div>
       </transition-group>
@@ -48,22 +48,22 @@
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 1rem;
   }
   
   .p-ToastComp {
+    justify-content: space-between;
+    border-radius: var(--radius-b);
+    font-size: var(--text-size-1);
+    box-shadow: var(--shadow-b);
+    margin-bottom: 1rem;
+    align-items: center;
     position: relative;
     min-width: 240px;
     max-width: 320px;
-    padding: 1rem;
-    border-radius: var(--radius-b);
-    box-shadow: var(--shadow-b);
-    font-size: var(--text-size-1);
     font-weight: 500;
+    padding: 1rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
   }
   
   .p-ToastComp.success {
@@ -84,22 +84,10 @@
   }
   
   .p-ToastComp-message {
+    overflow-wrap: anywhere;
     flex: 1;
-    overflow-wrap: break-word;
   }
   
-  .close-btn {
-    background: transparent;
-    border: none;
-    color: inherit;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 0 4px;
-    line-height: 1;
-  }
-  
-  /* Transition */
   .p-ToastComp-enter-active,
   .p-ToastComp-leave-active {
     transition: all 0.3s ease;
