@@ -16,7 +16,11 @@ export class RateLimiter {
   }
 
   getMiddleware() {
-    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): Promise<void> => {
       let key = "";
 
       try {
@@ -29,6 +33,7 @@ export class RateLimiter {
         key = `ratelimit:ip:${req.publicAddress}`;
 
         const token = req.session?.jwt;
+
         if (token) {
           try {
             const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
@@ -43,10 +48,12 @@ export class RateLimiter {
         }
 
         const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
+        
         if (!saved) {
           const current = await this.redis.incr(key);
+          
           if (current > MAX_REQUESTS) {
-            logger.warn(`Rate limit exceeded: key=${key}`);
+            logger.warn(`[RateLimitExceeded]: key=${key}`);
             throw new ApiError(429, "Too many requests", {
               code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
             });
@@ -55,10 +62,16 @@ export class RateLimiter {
 
         return next();
       } catch (err) {
-        logger.error("Rate limiter error, using fallback:", err);
+        if (err instanceof ApiError) {
+          return next(err);
+        }
+
+        logger.error("[RateLimitFallback]", err);
 
         const now = Date.now();
         const entry = this.fallbackStore.get(key);
+
+         //////////////////////////////////////////////////////////////////////
 
         if (!entry || entry.expiresAt < now) {
           this.fallbackStore.set(key, {
@@ -68,15 +81,20 @@ export class RateLimiter {
           return next();
         }
 
+        //////////////////////////////////////////////////////////////////////
+
         entry.count += 1;
+
         if (entry.count > MAX_REQUESTS) {
-          logger.warn(`Rate limit exceeded (fallback): key=${key}`);
+          logger.warn(`[RateLimitExceededFallback]: key=${key}`);
           return next(
             new ApiError(429, "Too many requests", {
               code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
             })
           );
         }
+
+        //////////////////////////////////////////////////////////////////////
 
         return next();
       }

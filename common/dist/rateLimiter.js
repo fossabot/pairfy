@@ -40,7 +40,7 @@ class RateLimiter {
                 if (!saved) {
                     const current = await this.redis.incr(key);
                     if (current > MAX_REQUESTS) {
-                        index_1.logger.warn(`Rate limit exceeded: key=${key}`);
+                        index_1.logger.warn(`[RateLimitExceeded]: key=${key}`);
                         throw new index_1.ApiError(429, "Too many requests", {
                             code: index_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
                         });
@@ -49,9 +49,13 @@ class RateLimiter {
                 return next();
             }
             catch (err) {
-                index_1.logger.error("Rate limiter error, using fallback:", err);
+                if (err instanceof index_1.ApiError) {
+                    return next(err);
+                }
+                index_1.logger.error("[RateLimitFallback]", err);
                 const now = Date.now();
                 const entry = this.fallbackStore.get(key);
+                //////////////////////////////////////////////////////////////////////
                 if (!entry || entry.expiresAt < now) {
                     this.fallbackStore.set(key, {
                         count: 1,
@@ -59,13 +63,15 @@ class RateLimiter {
                     });
                     return next();
                 }
+                //////////////////////////////////////////////////////////////////////
                 entry.count += 1;
                 if (entry.count > MAX_REQUESTS) {
-                    index_1.logger.warn(`Rate limit exceeded (fallback): key=${key}`);
+                    index_1.logger.warn(`[RateLimitExceededFallback]: key=${key}`);
                     return next(new index_1.ApiError(429, "Too many requests", {
                         code: index_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
                     }));
                 }
+                //////////////////////////////////////////////////////////////////////
                 return next();
             }
         };
