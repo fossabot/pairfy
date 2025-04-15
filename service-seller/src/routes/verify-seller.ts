@@ -1,11 +1,10 @@
 import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { verifySellerValidator } from "../validators/verify-seller";
-import { verifyToken } from "../common/token";
 import { updateSeller } from "./updateSeller";
 import { getSellerByEmail } from "../common/getSellerByEmail";
 import { Request, Response } from "express";
 import database from "../database";
-import {logger} from "@pairfy/common";
+import {logger, verifyToken} from "@pairfy/common";
 
 const verifySellerMiddlewares: any = [];
 

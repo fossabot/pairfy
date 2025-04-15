@@ -1,6 +1,9 @@
-import jwt, { JsonWebTokenError, TokenExpiredError, NotBeforeError } from "jsonwebtoken";
-import { ApiError, ERROR_CODES } from "@pairfy/common";
-
+import jwt, {
+  JsonWebTokenError,
+  TokenExpiredError,
+  NotBeforeError,
+} from "jsonwebtoken";
+import { ApiError, ERROR_CODES } from "./index";
 
 export function createToken(params: object, expires?: string) {
   const secretKey: jwt.Secret = process.env.AGENT_JWT_KEY as string;
@@ -46,5 +49,3 @@ export function verifyToken(token: string, key: string): any {
     });
   }
 }
-
-

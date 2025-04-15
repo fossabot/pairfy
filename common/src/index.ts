@@ -5,3 +5,6 @@ export * from "./consumedEvent";
 export * from "./loadSql";
 export * from "./errorHandler";
 export * from "./logger";
+export * from "./getPublicAddress";
+export * from "./rateLimiter";
+export * from "./token";

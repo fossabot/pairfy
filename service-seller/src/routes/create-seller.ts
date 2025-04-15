@@ -6,12 +6,10 @@ import {
 import { hashPassword } from "../common/password";
 import { Request, Response } from "express";
 import { getSellerId } from "../common/nano";
-import { createToken } from "../common/token";
-import { createEvent, createSeller } from "@pairfy/common";
-import { ApiError, ERROR_CODES } from "@pairfy/common";
+import { createEvent, createSeller, createToken } from "@pairfy/common";
+import { ApiError, ERROR_CODES, logger } from "@pairfy/common";
 import { getSellerByEmail } from "../common/getSellerByEmail";
 import { getSellerByUsername } from "../common/getSellerByUsername";
-import {logger} from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 

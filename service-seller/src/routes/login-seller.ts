@@ -3,10 +3,9 @@ import database from "../database";
 import { comparePassword } from "../common/password";
 import { Request, Response } from "express";
 import { SellerToken, sellerMiddleware } from "../common/sellerMiddleware";
-import { createToken } from "../common/token";
 import { getPubKeyHash } from "../utils/blockchain";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
-import {logger} from "@pairfy/common";
+import {logger, createToken} from "@pairfy/common";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 

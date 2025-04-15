@@ -4,6 +4,10 @@ declare global {
   namespace Express {
     interface Request {
       publicAddress?: any;
+      session?: {
+        jwt?: string;
+        [key: string]: any;
+      } | null | undefined;
     }
   }
 }
