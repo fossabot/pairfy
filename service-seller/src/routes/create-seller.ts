@@ -29,7 +29,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
     const isEmailDuplicated = await getSellerByEmail(connection, params.email);
 
     if (isEmailDuplicated) {
-      throw new ApiError(400, "Invalid email or username", {
+      throw new ApiError(400, "The email address is already registered.", {
         code: ERROR_CODES.BAD_REQUEST,
       });
     }

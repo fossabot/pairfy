@@ -19,7 +19,8 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "ADMIN_SESSION_SECRET"
+      "ADMIN_SESSION_SECRET",
+      "REDIS_RATE_LIMIT"
     ];
     
     for (const key of requiredEnvVars) {

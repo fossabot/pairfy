@@ -4,11 +4,12 @@ import { verifyToken } from "../utils/token";
 import logger from "../utils/logger";
 import Redis from "ioredis";
 
-const redis = new Redis(process.env.REDIS_URL || "redis://redis-limiter:6379");
+const redis = new Redis(process.env.REDIS_RATE_LIMIT as string);
 
 const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 20;
 
+//change with distributed rate-limit
 const fallbackStore = new Map<string, { count: number; expiresAt: number }>();
 
 export const rateLimiter = async (
@@ -85,13 +86,11 @@ export const rateLimiter = async (
       if (data.count > MAX_REQUESTS) {
         logger.warn(`Rate limit exceeded (fallback): key=${key}`);
 
-        next(
+        return next(
           new ApiError(429, "Too many requests", {
             code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
           })
         );
-
-        return;
       }
     }
 
