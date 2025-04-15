@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { ApiError, ERROR_CODES } from "@pairfy/common";
 
 export const updateSeller = async (
   connection: mysql.Connection,

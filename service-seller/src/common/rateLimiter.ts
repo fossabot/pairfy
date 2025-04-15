@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { ApiError, ERROR_CODES } from "./errorHandler";
+import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { verifyToken } from "./token";
 import logger from "./logger";
 import Redis from "ioredis";

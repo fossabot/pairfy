@@ -4,8 +4,7 @@ import compression from "compression";
 import logger from "./common/logger";
 import { catchError } from "./utils";
 import { app } from "./app";
-
-import { ApiError, errorHandler } from "./common/errorHandler";
+import { ApiError, errorHandler } from "@pairfy/common";
 
 const main = async () => {
   try {

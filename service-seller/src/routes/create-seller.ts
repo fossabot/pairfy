@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 import { getSellerId } from "../common/nano";
 import { createToken } from "../common/token";
 import { createEvent, createSeller } from "@pairfy/common";
-import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { getSellerByEmail } from "../common/getSellerByEmail";
 import { getSellerByUsername } from "../common/getSellerByUsername";
 import logger from "../common/logger";

@@ -1,4 +1,4 @@
-import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { verifySellerValidator } from "../validators/verify-seller";
 import { verifyToken } from "../common/token";
 import { updateSeller } from "./updateSeller";
