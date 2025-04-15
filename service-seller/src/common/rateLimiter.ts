@@ -1,55 +1,100 @@
-import { Request, Response, NextFunction } from 'express';
-import Redis from 'ioredis';
-import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from "express";
+import { ApiError, ERROR_CODES } from "./errorHandler";
+import { verifyToken } from "../utils/token";
+import logger from "../utils/logger";
+import Redis from "ioredis";
 
-const redis = new Redis('redis://redis-limiter:6379');
+const redis = new Redis(process.env.REDIS_URL || "redis://redis-limiter:6379");
 
 const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 20;
 
+const fallbackStore = new Map<string, { count: number; expiresAt: number }>();
+
 export const rateLimiter = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ): Promise<void> => {
+  let key = "";
+
   try {
+    if (!req.publicAddress) {
+      throw new ApiError(500, "Internal Error", {
+        code: ERROR_CODES.INTERNAL_ERROR,
+      });
+    }
+
+    key = `ratelimit:ip:${req.publicAddress}`;
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const token = req.session?.jwt;
-    let key: string;
 
     if (token) {
       try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { sub: string };
+        const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
+          sub?: string;
+        };
+
         if (decoded?.sub) {
-          key = `rl:user:${decoded.sub}`;
-        } else {
-          key = `rl:ip:${req.publicAddress}`;
+          key = `ratelimit:user:${decoded.sub}`;
         }
-      } catch {
-        key = `rl:ip:${req.publicAddress}`; 
+      } catch {}
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    const saveInRedis = await redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
+
+    if (!saveInRedis) {
+      const current = await redis.incr(key);
+
+      if (current > MAX_REQUESTS) {
+        logger.warn(`RateLimitExceeded: key=${key}`);
+
+        throw new ApiError(429, "Too many requests", {
+          code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+        });
       }
-    } else {
-      key = `rl:ip:${req.publicAddress}`;
     }
 
-    const current = await redis.incr(key);
-    if (current === 1) {
-      await redis.expire(key, WINDOW_SECONDS);
-    }
-
-    if (current > MAX_REQUESTS) {
-      res.status(429).json({ message: 'Too many requests' });
-      return;
-    }
-    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     next();
   } catch (err) {
-    console.error('Rate limit error:', err);
-    res.status(500).json({ message: 'Internal rate limit error' });
+    if (!(err instanceof ApiError)) {
+      logger.error("Redis error, using fallback store:", err);
+    }
+
+    const now = Date.now();
+
+    const data = fallbackStore.get(key);
+
+    const isKeyInvalid = !data || data.expiresAt < now;
+
+    if (isKeyInvalid) {
+      fallbackStore.set(key, {
+        count: 1,
+        expiresAt: now + WINDOW_SECONDS * 1000,
+      });
+    }
+
+    if (!isKeyInvalid) {
+      data.count += 1;
+
+      if (data.count > MAX_REQUESTS) {
+        logger.warn(`Rate limit exceeded (fallback): key=${key}`);
+
+        next(
+          new ApiError(429, "Too many requests", {
+            code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+          })
+        );
+
+        return;
+      }
+    }
+
+    next(err);
   }
 };
-
-
-
-
-
