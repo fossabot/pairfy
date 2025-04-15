@@ -9,7 +9,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,64}$/;
 const usernameRegex = /^[a-zA-Z0-9]*$/;
 
 const registrationSchema = z.object({
-  email: z.string().regex(emailRegex, {
+  email: z.string().email("Invalid email format").regex(emailRegex, {
     message: "Invalid email format (OWASP-compliant)",
   }),
 
