@@ -9,8 +9,8 @@ import { getSellerId } from "../common/nano";
 import { createToken } from "../common/token";
 import { createEvent, createSeller } from "@pairfy/common";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
-import { getSellerByEmail } from "./getSellerByEmail";
-import { getSellerByUsername } from "./getSellerByUsername";
+import { getSellerByEmail } from "../common/getSellerByEmail";
+import { getSellerByUsername } from "../common/getSellerByUsername";
 import logger from "../common/logger";
 
 
