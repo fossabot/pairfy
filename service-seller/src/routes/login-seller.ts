@@ -8,7 +8,7 @@ import {
   createToken,
   comparePassword,
 } from "@pairfy/common";
-import { SellerToken, sellerMiddleware } from "../common/sellerMiddleware";
+import { SellerToken, sellerMiddleware } from "@pairfy/common";
 import { getPubKeyHash } from "../utils/blockchain";
 
 

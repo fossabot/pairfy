@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import {logger} from "@pairfy/common";
+import { logger } from "./index";
 
-interface SellerToken {
+export interface SellerToken {
   id: string;
   role: string;
   email: string;
@@ -13,15 +13,8 @@ interface SellerToken {
   pubkeyhash: string;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      sellerData: SellerToken;
-    }
-  }
-}
 
-const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
   if (!req.session?.jwt) {
     return next();
   }
@@ -47,4 +40,3 @@ const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
   return next();
 };
 
-export { sellerMiddleware, SellerToken };

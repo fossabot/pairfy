@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { sellerMiddleware } from "../common/sellerMiddleware";
+import { sellerMiddleware } from "@pairfy/common";
 
 const currentSellerMiddlewares: any = [sellerMiddleware];
 

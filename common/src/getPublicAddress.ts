@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from "express";
+import { SellerToken } from "./index";
 
 declare global {
   namespace Express {
     interface Request {
+      sellerData?: SellerToken | undefined;
       publicAddress?: any;
       session?: {
         jwt?: string;

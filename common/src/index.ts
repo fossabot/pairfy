@@ -14,3 +14,4 @@ export * from "./findSellerByUsername";
 export * from "./password";
 export * from "./nano";
 export * from "./sleep";
+export * from "./sellerMiddleware";
