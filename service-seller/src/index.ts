@@ -101,7 +101,7 @@ const main = async () => {
       );
     });
 
-    app.use(errorHandler as any);
+    app.use(errorHandler);
 
     app.use(compression());
 

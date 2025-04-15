@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 export declare const ERROR_CODES: {
     BAD_REQUEST: string;
     UNAUTHORIZED: string;
@@ -45,5 +45,5 @@ export declare class ApiError extends Error {
         isOperational?: boolean;
     });
 }
-export declare const errorHandler: (err: unknown, _req: Request, res: Response, _next: NextFunction) => Response<any, Record<string, any>>;
+export declare const errorHandler: ErrorRequestHandler;
 export declare const asyncHandler: (fn: (...args: any[]) => Promise<any>) => (req: Request, res: Response, next: NextFunction) => Promise<any>;

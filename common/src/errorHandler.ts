@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { ZodError } from "zod";
 import { logger } from "./index";
 
@@ -21,7 +21,7 @@ export const ERROR_CODES = {
   RATE_LIMIT_EXCEEDED: "RATE_LIMIT_EXCEEDED",
   TOO_MANY_REQUESTS: "TOO_MANY_REQUESTS",
   INVALID_SIGNATURE: "INVALID_SIGNATURE",
-  UPDATE_CONFLICT :  "UPDATE_CONFLICT",
+  UPDATE_CONFLICT: "UPDATE_CONFLICT",
 
   INTERNAL_ERROR: "INTERNAL_ERROR",
   SERVICE_UNAVAILABLE: "SERVICE_UNAVAILABLE",
@@ -90,7 +90,7 @@ const normalizeError = (err: unknown): ApiError => {
   });
 };
 
-export const errorHandler = (
+export const errorHandler: ErrorRequestHandler = (
   err: unknown,
   _req: Request,
   res: Response,
@@ -98,11 +98,11 @@ export const errorHandler = (
 ) => {
   const normalized = normalizeError(err);
 
-  res.setHeader("Content-Type", "application/json");
-
   logger.error(normalized);
 
-  return res.status(normalized.statusCode).json({
+  res.setHeader("Content-Type", "application/json");
+
+  res.status(normalized.statusCode).json({
     status: normalized.statusCode,
     message: normalized.message,
     code: normalized.code,

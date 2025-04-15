@@ -77,9 +77,9 @@ const normalizeError = (err) => {
 };
 const errorHandler = (err, _req, res, _next) => {
     const normalized = normalizeError(err);
-    res.setHeader("Content-Type", "application/json");
     index_1.logger.error(normalized);
-    return res.status(normalized.statusCode).json({
+    res.setHeader("Content-Type", "application/json");
+    res.status(normalized.statusCode).json({
         status: normalized.statusCode,
         message: normalized.message,
         code: normalized.code,
