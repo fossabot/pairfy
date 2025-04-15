@@ -1,11 +1,17 @@
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import database from "../database";
-import { comparePassword } from "../common/password";
 import { Request, Response } from "express";
+import {
+  ApiError,
+  ERROR_CODES,
+  logger,
+  createToken,
+  comparePassword,
+} from "@pairfy/common";
 import { SellerToken, sellerMiddleware } from "../common/sellerMiddleware";
 import { getPubKeyHash } from "../utils/blockchain";
-import { ApiError, ERROR_CODES } from "@pairfy/common";
-import {logger, createToken} from "@pairfy/common";
+
+
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
@@ -35,7 +41,9 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (!verifySignature) {
-      throw new ApiError(401, "signature error", { code: ERROR_CODES.INVALID_SIGNATURE });
+      throw new ApiError(401, "signature error", {
+        code: ERROR_CODES.INVALID_SIGNATURE,
+      });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -102,7 +110,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     const [result] = await connection.execute(schemeData, [
       pubkeyhash,
       address32,
-      SELLER.id
+      SELLER.id,
     ]);
 
     if (result.affectedRows !== 1) {
@@ -127,7 +135,9 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     logger.error(err);
 
-    throw new ApiError(401, "authentication failed", { code: ERROR_CODES.INVALID_CREDENTIALS });
+    throw new ApiError(401, "authentication failed", {
+      code: ERROR_CODES.INVALID_CREDENTIALS,
+    });
   } finally {
     if (connection) {
       connection.release();

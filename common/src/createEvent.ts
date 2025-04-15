@@ -1,7 +1,6 @@
 import { Connection } from "mysql2/promise";
-import { customAlphabet } from "nanoid";
+import { createId } from "./index";
 
-const getEventId = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 26);
 
 export async function createEvent(
   connection: Connection,
@@ -24,7 +23,9 @@ export async function createEvent(
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  const values = [getEventId(), source, type, data, agentId, timestamp, timestamp, 0];
+  const getEventId = createId("abcdefghijklmnopqrstuvwxyz0123456789", 26)
+
+  const values = [getEventId, source, type, data, agentId, timestamp, timestamp, 0];
 
   return await connection.execute(sql, values);
 }

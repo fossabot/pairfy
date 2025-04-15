@@ -1,14 +1,19 @@
 import database from "../database";
+import { Request, Response } from "express";
 import {
   validateRegistration,
   RegistrationInput,
 } from "../validators/create-seller";
-import { hashPassword } from "../common/password";
-import { Request, Response } from "express";
-import { getSellerId } from "../common/nano";
-import { createEvent, createSeller, createToken } from "@pairfy/common";
-import { ApiError, ERROR_CODES } from "@pairfy/common";
-import { findSellerByEmailOrUsername } from "../common/findSellerByEmailOrUsername";
+import {
+  ApiError,
+  ERROR_CODES,
+  findSellerByEmailOrUsername,
+  hashPassword,
+  createId,
+  createEvent,
+  createSeller,
+  createToken,
+} from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -22,12 +27,20 @@ const createSellerHandler = async (req: Request, res: Response) => {
   try {
     connection = await database.client.getConnection();
 
-    const findSeller = await findSellerByEmailOrUsername(connection, params.email, params.username);
+    const findSeller = await findSellerByEmailOrUsername(
+      connection,
+      params.email,
+      params.username
+    );
 
     if (findSeller) {
-      throw new ApiError(400, "The email address or username is already registered.", {
-        code: ERROR_CODES.BAD_REQUEST,
-      });
+      throw new ApiError(
+        400,
+        "The email address or username is already registered.",
+        {
+          code: ERROR_CODES.BAD_REQUEST,
+        }
+      );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +51,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const password = await hashPassword(params.password);
 
-    const sellerId = getSellerId();
+    const sellerId = createId("0123456789", 25);
 
     const token = createToken(
       {

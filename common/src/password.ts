@@ -21,8 +21,10 @@ export class Password {
   }
 }
 
-export const hashPassword = async (password: string) =>
-  Password.toHash(password);
+export async function hashPassword(password: string) {
+  return Password.toHash(password);
+}
 
-export const comparePassword = async (a: string, b: string) =>
-  Password.compare(a, b);
+export async function comparePassword(a: string, b: string) {
+  return Password.compare(a, b);
+}
