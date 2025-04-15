@@ -1,11 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.asyncHandler = exports.errorHandler = exports.ApiError = exports.ERROR_CODES = void 0;
 const zod_1 = require("zod");
-const logger_1 = __importDefault(require("./logger"));
+const index_1 = require("./index");
 exports.ERROR_CODES = {
     BAD_REQUEST: "BAD_REQUEST",
     UNAUTHORIZED: "UNAUTHORIZED",
@@ -81,7 +78,7 @@ const normalizeError = (err) => {
 const errorHandler = (err, _req, res, _next) => {
     const normalized = normalizeError(err);
     res.setHeader("Content-Type", "application/json");
-    logger_1.default.error(normalized);
+    index_1.logger.error(normalized);
     return res.status(normalized.statusCode).json({
         status: normalized.statusCode,
         message: normalized.message,

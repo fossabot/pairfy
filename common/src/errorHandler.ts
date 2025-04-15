@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
-import logger from "./logger";
+import { logger } from "./index";
 
 export const ERROR_CODES = {
   BAD_REQUEST: "BAD_REQUEST",

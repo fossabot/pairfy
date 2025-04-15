@@ -1,2 +1,1 @@
-declare const logger: import("pino").Logger<never, boolean>;
-export default logger;
+export declare const logger: import("pino").Logger<never, boolean>;

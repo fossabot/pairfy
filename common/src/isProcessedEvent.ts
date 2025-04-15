@@ -1,5 +1,5 @@
 import { Connection, RowDataPacket } from "mysql2/promise";
-import logger from "./logger";
+import { logger } from "./index";
 
 
 export async function isProcessedEvent(

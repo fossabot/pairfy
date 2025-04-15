@@ -2,7 +2,7 @@ import pino from 'pino';
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const logger = pino({
+export const logger = pino({
   level: isProd ? 'info' : 'debug',
   timestamp: pino.stdTimeFunctions.isoTime,
   formatters: {
@@ -22,4 +22,3 @@ const logger = pino({
       }),
 });
 
-export default logger;
