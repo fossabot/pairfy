@@ -1,12 +1,12 @@
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import database from "../database";
-import { comparePassword } from "../utils/password";
+import { comparePassword } from "../common/password";
 import { Request, Response } from "express";
-import { SellerToken, sellerMiddleware } from "../utils/seller";
-import { createToken } from "../utils/token";
+import { SellerToken, sellerMiddleware } from "../common/seller";
+import { createToken } from "../common/token";
 import { getPubKeyHash } from "../utils/blockchain";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
-import logger from "../utils/logger";
+import logger from "../common/logger";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 

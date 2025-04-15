@@ -3,15 +3,15 @@ import {
   validateRegistration,
   RegistrationInput,
 } from "../validators/create-seller";
-import { hashPassword } from "../utils/password";
+import { hashPassword } from "../common/password";
 import { Request, Response } from "express";
-import { getSellerId } from "../utils/nano";
-import { createToken } from "../utils/token";
+import { getSellerId } from "../common/nano";
+import { createToken } from "../common/token";
 import { createEvent, createSeller } from "@pairfy/common";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
 import { getSellerByEmail } from "./getSellerByEmail";
 import { getSellerByUsername } from "./getSellerByUsername";
-import logger from "../utils/logger";
+import logger from "../common/logger";
 
 
 const createSellerMiddlewares: any = [validateRegistration];

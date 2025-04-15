@@ -1,5 +1,5 @@
 import jwt, { JsonWebTokenError, TokenExpiredError, NotBeforeError } from "jsonwebtoken";
-import { ApiError, ERROR_CODES } from "../common/errorHandler";
+import { ApiError, ERROR_CODES } from "./errorHandler";
 
 
 function createToken(params: object, expires?: string) {

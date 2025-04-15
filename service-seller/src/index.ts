@@ -1,7 +1,7 @@
 import * as route from "./routes";
 import database from "./database";
 import compression from "compression";
-import logger from "./utils/logger";
+import logger from "./common/logger";
 import { catchError } from "./utils";
 import { app } from "./app";
 

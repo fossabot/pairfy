@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import logger from "./logger";
 
-
 interface SellerToken {
   id: string;
   role: string;
@@ -33,21 +32,19 @@ const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
       process.env.AGENT_JWT_KEY!
     ) as SellerToken;
 
-    if (sessionData.role !== "SELLER") {
-      return next();
-    }
+    if (sessionData.role === "SELLER") {
+      const scheme = {
+        ...sessionData,
+        token: req.session.jwt,
+      };
 
-    const scheme =  {
-      ...sessionData,
-      token: req.session.jwt
+      req.sellerData = scheme;
     }
-
-    req.sellerData = scheme;
   } catch (err) {
     logger.error(err);
   }
 
-  next();
+  return next();
 };
 
 export { sellerMiddleware, SellerToken };

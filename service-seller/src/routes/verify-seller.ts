@@ -1,11 +1,11 @@
 import { ApiError, ERROR_CODES } from "../common/errorHandler";
 import { verifySellerValidator } from "../validators/verify-seller";
-import { verifyToken } from "../utils/token";
+import { verifyToken } from "../common/token";
 import { updateSeller } from "./updateSeller";
 import { getSellerByEmail } from "./getSellerByEmail";
 import { Request, Response } from "express";
 import database from "../database";
-import logger from "../utils/logger";
+import logger from "../common/logger";
 
 const verifySellerMiddlewares: any = [];
 

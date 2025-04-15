@@ -3,7 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
 import { json } from "body-parser";
-import { getPublicAddress } from "./utils/address";
+import { getPublicAddress } from "./common/getPublicAddress";
 import { rateLimiter } from "./common/rateLimiter";
 
 const app = express();
