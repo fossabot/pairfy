@@ -2,7 +2,7 @@ import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
 import database from "../database";
 import { comparePassword } from "../common/password";
 import { Request, Response } from "express";
-import { SellerToken, sellerMiddleware } from "../common/seller";
+import { SellerToken, sellerMiddleware } from "../common/sellerMiddleware";
 import { createToken } from "../common/token";
 import { getPubKeyHash } from "../utils/blockchain";
 import { ApiError, ERROR_CODES } from "../common/errorHandler";

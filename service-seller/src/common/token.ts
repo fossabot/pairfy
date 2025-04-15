@@ -2,7 +2,7 @@ import jwt, { JsonWebTokenError, TokenExpiredError, NotBeforeError } from "jsonw
 import { ApiError, ERROR_CODES } from "./errorHandler";
 
 
-function createToken(params: object, expires?: string) {
+export function createToken(params: object, expires?: string) {
   const secretKey: jwt.Secret = process.env.AGENT_JWT_KEY as string;
 
   const defaultTime: any = process.env.TOKEN_EXPIRATION as string;
@@ -14,7 +14,7 @@ function createToken(params: object, expires?: string) {
   return jwt.sign(params, secretKey, options);
 }
 
-function verifyToken(token: string, key: string): any {
+export function verifyToken(token: string, key: string): any {
   try {
     return jwt.verify(token, key);
   } catch (error) {
@@ -48,4 +48,3 @@ function verifyToken(token: string, key: string): any {
 }
 
 
-export { createToken, verifyToken };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { sellerMiddleware } from "../common/seller";
+import { sellerMiddleware } from "../common/sellerMiddleware";
 
 const currentSellerMiddlewares: any = [sellerMiddleware];
 

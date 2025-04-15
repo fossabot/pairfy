@@ -9,7 +9,7 @@ const redis = new Redis(process.env.REDIS_RATE_LIMIT as string);
 const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 20;
 
-//change with distributed rate-limit
+//change to distributed rate-limit
 const fallbackStore = new Map<string, { count: number; expiresAt: number }>();
 
 export const rateLimiter = async (
