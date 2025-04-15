@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
+import logger from "./logger";
 
 export const ERROR_CODES = {
   BAD_REQUEST: "BAD_REQUEST",
@@ -99,11 +100,7 @@ export const errorHandler = (
 
   res.setHeader("Content-Type", "application/json");
 
-  if (!normalized.isOperational) {
-    console.error("Unexpected error:", normalized);
-  }
-
-  console.log(normalized);
+  logger.error(normalized);
 
   return res.status(normalized.statusCode).json({
     status: normalized.statusCode,

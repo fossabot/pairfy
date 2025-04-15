@@ -5,7 +5,7 @@ import { updateSeller } from "./updateSeller";
 import { getSellerByEmail } from "../common/getSellerByEmail";
 import { Request, Response } from "express";
 import database from "../database";
-import logger from "../common/logger";
+import {logger} from "@pairfy/common";
 
 const verifySellerMiddlewares: any = [];
 

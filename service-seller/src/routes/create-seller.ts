@@ -11,8 +11,7 @@ import { createEvent, createSeller } from "@pairfy/common";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { getSellerByEmail } from "../common/getSellerByEmail";
 import { getSellerByUsername } from "../common/getSellerByUsername";
-import logger from "../common/logger";
-
+import {logger} from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateRegistration];
 

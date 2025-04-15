@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import logger from "./logger";
+import {logger} from "@pairfy/common";
 
 interface SellerToken {
   id: string;

@@ -6,7 +6,7 @@ import { SellerToken, sellerMiddleware } from "../common/sellerMiddleware";
 import { createToken } from "../common/token";
 import { getPubKeyHash } from "../utils/blockchain";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
-import logger from "../common/logger";
+import {logger} from "@pairfy/common";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 

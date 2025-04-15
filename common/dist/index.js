@@ -20,3 +20,4 @@ __exportStar(require("./isProcessedEvent"), exports);
 __exportStar(require("./consumedEvent"), exports);
 __exportStar(require("./loadSql"), exports);
 __exportStar(require("./errorHandler"), exports);
+__exportStar(require("./logger"), exports);

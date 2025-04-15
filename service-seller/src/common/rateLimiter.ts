@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { verifyToken } from "./token";
-import logger from "./logger";
+import {logger} from "@pairfy/common";
 import Redis from "ioredis";
 
 const redis = new Redis(process.env.REDIS_RATE_LIMIT as string);

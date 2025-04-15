@@ -1,7 +1,7 @@
 import * as route from "./routes";
 import database from "./database";
 import compression from "compression";
-import logger from "./common/logger";
+import { logger } from "@pairfy/common";
 import { catchError } from "./utils";
 import { app } from "./app";
 import { ApiError, errorHandler } from "@pairfy/common";
@@ -19,23 +19,23 @@ const main = async () => {
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
       "ADMIN_SESSION_SECRET",
-      "REDIS_RATE_LIMIT"
+      "REDIS_RATE_LIMIT",
     ];
-    
+
     for (const key of requiredEnvVars) {
       if (!process.env[key]) {
         throw new Error(`Missing environment variable: ${key}`);
       }
     }
 
-    const databasePort = parseInt(process.env.DATABASE_PORT as string)
+    const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
     database.connect({
       host: process.env.DATABASE_HOST,
       port: databasePort,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME
+      database: process.env.DATABASE_NAME,
     });
 
     const errorEvents: string[] = [
@@ -46,11 +46,11 @@ const main = async () => {
       "uncaughtException",
       "unhandledRejection",
       "SIGHUP",
-      "SIGCONT"
+      "SIGCONT",
     ];
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
-    
+
     app.post(
       "/api/seller/create-seller",
 
@@ -90,13 +90,15 @@ const main = async () => {
     );
 
     app.get("/api/seller/ping", (req, res) => {
-      res.status(200).send('Test OK');
+      res.status(200).send("Test OK");
     });
 
     app.all("*", (req, _res, next) => {
-      next(new ApiError(404, `Route not found: ${req.method} ${req.originalUrl}`, {
-        code: "ROUTE_NOT_FOUND",
-      }));
+      next(
+        new ApiError(404, `Route not found: ${req.method} ${req.originalUrl}`, {
+          code: "ROUTE_NOT_FOUND",
+        })
+      );
     });
 
     app.use(errorHandler as any);
@@ -106,7 +108,6 @@ const main = async () => {
     app.listen(process.env.EXPRESS_PORT, () =>
       logger.info(`express server listening in ${process.env.EXPRESS_PORT}`)
     );
-
   } catch (e) {
     catchError(e);
   }
