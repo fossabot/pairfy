@@ -1,7 +1,7 @@
 import { ApiError, ERROR_CODES } from "@pairfy/common";
 import { verifySellerValidator } from "../validators/verify-seller";
 import { updateSeller } from "./updateSeller";
-import { getSellerByEmail } from "../common/getSellerByEmail";
+import { findSellerByEmail } from "../common/findSellerByEmail";
 import { Request, Response } from "express";
 import database from "../database";
 import {logger, verifyToken} from "@pairfy/common";
@@ -23,7 +23,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
     await connection.beginTransaction();
 
     if (sellerToken.entity === "SELLER") {
-      const sellerData = await getSellerByEmail(connection, sellerToken.email);
+      const sellerData = await findSellerByEmail(connection, sellerToken.email);
 
       console.log(sellerData);
 

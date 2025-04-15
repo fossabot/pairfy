@@ -1,6 +1,6 @@
 import { Connection, RowDataPacket } from "mysql2/promise";
 
-export async function getSellerByEmail(
+export async function findSellerByEmail(
   connection: Connection,
   email: string
 ): Promise<any> {
@@ -9,5 +9,5 @@ export async function getSellerByEmail(
     [email]
   );
 
-  return rows[0]
+  return rows?.[0] || null
 }

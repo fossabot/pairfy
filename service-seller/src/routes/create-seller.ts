@@ -7,9 +7,8 @@ import { hashPassword } from "../common/password";
 import { Request, Response } from "express";
 import { getSellerId } from "../common/nano";
 import { createEvent, createSeller, createToken } from "@pairfy/common";
-import { ApiError, ERROR_CODES, logger } from "@pairfy/common";
-import { getSellerByEmail } from "../common/getSellerByEmail";
-import { getSellerByUsername } from "../common/getSellerByUsername";
+import { ApiError, ERROR_CODES } from "@pairfy/common";
+import { findSellerByEmailOrUsername } from "../common/findSellerByEmailOrUsername";
 
 const createSellerMiddlewares: any = [validateRegistration];
 
@@ -23,28 +22,14 @@ const createSellerHandler = async (req: Request, res: Response) => {
   try {
     connection = await database.client.getConnection();
 
-    const isEmailDuplicated = await getSellerByEmail(connection, params.email);
+    const findSeller = await findSellerByEmailOrUsername(connection, params.email, params.username);
 
-    if (isEmailDuplicated) {
-      throw new ApiError(400, "The email address is already registered.", {
+    if (findSeller) {
+      throw new ApiError(400, "The email address or username is already registered.", {
         code: ERROR_CODES.BAD_REQUEST,
       });
     }
 
-    const isUsernameDuplicated = await getSellerByUsername(
-      connection,
-      params.username
-    );
-
-    if (isUsernameDuplicated) {
-      throw new ApiError(
-        400,
-        `The username ${params.username} is already in use.`,
-        {
-          code: ERROR_CODES.BAD_REQUEST,
-        }
-      );
-    }
     ///////////////////////////////////////////////////////////////////////////////////
 
     await connection.beginTransaction();
@@ -125,8 +110,6 @@ const createSellerHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err) {
-    logger.error(err);
-
     if (connection) {
       await connection.rollback();
     }
