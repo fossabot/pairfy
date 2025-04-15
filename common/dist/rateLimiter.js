@@ -57,6 +57,8 @@ class RateLimiter {
                 const entry = this.fallbackStore.get(key);
                 //////////////////////////////////////////////////////////////////////
                 if (!entry || entry.expiresAt < now) {
+                    if (entry)
+                        this.fallbackStore.delete(key);
                     this.fallbackStore.set(key, {
                         count: 1,
                         expiresAt: now + WINDOW_SECONDS * 1000,

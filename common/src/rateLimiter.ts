@@ -48,10 +48,10 @@ export class RateLimiter {
         }
 
         const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
-        
+
         if (!saved) {
           const current = await this.redis.incr(key);
-          
+
           if (current > MAX_REQUESTS) {
             logger.warn(`[RateLimitExceeded]: key=${key}`);
             throw new ApiError(429, "Too many requests", {
@@ -71,9 +71,11 @@ export class RateLimiter {
         const now = Date.now();
         const entry = this.fallbackStore.get(key);
 
-         //////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////
 
         if (!entry || entry.expiresAt < now) {
+          if (entry) this.fallbackStore.delete(key);
+
           this.fallbackStore.set(key, {
             count: 1,
             expiresAt: now + WINDOW_SECONDS * 1000,
