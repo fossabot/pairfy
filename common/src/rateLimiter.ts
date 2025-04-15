@@ -29,7 +29,6 @@ export class RateLimiter {
         key = `ratelimit:ip:${req.publicAddress}`;
 
         const token = req.session?.jwt;
-
         if (token) {
           try {
             const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
@@ -39,50 +38,47 @@ export class RateLimiter {
               key = `ratelimit:user:${decoded.sub}`;
             }
           } catch {
-            
+            // IP
           }
         }
 
-        const saveInRedis = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
-        
-        if (!saveInRedis) {
+        const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
+        if (!saved) {
           const current = await this.redis.incr(key);
           if (current > MAX_REQUESTS) {
-            logger.warn(`RateLimitExceeded: key=${key}`);
+            logger.warn(`Rate limit exceeded: key=${key}`);
             throw new ApiError(429, "Too many requests", {
               code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
             });
           }
         }
 
-        next();
+        return next();
       } catch (err) {
-        if (!(err instanceof ApiError)) {
-          logger.error("Redis error, using fallback store:", err);
-        }
+        logger.error("Rate limiter error, using fallback:", err);
 
         const now = Date.now();
-        const data = this.fallbackStore.get(key);
-        const isKeyInvalid = !data || data.expiresAt < now;
+        const entry = this.fallbackStore.get(key);
 
-        if (isKeyInvalid) {
+        if (!entry || entry.expiresAt < now) {
           this.fallbackStore.set(key, {
             count: 1,
             expiresAt: now + WINDOW_SECONDS * 1000,
           });
-        } else {
-          data.count += 1;
-          if (data.count > MAX_REQUESTS) {
-            logger.warn(`Rate limit exceeded (fallback): key=${key}`);
-            return next(
-              new ApiError(429, "Too many requests", {
-                code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
-              })
-            );
-          }
+          return next();
         }
 
-        next(err);
+        entry.count += 1;
+        if (entry.count > MAX_REQUESTS) {
+          logger.warn(`Rate limit exceeded (fallback): key=${key}`);
+          return next(
+            new ApiError(429, "Too many requests", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            })
+          );
+        }
+
+        return next();
       }
     };
   }
