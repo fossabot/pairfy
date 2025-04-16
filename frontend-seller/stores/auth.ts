@@ -1,5 +1,3 @@
-import { defineStore } from "pinia";
-
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = useState<boolean>("isAuthenticated", () => false);
   const seller = useState<any>("seller", () => null);
@@ -64,7 +62,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     try {
       const data = await $fetch(
-        `${config.serviceSellerBase}/seller/current-seller`,
+        "/api/seller/current-seller",
         {
           method: "GET",
           credentials: "include",
@@ -84,7 +82,7 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
 
     try {
-      const response: any = await $fetch("/api/seller/verify-seller", {
+      const response = await $fetch("/api/seller/verify-seller", {
         method: "POST",
         body: credentials,
         async onResponseError({ response }) {
@@ -100,7 +98,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   const logout = async () => {
     try {
-      await $fetch(`${config.serviceSellerBase}/seller/logout-seller`, {
+      await $fetch("/api/seller/logout-seller", {
         method: "GET",
         credentials: "include",
       });
