@@ -19,6 +19,7 @@ export declare const ERROR_CODES: {
     TOO_MANY_REQUESTS: string;
     INVALID_SIGNATURE: string;
     UPDATE_CONFLICT: string;
+    UNVERIFIED_EMAIL: string;
     INTERNAL_ERROR: string;
     SERVICE_UNAVAILABLE: string;
     TIMEOUT_ERROR: string;
