@@ -29,7 +29,7 @@ onMounted(async () => {
         try {
             const response = await auth.verify({ token })
 
-            message.value = response.data.message;
+            message.value = response.data.message
 
             displayMessage(response.data.message, 'info', 20_000)
 
