@@ -4,7 +4,7 @@ import {
   findSellerByEmail,
   ApiError,
   ERROR_CODES,
-  updateSeller,
+  updateSeller
 } from "@pairfy/common";
 import { Request, Response } from "express";
 import {
