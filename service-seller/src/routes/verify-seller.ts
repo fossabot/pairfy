@@ -4,7 +4,7 @@ import {
   findSellerByEmail,
   ApiError,
   ERROR_CODES,
-  updateSeller
+  updateSeller,
 } from "@pairfy/common";
 import { Request, Response } from "express";
 import { verifySellerValidator } from "../validators/verify-seller";
@@ -36,6 +36,12 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
       console.log(SELLER);
 
+      if (SELLER.verified === true) {
+        throw new ApiError(400, "Email is already verified", {
+          code: ERROR_CODES.EMAIL_ALREADY_VERIFIED,
+        });
+      }
+
       const updatedSeller = await updateSeller(
         connection,
         SELLER.id,
@@ -55,7 +61,6 @@ const verifySellerHandler = async (req: Request, res: Response) => {
           }
         );
       }
-      
     }
 
     await connection.commit();

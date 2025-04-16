@@ -10,9 +10,9 @@ import {
   SellerToken,
   sellerMiddleware,
   findSellerByEmail,
+  updateSeller
 } from "@pairfy/common";
 import { getPubKeyHash } from "../utils/blockchain";
-import { updateSeller } from "./updateSeller";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
