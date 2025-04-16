@@ -36,7 +36,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
       console.log(SELLER);
 
-      if (SELLER.verified === true) {
+      if (SELLER.verified === 1) {
         throw new ApiError(400, "Email is already verified", {
           code: ERROR_CODES.EMAIL_ALREADY_VERIFIED,
         });

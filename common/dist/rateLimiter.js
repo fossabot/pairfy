@@ -19,7 +19,7 @@ class RateLimiter {
             },
         });
         this.redis.on("error", (err) => {
-            index_1.logger.error("[RedisClientError]", err.message);
+            index_1.logger.error("[RedisClientError]", err);
         });
         this.redis.on("connect", () => {
             index_1.logger.info("[RedisClientConnected]");

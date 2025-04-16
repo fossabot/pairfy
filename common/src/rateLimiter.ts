@@ -21,7 +21,7 @@ export class RateLimiter {
     this.redis.on("error", (err) => {
       logger.error("[RedisClientError]", err);
     });
-
+    
     this.redis.on("connect", () => {
       logger.info("[RedisClientConnected]");
     });
