@@ -50,3 +50,11 @@ export function verifyToken(token: string, key: string): any {
     });
   }
 }
+
+
+export interface SellerEmailRegistrationToken {
+  source: "service-seller";
+  role: "SELLER";
+  email: string;
+  username: string;
+}

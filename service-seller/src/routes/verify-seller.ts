@@ -5,6 +5,7 @@ import {
   ApiError,
   ERROR_CODES,
   updateSeller,
+  SellerEmailRegistrationToken,
 } from "@pairfy/common";
 import { Request, Response } from "express";
 import { verifySellerValidator } from "../validators/verify-seller";
@@ -17,8 +18,11 @@ const verifySellerHandler = async (req: Request, res: Response) => {
   try {
     const { token } = verifySellerValidator.parse(req.body);
 
-    const sellerToken = verifyToken(token, process.env.AGENT_JWT_KEY as string);
-
+    const sellerToken = verifyToken(
+      token,
+      process.env.AGENT_JWT_KEY as string
+    ) as SellerEmailRegistrationToken;
+    console.log(sellerToken);
     if (!sellerToken) {
       throw new ApiError(401, "Invalid Credentials", {
         code: ERROR_CODES.INVALID_CREDENTIALS,
@@ -31,7 +35,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    if (sellerToken.entity === "SELLER") {
+    if (sellerToken.role === "SELLER") {
       const SELLER = await findSellerByEmail(connection, sellerToken.email);
 
       console.log(SELLER);

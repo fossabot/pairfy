@@ -1,9 +1,6 @@
 import database from "../database";
 import { Request, Response } from "express";
-import {
-  validateParams,
-  RegistrationInput,
-} from "../validators/create-seller";
+import { validateParams, RegistrationInput } from "../validators/create-seller";
 import {
   ApiError,
   ERROR_CODES,
@@ -13,6 +10,7 @@ import {
   createEvent,
   createSeller,
   createToken,
+  SellerEmailRegistrationToken
 } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateParams];
@@ -53,15 +51,14 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const sellerId = createId("0123456789", 25);
 
-    const token = createToken(
-      {
-        source: "service-seller",
-        entity: "SELLER",
-        email: params.email,
-        username: params.username,
-      },
-      "1h"
-    );
+    const emailToken: SellerEmailRegistrationToken = {
+      source: "service-seller",
+      role: "SELLER",
+      email: params.email,
+      username: params.username,
+    };
+
+    const token = createToken(emailToken, "1h");
 
     const emailScheme = {
       type: "register:seller",
