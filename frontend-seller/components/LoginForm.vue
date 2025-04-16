@@ -73,13 +73,11 @@ const onValidPassword = (event) => {
 }
 
 const disableSubmit = computed(() => {
-
   return !emailValid.value || !passwordValid.value
 })
 
 const connectWallet = async (name) => {
   try {
-    console.log(name)
     await wallet.connect(name)
 
     const [signature, address] = await wallet.sign()
