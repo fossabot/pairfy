@@ -1,7 +1,11 @@
 <!-- components/ResizableButton.vue -->
 <template>
   <button class="p-ButtonSolid" :class="[{ disabled }, sizeClass]" @click="$emit('click')" :disabled="disabled">
-    {{ label }}
+
+    <span class="loader" v-if="loading"/>
+
+
+    <span>{{ label }}</span>
   </button>
 </template>
 
@@ -16,6 +20,10 @@ const props = defineProps({
     required: true
   },
   disabled: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
     type: Boolean,
     default: false
   }
@@ -39,9 +47,12 @@ const sizeClass = computed(() => {
   transition: background-color 0.2s ease;
   border-radius: var(--button-radius);
   background: var(--primary-a);
+  justify-content: center;
   color: var(--text-w);
-  font-weight: bold;
+  align-items: center;
+  font-weight: 600;
   cursor: pointer;
+  display: flex;
   border: none;
 }
 
@@ -66,5 +77,28 @@ const sizeClass = computed(() => {
 .btn-large {
   padding: 12px 24px;
   font-size: 16px;
+}
+
+
+.loader {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #FFF;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  border-bottom-color: transparent;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

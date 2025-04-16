@@ -17,7 +17,7 @@
       :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
 
 
-    <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" />
+    <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" :loading="auth.loading" /> 
   </form>
 </template>
 
