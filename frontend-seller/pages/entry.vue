@@ -2,12 +2,13 @@
 <template>
   <div class="entry">
 
-    <ToastComp ref="toastRef" />
 
     <div class="entry-form">
 
       <div class="entry-form-image">
-        <img :src="miImagen" alt="Mi imagen" />
+        <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
+          <img :src="miImagen" alt="Mi imagen" />
+        </NuxtLink>
       </div>
 
 
@@ -15,7 +16,7 @@
 
         <component :is="currentComponent" />
 
-        <div class="entry-form-switcher">
+        <div class="entry-form-switcher" v-if="currentView !== 'verify'">
 
           <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
             <button @click="mode = 'login'">I already have an account.</button>
@@ -38,21 +39,13 @@
 import miImagen from '@/assets/brand/icon.svg'
 import RegisterForm from '~/components/RegisterForm.vue'
 import LoginForm from '~/components/LoginForm.vue'
-import VerifyForm from '~/components/VerifyView.vue'
+import VerifyView from '~/components/VerifyView.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
-import { useAuthStore } from '@/stores/auth'
+
 
 definePageMeta({
   layout: 'entry'
 })
-
-const auth = useAuthStore()
-
-const toastRef = ref(null);
-
-const displayMessage = (message, type, duration) => {
-  toastRef.value?.showToast(message, type, duration)
-}
 
 const mode = ref('login')
 
@@ -60,7 +53,7 @@ const views = {
   login: LoginForm,
   register: RegisterForm,
   recovery: RecoveryForm,
-  verify: VerifyForm
+  verify: VerifyView
 }
 
 const route = useRoute()
@@ -72,21 +65,7 @@ const currentView = computed(() => {
 
 const currentComponent = computed(() => views[currentView.value])
 
-onMounted(async () => {
-  const mode = route.query.m?.toString()
-  const token = route.query.t?.toString()
 
-  if (mode === 'verify' && token) {
-    try {
-      const response = await auth.verify({ token })
-
-      displayMessage(response.data.message, 'info', 20_000)
-    } catch (err) {
-
-      displayMessage(err, 'error', 20_000)
-    }
-  }
-})
 </script>
 
 <style scoped>

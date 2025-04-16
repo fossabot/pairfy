@@ -4,7 +4,7 @@
 
     <InputEmail class="p-RegisterForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
-    <InputAlphaNumeric class="p-RegisterForm-username" v-model="username" label="username" placeholder="Eg: Matthew777"
+    <InputAlphaNumeric class="p-RegisterForm-username" v-model="username" label="username" placeholder="Eg: Name777"
       :minLength="5" :maxLength="20" @valid="onValidUsername" />
 
     <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />

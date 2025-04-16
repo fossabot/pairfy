@@ -84,7 +84,7 @@ const verifySellerHandler = async (req: Request, res: Response) => {
     res.status(200).send({
       success: true,
       data: {
-        message: "Token verified successfully",
+        message: "The email has been successfully verified !",
       },
     });
   } catch (err: any) {

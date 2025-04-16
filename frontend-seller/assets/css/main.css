@@ -40,9 +40,9 @@ body {
   --primary-a: var(--blue-a);
   --primary-b: var(--gray-a);
 
-  --radius-a: 4px;
-  --radius-b: 8px;
-  --radius-c: 16px;
+  --radius-a: 3px;
+  --radius-b: 6px;
+  --radius-c: 12px;
   --radius-d: 24px;
 
   --blue-a: #2563eb;

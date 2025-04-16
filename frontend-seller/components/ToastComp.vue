@@ -7,10 +7,6 @@
           :class="['p-ToastComp', toast.type]"
         >
           <span class="p-ToastComp-message">{{ toast.message }}</span>
-
-          
-       
-
         </div>
       </transition-group>
     </div>
@@ -85,6 +81,7 @@
   
   .p-ToastComp-message {
     overflow-wrap: anywhere;
+    text-align: left;
     flex: 1;
   }
   
