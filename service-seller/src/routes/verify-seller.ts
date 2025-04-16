@@ -4,10 +4,10 @@ import {
   findSellerByEmail,
   ApiError,
   ERROR_CODES,
+  updateSeller
 } from "@pairfy/common";
 import { Request, Response } from "express";
 import { verifySellerValidator } from "../validators/verify-seller";
-import { updateSeller } from "./updateSeller";
 
 const verifySellerMiddlewares: any = [];
 
