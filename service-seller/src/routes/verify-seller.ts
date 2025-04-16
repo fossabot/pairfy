@@ -5,10 +5,12 @@ import {
   ApiError,
   ERROR_CODES,
   updateSeller,
-  SellerEmailRegistrationToken,
 } from "@pairfy/common";
 import { Request, Response } from "express";
-import { verifySellerValidator } from "../validators/verify-seller";
+import {
+  tokenTypeValidator,
+  tokenValidator,
+} from "../validators/verify-seller";
 
 const verifySellerMiddlewares: any = [];
 
@@ -16,15 +18,23 @@ const verifySellerHandler = async (req: Request, res: Response) => {
   let connection = null;
 
   try {
-    const { token } = verifySellerValidator.parse(req.body);
+    const isValidToken = tokenValidator.safeParse(req.body);
+
+    if (!isValidToken.success) {
+      throw new ApiError(401, "Invalid Token", {
+        code: ERROR_CODES.INVALID_CREDENTIALS,
+      });
+    }
 
     const sellerToken = verifyToken(
-      token,
+      isValidToken.data.token,
       process.env.AGENT_JWT_KEY as string
-    ) as SellerEmailRegistrationToken;
-    console.log(sellerToken);
-    if (!sellerToken) {
-      throw new ApiError(401, "Invalid Credentials", {
+    );
+
+    const isValidTokenContent = tokenTypeValidator.safeParse(sellerToken);
+
+    if (!isValidTokenContent.success) {
+      throw new ApiError(401, "Invalid Token", {
         code: ERROR_CODES.INVALID_CREDENTIALS,
       });
     }
@@ -81,6 +91,8 @@ const verifySellerHandler = async (req: Request, res: Response) => {
     if (connection) {
       await connection.rollback();
     }
+
+    throw err;
   } finally {
     if (connection) {
       connection.release();
