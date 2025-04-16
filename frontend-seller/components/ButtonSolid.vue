@@ -2,10 +2,11 @@
 <template>
   <button class="p-ButtonSolid" :class="[{ disabled }, sizeClass]" @click="$emit('click')" :disabled="disabled">
 
-    <span class="loader" v-if="loading"/>
+    <div class="p-ButtonSolid-body">
+      <span class="loader" :class="{ visible: loading }" />
+      <span class="label">{{ label }}</span>
+    </div>
 
-
-    <span>{{ label }}</span>
   </button>
 </template>
 
@@ -64,6 +65,12 @@ const sizeClass = computed(() => {
   pointer-events: none;
 }
 
+.p-ButtonSolid-body {
+  margin-right: calc(1rem + 0.5rem);
+  align-items: center;
+  display: flex;
+}
+
 .btn-mini {
   padding: 4px 8px;
   font-size: 12px;
@@ -81,8 +88,8 @@ const sizeClass = computed(() => {
 
 
 .loader {
-  width: 16px;
-  height: 16px;
+  width: 1rem;
+  height: 1rem;
   border: 2px solid #FFF;
   margin-right: 0.5rem;
   border-radius: 50%;
@@ -90,6 +97,11 @@ const sizeClass = computed(() => {
   box-sizing: border-box;
   border-bottom-color: transparent;
   animation: rotation 1s linear infinite;
+  visibility: hidden;
+}
+
+.loader.visible {
+  visibility: visible;
 }
 
 @keyframes rotation {
