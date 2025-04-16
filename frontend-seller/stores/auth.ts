@@ -78,17 +78,19 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
-  const verify = async (credentials: { token: string }) => {
+  const verify = async (body: { token: string }) => {
     loading.value = true;
 
     try {
       const response = await $fetch("/api/seller/verify-seller", {
         method: "POST",
-        body: credentials,
+        body: body,
         async onResponseError({ response }) {
           throw new Error(JSON.stringify(response._data.data));
         },
       });
+
+      return response
     } catch (err: any) {
       throw new Error(err.message);
     } finally {

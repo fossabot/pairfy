@@ -42,29 +42,26 @@ import VerifyForm from '~/components/VerifyView.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
 import { useAuthStore } from '@/stores/auth'
 
-
-const toastRef = ref(null);
-
-const displayMessage = (message, type, duration) => {
-  toastRef.value?.showToast(message, type, duration) 
-}
-
-const auth = useAuthStore()
-
-
 definePageMeta({
   layout: 'entry'
 })
 
-const mode = ref('login')
+const auth = useAuthStore()
 
+const toastRef = ref(null);
+
+const displayMessage = (message, type, duration) => {
+  toastRef.value?.showToast(message, type, duration)
+}
+
+const mode = ref('login')
 
 const views = {
   login: LoginForm,
   register: RegisterForm,
   recovery: RecoveryForm,
-  verify: VerifyForm 
-} 
+  verify: VerifyForm
+}
 
 const route = useRoute()
 
@@ -81,11 +78,12 @@ onMounted(async () => {
 
   if (mode === 'verify' && token) {
     try {
-      await auth.verify({ token })
-    } catch (err) {
-      console.error("FINAL", err)
+      const response = await auth.verify({ token })
 
-      displayMessage(err, 'error', 200000)
+      displayMessage(response.data.message, 'info', 20_000)
+    } catch (err) {
+
+      displayMessage(err, 'error', 20_000)
     }
   }
 })
