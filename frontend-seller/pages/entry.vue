@@ -18,14 +18,14 @@
 
         <div class="entry-form-switcher" v-if="!['verify','email'].includes(currentView)">
 
-          <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
-            <button @click="mode = 'login'">I already have an account.</button>
+          <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }" v-if="!['login'].includes(currentView)">
+            <button @click="mode = 'login'">I already have an account</button>
           </NuxtLink>
           <NuxtLink :to="{ path: '/entry', query: { m: 'register' } }">
-            <button @click="mode = 'register'">Create a new account.</button>
+            <button @click="mode = 'register'">Create a new account</button>
           </NuxtLink>
           <NuxtLink :to="{ path: '/entry', query: { m: 'recovery' } }">
-            <button @click="mode = 'recovery'">Recover password.</button>
+            <button @click="mode = 'recovery'">Recover password</button>
           </NuxtLink>
 
         </div>
