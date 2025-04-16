@@ -1,4 +1,3 @@
-import { ofetch } from "ofetch";
 import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", () => {
