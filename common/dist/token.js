@@ -45,6 +45,7 @@ function createToken(params, expires) {
     };
     return jsonwebtoken_1.default.sign(params, secretKey, options);
 }
+/**Verifies JWT token, raises TokenExpiredError, NotBeforeError, JsonWebTokenError */
 function verifyToken(token, key) {
     try {
         return jsonwebtoken_1.default.verify(token, key);

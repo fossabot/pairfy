@@ -11,7 +11,19 @@ const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 20;
 class RateLimiter {
     constructor(redisUrl) {
-        this.redis = new ioredis_1.default(redisUrl);
+        this.redis = new ioredis_1.default(redisUrl, {
+            retryStrategy(times) {
+                if (times > 20)
+                    return null;
+                return Math.min(times * 100, 2000);
+            },
+        });
+        this.redis.on("error", (err) => {
+            index_1.logger.error("[RedisClientError]", err.message);
+        });
+        this.redis.on("connect", () => {
+            index_1.logger.info("[RedisClientConnected]");
+        });
         this.fallbackStore = new Map();
     }
     getMiddleware() {
