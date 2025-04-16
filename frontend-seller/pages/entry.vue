@@ -16,7 +16,7 @@
 
         <component :is="currentComponent" />
 
-        <div class="entry-form-switcher" v-if="currentView !== 'verify'">
+        <div class="entry-form-switcher" v-if="!['verify','email'].includes(currentView)">
 
           <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
             <button @click="mode = 'login'">I already have an account.</button>
@@ -41,6 +41,7 @@ import RegisterForm from '~/components/RegisterForm.vue'
 import LoginForm from '~/components/LoginForm.vue'
 import VerifyView from '~/components/VerifyView.vue'
 import RecoveryForm from '~/components/RecoveryForm.vue'
+import EmailView from '~/components/EmailView.vue'
 
 
 definePageMeta({
@@ -53,7 +54,8 @@ const views = {
   login: LoginForm,
   register: RegisterForm,
   recovery: RecoveryForm,
-  verify: VerifyView
+  verify: VerifyView,
+  email: EmailView 
 }
 
 const route = useRoute()
@@ -78,7 +80,7 @@ const currentComponent = computed(() => views[currentView.value])
 
 .entry-form {
   background: var(--background-a);
-  border-radius: var(--radius-b);
+  border-radius: var(--radius-c);
   box-shadow: var(--shadow-a);
   margin-top: 4rem;
   padding: 1.5rem;

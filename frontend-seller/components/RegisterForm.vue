@@ -17,7 +17,8 @@
       :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
 
 
-    <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit" :loading="auth.loading" /> 
+    <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit"
+      :loading="auth.loading" />
   </form>
 </template>
 
@@ -25,7 +26,10 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 import InputAlphaNumeric from './InputAlphaNumeric.vue'
+
 const auth = useAuthStore()
+
+const router = useRouter();
 
 const toastRef = ref(null);
 
@@ -81,10 +85,12 @@ const register = async () => {
 
     const response = await auth.register({ email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
 
-    displayMessage(response.data.message, 'info', 100_000)
+    displayMessage(response.data.message, 'info', 20_000)
+
+    router.replace({ path: '/email', query: { m: 'email' } })
   } catch (err) {
     console.error(err)
-    displayMessage(err, 'error', 150_000)
+    displayMessage(err, 'error', 20_000)
   }
 }
 
