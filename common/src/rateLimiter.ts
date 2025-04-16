@@ -11,7 +11,21 @@ export class RateLimiter {
   private fallbackStore: Map<string, { count: number; expiresAt: number }>;
 
   constructor(redisUrl: string) {
-    this.redis = new Redis(redisUrl);
+    this.redis = new Redis(redisUrl, {
+      retryStrategy(times) {
+        if (times > 20) return null;
+        return Math.min(times * 100, 2000);
+      },
+    });
+
+    this.redis.on("error", (err) => {
+      logger.error("[RedisClientError]", err.message);
+    });
+
+    this.redis.on("connect", () => {
+      logger.info("[RedisClientConnected]");
+    });
+
     this.fallbackStore = new Map();
   }
 
