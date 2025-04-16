@@ -17,6 +17,7 @@ export function createToken(params: object, expires?: string) {
   return jwt.sign(params, secretKey, options);
 }
 
+/**Verifies JWT token, raises TokenExpiredError, NotBeforeError, JsonWebTokenError */
 export function verifyToken(token: string, key: string): any {
   try {
     return jwt.verify(token, key);
