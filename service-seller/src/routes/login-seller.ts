@@ -7,11 +7,12 @@ import {
   logger,
   createToken,
   comparePassword,
+  SellerToken,
+  sellerMiddleware,
+  findSellerByEmail,
 } from "@pairfy/common";
-import { SellerToken, sellerMiddleware } from "@pairfy/common";
 import { getPubKeyHash } from "../utils/blockchain";
-
-
+import { updateSeller } from "./updateSeller";
 
 const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
 
@@ -20,28 +21,26 @@ const loginSellerMiddlewares: any = [sellerMiddleware];
 const loginSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
 
-  let params = req.body;
-
   try {
-    const address = Cardano.Address.from_hex(params.address);
+    let params = req.body;
 
-    const address32: string = address.to_bech32();
+    const hexAddress = Cardano.Address.from_hex(params.address);
 
-    const pubkeyhash = getPubKeyHash(address);
+    const address32: string = hexAddress.to_bech32();
 
-    const signature = params.signature;
+    const pubKeyHash = getPubKeyHash(hexAddress);
 
     const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
 
     const verifySignature = verifyDataSignature(
-      signature.signature,
-      signature.key,
+      params.signature.signature,
+      params.signature.key,
       message,
       address32
     );
 
     if (!verifySignature) {
-      throw new ApiError(401, "signature error", {
+      throw new ApiError(401, "Signature error", {
         code: ERROR_CODES.INVALID_SIGNATURE,
       });
     }
@@ -50,28 +49,18 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     connection = await database.client.getConnection();
 
-    const [rows] = await connection.execute(
-      `SELECT id,
-              email,
-              password_hash,              
-              verified,
-              avatar_base,
-              avatar_path,
-              address,
-              country,
-              username
-      FROM sellers WHERE email = ?`,
-      [params.email]
-    );
+    const SELLER = await findSellerByEmail(connection, params.email);
 
-    if (rows.length === 0) {
-      throw new Error("CREDENTIALS");
+    if (!SELLER) {
+      throw new ApiError(404, "Seller not found", {
+        code: ERROR_CODES.NOT_FOUND,
+      });
     }
 
-    const SELLER = rows[0];
-
     if (SELLER.verified !== 1) {
-      throw new Error("UNVERIFIED");
+      throw new ApiError(403, "Email not verified", {
+        code: ERROR_CODES.UNVERIFIED_EMAIL,
+      });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -82,10 +71,14 @@ const loginSellerHandler = async (req: Request, res: Response) => {
     );
 
     if (!passwordsMatch) {
-      throw new Error("CREDENTIALS");
+      throw new ApiError(401, "Invalid Credentials", {
+        code: ERROR_CODES.INVALID_CREDENTIALS,
+      });
     }
 
     /////////////////////////////////////////////////////////////////
+
+    await connection.beginTransaction();
 
     const sellerData: SellerToken = {
       id: SELLER.id,
@@ -95,26 +88,24 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       address: address32,
       country: SELLER.country,
       username: SELLER.username,
-      pubkeyhash,
+      pubkeyhash: pubKeyHash,
     };
 
-    /////////////////////////////////////////////////////////////////
-
-    await connection.beginTransaction();
-
-    const schemeData = `
-      UPDATE sellers
-      SET pubkeyhash = ?, address = ?
-      WHERE id = ?
-   `;
-    const [result] = await connection.execute(schemeData, [
-      pubkeyhash,
-      address32,
+    const updatedSeller = await updateSeller(
+      connection,
       SELLER.id,
-    ]);
+      SELLER.schema_v,
+      {
+        pubkeyhash: pubKeyHash,
+        address: address32,
+        schema_v: SELLER.schema_v + 1,
+      }
+    );
 
-    if (result.affectedRows !== 1) {
-      throw new Error("INTERNAL_ERROR");
+    if (updatedSeller.affectedRows !== 1) {
+      throw new ApiError(409, "Update failed: version mismatch or not found", {
+        code: ERROR_CODES.UPDATE_CONFLICT,
+      });
     }
 
     const token = createToken(sellerData);
@@ -133,11 +124,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
       await connection.rollback();
     }
 
-    logger.error(err);
-
-    throw new ApiError(401, "authentication failed", {
-      code: ERROR_CODES.INVALID_CREDENTIALS,
-    });
+    throw err
   } finally {
     if (connection) {
       connection.release();

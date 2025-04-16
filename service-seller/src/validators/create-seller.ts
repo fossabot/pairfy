@@ -39,7 +39,7 @@ const registrationSchema = z.object({
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;
 
-export const validateRegistration = (
+export const validateParams = (
   req: Request,
   res: Response,
   next: NextFunction

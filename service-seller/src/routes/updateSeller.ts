@@ -1,13 +1,14 @@
 import mysql from "mysql2/promise";
-import { ApiError, ERROR_CODES } from "@pairfy/common";
 
+/**Update model without data verification without error handling */ 
 export const updateSeller = async (
   connection: mysql.Connection,
   id: string,
   schema_v: number,
-  payload: any
+  data: any
 ) => {
-  const fields = Object.keys(payload)
+
+  const fields = Object.keys(data)
     .map((key) => `${key} = ?`)
     .join(", ");
 
@@ -17,17 +18,9 @@ export const updateSeller = async (
     WHERE id = ? AND schema_v = ?
     `;
 
-  const values = [...Object.values(payload), id, schema_v];
+  const values = [...Object.values(data), id, schema_v];
 
-  const [rows] = await connection.execute<mysql.ResultSetHeader>(
-    sql,
-    values
-  );
+  const [rows] = await connection.execute<mysql.ResultSetHeader>(sql, values);
 
-  if (rows.affectedRows !== 1) {
-    throw new ApiError(409, "Update failed: version mismatch or not found", {
-        code: ERROR_CODES.UPDATE_CONFLICT,
-        details: { id: id },
-      });
-  }
+  return rows;
 };

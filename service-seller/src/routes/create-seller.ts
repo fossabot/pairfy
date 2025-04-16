@@ -1,7 +1,7 @@
 import database from "../database";
 import { Request, Response } from "express";
 import {
-  validateRegistration,
+  validateParams,
   RegistrationInput,
 } from "../validators/create-seller";
 import {
@@ -15,7 +15,7 @@ import {
   createToken,
 } from "@pairfy/common";
 
-const createSellerMiddlewares: any = [validateRegistration];
+const createSellerMiddlewares: any = [validateParams];
 
 const createSellerHandler = async (req: Request, res: Response) => {
   let connection = null;

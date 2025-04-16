@@ -1,6 +1,5 @@
 import database from "../database";
 import {
-  logger,
   verifyToken,
   findSellerByEmail,
   ApiError,
@@ -20,6 +19,12 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
     const sellerToken = verifyToken(token, process.env.AGENT_JWT_KEY as string);
 
+    if (!sellerToken) {
+      throw new ApiError(401, "Invalid Credentials", {
+        code: ERROR_CODES.INVALID_CREDENTIALS,
+      });
+    }
+
     connection = await database.client.getConnection();
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -27,13 +32,30 @@ const verifySellerHandler = async (req: Request, res: Response) => {
     await connection.beginTransaction();
 
     if (sellerToken.entity === "SELLER") {
-      const sellerData = await findSellerByEmail(connection, sellerToken.email);
+      const SELLER = await findSellerByEmail(connection, sellerToken.email);
 
-      console.log(sellerData);
+      console.log(SELLER);
 
-      await updateSeller(connection, sellerData.id, sellerData.schema_v, {
-        verified: true,
-      });
+      const updatedSeller = await updateSeller(
+        connection,
+        SELLER.id,
+        SELLER.schema_v,
+        {
+          verified: true,
+          schema_v: SELLER.schema_v + 1,
+        }
+      );
+
+      if (updatedSeller.affectedRows !== 1) {
+        throw new ApiError(
+          409,
+          "Update failed: version mismatch or not found",
+          {
+            code: ERROR_CODES.UPDATE_CONFLICT,
+          }
+        );
+      }
+      
     }
 
     await connection.commit();
@@ -47,15 +69,9 @@ const verifySellerHandler = async (req: Request, res: Response) => {
       },
     });
   } catch (err: any) {
-    logger.error(err);
-
     if (connection) {
       await connection.rollback();
     }
-
-    throw new ApiError(500, "Invalid Credentials", {
-      code: ERROR_CODES.INVALID_CREDENTIALS,
-    });
   } finally {
     if (connection) {
       connection.release();
