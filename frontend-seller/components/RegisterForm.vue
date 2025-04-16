@@ -87,7 +87,7 @@ const register = async () => {
 
     displayMessage(response.data.message, 'info', 20_000)
 
-    router.replace({ path: '/email', query: { m: 'email' } })
+    router.replace({ path: '/entry', query: { m: 'email' } })
   } catch (err) {
     console.error(err)
     displayMessage(err, 'error', 20_000)
