@@ -3,9 +3,20 @@
     <aside :class="['sidebar', { collapsed: isCollapsed && !isHovering }]" @mouseenter="isHovering = true"
       @mouseleave="isHovering = false">
 
-      <div class="layout-icon">
-        <img src="@/assets/brand/icon.svg" alt="">
+      <div class="layout-top">
+        <div class="layout-top-image">
+          <img src="@/assets/brand/icon.svg" alt="">
+        </div>
+
+        <div class="layout-logo-text" :class="{ collapsed: isCollapsed && !isHovering }"
+          v-show="!isCollapsed || isHovering">
+          Pairfy
+          <span>Marketplace</span>
+        </div>
       </div>
+
+
+
       <nav>
         <NuxtLink to="/">
           <span class="icon">
@@ -130,7 +141,7 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 50px;
+  padding-right: 100px;
   visibility: initial;
 }
 
@@ -138,14 +149,35 @@ nav a:hover {
   visibility: hidden;
 }
 
-.layout-icon {
+.layout-top {
+  display: flex;
+  align-items: center;
+}
+
+.layout-top-image {
   justify-content: center;
+  align-items: center;
   display: flex;
   height: 64px;
   width: 64px;
 }
 
-.layout-icon img {
-  width: 80%;
+.layout-top-image img {
+  width: 54px;
+}
+
+.layout-logo-text {
+  font-size: var(--text-size-3);
+  white-space: nowrap;
+  visibility: initial;
+  font-weight: 700;
+}
+
+.layout-logo-text span{
+  font-weight: 300;
+}
+
+.layout-logo-text.collapsed {
+  visibility: hidden;
 }
 </style>
