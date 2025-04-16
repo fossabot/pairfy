@@ -1,17 +1,19 @@
 <template>
   <form class="p-LoginForm" @submit.prevent="connectWallet">
+    <ToastComp ref="toastRef" />
+
     <InputEmail class="p-LoginForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
     <InputPassword class="p-LoginForm-password" v-model="password" @valid="onValidPassword" />
 
     <div class="p-LoginForm-wallets">
-      <button class="p-LoginForm-wallet" type="submit" v-for="wallet in walletImages" :key="wallet.name"
-        @click="connectWallet(wallet.name)">
-        <img :src="wallet.src" :alt="wallet.name" />
+      <button class="p-LoginForm-wallet" :class="{ disabled: disableSubmit }" type="submit" v-for="item in walletImages"
+        :key="item.name" @click="connectWallet(item.name)">
+        <img :src="item.src" :alt="item.name" />
       </button>
 
-      <div class="p-LoginForm-wallet" />
-      <div class="p-LoginForm-wallet" />
+      <div class="p-LoginForm-wallet" :class="{ disabled: disableSubmit }" />
+      <div class="p-LoginForm-wallet" :class="{ disabled: disableSubmit }" />
 
     </div>
 
@@ -26,19 +28,28 @@ import eternl from '@/assets/wallets/eternl.png'
 import lace from '@/assets/wallets/lace.svg'
 import nami from '@/assets/wallets/nami.svg'
 
+const config = useRuntimeConfig()
+
+const auth = useAuthStore()
+
+const router = useRouter()
+
+const wallet = useWalletStore()
+
+const toastRef = ref(null);
+
+const displayMessage = (message, type, duration) => {
+  toastRef.value?.showToast(message, type, duration)
+}
+
 const walletMap = {
   eternl,
   lace,
   nami
 }
 
-const config = useRuntimeConfig()
-const { $wallet } = useNuxtApp()
-const auth = useAuthStore()
-const wallet = useWalletStore()
-
-
 const validWallets = config.public.validWallets
+
 const walletImages = validWallets.map(name => ({
   name,
   src: walletMap[name] ?? ''
@@ -48,34 +59,41 @@ const walletImages = validWallets.map(name => ({
 const email = ref('')
 const password = ref('')
 
+const emailValid = ref(false)
+const passwordValid = ref(false)
+
 const onValidEmail = (event) => {
   console.log("emailhandler", event)
+  emailValid.value = event
 }
 
 const onValidPassword = (event) => {
   console.log("passwordhandler", event)
+  passwordValid.value = event
 }
 
-const connectWallet = async (name) => {
-  //$wallet.connect('wallet', 'lace')
+const disableSubmit = computed(() => {
 
+  return !emailValid.value || !passwordValid.value
+})
+
+const connectWallet = async (name) => {
   try {
-    await wallet.connect('lace')
+    console.log(name)
+    await wallet.connect(name)
 
     const [signature, address] = await wallet.sign()
 
-    const response = await auth.login({ email: email.value, password: password.value, signature, address })
+    await auth.login({ email: email.value, password: password.value, signature, address })
 
-    console.log(response)
-
+    router.push({ path: '/home', query: {} })
   } catch (err) {
     console.error(err);
 
+    displayMessage(err, 'error', 20_000)
+
   }
 }
-
-
-
 </script>
 
 <style scoped>
@@ -97,13 +115,19 @@ form {
 .p-LoginForm-wallet {
   width: 3rem;
   height: 3rem;
-  font-weight: bold;
   display: flex;
-  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
   align-items: center;
   justify-content: center;
   background: transparent;
+  border-radius: var(--radius-b);
   border: 1px solid var(--border-a);
+}
+
+.p-LoginForm-wallet.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .p-LoginForm-wallet img {

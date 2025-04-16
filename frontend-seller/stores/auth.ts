@@ -3,9 +3,7 @@ export const useAuthStore = defineStore("auth", () => {
   const seller = useState<any>("seller", () => null);
   const loading = ref(false);
   const error = ref<string | null>(null);
-
-  const config = useRuntimeConfig();
-
+  
   const login = async (credentials: {
     email: string;
     password: string;
@@ -15,19 +13,17 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
 
     try {
-      const response: any = await $fetch("/api/seller/login-seller", {
+      await $fetch("/api/seller/login-seller", {
         method: "POST",
         body: credentials,
         credentials: "include",
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
       });
-
-      console.log(response.data);
-
       await fetchProfile();
-      isAuthenticated.value = true;
     } catch (err: any) {
-      isAuthenticated.value = false;
-      throw err;
+      throw new Error(err.message);
     } finally {
       loading.value = false;
     }
@@ -61,18 +57,14 @@ export const useAuthStore = defineStore("auth", () => {
     if (!import.meta.server) return;
 
     try {
-      const data = await $fetch(
-        "/api/seller/current-seller",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const data = await $fetch("/api/seller/current-seller", {
+        method: "GET",
+        credentials: "include",
+      });
 
       seller.value = data;
       isAuthenticated.value = true;
     } catch (err: any) {
-      console.log(err);
       isAuthenticated.value = false;
       seller.value = null;
     }
@@ -90,7 +82,7 @@ export const useAuthStore = defineStore("auth", () => {
         },
       });
 
-      return response
+      return response;
     } catch (err: any) {
       throw new Error(err.message);
     } finally {
