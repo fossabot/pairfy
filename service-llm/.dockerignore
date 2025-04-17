@@ -1,0 +1,34 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Modelos grandes (.gguf se monta externamente)
+*.gguf
+models/
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Skaffold
+skaffold.yaml
+k8s/
+
+# Misc
+.DS_Store
+*.bak

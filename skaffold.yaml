@@ -49,7 +49,16 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .            
-
+    - image: pairfy/service-llm
+      context: service-llm
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.py'
+            dest: .
+          - src: 'requirements.txt'
+            dest: .
 deploy:
   statusCheckDeadlineSeconds: 540
   kubectl:
