@@ -72,3 +72,8 @@ portForward:
     namespace: default
     port: 8000
     localPort: 8000
+  - resourceType: service
+    resourceName: service-llm
+    namespace: default
+    port: 8002
+    localPort: 8002
