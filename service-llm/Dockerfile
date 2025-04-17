@@ -5,12 +5,15 @@ RUN apt update && apt install -y --no-install-recommends \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copia el código y el modelo dentro de la imagen
 COPY . .
 
-VOLUME ["/models"]
+# Define la ruta absoluta al modelo embebido en la imagen
+ENV MODEL_PATH=/app/models/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf
 
 EXPOSE 8000
 
