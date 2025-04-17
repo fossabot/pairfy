@@ -3,8 +3,9 @@ Write a professional and engaging product description between 80 and 120 words b
 
 Do not explain, comment, or analyze the specs — just output the final product description.
 
-At the end of the output, add a list of the technical characteristics.
+Don't summarize our conversation, don't say what you have to do or are doing.
 
+Do not explain or describe what you are doing. Just output the final description. No introductions, no analysis.
 
 [Product]
 Processor	Intel Core i7-13700H, 14C (6P + 8E) / 20T, P-core 2.4 / 5.0GHz, E-core 1.8 / 3.7GHz, 24MB
@@ -23,7 +24,6 @@ Power Adapter	65W USB-C (3-pin)
 Dimensions (WxDxH)	356 x 253.5 x 17.5 mm (14.01 x 9.98 x 0.69 inches)
 Weight	Starting at 1.7 kg (3.75 lbs)
 Fingerprint Reader	Touch Style, Integrated in Power Button
-
 
 `
 

@@ -28,7 +28,7 @@ def generate_stream(data: PromptRequest):
             temperature=0.7,
             top_p=0.9,
             repeat_penalty=1.1,
-            stop=["</s>", "User:", "Usuario:"]
+            stop=["</s>", "User:", "Okay", "I will now", "Let me", "Here is", "Alright" ,"I should"]
         ):
             yield output["choices"][0]["text"]
 
