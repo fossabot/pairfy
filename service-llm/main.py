@@ -33,3 +33,6 @@ def generate_stream(data: PromptRequest):
             yield output["choices"][0]["text"]
 
     return StreamingResponse(token_stream(), media_type="text/plain")
+
+
+
