@@ -104,7 +104,6 @@ if (import.meta.server) {
 }
 
 .content {
-  padding: 1rem;
   width: 100%;
 }
 
