@@ -15,6 +15,6 @@ COPY . .
 # Define la ruta absoluta al modelo embebido en la imagen
 ENV MODEL_PATH=/app/models/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf
 
-EXPOSE 8000
+EXPOSE 8002
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8002"]

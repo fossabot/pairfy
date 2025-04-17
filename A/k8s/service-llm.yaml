@@ -16,7 +16,7 @@ spec:
         - name: service-llm
           image: pairfy/service-llm
           ports:
-            - containerPort: 8000
+            - containerPort: 8002
           env:
             - name: MODEL_PATH
               value: /app/models/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf
@@ -31,5 +31,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: 8002
   type: ClusterIP
