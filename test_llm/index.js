@@ -1,29 +1,47 @@
 const prompt = `
-Write a professional and engaging product description between 80 and 120 words based on the following technical specifications. Focus on real-world benefits and use cases. 
-
-Do not explain, comment, or analyze the specs — just output the final product description.
-
-Don't summarize our conversation, don't say what you have to do or are doing.
-
-Do not explain or describe what you are doing. Just output the final description. No introductions, no analysis.
+Receive [Product] as input to make an ordered list of the product's features
+create [Use Cases]
+create [Description]
+create [Summary]
+focus on real-world benefits and use cases
+create a beatiful list with the technical characteristics
+don't say what you have to do or are doing
+do not explain or describe what you are doing
+just output the final description, no introductions
 
 [Product]
-Processor	Intel Core i7-13700H, 14C (6P + 8E) / 20T, P-core 2.4 / 5.0GHz, E-core 1.8 / 3.7GHz, 24MB
-Graphics	Intel Iris Xe Graphics
-Chipset	Intel SoC Platform
-Display	16" WUXGA (1920x1200) IPS 300nits Anti-glare, Non-Touch, 45% NTSC
-Keyboard	Backlit, English
-Case Color	Arctic Grey
-WLAN + Bluetooth	Wi-Fi 6, 802.11ax 2x2 + BT5.2
-Audio Chip	High Definition (HD) Audio, Realtek ALC3287 codec
-Speakers	Stereo speakers, 2W x2, Dolby Audio
-Camera	HD 720p with Privacy Shutter
-Microphone	2x, Array
-Battery	Integrated 45Wh
-Power Adapter	65W USB-C (3-pin)
-Dimensions (WxDxH)	356 x 253.5 x 17.5 mm (14.01 x 9.98 x 0.69 inches)
-Weight	Starting at 1.7 kg (3.75 lbs)
-Fingerprint Reader	Touch Style, Integrated in Power Button
+Dual LED
+Get a natural, realistic picture and accurate contrast that adapts automatically to match your content with our innovative backlight technology.
+
+100% Color Volume with Quantum Dot
+Take in breathtaking color that stays true at any level of brightness. Marvel as your TV transforms light into over a billion beautiful shades.¹
+
+Quantum Processor Lite with 4K Upscaling
+Automatically transform your content into 4K and improve your sound. Our processor enhances each pixel, regardless of the source so you get great visuals and audio.
+
+Motion Xcelerator
+Watch your content smoothly while experiencing less lag and blur. It improves motion between frames so you have a seamless picture.
+
+Object Tracking Sound Lite
+You’ll hear 3D surround sound that follows the movement on screen using our incredible virtual top channel audio putting you right in the middle of the car chase, stampede or party scene.
+
+Quantum HDR
+View a range of color, contrast and detail. Vibrant imagery brings full power to the picture.
+
+AirSlim
+This TV blends right into your wall with a slim design. It brings clutter free minimalism to the room without distracting you from what you watch.
+
+Samsung Tizen OS
+Stream your favorite shows. Play games. Work out with a trainer. Do all you enjoy with Smart TV Powered by Tizen. Discover your must have apps and streaming services all just a few clicks away.²
+
+PANTONE Validated
+Enjoy color validated by industry leading experts at Pantone, so that images on the screen look as incredible as they do in real life. Every hue, tint and skin tone offers a more accurate and beautiful picture.
+
+Gaming Hub
+Where gaming comes together. Stream your favorite games right from your TV. No console required. You’ll also get recommendations on what to play next, based on what you like.³
+
+TV Speakers and Soundbar in Sync
+Only Samsung gives you the power to unlock incredible when you pair your TV with a soundbar. With Q-Symphony, your TV speakers paired with Q-Series and S-Series soundbar operate as one. Together, they can optimize all the channels to bring you our most powerful sound experience ⁴
 
 `
 
