@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from llama_cpp import Llama
 import os
 
-MODEL_PATH = os.getenv("MODEL_PATH", "/models/DeepSeek-R1-Distill-Qwen-1.5B-Q4_K_M.gguf")
+MODEL_PATH = os.getenv("MODEL_PATH", "/models/DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf")
 
 app = FastAPI()
 
