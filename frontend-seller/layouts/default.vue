@@ -146,7 +146,7 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 150px;
+  padding-right: 8rem;
   visibility: initial;
 }
 
@@ -166,7 +166,7 @@ nav a:hover {
   display: flex;
   height: 64px;
   width: 64px;
-  
+
 }
 
 .layout-top-image img {
