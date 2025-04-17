@@ -31,7 +31,7 @@
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Home</span>
         </NuxtLink>
-        <NuxtLink to="/dashboard">
+        <NuxtLink to="/create-product">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -44,7 +44,7 @@
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Create Product</span>
         </NuxtLink>
-        <NuxtLink to="/settings">
+        <NuxtLink to="/create-product">
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -98,8 +98,14 @@ if (import.meta.server) {
 
 <style scoped>
 .layout {
+  background: var(--background-b);
   display: flex;
   height: 100vh;
+}
+
+.content {
+  padding: 1rem;
+  width: 100%;
 }
 
 .sidebar {
@@ -108,7 +114,6 @@ if (import.meta.server) {
   position: relative;
   overflow: hidden;
 }
-
 
 nav {
   flex-direction: column;
@@ -136,12 +141,13 @@ nav a:hover {
   display: flex;
   width: 64px;
   height: 64px;
+  min-width: 64px;
 }
 
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 100px;
+  padding-right: 150px;
   visibility: initial;
 }
 
@@ -157,9 +163,11 @@ nav a:hover {
 .layout-top-image {
   justify-content: center;
   align-items: center;
+  min-width: 64px;
   display: flex;
   height: 64px;
   width: 64px;
+  
 }
 
 .layout-top-image img {
@@ -173,7 +181,7 @@ nav a:hover {
   font-weight: 700;
 }
 
-.layout-logo-text span{
+.layout-logo-text span {
   font-weight: 300;
 }
 
