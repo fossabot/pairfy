@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadOnlyMany
   hostPath:
-    path: /mnt/models # <-- aquí pones el path real donde está el modelo en tu nodo
+    path: /mnt/models 
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
