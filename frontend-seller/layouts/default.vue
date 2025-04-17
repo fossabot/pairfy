@@ -163,7 +163,7 @@ nav a:hover {
 }
 
 .layout-top-image img {
-  width: 54px;
+  width: 44px;
 }
 
 .layout-logo-text {
