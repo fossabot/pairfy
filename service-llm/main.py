@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from llama_cpp import Llama
@@ -25,7 +25,10 @@ def generate_stream(data: PromptRequest):
             prompt=data.prompt,
             max_tokens=data.max_tokens,
             stream=True,
-            stop=["</s>"]
+            temperature=0.7,
+            top_p=0.9,
+            repeat_penalty=1.1,
+            stop=["</s>", "User:", "Usuario:"]
         ):
             yield output["choices"][0]["text"]
 
