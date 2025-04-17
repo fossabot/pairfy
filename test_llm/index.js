@@ -2,6 +2,7 @@ const prompt = `
 Receive [Product] as input to make an ordered list of the product's features
 create [Use Cases]
 create [Description]
+create [Specifications]
 create [Summary]
 focus on real-world benefits and use cases
 create a beatiful list with the technical characteristics

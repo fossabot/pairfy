@@ -4,31 +4,31 @@ from pydantic import BaseModel
 from llama_cpp import Llama
 import os
 
-MODEL_PATH = os.getenv("MODEL_PATH", "/models/DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf")
+MODEL_PATH = os.getenv("MODEL_PATH")
 
 app = FastAPI()
 
 llm = Llama(
     model_path=MODEL_PATH,
-    n_ctx=1024,
+    n_ctx=2048,      
     n_threads=8,
 )
 
 class PromptRequest(BaseModel):
     prompt: str
-    max_tokens: int = 128
+    max_tokens: int = 256 
 
 @app.post("/generate-stream")
 def generate_stream(data: PromptRequest):
     def token_stream():
         for output in llm.create_completion(
-            prompt=data.prompt,
+            prompt=data.prompt.strip(),
             max_tokens=data.max_tokens,
             stream=True,
             temperature=0.7,
             top_p=0.9,
             repeat_penalty=1.1,
-            stop=["</s>", "User:", "Okay", "I will now", "Let me", "Here is", "Alright" ,"I should"]
+            stop=["</s>"]
         ):
             yield output["choices"][0]["text"]
 

@@ -1,3 +1,3 @@
-huggingface-cli download bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF \
-  --include "DeepSeek-R1-Distill-Qwen-7B-Q4_K_M.gguf" \
+huggingface-cli download MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF \
+  --include "Mistral-7B-Instruct-v0.3.Q4_K_M.gguf" \
   --local-dir ./models
