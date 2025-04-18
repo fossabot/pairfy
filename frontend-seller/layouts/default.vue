@@ -133,7 +133,6 @@ nav a {
   text-decoration: none;
   color: var(--text-w);
   align-items: center;
-  font-weight: 600;
   display: flex;
 }
 
@@ -153,7 +152,7 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 8rem;
+  padding-right: 6rem;
   visibility: initial;
 }
 
