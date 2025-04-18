@@ -5,7 +5,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Create a new product
+                        Product
                     </div>
                     <div class="grid-subtitle">
                         Fill in the details to publish a new product.
@@ -36,7 +36,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductPostal id="create-product-postal" />
-                        <InputProductCity id="create-product-city" />
+                      
                     </div>
                 </div>
 
