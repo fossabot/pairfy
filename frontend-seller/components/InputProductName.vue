@@ -83,6 +83,7 @@ const validateInput = (value: string) => {
     if (condition) {
       errorMessage.value = message
       emit('valid', false)
+      return
     }
   }
 
