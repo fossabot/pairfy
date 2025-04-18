@@ -110,7 +110,8 @@ if (import.meta.server) {
 }
 
 .content {
-  width: 100%;
+  overflow-y: auto;
+  flex: 1; 
 }
 
 .sidebar {

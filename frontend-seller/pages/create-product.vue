@@ -49,7 +49,17 @@
                     </div>
                 </div>
 
+                <div class="grid-row">
+                    <div class="grid-title">
+                        Description
+                    </div>
+                    <div class="grid-subtitle">
+                        Create a product description using the AI tool.
+                    </div>
+                </div>
 
+
+                
             </div>
             <div class="grid-right">Contenido secundario</div>
         </div>
