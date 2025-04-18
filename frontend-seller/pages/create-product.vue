@@ -60,6 +60,8 @@
 
 .grid-row {
     background: var(--background-a);
+    border-radius: var(--radius-b);
+    box-shadow: var(--shadow-b);
     margin-top: 1rem;
     padding: 1.5rem;
 }
