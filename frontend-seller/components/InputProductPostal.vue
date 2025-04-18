@@ -120,8 +120,8 @@
   
   .title-text {
     font-size: var(--text-size-1, 1rem);
-    font-weight: bold;
     margin-bottom: 0.75rem;
+    font-weight: 600;
   }
   
   .error-text {
