@@ -11,7 +11,11 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" focus/>
+                        <InputProductName id="create-product-name" focus />
+                    </div>
+                    <div class="grid-item">
+                        <InputProductPrice id="create-product-price" />
+                        <InputProductPrice id="create-product-price" />
                     </div>
                 </div>
 
@@ -55,7 +59,10 @@
 }
 
 .grid-item {
+    align-items: center;
     margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
 }
 
 .grid-row {

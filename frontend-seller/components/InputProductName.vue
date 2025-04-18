@@ -92,8 +92,8 @@ const validateInput = (value: string) => {
 <style scoped>
 .p-InputProductName {
   flex-direction: column;
-  max-width: 100%;
   display: flex;
+  width: 100%;
 }
 
 .p-InputProductName-input {
