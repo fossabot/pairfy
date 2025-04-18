@@ -46,13 +46,16 @@
         </NuxtLink>
         <NuxtLink to="/create-product">
           <span class="icon">
+
+
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-square-chart-gantt-icon lucide-square-chart-gantt">
-              <rect width="18" height="18" x="3" y="3" rx="2" />
-              <path d="M9 8h7" />
-              <path d="M8 12h6" />
-              <path d="M11 16h5" />
+              class="lucide lucide-folder-kanban-icon lucide-folder-kanban">
+              <path
+                d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
+              <path d="M8 10v4" />
+              <path d="M12 10v2" />
+              <path d="M16 10v6" />
             </svg>
           </span>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
@@ -63,11 +66,14 @@
           <span class="icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-square-chart-gantt-icon lucide-square-chart-gantt">
-              <rect width="18" height="18" x="3" y="3" rx="2" />
-              <path d="M9 8h7" />
-              <path d="M8 12h6" />
-              <path d="M11 16h5" />
+              class="lucide lucide-package-search-icon lucide-package-search">
+              <path
+                d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
+              <path d="m7.5 4.27 9 5.15" />
+              <polyline points="3.29 7 12 12 20.71 7" />
+              <line x1="12" x2="12" y1="22" y2="12" />
+              <circle cx="18.5" cy="15.5" r="2.5" />
+              <path d="M20.27 17.27 22 19" />
             </svg>
           </span>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"

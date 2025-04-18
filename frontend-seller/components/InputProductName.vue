@@ -15,7 +15,7 @@
 const props = defineProps({
   id: { type: String, default: 'product-name' },
   modelValue: { type: String, default: '' },
-  label: { type: String, default: 'Product name' },
+  label: { type: String, default: 'Name' },
   placeholder: { type: String, default: 'Product name' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
