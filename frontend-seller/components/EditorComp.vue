@@ -139,11 +139,13 @@
 
 <script setup>
 import StarterKit from '@tiptap/starter-kit';
+import HardBreak from '@tiptap/extension-hard-break'
 import ListItem from '@tiptap/extension-list-item';
 import TextStyle from '@tiptap/extension-text-style';
 import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
 import { Editor, EditorContent } from '@tiptap/vue-3';
+import { Node, mergeAttributes } from '@tiptap/core'
 
 const editor = ref(null);
 
@@ -151,11 +153,41 @@ const editorLimit = ref(6000);
 
 const isGenerating = ref(false)
 
+const ChunkSpan = Node.create({
+    name: 'chunkSpan',
+    inline: true,
+    group: 'inline',
+    content: 'text*',
+    atom: false,      
+    selectable: false,
+
+    addAttributes() {
+        return {
+            class: {
+                default: 'chunk-animate',
+            },
+        }
+    },
+
+    parseHTML() {
+        return [{ tag: 'span.chunk-animate' }]
+    },
+
+    renderHTML({ HTMLAttributes }) {
+        return ['span', mergeAttributes(HTMLAttributes), 0]
+    },
+})
+
+
 const setupEditor = async () => {
     await nextTick(() => {
         editor.value = new Editor({
             extensions: [
-                StarterKit,
+                StarterKit.configure({ hardBreak: false }),
+                HardBreak.configure({
+                    keepMarks: false,
+                }),
+                ChunkSpan,
                 Placeholder.configure({
                     placeholder: 'Output',
                 }),
@@ -188,9 +220,6 @@ const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
 const generativeEditor = ref('')
 
 
-const prompt = 'Describe una mochila resistente al agua'
-
-
 const onGenerativeSubmit = async () => {
     console.log(generativeEditor.value)
 
@@ -204,11 +233,31 @@ const onGenerativeSubmit = async () => {
 
     editor.value.commands.setContent('')
 
-    await useProductDescriptionStream(prompt, (chunk) => {
-        console.log("chunk:", chunk)
+    try {
+        await useProductDescriptionStream(generativeEditor.value, (chunk) => {
 
-        editor.value.chain().focus('end').insertContent(chunk).run()
-    })
+            console.log(chunk)
+
+            const lines = chunk.split('\n')
+
+            const content = lines.flatMap((line, i) => [
+                {
+                    type: 'chunkSpan',
+                    content: line ? [{ type: 'text', text: line }] : [],
+                },
+                ...(i < lines.length - 1 ? [{ type: 'hardBreak' }] : []),
+            ])
+
+            editor.value.chain()
+                .focus('end')
+                .insertContent(content)
+                .run()
+        })
+    } catch (err) {
+        console.error(err)
+    }
+
+    editor.value.commands.focus('end')
 
     editor.value.setEditable(true)
 
@@ -235,6 +284,7 @@ onBeforeUnmount(() => {
     font-size: var(--text-size-1);
     box-sizing: border-box;
     word-break: break-word;
+    white-space: pre-wrap;
     color: var(--text-a);
     overflow-y: scroll;
     height: auto;
@@ -242,6 +292,21 @@ onBeforeUnmount(() => {
     padding: 1rem;
     outline: none;
 
+}
+
+
+::v-deep(.chunk-animate) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: fadeInSlideUp 0.3s ease-out forwards;
+}
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar) {

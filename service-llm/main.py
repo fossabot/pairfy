@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from llama_cpp import Llama
 import os
-from templates import product_description
+from templates.product_description import product_description
 
 
 MODEL_PATH = os.getenv("MODEL_PATH")
@@ -21,9 +21,13 @@ class PromptRequest(BaseModel):
 
 @app.post("/api/llm/product-description")
 def generate_product_description(data: PromptRequest):
+    prompt = product_description.format(product=data.prompt.strip())
+    
+    print(prompt)
+    
     def token_stream():
         for output in llm.create_completion(
-            prompt=product_description.format(product=data.prompt.strip()),
+            prompt=prompt,
             max_tokens=1000,
             stream=True,
             temperature=0.7,
