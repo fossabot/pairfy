@@ -5,7 +5,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Product
+                        Create Product
                     </div>
                     <div class="grid-subtitle">
                         Fill in the details to publish a new product.

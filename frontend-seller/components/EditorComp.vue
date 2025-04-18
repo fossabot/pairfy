@@ -1,98 +1,76 @@
 <template>
-    <div class="editor" :class="{ invalid: false }" v-if="editor">
-        <div class="editor-control">
-            <div class="editor-control-group">
+    <div class="p-EditorComp" :class="{ invalid: false }" v-if="editor">
+        <div class="p-EditorComp-control">
+            <div class="p-EditorComp-control-group">
                 <button @click="editor.chain().focus().toggleBold().run()"
                     :disabled="!editor.can().chain().focus().toggleBold().run()"
                     :class="{ 'is-active': editor.isActive('bold') }">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linejoin="round"
-                            d="M6.75 3.744h-.753v8.25h7.125a4.125 4.125 0 0 0 0-8.25H6.75Zm0 0v.38m0 16.122h6.747a4.5 4.5 0 0 0 0-9.001h-7.5v9h.753Zm0 0v-.37m0-15.751h6a3.75 3.75 0 1 1 0 7.5h-6m0-7.5v7.5m0 0v8.25m0-8.25h6.375a4.125 4.125 0 0 1 0 8.25H6.75m.747-15.38h4.875a3.375 3.375 0 0 1 0 6.75H7.497v-6.75Zm0 7.5h5.25a3.75 3.75 0 0 1 0 7.5h-5.25v-7.5Z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bold-icon lucide-bold"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>
                 </button>
 
                 <button @click="editor.chain().focus().toggleItalic().run()"
                     :disabled="!editor.can().chain().focus().toggleItalic().run()"
                     :class="{ 'is-active': editor.isActive('italic') }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M5.248 20.246H9.05m0 0h3.696m-3.696 0 5.893-16.502m0 0h-3.697m3.697 0h3.803" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-italic-icon lucide-italic"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
                 </button>
 
                 <button @click="editor.chain().focus().toggleStrike().run()"
                     :disabled="!editor.can().chain().focus().toggleStrike().run()"
                     :class="{ 'is-active': editor.isActive('strike') }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 12a8.912 8.912 0 0 1-.318-.079c-1.585-.424-2.904-1.247-3.76-2.236-.873-1.009-1.265-2.19-.968-3.301.59-2.2 3.663-3.29 6.863-2.432A8.186 8.186 0 0 1 16.5 5.21M6.42 17.81c.857.99 2.176 1.812 3.761 2.237 3.2.858 6.274-.23 6.863-2.431.233-.868.044-1.779-.465-2.617M3.75 12h16.5" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-strikethrough-icon lucide-strikethrough"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" x2="20" y1="12" y2="12"/></svg>
                 </button>
             </div>
 
-            <div class="editor-control-group">
+            <div class="p-EditorComp-control-group">
                 <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
                     :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M2.243 4.493v7.5m0 0v7.502m0-7.501h10.5m0-7.5v7.5m0 0v7.501m4.501-8.627 2.25-1.5v10.126m0 0h-2.25m2.25 0h2.25" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heading1-icon lucide-heading-1"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="m17 12 3-2v8"/></svg>
 
                 </button>
                 <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
                     :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21.75 19.5H16.5v-1.609a2.25 2.25 0 0 1 1.244-2.012l2.89-1.445c.651-.326 1.116-.955 1.116-1.683 0-.498-.04-.987-.118-1.463-.135-.825-.835-1.422-1.668-1.489a15.202 15.202 0 0 0-3.464.12M2.243 4.492v7.5m0 0v7.502m0-7.501h10.5m0-7.5v7.5m0 0v7.501" />
-                    </svg>
-
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heading2-icon lucide-heading-2"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="M21 18h-4c0-4 4-3 4-6 0-1.5-2-2.5-4-1"/></svg>
                 </button>
 
                 <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
                     :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M20.905 14.626a4.52 4.52 0 0 1 .738 3.603c-.154.695-.794 1.143-1.504 1.208a15.194 15.194 0 0 1-3.639-.104m4.405-4.707a4.52 4.52 0 0 0 .738-3.603c-.154-.696-.794-1.144-1.504-1.209a15.19 15.19 0 0 0-3.639.104m4.405 4.708H18M2.243 4.493v7.5m0 0v7.502m0-7.501h10.5m0-7.5v7.5m0 0v7.501" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-heading3-icon lucide-heading-3"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="M17.5 10.5c1.7-1 3.5 0 3.5 1.5a2 2 0 0 1-2 2"/><path d="M17 17.5c2 1.5 4 .3 4-1.5a2 2 0 0 0-2-2"/></svg>
                 </button>
             </div>
 
-            <div class="editor-control-group">
+            <div class="p-EditorComp-control-group">
                 <button @click="editor.chain().focus().toggleBulletList().run()"
                     :class="{ 'is-active': editor.isActive('bulletList') }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-icon lucide-list"><path d="M3 12h.01"/><path d="M3 18h.01"/><path d="M3 6h.01"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M8 6h13"/></svg>
 
                 </button>
                 <button @click="editor.chain().focus().toggleOrderedList().run()"
                     :class="{ 'is-active': editor.isActive('orderedList') }">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-ordered-icon lucide-list-ordered"><path d="M10 12h11"/><path d="M10 18h11"/><path d="M10 6h11"/><path d="M4 10h2"/><path d="M4 6h1v4"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
                 </button>
             </div>
 
-            <span class="editor-control-counter">
+            <span class="p-EditorComp-control-counter">
                 {{ productEditorCounter }} / {{ editorLimit }}
             </span>
         </div>
 
-        <div class="editor-content">
+        <div class="p-EditorComp-content">
 
-            <div class="editor-content-ai">
-                <textarea id="editor-content-ai" v-model="editorAiContent" placeholder="Write everything about the product..." rows="4"></textarea>
+            <div class="p-EditorComp-generative">
+                <textarea id="p-EditorComp-generative" v-model="editorAiContent"
+                    placeholder="Write everything about the product..." rows="4"></textarea>
+
+                <div class="p-EditorComp-generative-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-up-icon lucide-arrow-up">
+                        <path d="m5 12 7-7 7 7" />
+                        <path d="M12 19V5" />
+                    </svg>
+                </div>
+
             </div>
 
             <editor-content :editor="editor" />
@@ -201,7 +179,7 @@ onBeforeUnmount(() => {
     pointer-events: none;
 }
 
-.editor {
+.p-EditorComp {
     border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
     overflow: hidden;
@@ -212,7 +190,7 @@ onBeforeUnmount(() => {
     position: relative;
 }
 
-.editor-content {
+.p-EditorComp-content {
     display: grid;
     grid-template-rows: calc(150px + 2rem) 500px;
     grid-template-columns: 1fr;
@@ -220,13 +198,14 @@ onBeforeUnmount(() => {
     height: 100%;
 }
 
-.editor-content-ai {
+.p-EditorComp-generative {
     border-bottom: 1px solid var(--border-a);
+    position: relative;
     display: flex;
     padding: 1rem;
 }
 
-.editor-content-ai textarea {
+.p-EditorComp-generative textarea {
     border: 1px solid var(--border-a);
     background: var(--background-b);
     border-radius: var(--radius-c);
@@ -238,16 +217,30 @@ onBeforeUnmount(() => {
     width: 100%;
 }
 
-.editor-content-ai textarea::placeholder {
+.p-EditorComp-generative textarea::placeholder {
     color: #999;
 }
 
-.editor-content-ai textarea:focus {
+.p-EditorComp-generative textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
     border-color: var(--primary-a);
 }
 
-.editor-control {
+.p-EditorComp-generative-button {
+    border-radius: var(--radius-b);
+    background: var(--primary-a);
+    justify-content: center;
+    color: var(--text-w);
+    align-items: center;
+    position: absolute;
+    display: flex;
+    height: 2rem;
+    bottom: 2rem;
+    width: 2rem;
+    right: 2rem;
+}
+
+.p-EditorComp-control {
     border-bottom: 1px solid var(--border-a);
     background: var(--background-a);
     align-items: center;
@@ -257,12 +250,12 @@ onBeforeUnmount(() => {
     top: 0;
 }
 
-.editor-control-group {
+.p-EditorComp-control-group {
     display: flex;
     margin-right: 1rem
 }
 
-.editor-control button {
+.p-EditorComp-control button {
     border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
     background: transparent;
@@ -276,16 +269,16 @@ onBeforeUnmount(() => {
     cursor: pointer;
 }
 
-.editor-control button svg {
+.p-EditorComp-control button svg {
     width: var(--text-size-2);
     height: var(--text-size-2);
 }
 
-.editor-control button.is-active {
+.p-EditorComp-control button.is-active {
     border: 1px solid gray;
 }
 
-.editor-control-counter {
+.p-EditorComp-control-counter {
     font-size: var(--text-size-1);
     color: var(--text-b);
 }
