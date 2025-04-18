@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from llama_cpp import Llama
@@ -21,6 +21,10 @@ class PromptRequest(BaseModel):
 
 @app.post("/api/llm/product-description")
 def generate_product_description(data: PromptRequest):
+    
+    if not data.prompt.strip():
+        raise HTTPException(status_code=400, detail="Prompt cannot be empty.")
+
     prompt = product_description.format(product=data.prompt.strip())
     
     print(prompt)

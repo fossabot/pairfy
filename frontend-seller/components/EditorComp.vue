@@ -1,5 +1,7 @@
 <template>
     <div class="p-EditorComp" :class="{ invalid: false }" v-if="editor">
+        <ToastComp ref="toastRef" />
+
         <div class="p-EditorComp-control">
             <div class="p-EditorComp-control-group">
                 <button @click="editor.chain().focus().toggleBold().run()"
@@ -116,7 +118,8 @@
 
             <div class="p-EditorComp-generative">
                 <textarea id="p-EditorComp-generative" v-model="generativeEditor"
-                    placeholder="Write everything about the product..." rows="4" @keydown.enter.exact.prevent="onGenerativeSubmit"/>
+                    placeholder="Write everything about the product..." rows="4"
+                    @keydown.enter.exact.prevent="onGenerativeSubmit" />
                 <div class="p-EditorComp-generative-loader">
                     <span class="loader" :class="{ visible: isGenerating }" />
                 </div>
@@ -147,6 +150,13 @@ import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
 import { Editor, EditorContent } from '@tiptap/vue-3';
 import { Node, mergeAttributes } from '@tiptap/core'
+
+const toastRef = ref(null);
+
+const displayMessage = (message, type, duration) => {
+    toastRef.value?.showToast(message, type, duration)
+}
+
 
 const editor = ref(null);
 
@@ -223,6 +233,16 @@ const generativeEditor = ref('')
 
 const onGenerativeSubmit = async () => {
     console.log(generativeEditor.value)
+
+    const rawText = generativeEditor.value.trim()
+
+    const isPromptValid = rawText.length > 50
+
+    if (!isPromptValid) {
+        displayMessage('Your prompt is too short. Please provide more context or keywords so the content generation works correctly.', 'error', 20_000)
+
+        return;
+    }
 
     if (!editor) return
 
@@ -403,7 +423,7 @@ onBeforeUnmount(() => {
     background: #999;
 }
 
-.p-EditorComp-generative-loader{
+.p-EditorComp-generative-loader {
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -480,29 +500,29 @@ onBeforeUnmount(() => {
 
 
 .loader {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  border: 2px solid var(--text-b);
-  border-bottom-color: transparent;
-  animation: rotation 1s linear infinite;
-  visibility: hidden;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: 2px solid var(--text-b);
+    border-bottom-color: transparent;
+    animation: rotation 1s linear infinite;
+    visibility: hidden;
 
 }
 
 .loader.visible {
-  visibility: visible;
+    visibility: visible;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
 
-  100% {
-    transform: rotate(360deg);
-  }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 </style>

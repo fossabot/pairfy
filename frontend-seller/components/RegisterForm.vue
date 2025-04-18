@@ -85,7 +85,7 @@ const register = async () => {
 
     const response = await auth.register({ email: email.value, username: username.value, password: password.value, terms_accepted: terms.value, country: country.value })
 
-    displayMessage(response.data.message, 'info', 20_000)
+    displayMessage(response.data.message, 'success', 20_000)
 
     router.replace({ path: '/entry', query: { m: 'email' } })
   } catch (err) {
