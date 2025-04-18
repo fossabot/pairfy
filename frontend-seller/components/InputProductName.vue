@@ -13,7 +13,7 @@
 <script setup lang="ts">
 
 const props = defineProps({
-  id: { type: String, default: '' },
+  id: { type: String, default: 'product-name' },
   modelValue: { type: String, default: '' },
   label: { type: String, default: 'Product name' },
   placeholder: { type: String, default: 'Product name' },
