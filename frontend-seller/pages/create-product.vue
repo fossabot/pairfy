@@ -24,6 +24,9 @@
                     <div class="grid-title">
                         Description
                     </div>
+                    <div class="grid-subtitle">
+                        Create a product description using the AI tool.
+                    </div>
                 </div>
 
 
