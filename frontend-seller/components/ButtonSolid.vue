@@ -1,4 +1,4 @@
-<!-- components/ResizableButton.vue -->
+
 <template>
   <button class="p-ButtonSolid" :class="[{ disabled }, sizeClass]" @click="$emit('click')" :disabled="disabled">
 

@@ -116,8 +116,10 @@
 
             <div class="p-EditorComp-generative">
                 <textarea id="p-EditorComp-generative" v-model="generativeEditor"
-                    placeholder="Write everything about the product..." rows="4"></textarea>
-
+                    placeholder="Write everything about the product..." rows="4" @keydown.enter.exact.prevent="onGenerativeSubmit"/>
+                <div class="p-EditorComp-generative-loader">
+                    <span class="loader" :class="{ visible: isGenerating }" />
+                </div>
                 <div class="p-EditorComp-generative-button" @click="onGenerativeSubmit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
@@ -317,7 +319,7 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar-thumb) {
-    border: 2px solid var(--background-b); 
+    border: 2px solid var(--background-b);
     background: #888;
     border-radius: 4px;
     cursor: pointer;
@@ -391,7 +393,7 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative textarea::-webkit-scrollbar-thumb {
-    border: 2px solid var(--background-b); 
+    border: 2px solid var(--background-b);
     background: #888;
     border-radius: 4px;
     cursor: pointer;
@@ -399,6 +401,17 @@ onBeforeUnmount(() => {
 
 .p-EditorComp-generative textarea::-webkit-scrollbar-thumb:hover {
     background: #999;
+}
+
+.p-EditorComp-generative-loader{
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    height: 2rem;
+    bottom: 2rem;
+    width: 2rem;
+    right: 6rem;
 }
 
 .p-EditorComp-generative-button {
@@ -463,5 +476,33 @@ onBeforeUnmount(() => {
 .invalid {
     border: 1px solid red;
     border-radius: 5px 5px 0 0;
+}
+
+
+.loader {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 2px solid var(--text-b);
+  border-bottom-color: transparent;
+  animation: rotation 1s linear infinite;
+  visibility: hidden;
+
+}
+
+.loader.visible {
+  visibility: visible;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
