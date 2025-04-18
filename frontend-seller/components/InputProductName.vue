@@ -1,22 +1,9 @@
 <template>
   <div class="p-InputProductName">
     <label :for="inputId" class="title-text">{{ label }}</label>
-    <input
-      ref="inputRef"
-      v-model="internalValue"
-      :id="inputId"
-      type="text"
-      @beforeinput="onBeforeInput"
-      @paste="onPaste"
-      @drop.prevent
-      :placeholder="placeholder"
-      class="p-InputProductName-input"
-      :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength"
-      :aria-invalid="!!errorMessage"
-      :aria-describedby="`${inputId}-error`"
-      inputmode="text"
-    />
+    <input ref="inputRef" v-model="internalValue" :id="inputId" type="text" @beforeinput="onBeforeInput" @drop.prevent
+      :placeholder="placeholder" class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }"
+      :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${inputId}-error`" inputmode="text" />
     <p v-if="errorMessage" :id="`${inputId}-error`" class="error-text">
       {{ errorMessage }}
     </p>
@@ -76,20 +63,15 @@ watch(internalValue, (val) => {
   validateInput(val)
 })
 
-const onBeforeInput = (e: InputEvent) => {
-  if (e.data && !productNameRegex.test(e.data)) {
+const onBeforeInput = (e: Event) => {
+  const inputEvent = e as InputEvent
+  if (inputEvent.data && !productNameRegex.test(inputEvent.data)) {
     e.preventDefault()
   }
 }
 
-const onPaste = (e: ClipboardEvent) => {
-  const pasted = (e.clipboardData || window.clipboardData).getData('text')
-  if (!productNameRegex.test(pasted)) {
-    e.preventDefault()
-  }
-}
 
-const validateInput = (value: string): boolean => {
+const validateInput = (value: string) => {
   const validators: { condition: boolean; message: string }[] = [
     { condition: props.required && !value.trim(), message: messages.required },
     { condition: value.length < props.minLength, message: messages.minLength },
