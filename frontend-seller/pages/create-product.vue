@@ -25,7 +25,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Origin
+                        Product Origin
                     </div>
                     <div class="grid-subtitle">
                         Data required for calculating shipments.

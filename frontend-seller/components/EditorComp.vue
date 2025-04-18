@@ -131,7 +131,6 @@
 
             <editor-content :editor="editor" />
 
-            <div v-if="isGenerating" class="editor-overlay" />
         </div>
 
     </div>
@@ -353,16 +352,6 @@ onBeforeUnmount(() => {
     grid-template-columns: 1fr;
     height: 100%;
 }
-
-.editor-overlay {
-    inset: 0;
-    z-index: 1000;
-    cursor: default;
-    margin-top: 50px;
-    position: absolute;
-    pointer-events: all;
-}
-
 
 .p-EditorComp-generative {
     border-bottom: 1px solid var(--border-a);
