@@ -19,7 +19,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductModel id="create-product-model" />
-                 
+                        <InputProductBrand id="create-product-brand" />
                     </div>
                 </div>
 
