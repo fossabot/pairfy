@@ -32,9 +32,12 @@
                     </div>
                     <div class="grid-item">
                         <InputProductCountry id="create-product-country" />
-                        <InputProductCity id="create-product-city" /> 
+                        <InputProductCity id="create-product-city" />
                     </div>
-
+                    <div class="grid-item">
+                        <InputProductPostal id="create-product-postal" />
+                        <InputProductCity id="create-product-city" />
+                    </div>
                 </div>
 
                 <div class="grid-row">
