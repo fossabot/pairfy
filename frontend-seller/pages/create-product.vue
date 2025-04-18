@@ -113,7 +113,7 @@
     background: var(--background-a);
     border-radius: var(--radius-b);
     box-shadow: var(--shadow-b);
-    margin-top: 1rem;
+    margin-bottom: 1.5rem;
     padding: 1.5rem;
 }
 
