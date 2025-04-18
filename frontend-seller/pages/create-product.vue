@@ -32,7 +32,7 @@
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem;
+    padding: 1rem 2rem;
 }
 
 .grid {
@@ -40,8 +40,6 @@
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
 }
-
-.grid-left {}
 
 .grid-right {
     padding: 1rem;
@@ -55,12 +53,12 @@
 .grid-subtitle {
     font-size: var(--text-size-1);
     color: var(--text-b);
+    margin-bottom: 2rem;
     margin-top: 0.5rem;
 }
 
 .grid-item {
     align-items: center;
-    margin-top: 1rem;
     display: flex;
     gap: 1rem;
 }

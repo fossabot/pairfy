@@ -16,12 +16,12 @@
         :aria-describedby="`${props.id}-error`"
         inputmode="numeric"
       />
-      <p v-if="errorMessage" :id="`${props.id}-error`" class="error-text">
-        {{ errorMessage }}
-      </p>
+      <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
+      {{ errorMessage || '-' }}
+    </p>
     </div>
   </template>
-  
+   
   <script setup lang="ts">
   const props = defineProps({
     id: { type: String, default: 'price' },
@@ -124,13 +124,21 @@
     margin-bottom: 0.75rem;
   }
   
-  .error-text {
-    animation: fadeIn 0.2s ease-in-out;
-    font-size: var(--text-size-0, 0.875rem);
-    margin-top: 0.5rem;
-    color: red;
-  }
-  
+.error-text {
+  animation: fadeIn 0.2s ease-in-out;
+  font-size: var(--text-size-0, 0.875rem);
+  margin-top: 0.5rem;
+  color: transparent;
+  opacity: 0; 
+}
+
+.error-text.visible {
+  opacity: 1;
+  color: red;
+}
+
+
+
   @keyframes fadeIn {
     from {
       opacity: 0;

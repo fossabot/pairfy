@@ -4,8 +4,8 @@
     <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
       :placeholder="placeholder" class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }"
       :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" />
-    <p v-if="errorMessage" :id="`${props.id}-error`" class="error-text">
-      {{ errorMessage }}
+    <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
+      {{ errorMessage || '-' }}
     </p>
   </div>
 </template>
@@ -122,6 +122,12 @@ const validateInput = (value: string) => {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
   margin-top: 0.5rem;
+  color: transparent;
+  opacity: 0; 
+}
+
+.error-text.visible {
+  opacity: 1;
   color: red;
 }
 
