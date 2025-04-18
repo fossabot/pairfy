@@ -2,15 +2,20 @@
     <div class="card">
         <div class="grid">
             <div class="grid-left">
-                <div class="grid-title">
-                    Create a new product
+
+                <div class="grid-row">
+                    <div class="grid-title">
+                        Create a new product
+                    </div>
+                    <div class="grid-subtitle">
+                        Fill in the details to publish a new product.
+                    </div>
+                    <div class="grid-item">
+                        <InputProductName id="create-product-name" />
+                    </div>
                 </div>
-                <div class="grid-subtitle">
-                    Fill in the details to publish a new product.
-                </div>
-                <div class="grid-item">
-                    <InputEmail />
-                </div>
+
+
             </div>
             <div class="grid-right">Contenido secundario</div>
         </div>
@@ -32,13 +37,9 @@
     gap: 1rem;
 }
 
-.grid-left {
-    background: var(--background-a);
-    padding: 1.5rem;
-}
+.grid-left {}
 
 .grid-right {
-    background: var(--background-a);
     padding: 1rem;
 }
 
@@ -55,6 +56,12 @@
 
 .grid-item {
     margin-top: 1rem;
+}
+
+.grid-row {
+    background: var(--background-a);
+    margin-top: 1rem;
+    padding: 1.5rem;
 }
 
 @media (max-width: 768px) {
