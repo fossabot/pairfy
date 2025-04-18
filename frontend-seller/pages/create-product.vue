@@ -36,7 +36,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductPostal id="create-product-postal" />
-                      
+
                     </div>
                 </div>
 
@@ -59,9 +59,19 @@
                 </div>
 
 
-                
+
             </div>
-            <div class="grid-right">Contenido secundario</div>
+            <div class="grid-right">
+                <div class="grid-row">
+                    <div class="grid-title">
+                        Category
+                    </div>
+                    <div class="grid-subtitle">
+                        Create a product description using the AI tool.
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </template>
@@ -79,10 +89,6 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 1rem;
-}
-
-.grid-right {
-    padding: 1rem;
 }
 
 .grid-title {
