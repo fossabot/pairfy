@@ -1,17 +1,16 @@
 <template>
   <div class="p-InputProductName">
-    <label :for="inputId" class="title-text">{{ label }}</label>
-    <input ref="inputRef" v-model="internalValue" :id="inputId" type="text" @beforeinput="onBeforeInput" @drop.prevent
+    <label :for="props.id" class="title-text">{{ label }}</label>
+    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
       :placeholder="placeholder" class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${inputId}-error`" inputmode="text" />
-    <p v-if="errorMessage" :id="`${inputId}-error`" class="error-text">
+      :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" />
+    <p v-if="errorMessage" :id="`${props.id}-error`" class="error-text">
       {{ errorMessage }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
 
 const props = defineProps({
   id: { type: String, default: '' },
@@ -32,9 +31,6 @@ const emit = defineEmits<{
 const inputRef = ref<HTMLInputElement | null>(null)
 const errorMessage = ref('')
 const internalValue = ref(props.modelValue)
-
-
-const inputId = computed(() => props.id || `input-${Math.random().toString(36).slice(2, 10)}`)
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-():+]+$/u
 
