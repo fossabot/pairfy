@@ -144,9 +144,9 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 64px;
-  height: 64px;
-  min-width: 64px;
+  width: 4rem;
+  height: 4rem;
+  min-width: 4rem;
 }
 
 .label {
@@ -168,15 +168,15 @@ nav a:hover {
 .layout-top-image {
   justify-content: center;
   align-items: center;
-  min-width: 64px;
+  min-width: 4rem;
   display: flex;
-  height: 64px;
-  width: 64px;
+  height: 4rem;
+  width: 4rem;
 
 }
 
 .layout-top-image img {
-  width: 44px;
+  width: 3rem;
 }
 
 .layout-logo-text {
