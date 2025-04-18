@@ -47,6 +47,9 @@
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
                     </div>
+                    <div class="grid-item">
+                        <EditorComp />
+                    </div>
                 </div>
 
                 <div class="grid-row">

@@ -27,7 +27,7 @@
     id: { type: String, default: 'product-postal' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: 'Postal Code' },
-    placeholder: { type: String, default: 'e.g. 10001, EC1A 1BB, H2X 1Y4' },
+    placeholder: { type: String, default: 'e.g. 10001' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     maxLength: { type: Number, default: 12 },
