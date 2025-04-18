@@ -16,14 +16,13 @@ llm = Llama(
 
 class PromptRequest(BaseModel):
     prompt: str
-    max_tokens: int = 256 
 
-@app.post("/generate-stream")
-def generate_stream(data: PromptRequest):
+@app.post("/api/llm/product-description")
+def product_description(data: PromptRequest):
     def token_stream():
         for output in llm.create_completion(
             prompt=data.prompt.strip(),
-            max_tokens=data.max_tokens,
+            max_tokens=1000,
             stream=True,
             temperature=0.7,
             top_p=0.9,

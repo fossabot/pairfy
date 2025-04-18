@@ -47,12 +47,11 @@ Only Samsung gives you the power to unlock incredible when you pair your TV with
 `
 
 
-const response = await fetch("http://localhost:8002/generate-stream", {
+const response = await fetch("http://localhost:8002/api/llm/product-description", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      prompt: prompt,
-      max_tokens: 1000,
+      prompt: prompt
     }),
   });
   
