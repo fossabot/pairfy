@@ -92,8 +92,7 @@
         <div class="editor-content">
 
             <div class="editor-content-ai">
-                    
-                <textarea name="" id=""></textarea>
+                <textarea id="editor-content-ai" v-model="editorAiContent" placeholder="Write everything about the product..." rows="4"></textarea>
             </div>
 
             <editor-content :editor="editor" />
@@ -120,7 +119,7 @@ const setupEditor = async () => {
             extensions: [
                 StarterKit,
                 Placeholder.configure({
-                    placeholder: 'Product description, terms of sale, warranty and others...',
+                    placeholder: 'Output',
                 }),
                 CharacterCount.configure({
                     limit: editorLimit.value,
@@ -137,9 +136,7 @@ const setupEditor = async () => {
     });
 }
 
-onMounted(() => {
-    setupEditor();
-})
+const editorAiContent = ref('')
 
 const productEditorCounter = computed(() => {
     if (editor) {
@@ -150,6 +147,10 @@ const productEditorCounter = computed(() => {
 })
 
 const productFeatures = computed(() => JSON.stringify(editor.value.getJSON()))
+
+onMounted(() => {
+    setupEditor();
+})
 
 onBeforeUnmount(() => {
     if (editor.value) {
@@ -220,15 +221,30 @@ onBeforeUnmount(() => {
 }
 
 .editor-content-ai {
-    border-bottom: 1px solid var(--border-a); 
+    border-bottom: 1px solid var(--border-a);
     display: flex;
     padding: 1rem;
 }
 
-.editor-content-ai textarea{
-    width: 100%;
+.editor-content-ai textarea {
+    border: 1px solid var(--border-a);
     background: var(--background-b);
-    border-radius: var(--radius-d);
+    border-radius: var(--radius-c);
+    font-size: var(--text-size-1);
+    font-family: inherit;
+    padding: 1rem;
+    outline: none;
+    resize: none;
+    width: 100%;
+}
+
+.editor-content-ai textarea::placeholder {
+    color: #999;
+}
+
+.editor-content-ai textarea:focus {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+    border-color: var(--primary-a);
 }
 
 .editor-control {
