@@ -309,7 +309,7 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar) {
-    width: 1rem;
+    width: 0.9rem;
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar-track) {
@@ -383,7 +383,7 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative textarea::-webkit-scrollbar {
-    width: 1rem;
+    width: 0.9rem;
 }
 
 .p-EditorComp-generative textarea::-webkit-scrollbar-track {
