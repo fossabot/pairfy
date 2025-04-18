@@ -116,6 +116,8 @@
 
         <div class="p-EditorComp-content">
 
+            <editor-content :editor="editor" />
+
             <div class="p-EditorComp-generative">
                 <textarea id="p-EditorComp-generative" v-model="generativeEditor"
                     placeholder="Write everything about the product..." rows="4"
@@ -134,7 +136,7 @@
 
             </div>
 
-            <editor-content :editor="editor" />
+      
 
         </div>
 
@@ -369,14 +371,13 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-content {
-    display: grid;
-    grid-template-rows: 10rem 500px;
+    grid-template-rows: 500px 10rem;
     grid-template-columns: 1fr;
+    display: grid;
     height: 100%;
 }
 
 .p-EditorComp-generative {
-    border-bottom: 1px solid var(--border-a);
     position: relative;
     display: flex;
     padding: 1rem;
