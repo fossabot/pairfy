@@ -11,7 +11,7 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" />
+                        <InputProductName id="create-product-name" focus/>
                     </div>
                 </div>
 
