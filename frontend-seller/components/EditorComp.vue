@@ -157,7 +157,7 @@ const ChunkSpan = Node.create({
     inline: true,
     group: 'inline',
     content: 'text*',
-    atom: false,      
+    atom: false,
     selectable: false,
 
     addAttributes() {
@@ -309,7 +309,7 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar) {
-    width: 13px;
+    width: 1rem;
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar-track) {
@@ -317,14 +317,14 @@ onBeforeUnmount(() => {
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar-thumb) {
-    background-color: #888;
+    border: 2px solid var(--background-b); 
+    background: #888;
     border-radius: 4px;
-    border: 2px solid #f1f1f1;
     cursor: pointer;
 }
 
 ::v-deep(.editor-class::-webkit-scrollbar-thumb:hover) {
-    background-color: #3b3b3b;
+    background: #999;
 }
 
 ::v-deep(.is-editor-empty:first-child::before) {
@@ -366,6 +366,7 @@ onBeforeUnmount(() => {
     border-radius: var(--radius-c);
     font-size: var(--text-size-1);
     font-family: inherit;
+    overflow: auto;
     padding: 1rem;
     outline: none;
     resize: none;
@@ -373,12 +374,31 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative textarea::placeholder {
-    color: #999;
+    color: var(--text-b);
 }
 
 .p-EditorComp-generative textarea:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
     border-color: var(--primary-a);
+}
+
+.p-EditorComp-generative textarea::-webkit-scrollbar {
+    width: 1rem;
+}
+
+.p-EditorComp-generative textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.p-EditorComp-generative textarea::-webkit-scrollbar-thumb {
+    border: 2px solid var(--background-b); 
+    background: #888;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.p-EditorComp-generative textarea::-webkit-scrollbar-thumb:hover {
+    background: #999;
 }
 
 .p-EditorComp-generative-button {
@@ -393,7 +413,7 @@ onBeforeUnmount(() => {
     height: 2rem;
     bottom: 2rem;
     width: 2rem;
-    right: 2rem;
+    right: 3rem;
 }
 
 .p-EditorComp-control {
