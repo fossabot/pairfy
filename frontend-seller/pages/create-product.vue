@@ -11,7 +11,7 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones"/>
+                        <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones" />
                     </div>
                     <div class="grid-item">
                         <InputProductPrice id="create-product-price" />
@@ -23,6 +23,19 @@
                     </div>
                 </div>
 
+                <div class="grid-row">
+                    <div class="grid-title">
+                        Origin
+                    </div>
+                    <div class="grid-subtitle">
+                        Data required for calculating shipments.
+                    </div>
+                    <div class="grid-item">
+                        <InputProductCountry id="create-product-country" />
+                        <InputProductCountry id="create-product-country" />
+                    </div>
+
+                </div>
 
                 <div class="grid-row">
                     <div class="grid-title">

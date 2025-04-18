@@ -1,10 +1,21 @@
 <template>
-    <div class="p-InputSku">
+    <div class="p-InputProductCountry">
       <label :for="props.id" class="title-text">{{ label }}</label>
-      <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
-        :placeholder="placeholder" class="p-InputSku-input" :class="{ 'is-invalid': errorMessage }"
-        :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`"
-        inputmode="text" />
+      <input
+        ref="inputRef"
+        v-model="internalValue"
+        :id="props.id"
+        type="text"
+        @beforeinput="onBeforeInput"
+        @drop.prevent
+        :placeholder="placeholder"
+        class="p-InputProductCountry-input"
+        :class="{ 'is-invalid': errorMessage }"
+        :maxlength="maxLength"
+        :aria-invalid="!!errorMessage"
+        :aria-describedby="`${props.id}-error`"
+        inputmode="text"
+      />
       <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
         {{ errorMessage || '-' }}
       </p>
@@ -13,13 +24,13 @@
   
   <script setup lang="ts">
   const props = defineProps({
-    id: { type: String, default: 'sku' },
+    id: { type: String, default: 'product-country' },
     modelValue: { type: String, default: '' },
-    label: { type: String, default: 'SKU' },
-    placeholder: { type: String, default: 'ABC123' },
+    label: { type: String, default: 'Country' },
+    placeholder: { type: String, default: 'e.g. Brazil' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
-    maxLength: { type: Number, default: 20 },
+    maxLength: { type: Number, default: 40 },
   })
   
   const emit = defineEmits<{
@@ -31,11 +42,12 @@
   const internalValue = ref(props.modelValue)
   const errorMessage = ref('')
   
-  const skuRegex = /^[A-Z0-9]*$/
+  // OWASP-safe Unicode-aware regex for country names
+  const countryRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u
   
   const messages = {
     required: 'This field is required.',
-    invalid: 'Only uppercase letters and numbers are allowed.',
+    invalid: 'Only letters, spaces, and symbols like - . , ’ ( ) are allowed.',
     maxLength: `Maximum length is ${props.maxLength} characters.`,
   }
   
@@ -58,7 +70,7 @@
   
   const onBeforeInput = (e: Event) => {
     const inputEvent = e as InputEvent
-    if (inputEvent.data && !/^[A-Z0-9]$/.test(inputEvent.data)) {
+    if (inputEvent.data && !/^[\p{L}\p{M}\s\-'.(),]$/u.test(inputEvent.data)) {
       e.preventDefault()
     }
   }
@@ -67,7 +79,7 @@
     const validators: { condition: boolean; message: string }[] = [
       { condition: props.required && value.trim() === '', message: messages.required },
       { condition: value.length > props.maxLength, message: messages.maxLength },
-      { condition: !skuRegex.test(value), message: messages.invalid },
+      { condition: !countryRegex.test(value), message: messages.invalid },
     ]
   
     for (const { condition, message } of validators) {
@@ -84,26 +96,25 @@
   </script>
   
   <style scoped>
-  .p-InputSku {
+  .p-InputProductCountry {
     flex-direction: column;
     display: flex;
     width: 100%;
   }
   
-  .p-InputSku-input {
+  .p-InputProductCountry-input {
     border: 1px solid var(--border-a, #ccc);
     border-radius: var(--input-radius, 6px);
     padding: 0.75rem 1rem;
     outline: none;
     transition: border-color 0.2s;
-    text-transform: uppercase;
   }
   
-  .p-InputSku-input:focus-within {
+  .p-InputProductCountry-input:focus-within {
     border: 1px solid var(--primary-a, #2563eb);
   }
   
-  .p-InputSku-input.is-invalid {
+  .p-InputProductCountry-input.is-invalid {
     border-color: red;
   }
   
