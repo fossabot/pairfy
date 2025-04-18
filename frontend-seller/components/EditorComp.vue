@@ -130,6 +130,8 @@
             </div>
 
             <editor-content :editor="editor" />
+
+            <div v-if="isGenerating" class="editor-overlay" />
         </div>
 
     </div>
@@ -146,6 +148,8 @@ import { Editor, EditorContent } from '@tiptap/vue-3';
 const editor = ref(null);
 
 const editorLimit = ref(6000);
+
+const isGenerating = ref(false)
 
 const setupEditor = async () => {
     await nextTick(() => {
@@ -190,10 +194,25 @@ const prompt = 'Describe una mochila resistente al agua'
 const onGenerativeSubmit = async () => {
     console.log(generativeEditor.value)
 
+    if (!editor) return
+
+    isGenerating.value = true;
+
+    editor.value.commands.blur()
+
+    editor.value.setEditable(false)
+
+    editor.value.commands.setContent('')
+
     await useProductDescriptionStream(prompt, (chunk) => {
         console.log("chunk:", chunk)
+
+        editor.value.chain().focus('end').insertContent(chunk).run()
     })
 
+    editor.value.setEditable(true)
+
+    isGenerating.value = false;
 }
 
 
@@ -265,11 +284,20 @@ onBeforeUnmount(() => {
 
 .p-EditorComp-content {
     display: grid;
-    grid-template-rows: calc(150px + 2rem) 500px;
+    grid-template-rows: 10rem 500px;
     grid-template-columns: 1fr;
-    gap: 10px;
     height: 100%;
 }
+
+.editor-overlay {
+    inset: 0;
+    z-index: 1000;
+    cursor: default;
+    margin-top: 50px;
+    position: absolute;
+    pointer-events: all;
+}
+
 
 .p-EditorComp-generative {
     border-bottom: 1px solid var(--border-a);
