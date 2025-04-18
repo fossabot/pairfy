@@ -241,7 +241,7 @@ const onGenerativeSubmit = async () => {
     const isPromptValid = rawText.length > 50 && rawText.length <= 1000
 
     if (!isPromptValid) {
-        displayMessage('Please use a prompt of at least 50 to 1000 characters. Provide context, keywords or technical characteristics so the content generation works correctly.', 'error', 20_000)
+        displayMessage('Please use a prompt of at least 50 to 1000 characters. Provide context, keywords or technical characteristics so the content generation works correctly.', 'error', 10_000)
 
         return;
     }
