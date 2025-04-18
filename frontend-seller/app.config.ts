@@ -1,5 +1,5 @@
 export default defineAppConfig({
-    title: 'Pairfy - Cardano Marketplace',
+    title: 'Pairfy - Cardano marketplace',
     theme: {
       dark: false,
       colors: {

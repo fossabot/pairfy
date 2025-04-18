@@ -15,7 +15,11 @@
                     </div>
                     <div class="grid-item">
                         <InputProductPrice id="create-product-price" />
-                        <InputProductPrice id="create-product-price" />
+                        <InputProductSku id="create-product-sku" />
+                    </div>
+                    <div class="grid-item">
+                        <InputProductModel id="create-product-model" />
+                 
                     </div>
                 </div>
 
