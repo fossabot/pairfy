@@ -238,10 +238,10 @@ const onGenerativeSubmit = async () => {
 
     const rawText = generativeEditor.value.trim()
 
-    const isPromptValid = rawText.length > 50
+    const isPromptValid = rawText.length > 50 && rawText.length <= 1000
 
     if (!isPromptValid) {
-        displayMessage('Your prompt is too short. Please provide more context or keywords so the content generation works correctly.', 'error', 20_000)
+        displayMessage('Please use a prompt of at least 50 to 1000 characters. Provide context, keywords or technical characteristics so the content generation works correctly.', 'error', 20_000)
 
         return;
     }
@@ -362,12 +362,10 @@ onBeforeUnmount(() => {
 .p-EditorComp {
     border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
+    position: relative;
     overflow: hidden;
     display: block;
-    height: 700px;
-    max-height: 700px;
     width: 100%;
-    position: relative;
 }
 
 .p-EditorComp-content {

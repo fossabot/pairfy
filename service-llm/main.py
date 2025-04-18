@@ -22,8 +22,13 @@ class PromptRequest(BaseModel):
 @app.post("/api/llm/product-description")
 def generate_product_description(data: PromptRequest):
     
-    if not data.prompt.strip():
+    input_ = data.prompt.strip()
+    
+    if not input_:
         raise HTTPException(status_code=400, detail="Prompt cannot be empty.")
+
+    if len(input_) > 1000:
+        raise HTTPException(status_code=400, detail="Prompt exceeds 1000 characters.")
 
     prompt = product_description.format(product=data.prompt.strip())
     
