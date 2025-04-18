@@ -5,7 +5,20 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Create Product
+
+                        <span>Create Product</span>
+
+                        <TipComp text="Fill in the fields with information about your product." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
                     </div>
                     <div class="grid-subtitle">
                         Fill in the details to publish a new product.
@@ -25,10 +38,22 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Product Origin
+                        <span>Product Origin</span>
+
+                        <TipComp text="Information on where the product is shipped." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
                     </div>
                     <div class="grid-subtitle">
-                        Data required for calculating shipments.
+                        Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
                         <InputProductCountry id="create-product-country" />
@@ -42,7 +67,19 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Description
+                        <span>Description</span>
+
+                        <TipComp text="Provide as input everything you know about the product." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
                     </div>
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
@@ -54,23 +91,78 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Description
+                        <span>Upload Images</span>
+
+                        <TipComp text="Upload product images and select the main image." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
                     </div>
                     <div class="grid-subtitle">
-                        Create a product description using the AI tool.
+                        Select the main product image and any secondary images.
                     </div>
                 </div>
 
-
-
-            </div>
-            <div class="grid-right">
                 <div class="grid-row">
                     <div class="grid-title">
-                        Category
+                        <span>Upload Video</span>
+
+                        <TipComp text="Upload a video to showcase your product." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
+
                     </div>
                     <div class="grid-subtitle">
-                        Create a product description using the AI tool.
+                        Select 1 video showing the product features (optional).
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-right">
+
+                <div class="grid-row">
+                    <div class="grid-title">
+                        <span>Configuration</span>
+
+                        <TipComp text="Make the final settings." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
+
+                    </div>
+                    <div class="grid-subtitle">
+                        Make the final settings.
+                    </div>
+                </div>
+
+                <div class="grid-row">
+                    <div class="grid-title">
+                        Publish
+                    </div>
+                    <div class="grid-subtitle">
+                        Preview or publish your product.
                     </div>
                 </div>
 
@@ -96,8 +188,11 @@
 
 .grid-title {
     font-size: var(--text-size-3);
+    align-items: center;
     font-weight: bold;
+    display: flex;
 }
+
 
 .grid-subtitle {
     font-size: var(--text-size-1);
