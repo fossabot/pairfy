@@ -56,7 +56,7 @@
                     <div class="grid-item">
 
                         <InputSelect v-model="country" label="Country" placeholder="Select Country..."
-                            :options="countries" @valid="onValidCountry" required :invalid="true">
+                            :options="countries" @valid="onValidCountry" :invalid="false">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
