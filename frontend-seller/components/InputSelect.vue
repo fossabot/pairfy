@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 
 const props = defineProps({
   id: { type: String, default: 'input-select' },
@@ -99,7 +99,8 @@ const props = defineProps({
   required: { type: Boolean, default: false },
   options: { type: Array, required: true },
   placeholder: { type: String, default: 'Select one...' },
-  focus: { type: Boolean, default: false }
+  focus: { type: Boolean, default: false },
+  invalid: { type: Boolean, default: false } // external error flag
 })
 
 const emit = defineEmits(['update:modelValue', 'valid'])
@@ -149,6 +150,18 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
+
+watch(
+  () => props.invalid,
+  (val) => {
+    if (val) {
+      errorMessage.value = 'This field is required.'
+    } else if (!val && !props.required) {
+      errorMessage.value = ''
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped>
