@@ -69,31 +69,31 @@
   
   <style scoped>
   .p-InputProductColor {
-    display: flex;
     flex-direction: column;
+    display: flex;
     width: 100%;
   }
   
   .color-picker-wrapper {
-    display: flex;
     align-items: center;
-    gap: 1rem;
     padding: 0.5rem 0;
+    display: flex;
+    gap: 1rem;
   }
   
   .color-picker {
-    border: 1px solid var(--border-a, #ccc);
-    border-radius: 6px;
-    width: 3rem;
-    height: 2.25rem;
-    padding: 0;
+    border: 1px solid var(--border-a);
+    border-radius: var(--radius-b);
+    padding: 0.25rem;
     background: none;
+    height: 2.25rem;
     cursor: pointer;
+    width: 3rem;
   }
   
   .color-value {
+    font-size: var(--text-size-1);
     font-family: monospace;
-    font-size: 0.875rem;
   }
   
   .color-picker-wrapper.is-invalid .color-picker {

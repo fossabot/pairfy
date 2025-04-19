@@ -70,32 +70,32 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 <style scoped>
 .p-InputProductCondition {
-  display: flex;
   flex-direction: column;
+  display: flex;
   width: 100%;
 }
 
 .switch-group {
+  margin-top: 0.25rem;
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.25rem;
 }
 
 .switch-button {
-  flex: 1;
-  padding: 0.75rem 1rem;
   border: 1px solid var(--border-a, #ccc);
-  border-radius: 6px;
-  background-color: #fff;
-  cursor: pointer;
-  transition: 0.2s;
+  background: var(--background-a);
+  border-radius: var(--radius-b);
+  padding: 0.75rem 1rem;
   font-weight: 500;
+  transition: 0.2s;
+  cursor: pointer;
+  flex: 1;
 }
 
 .switch-button.active {
   background-color: var(--primary-a, #2563eb);
-  color: white;
   border-color: var(--primary-a, #2563eb);
+  color: var(--text-w);
 }
 
 .switch-group.is-invalid .switch-button {
