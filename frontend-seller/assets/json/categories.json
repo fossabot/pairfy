@@ -2,91 +2,96 @@
   "0": {
     "name": "Electronics & Digital Content",
     "keywords": "gadgets, smartphones, laptops, computers, software, electronics, tech, digital products, streaming, apps",
-    "index": "0",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "index": "0"
   },
   "1": {
     "name": "Clothing & Fashion",
-    "keywords": "apparel, fashion, clothes, outfits, trends, style, menswear, womenswear, accessories, shoes",
-    "index": "1",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "keywords": "apparel, fashion, clothes, outfits, trends, style, menswear, womenswear, accessories",
+    "index": "1"
   },
   "2": {
-    "name": "Health & Beauty",
-    "keywords": "skincare, makeup, personal care, beauty products, health, wellness, fitness, hair care, cosmetics, nutrition",
-    "index": "2",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Shoes & Footwear",
+    "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
+    "index": "2"
   },
   "3": {
-    "name": "Books, Music & Movies",
-    "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
-    "index": "3",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Jewelry & Watches",
+    "keywords": "jewelry, rings, necklaces, bracelets, watches, earrings, accessories, fashion jewelry, luxury watches",
+    "index": "3"
   },
   "4": {
-    "name": "Home & Garden",
-    "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, tools",
-    "index": "4",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Health & Beauty",
+    "keywords": "skincare, makeup, personal care, beauty products, health, wellness, fitness, hair care, cosmetics, nutrition",
+    "index": "4"
   },
   "5": {
-    "name": "Toys, Hobbies & Collectibles",
-    "keywords": "toys, hobbies, action figures, collectibles, games, puzzles, model kits, figurines, arts and crafts, collecting",
-    "index": "5",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Books, Music & Movies",
+    "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
+    "index": "5"
   },
   "6": {
-    "name": "Sports & Outdoors & Entertainment",
-    "keywords": "sports equipment, outdoor gear, fitness, exercise, hiking, camping, biking, sportswear, athletics, recreation",
-    "index": "6",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Gaming",
+    "keywords": "video games, consoles, gaming accessories, PC games, Xbox, PlayStation, Nintendo, esports, game controllers",
+    "index": "6"
   },
   "7": {
-    "name": "Grocery & Gourmet Food",
-    "keywords": "food, gourmet, snacks, organic, groceries, beverages, kitchen essentials, meal kits, fresh produce, specialty foods",
-    "index": "7",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Home & Garden",
+    "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, lighting, tools",
+    "index": "7"
   },
   "8": {
-    "name": "Automotive & Industrial",
-    "keywords": "cars, motorcycles, automotive parts, car accessories, tools, industrial equipment, mechanical, vehicle repair, motor parts, garage",
-    "index": "8",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Toys, Hobbies & Collectibles",
+    "keywords": "toys, hobbies, action figures, collectibles, games, puzzles, model kits, figurines, arts and crafts, trading cards",
+    "index": "8"
   },
   "9": {
-    "name": "Office Supplies & Equipment",
-    "keywords": "office supplies, stationery, computers, office furniture, printers, desks, chairs, organization, business equipment, workplace",
-    "index": "9",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Sports & Outdoors",
+    "keywords": "sports equipment, outdoor gear, fitness, exercise, hiking, camping, biking, sportswear, recreation, training gear",
+    "index": "9"
   },
   "10": {
-    "name": "Pet Supplies",
-    "keywords": "pets, pet food, pet toys, dog accessories, cat supplies, pet grooming, pet health, aquarium, pet training, animal care",
-    "index": "10",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Grocery & Gourmet Food",
+    "keywords": "food, gourmet, snacks, organic, groceries, beverages, kitchen essentials, meal kits, fresh produce, specialty foods",
+    "index": "10"
   },
   "11": {
-    "name": "Lights & Lighting",
-    "keywords": "lighting, lamps, light bulbs, LED, chandeliers, home lighting, outdoor lights, ceiling lights, wall sconces, floor lamps",
-    "index": "11",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Automotive & Industrial",
+    "keywords": "cars, motorcycles, automotive parts, car accessories, tools, industrial equipment, mechanical, vehicle repair, motor parts, garage",
+    "index": "11"
   },
   "12": {
-    "name": "Mother & Kids",
-    "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care",
-    "index": "12",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Office Supplies & Equipment",
+    "keywords": "office supplies, stationery, computers, office furniture, printers, desks, chairs, organization, business equipment, workplace",
+    "index": "12"
   },
   "13": {
-    "name": "Shoes & Accessories",
-    "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
-    "index": "13",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Pet Supplies",
+    "keywords": "pets, pet food, pet toys, dog accessories, cat supplies, pet grooming, pet health, aquarium, pet training, animal care",
+    "index": "13"
   },
   "14": {
-    "name": "Art & NFT's",
-    "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
-    "index": "14",
-    "icon": "https://img.icons8.com/ios/100/books.png"
+    "name": "Mother & Kids",
+    "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care",
+    "index": "14"
+  },
+  "15": {
+    "name": "Art & Collectibles",
+    "keywords": "art, paintings, prints, digital art, NFTs, limited editions, handmade, sculptures, digital collectibles",
+    "index": "15"
+  },
+  "16": {
+    "name": "Tools & Hardware",
+    "keywords": "hardware, power tools, hand tools, fasteners, construction materials, safety gear, drills, saws, workshop",
+    "index": "16"
+  },
+  "17": {
+    "name": "Travel & Luggage",
+    "keywords": "luggage, suitcases, backpacks, travel accessories, packing organizers, travel pillows, passport holders",
+    "index": "17"
+  },
+  "18": {
+    "name": "Services & Subscriptions",
+    "keywords": "digital services, memberships, subscriptions, SaaS, online platforms, streaming services, software licenses",
+    "index": "18"
   }
 }
