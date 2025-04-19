@@ -100,9 +100,9 @@ watch(items, () => {
 }
 
 .error-text {
-  color: red;
-  font-size: 0.875rem;
+  font-size: var(--text-size-0);
   margin-top: 0.5rem;
+  color: red;
 }
 
 
