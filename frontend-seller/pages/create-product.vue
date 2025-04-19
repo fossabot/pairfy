@@ -1,13 +1,11 @@
 <template>
     <div class="card">
         <div class="grid">
+            <!--LEFT-->
             <div class="grid-left">
-
                 <div class="grid-row">
                     <div class="grid-title">
-
                         <span>Create Product</span>
-
                         <TipComp text="Fill in the fields with information about your product." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -132,12 +130,11 @@
                     </div>
                 </div>
             </div>
-
+            <!--RIGHT-->
             <div class="grid-right">
-
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Configuration</span>
+                        <span>Details</span>
 
                         <TipComp text="Make the final settings." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
@@ -150,10 +147,27 @@
                                 </svg>
                             </span>
                         </TipComp>
-
                     </div>
                     <div class="grid-subtitle">
                         Make the final settings.
+                    </div>
+
+                    <div class="grid-item">
+
+                        <InputSelect v-model="country" :options="[
+                            { code: 'us', label: 'United States' },
+                            { code: 'co', label: 'Colombia' },
+                            { code: 'fr', label: 'France' }
+                        ]" label="Category" required>
+                            <template #option="{ option }">
+                                <span class="flex">
+                                    <img :src="`/flags/${option.code}.svg`" alt="" class="flag" />
+                                    <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
+                                </span>
+                            </template>
+                        </InputSelect>
+
+
                     </div>
                 </div>
 
@@ -172,6 +186,8 @@
 </template>
 
 <script setup>
+
+const country = ref('')
 
 </script>
 

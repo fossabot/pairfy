@@ -10,11 +10,18 @@
     <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />
 
 
-    <InputSelect class="p-RegisterForm-select" v-model="country" label="Country" :options="countries" :required="true"
-      placeholder="Select Country..." @valid="onValidCountry" />
+    <InputSelect class="p-RegisterForm-country" v-model="country" label="Country" placeholder="Select Country..."
+      :options="countries" @valid="onValidCountry" required>
+      <template #option="{ option }">
+        <span class="flex">
+          <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
+          <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
+        </span>
+      </template>
+    </InputSelect>
 
     <InputCheck class="p-RegisterForm-terms" v-model="terms" @valid="onValidTerms" label="I have read the "
-      :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" :required="true" />
+      :link="{ label: 'terms of use and privacy policy.', href: '/terms' }" required />
 
 
     <ButtonSolid class="p-RegisterForm-button" type="submit" label="Register" :disabled="disableSubmit"
@@ -117,7 +124,7 @@ form {
 .p-RegisterForm-email,
 .p-RegisterForm-username,
 .p-RegisterForm-password,
-.p-RegisterForm-select {
+.p-RegisterForm-country {
   margin-bottom: 1rem;
 }
 </style>
