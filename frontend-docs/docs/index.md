@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Pairfy - Cardano Native Marketplace"
-  text: "Buy and sell products on the Cardano blockchain"
+  text: "Buy and sell products on the Cardano - Midnight blockchain"
   tagline: Documentation
   actions:
     - theme: brand
@@ -15,11 +15,11 @@ hero:
       link: /api-examples
 
 features:
-  - title: Open Source
+  - title: Open Source 🧩
     details: Project funded by the Catalyst open-source license program.
-  - title: Community-governed
+  - title: Community-governed 🤝
     details: Constitutional, democratic, and participatory model, 1 identity = 1 vote.
-  - title: Native asset payments
+  - title: Native asset payments 🏦
     details: The community can use ADA, stablecoins, and any other asset on the Cardano network as a form of payment.
 ---
 

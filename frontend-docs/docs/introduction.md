@@ -1,7 +1,7 @@
 # Introduction
 
 Pairfy is a decentralized application for trading physical products. It uses the Cardano blockchain network as a transactional and procedural layer.
-Each purchase of a product is managed by a separate smart contract which contains a state machine login page that ensures secure and efficient trading.
+Each purchase of a product is managed by a separate smart contract which contains a state machine that ensures secure and efficient trade.
 
 Cardano's E-UTXO model provides atomic and deterministic security for transactions and contract state changes.
 Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a form of payment, and even any **_stablecoin_** and **_native asset_**.
@@ -29,7 +29,7 @@ Although the price of ADAUSD may fluctuate depending on the time you read this,
 the price is bullish in the long term, so for this example 1 ADA = 1 USD will be used.
 
 If the liquidity pool reaches 1.000.000 ADA this liquidity can be
-divided by 100 ADA (discount per order).
+divided by 100 ADA as `discount_per_order`
 
 ```md
 discount_per_order = 100 ADA
@@ -40,7 +40,7 @@ Beneficiaries: 10_000 users
 ```
 
 This means that 10,000 buy orders will have a discount of 100 ADA.
-Which for products over $100 represents a pretty substantial discount. 
+Which for products over $200 represents a pretty substantial discount. 
 A very generous discount is a good incentive to encourage traditional market buyers to migrate to the Cardano ecosystem.
 
 
@@ -61,6 +61,15 @@ Beneficiaries: 2_500 users
 
 
 The community can vote to set the pool cap and the `discount_per_order` value.
+
+#### Paradigm revolution
+
+Using Turing-complete smart contracts enables high levels of innovation that dwarf traditional, private, and centralized applications.
+Applications that are currently Web 2 will eventually be replaced by Web 3.
+Even large tech companies will have to adapt to this change or else disappear.
+The open source community is a giant that can never be defeated.
+It allows for the distribution of value based on merit and opportunity, enables transparency, and highlights the power of community governance.
+Closed source, telemetry, data collection, will pass.
 
 
 
