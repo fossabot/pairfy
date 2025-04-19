@@ -27,7 +27,7 @@
     id: { type: String, default: 'product-model' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: 'Model' },
-    placeholder: { type: String, default: 'XR-3000' },
+    placeholder: { type: String, default: 'e.g. XR-3000' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     maxLength: { type: Number, default: 40 },
