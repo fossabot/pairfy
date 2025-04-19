@@ -181,9 +181,7 @@
                     <div class="grid-title">
                         Publish
                     </div>
-                    <div class="grid-subtitle">
-                        Preview or publish your product.
-                    </div>
+
                 </div>
 
             </div>
