@@ -29,6 +29,23 @@
       <template v-else>
         <span class="placeholder">{{ placeholder }}</span>
       </template>
+
+      <!-- Down arrow icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="chevron-down-icon"
+        aria-hidden="true"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
     </div>
 
     <!-- Dropdown -->
@@ -94,8 +111,7 @@ const selectedOption = computed(() =>
   props.options.find(opt => opt.code === props.modelValue)
 )
 
-// Toggle manually to avoid SSR hydration errors
-const toggleDropdown = () => {
+function toggleDropdown() {
   isOpen.value = !isOpen.value
 }
 
@@ -122,7 +138,6 @@ function handleClickOutside(e) {
   }
 }
 
-// Reemplazar imagen fallida por bandera por defecto
 function onFlagError(event) {
   event.target.src = '/flags/default.svg'
 }
@@ -154,10 +169,22 @@ onBeforeUnmount(() => {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  justify-content: space-between;
 }
 
 .dropdown-display.is-invalid {
   border-color: red;
+}
+
+.chevron-down-icon {
+  margin-left: auto;
+  flex-shrink: 0;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-display[aria-expanded="true"] .chevron-down-icon {
+  transform: rotate(180deg);
 }
 
 .placeholder {
