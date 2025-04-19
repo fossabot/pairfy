@@ -163,8 +163,6 @@
                     </div>
 
                     <div class="grid-item">
-
-
                         <InputSelect v-model="country" :options="categories" label="Category" required>
                             <template #option="{ option }">
                                 <span class="flex">
@@ -172,8 +170,10 @@
                                 </span>
                             </template>
                         </InputSelect>
+                    </div>
 
-
+                    <div class="grid-item">
+                        <InputProductCondition />
                     </div>
                 </div>
 
