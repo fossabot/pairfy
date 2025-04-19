@@ -37,15 +37,18 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const items = ref([...props.modelValue])
+
 const showError = computed(() => items.value.every(item => !item.trim()))
 
 watch(items, () => {
   emit('update:modelValue', items.value)
 }, { deep: true })
+
 </script>
 
 <style scoped>
 .p-EditableBulletList {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

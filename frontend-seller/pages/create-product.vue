@@ -161,7 +161,7 @@
 
                     </div>
                     <div class="grid-subtitle">
-                        Bullet list
+                        Summary of characteristics that are displayed with priority.
                     </div>
 
                     <div class="grid-item">
