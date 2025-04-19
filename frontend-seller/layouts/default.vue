@@ -172,11 +172,10 @@ nav a:hover {
   display: flex;
   height: 4rem;
   width: 4rem;
-
 }
 
 .layout-top-image img {
-  width: 3rem;
+  width: 2.5rem;
 }
 
 .layout-logo-text {
