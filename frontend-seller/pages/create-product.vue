@@ -246,7 +246,7 @@ const onValidCountry = (event) => {
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .grid-title {
