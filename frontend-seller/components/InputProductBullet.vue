@@ -72,7 +72,7 @@ watch(items, () => {
   box-sizing: border-box;
   border: 1px solid var(--border-a);
   border-radius: var(--input-radius);
-  min-height: 4rem;
+  min-height: 2rem;
   max-height: 8rem;
 }
 
