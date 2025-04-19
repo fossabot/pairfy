@@ -56,8 +56,8 @@ body {
 }
 
 :root {
-  --input-radius: 6px;
-  --button-radius: 6px;
+  --input-radius: var(--radius-b);
+  --button-radius: var(--radius-b);
 }
 
 .flex {
@@ -71,5 +71,13 @@ body {
 }
 
 input {
+  font-size: var(--text-size-0);
+}
+
+textarea{
+  font-size: var(--text-size-0);
+}
+
+textarea::placeholder {
   font-size: var(--text-size-0);
 }

@@ -1,20 +1,14 @@
 <template>
   <div class="p-EditableBulletList">
     <label class="title-text">{{ label }}</label>
-    <ul class="bullet-list">
-      <li v-for="(item, index) in items" :key="index" class="bullet-item">
-        <textarea
-          v-model="items[index]"
-          :placeholder="`Punto ${index + 1}`"
-          :maxlength="maxLength"
-          rows="2"
-          class="bullet-textarea"
-          :class="{ 'is-invalid': showError && !item.trim() }"
-        />
-        <small class="char-count">{{ item.length }} / {{ maxLength }}</small>
-      </li>
-    </ul>
-    <p v-if="showError" class="error-text">Debes ingresar al menos un punto.</p>
+    <div class="list-container">
+      <div v-for="(item, index) in items" :key="index" class="item">
+        <textarea v-model="items[index]" :placeholder="`Feature group ${index + 1}`" :maxlength="maxLength"
+          class="textarea" :class="{ 'is-invalid': showError && !item.trim() }" />
+
+      </div>
+    </div>
+    <p v-if="showError" class="error-text">At least one item is required.</p>
   </div>
 </template>
 
@@ -26,7 +20,7 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: 'Technical specifications',
+    default: 'Important features',
   },
   maxLength: {
     type: Number,
@@ -37,21 +31,19 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue'])
 
 const items = ref([...props.modelValue])
-
 const showError = computed(() => items.value.every(item => !item.trim()))
 
 watch(items, () => {
   emit('update:modelValue', items.value)
 }, { deep: true })
-
 </script>
 
 <style scoped>
 .p-EditableBulletList {
+  gap: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
 }
 
 .title-text {
@@ -59,42 +51,59 @@ watch(items, () => {
   font-size: 1rem;
 }
 
-.bullet-list {
-  padding-left: 1.5rem;
+.list-container {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-.bullet-item {
-  position: relative;
-  list-style-type: disc;
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.bullet-textarea {
+.textarea {
   width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  font-size: 0.95rem;
   resize: vertical;
-  min-height: 50px;
+  line-height: 1.5;
+  font-family: inherit;
+  padding: 0.75rem 1rem;
+  box-sizing: border-box;
+  border: 1px solid var(--border-a);
+  border-radius: var(--input-radius);
+  min-height: 4rem;
+  max-height: 8rem;
 }
 
-.bullet-textarea.is-invalid {
+.textarea::-webkit-scrollbar {
+    width: 0.9rem;
+}
+
+.textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+    border: 2px solid var(--background-b);
+    background: #888;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.textarea::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+.textarea.is-invalid {
   border-color: red;
-}
-
-.char-count {
-  font-size: 0.75rem;
-  color: #888;
-  position: absolute;
-  right: 0.5rem;
-  bottom: -1.1rem;
 }
 
 .error-text {
   color: red;
   font-size: 0.875rem;
+  margin-top: 0.5rem;
 }
+
+
 </style>
