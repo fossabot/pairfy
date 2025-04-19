@@ -163,6 +163,10 @@
                     <div class="grid-subtitle">
                         Bullet list
                     </div>
+
+                    <div class="grid-item">
+                        <InputProductBullet v-model="productFeatures"/>
+                    </div>
                 </div>
 
 
@@ -235,6 +239,10 @@ const onValidCountry = (event) => {
     console.log("countryHandler", event)
     countryValid.value = event
 }
+
+
+const productFeatures = ref(Array(5).fill(''))
+
 
 </script>
 
