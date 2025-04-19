@@ -27,7 +27,7 @@
     id: { type: String, default: 'product-city' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: 'City' },
-    placeholder: { type: String, default: 'e.g. Los Ángeles' },
+    placeholder: { type: String, default: 'Los Ángeles' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     maxLength: { type: Number, default: 40 },
