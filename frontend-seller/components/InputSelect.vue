@@ -100,7 +100,7 @@ const props = defineProps({
   options: { type: Array, required: true },
   placeholder: { type: String, default: 'Select one...' },
   focus: { type: Boolean, default: false },
-  invalid: { type: Boolean, default: false } // external error flag
+  invalid: { type: Boolean, default: false } 
 })
 
 const emit = defineEmits(['update:modelValue', 'valid'])
@@ -215,7 +215,7 @@ watch(
   top: calc(100% - 30px);
   left: 0;
   right: 0;
-  max-height: 150px;
+  max-height: 200px;
   list-style: none;
   overflow-y: auto;
   z-index: 1000;
