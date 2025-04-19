@@ -1,13 +1,27 @@
 <template>
-  <div class="p-InputSelect" @click="toggleDropdown" ref="dropdownRef">
+  <div class="p-InputSelect" ref="dropdownRef">
     <label :for="props.id" class="title-text">{{ label }}</label>
 
-    <div class="dropdown-display" :class="{ 'is-invalid': errorMessage }">
+    <!-- Display -->
+    <div
+      class="dropdown-display"
+      :class="{ 'is-invalid': errorMessage }"
+      role="combobox"
+      :aria-expanded="isOpen.toString()"
+      aria-haspopup="listbox"
+      :aria-controls="`${props.id}-listbox`"
+      @click="toggleDropdown"
+    >
       <template v-if="selectedOption">
         <slot name="option" :option="selectedOption">
-
           <span class="flex items-center gap-2">
-            <img :src="`/flags/${selectedOption.code}.svg`" class="flag-icon" />
+            <img
+              :src="`/flags/${selectedOption.code}.svg`"
+              @error="onFlagError"
+              class="flag-icon"
+              alt=""
+              aria-hidden="true"
+            />
             {{ selectedOption.label }}
           </span>
         </slot>
@@ -17,16 +31,42 @@
       </template>
     </div>
 
-
-    <ul v-if="isOpen" class="dropdown-list">
-      <li v-for="option in options" :key="option.code" class="dropdown-item" @click.stop="select(option)">
+    <!-- Dropdown -->
+    <ul
+      v-if="isOpen"
+      :id="`${props.id}-listbox`"
+      class="dropdown-list"
+      role="listbox"
+    >
+      <li
+        v-for="option in options"
+        :key="option.code"
+        class="dropdown-item"
+        @click.stop="select(option)"
+        :id="`option-${option.code}`"
+        role="option"
+      >
         <slot name="option" :option="option">
-          {{ option.label }}
+          <span class="flex items-center gap-2">
+            <img
+              :src="`/flags/${option.code}.svg`"
+              @error="onFlagError"
+              class="flag-icon"
+              alt=""
+              aria-hidden="true"
+            />
+            {{ option.label }}
+          </span>
         </slot>
       </li>
     </ul>
 
-    <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
+    <!-- Error -->
+    <p
+      class="error-text"
+      :class="{ visible: errorMessage }"
+      :id="`${props.id}-error`"
+    >
       {{ errorMessage || '-' }}
     </p>
   </div>
@@ -50,12 +90,12 @@ const emit = defineEmits(['update:modelValue', 'valid'])
 const isOpen = ref(false)
 const dropdownRef = ref(null)
 const errorMessage = ref('')
-
 const selectedOption = computed(() =>
   props.options.find(opt => opt.code === props.modelValue)
 )
 
-function toggleDropdown() {
+// Toggle manually to avoid SSR hydration errors
+const toggleDropdown = () => {
   isOpen.value = !isOpen.value
 }
 
@@ -80,6 +120,11 @@ function handleClickOutside(e) {
   if (!dropdownRef.value?.contains(e.target)) {
     isOpen.value = false
   }
+}
+
+// Reemplazar imagen fallida por bandera por defecto
+function onFlagError(event) {
+  event.target.src = '/flags/default.svg'
 }
 
 onMounted(() => {
@@ -116,23 +161,8 @@ onBeforeUnmount(() => {
 }
 
 .placeholder {
-  font-size: var(--text-size-0);
-  text-rendering: auto;
   color: var(--text-b);
-  letter-spacing: normal;
-  font-weight: 400;
-  word-spacing: normal;
-  line-height: normal;
-  text-transform: none;
-  text-indent: 0px;
-  text-shadow: none;
-  display: inline-block;
-  text-align: start;
-  appearance: auto;
-  -webkit-rtl-ordering: logical;
-  cursor: text;
-  background-color: field;
-  margin: 0em;
+  font-style: italic;
 }
 
 .dropdown-list {
@@ -182,6 +212,12 @@ onBeforeUnmount(() => {
 .error-text.visible {
   opacity: 1;
   color: red;
+}
+
+.flag-icon {
+  width: 20px;
+  height: 14px;
+  object-fit: contain;
 }
 
 @keyframes fadeIn {
