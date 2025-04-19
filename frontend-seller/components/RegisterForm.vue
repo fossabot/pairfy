@@ -109,6 +109,7 @@ form {
   overflow: hidden;
   max-width: 100%;
   display: flex;
+  height: 500px;
 }
 
 .p-RegisterForm-button {

@@ -54,7 +54,17 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-                        <InputProductCountry id="create-product-country" />
+
+                        <InputSelect v-model="country" label="Country" placeholder="Select Country..."
+                            :options="countries" @valid="onValidCountry" required>
+                            <template #option="{ option }">
+                                <span class="flex">
+                                    <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
+                                    <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
+                                </span>
+                            </template>
+                        </InputSelect>
+
                         <InputProductCity id="create-product-city" />
                     </div>
                     <div class="grid-item">
@@ -153,7 +163,7 @@
                     </div>
 
                     <div class="grid-item">
-                     
+
 
                         <InputSelect v-model="country" :options="categories" label="Category" required>
                             <template #option="{ option }">
@@ -182,16 +192,26 @@
 </template>
 
 <script setup>
-import categoryList from '@/assets/categories.json'
+import categoryList from '@/assets/json/categories.json'
+import countryList from '@/assets/json/countries.json'
 
 const categories = computed(() =>
     Object.values(categoryList).map(item => ({
         label: item.name,
         code: item.index
     }))
-) 
+)
+
+
+const countries = ref(countryList)
 
 const country = ref('')
+const countryValid = ref(false)
+
+const onValidCountry = (event) => {
+    console.log("countryHandler", event)
+    countryValid.value = event
+}
 
 </script>
 
