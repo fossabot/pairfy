@@ -153,16 +153,12 @@
                     </div>
 
                     <div class="grid-item">
+                     
 
-                        <InputSelect v-model="country" :options="[
-                            { code: 'us', label: 'United States' },
-                            { code: 'co', label: 'Colombia' },
-                            { code: 'fr', label: 'France' }
-                        ]" label="Category" required>
+                        <InputSelect v-model="country" :options="categories" label="Category" required>
                             <template #option="{ option }">
                                 <span class="flex">
-                                    <img :src="`/flags/${option.code}.svg`" alt="" class="flag" />
-                                    <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
+                                    <span>{{ option.label }}</span>
                                 </span>
                             </template>
                         </InputSelect>
@@ -186,6 +182,14 @@
 </template>
 
 <script setup>
+import categoryList from '@/assets/categories.json'
+
+const categories = computed(() =>
+    Object.values(categoryList).map(item => ({
+        label: item.name,
+        code: item.index
+    }))
+) 
 
 const country = ref('')
 
