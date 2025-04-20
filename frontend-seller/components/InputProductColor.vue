@@ -84,11 +84,10 @@
   .color-picker {
     border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
-    padding: 0.25rem;
     background: none;
-    height: 2.25rem;
     cursor: pointer;
-    width: 3rem;
+    height: 42px;
+    width: 4rem;
   }
   
   .color-value {

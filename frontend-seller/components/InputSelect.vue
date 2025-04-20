@@ -202,7 +202,6 @@ watch(
 
 .placeholder {
   color: var(--text-b);
-  font-style: italic;
 }
 
 .dropdown-list {

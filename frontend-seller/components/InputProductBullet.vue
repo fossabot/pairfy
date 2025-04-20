@@ -3,8 +3,8 @@
     <label class="title-text">{{ label }}</label>
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
-        <textarea v-model="items[index]" :placeholder="`Features ${index + 1}`" :maxlength="maxLength"
-          class="textarea" :class="{ 'is-invalid': showError && !item.trim() }" />
+        <textarea v-model="items[index]" :placeholder="`Features ${index + 1}`" :maxlength="maxLength" class="textarea"
+          :class="{ 'is-invalid': showError && !item.trim() }" />
 
       </div>
     </div>
@@ -72,27 +72,32 @@ watch(items, () => {
   box-sizing: border-box;
   border: 1px solid var(--border-a);
   border-radius: var(--input-radius);
+  outline: none;
   min-height: 2rem;
   max-height: 8rem;
 }
 
+.textarea:focus-within {
+  border: 1px solid var(--primary-a);
+}
+
 .textarea::-webkit-scrollbar {
-    width: 0.9rem;
+  width: 0.9rem;
 }
 
 .textarea::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 .textarea::-webkit-scrollbar-thumb {
-    border: 2px solid var(--background-b);
-    background: #888;
-    border-radius: 4px;
-    cursor: pointer;
+  border: 2px solid var(--background-b);
+  background: #888;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .textarea::-webkit-scrollbar-thumb:hover {
-    background: #999;
+  background: #999;
 }
 
 .textarea.is-invalid {
@@ -104,6 +109,4 @@ watch(items, () => {
   margin-top: 0.5rem;
   color: red;
 }
-
-
 </style>
