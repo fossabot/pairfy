@@ -166,7 +166,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductBullet v-model="productFeatures"/>
+                        <InputProductBullet v-model="productFeatures" />
                     </div>
                 </div>
 
@@ -203,10 +203,12 @@
 
                     <div class="grid-item">
                         <InputProductCondition />
+                    </div>
+
+                    <div class="grid-item">
                         <InputProductColor />
                     </div>
                 </div>
-
 
                 <div class="grid-row">
                     <div class="grid-title">
@@ -230,7 +232,7 @@
                     </div>
 
                     <div class="grid-item">
-
+                        <SwitchComp label="Paused" />
                     </div>
                 </div>
 
@@ -240,7 +242,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
     </div>

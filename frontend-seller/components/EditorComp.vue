@@ -444,8 +444,8 @@ onBeforeUnmount(() => {
     display: flex;
     height: 2rem;
     bottom: 2rem;
-    width: 2rem;
-    right: 3rem;
+    width: 3rem;
+    right: 2rem;
 }
 
 .p-EditorComp-control {
