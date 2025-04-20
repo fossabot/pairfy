@@ -95,7 +95,6 @@ const validateEmail = (email) => {
 }
 
 .title-text {
-    font-size: var(--text-size-1);
     margin-bottom: 0.75rem;
     font-weight: 600;
 }

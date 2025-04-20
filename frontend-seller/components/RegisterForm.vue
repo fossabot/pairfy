@@ -4,13 +4,12 @@
 
     <InputEmail class="p-RegisterForm-email" v-model="email" :focus="true" @valid="onValidEmail" />
 
-    <InputAlphaNumeric class="p-RegisterForm-username" v-model="username" label="username" placeholder="Eg: Name777"
+    <InputAlphaNumeric class="p-RegisterForm-username" v-model="username" label="username" placeholder="e.g. Name777"
       :minLength="5" :maxLength="20" @valid="onValidUsername" />
 
     <InputPassword class="p-RegisterForm-password" v-model="password" @valid="onValidPassword" />
 
-
-    <InputSelect class="p-RegisterForm-country" v-model="country" label="Country" placeholder="Select Country..."
+    <InputSelect class="p-RegisterForm-country" v-model="country" label="Country" 
       :options="countries" @valid="onValidCountry" required>
       <template #option="{ option }">
         <span class="flex">
