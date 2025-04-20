@@ -16,7 +16,7 @@
     id: { type: String, default: 'sku' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: 'SKU' },
-    placeholder: { type: String, default: 'ABC123' },
+    placeholder: { type: String, default: 'e.g. TV-55QLED-SAMSUNG-2025' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     maxLength: { type: Number, default: 20 },
@@ -96,7 +96,6 @@
     padding: 0.75rem 1rem;
     outline: none;
     transition: border-color 0.2s;
-    text-transform: uppercase;
   }
   
   .p-InputSku-input:focus-within {
