@@ -3,7 +3,7 @@
     <label class="title-text">{{ label }}</label>
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
-        <textarea v-model="items[index]" :placeholder="`Features ${index + 1}`" :maxlength="maxLength" class="textarea"
+        <textarea v-model="items[index]" placeholder="•" :maxlength="maxLength" class="textarea"
           :class="{ 'is-invalid': showError && !item.trim() }" />
 
       </div>
@@ -64,6 +64,8 @@ watch(items, () => {
 
 .textarea {
   width: 100%;
+  height: 3rem;
+  max-height: 8rem;
   resize: vertical;
   line-height: 1.5;
   font-family: inherit;
@@ -72,8 +74,7 @@ watch(items, () => {
   border: 1px solid var(--border-a);
   border-radius: var(--input-radius);
   outline: none;
-  min-height: 2rem;
-  max-height: 8rem;
+
 }
 
 .textarea:focus-within {
