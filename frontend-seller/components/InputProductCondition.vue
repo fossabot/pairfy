@@ -84,6 +84,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
   border: 1px solid var(--border-a, #ccc);
   background: var(--background-a);
   border-radius: var(--radius-b);
+  font-size: var(--text-size-0);
   padding: 0.75rem 1rem;
   font-weight: 500;
   transition: 0.2s;
@@ -92,8 +93,8 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 .switch-button.active {
-  background-color: var(--primary-a, #2563eb);
-  border-color: var(--primary-a, #2563eb);
+  background-color: var(--primary-a);
+  border-color: var(--primary-a);
   color: var(--text-w);
 }
 
