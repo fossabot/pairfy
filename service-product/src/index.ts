@@ -41,47 +41,22 @@ const server = new ApolloServer({
 });
 
 const main = async () => {
-
     try {
-        if (!process.env.POD_TIMEOUT) {
-            throw new Error("POD_TIMEOUT error");
-        }
-
-        if (!process.env.EXPRESS_PORT) {
-            throw new Error("EXPRESS_PORT error");
-        }
-
-        if (!process.env.EXPRESS_TIMEOUT) {
-            throw new Error("EXPRESS_TIMEOUT error");
-        }
-
-        if (!process.env.CORS_DOMAINS) {
-            throw new Error("CORS_DOMAINS error");
-        }
-
-        if (!process.env.SELLER_JWT_KEY) {
-            throw new Error("SELLER_JWT_KEY error");
-        }
-
-        if (!process.env.DATABASE_HOST) {
-            throw new Error("DATABASE_HOST error");
-        }
-
-        if (!process.env.DATABASE_PORT) {
-            throw new Error("DATABASE_PORT error");
-        }
-
-        if (!process.env.DATABASE_USER) {
-            throw new Error("DATABASE_USER error");
-        }        
-
-        if (!process.env.DATABASE_PASSWORD) {
-            throw new Error("DATABASE_PASSWORD error");
-        }   
-
-        if (!process.env.DATABASE_NAME) {
-            throw new Error("DATABASE_NAME error");
-        }   
+        const requiredEnvVars = [
+            'SELLER_JWT_KEY',
+            'DATABASE_HOST',
+            'DATABASE_PORT',
+            'DATABASE_USER',
+            'DATABASE_PASSWORD',
+            'DATABASE_NAME'
+          ];
+          
+          for (const varName of requiredEnvVars) {
+            if (!process.env[varName]) {
+              throw new Error(`${varName} error`);
+            }
+          }
+          
 
         const sessionOptions: object = {
             maxAge: 168 * 60 * 60 * 1000,
@@ -89,17 +64,6 @@ const main = async () => {
             secure: true,
             httpOnly: true,
             sameSite: "strict",
-        };
-
-        const corsOrigin = process.env.CORS_DOMAINS;
-
-        const corsOptions = {
-            origin: corsOrigin.split(",") || "*",
-            credentials: true,
-            maxAge: 86400,
-            preflightContinue: false,
-            exposedHeaders: ["Set-Cookie", "Cookie"],
-            optionsSuccessStatus: 204,
         };
 
         const errorEvents: string[] = [
@@ -114,8 +78,6 @@ const main = async () => {
         ];
 
         errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
-
-        app.options('*', cors(corsOptions));
 
         database.connect({
             host: process.env.DATABASE_HOST,
@@ -135,7 +97,6 @@ const main = async () => {
 
         app.use(
             "/api/product/graphql",
-            cors<cors.CorsRequest>(corsOptions),
             express.json(),
             expressMiddleware(server, {
                 context: async ({ req }) => ({ sellerData: req.sellerData }),
@@ -143,7 +104,7 @@ const main = async () => {
         );
 
         await new Promise<void>((resolve) =>
-            httpServer.listen({ port: 4000 }, resolve)
+            httpServer.listen({ port: 8001 }, resolve)
         );
 
         logger.info("ONLINE");

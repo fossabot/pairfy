@@ -24,13 +24,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: seller-token-secret
-                  key: SELLER_TOKEN_KEY                       
-            - name: POD_TIMEOUT
-              value: '120000'   
-            - name: EXPRESS_PORT
-              value: "8000"
-            - name: EXPRESS_TIMEOUT
-              value: "120000"
+                  key: SELLER_TOKEN_KEY                         
             - name: DATABASE_HOST  
               valueFrom:
                 configMapKeyRef:
@@ -44,14 +38,12 @@ spec:
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-password
+                  name: database-password-secret
                   key: password   
             - name: DATABASE_NAME
               value: service_product        
             - name: DATABASE_USER
-              value: marketplace                                                                                                                                                                                       
-            - name: CORS_DOMAINS
-              value: "http://localhost:5173,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
+              value: marketplace                                                                                                                                                                                                               
           resources:
             limits:
               memory: "500Mi"
@@ -68,5 +60,5 @@ spec:
   ports:
     - name: service-product
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 8001
+      targetPort: 8001
