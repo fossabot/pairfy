@@ -76,7 +76,6 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 .switch-group {
-  margin-top: 0.25rem;
   display: flex;
   gap: 0.5rem;
 }

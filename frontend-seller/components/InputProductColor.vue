@@ -76,7 +76,6 @@
   
   .color-picker-wrapper {
     align-items: center;
-    padding: 0.5rem 0;
     display: flex;
     gap: 1rem;
   }

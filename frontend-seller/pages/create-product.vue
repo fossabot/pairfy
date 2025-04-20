@@ -202,8 +202,8 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductColor />
                         <InputProductCondition />
+                        <InputProductColor />
                     </div>
                 </div>
 
