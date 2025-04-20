@@ -5,7 +5,7 @@
             <div class="grid-left">
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Create Product</span>
+                        <span>New Product</span>
                         <TipComp text="Fill in the fields with information about your product." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -175,7 +175,7 @@
                     <div class="grid-title">
                         <span>Product Details</span>
 
-                        <TipComp text="Make the final settings." position="right">
+                        <TipComp text="Configure product details." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -188,7 +188,7 @@
                         </TipComp>
                     </div>
                     <div class="grid-subtitle">
-                        Make the final settings.
+                        Configure product details.
                     </div>
 
                     <div class="grid-item">
@@ -212,7 +212,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Discount</span>
+                        <span>Product Discount</span>
 
                         <TipComp text="Discount" position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
@@ -228,11 +228,11 @@
                     </div>
 
                     <div class="grid-subtitle">
-                        Discount
+                        Apply a percentage discount to the price.
                     </div>
 
                     <div class="grid-item">
-                        <SwitchComp label="Paused" />
+                        <InputProductDiscount v-model="discountData"  />
                     </div>
                 </div>
 
@@ -273,6 +273,11 @@ const onValidCountry = (event) => {
 
 const productFeatures = ref(Array(4).fill(''))
 
+const discountData = ref({
+  enabled: false,
+  price: 1000,
+  discount: 10,
+})
 
 </script>
 
