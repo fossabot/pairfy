@@ -74,6 +74,10 @@ input {
   font-size: var(--text-size-1);
 }
 
+input::placeholder {
+  color: var(--text-b); 
+}
+
 label{
   font-size: var(--text-size-0);
 }
@@ -84,4 +88,5 @@ textarea{
 
 textarea::placeholder {
   font-size: var(--text-size-1);
+  color: var(--text-b); 
 }
