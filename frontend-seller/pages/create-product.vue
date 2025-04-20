@@ -173,7 +173,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Details</span>
+                        <span>Product Details</span>
 
                         <TipComp text="Make the final settings." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
