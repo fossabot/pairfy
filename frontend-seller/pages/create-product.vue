@@ -148,7 +148,7 @@
                     <div class="grid-title">
                         <span>Bullet List</span>
 
-                        <TipComp text="bulletlist" position="right">
+                        <TipComp text="List displayed at the top of the product page." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -162,7 +162,7 @@
 
                     </div>
                     <div class="grid-subtitle">
-                        Summary of characteristics that are displayed with priority.
+                        List of characteristics that are displayed with priority.
                     </div>
 
                     <div class="grid-item">
@@ -269,7 +269,7 @@ const onValidCountry = (event) => {
 }
 
 
-const productFeatures = ref(Array(5).fill(''))
+const productFeatures = ref(Array(4).fill(''))
 
 
 </script>

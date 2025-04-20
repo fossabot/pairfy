@@ -3,7 +3,7 @@
     <label class="title-text">{{ label }}</label>
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
-        <textarea v-model="items[index]" :placeholder="`Feature group ${index + 1}`" :maxlength="maxLength"
+        <textarea v-model="items[index]" :placeholder="`Features ${index + 1}`" :maxlength="maxLength"
           class="textarea" :class="{ 'is-invalid': showError && !item.trim() }" />
 
       </div>
@@ -16,11 +16,11 @@
 const props = defineProps({
   modelValue: {
     type: Array as () => string[],
-    default: () => Array(5).fill(''),
+    default: () => Array(4).fill(''),
   },
   label: {
     type: String,
-    default: 'Important features',
+    default: 'List of important features',
   },
   maxLength: {
     type: Number,
@@ -40,15 +40,15 @@ watch(items, () => {
 
 <style scoped>
 .p-EditableBulletList {
-  gap: 1rem;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
 .title-text {
+  font-size: var(--text-size-1);
+  margin-bottom: 0.75rem;
   font-weight: 600;
-  font-size: 1rem;
 }
 
 .list-container {
