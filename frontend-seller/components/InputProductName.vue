@@ -1,17 +1,27 @@
 <template>
   <div class="p-InputProductName">
     <label :for="props.id" class="title-text">{{ label }}</label>
-    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
-      :placeholder="placeholder" class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" />
+    <input
+      ref="inputRef"
+      v-model="internalValue"
+      :id="props.id"
+      type="text"
+      @drop.prevent
+      :placeholder="placeholder"
+      class="p-InputProductName-input"
+      :class="{ 'is-invalid': errorMessage }"
+      :maxlength="maxLength"
+      :aria-invalid="!!errorMessage"
+      :aria-describedby="`${props.id}-error`"
+      inputmode="text"
+    />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
-      {{ errorMessage || '-' }}
+      {{ errorMessage || '\u00A0' }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-
 const props = defineProps({
   id: { type: String, default: 'product-name' },
   modelValue: { type: String, default: '' },
@@ -20,7 +30,7 @@ const props = defineProps({
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 200 },
-  minLength: { type: Number, default: 3 }
+  minLength: { type: Number, default: 3 },
 })
 
 const emit = defineEmits<{
@@ -29,26 +39,26 @@ const emit = defineEmits<{
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const errorMessage = ref('')
 const internalValue = ref(props.modelValue)
+const errorMessage = ref('')
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-():+]+$/u
 
-const messages = {
+const getMessages = () => ({
   required: 'This field is required.',
   minLength: `Minimum length is ${props.minLength} characters.`,
   maxLength: `Maximum length is ${props.maxLength} characters.`,
-  invalid: 'Only valid characters are allowed: letters, numbers, basic punctuation.'
-}
+  invalid: 'Only valid characters are allowed: letters, numbers, basic punctuation.',
+})
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value)
 })
 
 watch(() => props.focus, (newVal) => {
   if (newVal) inputRef.value?.focus()
 })
-
 
 watch(() => props.modelValue, (val) => {
   if (val !== internalValue.value) internalValue.value = val
@@ -59,15 +69,9 @@ watch(internalValue, (val) => {
   validateInput(val)
 })
 
-const onBeforeInput = (e: Event) => {
-  const inputEvent = e as InputEvent
-  if (inputEvent.data && !productNameRegex.test(inputEvent.data)) {
-    e.preventDefault()
-  }
-}
-
-
 const validateInput = (value: string) => {
+  const messages = getMessages()
+
   const validators: { condition: boolean; message: string }[] = [
     { condition: props.required && !value.trim(), message: messages.required },
     { condition: value.length < props.minLength, message: messages.minLength },
@@ -86,13 +90,12 @@ const validateInput = (value: string) => {
   errorMessage.value = ''
   emit('valid', true)
 }
-
 </script>
 
 <style scoped>
 .p-InputProductName {
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
   width: 100%;
 }
 
@@ -105,7 +108,7 @@ const validateInput = (value: string) => {
 }
 
 .p-InputProductName-input:focus-within {
-  border: 1px solid var(--primary-a, #2563eb);
+  border-color: var(--primary-a, #2563eb);
 }
 
 .p-InputProductName-input.is-invalid {
@@ -122,7 +125,7 @@ const validateInput = (value: string) => {
   font-size: var(--text-size-0, 0.875rem);
   margin-top: 0.5rem;
   color: transparent;
-  opacity: 0; 
+  opacity: 0;
 }
 
 .error-text.visible {
