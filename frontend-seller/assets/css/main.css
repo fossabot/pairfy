@@ -71,13 +71,17 @@ body {
 }
 
 input {
+  font-size: var(--text-size-1);
+}
+
+label{
   font-size: var(--text-size-0);
 }
 
 textarea{
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
 }
 
 textarea::placeholder {
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
 }
