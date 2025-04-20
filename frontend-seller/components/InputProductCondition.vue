@@ -102,7 +102,6 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 .title-text {
-  font-size: var(--text-size-1, 1rem);
   margin-bottom: 0.75rem;
   font-weight: 600;
 }

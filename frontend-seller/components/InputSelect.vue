@@ -166,7 +166,7 @@ watch(
 
 <style scoped>
 .p-InputSelect {
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -208,7 +208,7 @@ watch(
   border-radius: var(--input-radius);
   border: 1px solid var(--border-a);
   background: var(--background-a);
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
   box-shadow: var(--shadow-a);
   position: absolute;
   top: calc(100% - 30px);
@@ -235,7 +235,6 @@ watch(
 }
 
 .title-text {
-  font-size: var(--text-size-1);
   margin-bottom: 0.75rem;
   font-weight: 600;
 }
