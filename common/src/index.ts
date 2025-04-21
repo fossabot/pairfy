@@ -18,3 +18,4 @@ export * from "./sellerMiddleware";
 export * from './updateSeller';
 export * from "./errorHandlerGraphQL";
 export * from "./errorCodes";
+export * from "./sellerRequired";

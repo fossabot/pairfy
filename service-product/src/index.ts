@@ -8,12 +8,12 @@ import { catcher, logger } from "./utils/index.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
-import { requireAuth } from "./common/sellerRequired.js";
 import { GraphQLError } from "graphql";
 import {
   RateLimiter,
   sellerMiddleware,
   normalizeGraphError,
+  sellerRequiredGraphQL
 } from "@pairfy/common";
 
 const main = async () => {
@@ -112,7 +112,7 @@ const main = async () => {
 
     app.use(sellerMiddleware);
 
-    app.use(requireAuth);
+    app.use(sellerRequiredGraphQL);
 
     await server.start();
 

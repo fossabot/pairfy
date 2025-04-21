@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
-    "@pairfy/common": "^1.0.111",
+    "@pairfy/common": "^1.0.112",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",
