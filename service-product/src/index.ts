@@ -4,16 +4,17 @@ import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { catcher, logger } from "./utils/index.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
+import { catchError } from "./utils/index.js";
 import { GraphQLError } from "graphql";
 import {
   RateLimiter,
   sellerMiddleware,
   normalizeGraphError,
-  sellerRequiredGraphQL
+  sellerRequiredGraphQL,
+  logger
 } from "@pairfy/common";
 
 const main = async () => {
@@ -46,7 +47,7 @@ const main = async () => {
       "SIGCONT",
     ];
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+    errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
 
     ///////////////////////////////////////////////////////////////////////////////////
 
@@ -130,7 +131,7 @@ const main = async () => {
 
     logger.info("ONLINE");
   } catch (err) {
-    catcher(err);
+    catchError(err)
   }
 };
 
