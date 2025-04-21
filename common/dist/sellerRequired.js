@@ -5,7 +5,7 @@ const index_1 = require("./index");
 const sellerRequired = (req, res, next) => {
     if (!req.sellerData) {
         throw new index_1.ApiError(401, "Unauthorized", {
-            code: index_1.ERROR_CODES.INVALID_CREDENTIALS,
+            code: index_1.ERROR_CODES.UNAUTHORIZED,
         });
     }
     next();
@@ -13,9 +13,8 @@ const sellerRequired = (req, res, next) => {
 exports.sellerRequired = sellerRequired;
 const sellerRequiredGraphQL = (req, res, next) => {
     if (!req.sellerData) {
-        throw new index_1.ApiGraphQLError("Unauthorized", {
-            code: index_1.ERROR_CODES.UNAUTHORIZED,
-            statusCode: 401,
+        throw new index_1.ApiGraphQLError(401, "Unauthorized", {
+            code: index_1.ERROR_CODES.UNAUTHORIZED
         });
     }
     next();

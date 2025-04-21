@@ -21,9 +21,8 @@ export const sellerRequiredGraphQL = (
   next: NextFunction
 ) => {
   if (!req.sellerData) {
-    throw new ApiGraphQLError("Unauthorized", {
-      code: ERROR_CODES.UNAUTHORIZED,
-      statusCode: 401,
+    throw new ApiGraphQLError(401, "Unauthorized", {
+      code: ERROR_CODES.UNAUTHORIZED
     });
   }
 
