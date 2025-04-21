@@ -28,6 +28,23 @@ type Product {
   schema_v: Int!
 }
 
+enum media_type {
+  image
+  video
+}
+
+type media {
+  id: ID!
+  product_id: String!
+  type: media_type!
+  is_primary: Boolean!
+  order_index: Int!
+  alt_text: String
+  resolutions: JSON!
+  created_at: BigInt!
+  updated_at: BigInt!
+  schema_v: Int!
+}
 
 input GetProductsInput {
   cursor: String!
