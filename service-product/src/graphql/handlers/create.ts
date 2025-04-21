@@ -1,4 +1,4 @@
-import {  getProductId } from "../../utils/index.js";
+import { getProductId } from "@pairfy/common";
 import database from "../../database/client.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {

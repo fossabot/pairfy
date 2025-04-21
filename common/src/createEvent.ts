@@ -1,5 +1,5 @@
 import { Connection } from "mysql2/promise";
-import { createId } from "./index";
+import { getEventId } from "./index";
 
 
 export async function createEvent(
@@ -23,9 +23,8 @@ export async function createEvent(
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
 
-  const getEventId = createId("abcdefghijklmnopqrstuvwxyz0123456789", 26)
 
-  const values = [getEventId, source, type, data, agentId, timestamp, timestamp, 0];
+  const values = [getEventId(), source, type, data, agentId, timestamp, timestamp, 0];
 
   return await connection.execute(sql, values);
 }

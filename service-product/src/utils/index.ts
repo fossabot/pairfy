@@ -1,4 +1,4 @@
-import {createId, logger} from "@pairfy/common";
+import {logger} from "@pairfy/common";
 
 export const catchError = (error?: any) => {
   logger.error(`EXIT=>${error}`);
@@ -7,6 +7,3 @@ export const catchError = (error?: any) => {
 };
 
 
-export const getProductId = () =>{
-  return createId("0123456789ABCDEF", 25)
-}

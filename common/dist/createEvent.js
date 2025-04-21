@@ -15,7 +15,6 @@ async function createEvent(connection, timestamp, source, type, data, agentId) {
       spec_version
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
-    const getEventId = (0, index_1.createId)("abcdefghijklmnopqrstuvwxyz0123456789", 26);
-    const values = [getEventId, source, type, data, agentId, timestamp, timestamp, 0];
+    const values = [(0, index_1.getEventId)(), source, type, data, agentId, timestamp, timestamp, 0];
     return await connection.execute(sql, values);
 }

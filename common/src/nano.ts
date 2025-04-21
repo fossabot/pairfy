@@ -11,3 +11,11 @@ export function createId(alphabet: string, length: number): string {
 
   return customAlphabet(alphabet, length)();
 }
+
+export const getProductId = () =>{
+  return createId("ACDEHILMOTUVWXY01378", 25)
+}
+
+export const getEventId = () =>{
+  return createId("abcdefghijklmnopqrstuvwxyz0123456789", 26)
+}
