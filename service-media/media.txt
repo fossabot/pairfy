@@ -1,0 +1,112 @@
+1. 📤 Upload inicial (solo archivo original)
+frontend → service-media:
+
+http
+Copiar
+Editar
+POST /media/upload
+{
+  file,
+  product_id,
+  media_group_id,
+  type: image | video,
+  is_primary: true | false
+}
+
+
+
+2. 🪣 service-media sube a MinIO:
+bash
+Copiar
+Editar
+minio/
+└── uploads/
+    └── abc-123/uuid-original.jpg
+Y emite un evento:
+
+json
+Copiar
+Editar
+{
+  event: "MediaUploaded",
+  data: {
+    media_id: "uuid",
+    product_id: 123,
+    media_group_id: "abc-123",
+    type: "image",
+    path: "uploads/abc-123/uuid-original.jpg",
+    is_primary: true
+  }
+}
+
+
+3. 🧠 service-processor escucha "MediaUploaded"
+Y realiza:
+
+✔ Procesamiento:
+
+sharp para imágenes
+
+ffmpeg para videos
+
+✔ Sube versiones a MinIO:
+
+pgsql
+Copiar
+Editar
+media/
+└── abc-123/
+    └── uuid/
+        ├── thumb.jpg
+        ├── medium.jpg
+        └── large.jpg
+✔ Emite nuevo evento:
+
+json
+Copiar
+Editar
+{
+  event: "MediaProcessed",
+  data: {
+    media_id: "uuid",
+    product_id: 123,
+    type: "image",
+    is_primary: true,
+    resolutions: {
+      thumb: "https://cdn.example.com/media/abc-123/uuid/thumb.jpg",
+      medium: "...",
+      large: "..."
+    }
+  }
+}
+
+
+
+4. 🧾 service-product escucha "MediaProcessed"
+Y guarda en product_media:
+
+sql
+Copiar
+Editar
+INSERT INTO product_media (
+  id, product_id, type, is_primary, resolutions, created_at
+) VALUES (
+  'uuid', 123, 'image', TRUE, JSON_OBJECT('thumb', '...', ...), NOW()
+);
+🎯 Ventajas
+🔌 Desacoplado: cada servicio hace solo su parte.
+
+⚙️ Escalable: puedes paralelizar procesamiento multimedia.
+
+🔄 Resiliente: puedes reenviar eventos si hay fallos.
+
+📊 Auditabilidad: tienes logs de eventos para trazabilidad.
+
+¿Quieres que te dé un ejemplo de:
+Event schema con Kafka o NATS
+
+Código de service-media en Express o FastAPI
+
+Docker setup para MinIO + procesador
+
+? Solo dime qué parte necesitas primero.
