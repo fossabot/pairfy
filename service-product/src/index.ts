@@ -9,7 +9,12 @@ import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { requireAuth } from "./common/sellerRequired.js";
-import { RateLimiter, sellerMiddleware } from "@pairfy/common";
+import { GraphQLError } from "graphql";
+import {
+  RateLimiter,
+  sellerMiddleware,
+  normalizeGraphError,
+} from "@pairfy/common";
 
 const main = async () => {
   try {
@@ -21,7 +26,7 @@ const main = async () => {
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
       "REDIS_RATELIMIT_URL",
-      "ADMIN_SESSION_KEY"
+      "ADMIN_SESSION_KEY",
     ];
 
     for (const varName of requiredEnvVars) {
@@ -62,16 +67,19 @@ const main = async () => {
       typeDefs,
       resolvers,
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-      formatError: (error) => {
-        logger.error(error);
 
-        return {
-          message: error.message,
-          details: error.message,
-          code: "INTERNAL_SERVER_ERROR",
-        };
-      },
+      formatError: (formattedError, error) => {
+        let original: unknown = error;
+      
+        if (error instanceof GraphQLError && error.originalError) {
+          original = error.originalError;
+        }
+      
+        return normalizeGraphError(original);
+      }
+      
     });
+
     const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
     database.connect({
@@ -96,7 +104,9 @@ const main = async () => {
 
     app.use(cookieSession(sessionOptions));
 
-    const rateLimiter = new RateLimiter(process.env.REDIS_RATELIMIT_URL as string);
+    const rateLimiter = new RateLimiter(
+      process.env.REDIS_RATELIMIT_URL as string
+    );
 
     app.use(rateLimiter.getMiddleware());
 
