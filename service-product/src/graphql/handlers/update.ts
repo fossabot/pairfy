@@ -1,5 +1,4 @@
-import { formatProduct, getCurrentTimestamp } from "../../utils/index.js";
-import { database } from "../../database/client.js";
+import database from "../../database/client.js";
 
 export const updateProduct = async (_: any, args: any, context: any) => {
   const params = args.updateProductInput;
@@ -25,7 +24,7 @@ export const updateProduct = async (_: any, args: any, context: any) => {
 
     delete productData["id"];
 
-    productData["updated_at"] = getCurrentTimestamp();
+    productData["updated_at"] = Date.now(); ///////////////////////////////////////////////
 
     const fields = Object.keys(productData)
       .map((key) => `${key} = ?`)
@@ -60,7 +59,7 @@ export const updateProduct = async (_: any, args: any, context: any) => {
       throw new Error("INTERNAL_ERROR");
     }
 
-    const PRODUCT = formatProduct(products[0]);
+    const PRODUCT = products[0];
 
     const eventId = PRODUCT.id + "-" + PRODUCT.schema_v;
 

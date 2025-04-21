@@ -1,5 +1,5 @@
-import { formatProduct, getCurrentTimestamp, getProductId } from "../../utils/index.js";
-import { database } from "../../database/client.js";
+import {  getProductId } from "../../utils/index.js";
+import database from "../../database/client.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
   const params = args.createProductInput;
@@ -54,7 +54,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       shipping_postal: params.shipping_postal,
       shipping_instructions: params.shipping_instructions,
       shipping_fragile: params.shipping_fragile,
-      updated_at: getCurrentTimestamp(),
+      updated_at: Date.now(),     ////////
       schema_v: productVersion,
     };
 
@@ -84,7 +84,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       throw new Error("INTERNAL_ERROR");
     }
 
-    const PRODUCT = formatProduct(products[0]);
+    const PRODUCT = products[0];      /////////////////////////////////////
    
     const eventId = PRODUCT.id + "-" + PRODUCT.schema_v;
 

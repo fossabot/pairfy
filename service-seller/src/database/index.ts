@@ -1,4 +1,5 @@
 import { DatabaseWrap } from '@pairfy/common'
 
-export const database = new DatabaseWrap();
+const database = new DatabaseWrap();
 
+export default database

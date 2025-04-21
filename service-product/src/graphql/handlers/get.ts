@@ -1,4 +1,4 @@
-import { database } from "../../database/client.js";
+import database from "../../database/client.js";
 
 const getProducts = async (_: any, args: any, context: any) => {
     const params = args.getProductsInput;

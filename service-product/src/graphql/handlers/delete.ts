@@ -1,5 +1,5 @@
-import { formatProduct, getEventId } from "../../utils/index.js";
-import { database } from "../../database/client.js";
+import database from "../../database/client.js";
+import { createId } from "@pairfy/common";
 
 export const deleteProduct = async (_: any, args: any, context: any) => {
   const params = args.deleteProductInput;
@@ -26,7 +26,7 @@ export const deleteProduct = async (_: any, args: any, context: any) => {
       throw new Error("ProductExistence");
     }
 
-    const PRODUCT = formatProduct(products[0]);
+    const PRODUCT = products[0]; ////////////////////////////////////////
 
     const [result] = await connection.execute("DELETE FROM products WHERE id = ?", [PRODUCT.id]);
 
@@ -46,7 +46,7 @@ export const deleteProduct = async (_: any, args: any, context: any) => {
           `;
 
     const eventValue = [
-      getEventId(),
+      createId("abcdefghijklmnopqrstuvwxyz0123456789", 26), //////////////////
       "service-product",
       "DeleteProduct",
       JSON.stringify(PRODUCT),

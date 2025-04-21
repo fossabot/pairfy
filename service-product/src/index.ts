@@ -4,7 +4,7 @@ import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { database } from "./database/client.js";
+import database  from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { catchError } from "./utils/index.js";
