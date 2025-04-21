@@ -14,7 +14,7 @@ import { RateLimiter, sellerMiddleware } from "@pairfy/common";
 const main = async () => {
   try {
     const requiredEnvVars = [
-      "SELLER_JWT_KEY",
+      "AGENT_JWT_KEY",
       "DATABASE_HOST",
       "DATABASE_PORT",
       "DATABASE_USER",
