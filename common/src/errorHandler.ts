@@ -80,7 +80,6 @@ const normalizeError = (err: unknown): ApiError => {
   if (err instanceof Error) {
     return new ApiError(500, err.message || "Internal error", {
       code: "INTERNAL_ERROR",
-      details: { stack: err.stack },
       isOperational: false,
     });
   }
@@ -88,7 +87,6 @@ const normalizeError = (err: unknown): ApiError => {
   /////////////////////////////////// ALL ERRORS
   return new ApiError(500, "Unknown internal error", {
     code: "INTERNAL_ERROR",
-    details: { raw: err },
     isOperational: false,
   });
 };
