@@ -1,4 +1,6 @@
 const typeDefs = `#graphql
+scalar BigInt
+scalar JSON
 
 type Product {
   id: ID!
