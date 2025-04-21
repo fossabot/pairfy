@@ -48,7 +48,15 @@ build:
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .            
+            dest: .   
+    - image: pairfy/service-product
+      context: service-product
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .                      
     - image: pairfy/service-llm
       context: service-llm
       docker:

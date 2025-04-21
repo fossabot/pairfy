@@ -8,7 +8,7 @@
     "marketplace",
     "cardano"
   ],
-  "author": "https://github.com/Kraphene",
+  "author": "https://github.com/rey-sudo",
   "license": "MIT",
   "scripts": {
     "database": "node setup.js",

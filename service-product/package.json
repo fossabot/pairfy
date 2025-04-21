@@ -1,11 +1,17 @@
 {
   "name": "service-product",
   "version": "1.0.0",
-  "type": "module",
+  "description": "products",
+  "main": "index.js",
+  "author": "https://github.com/rey-sudo",
+  "license": "MIT",
   "scripts": {
     "database": "node setup.js",
+    "build": "tsc --build",
+    "dev": "ts-node-dev src/index.ts",
     "start": "node dist/index.js",
-    "build": "tsc --build"
+    "test": "jest --watchAll --no-cache --detectOpenHandles",
+    "test:ci": "jest"
   },
   "devDependencies": {
     "@types/cookie-session": "^2.0.49",

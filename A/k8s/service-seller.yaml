@@ -55,7 +55,7 @@ spec:
               value: marketplace 
             - name: TOKEN_EXPIRATION
               value: "7d" 
-            - name : REDIS_RATE_LIMIT
+            - name : REDIS_RATELIMIT_URL
               value: "redis://redis-limiter:6379"
 
           resources:
