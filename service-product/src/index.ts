@@ -104,15 +104,15 @@ const main = async () => {
 
     app.use(cookieSession(sessionOptions));
 
+    app.use(sellerMiddleware);
+
+    app.use(sellerRequiredGraphQL);
+
     const rateLimiter = new RateLimiter(
       process.env.REDIS_RATELIMIT_URL as string
     );
 
     app.use(rateLimiter.getMiddleware());
-
-    app.use(sellerMiddleware);
-
-    app.use(sellerRequiredGraphQL);
 
     await server.start();
 
