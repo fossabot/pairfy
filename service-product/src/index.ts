@@ -21,7 +21,7 @@ const main = async () => {
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
       "REDIS_RATELIMIT_URL",
-      "ADMIN_SESSION_SECRET"
+      "ADMIN_SESSION_KEY"
     ];
 
     for (const varName of requiredEnvVars) {
@@ -84,7 +84,7 @@ const main = async () => {
 
     const sessionOptions: object = {
       name: "session",
-      keys: [process.env.ADMIN_SESSION_SECRET as string],
+      keys: [process.env.ADMIN_SESSION_KEY as string],
       maxAge: 7 * 24 * 60 * 60 * 1000,
       signed: true,
       secure: true,

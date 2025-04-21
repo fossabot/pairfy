@@ -25,7 +25,7 @@ spec:
                 secretKeyRef:
                   name: agent-token-secret
                   key: AGENT_TOKEN_KEY
-            - name: ADMIN_SESSION_SECRET
+            - name: ADMIN_SESSION_KEY
               valueFrom:
                 secretKeyRef:
                   name: admin-session-secret

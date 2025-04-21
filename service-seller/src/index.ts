@@ -18,7 +18,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "ADMIN_SESSION_SECRET",
+      "ADMIN_SESSION_KEY",
       "REDIS_RATELIMIT_URL",
     ];
 

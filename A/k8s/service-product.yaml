@@ -20,7 +20,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name   
-            - name: ADMIN_SESSION_SECRET
+            - name: ADMIN_SESSION_KEY
               valueFrom:
                 secretKeyRef:
                   name: admin-session-secret
