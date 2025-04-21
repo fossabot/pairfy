@@ -15,7 +15,7 @@ create table if not exists products(
   category varchar(100) not null,
   bullet_list JSON NOT NULL,                   
   color varchar(100) not null,
-  condition varchar(50) not null,
+  condition_ varchar(50) not null,
   country varchar(10) not null,
   city varchar(255) not null,
   postal varchar(50) not null,
