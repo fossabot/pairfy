@@ -21,6 +21,7 @@ type Product {
   color: String!
   condition_: String!
   country: String!
+  origin: String!
   city: String!
   postal: String!
   discount: Boolean!
@@ -83,31 +84,21 @@ type DeleteProductResponse {
 
 input CreateProductInput {
   name: String!
-  price: Int! 
-  sku: String!              
+  price: Int!
+  sku: String!
   model: String!
   brand: String!
-  features: String!
+  description: String!
   category: String!
-  keywords: String!
-  bullet_list: String!
-  paused: Int!
+  bullet_list: [String!]!
   color: String!
-  color_name: String!
-  variations: String!
-  quality: String!
-  image_set: String!
-  video_set: String!
+  condition_: String!
+  country: String!
+  origin: String!
+  city: String!
+  postal: String!
   discount: Boolean!
   discount_value: Int!
-  shipping_weight: Float!
-  shipping_length: Float!
-  shipping_width: Float!
-  shipping_height: Float!
-  shipping_city: String!
-  shipping_postal: String!
-  shipping_instructions: String!
-  shipping_fragile: Boolean!
 }
 
 input UpdateProductInput {

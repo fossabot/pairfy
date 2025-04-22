@@ -17,6 +17,7 @@ create table if not exists products(
   color varchar(100) not null,
   condition_ varchar(50) not null,
   country varchar(10) not null,
+  origin varchar(10) not null,
   city varchar(255) not null,
   postal varchar(50) not null,
   discount boolean not null,
