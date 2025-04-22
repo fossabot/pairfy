@@ -37,4 +37,4 @@ __exportStar(require("./errorCodes"), exports);
 __exportStar(require("./sellerRequired"), exports);
 __exportStar(require("./mysql"), exports);
 __exportStar(require("./insertProduct"), exports);
-///END
+__exportStar(require("./findProductById"), exports);

@@ -6,11 +6,12 @@ import {
   ERROR_CODES,
   findSellerByEmailOrUsername,
   hashPassword,
-  createId,
+  getSellerId,
   createEvent,
   insertSeller,
   createToken,
   SellerEmailRegistrationToken,
+  findSellerByEmail,
 } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateParams];
@@ -25,13 +26,13 @@ const createSellerHandler = async (req: Request, res: Response) => {
   try {
     connection = await database.client.getConnection();
 
-    const findSeller = await findSellerByEmailOrUsername(
+    const sellerExists = await findSellerByEmailOrUsername(
       connection,
       params.email,
       params.username
     );
 
-    if (findSeller) {
+    if (sellerExists) {
       throw new ApiError(
         400,
         "The email address or username is already registered.",
@@ -49,7 +50,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     const password = await hashPassword(params.password);
 
-    const sellerId = createId("0123456789", 25);
+    const sellerId = getSellerId();
 
     const emailToken: SellerEmailRegistrationToken = {
       source: "service-seller",
@@ -93,12 +94,14 @@ const createSellerHandler = async (req: Request, res: Response) => {
       });
     }
 
+    const findSeller = await findSellerByEmail(connection, sellerScheme.email);
+
     await createEvent(
       connection,
       timestamp,
       "service-seller",
       "CreateSeller",
-      JSON.stringify(sellerScheme),
+      JSON.stringify(findSeller),
       sellerId
     );
 
@@ -113,7 +116,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
 
     await connection.commit();
 
-    ///////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
 
     res.status(200).send({
       success: true,

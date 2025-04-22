@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEventId = exports.getProductId = void 0;
+exports.getEventId = exports.getProductId = exports.getSellerId = void 0;
 exports.createId = createId;
 const nanoid_1 = require("nanoid");
 function createId(alphabet, length) {
@@ -12,11 +12,15 @@ function createId(alphabet, length) {
     }
     return (0, nanoid_1.customAlphabet)(alphabet, length)();
 }
+const getSellerId = () => {
+    return createId("0123456789ABCD", 21);
+};
+exports.getSellerId = getSellerId;
 const getProductId = () => {
-    return createId("ACDEHILMOTUVWXY01378", 25);
+    return createId("ACDEHILMOTUVWXY01378", 21);
 };
 exports.getProductId = getProductId;
 const getEventId = () => {
-    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 26);
+    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
 };
 exports.getEventId = getEventId;
