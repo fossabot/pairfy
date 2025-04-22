@@ -1,7 +1,7 @@
 import { Connection } from "mysql2/promise";
 
 
-export async function createSeller(
+export async function insertSeller(
   connection: Connection,
   scheme: any
 ): Promise<any> {

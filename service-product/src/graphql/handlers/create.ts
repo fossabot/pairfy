@@ -53,7 +53,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       schema_v: 0,
     };
 
-    const productCreated = await insertProduct(connection, productScheme)
+    const [productCreated] = await insertProduct(connection, productScheme)
 
     if (productCreated.affectedRows !== 1) {
       throw new ApiGraphQLError(500, "Unexpected error while creating product.", {

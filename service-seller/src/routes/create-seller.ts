@@ -8,9 +8,9 @@ import {
   hashPassword,
   createId,
   createEvent,
-  createSeller,
+  insertSeller,
   createToken,
-  SellerEmailRegistrationToken
+  SellerEmailRegistrationToken,
 } from "@pairfy/common";
 
 const createSellerMiddlewares: any = [validateParams];
@@ -67,7 +67,7 @@ const createSellerHandler = async (req: Request, res: Response) => {
       token: token,
     };
 
-    const productScheme = {
+    const sellerScheme = {
       id: sellerId,
       username: params.username,
       email: params.email,
@@ -83,20 +83,22 @@ const createSellerHandler = async (req: Request, res: Response) => {
       schema_v: 0,
     };
 
-    console.log(productScheme);
+    console.log(sellerScheme);
 
-    await createSeller(connection, productScheme).catch((err: any) => {
-      throw new ApiError(500, "Internal error, please try again later.", {
+    const [sellerCreated] = await insertSeller(connection, sellerScheme);
+
+    if (sellerCreated.affectedRows !== 1) {
+      throw new ApiError(500, "Unexpected error while creating seller.", {
         code: ERROR_CODES.INTERNAL_ERROR,
       });
-    });
+    }
 
     await createEvent(
       connection,
       timestamp,
       "service-seller",
       "CreateSeller",
-      JSON.stringify(productScheme),
+      JSON.stringify(sellerScheme),
       sellerId
     );
 
