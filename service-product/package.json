@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
-    "@pairfy/common": "^1.0.117",
+    "@pairfy/common": "^1.0.118",
     "cookie-session": "^2.1.0",
     "express": "^4.21.1",
     "graphql": "^16.9.0",

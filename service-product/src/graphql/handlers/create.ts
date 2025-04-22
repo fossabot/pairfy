@@ -1,4 +1,4 @@
-import { getProductId } from "@pairfy/common";
+import { ApiGraphQLError, ERROR_CODES, getProductId, insertProduct } from "@pairfy/common";
 import database from "../../database/client.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
@@ -27,8 +27,6 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     const mediaId = productId;
 
-    const productSKU = params.sku + `:${SELLER.id}`;
-
     const productScheme = {
       id: productId,
       group_id: groupId,
@@ -36,7 +34,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       seller_id: SELLER.id,
       name: params.name,
       price: params.price,
-      sku: productSKU,
+      sku: params.sku,
       model: params.model,
       brand: params.brand,
       description: params.description,
@@ -55,19 +53,12 @@ export const createProduct = async (_: any, args: any, context: any) => {
       schema_v: 0,
     };
 
-    const columns = Object.keys(productScheme);
+    const productCreated = await insertProduct(connection, productScheme)
 
-    const values = Object.values(productScheme);
-
-    const createScheme = `
-        INSERT INTO products (${columns.join(", ")})
-        VALUES (${columns.map(() => "?").join(", ")})
-      `;
-
-    const [created] = await connection.execute(createScheme, values);
-
-    if (created.affectedRows !== 1) {
-      throw new Error("INTERNAL_ERROR");
+    if (productCreated.affectedRows !== 1) {
+      throw new ApiGraphQLError(500, "Unexpected error while creating product.", {
+        code: ERROR_CODES.INTERNAL_ERROR
+      });
     }
 
     //////////////////////////////////////////////////////////////

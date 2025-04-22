@@ -26,7 +26,7 @@ create table if not exists products(
   updated_at BIGINT UNSIGNED NOT NULL,
   schema_v INT UNSIGNED NOT NULL,
   primary key(id),
-  unique(sku),
+  UNIQUE KEY unique_seller_sku (seller_id, sku),
   index idx_created_at (created_at),
   index idx_seller_id (seller_id),
   INDEX idx_group_id (group_id)
