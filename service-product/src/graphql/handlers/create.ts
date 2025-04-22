@@ -6,6 +6,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
   console.log(params);
 
+  //////////////////// INPUT VALIDATION
+
   const SELLER = context.sellerData;
 
   let connection = null;
@@ -15,52 +17,47 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     await connection.beginTransaction();
 
+    ///////////////////////////////////////////////////////////////////////
+
+    const timestamp = Date.now();
+
     const productId = getProductId();
 
-    const productVersion = 0;
+    const groupId = productId;
+
+    const mediaId = productId;
 
     const productSKU = params.sku + `:${SELLER.id}`;
 
-    const productData = {
+    const productScheme = {
       id: productId,
+      group_id: groupId,
+      media_group_id: mediaId,
       seller_id: SELLER.id,
       name: params.name,
       price: params.price,
       sku: productSKU,
       model: params.model,
       brand: params.brand,
-      features: params.features,
+      description: params.description,
       category: params.category,
-      keywords: params.keywords,
       bullet_list: params.bullet_list,
-      paused: params.paused,
       color: params.color,
-      color_name: params.color_name,
-      variations: params.variations,
-      quality: params.quality,
+      condition_: params.condition_,
       country: SELLER.country,
-      media_url: "https://pairfy.dev",
-      image_path: "/api/media/get-image/",
-      video_path: "/api/media/get-video/",
-      image_set: params.image_set,
-      video_set: params.video_set,
+      origin: params.origin,
+      city: params.city,
+      postal: params.postal,
       discount: params.discount,
       discount_value: params.discount_value,
-      shipping_weight: params.shipping_weight,
-      shipping_length: params.shipping_length,
-      shipping_width: params.shipping_width,
-      shipping_height: params.shipping_height,
-      shipping_city: params.shipping_city,
-      shipping_postal: params.shipping_postal,
-      shipping_instructions: params.shipping_instructions,
-      shipping_fragile: params.shipping_fragile,
-      updated_at: Date.now(),     ////////
-      schema_v: productVersion,
+      created_at: timestamp,
+      updated_at: timestamp,
+      schema_v: 0,
     };
 
-    const columns = Object.keys(productData);
+    const columns = Object.keys(productScheme);
 
-    const values = Object.values(productData);
+    const values = Object.values(productScheme);
 
     const createScheme = `
         INSERT INTO products (${columns.join(", ")})
@@ -84,8 +81,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
       throw new Error("INTERNAL_ERROR");
     }
 
-    const PRODUCT = products[0];      /////////////////////////////////////
-   
+    const PRODUCT = products[0]; /////////////////////////////////////
+
     const eventId = PRODUCT.id + "-" + PRODUCT.schema_v;
 
     const eventSchema = `
@@ -110,7 +107,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     await connection.execute(eventSchema, eventValue);
 
-    //////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 
     await connection.commit();
 
@@ -120,7 +117,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       await connection.rollback();
     }
 
-    throw new Error(err.message);
+    throw err;
   } finally {
     if (connection) {
       connection.release();
