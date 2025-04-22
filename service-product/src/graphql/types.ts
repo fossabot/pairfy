@@ -5,7 +5,6 @@ scalar JSON
 type Product {
   id: ID!
   group_id: String!
-  media_group_id: String!
   state: String!
   moderated: Boolean!
   seller_id: String!
@@ -71,7 +70,10 @@ type Query {
 #/////////////////////////////////////////////////
 
 type CreateProductResponse {
-  success: Boolean!
+  success: Boolean!,
+  data: {
+    product_id: ID!
+  }
 }
 
 type UpdateProductResponse {

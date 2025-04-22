@@ -32,12 +32,9 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     const groupId = productId;
 
-    const mediaId = productId;
-
     const productScheme = {
       id: productId,
       group_id: groupId,
-      media_group_id: mediaId,
       seller_id: SELLER.id,
       name: params.name,
       price: params.price,
@@ -89,7 +86,12 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     await connection.commit();
 
-    return { success: true };
+    return {
+      success: true,
+      data: {
+        product_id: findProduct.id
+      },
+    };
   } catch (err: any) {
     if (connection) {
       await connection.rollback();
