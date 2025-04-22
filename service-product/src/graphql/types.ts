@@ -69,11 +69,13 @@ type Query {
 
 #/////////////////////////////////////////////////
 
+type CreateProductResponseData {
+  product_id: ID!
+}
+
 type CreateProductResponse {
-  success: Boolean!,
-  data: {
-    product_id: ID!
-  }
+  success: Boolean!
+  data: CreateProductResponseData!
 }
 
 type UpdateProductResponse {
