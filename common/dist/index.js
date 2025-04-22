@@ -15,7 +15,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./createEvent"), exports);
-__exportStar(require("./createSeller"), exports);
+__exportStar(require("./insertSeller"), exports);
 __exportStar(require("./isProcessedEvent"), exports);
 __exportStar(require("./consumedEvent"), exports);
 __exportStar(require("./loadSql"), exports);
@@ -37,3 +37,4 @@ __exportStar(require("./errorCodes"), exports);
 __exportStar(require("./sellerRequired"), exports);
 __exportStar(require("./mysql"), exports);
 __exportStar(require("./insertProduct"), exports);
+///END
