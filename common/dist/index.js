@@ -38,3 +38,4 @@ __exportStar(require("./sellerRequired"), exports);
 __exportStar(require("./mysql"), exports);
 __exportStar(require("./insertProduct"), exports);
 __exportStar(require("./findProductById"), exports);
+/////END
