@@ -13,16 +13,16 @@ import {
   updateSeller
 } from "@pairfy/common";
 import { getPubKeyHash } from "../utils/blockchain";
+import  verifyDataSignature  from '@cardano-foundation/cardano-verify-datasignature';
+import { LoginInput, validateParams } from "../validators/login-seller";
 
-const verifyDataSignature = require("@cardano-foundation/cardano-verify-datasignature");
-
-const loginSellerMiddlewares: any = [sellerMiddleware];
+const loginSellerMiddlewares: any = [sellerMiddleware, validateParams];
 
 const loginSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
 
   try {
-    let params = req.body;
+    let params = req.body as LoginInput;
 
     const hexAddress = Cardano.Address.from_hex(params.address);
 
@@ -32,7 +32,7 @@ const loginSellerHandler = async (req: Request, res: Response) => {
 
     const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE";
 
-    const verifySignature = verifyDataSignature(
+    const verifySignature: boolean = verifyDataSignature(
       params.signature.signature,
       params.signature.key,
       message,

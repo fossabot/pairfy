@@ -133,6 +133,7 @@ nav a {
   text-decoration: none;
   color: var(--text-w);
   align-items: center;
+  font-weight: 500;
   display: flex;
 }
 

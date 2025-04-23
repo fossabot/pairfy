@@ -51,7 +51,6 @@ export const validateParams = (
     return res.status(400).json({ errors });
   }
 
-  // Optionally attach validated data to request object
   req.body = result.data;
   next();
 };
