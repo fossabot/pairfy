@@ -7,13 +7,21 @@ import {
   createEvent,
 } from "@pairfy/common";
 import database from "../../database/client.js";
+import { createProductSchema } from "../../validators/create-product.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
-  const params = args.createProductInput;
+  const validateParams = createProductSchema.safeParse(args.createProductInput);
+
+  if (!validateParams.success) {
+    throw new ApiGraphQLError(400, "Validation failed", {
+      code: ERROR_CODES.VALIDATION_ERROR,
+      details: validateParams.error.flatten(),
+    });
+  }
+
+  const params = validateParams.data;
 
   console.log(params);
-
-  //////////////////// INPUT VALIDATION
 
   const SELLER = context.sellerData;
 
@@ -94,7 +102,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
     };
   } catch (err: any) {
     console.error(err);
-    
+
     if (connection) {
       await connection.rollback();
     }
