@@ -16,15 +16,8 @@ spec:
         - name: service-product
           image: pairfy/service-product
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name   
-            - name: ADMIN_SESSION_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: admin-session-secret
-                  key: key                                                      
+            - name: NODE_ENV
+              value: development                                                
             - name: AGENT_JWT_KEY
               valueFrom:
                 secretKeyRef:

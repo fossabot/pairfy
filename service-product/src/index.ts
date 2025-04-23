@@ -20,14 +20,14 @@ import {
 const main = async () => {
   try {
     const requiredEnvVars = [
+      "NODE_ENV",
       "AGENT_JWT_KEY",
       "DATABASE_HOST",
       "DATABASE_PORT",
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "REDIS_RATELIMIT_URL",
-      "ADMIN_SESSION_KEY",
+      "REDIS_RATELIMIT_URL"
     ];
 
     for (const varName of requiredEnvVars) {
@@ -92,14 +92,14 @@ const main = async () => {
     });
 
     const sessionOptions: object = {
-      name: "session",
-      keys: [process.env.ADMIN_SESSION_KEY as string],
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      signed: true,
-      secure: true,
+      name: 'session',
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      signed: false,
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: "none",
+      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none'
     };
+    
 
     app.set("trust proxy", 1);
 

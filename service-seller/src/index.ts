@@ -9,6 +9,7 @@ import { ApiError, errorHandler } from "@pairfy/common";
 const main = async () => {
   try {
     const requiredEnvVars = [
+      "NODE_ENV",
       "EXPRESS_PORT",
       "EXPRESS_TIMEOUT",
       "AGENT_JWT_KEY",
@@ -18,8 +19,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "ADMIN_SESSION_KEY",
-      "REDIS_RATELIMIT_URL",
+      "REDIS_RATELIMIT_URL"
     ];
 
     for (const key of requiredEnvVars) {

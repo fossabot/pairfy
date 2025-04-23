@@ -9,13 +9,13 @@ const app = express();
 
 const sessionOptions: object = {
   name: 'session',
-  keys: [process.env.ADMIN_SESSION_SECRET as string],
-  maxAge: 7 * 24 * 60 * 60 * 1000,
-  signed: true,
-  secure: true,
+  maxAge: 7 * 24 * 60 * 60 * 1000, 
+  signed: false,
+  secure: process.env.NODE_ENV === 'production',
   httpOnly: true,
-  sameSite: "none", 
+  sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none'
 };
+
 
 app.set("trust proxy", 1);
 
