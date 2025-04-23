@@ -14,7 +14,8 @@ import {
   sellerMiddleware,
   normalizeGraphError,
   sellerRequiredGraphQL,
-  logger
+  logger,
+  getPublicAddress
 } from "@pairfy/common";
 
 const main = async () => {
@@ -102,6 +103,8 @@ const main = async () => {
     
 
     app.set("trust proxy", 1);
+    
+    app.use(getPublicAddress);
 
     app.use(cookieSession(sessionOptions));
 

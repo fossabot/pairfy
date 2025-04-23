@@ -29,6 +29,7 @@ class RateLimiter {
     getMiddleware() {
         return async (req, res, next) => {
             let key = "";
+            console.log(req);
             try {
                 if (!req.publicAddress) {
                     throw new index_1.ApiError(500, "Internal Error", {

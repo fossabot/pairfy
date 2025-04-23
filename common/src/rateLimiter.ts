@@ -21,7 +21,7 @@ export class RateLimiter {
     this.redis.on("error", (err) => {
       logger.error("[RedisClientError]", err);
     });
-    
+
     this.redis.on("connect", () => {
       logger.info("[RedisClientConnected]");
     });
@@ -36,7 +36,7 @@ export class RateLimiter {
       next: NextFunction
     ): Promise<void> => {
       let key = "";
-
+      
       try {
         if (!req.publicAddress) {
           throw new ApiError(500, "Internal Error", {
