@@ -89,10 +89,12 @@ export const createProduct = async (_: any, args: any, context: any) => {
     return {
       success: true,
       data: {
-        product_id: findProduct.id
+        product_id: findProduct.id,
       },
     };
   } catch (err: any) {
+    console.error(err);
+    
     if (connection) {
       await connection.rollback();
     }
