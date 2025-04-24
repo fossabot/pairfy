@@ -6,6 +6,7 @@ const CREATE_PRODUCT_MUTATION = gql`
   mutation($createProductVariable: CreateProductInput!) {
     createProduct(createProductInput: $createProductVariable) {
       success
+      message
       data {
         product_id
       }

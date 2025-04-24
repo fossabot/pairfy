@@ -11,8 +11,6 @@ export const getServiceProductClient = (event: H3Event) => {
   const cookies = parseCookies(event);
   const sessionCookie = cookies.session;
 
-  console.log("session", sessionCookie);
-
   return new ApolloClient({
     ssrMode: true,
     link: createHttpLink({

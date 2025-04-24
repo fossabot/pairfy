@@ -75,6 +75,7 @@ type CreateProductResponseData {
 
 type CreateProductResponse {
   success: Boolean!
+  message: String!
   data: CreateProductResponseData!
 }
 

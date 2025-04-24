@@ -300,7 +300,7 @@ const onCreateProduct = async () => {
         body: {
             "name": "Camisa manga larga",
             "price": 45000,
-            "sku": "CAM1234OO7",
+            "sku": "CAM1234OO7457XX",
             "model": "M2025",
             "brand": "MarcaX",
             "description": "Camisa elegante para eventos formales.",
@@ -324,13 +324,15 @@ const onCreateProduct = async () => {
         },
     })
 
-    console.log(data);
+    console.log(data.value);
 
     if (error.value) {
         displayMessage(error.value, 'error', 30_000)
         console.error('Error al crear producto:', error)
-    } else {
-        productId.value = data.value?.data?.product_id ?? null
+    }
+
+    if(data.value.success){
+        displayMessage(data.value.message, 'success', 30_000)
     }
 }
 </script>

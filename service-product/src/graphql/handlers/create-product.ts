@@ -109,6 +109,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     return {
       success: true,
+      message: "Product created successfully.",
       data: {
         product_id: findProduct.id,
       },
