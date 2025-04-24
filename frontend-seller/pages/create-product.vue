@@ -247,7 +247,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <ButtonSolid label="Save" @click="onCreateProduct" />
+                        <ButtonSolid label="Save" @click="onCreateProduct" :loading="loading"/>
                     </div>
                 </div>
 
@@ -261,6 +261,8 @@ import categoryList from '@/assets/json/categories.json'
 import countryList from '@/assets/json/countries.json'
 
 const toastRef = ref(null);
+
+const loading = ref(false)
 
 const categories = computed(() =>
     Object.values(categoryList).map(item => ({
@@ -294,6 +296,8 @@ const displayMessage = (message, type, duration) => {
 }
 
 const onCreateProduct = async () => {
+    loading.value = true
+
     const { data, error } = await useFetch('/api/product/createProduct', {
         method: 'POST',
         credentials: 'include',
@@ -320,9 +324,11 @@ const onCreateProduct = async () => {
             "discount_value": 50
         },
         async onResponseError({ response }) {
-          throw new Error(JSON.stringify(response._data.data));
+            throw new Error(JSON.stringify(response._data.data));
         },
     })
+
+    loading.value = false
 
     console.log(data.value);
 
@@ -331,7 +337,7 @@ const onCreateProduct = async () => {
         console.error('Error al crear producto:', error)
     }
 
-    if(data.value.success){
+    if (data.value.success) {
         displayMessage(data.value.message, 'success', 30_000)
     }
 }

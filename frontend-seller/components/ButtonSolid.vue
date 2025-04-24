@@ -3,8 +3,8 @@
   <button class="p-ButtonSolid" :class="[{ disabled }, sizeClass]" @click="$emit('click')" :disabled="disabled">
 
     <div class="p-ButtonSolid-body">
-      <span class="loader" :class="{ visible: loading }" />
-      <span class="label">{{ label }}</span>
+      <span class="loader" v-if="loading" />
+      <span class="label" v-if="!loading">{{ label }}</span>
     </div>
 
   </button>
@@ -66,7 +66,6 @@ const sizeClass = computed(() => {
 }
 
 .p-ButtonSolid-body {
-  margin-right: calc(1rem + 0.5rem);
   align-items: center;
   display: flex;
 }
@@ -90,18 +89,13 @@ const sizeClass = computed(() => {
 .loader {
   width: 1rem;
   height: 1rem;
+  margin: 0 1rem;
   border: 2px solid #FFF;
-  margin-right: 0.5rem;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
   border-bottom-color: transparent;
   animation: rotation 1s linear infinite;
-  visibility: hidden;
-}
-
-.loader.visible {
-  visibility: visible;
 }
 
 @keyframes rotation {
