@@ -153,7 +153,7 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 6rem;
+  padding-right: 5rem;
   visibility: initial;
 }
 
@@ -187,6 +187,7 @@ nav a:hover {
 }
 
 .layout-logo-text span {
+  font-size: var(--text-size-2);
   font-weight: 300;
 }
 
