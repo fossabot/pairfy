@@ -1,5 +1,6 @@
 import { gql } from 'graphql-tag'
 import { getServiceProductClient } from './client'
+import { throwRemoteError } from "~/server/utils/fetch";
 
 const CREATE_PRODUCT_MUTATION = gql`
   mutation($createProductVariable: CreateProductInput!) {
@@ -27,10 +28,6 @@ export default defineEventHandler(async (event) => {
 
     return res.data?.createProduct
   } catch (err) {
-    console.error('GraphQL error:', err)
-    return createError({
-      statusCode: 500,
-      statusMessage: 'Failed to create product'
-    })
+    throwRemoteError(err);
   }
 })

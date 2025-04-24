@@ -1,5 +1,7 @@
 <template>
     <div class="card">
+        <ToastComp ref="toastRef" />
+
         <div class="grid">
             <!--LEFT-->
             <div class="grid-left">
@@ -258,6 +260,8 @@
 import categoryList from '@/assets/json/categories.json'
 import countryList from '@/assets/json/countries.json'
 
+const toastRef = ref(null);
+
 const categories = computed(() =>
     Object.values(categoryList).map(item => ({
         label: item.name,
@@ -285,6 +289,9 @@ const discountData = ref({
     discount: 10,
 })
 
+const displayMessage = (message, type, duration) => {
+    toastRef.value?.showToast(message, type, duration)
+}
 
 const onCreateProduct = async () => {
     const { data, error } = await useFetch('/api/product/createProduct', {
@@ -311,13 +318,17 @@ const onCreateProduct = async () => {
             "postal": "110111",
             "discount": true,
             "discount_value": 50
-        }
+        },
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
     })
 
     console.log(data);
 
     if (error.value) {
-        console.error('Error al crear producto:', error.value)
+        displayMessage(error.value, 'error', 30_000)
+        console.error('Error al crear producto:', error)
     } else {
         productId.value = data.value?.data?.product_id ?? null
     }
