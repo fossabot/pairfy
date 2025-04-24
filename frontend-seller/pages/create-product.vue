@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductDiscount v-model="discountData"  />
+                        <InputProductDiscount v-model="discountData" />
                     </div>
                 </div>
 
@@ -240,8 +240,14 @@
                     <div class="grid-title">
                         Publish
                     </div>
-                </div>
+                    <div class="grid-subtitle">
+                        Publish your product.
+                    </div>
 
+                    <div class="grid-item">
+                        <ButtonSolid label="Save" @click="onCreateProduct" />
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -274,11 +280,48 @@ const onValidCountry = (event) => {
 const productFeatures = ref(Array(4).fill(''))
 
 const discountData = ref({
-  enabled: false,
-  price: 1000,
-  discount: 10,
+    enabled: false,
+    price: 1000,
+    discount: 10,
 })
 
+
+const onCreateProduct = async () => {
+    const { data, error } = await useFetch('/api/product/createProduct', {
+        method: 'POST',
+        credentials: 'include',
+        body: {
+            "name": "Camisa manga larga",
+            "price": 45000,
+            "sku": "CAM1234OO7",
+            "model": "M2025",
+            "brand": "MarcaX",
+            "description": "Camisa elegante para eventos formales.",
+            "category": "ropa",
+            "bullet_list": [
+                "100% algodón",
+                "Disponible en varias tallas",
+                "Fácil de lavar"
+            ],
+            "color": "azul",
+            "condition_": "nuevo",
+            "country": "CO",
+            "origin": "CO",
+            "city": "Bogotá",
+            "postal": "110111",
+            "discount": true,
+            "discount_value": 50
+        }
+    })
+
+    console.log(data);
+
+    if (error.value) {
+        console.error('Error al crear producto:', error.value)
+    } else {
+        productId.value = data.value?.data?.product_id ?? null
+    }
+}
 </script>
 
 <style lang="css" scoped>
