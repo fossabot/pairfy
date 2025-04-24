@@ -16,7 +16,7 @@
     id: { type: String, default: 'sku' },
     modelValue: { type: String, default: '' },
     label: { type: String, default: 'SKU' },
-    placeholder: { type: String, default: 'e.g. TV-55QLED-SAMSUNG-2025' },
+    placeholder: { type: String, default: 'e.g. P32-TV55-SAMSUNG-2025' },
     focus: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     maxLength: { type: Number, default: 20 },
@@ -24,7 +24,7 @@
   
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void
-    (e: 'valid', value: boolean): void
+    (e: 'valid', payload: { valid: boolean, value: string }): void
   }>()
   
   const inputRef = ref<HTMLInputElement | null>(null)
@@ -73,13 +73,13 @@
     for (const { condition, message } of validators) {
       if (condition) {
         errorMessage.value = message
-        emit('valid', false)
+        emit('valid', { valid: false, value: null })
         return
       }
     }
   
     errorMessage.value = ''
-    emit('valid', true)
+    emit('valid', { valid: true, value })
   }
   </script>
   

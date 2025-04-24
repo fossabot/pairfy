@@ -29,7 +29,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductPrice id="create-product-price" @valid="productPrice = $event.value" />
-                        <InputProductSku id="create-product-sku" />
+                        <InputProductSku id="create-product-sku" @valid="productSku = $event.value" />
                     </div>
                     <div class="grid-item">
                         <InputProductModel id="create-product-model" />
@@ -297,11 +297,13 @@ const discountData = ref({
 
 const productName = ref(null)
 const productPrice = ref(null)
+const productSku = ref(null)
 
 const validateParams = () => {
     return [
         !productName.value,
-        !productPrice.value
+        !productPrice.value,
+        !productSku.value
     ].includes(true)
 }
 
@@ -320,7 +322,7 @@ const onCreateProduct = async () => {
         body: {
             "name": productName.value,
             "price": productPrice.value,
-            "sku": "CAM1234OO7457XX",
+            "sku": productSku.value,
             "model": "M2025",
             "brand": "MarcaX",
             "description": "Camisa elegante para eventos formales.",
