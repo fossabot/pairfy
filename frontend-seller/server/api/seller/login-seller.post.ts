@@ -13,6 +13,16 @@ export default defineEventHandler(async (event) => {
         headers: {
           cookie: getHeader(event, "cookie") || "",
         },
+        
+        async onResponse({ response }) {
+          const setCookies = response.headers.getSetCookie?.()
+          if (Array.isArray(setCookies)) {
+            for (const cookie of setCookies) {
+              appendHeader(event, 'set-cookie', cookie)
+            }
+          }
+        },
+
         async onResponseError({ response }) {
           throw new Error(JSON.stringify(response._data));
         },
