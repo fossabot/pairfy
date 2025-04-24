@@ -24,7 +24,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', payload: { valid: boolean, value: string }): void
+  (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
