@@ -1,137 +1,158 @@
 <template>
-    <div class="p-InputSku">
-      <label :for="props.id" class="title-text">{{ label }}</label>
-      <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
-        :placeholder="placeholder" class="p-InputSku-input" :class="{ 'is-invalid': errorMessage }"
-        :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`"
-        inputmode="text" />
-      <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
-        {{ errorMessage || '-' }}
-      </p>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  const props = defineProps({
-    id: { type: String, default: 'sku' },
-    modelValue: { type: String, default: '' },
-    label: { type: String, default: 'SKU' },
-    placeholder: { type: String, default: 'e.g. TV55-SAMSUNG-2025' },
-    focus: { type: Boolean, default: false },
-    required: { type: Boolean, default: true },
-    maxLength: { type: Number, default: 20 },
-  })
-  
-  const emit = defineEmits<{
-    (e: 'update:modelValue', value: string): void
-    (e: 'valid', payload: { valid: boolean, value: string | null }): void
-  }>()
-  
-  const inputRef = ref<HTMLInputElement | null>(null)
-  const internalValue = ref(props.modelValue)
-  const errorMessage = ref('')
-  
-  const skuRegex = /^[A-Z0-9]*$/
-  
-  const messages = {
-    required: 'This field is required.',
-    invalid: 'Only uppercase letters and numbers are allowed.',
-    maxLength: `Maximum length is ${props.maxLength} characters.`,
+  <div class="p-InputSku">
+    <label :for="props.id" class="title-text">{{ label }}</label>
+    <input
+      ref="inputRef"
+      v-model="internalValue"
+      :id="props.id"
+      type="text"
+      @beforeinput="onBeforeInput"
+      @drop.prevent
+      :placeholder="placeholder"
+      class="p-InputSku-input"
+      :class="{ 'is-invalid': errorMessage }"
+      :maxlength="maxLength"
+      :aria-invalid="!!errorMessage"
+      :aria-describedby="`${props.id}-error`"
+      inputmode="text"
+    />
+    <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
+      {{ errorMessage || '-' }}
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps({
+  id: { type: String, default: 'sku' },
+  modelValue: { type: String, default: '' },
+  label: { type: String, default: 'SKU' },
+  placeholder: { type: String, default: 'e.g. TV55-SAMSUNG-2025' },
+  focus: { type: Boolean, default: false },
+  required: { type: Boolean, default: true },
+  maxLength: { type: Number, default: 20 },
+})
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+  (e: 'valid', payload: { valid: boolean, value: string | null }): void
+}>()
+
+const inputRef = ref<HTMLInputElement | null>(null)
+const internalValue = ref(props.modelValue)
+const errorMessage = ref('')
+
+// Solo letras mayúsculas, números y guiones
+const skuRegex = /^[A-Z0-9-]+$/
+
+const messages = {
+  required: 'This field is required.',
+  invalid: 'Invalid format. Use only UPPERCASE letters, numbers, and dashes.',
+  maxLength: `Maximum length is ${props.maxLength} characters.`,
+}
+
+onMounted(() => {
+  if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value)
+})
+
+watch(() => props.focus, (newVal) => {
+  if (newVal) inputRef.value?.focus()
+})
+
+watch(() => props.modelValue, (val) => {
+  if (val !== internalValue.value) internalValue.value = val
+})
+
+watch(internalValue, (val) => {
+  emit('update:modelValue', val)
+  validateInput(val)
+})
+
+const onBeforeInput = (e: Event) => {
+  const inputEvent = e as InputEvent
+
+  if (
+    inputEvent.inputType === 'insertText' &&
+    inputEvent.data &&
+    !/^[A-Z0-9-]$/.test(inputEvent.data)
+  ) {
+    e.preventDefault()
   }
-  
-  onMounted(() => {
-    if (props.focus) inputRef.value?.focus()
-  })
-  
-  watch(() => props.focus, (newVal) => {
-    if (newVal) inputRef.value?.focus()
-  })
-  
-  watch(() => props.modelValue, (val) => {
-    if (val !== internalValue.value) internalValue.value = val
-  })
-  
-  watch(internalValue, (val) => {
-    emit('update:modelValue', val)
-    validateInput(val)
-  })
-  
-  const onBeforeInput = (e: Event) => {
-    const inputEvent = e as InputEvent
-    if (inputEvent.data && !/^[A-Z0-9]$/.test(inputEvent.data)) {
-      e.preventDefault()
-    }
+}
+
+const validateInput = (value: string) => {
+  if (props.required && value.trim() === '') {
+    errorMessage.value = messages.required
+    emit('valid', { valid: false, value: null })
+    return
   }
-  
-  const validateInput = (value: string) => {
-    const validators: { condition: boolean; message: string }[] = [
-      { condition: props.required && value.trim() === '', message: messages.required },
-      { condition: value.length > props.maxLength, message: messages.maxLength },
-      { condition: !skuRegex.test(value), message: messages.invalid },
-    ]
-  
-    for (const { condition, message } of validators) {
-      if (condition) {
-        errorMessage.value = message
-        emit('valid', { valid: false, value: null })
-        return
-      }
-    }
-  
-    errorMessage.value = ''
-    emit('valid', { valid: true, value })
+
+  if (value.length > props.maxLength) {
+    errorMessage.value = messages.maxLength
+    emit('valid', { valid: false, value: null })
+    return
   }
-  </script>
-  
-  <style scoped>
-  .p-InputSku {
-    flex-direction: column;
-    display: flex;
-    width: 100%;
+
+  if (!skuRegex.test(value)) {
+    errorMessage.value = messages.invalid
+    emit('valid', { valid: false, value: null })
+    return
   }
-  
-  .p-InputSku-input {
-    border: 1px solid var(--border-a, #ccc);
-    border-radius: var(--input-radius, 6px);
-    padding: 0.75rem 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  
-  .p-InputSku-input:focus-within {
-    border: 1px solid var(--primary-a, #2563eb);
-  }
-  
-  .p-InputSku-input.is-invalid {
-    border-color: red;
-  }
-  
-  .title-text {
-    margin-bottom: 0.75rem;
-    font-weight: 600;
-  }
-  
-  .error-text {
-    animation: fadeIn 0.2s ease-in-out;
-    font-size: var(--text-size-0, 0.875rem);
-    margin-top: 0.5rem;
-    color: transparent;
+
+  errorMessage.value = ''
+  emit('valid', { valid: true, value })
+}
+</script>
+
+<style scoped>
+.p-InputSku {
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+}
+
+.p-InputSku-input {
+  border: 1px solid var(--border-a, #ccc);
+  border-radius: var(--input-radius, 6px);
+  padding: 0.75rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.p-InputSku-input:focus-within {
+  border: 1px solid var(--primary-a, #2563eb);
+}
+
+.p-InputSku-input.is-invalid {
+  border-color: red;
+}
+
+.title-text {
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.error-text {
+  animation: fadeIn 0.2s ease-in-out;
+  font-size: var(--text-size-0, 0.875rem);
+  margin-top: 0.5rem;
+  color: transparent;
+  opacity: 0;
+}
+
+.error-text.visible {
+  opacity: 1;
+  color: red;
+}
+
+@keyframes fadeIn {
+  from {
     opacity: 0;
   }
-  
-  .error-text.visible {
+
+  to {
     opacity: 1;
-    color: red;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-  
-    to {
-      opacity: 1;
-    }
-  }
-  </style>
-  
+}
+</style>
