@@ -4,35 +4,50 @@ import {
   getProductId,
   insertProduct,
   findProductById,
+  findProductBySku,
   createEvent,
 } from "@pairfy/common";
 import database from "../../database/client.js";
 import { createProductSchema } from "../../validators/create-product.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
-  const validateParams = createProductSchema.safeParse(args.createProductInput);
-
-  if (!validateParams.success) {
-    throw new ApiGraphQLError(400, "Validation failed", {
-      code: ERROR_CODES.VALIDATION_ERROR,
-      details: validateParams.error.flatten(),
-    });
-  }
-
-  const params = validateParams.data;
-
-  console.log(params);
-
-  const SELLER = context.sellerData;
-
   let connection = null;
 
   try {
+    const validateParams = createProductSchema.safeParse(
+      args.createProductInput
+    );
+
+    if (!validateParams.success) {
+      throw new ApiGraphQLError(400, "Validation failed", {
+        code: ERROR_CODES.VALIDATION_ERROR,
+        details: validateParams.error.flatten(),
+      });
+    }
+
+    const params = validateParams.data;
+
+    console.log(params);
+
+    const SELLER = context.sellerData;
+
     connection = await database.client.getConnection();
+
+    const isSkuRepeated = await findProductBySku(
+      connection,
+      SELLER.id,
+      params.sku
+    );
+
+    if (isSkuRepeated) {
+      throw new ApiGraphQLError(409, "Repeated Product Sku", {
+        code: ERROR_CODES.RESOURCE_ALREADY_EXISTS
+      });
+    }
 
     await connection.beginTransaction();
 
-    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////// START TRANSACTION
 
     const timestamp = Date.now();
 
@@ -77,8 +92,6 @@ export const createProduct = async (_: any, args: any, context: any) => {
       );
     }
 
-    //////////////////////////////////////////////////////////////
-
     const findProduct = await findProductById(connection, productId);
 
     await createEvent(
@@ -90,7 +103,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       SELLER.id
     );
 
-    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////// END TRANSACTION
 
     await connection.commit();
 
