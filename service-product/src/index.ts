@@ -98,10 +98,9 @@ const main = async () => {
       signed: false,
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'none'
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
     };
     
-
     app.set("trust proxy", 1);
     
     app.use(getPublicAddress);
