@@ -1,10 +1,22 @@
 <template>
   <div class="p-InputPrice">
     <label :for="props.id" class="title-text">{{ label }}</label>
-    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
-      :placeholder="placeholder" class="p-InputPrice-input" :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`"
-      inputmode="numeric"  @paste="onPaste" />
+    <input
+      ref="inputRef"
+      v-model="internalValue"
+      :id="props.id"
+      type="text"
+      @beforeinput="onBeforeInput"
+      @paste="onPaste"
+      @drop.prevent
+      :placeholder="placeholder"
+      class="p-InputPrice-input"
+      :class="{ 'is-invalid': errorMessage }"
+      :maxlength="maxLength"
+      :aria-invalid="!!errorMessage"
+      :aria-describedby="`${props.id}-error`"
+      inputmode="numeric"
+    />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
     </p>
@@ -24,13 +36,12 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', payload: { valid: boolean, value: number }): void
+  (e: 'valid', payload: { valid: boolean, value: number | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
 const internalValue = ref(props.modelValue)
 const errorMessage = ref('')
-
 
 const dollarRegex = /^[0-9]*$/
 
@@ -38,6 +49,8 @@ const messages = {
   required: 'This field is required.',
   invalid: 'Only whole dollar amounts are allowed.',
   maxLength: `Maximum length is ${props.maxLength} digits.`,
+  minValue: 'Minimum is $5.',
+  maxValue: 'Maximum is $999,999.',
 }
 
 onMounted(() => {
@@ -72,12 +85,15 @@ const onPaste = (e: ClipboardEvent) => {
   }
 }
 
-
 const validateInput = (value: string) => {
+  const numValue = Number(value)
+
   const validators: { condition: boolean; message: string }[] = [
     { condition: props.required && value.trim() === '', message: messages.required },
     { condition: value.length > props.maxLength, message: messages.maxLength },
     { condition: !dollarRegex.test(value), message: messages.invalid },
+    { condition: numValue < 5, message: messages.minValue },
+    { condition: numValue > 999999, message: messages.maxValue },
   ]
 
   for (const { condition, message } of validators) {
@@ -89,7 +105,7 @@ const validateInput = (value: string) => {
   }
 
   errorMessage.value = ''
-  emit('valid', { valid: true, value: Number(value) })
+  emit('valid', { valid: true, value: numValue })
 }
 </script>
 
@@ -134,13 +150,10 @@ const validateInput = (value: string) => {
   color: red;
 }
 
-
-
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
