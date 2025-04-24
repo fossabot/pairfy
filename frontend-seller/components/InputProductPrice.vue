@@ -7,7 +7,6 @@
       :id="props.id"
       type="text"
       @beforeinput="onBeforeInput"
-      @paste="onPaste"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputPrice-input"
@@ -72,17 +71,8 @@ watch(internalValue, (val) => {
 })
 
 const onBeforeInput = (e: Event) => {
-  const inputEvent = e as InputEvent
-  if (inputEvent.data && !/^\d$/.test(inputEvent.data)) {
-    e.preventDefault()
-  }
-}
-
-const onPaste = (e: ClipboardEvent) => {
-  const pasted = e.clipboardData?.getData('text') ?? ''
-  if (!/^\d+$/.test(pasted)) {
-    e.preventDefault()
-  }
+  const target = e.target as HTMLInputElement
+  internalValue.value = target.value.replace(/\D+/g, '')
 }
 
 const validateInput = (value: string) => {
