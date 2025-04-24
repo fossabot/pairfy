@@ -4,7 +4,7 @@
     <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @beforeinput="onBeforeInput" @drop.prevent
       :placeholder="placeholder" class="p-InputPrice-input" :class="{ 'is-invalid': errorMessage }"
       :maxlength="maxLength" :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`"
-      inputmode="numeric" />
+      inputmode="numeric"  @paste="onPaste" />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
     </p>
@@ -24,7 +24,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', value: boolean): void
+  (e: 'valid', payload: { valid: boolean, value: number }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -42,6 +42,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value)
 })
 
 watch(() => props.focus, (newVal) => {
@@ -64,6 +65,14 @@ const onBeforeInput = (e: Event) => {
   }
 }
 
+const onPaste = (e: ClipboardEvent) => {
+  const pasted = e.clipboardData?.getData('text') ?? ''
+  if (!/^\d+$/.test(pasted)) {
+    e.preventDefault()
+  }
+}
+
+
 const validateInput = (value: string) => {
   const validators: { condition: boolean; message: string }[] = [
     { condition: props.required && value.trim() === '', message: messages.required },
@@ -74,13 +83,13 @@ const validateInput = (value: string) => {
   for (const { condition, message } of validators) {
     if (condition) {
       errorMessage.value = message
-      emit('valid', false)
+      emit('valid', { valid: false, value: null })
       return
     }
   }
 
   errorMessage.value = ''
-  emit('valid', true)
+  emit('valid', { valid: true, value: Number(value) })
 }
 </script>
 

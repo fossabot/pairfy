@@ -1,20 +1,9 @@
 <template>
   <div class="p-InputProductName">
     <label :for="props.id" class="title-text">{{ label }}</label>
-    <input
-      ref="inputRef"
-      v-model="internalValue"
-      :id="props.id"
-      type="text"
-      @drop.prevent
-      :placeholder="placeholder"
-      class="p-InputProductName-input"
-      :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength"
-      :aria-invalid="!!errorMessage"
-      :aria-describedby="`${props.id}-error`"
-      inputmode="text"
-    />
+    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @drop.prevent :placeholder="placeholder"
+      class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }" :maxlength="maxLength"
+      :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '\u00A0' }}
     </p>
@@ -82,7 +71,7 @@ const validateInput = (value: string) => {
   for (const { condition, message } of validators) {
     if (condition) {
       errorMessage.value = message
-      emit('valid', { valid: false, value })
+      emit('valid', { valid: false, value: null })
       return
     }
   }

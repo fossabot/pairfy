@@ -25,11 +25,10 @@
                     </div>
                     <div class="grid-item">
                         <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones"
-                        @valid="productName = $event.value"
-                        />
+                            @valid="productName = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPrice id="create-product-price" />
+                        <InputProductPrice id="create-product-price" @valid="productPrice = $event.value" />
                         <InputProductSku id="create-product-sku" />
                     </div>
                     <div class="grid-item">
@@ -297,10 +296,13 @@ const discountData = ref({
 })
 
 const productName = ref(null)
-
+const productPrice = ref(null)
 
 const validateParams = () => {
-    return [!productName.value].includes(true)
+    return [
+        !productName.value,
+        !productPrice.value
+    ].includes(true)
 }
 
 const onCreateProduct = async () => {
@@ -317,7 +319,7 @@ const onCreateProduct = async () => {
         credentials: 'include',
         body: {
             "name": productName.value,
-            "price": 45000,
+            "price": productPrice.value,
             "sku": "CAM1234OO7457XX",
             "model": "M2025",
             "brand": "MarcaX",
