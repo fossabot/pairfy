@@ -13,7 +13,7 @@ export const createProductSchema = z.object({
     message: "Invalid price format",
   }),
   sku: z.string().min(1).max(20).regex(skuRegex, "Invalid SKU format"),
-  model: z.string().min(1).regex(modelRegex, "Invalid model format"),
+  model: z.string().min(1).max(40).regex(modelRegex, "Invalid model format"),
   brand: z.string().min(1).regex(brandRegex, "Invalid brand format"),
   description: z.string().min(1),
   category: z.string().min(1),
