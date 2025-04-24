@@ -55,8 +55,8 @@
     margin-bottom: 1rem;
     align-items: center;
     position: relative;
-    min-width: 240px;
-    max-width: 320px;
+    min-width: 300px;
+    max-width: 400px;
     font-weight: 500;
     padding: 1rem;
     display: flex;

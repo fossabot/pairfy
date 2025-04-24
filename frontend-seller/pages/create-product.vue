@@ -24,7 +24,9 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones" />
+                        <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones"
+                        @valid="productName = $event.value"
+                        />
                     </div>
                     <div class="grid-item">
                         <InputProductPrice id="create-product-price" />
@@ -247,7 +249,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <ButtonSolid label="Save" @click="onCreateProduct" :loading="loading"/>
+                        <ButtonSolid label="Publish" @click="onCreateProduct" :loading="loading" />
                     </div>
                 </div>
 
@@ -261,6 +263,10 @@ import categoryList from '@/assets/json/categories.json'
 import countryList from '@/assets/json/countries.json'
 
 const toastRef = ref(null);
+
+const displayMessage = (message, type, duration) => {
+    toastRef.value?.showToast(message, type, duration)
+}
 
 const loading = ref(false)
 
@@ -282,7 +288,6 @@ const onValidCountry = (event) => {
     countryValid.value = event
 }
 
-
 const productFeatures = ref(Array(4).fill(''))
 
 const discountData = ref({
@@ -291,18 +296,27 @@ const discountData = ref({
     discount: 10,
 })
 
-const displayMessage = (message, type, duration) => {
-    toastRef.value?.showToast(message, type, duration)
+const productName = ref(null)
+
+
+const validateParams = () => {
+    return [!productName.value].includes(true)
 }
 
 const onCreateProduct = async () => {
     loading.value = true
 
+    if (validateParams()) {
+        displayMessage("Please complete all required fields.", 'error', 30_000)
+        loading.value = false
+        return;
+    }
+
     const { data, error } = await useFetch('/api/product/createProduct', {
         method: 'POST',
         credentials: 'include',
         body: {
-            "name": "Camisa manga larga",
+            "name": productName.value,
             "price": 45000,
             "sku": "CAM1234OO7457XX",
             "model": "M2025",
