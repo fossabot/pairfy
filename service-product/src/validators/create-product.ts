@@ -3,7 +3,7 @@ import { z } from "zod";
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-():+]+$/u;
 const productPriceRegex = /^[0-9]*$/;
-const skuRegex = /^[A-Z0-9]*$/;
+const skuRegex = /^[A-Z0-9-]+$/;
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u;
 

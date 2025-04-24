@@ -42,7 +42,7 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const internalValue = ref(props.modelValue)
 const errorMessage = ref('')
 
-// Solo letras mayúsculas, números y guiones
+
 const skuRegex = /^[A-Z0-9-]+$/
 
 const messages = {
