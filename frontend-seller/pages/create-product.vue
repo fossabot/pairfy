@@ -33,7 +33,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductModel id="create-product-model" @valid="productModel = $event.value" />
-                        <InputProductBrand id="create-product-brand" @valid="productBrand = $event.value"/>
+                        <InputProductBrand id="create-product-brand" @valid="productBrand = $event.value" />
                     </div>
                 </div>
 
@@ -57,9 +57,8 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-
                         <InputSelect v-model="country" label="Country" placeholder="Select Country..."
-                            :options="countries" @valid="onValidCountry" :invalid="false">
+                            :options="countries" @valid="productOrigin = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
@@ -68,7 +67,7 @@
                             </template>
                         </InputSelect>
 
-                        <InputProductCity id="create-product-city" />
+                        <InputProductCity id="create-product-city" @valid="productCity = $event.value" />
                     </div>
                     <div class="grid-item">
                         <InputProductPostal id="create-product-postal" />
@@ -300,15 +299,24 @@ const productPrice = ref(null)
 const productSku = ref(null)
 const productModel = ref(null)
 const productBrand = ref(null)
+const productOrigin = ref(null)
+const productCity = ref(null)
 
 const validateParams = () => {
-    return [
+    const params = [
         !productName.value,
         !productPrice.value,
         !productSku.value,
         !productModel.value,
-        !productBrand.value
-    ].includes(true)
+        !productBrand.value,
+        !productOrigin.value,
+        !productCity.value
+    ]
+
+    console.log(params)
+
+    return params.includes(true)
+
 }
 
 const onCreateProduct = async () => {
@@ -328,7 +336,7 @@ const onCreateProduct = async () => {
             "price": productPrice.value,
             "sku": productSku.value,
             "model": productModel.value,
-            "brand": "MarcaX",
+            "brand": productBrand.value,
             "description": "Camisa elegante para eventos formales.",
             "category": "ropa",
             "bullet_list": [
@@ -339,8 +347,8 @@ const onCreateProduct = async () => {
             "color": "azul",
             "condition_": "nuevo",
             "country": "CO",
-            "origin": "CO",
-            "city": "Bogotá",
+            "origin": productOrigin.value,
+            "city": productCity.value,
             "postal": "110111",
             "discount": true,
             "discount_value": 50

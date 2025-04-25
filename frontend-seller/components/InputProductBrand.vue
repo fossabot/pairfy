@@ -36,7 +36,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', value: boolean): void
+  (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -71,7 +71,7 @@ watch(internalValue, (val) => {
 const onBeforeInput = (e: Event) => {
   const inputEvent = e as InputEvent
 
-  // Solo bloquear escritura manual con caracteres inválidos
+
   if (inputEvent.inputType === 'insertFromPaste' || !inputEvent.data) return
 
   if (!/^[\p{L}\p{N}\s\-.,&()']$/u.test(inputEvent.data)) {
@@ -89,13 +89,13 @@ const validateInput = (value: string) => {
   for (const { condition, message } of validators) {
     if (condition) {
       errorMessage.value = message
-      emit('valid', false)
+      emit('valid', { valid: false, value: null })
       return
     }
   }
 
   errorMessage.value = ''
-  emit('valid', true)
+  emit('valid', { valid: true, value })
 }
 </script>
 

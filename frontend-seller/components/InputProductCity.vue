@@ -35,7 +35,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', value: boolean): void
+  (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -77,13 +77,13 @@ const validateInput = (value: string) => {
   for (const { condition, message } of validators) {
     if (condition) {
       errorMessage.value = message
-      emit('valid', false)
+      emit('valid', { valid: false, value: null })
       return
     }
   }
 
   errorMessage.value = ''
-  emit('valid', true)
+  emit('valid', { valid: true, value })
 }
 </script>
 
