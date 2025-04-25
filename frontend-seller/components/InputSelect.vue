@@ -30,7 +30,6 @@
         <span class="placeholder">{{ placeholder }}</span>
       </template>
 
-      <!-- Down arrow icon -->
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -96,11 +95,11 @@ const props = defineProps({
   id: { type: String, default: 'input-select' },
   modelValue: { type: String, default: '' },
   label: { type: String, required: true },
-  required: { type: Boolean, default: false },
+  required: { type: Boolean, default: true },
   options: { type: Array, required: true },
   placeholder: { type: String, default: 'Select one...' },
   focus: { type: Boolean, default: false },
-  invalid: { type: Boolean, default: false } 
+  invalid: { type: Boolean, default: false }
 })
 
 const emit = defineEmits(['update:modelValue', 'valid'])
@@ -125,11 +124,11 @@ function select(option) {
 function validate(value) {
   if (props.required && !value) {
     errorMessage.value = 'This field is required.'
-    emit('valid', false)
+    emit('valid', { valid: false, value: null })
     return false
   }
   errorMessage.value = ''
-  emit('valid', true)
+  emit('valid', { valid: true, value })
   return true
 }
 
@@ -145,11 +144,18 @@ function onFlagError(event) {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  validate(props.modelValue) 
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
+
+
+watch(() => props.modelValue, (newVal) => {
+  validate(newVal)
+})
+
 
 watch(
   () => props.invalid,
