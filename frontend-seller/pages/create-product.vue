@@ -32,7 +32,7 @@
                         <InputProductSku id="create-product-sku" @valid="productSku = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductModel id="create-product-model" />
+                        <InputProductModel id="create-product-model" @valid="productModel = $event.value" />
                         <InputProductBrand id="create-product-brand" />
                     </div>
                 </div>
@@ -298,12 +298,14 @@ const discountData = ref({
 const productName = ref(null)
 const productPrice = ref(null)
 const productSku = ref(null)
+const productModel = ref(null)
 
 const validateParams = () => {
     return [
         !productName.value,
         !productPrice.value,
-        !productSku.value
+        !productSku.value,
+        !productModel.value
     ].includes(true)
 }
 
