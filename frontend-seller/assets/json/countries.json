@@ -16,7 +16,7 @@
     "code": "AI"
   },
   {
-    "label": "\u00c5land Islands",
+    "label": "Åland Islands",
     "code": "AX"
   },
   {
@@ -108,7 +108,7 @@
     "code": "BA"
   },
   {
-    "label": "Saint Barth\u00e9lemy",
+    "label": "Saint Barthélemy",
     "code": "BL"
   },
   {
@@ -124,7 +124,7 @@
     "code": "BM"
   },
   {
-    "label": "Bolivia, Plurinational State of",
+    "label": "Bolivia",
     "code": "BO"
   },
   {
@@ -176,7 +176,7 @@
     "code": "CN"
   },
   {
-    "label": "C\u00f4te d'Ivoire",
+    "label": "Côte d'Ivoire",
     "code": "CI"
   },
   {
@@ -216,7 +216,7 @@
     "code": "CU"
   },
   {
-    "label": "Cura\u00e7ao",
+    "label": "Curaçao",
     "code": "CW"
   },
   {
@@ -308,7 +308,7 @@
     "code": "FO"
   },
   {
-    "label": "Micronesia, Federated States of",
+    "label": "Micronesia",
     "code": "FM"
   },
   {
@@ -428,7 +428,7 @@
     "code": "IE"
   },
   {
-    "label": "Iran, Islamic Republic of",
+    "label": "Iran",
     "code": "IR"
   },
   {
@@ -488,7 +488,7 @@
     "code": "KN"
   },
   {
-    "label": "Korea, Republic of",
+    "label": "South Korea",
     "code": "KR"
   },
   {
@@ -496,7 +496,7 @@
     "code": "KW"
   },
   {
-    "label": "Lao People's Democratic Republic",
+    "label": "Laos",
     "code": "LA"
   },
   {
@@ -556,7 +556,7 @@
     "code": "MC"
   },
   {
-    "label": "Moldova, Republic of",
+    "label": "Moldova",
     "code": "MD"
   },
   {
@@ -724,7 +724,7 @@
     "code": "PR"
   },
   {
-    "label": "Korea, Democratic People's Republic of",
+    "label": "North Korea",
     "code": "KP"
   },
   {
@@ -736,7 +736,7 @@
     "code": "PY"
   },
   {
-    "label": "Palestine, State of",
+    "label": "Palestine",
     "code": "PS"
   },
   {
@@ -748,7 +748,7 @@
     "code": "QA"
   },
   {
-    "label": "R\u00e9union",
+    "label": "Réunion",
     "code": "RE"
   },
   {
@@ -756,7 +756,7 @@
     "code": "RO"
   },
   {
-    "label": "Russian Federation",
+    "label": "Russia",
     "code": "RU"
   },
   {
@@ -856,7 +856,7 @@
     "code": "SC"
   },
   {
-    "label": "Syrian Arab Republic",
+    "label": "Syria",
     "code": "SY"
   },
   {
@@ -912,11 +912,11 @@
     "code": "TV"
   },
   {
-    "label": "Taiwan, Province of China",
+    "label": "Taiwan",
     "code": "TW"
   },
   {
-    "label": "Tanzania, United Republic of",
+    "label": "Tanzania",
     "code": "TZ"
   },
   {
@@ -952,7 +952,7 @@
     "code": "VC"
   },
   {
-    "label": "Venezuela, Bolivarian Republic of",
+    "label": "Venezuela",
     "code": "VE"
   },
   {
@@ -964,7 +964,7 @@
     "code": "VI"
   },
   {
-    "label": "Viet Nam",
+    "label": "Vietnam",
     "code": "VN"
   },
   {
