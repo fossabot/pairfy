@@ -24,7 +24,7 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" focus placeholder="e.g. Wireless Headphones"
+                        <InputProductName id="create-product-name" placeholder="e.g. Wireless Headphones"
                             @valid="productName = $event.value" />
                     </div>
                     <div class="grid-item">
