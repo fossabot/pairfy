@@ -15,6 +15,7 @@
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
       inputmode="text"
+      @blur="validateInput(internalValue)"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -52,7 +53,6 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
-  validateInput(internalValue.value)
 })
 
 watch(() => props.focus, (newVal) => {
