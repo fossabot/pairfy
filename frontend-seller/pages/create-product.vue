@@ -33,7 +33,7 @@
                     </div>
                     <div class="grid-item">
                         <InputProductModel id="create-product-model" @valid="productModel = $event.value" />
-                        <InputProductBrand id="create-product-brand" />
+                        <InputProductBrand id="create-product-brand" @valid="productBrand = $event.value"/>
                     </div>
                 </div>
 
@@ -299,13 +299,15 @@ const productName = ref(null)
 const productPrice = ref(null)
 const productSku = ref(null)
 const productModel = ref(null)
+const productBrand = ref(null)
 
 const validateParams = () => {
     return [
         !productName.value,
         !productPrice.value,
         !productSku.value,
-        !productModel.value
+        !productModel.value,
+        !productBrand.value
     ].includes(true)
 }
 
