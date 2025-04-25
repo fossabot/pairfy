@@ -325,7 +325,7 @@ const onCreateProduct = async () => {
             "name": productName.value,
             "price": productPrice.value,
             "sku": productSku.value,
-            "model": "M2025",
+            "model": productModel.value,
             "brand": "MarcaX",
             "description": "Camisa elegante para eventos formales.",
             "category": "ropa",
