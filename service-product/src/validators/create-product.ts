@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ISOCountries } from "../utils";
 
-const productNameRegex = /^[\p{L}\p{N} .,'"\-():+]+$/u;
+const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u
 const productPriceRegex = /^[0-9]*$/;
 const skuRegex = /^[A-Z0-9-]+$/;
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;

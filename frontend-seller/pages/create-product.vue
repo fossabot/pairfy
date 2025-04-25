@@ -346,7 +346,6 @@ const onCreateProduct = async () => {
             ],
             "color": "azul",
             "condition_": "nuevo",
-            "country": "CO",
             "origin": productOrigin.value,
             "city": productCity.value,
             "postal": "110111",

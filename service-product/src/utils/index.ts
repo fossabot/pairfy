@@ -1,5 +1,4 @@
-import {logger} from "@pairfy/common";
-import { ISO31661Alpha2Countries } from "./countries";
+import {logger, ISO31661Alpha2Countries} from "@pairfy/common";
 
 export const catchError = (error?: any) => {
   logger.error(`EXIT=>${error}`);

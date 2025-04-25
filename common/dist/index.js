@@ -39,4 +39,4 @@ __exportStar(require("./mysql"), exports);
 __exportStar(require("./insertProduct"), exports);
 __exportStar(require("./findProductById"), exports);
 __exportStar(require("./findProductBySku"), exports);
-/////END
+__exportStar(require("./countries"), exports);

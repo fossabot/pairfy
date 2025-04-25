@@ -23,3 +23,4 @@ export * from "./mysql";
 export * from "./insertProduct";
 export * from "./findProductById";
 export * from "./findProductBySku";
+export * from "./countries";

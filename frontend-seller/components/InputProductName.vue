@@ -31,7 +31,7 @@ const inputRef = ref<HTMLInputElement | null>(null)
 const internalValue = ref(props.modelValue)
 const errorMessage = ref('')
 
-const productNameRegex = /^[\p{L}\p{N} .,'"\-():+]+$/u
+const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u
 
 const getMessages = () => ({
   required: 'This field is required.',

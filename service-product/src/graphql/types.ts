@@ -98,7 +98,6 @@ input CreateProductInput {
   bullet_list: [String!]!
   color: String!
   condition_: String!
-  country: String!
   origin: String!
   city: String!
   postal: String!
