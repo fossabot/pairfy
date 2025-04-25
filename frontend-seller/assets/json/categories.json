@@ -1,97 +1,107 @@
 {
   "0": {
-    "name": "Electronics & Digital Content",
-    "keywords": "gadgets, smartphones, laptops, computers, software, electronics, tech, digital products, streaming, apps",
+    "name": "Electronics & Devices",
+    "keywords": "smartphones, laptops, computers, tablets, accessories, gadgets, TVs, audio, cameras, tech",
     "index": "0"
   },
   "1": {
-    "name": "Clothing & Fashion",
-    "keywords": "apparel, fashion, clothes, outfits, trends, style, menswear, womenswear, accessories",
+    "name": "Digital Content & Software",
+    "keywords": "apps, streaming, digital products, software, downloads, licenses, subscriptions, media, cloud services",
     "index": "1"
   },
   "2": {
-    "name": "Shoes & Footwear",
-    "keywords": "footwear, sneakers, boots, sandals, dress shoes, athletic shoes, casual shoes, heels, flats, slippers",
+    "name": "Clothing & Fashion",
+    "keywords": "fashion, clothes, apparel, menswear, womenswear, kidswear, accessories, outfits, trends, style",
     "index": "2"
   },
   "3": {
-    "name": "Jewelry & Watches",
-    "keywords": "jewelry, rings, necklaces, bracelets, watches, earrings, accessories, fashion jewelry, luxury watches",
+    "name": "Footwear",
+    "keywords": "shoes, sneakers, boots, sandals, athletic shoes, heels, slippers, flats, footwear",
     "index": "3"
   },
   "4": {
-    "name": "Health & Beauty",
-    "keywords": "skincare, makeup, personal care, beauty products, health, wellness, fitness, hair care, cosmetics, nutrition",
+    "name": "Jewelry & Watches",
+    "keywords": "rings, necklaces, bracelets, watches, earrings, fashion jewelry, luxury, accessories",
     "index": "4"
   },
   "5": {
-    "name": "Books, Music & Movies",
-    "keywords": "books, novels, ebooks, music, albums, movies, films, audiobooks, pop culture, entertainment",
+    "name": "Health, Wellness & Beauty",
+    "keywords": "skincare, makeup, cosmetics, fitness, personal care, health, nutrition, wellness, hair care",
     "index": "5"
   },
   "6": {
-    "name": "Gaming",
-    "keywords": "video games, consoles, gaming accessories, PC games, Xbox, PlayStation, Nintendo, esports, game controllers",
+    "name": "Books, Music & Movies",
+    "keywords": "books, novels, ebooks, music, albums, vinyl, movies, films, audiobooks, entertainment",
     "index": "6"
   },
   "7": {
-    "name": "Home & Garden",
-    "keywords": "furniture, home decor, gardening, kitchenware, outdoor furniture, home improvement, DIY, home accessories, plants, lighting, tools",
+    "name": "Gaming",
+    "keywords": "video games, consoles, accessories, pc gaming, xbox, playstation, nintendo, esports, game controllers",
     "index": "7"
   },
   "8": {
-    "name": "Toys, Hobbies & Collectibles",
-    "keywords": "toys, hobbies, action figures, collectibles, games, puzzles, model kits, figurines, arts and crafts, trading cards",
+    "name": "Home, Furniture & Decor",
+    "keywords": "furniture, home decor, lighting, storage, kitchenware, bedding, rugs, curtains, organization",
     "index": "8"
   },
   "9": {
-    "name": "Sports & Outdoors",
-    "keywords": "sports equipment, outdoor gear, fitness, exercise, hiking, camping, biking, sportswear, recreation, training gear",
+    "name": "Garden & Outdoor",
+    "keywords": "gardening, outdoor furniture, plants, tools, patio, grills, lawn, garden decor, outdoor living",
     "index": "9"
   },
   "10": {
-    "name": "Grocery & Gourmet Food",
-    "keywords": "food, gourmet, snacks, organic, groceries, beverages, kitchen essentials, meal kits, fresh produce, specialty foods",
+    "name": "Toys, Hobbies & Collectibles",
+    "keywords": "toys, action figures, board games, puzzles, trading cards, model kits, figurines, hobbies, crafts",
     "index": "10"
   },
   "11": {
-    "name": "Automotive & Industrial",
-    "keywords": "cars, motorcycles, automotive parts, car accessories, tools, industrial equipment, mechanical, vehicle repair, motor parts, garage",
+    "name": "Sports & Outdoors",
+    "keywords": "fitness, training, sports equipment, hiking, camping, running, outdoor gear, activewear, gym",
     "index": "11"
   },
   "12": {
-    "name": "Office Supplies & Equipment",
-    "keywords": "office supplies, stationery, computers, office furniture, printers, desks, chairs, organization, business equipment, workplace",
+    "name": "Grocery & Gourmet",
+    "keywords": "groceries, gourmet, snacks, beverages, organic, fresh food, pantry, meal kits, specialty food",
     "index": "12"
   },
   "13": {
-    "name": "Pet Supplies",
-    "keywords": "pets, pet food, pet toys, dog accessories, cat supplies, pet grooming, pet health, aquarium, pet training, animal care",
+    "name": "Automotive",
+    "keywords": "cars, motorcycles, parts, auto accessories, tools, tires, car care, maintenance, garage, vehicles",
     "index": "13"
   },
   "14": {
-    "name": "Mother & Kids",
-    "keywords": "baby products, children's clothing, toys, maternity, nursery, baby gear, parenting, kids books, school supplies, family care",
+    "name": "Industrial & Tools",
+    "keywords": "industrial, power tools, hand tools, hardware, construction, equipment, safety gear, workshop",
     "index": "14"
   },
   "15": {
-    "name": "Art & Collectibles",
-    "keywords": "art, paintings, prints, digital art, NFTs, limited editions, handmade, sculptures, digital collectibles",
+    "name": "Office & School Supplies",
+    "keywords": "office supplies, stationery, printers, desks, organization, school supplies, work from home",
     "index": "15"
   },
   "16": {
-    "name": "Tools & Hardware",
-    "keywords": "hardware, power tools, hand tools, fasteners, construction materials, safety gear, drills, saws, workshop",
+    "name": "Pet Supplies",
+    "keywords": "pets, dog food, cat toys, pet grooming, aquariums, animal care, collars, leashes, pet beds",
     "index": "16"
   },
   "17": {
-    "name": "Travel & Luggage",
-    "keywords": "luggage, suitcases, backpacks, travel accessories, packing organizers, travel pillows, passport holders",
+    "name": "Baby, Kids & Maternity",
+    "keywords": "baby gear, children's clothes, diapers, strollers, maternity, parenting, toys, nursery, baby care",
     "index": "17"
   },
   "18": {
-    "name": "Services & Subscriptions",
-    "keywords": "digital services, memberships, subscriptions, SaaS, online platforms, streaming services, software licenses",
+    "name": "Art & Handmade",
+    "keywords": "art, paintings, digital art, handmade, crafts, prints, limited editions, sculptures, unique gifts",
     "index": "18"
+  },
+  "19": {
+    "name": "Travel & Luggage",
+    "keywords": "luggage, suitcases, backpacks, travel accessories, passport holders, travel pillows, organizers",
+    "index": "19"
+  },
+  "20": {
+    "name": "Subscriptions & Services",
+    "keywords": "streaming, SaaS, digital services, memberships, online tools, cloud software, service plans",
+    "index": "20"
   }
 }
