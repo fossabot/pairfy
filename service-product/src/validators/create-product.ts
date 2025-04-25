@@ -6,6 +6,7 @@ const productPriceRegex = /^[0-9]*$/;
 const skuRegex = /^[A-Z0-9-]+$/;
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u;
+const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u
 
 export const createProductSchema = z.object({
   name: z.string().min(3).max(200).regex(productNameRegex, "Invalid product name"),
@@ -22,7 +23,7 @@ export const createProductSchema = z.object({
   condition_: z.string().min(1),
   country: z.string().min(1),
   origin: z.string().min(1),
-  city: z.string().min(1),
+  city: z.string().min(1).max(40).regex(cityRegex, "Invalid city format"),
   postal: z.string().min(1),
   discount: z.boolean(),
   discount_value: z.number().int().nonnegative(),
