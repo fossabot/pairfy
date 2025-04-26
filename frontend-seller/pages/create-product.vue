@@ -94,7 +94,6 @@
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
                     </div>
-                    {{ productDescription }}x
                     <div class="grid-item">
                         <EditorComp @valid="productDescription = $event.value"/>
                     </div>
