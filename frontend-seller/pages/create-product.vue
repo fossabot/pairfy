@@ -168,9 +168,9 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-
+                    {{ productBulletlist }}x
                     <div class="grid-item">
-                        <InputProductBullet v-model="productFeatures" />
+                        <InputProductBullet @valid="productBulletlist = $event.value" />
                     </div>
                 </div>
 
@@ -306,6 +306,7 @@ const productOrigin = ref(null)
 const productCity = ref(null)
 const productPostal = ref(null)
 const productDescription = ref(null)
+const productBulletlist = ref(null)
 
 const validateParams = () => {
     const params = [
@@ -317,7 +318,8 @@ const validateParams = () => {
         !productOrigin.value,
         !productCity.value,
         !productPostal.value,
-        !productDescription.value
+        !productDescription.value,
+        !productBulletlist.value
     ]
 
     console.log(params)
@@ -345,11 +347,7 @@ const onCreateProduct = async () => {
             "brand": productBrand.value,
             "description": productDescription.value,
             "category": "ropa",
-            "bullet_list": [
-                "100% algodón",
-                "Disponible en varias tallas",
-                "Fácil de lavar"
-            ],
+            "bullet_list": productBulletlist.value,
             "color": "azul",
             "condition_": "nuevo",
             "origin": productOrigin.value,

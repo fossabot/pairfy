@@ -3,12 +3,18 @@
     <label class="title-text">{{ label }}</label>
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
-        <textarea v-model="items[index]" placeholder="•" :maxlength="maxLength" class="textarea"
-          :class="{ 'is-invalid': showError && !item.trim() }" />
-
+        <textarea
+          v-model="items[index]"
+          placeholder="•"
+          :maxlength="maxLength"
+          class="textarea"
+          :class="{ 'is-invalid': touched && showError && !item.trim() }"
+          :aria-invalid="touched && showError && !item.trim()"
+          @blur="onBlur"
+        />
       </div>
     </div>
-    <p v-if="showError" class="error-text">At least one item is required.</p>
+    <p v-if="touched && showError" class="error-text">At least one item is required.</p>
   </div>
 </template>
 
@@ -28,15 +34,28 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'valid'])
 
 const items = ref([...props.modelValue])
-const showError = computed(() => items.value.every(item => !item.trim()))
+const touched = ref(false)
+
+const showError = computed(() => items.value.filter(item => item.trim()).length === 0)
 
 watch(items, () => {
   emit('update:modelValue', items.value)
+
+  if (showError.value) {
+    emit('valid', { valid: false, value: null })
+  } else {
+    emit('valid', { valid: true, value: items.value })
+  }
 }, { deep: true })
+
+function onBlur() {
+  touched.value = true
+}
 </script>
+
 
 <style scoped>
 .p-EditableBulletList {
@@ -74,7 +93,6 @@ watch(items, () => {
   border: 1px solid var(--border-a);
   border-radius: var(--input-radius);
   outline: none;
-
 }
 
 .textarea:focus-within {
