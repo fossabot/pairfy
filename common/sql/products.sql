@@ -10,7 +10,7 @@ create table if not exists products(
   sku varchar(100) not null,
   model varchar(200) not null,
   brand varchar(200) not null,
-  description mediumtext not null,
+  description JSON NOT NULL,   
   category varchar(100) not null,
   bullet_list JSON NOT NULL,                   
   color varchar(100) not null,

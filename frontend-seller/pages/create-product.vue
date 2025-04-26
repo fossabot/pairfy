@@ -94,8 +94,9 @@
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
                     </div>
+                    {{ productDescription }}x
                     <div class="grid-item">
-                        <EditorComp />
+                        <EditorComp @valid="productDescription = $event.value"/>
                     </div>
                 </div>
 
@@ -302,6 +303,7 @@ const productBrand = ref(null)
 const productOrigin = ref(null)
 const productCity = ref(null)
 const productPostal = ref(null)
+const productDescription = ref(null)
 
 const validateParams = () => {
     const params = [
@@ -312,13 +314,13 @@ const validateParams = () => {
         !productBrand.value,
         !productOrigin.value,
         !productCity.value,
-        !productPostal.value
+        !productPostal.value,
+        !productDescription.value
     ]
 
     console.log(params)
 
     return params.includes(true)
-
 }
 
 const onCreateProduct = async () => {
@@ -339,7 +341,7 @@ const onCreateProduct = async () => {
             "sku": productSku.value,
             "model": productModel.value,
             "brand": productBrand.value,
-            "description": "Camisa elegante para eventos formales.",
+            "description": productDescription.value,
             "category": "ropa",
             "bullet_list": [
                 "100% algodón",

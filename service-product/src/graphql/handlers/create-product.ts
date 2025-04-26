@@ -6,6 +6,7 @@ import {
   findProductById,
   findProductBySku,
   createEvent,
+  sanitizeTiptapContent
 } from "@pairfy/common";
 import database from "../../database/client.js";
 import { createProductSchema } from "../../validators/create-product.js";
@@ -64,7 +65,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       sku: params.sku,
       model: params.model,
       brand: params.brand,
-      description: params.description,
+      description: sanitizeTiptapContent(params.description),
       category: params.category,
       bullet_list: params.bullet_list,
       color: params.color,

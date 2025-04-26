@@ -14,7 +14,7 @@ type Product {
   sku: String!
   model: String!
   brand: String!
-  description: String!
+  description: JSON!
   category: String!
   bullet_list: [String!]!
   color: String!
@@ -93,7 +93,7 @@ input CreateProductInput {
   sku: String!
   model: String!
   brand: String!
-  description: String!
+  description: JSON!
   category: String!
   bullet_list: [String!]!
   color: String!
