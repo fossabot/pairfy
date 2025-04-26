@@ -31,7 +31,6 @@ export const createProductSchema = z.object({
   bullet_list: z.array(z.string().min(1)).min(1),
   color: z.string().min(1),
   condition_: z.string().min(1),
-  country: z.string().min(1),
   origin: z
     .string()
     .length(2)

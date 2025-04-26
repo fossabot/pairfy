@@ -19,9 +19,9 @@ export const createProduct = async (_: any, args: any, context: any) => {
     );
 
     if (!validateParams.success) {
-      throw new ApiGraphQLError(400, "Validation failed", {
+      const errors = JSON.stringify(validateParams.error.flatten());
+      throw new ApiGraphQLError(400, `Validation failed: ${errors}`, {
         code: ERROR_CODES.VALIDATION_ERROR,
-        details: validateParams.error.flatten(),
       });
     }
 
@@ -41,7 +41,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     if (isSkuRepeated) {
       throw new ApiGraphQLError(409, "Repeated Product Sku", {
-        code: ERROR_CODES.RESOURCE_ALREADY_EXISTS
+        code: ERROR_CODES.RESOURCE_ALREADY_EXISTS,
       });
     }
 
