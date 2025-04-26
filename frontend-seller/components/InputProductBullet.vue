@@ -15,16 +15,17 @@
           @focus="onFocus(index)"
           @input="(e) => onInput(index, e)"
         />
-        <p class="error-text" :class="{ visible: showError[index] }">
-          {{ showError[index] ? errorMessages[index] : '‎' }}
-        </p>
       </div>
     </div>
+
+    <p class="error-text" :class="{ visible: overallErrorMessage !== '' }">
+      {{ overallErrorMessage || '‎' }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -48,7 +49,20 @@ const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u
 const items = ref([...props.modelValue])
 const touched = ref<boolean[]>(items.value.map(() => false))
 const showError = ref<boolean[]>(items.value.map(() => false))
-const errorMessages = ref<string[]>(items.value.map(() => ''))
+
+
+const overallErrorMessage = computed(() => {
+  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
+  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
+
+  if (!hasValidItem) {
+    return 'At least one valid feature is required.'
+  }
+  if (hasInvalidFilledItem) {
+    return 'Some features contain invalid characters.'
+  }
+  return ''
+})
 
 function onFocus(index: number) {
   if (!touched.value[index]) {
@@ -59,7 +73,6 @@ function onFocus(index: number) {
 
 function onInput(index: number, event: Event) {
   const textarea = event.target as HTMLTextAreaElement
-
 
   textarea.style.height = 'auto'
   textarea.style.height = textarea.scrollHeight + 'px'
@@ -73,22 +86,18 @@ function onInput(index: number, event: Event) {
 function validateItem(index: number) {
   const item = items.value[index].trim()
 
-  if (item === '') {
+  if (item !== '' && !bulletRegex.test(item)) {
     showError.value[index] = true
-    errorMessages.value[index] = 'This field is required.'
-  } else if (!bulletRegex.test(item)) {
-    showError.value[index] = true
-    errorMessages.value[index] = 'Invalid characters.'
   } else {
     showError.value[index] = false
-    errorMessages.value[index] = ''
   }
 }
 
 function emitValidEvent() {
-  const hasErrors = showError.value.some(err => err)
+  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
+  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
 
-  if (hasErrors) {
+  if (!hasValidItem || hasInvalidFilledItem) {
     emit('valid', { valid: false, value: null })
   } else {
     emit('valid', { valid: true, value: [...items.value] })
@@ -163,10 +172,11 @@ function emitValidEvent() {
 
 .error-text {
   font-size: var(--text-size-0);
-  margin-top: 0.25rem;
+  margin-top: 1rem;
   min-height: 1.2rem; 
   visibility: hidden;
   color: red;
+  text-align: left;
 }
 
 .error-text.visible {
