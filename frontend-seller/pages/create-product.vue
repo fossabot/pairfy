@@ -168,7 +168,7 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-                    {{ productBulletlist }}x
+                   
                     <div class="grid-item">
                         <InputProductBullet @valid="productBulletlist = $event.value" />
                     </div>
@@ -307,6 +307,8 @@ const productCity = ref(null)
 const productPostal = ref(null)
 const productDescription = ref(null)
 const productBulletlist = ref(null)
+
+watch(productBulletlist, (e)=> console.log(e))
 
 const validateParams = () => {
     const params = [
