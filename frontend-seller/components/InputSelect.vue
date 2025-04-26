@@ -1,5 +1,5 @@
 <template>
-  <div class="p-InputSelect" ref="dropdownRef">
+  <div class="p-InputSelect" ref="dropdownRef" @blur="validate(props.modelValue)" tabindex="0">
     <label :for="props.id" class="title-text">{{ label }}</label>
 
     <!-- Display -->
@@ -144,7 +144,6 @@ function onFlagError(event) {
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
-  validate(props.modelValue) 
 })
 
 onBeforeUnmount(() => {

@@ -433,7 +433,7 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-control-counter {
-  font-size: var(--text-size-1);
+  font-size: var(--text-size-0);
   color: var(--text-b);
 }
 
