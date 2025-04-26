@@ -18,8 +18,9 @@
       </div>
     </div>
 
-    <!-- ✅ Mostrar error global SOLO si el usuario tocó al menos un campo -->
-    <p v-if="touchedAny && globalError" class="error-text">At least one valid item is required.</p>
+    <p v-if="touchedAny && globalError" class="error-text">
+      At least one valid item is required.
+    </p>
   </div>
 </template>
 
@@ -41,13 +42,13 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'valid'])
 
-const bulletRegex = /^[\w\s.,'-]{1,240}$/u
+const bulletRegex = /^[\w\s.,'-]{1,240}$/u 
 const errorMessage = 'Only letters, numbers, spaces, and basic punctuation (.,\'-) are allowed.'
 
 const items = ref([...props.modelValue])
 const touched = ref<boolean[]>(items.value.map(() => false))
 const errors = ref<boolean[]>(items.value.map(() => false))
-const touchedAny = ref(false) // ✅ nueva bandera
+const touchedAny = ref(false)
 
 const globalError = computed(() => {
   return items.value.every((item, idx) => !item.trim() || errors.value[idx])
@@ -58,35 +59,29 @@ function validateItem(index: number) {
   errors.value[index] = item !== '' && !bulletRegex.test(item)
 }
 
-function onInput(index: number) {
-  // ✅ Solo validar si ya tocó el campo
-  if (touched.value[index]) {
-    validateItem(index)
+function emitValidEvent() {
+  const hasRegexError = errors.value.some(error => error)
+
+  if (hasRegexError || globalError.value) {
+    emit('valid', { valid: false, value: null })
+  } else {
+    emit('valid', { valid: true, value: [...items.value] })
   }
+}
 
+function onInput(index: number) {
+  validateItem(index)
   emit('update:modelValue', items.value)
-
-  emit('valid', { 
-    valid: !globalError.value,
-    value: [...items.value],
-  })
+  emitValidEvent()
 }
 
 function onBlur(index: number) {
-  touched.value[index] = true
-  touchedAny.value = true // ✅ apenas hace blur, activamos "usuario tocó"
-  
-  validateItem(index)
-
-  emit('update:modelValue', items.value)
-
-  emit('valid', { 
-    valid: !globalError.value,
-    value: [...items.value],
-  })
+  if (!touched.value[index]) {
+    touched.value[index] = true
+    touchedAny.value = true
+  }
 }
 </script>
-
 
 <style scoped>
 .p-EditableBulletList {
