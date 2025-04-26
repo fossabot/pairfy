@@ -41,7 +41,9 @@
                     <div class="grid-title">
                         <span>Product Origin</span>
 
-                        <TipComp text="National or international location from where the supplier or seller ships the product to the buyer." position="right">
+                        <TipComp
+                            text="National or international location from where the supplier or seller ships the product to the buyer."
+                            position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -70,7 +72,7 @@
                         <InputProductCity id="create-product-city" @valid="productCity = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value"/>
+                        <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value" />
 
                     </div>
                 </div>
@@ -95,7 +97,7 @@
                         Create a product description using the AI tool.
                     </div>
                     <div class="grid-item">
-                        <EditorComp @valid="productDescription = $event.value"/>
+                        <EditorComp @valid="productDescription = $event.value" />
                     </div>
                 </div>
 
@@ -269,12 +271,13 @@ const displayMessage = (message, type, duration) => {
 const loading = ref(false)
 
 const categories = computed(() =>
-    Object.values(categoryList).map(item => ({
-        label: item.name,
-        code: item.index
-    }))
-)
 
+    Object.values(categoryList).map(category => ({
+        label: category.label,
+        code: category.code,
+    }))
+
+)
 
 const countries = ref(countryList)
 
