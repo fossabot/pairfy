@@ -1,6 +1,7 @@
 <template>
   <div class="p-EditableBulletList">
     <label class="title-text">{{ label }}</label>
+
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
         <textarea
@@ -8,13 +9,17 @@
           placeholder="•"
           :maxlength="maxLength"
           class="textarea"
-          :class="{ 'is-invalid': touched && showError && !item.trim() }"
-          :aria-invalid="touched && showError && !item.trim()"
-          @blur="onBlur"
+          :class="{ 'is-invalid': touched[index] && errors[index] }"
+          :aria-invalid="touched[index] && errors[index]"
+          @input="onInput(index)"
+          @blur="onBlur(index)"
         />
+        <p v-if="touched[index] && errors[index]" class="error-text">{{ errorMessage }}</p>
       </div>
     </div>
-    <p v-if="touched && showError" class="error-text">At least one item is required.</p>
+
+    <!-- ✅ Mostrar error global SOLO si el usuario tocó al menos un campo -->
+    <p v-if="touchedAny && globalError" class="error-text">At least one valid item is required.</p>
   </div>
 </template>
 
@@ -36,23 +41,49 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'valid'])
 
+const bulletRegex = /^[\w\s.,'-]{1,240}$/u
+const errorMessage = 'Only letters, numbers, spaces, and basic punctuation (.,\'-) are allowed.'
+
 const items = ref([...props.modelValue])
-const touched = ref(false)
+const touched = ref<boolean[]>(items.value.map(() => false))
+const errors = ref<boolean[]>(items.value.map(() => false))
+const touchedAny = ref(false) // ✅ nueva bandera
 
-const showError = computed(() => items.value.filter(item => item.trim()).length === 0)
+const globalError = computed(() => {
+  return items.value.every((item, idx) => !item.trim() || errors.value[idx])
+})
 
-watch(items, () => {
+function validateItem(index: number) {
+  const item = items.value[index].trim()
+  errors.value[index] = item !== '' && !bulletRegex.test(item)
+}
+
+function onInput(index: number) {
+  // ✅ Solo validar si ya tocó el campo
+  if (touched.value[index]) {
+    validateItem(index)
+  }
+
   emit('update:modelValue', items.value)
 
-  if (showError.value) {
-    emit('valid', { valid: false, value: null })
-  } else {
-    emit('valid', { valid: true, value: items.value })
-  }
-}, { deep: true })
+  emit('valid', { 
+    valid: !globalError.value,
+    value: [...items.value],
+  })
+}
 
-function onBlur() {
-  touched.value = true
+function onBlur(index: number) {
+  touched.value[index] = true
+  touchedAny.value = true // ✅ apenas hace blur, activamos "usuario tocó"
+  
+  validateItem(index)
+
+  emit('update:modelValue', items.value)
+
+  emit('valid', { 
+    valid: !globalError.value,
+    value: [...items.value],
+  })
 }
 </script>
 
@@ -124,7 +155,7 @@ function onBlur() {
 
 .error-text {
   font-size: var(--text-size-0);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   color: red;
 }
 </style>
