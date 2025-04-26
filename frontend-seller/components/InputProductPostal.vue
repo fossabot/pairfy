@@ -35,7 +35,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', value: boolean): void
+  (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
@@ -67,25 +67,25 @@ watch(internalValue, (val) => {
 })
 
 const validateInput = (value: string) => {
-  if (props.required && value.trim() === '') {
-    errorMessage.value = messages.required
-    emit('valid', false)
-    return
-  }
-  if (value.length > props.maxLength) {
-    errorMessage.value = `Maximum length is ${props.maxLength} characters.`
-    emit('valid', false)
-    return
-  }
-  if (!postalRegex.test(value)) {
-    errorMessage.value = messages.invalid
-    emit('valid', false)
-    return
+  const validators: { condition: boolean; message: string }[] = [
+    { condition: props.required && value.trim() === '', message: messages.required },
+    { condition: value.length > props.maxLength, message: `Maximum length is ${props.maxLength} characters.` },
+    { condition: !postalRegex.test(value), message: messages.invalid },
+  ]
+
+  for (const { condition, message } of validators) {
+    if (condition) {
+      errorMessage.value = message
+      emit('valid', { valid: false, value: null })
+      return
+    }
   }
 
   errorMessage.value = ''
-  emit('valid', true)
+  emit('valid', { valid: true, value })
 }
+
+
 </script>
 
 <style scoped>
