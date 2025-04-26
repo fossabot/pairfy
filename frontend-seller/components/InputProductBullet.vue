@@ -25,6 +25,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue'
+
 const props = defineProps({
   modelValue: {
     type: Array as () => string[],
@@ -42,7 +44,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'valid'])
 
-const bulletRegex = /^[\w\s.,'-]{1,240}$/u 
+const bulletRegex = /^[\w\s.,'-]{1,240}$/u
 const errorMessage = 'Only letters, numbers, spaces, and basic punctuation (.,\'-) are allowed.'
 
 const items = ref([...props.modelValue])
@@ -54,25 +56,30 @@ const globalError = computed(() => {
   return items.value.every((item, idx) => !item.trim() || errors.value[idx])
 })
 
-function validateItem(index: number) {
-  const item = items.value[index].trim()
-  errors.value[index] = item !== '' && !bulletRegex.test(item)
+function validateAll(currentItems: string[]) {
+  currentItems.forEach((item, idx) => {
+    const value = item.trim()
+    errors.value[idx] = value !== '' && !bulletRegex.test(value)
+  })
 }
 
-function emitValidEvent() {
+function emitValidEvent(currentItems: string[]) {
   const hasRegexError = errors.value.some(error => error)
 
-  if (hasRegexError || globalError.value) {
+  if (hasRegexError || currentItems.every((item, idx) => !item.trim() || errors.value[idx])) {
     emit('valid', { valid: false, value: null })
   } else {
-    emit('valid', { valid: true, value: [...items.value] })
+    emit('valid', { valid: true, value: currentItems })
   }
 }
 
 function onInput(index: number) {
-  validateItem(index)
-  emit('update:modelValue', items.value)
-  emitValidEvent()
+  const newItems = [...items.value] // ✅ hacer nueva copia segura
+  validateAll(newItems)
+  items.value = newItems             // ✅ volver a setear la copia para que Vue reaccione bien
+
+  emit('update:modelValue', newItems)
+  emitValidEvent(newItems)
 }
 
 function onBlur(index: number) {
