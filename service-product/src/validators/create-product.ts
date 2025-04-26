@@ -7,6 +7,7 @@ const skuRegex = /^[A-Z0-9-]+$/;
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u;
 const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u;
+const postalRegex = /^[\p{L}\p{N}\s\-]+$/u
 
 export const createProductSchema = z.object({
   name: z
@@ -38,7 +39,7 @@ export const createProductSchema = z.object({
       message: "Invalid origin country code",
     }),
   city: z.string().min(1).max(40).regex(cityRegex, "Invalid city format"),
-  postal: z.string().min(1),
+  postal: z.string().min(1).max(12).regex(postalRegex, "Invalid postal format"),
   discount: z.boolean(),
   discount_value: z.number().int().nonnegative(),
 });

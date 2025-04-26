@@ -70,7 +70,7 @@
                         <InputProductCity id="create-product-city" @valid="productCity = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPostal id="create-product-postal" />
+                        <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value"/>
 
                     </div>
                 </div>
@@ -301,6 +301,7 @@ const productModel = ref(null)
 const productBrand = ref(null)
 const productOrigin = ref(null)
 const productCity = ref(null)
+const productPostal = ref(null)
 
 const validateParams = () => {
     const params = [
@@ -310,7 +311,8 @@ const validateParams = () => {
         !productModel.value,
         !productBrand.value,
         !productOrigin.value,
-        !productCity.value
+        !productCity.value,
+        !productPostal.value
     ]
 
     console.log(params)
@@ -348,7 +350,7 @@ const onCreateProduct = async () => {
             "condition_": "nuevo",
             "origin": productOrigin.value,
             "city": productCity.value,
-            "postal": "110111",
+            "postal": productPostal.value,
             "discount": true,
             "discount_value": 50
         },
