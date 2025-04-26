@@ -430,7 +430,7 @@ onBeforeUnmount(() => {
     height: 2rem;
     bottom: 2rem;
     width: 2rem;
-    right: 6rem;
+    right: 7rem;
 }
 
 .p-EditorComp-generative-button {
@@ -445,7 +445,7 @@ onBeforeUnmount(() => {
     height: 2rem;
     bottom: 2rem;
     width: 3rem;
-    right: 2rem;
+    right: 3rem;
 }
 
 .p-EditorComp-control {
