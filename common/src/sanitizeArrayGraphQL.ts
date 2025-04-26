@@ -22,7 +22,7 @@ export function sanitizeArrayGraphQL(input: unknown): string | string[] {
     return sanitizedArray
   }
 
-  throw new ApiGraphQLError(400, 'Invalid bullet list symbols', {
+  throw new ApiGraphQLError(400, 'Must be array of strings', {
     code: ERROR_CODES.BAD_USER_INPUT
   })
 }
