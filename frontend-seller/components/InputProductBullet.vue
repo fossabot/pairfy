@@ -9,23 +9,19 @@
           placeholder="•"
           :maxlength="maxLength"
           class="textarea"
-          :class="{ 'is-invalid': touched[index] && errors[index] }"
-          :aria-invalid="touched[index] && errors[index]"
+          :class="{ 'is-invalid': showError[index] }"
+          :aria-invalid="showError[index]"
+          @focus="onFocus(index)"
           @input="onInput(index)"
-          @blur="onBlur(index)"
         />
-        <p v-if="touched[index] && errors[index]" class="error-text">{{ errorMessage }}</p>
+        <p v-if="showError[index]" class="error-text">{{ errorMessages[index] }}</p>
       </div>
     </div>
-
-    <p v-if="touchedAny && globalError" class="error-text">
-      At least one valid item is required.
-    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -45,47 +41,49 @@ const props = defineProps({
 const emit = defineEmits(['update:modelValue', 'valid'])
 
 const bulletRegex = /^[\w\s.,'-]{1,240}$/u
-const errorMessage = 'Only letters, numbers, spaces, and basic punctuation (.,\'-) are allowed.'
 
 const items = ref([...props.modelValue])
 const touched = ref<boolean[]>(items.value.map(() => false))
-const errors = ref<boolean[]>(items.value.map(() => false))
-const touchedAny = ref(false)
+const showError = ref<boolean[]>(items.value.map(() => false))
+const errorMessages = ref<string[]>(items.value.map(() => ''))
 
-const globalError = computed(() => {
-  return items.value.every((item, idx) => !item.trim() || errors.value[idx])
-})
-
-function validateAll(currentItems: string[]) {
-  currentItems.forEach((item, idx) => {
-    const value = item.trim()
-    errors.value[idx] = value !== '' && !bulletRegex.test(value)
-  })
-}
-
-function emitValidEvent(currentItems: string[]) {
-  const hasRegexError = errors.value.some(error => error)
-
-  if (hasRegexError || currentItems.every((item, idx) => !item.trim() || errors.value[idx])) {
-    emit('valid', { valid: false, value: null })
-  } else {
-    emit('valid', { valid: true, value: currentItems })
+function onFocus(index: number) {
+  if (!touched.value[index]) {
+    touched.value[index] = true
+    validateItem(index)
   }
 }
 
 function onInput(index: number) {
-  const newItems = [...items.value] // ✅ hacer nueva copia segura
-  validateAll(newItems)
-  items.value = newItems             // ✅ volver a setear la copia para que Vue reaccione bien
+  validateItem(index)
 
-  emit('update:modelValue', newItems)
-  emitValidEvent(newItems)
+  emit('update:modelValue', items.value)
+
+  emitValidEvent()
 }
 
-function onBlur(index: number) {
-  if (!touched.value[index]) {
-    touched.value[index] = true
-    touchedAny.value = true
+function validateItem(index: number) {
+  const item = items.value[index].trim()
+
+  if (item === '') {
+    showError.value[index] = true
+    errorMessages.value[index] = 'This field is required.'
+  } else if (!bulletRegex.test(item)) {
+    showError.value[index] = true
+    errorMessages.value[index] = 'Invalid characters.'
+  } else {
+    showError.value[index] = false
+    errorMessages.value[index] = ''
+  }
+}
+
+function emitValidEvent() {
+  const hasErrors = showError.value.some(err => err)
+
+  if (hasErrors) {
+    emit('valid', { valid: false, value: null })
+  } else {
+    emit('valid', { valid: true, value: [...items.value] })
   }
 }
 </script>
