@@ -124,12 +124,7 @@
           <span class="loader" :class="{ visible: isGenerating }" />
         </div>
         <div class="p-EditorComp-generative-button" @click="onGenerativeSubmit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-arrow-up-icon lucide-arrow-up">
-            <path d="m5 12 7-7 7 7" />
-            <path d="M12 19V5" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
         </div>
       </div>
     </div>
@@ -384,7 +379,7 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative-button {
-  border-radius: var(--radius-b);
+  border-radius: var(--radius-c);
   background: var(--primary-a);
   box-shadow: var(--shadow-a);
   justify-content: center;
@@ -393,9 +388,9 @@ onBeforeUnmount(() => {
   position: absolute;
   cursor: pointer;
   display: flex;
-  height: 2rem;
+  height: 2.5rem;
   bottom: 2rem;
-  width: 3rem;
+  width: 2.5rem;
   right: 3rem;
 }
 
