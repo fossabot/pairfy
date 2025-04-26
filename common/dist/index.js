@@ -40,3 +40,5 @@ __exportStar(require("./insertProduct"), exports);
 __exportStar(require("./findProductById"), exports);
 __exportStar(require("./findProductBySku"), exports);
 __exportStar(require("./countries"), exports);
+__exportStar(require("./tiptapValidator"), exports);
+//////////////END
