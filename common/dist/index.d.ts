@@ -25,3 +25,4 @@ export * from "./findProductById";
 export * from "./findProductBySku";
 export * from "./countries";
 export * from "./tiptapValidator";
+export * from "./sanitizeArrayGraphQL";

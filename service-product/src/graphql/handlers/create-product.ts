@@ -6,7 +6,8 @@ import {
   findProductById,
   findProductBySku,
   createEvent,
-  sanitizeTiptapContent
+  sanitizeTiptapContent,
+  sanitizeArrayGraphQL
 } from "@pairfy/common";
 import database from "../../database/client.js";
 import { createProductSchema } from "../../validators/create-product.js";
@@ -15,6 +16,10 @@ export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
+    
+    args.createProductInput.bullet_list = sanitizeArrayGraphQL(args.createProductInput.bullet_list) 
+
+
     const validateParams = createProductSchema.safeParse(
       args.createProductInput
     );
