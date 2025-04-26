@@ -41,7 +41,7 @@
                     <div class="grid-title">
                         <span>Product Origin</span>
 
-                        <TipComp text="Location from which the product is shipped." position="right">
+                        <TipComp text="National or international location from where the supplier or seller ships the product to the buyer." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
