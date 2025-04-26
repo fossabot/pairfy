@@ -6,15 +6,18 @@
       <div v-for="(item, index) in items" :key="index" class="item">
         <textarea
           v-model="items[index]"
+          ref="textareas"
           placeholder="•"
           :maxlength="maxLength"
           class="textarea"
           :class="{ 'is-invalid': showError[index] }"
           :aria-invalid="showError[index]"
           @focus="onFocus(index)"
-          @input="onInput(index)"
+          @input="(e) => onInput(index, e)"
         />
-        <p v-if="showError[index]" class="error-text">{{ errorMessages[index] }}</p>
+        <p class="error-text" :class="{ visible: showError[index] }">
+          {{ showError[index] ? errorMessages[index] : '‎' }}
+        </p>
       </div>
     </div>
   </div>
@@ -40,7 +43,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue', 'valid'])
 
-const bulletRegex = /^[\w\s.,'-]{1,240}$/u
+const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u
 
 const items = ref([...props.modelValue])
 const touched = ref<boolean[]>(items.value.map(() => false))
@@ -54,11 +57,16 @@ function onFocus(index: number) {
   }
 }
 
-function onInput(index: number) {
+function onInput(index: number, event: Event) {
+  const textarea = event.target as HTMLTextAreaElement
+
+
+  textarea.style.height = 'auto'
+  textarea.style.height = textarea.scrollHeight + 'px'
+
   validateItem(index)
 
   emit('update:modelValue', items.value)
-
   emitValidEvent()
 }
 
@@ -114,10 +122,10 @@ function emitValidEvent() {
 
 .textarea {
   width: 100%;
-  height: 3rem;
-  max-height: 8rem;
-  resize: vertical;
-  line-height: 1.5;
+  height: 43px;
+  max-height: 12rem;
+  resize: none; 
+  overflow-y: hidden;
   font-family: inherit;
   padding: 0.75rem 1rem;
   box-sizing: border-box;
@@ -156,6 +164,12 @@ function emitValidEvent() {
 .error-text {
   font-size: var(--text-size-0);
   margin-top: 0.25rem;
+  min-height: 1.2rem; 
+  visibility: hidden;
   color: red;
+}
+
+.error-text.visible {
+  visibility: visible;
 }
 </style>
