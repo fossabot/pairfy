@@ -12,7 +12,7 @@ resources:
     memory: "512Mi"
     cpu: "500m"
   limits:
-    memory: "1Gi" 
+    memory: "1Gi"
     cpu: "1000m"
 
 weaviate:
@@ -27,16 +27,18 @@ weaviate:
       anonymousAccess:
         enabled: true
     replication:
-      factor: 2 
+      factor: 2
+    query:
+      port: 8003
 
 service:
   type: LoadBalancer
-  port: 8080
+  port: 8003
 
 livenessProbe:
   httpGet:
     path: /v1/.well-known/ready
-    port: 8080
+    port: 8003
   initialDelaySeconds: 20
   periodSeconds: 10
   timeoutSeconds: 5
@@ -45,7 +47,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /v1/.well-known/ready
-    port: 8080
+    port: 8003
   initialDelaySeconds: 20
   periodSeconds: 10
   timeoutSeconds: 5
