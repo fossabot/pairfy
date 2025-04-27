@@ -386,13 +386,13 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1.5rem;
+    padding: 2rem;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .grid-title {
@@ -420,7 +420,7 @@ const onCreateProduct = async () => {
     border: 1px solid var(--border-a);
     background: var(--background-a);
     border-radius: var(--radius-c);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     padding: 1.5rem;
 }
 
