@@ -1,5 +1,12 @@
 <template>
-  <div class="p-InputSelect" ref="dropdownRef" @blur="validate(props.modelValue)" tabindex="0">
+  <div
+    class="p-InputSelect"
+    ref="dropdownRef"
+    @blur="validate(props.modelValue)"
+    @keydown.enter.prevent="toggleDropdown"
+    @keydown.space.prevent="toggleDropdown"
+    tabindex="0"
+  >
     <label :for="props.id" class="title-text">{{ label }}</label>
 
     <!-- Display -->
@@ -48,34 +55,36 @@
     </div>
 
     <!-- Dropdown -->
-    <ul
-      v-if="isOpen"
-      :id="`${props.id}-listbox`"
-      class="dropdown-list"
-      role="listbox"
-    >
-      <li
-        v-for="option in options"
-        :key="option.code"
-        class="dropdown-item"
-        @click.stop="select(option)"
-        :id="`option-${option.code}`"
-        role="option"
+    <transition name="fade">
+      <ul
+        v-if="isOpen"
+        :id="`${props.id}-listbox`"
+        class="dropdown-list"
+        role="listbox"
       >
-        <slot name="option" :option="option">
-          <span class="flex items-center gap-2">
-            <img
-              :src="`/flags/${option.code}.svg`"
-              @error="onFlagError"
-              class="flag-icon"
-              alt=""
-              aria-hidden="true"
-            />
-            {{ option.label }}
-          </span>
-        </slot>
-      </li>
-    </ul>
+        <li
+          v-for="option in options"
+          :key="option.code"
+          class="dropdown-item"
+          @click.stop="select(option)"
+          :id="`option-${option.code}`"
+          role="option"
+        >
+          <slot name="option" :option="option">
+            <span class="flex items-center gap-2">
+              <img
+                :src="`/flags/${option.code}.svg`"
+                @error="onFlagError"
+                class="flag-icon"
+                alt=""
+                aria-hidden="true"
+              />
+              {{ option.label }}
+            </span>
+          </slot>
+        </li>
+      </ul>
+    </transition>
 
     <!-- Error -->
     <p
@@ -140,21 +149,20 @@ function handleClickOutside(e) {
 
 function onFlagError(event) {
   event.target.src = '/flags/default.svg'
+  console.warn(`⚠️ Flag not found for ${event.target.src}, loading default.`)
 }
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
+  document.addEventListener('click', handleClickOutside, { passive: true })
 })
 
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-
 watch(() => props.modelValue, (newVal) => {
   validate(newVal)
 })
-
 
 watch(
   () => props.invalid,
@@ -263,11 +271,17 @@ watch(
   object-fit: contain;
 }
 
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }
