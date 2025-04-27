@@ -235,7 +235,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductDiscount v-model="discountData" />
+                        <InputProductDiscount v-model="productDiscount" />
                     </div>
                 </div>
 
@@ -288,14 +288,6 @@ const onValidCountry = (event) => {
     countryValid.value = event
 }
 
-const productFeatures = ref(Array(4).fill(''))
-
-const discountData = ref({
-    enabled: false,
-    price: 1000,
-    discount: 10,
-})
-
 const productName = ref(null)
 const productPrice = ref(null)
 const productSku = ref(null)
@@ -309,6 +301,17 @@ const productBulletlist = ref(null)
 const productCategory = ref(null)
 const productCondition = ref(null)
 const productColor = ref(null)
+
+const productDiscount = ref({
+  enabled: false,
+  price: productPrice.value,
+  discount: 0,
+})
+
+watch(productPrice, (newPrice) => {
+  productDiscount.value.price = newPrice
+})
+
 
 const validateParams = () => {
     const params = [
@@ -358,8 +361,8 @@ const onCreateProduct = async () => {
             "origin": productOrigin.value,
             "city": productCity.value,
             "postal": productPostal.value,
-            "discount": true,
-            "discount_value": 50
+            "discount": productDiscount.value.enabled,
+            "discount_value": productDiscount.value.discount 
         },
         async onResponseError({ response }) {
             throw new Error(JSON.stringify(response._data.data));

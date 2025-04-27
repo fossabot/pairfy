@@ -175,7 +175,6 @@ function emitValidEvent() {
   margin-top: 1rem;
   min-height: 1.2rem; 
   visibility: hidden;
-  color: red;
   text-align: left;
 }
 

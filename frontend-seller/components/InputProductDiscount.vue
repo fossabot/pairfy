@@ -14,7 +14,7 @@
       <div v-if="enabled" class="input-group">
         <label for="discount" class="label-small">Discount (%)</label>
         <input id="discount" type="number" min="1" max="100" step="1" v-model.number="discountPercent"
-          class="discount-input" placeholder="e.g. 25" @keydown.prevent />
+          class="discount-input" placeholder="25" @keydown.prevent />
       </div>
     </Transition>
 
@@ -28,19 +28,33 @@
 <script setup lang="ts">
 const props = defineProps({
   label: { type: String, default: 'Enabled' },
-  modelValue: { type: Object as () => { enabled: boolean; price: number; discount: number }, required: true },
+  modelValue: {
+    type: Object as () => { enabled: boolean; price: number | null; discount: number },
+    required: true
+  },
   disabled: { type: Boolean, default: false },
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: { enabled: boolean; price: number; discount: number }): void
+  (e: 'update:modelValue', value: { enabled: boolean; price: number | null; discount: number }): void
 }>()
 
 const enabled = ref(props.modelValue.enabled)
-const originalPrice = ref(props.modelValue.price)
 const discountPercent = ref(props.modelValue.discount)
 
-watch([enabled, originalPrice, discountPercent], () => {
+
+const originalPrice = computed({
+  get: () => props.modelValue.price,
+  set: (val) => {
+    emit('update:modelValue', {
+      enabled: enabled.value,
+      price: val,
+      discount: discountPercent.value
+    })
+  }
+})
+
+watch([enabled, discountPercent], () => {
   emit('update:modelValue', {
     enabled: enabled.value,
     price: originalPrice.value,
@@ -53,6 +67,7 @@ const discountedPrice = computed(() => {
   return originalPrice.value * (1 - discountPercent.value / 100)
 })
 </script>
+
 
 <style scoped>
 .p-ProductDiscountComp {
@@ -134,11 +149,11 @@ const discountedPrice = computed(() => {
 .price-input,
 .discount-input {
   border: 1px solid var(--border-a, #ccc);
+  border-radius: var(--input-radius);
+  background: var(--background-a);
+  font-size: var(--text-size-1);
   box-sizing: border-box;
   padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  background: white;
   outline: none;
   width: 100%;
 }

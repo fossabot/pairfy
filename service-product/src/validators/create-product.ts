@@ -58,7 +58,7 @@ export const createProductSchema = z.object({
   city: z.string().min(1).max(40).regex(cityRegex, "Invalid city format"),
   postal: z.string().min(1).max(12).regex(postalRegex, "Invalid postal format"),
   discount: z.boolean(),
-  discount_value: z.number().int().nonnegative(),
+  discount_value: z.number().int().nonnegative().min(0).max(100),
 });
 
 
