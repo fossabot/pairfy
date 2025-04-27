@@ -59,7 +59,7 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-                        <InputSelect v-model="country" label="Country" placeholder="Select Country..."
+                        <InputSelect v-model="productOrigin" label="Country" 
                             :options="countries" @valid="productOrigin = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
@@ -196,7 +196,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputSelect v-model="country" :options="categories" label="Category" required>
+                        <InputSelect v-model="productCategory" :options="categories" label="Category" @valid="productCategory = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
@@ -307,8 +307,8 @@ const productCity = ref(null)
 const productPostal = ref(null)
 const productDescription = ref(null)
 const productBulletlist = ref(null)
+const productCategory = ref(null)
 
-watch(productBulletlist, (e)=> console.log(e))
 
 const validateParams = () => {
     const params = [
@@ -321,7 +321,8 @@ const validateParams = () => {
         !productCity.value,
         !productPostal.value,
         !productDescription.value,
-        !productBulletlist.value
+        !productBulletlist.value,
+        !productCategory.value
     ]
 
     console.log(params)
@@ -348,7 +349,7 @@ const onCreateProduct = async () => {
             "model": productModel.value,
             "brand": productBrand.value,
             "description": productDescription.value,
-            "category": "ropa",
+            "category": productCategory.value,
             "bullet_list": productBulletlist.value,
             "color": "azul",
             "condition_": "nuevo",
