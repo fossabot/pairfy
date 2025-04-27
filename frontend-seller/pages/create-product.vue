@@ -59,7 +59,7 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-                        <InputSelect v-model="productOrigin" label="Country" 
+                        <InputSelect v-model="productOrigin" label="Country *" 
                             :options="countries" @valid="productOrigin = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
@@ -196,7 +196,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputSelect v-model="productCategory" :options="categories" label="Category" @valid="productCategory = $event.value">
+                        <InputSelect v-model="productCategory" :options="categories" label="Category *" @valid="productCategory = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
