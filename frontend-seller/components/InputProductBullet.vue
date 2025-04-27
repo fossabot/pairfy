@@ -172,6 +172,7 @@ function emitValidEvent() {
 
 .error-text {
   font-size: var(--text-size-0);
+  color: var(--text-b);
   margin-top: 1rem;
   min-height: 1.2rem; 
   visibility: hidden;
