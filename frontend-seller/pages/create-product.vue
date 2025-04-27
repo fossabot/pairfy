@@ -339,7 +339,7 @@ const onCreateProduct = async () => {
     loading.value = true
 
     if (validateParams()) {
-        displayMessage("Please complete all required fields.", 'error', 30_000)
+        displayMessage("Please verify that all fields are filled out.", 'error', 30_000)
         loading.value = false
         return;
     }
