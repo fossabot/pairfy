@@ -1,6 +1,7 @@
-import { database } from "../../database/client.js";
+import  database  from "../../database/client.js";
 import { logger } from "../../utils/index.js";
 import { Client } from "@elastic/elasticsearch";
+import { CreateProduct } from "./CreateProduct.js";
 
 const searchClient = new Client({
   node: process.env.ELASTIC_NODE as string,
@@ -126,74 +127,6 @@ const updateProductIndex = async (payload: any): Promise<boolean> => {
   }
 };
 
-const CreateProduct = async (event: any, seq: number): Promise<boolean> => {
-  let response = null;
-
-  let connection = null;
-
-  try {
-    connection = await database.client.getConnection();
-
-    const [findProcessed] = await connection.execute(
-      "SELECT id FROM processed WHERE id = ? AND processed = ?",
-      [event.id, true]
-    );
-
-    if (findProcessed.length > 0) {
-      console.log("CreateProductRepeated");
-
-      return Promise.resolve(true);
-    }
-
-    const payload = JSON.parse(event.data);
-
-    await connection.beginTransaction();
-
-    ///////////////////////////////////////////////////////
-
-    const columns = Object.keys(payload);
-
-    const values = Object.values(payload);
-
-    const createScheme = `
-      INSERT INTO products (${columns.join(", ")})
-      VALUES (${columns.map(() => "?").join(", ")})
-    `;
-
-    await connection.execute(createScheme, values);
-
-    await connection.execute(
-      "INSERT INTO processed (id, seq, type, processed) VALUES (?, ?, ?, ?)",
-      [event.id, seq, event.type, true]
-    );
-
-    const elastic = await createProductIndex(payload);
-
-    if (!elastic) {
-      throw new Error("CreateProductElastic");
-    }
-
-    ///////////////////////////////////////////////////////
-
-    await connection.commit();
-
-    response = Promise.resolve(true);
-  } catch (err: any) {
-    logger.error(err);
-
-    if (connection) {
-      await connection.rollback();
-    }
-
-    response = Promise.resolve(false);
-  } finally {
-    if (connection) {
-      await connection.release();
-    }
-  }
-
-  return response;
-};
 
 const UpdateProduct = async (event: any, seq: number): Promise<boolean> => {
   let response = null;

@@ -4,72 +4,39 @@ import {
   jetstreamManager,
   ReplayPolicy,
 } from "@nats-io/jetstream";
-import { catchError, checkHandlerVariables, disableConnections, logger } from "./utils/index.js";
+import {
+  catchError,
+  checkHandlerVariables,
+  disableConnections,
+  errorEvents,
+  logger,
+} from "./utils/index.js";
 import { connect } from "@nats-io/transport-node";
-import { database } from "./database/client.js";
+import database from "./database/client.js";
 
 const main = async () => {
   try {
-    if (!process.env.POD_NAME) {
-      throw new Error("POD_NAME error");
-    }
+    const requiredEnvVars = [
+      "POD_NAME",
+      "STREAM_LIST",
+      "FILTER_SUBJECTS",
+      "SERVICE_NAME",
+      "CONSUMER_GROUP",
+      "DURABLE_NAME",
+      "DATABASE_HOST",
+      "DATABASE_PORT",
+      "DATABASE_USER",
+      "DATABASE_PASSWORD",
+      "DATABASE_NAME",
+    ];
 
-    if (!process.env.STREAM_LIST) {
-      throw new Error("STREAM_LIST error");
-    }
-
-    if (!process.env.FILTER_SUBJECTS) {
-      throw new Error("FILTER_SUBJECTS error");
-    }
-
-    if (!process.env.SERVICE_NAME) {
-      throw new Error("SERVICE_NAME error");
-    }
-
-    if (!process.env.CONSUMER_GROUP) {
-      throw new Error("CONSUMER_GROUP error");
-    }
-
-    if (!process.env.DURABLE_NAME) {
-      throw new Error("DURABLE_NAME error");
-    }
-
-    if (!process.env.DURABLE_NAME) {
-      throw new Error("DURABLE_NAME error");
-    }
-
-    if (!process.env.DATABASE_HOST) {
-      throw new Error("DATABASE_HOST error");
-    }
-
-    if (!process.env.DATABASE_PORT) {
-      throw new Error("DATABASE_PORT error");
-    }
-
-    if (!process.env.DATABASE_USER) {
-      throw new Error("DATABASE_USER error");
-    }
-
-    if (!process.env.DATABASE_PASSWORD) {
-      throw new Error("DATABASE_PASSWORD error");
-    }
-
-    if (!process.env.DATABASE_NAME) {
-      throw new Error("DATABASE_NAME error");
+    for (const varName of requiredEnvVars) {
+      if (!process.env[varName]) {
+        throw new Error(`${varName} error`);
+      }
     }
 
     checkHandlerVariables();
-
-    const errorEvents: string[] = [
-      "exit",
-      "SIGINT",
-      "SIGTERM",
-      "SIGQUIT",
-      "uncaughtException",
-      "unhandledRejection",
-      "SIGHUP",
-      "SIGCONT",
-    ];
 
     errorEvents.forEach((e: string) =>
       process.on(e, (err) => disableConnections(e, err))
@@ -81,7 +48,7 @@ const main = async () => {
 
     /////////////////////////////////////////////////////////////////////////
 
-    const databasePort = parseInt(process.env.DATABASE_PORT);
+    const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -114,8 +81,10 @@ const main = async () => {
     });
 
     const jetStream = jetStreamManager.jetstream();
+     
+    const streamListEnv  = process.env.STREAM_LIST as string;
 
-    const streamList = process.env.STREAM_LIST.split(",");
+    const streamList =streamListEnv.split(",");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 

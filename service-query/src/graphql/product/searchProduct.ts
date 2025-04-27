@@ -1,5 +1,5 @@
-import { logger } from "../../utils/index.js";
-import { searchClient } from "../../elastic/index.js";
+
+import { logger } from "@pairfy/common";
 import { searchProductInputSchema } from "../../validators/query.js";
 import { GraphQLError } from "graphql";
 
@@ -97,7 +97,7 @@ const processQueryParams = (query: any): any => {
 
   return body;
 };
-
+/*
 const searchIndex = async (query: any) => {
   let result: any = [];
 
@@ -114,7 +114,7 @@ const searchIndex = async (query: any) => {
     return result;
   }
 };
-
+*/
 const searchProduct = async (_: any, args: any, context: any) => {
   try {
     const params = args.searchProductInput;
@@ -133,10 +133,10 @@ const searchProduct = async (_: any, args: any, context: any) => {
         },
       });
     }
-
+/* 
     const search = await searchIndex(parsed.data);
 
-    return search;
+    return search; */
   } catch (err: any) {
     logger.error(err);
 

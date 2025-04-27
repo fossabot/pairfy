@@ -46,9 +46,20 @@ function checkHandlerVariables() {
   if (handlerVars.length === 0) {
     logger.info("[WARNING]: No HANDLER_ environment variables found");
   }
-  
+
   return handlerVars;
 }
+
+export const errorEvents: string[] = [
+  "exit",
+  "SIGINT",
+  "SIGTERM",
+  "SIGQUIT",
+  "uncaughtException",
+  "unhandledRejection",
+  "SIGHUP",
+  "SIGCONT",
+];
 
 export {
   logger,

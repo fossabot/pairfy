@@ -1,106 +1,71 @@
 import express from "express";
 import http from "http";
-import cors from "cors";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import { catcher, checkRedis, errorEvents, logger } from "./utils/index.js";
+import { catchError, checkRedis, errorEvents } from "./utils/index.js";
 import { assets, feed, products } from "./graphql/resolvers.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { redisClient } from "./database/redis.js";
-import { createProductIndex } from "./elastic/index.js";
-
-const app = express();
-
-const httpServer = http.createServer(app);
-
-const resolvers = {
-  Query: {
-    ...products.Query,
-    ...assets.Query,
-    ...feed.Query
-  },
-};
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-  formatError: (error) => {
-    logger.error(error);
-
-    return {
-      message: error.message,
-      details: error.message,
-      code: "INTERNAL_SERVER_ERROR",
-    };
-  },
-});
+import { GraphQLError } from "graphql";
+import { getPublicAddress, logger, normalizeGraphError, RateLimiter } from "@pairfy/common";
 
 const main = async () => {
   try {
-    if (!process.env.POD_TIMEOUT) {
-      throw new Error("POD_TIMEOUT error");
+    const requiredEnvVars = [
+      "DATABASE_HOST",
+      "DATABASE_PORT",
+      "DATABASE_USER",
+      "DATABASE_PASSWORD",
+      "DATABASE_NAME",
+      "REDIS_HOST",
+      "REDIS_RATELIMIT_URL",
+    ];
+
+    for (const varName of requiredEnvVars) {
+      if (!process.env[varName]) {
+        throw new Error(`${varName} error`);
+      }
     }
 
-    if (!process.env.EXPRESS_PORT) {
-      throw new Error("EXPRESS_PORT error");
-    }
+    errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
 
-    if (!process.env.EXPRESS_TIMEOUT) {
-      throw new Error("EXPRESS_TIMEOUT error");
-    }
+    ///////////////////////////////////////////////////////////////////////////////////
 
-    if (!process.env.CORS_DOMAINS) {
-      throw new Error("CORS_DOMAINS error");
-    }
+    const app = express();
 
-    if (!process.env.DATABASE_HOST) {
-      throw new Error("DATABASE_HOST error");
-    }
+    const httpServer = http.createServer(app);
 
-    if (!process.env.DATABASE_PORT) {
-      throw new Error("DATABASE_PORT error");
-    }
+    const resolvers = {
+      Query: {
+        ...products.Query,
+        ...assets.Query,
+        ...feed.Query,
+      },
+    };
 
-    if (!process.env.DATABASE_USER) {
-      throw new Error("DATABASE_USER error");
-    }
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 
-    if (!process.env.DATABASE_PASSWORD) {
-      throw new Error("DATABASE_PASSWORD error");
-    }
+      formatError: (formattedError, error) => {
+        let original: unknown = error;
 
-    if (!process.env.DATABASE_NAME) {
-      throw new Error("DATABASE_NAME error");
-    }
+        if (error instanceof GraphQLError && error.originalError) {
+          original = error.originalError;
+        }
 
-    if (!process.env.REDIS_HOST) {
-      throw new Error("REDIS_HOST error");
-    }
+        return normalizeGraphError(original);
+      },
+    });
 
-    if (!process.env.REDIS_HOST) {
-      throw new Error("REDIS_HOST error");
-    }
-
-    if (!process.env.REDIS_HOST) {
-      throw new Error("REDIS_HOST error");
-    }
-
-    if (!process.env.ELASTIC_ENDPOINT) {
-      throw new Error("ELASTIC_ENDPOINT error");
-    }
-
-    if (!process.env.ELASTIC_API_KEY) {
-      throw new Error("ELASTIC_API_KEY error");
-    }
-
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+    const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
     database.connect({
       host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT) || 3306,
+      port: databasePort,
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
@@ -113,30 +78,22 @@ const main = async () => {
         keepAlive: 100000,
       })
       .then(() => checkRedis(redisClient))
-      .catch((err: any) => catcher(err));
+      .catch((err: any) => catchError(err));
 
-    const elastic = await createProductIndex();
+    app.set("trust proxy", 1);
+    
+    app.use(getPublicAddress);
 
-    if (!elastic) {
-      throw new Error("ELASTIC");
-    }
+    const rateLimiter = new RateLimiter(
+      process.env.REDIS_RATELIMIT_URL as string
+    );
 
-    const corsOptions = {
-      origin: process.env.CORS_DOMAINS.split(",") || "*",
-      credentials: true,
-      maxAge: 86400,
-      preflightContinue: false,
-      exposedHeaders: ["Set-Cookie", "Cookie"],
-      optionsSuccessStatus: 204,
-    };
-
-    app.options("*", cors(corsOptions));
+    app.use(rateLimiter.getMiddleware());
 
     await server.start();
 
     app.use(
       "/api/query/graphql",
-      cors<cors.CorsRequest>(corsOptions),
       express.json(),
       expressMiddleware(server, {
         context: async ({ req }) => ({}),
@@ -144,12 +101,12 @@ const main = async () => {
     );
 
     await new Promise<void>((resolve) =>
-      httpServer.listen({ port: 4000 }, resolve)
+      httpServer.listen({ port: 8004 }, resolve)
     );
 
     logger.info("ONLINE");
   } catch (err) {
-    catcher(err);
+    catchError(err);
   }
 };
 

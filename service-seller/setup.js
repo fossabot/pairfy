@@ -24,28 +24,28 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
       multipleStatements: true,
     });
 
-    console.log("✅ Conectado al servidor MySQL");
+    console.log("✅ Connected to MySQL server");
 
-    // Crear base de datos si no existe
+    // Create database if it does not exist
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${DATABASE_NAME}\`;`);
     await connection.query(`USE \`${DATABASE_NAME}\`;`);
-    console.log(`✅ Base de datos '${DATABASE_NAME}' verificada y seleccionada.`);
+    console.log(`✅ Database '${DATABASE_NAME}' verified and selected.`);
 
-    // 🗂 Lista de archivos SQL a ejecutar (en orden)
+    // 🗂 List of SQL files to execute (in order)
     const sqlFiles = ['events.sql', 'sellers.sql'];
 
     for (const file of sqlFiles) {
-      console.log(`📄 Ejecutando ${file}...`);
+      console.log(`📄 Executing ${file}...`);
       const sql = loadSql(file);
       await connection.query(sql);
-      console.log(`✅ ${file} ejecutado correctamente.`);
+      console.log(`✅ ${file} executed successfully.`);
     }
 
     await connection.end();
-    console.log("🚪 Conexión cerrada.");
+    console.log("🚪 Connection closed.");
 
   } catch (err) {
-    console.error("❌ Error durante el setup:", err.message);
+    console.error("❌ Error during setup:", err.message);
     process.exit(1);
   }
 })();

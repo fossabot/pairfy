@@ -1,9 +1,15 @@
 import  database  from "../../database/client.js";
-import { logger } from "../../utils/index.js";
-import { sendEmail } from "./send-email.js";
-import { isProcessedEvent, consumedEvent } from '@pairfy/common'
+import {
+  isProcessedEvent,
+  consumedEvent,
+  logger,
+  insertProduct,
+} from "@pairfy/common";
 
-const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
+export const CreateProduct = async (
+  event: any,
+  seq: number
+): Promise<boolean> => {
   let response = null;
 
   let connection = null;
@@ -23,13 +29,15 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
 
     ///////////////////////////////////////////////////////
 
-    await sendEmail(dataParsed.type, dataParsed.email, dataParsed);
+    const [productCreated] = await insertProduct(connection, dataParsed);
 
-    console.log("EMAIL_SEND");
-
-    ///////////////////////////////////////////////////////
+    if (productCreated.affectedRows !== 1) {
+      throw new Error("CreateProductError");
+    }
 
     await consumedEvent(connection, event, seq);
+
+    ///////////////////////////////////////////////////////
 
     await connection.commit();
 
@@ -49,18 +57,4 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
   }
 
   return response;
-};
-
-const handlers: any = {
-  CreateEmail,
-};
-
-export const processEvent = (message: any) => {
-  const messageDecoded = new TextDecoder().decode(message.data);
-
-  const event = JSON.parse(messageDecoded);
-
-  console.log(message.seq, event.id, event.type);
-
-  return handlers[event.type](event, message.seq);
 };

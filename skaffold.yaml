@@ -67,6 +67,14 @@ build:
             dest: .
           - src: 'requirements.txt'
             dest: .
+    - image: pairfy/service-query
+      context: service-query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .  
 deploy:
   statusCheckDeadlineSeconds: 540
   kubectl:
@@ -90,3 +98,8 @@ portForward:
     namespace: default
     port: 8002
     localPort: 8002
+  - resourceType: service
+    resourceName: service-query
+    namespace: default
+    port: 8004
+    localPort: 8004    

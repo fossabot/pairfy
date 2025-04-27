@@ -39,26 +39,17 @@ spec:
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-password
-                  key: password  
-            - name: ELASTIC_ENDPOINT
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-endpoint
-                  key: key    
-            - name: ELASTIC_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-api-key
-                  key: key                                    
+                  name: database-password-secret
+                  key: password                                  
             - name: DATABASE_NAME
               value: service_query       
             - name: DATABASE_USER
               value: marketplace    
             - name: REDIS_HOST
-              value: redis://service-state-redis:6379                                                                                                                                                                                                  
-            - name: CORS_DOMAINS
-              value: "http://localhost:5173,http://localhost:5174,http://localhost:8080,http://localhost:8081,http://localhost:443,localhost,https://pairfy.dev,https://dashboard.pairfy.dev"                          
+              value: redis://service-state-redis:6379    
+            - name : REDIS_RATELIMIT_URL
+              value: "redis://redis-limiter:6379"
+                                                                                                                                                                                                                                        
           resources:
             limits:
               memory: "500Mi"
@@ -75,5 +66,5 @@ spec:
   ports:
     - name: service-query
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 8004
+      targetPort: 8004
