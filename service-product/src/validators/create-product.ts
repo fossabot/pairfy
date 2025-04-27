@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ISOCountries } from "../utils";
+import { categoryCodes, ISOCountries } from "../utils";
 import { TiptapDocumentSchema } from "@pairfy/common";
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u;
@@ -30,7 +30,10 @@ export const createProductSchema = z.object({
   model: z.string().min(1).max(40).regex(modelRegex, "Invalid model format"),
   brand: z.string().min(1).max(40).regex(brandRegex, "Invalid brand format"),
   description: TiptapDocumentSchema,
-  category: z.string().min(1),
+  category: z.string().min(1).refine(
+    (val) => categoryCodes.includes(val),
+    { message: 'Invalid category code' }
+  ),
   bullet_list: z
     .array(
       z

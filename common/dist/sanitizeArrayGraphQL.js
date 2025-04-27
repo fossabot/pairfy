@@ -22,7 +22,7 @@ function sanitizeArrayGraphQL(input) {
             .filter(item => item.length > 0);
         return sanitizedArray;
     }
-    throw new index_1.ApiGraphQLError(400, 'Invalid bullet list symbols', {
+    throw new index_1.ApiGraphQLError(400, 'Must be array of strings', {
         code: index_1.ERROR_CODES.BAD_USER_INPUT
     });
 }
