@@ -45,7 +45,9 @@ export const createProductSchema = z.object({
         })
     )
     .min(1, { message: "At least one feature is required." }),
-  color: z.string().min(1),
+  color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, {
+    message: 'Invalid hex color format.',
+  }),
   condition_: z.enum(['new', 'used', 'refurbished']),
   origin: z
     .string()

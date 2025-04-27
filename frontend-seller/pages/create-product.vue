@@ -208,9 +208,8 @@
                     <div class="grid-item">
                         <InputProductCondition @valid="productCondition = $event.value"/>
                     </div>
-
                     <div class="grid-item">
-                        <InputProductColor />
+                        <InputProductColor @valid="productColor = $event.value"/>
                     </div>
                 </div>
 
@@ -309,6 +308,7 @@ const productDescription = ref(null)
 const productBulletlist = ref(null)
 const productCategory = ref(null)
 const productCondition = ref(null)
+const productColor = ref(null)
 
 const validateParams = () => {
     const params = [
@@ -323,7 +323,8 @@ const validateParams = () => {
         !productDescription.value,
         !productBulletlist.value,
         !productCategory.value,
-        !productCondition.value
+        !productCondition.value,
+        !productColor.value
     ]
 
     console.log(params)
@@ -352,7 +353,7 @@ const onCreateProduct = async () => {
             "description": productDescription.value,
             "category": productCategory.value,
             "bullet_list": productBulletlist.value,
-            "color": "azul",
+            "color": productColor.value,
             "condition_": productCondition.value,
             "origin": productOrigin.value,
             "city": productCity.value,
