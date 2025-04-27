@@ -30,7 +30,7 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
-  (e: 'valid', value: boolean): void
+  (e: 'valid', payload: { valid: boolean; value: string | null }): void
 }>()
 
 const options = ['new', 'used', 'refurbished'] as const
@@ -46,7 +46,6 @@ watch(internalValue, (val) => {
   validate(val)
 })
 
-
 const selectOption = (val: string) => {
   internalValue.value = val
 }
@@ -58,10 +57,10 @@ const messages = {
 const validate = (val: string) => {
   if (props.required && !val) {
     errorMessage.value = messages.required
-    emit('valid', false)
+    emit('valid', { valid: false, value: null })
   } else {
     errorMessage.value = ''
-    emit('valid', true)
+    emit('valid', { valid: true, value: val })
   }
 }
 

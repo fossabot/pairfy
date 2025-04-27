@@ -59,7 +59,7 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-                        <InputSelect v-model="productOrigin" label="Country *" 
+                        <InputSelect v-model="productOrigin" label="Country" 
                             :options="countries" @valid="productOrigin = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
@@ -196,7 +196,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputSelect v-model="productCategory" :options="categories" label="Category *" @valid="productCategory = $event.value">
+                        <InputSelect v-model="productCategory" :options="categories" label="Category" @valid="productCategory = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
@@ -206,7 +206,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductCondition />
+                        <InputProductCondition @valid="productCondition = $event.value"/>
                     </div>
 
                     <div class="grid-item">
@@ -308,7 +308,7 @@ const productPostal = ref(null)
 const productDescription = ref(null)
 const productBulletlist = ref(null)
 const productCategory = ref(null)
-
+const productCondition = ref(null)
 
 const validateParams = () => {
     const params = [
@@ -322,7 +322,8 @@ const validateParams = () => {
         !productPostal.value,
         !productDescription.value,
         !productBulletlist.value,
-        !productCategory.value
+        !productCategory.value,
+        !productCondition.value
     ]
 
     console.log(params)
@@ -352,7 +353,7 @@ const onCreateProduct = async () => {
             "category": productCategory.value,
             "bullet_list": productBulletlist.value,
             "color": "azul",
-            "condition_": "nuevo",
+            "condition_": productCondition.value,
             "origin": productOrigin.value,
             "city": productCity.value,
             "postal": productPostal.value,

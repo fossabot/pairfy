@@ -46,7 +46,7 @@ export const createProductSchema = z.object({
     )
     .min(1, { message: "At least one feature is required." }),
   color: z.string().min(1),
-  condition_: z.string().min(1),
+  condition_: z.enum(['new', 'used', 'refurbished']),
   origin: z
     .string()
     .length(2)
