@@ -14,6 +14,9 @@ export async function createProduct(productData: any): Promise<void> {
   });
 
   try {
+    if (!productData.id_) {
+      throw new Error("❌ Missing 'id_' field in productData. Cannot create product without a business id.");
+    }
 
     const textToEmbed = `${productData.name} ${JSON.stringify(
       productData.description
@@ -36,7 +39,9 @@ export async function createProduct(productData: any): Promise<void> {
     await client.data
       .creator()
       .withClassName("ProductV1")
+      // 🔥 NO usamos .withId(), dejamos que Weaviate genere su UUID
       .withProperties({
+        id_: productData.id_, // 👈 Guardamos el id de negocio aquí
         group_id: productData.group_id,
         state: productData.state || "created",
         moderated: productData.moderated ?? false,
@@ -72,7 +77,9 @@ export async function createProduct(productData: any): Promise<void> {
   }
 }
 
+
 const product: any = {
+  id_: "product-001", 
   group_id: "group-001",
   seller_id: "seller-abc",
   thumbnail_url: "https://example.com/product.jpg",
@@ -81,7 +88,7 @@ const product: any = {
   sku: "SKU-001",
   model: "WH-1000XM5",
   brand: "Sony",
-  description: { type: "doc", content: [] }, 
+  description: { type: "doc", content: [] },
   category: "Electronics",
   bullet_list: ["Bluetooth 5.0", "Noise Cancelling", "30h Battery"],
   color: "Black",
@@ -94,8 +101,8 @@ const product: any = {
   discount_value: 20,
 };
 
-const main = async () =>{
+const main = async () => {
   await createProduct(product);
-}
+};
 
-main()
+main();
