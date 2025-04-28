@@ -14,12 +14,11 @@ export async function createProduct(productData: any): Promise<void> {
   });
 
   try {
-    // 🚀 Paso 1: Preparar el texto para embedding
+
     const textToEmbed = `${productData.name} ${JSON.stringify(
       productData.description
     )} ${productData.category}`;
 
-    // 🚀 Paso 2: Obtener embedding de Ollama
     const embeddingResponse = await axios.post<{ embedding: number[] }>(
       `http://${OLLAMA_HOST}/api/embeddings`,
       {
