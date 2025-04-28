@@ -4,7 +4,7 @@ import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import database  from "./database/client.js";
+import database from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { catchError } from "./utils/index.js";
@@ -15,7 +15,7 @@ import {
   normalizeGraphError,
   sellerRequiredGraphQL,
   logger,
-  getPublicAddress
+  getPublicAddress,
 } from "@pairfy/common";
 
 const main = async () => {
@@ -28,7 +28,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "REDIS_RATELIMIT_URL"
+      "REDIS_RATELIMIT_URL",
     ];
 
     for (const varName of requiredEnvVars) {
@@ -72,14 +72,13 @@ const main = async () => {
 
       formatError: (formattedError, error) => {
         let original: unknown = error;
-      
+
         if (error instanceof GraphQLError && error.originalError) {
           original = error.originalError;
         }
-      
+
         return normalizeGraphError(original);
-      }
-      
+      },
     });
 
     const databasePort = parseInt(process.env.DATABASE_PORT as string);
@@ -93,19 +92,23 @@ const main = async () => {
     });
 
     const sessionOptions: object = {
-      name: 'session',
-      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      name: "session",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       signed: false,
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     };
-    
+
     app.set("trust proxy", 1);
-    
-    app.use(getPublicAddress);
 
     app.use(cookieSession(sessionOptions));
+
+    app.use(express.json({ limit: "5mb" }));
+
+    app.use(express.urlencoded({ limit: "5mb", extended: true }));
+
+    app.use(getPublicAddress);
 
     app.use(sellerMiddleware);
 
@@ -121,7 +124,6 @@ const main = async () => {
 
     app.use(
       "/api/product/graphql",
-      express.json(),
       expressMiddleware(server, {
         context: async ({ req }) => ({ sellerData: req.sellerData }),
       })
@@ -133,7 +135,7 @@ const main = async () => {
 
     logger.info("ONLINE");
   } catch (err) {
-    catchError(err)
+    catchError(err);
   }
 };
 
