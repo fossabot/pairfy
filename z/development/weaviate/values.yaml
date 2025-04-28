@@ -16,9 +16,11 @@ resources:
     cpu: "1000m"
 
 weaviate:
-  modules:
-    enabled: true
   config:
+    modules:
+      text2vec-generic:
+        enabled: true
+        endpoint: http://ollama.default.svc.cluster.local:11434
     persistence:
       enabled: true
     cluster:
@@ -29,12 +31,12 @@ weaviate:
     replication:
       factor: 2
     query:
-      port: 8080   # <== Weaviate HTTP
+      port: 8080
     grpc:
-      port: 50051  # <== gRPC server 
+      port: 50051
     monitoring:
       metrics:
-        port: 2112 # <== Prometheus 
+        port: 2112
 
 service:
   type: LoadBalancer
@@ -63,3 +65,9 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 3
+  
+env:
+  ENABLE_MODULES: "text2vec-generic"
+  DEFAULT_VECTORIZER_MODULE: "text2vec-generic"
+  TEXT2VEC_GENERIC_ENDPOINT: "http://ollama.default.svc.cluster.local:11434"
+  RAFT_BOOTSTRAP_EXPECT: "1"

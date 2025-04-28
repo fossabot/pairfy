@@ -4,5 +4,6 @@ helm repo update
 
 helm install weaviate weaviate/weaviate -f values.yaml
 
-
 helm upgrade weaviate weaviate/weaviate -f values.yaml
+
+helm uninstall weaviate
