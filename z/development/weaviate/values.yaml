@@ -17,10 +17,6 @@ resources:
 
 weaviate:
   config:
-    modules:
-      text2vec-generic:
-        enabled: true
-        endpoint: http://ollama.default.svc.cluster.local:11434
     persistence:
       enabled: true
     cluster:
@@ -65,9 +61,3 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 5
   failureThreshold: 3
-  
-env:
-  ENABLE_MODULES: "text2vec-generic"
-  DEFAULT_VECTORIZER_MODULE: "text2vec-generic"
-  TEXT2VEC_GENERIC_ENDPOINT: "http://ollama.default.svc.cluster.local:11434"
-  RAFT_BOOTSTRAP_EXPECT: "1"
