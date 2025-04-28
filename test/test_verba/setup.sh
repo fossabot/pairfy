@@ -18,10 +18,11 @@ curl -X POST http://localhost:8080/v1/schema \
       {
         "name": "content",
         "dataType": ["text"],
-        "description": "Content text to embed"
+        "description": "Content to be embedded and searched."
       }
     ]
 }'
+
 
 
 
