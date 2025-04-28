@@ -1,9 +1,9 @@
 import weaviate from "weaviate-ts-client";
 
-export async function findProduct(sku: string): Promise<any | null> {
+export async function findProductById(id_: string): Promise<any | null> {
   const WEAVIATE_HOST = process.env.WEAVIATE_HOST || "localhost:8080";
 
-  console.log("🔍 Searching product with SKU:", sku);
+  console.log("🔍 Searching product with id_:", id_);
 
   const client = weaviate.client({
     scheme: "http",
@@ -15,6 +15,7 @@ export async function findProduct(sku: string): Promise<any | null> {
       .get()
       .withClassName("ProductV1")
       .withFields(`
+        id_
         group_id
         seller_id
         name
@@ -37,16 +38,16 @@ export async function findProduct(sku: string): Promise<any | null> {
         updated_at
       `)
       .withWhere({
-        path: ["sku"],
+        path: ["id_"], 
         operator: "Equal",
-        valueText: sku,
+        valueText: id_,
       })
       .do();
 
     const products = response.data?.Get?.ProductV1 || [];
 
     if (products.length === 0) {
-      console.log("⚠️ No product found with that SKU.");
+      console.log("⚠️ No product found with that id_.");
       return null;
     }
 
@@ -60,18 +61,17 @@ export async function findProduct(sku: string): Promise<any | null> {
 
 
 const main = async () => {
-    try {
-      const sku = "SKU-001"; 
-      const product = await findProduct(sku);
-  
-      if (!product) {
-        console.log("No product found.");
-      } 
-    } catch (error) {
-      console.error(error);
-      process.exit(1);
+  try {
+    const id_ = "product-001"; 
+    const product = await findProductById(id_);
+
+    if (!product) {
+      console.log("No product found.");
     }
-  };
-  
-  main();
-  
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+main();
