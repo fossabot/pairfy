@@ -2,7 +2,6 @@ import cookieSession from "cookie-session";
 import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
-import { json } from "body-parser";
 import { getPublicAddress, RateLimiter } from "@pairfy/common";
 
 const app = express();
@@ -20,11 +19,13 @@ app.set("trust proxy", 1);
 
 app.use(helmet());
 
-app.use(json({ limit: '5mb' }));
+app.use(express.json({ limit: '5mb' }));
 
-app.use(getPublicAddress);
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 app.use(cookieSession(sessionOptions));
+
+app.use(getPublicAddress);
 
 const rateLimiter = new RateLimiter(process.env.REDIS_RATE_LIMIT as string);
 

@@ -1,6 +1,6 @@
-import database from "../database";
+import database from "../database/index.js";
 import { Request, Response } from "express";
-import { validateParams, RegistrationInput } from "../validators/create-seller";
+import { validateParams, RegistrationInput } from "../validators/create-seller.js";
 import {
   ApiError,
   ERROR_CODES,

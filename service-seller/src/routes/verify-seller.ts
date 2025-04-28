@@ -1,4 +1,4 @@
-import database from "../database";
+import database from "../database/index.js";
 import {
   verifyToken,
   findSellerByEmail,
@@ -10,7 +10,7 @@ import { Request, Response } from "express";
 import {
   tokenTypeValidator,
   tokenValidator,
-} from "../validators/verify-seller";
+} from "../validators/verify-seller.js";
 
 const verifySellerMiddlewares: any = [];
 

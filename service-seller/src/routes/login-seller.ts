@@ -1,10 +1,9 @@
 import Cardano from "@emurgo/cardano-serialization-lib-nodejs";
-import database from "../database";
+import database from "../database/index.js";
 import { Request, Response } from "express";
 import {
   ApiError,
   ERROR_CODES,
-  logger,
   createToken,
   comparePassword,
   SellerToken,
@@ -12,9 +11,9 @@ import {
   findSellerByEmail,
   updateSeller
 } from "@pairfy/common";
-import { getPubKeyHash } from "../utils/blockchain";
+import { getPubKeyHash } from "../utils/blockchain.js";
 import  verifyDataSignature  from '@cardano-foundation/cardano-verify-datasignature';
-import { LoginInput, validateParams } from "../validators/login-seller";
+import { LoginInput, validateParams } from "../validators/login-seller.js";
 
 const loginSellerMiddlewares: any = [sellerMiddleware, validateParams];
 

@@ -1,5 +1,5 @@
-const mysql = require('mysql2/promise');
-const { loadSql } = require('@pairfy/common');
+import mysql from 'mysql2/promise';
+import { loadSql } from '@pairfy/common';
 
 const {
   DATABASE_HOST,
@@ -18,7 +18,7 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
   try {
     const connection = await mysql.createConnection({
       host: DATABASE_HOST,
-      port: parseInt(DATABASE_PORT) || 3306,
+      port: DATABASE_PORT ? parseInt(DATABASE_PORT, 10) : 3306,
       user: DATABASE_USER,
       password: DATABASE_PASSWORD,
       multipleStatements: true,
@@ -32,11 +32,11 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
     console.log(`✅ Database '${DATABASE_NAME}' verified and selected.`);
 
     // 🗂 List of SQL files to execute (in order)
-    const sqlFiles = ['events.sql', 'sellers.sql'];
+    const sqlFiles: string[] = ['events.sql', 'sellers.sql'];
 
     for (const file of sqlFiles) {
       console.log(`📄 Executing ${file}...`);
-      const sql = loadSql(file);
+      const sql: string = loadSql(file);
       await connection.query(sql);
       console.log(`✅ ${file} executed successfully.`);
     }
@@ -45,7 +45,8 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
     console.log("🚪 Connection closed.");
 
   } catch (err) {
-    console.error("❌ Error during setup:", err.message);
+    const error = err as Error;
+    console.error("❌ Error during setup:", error.message);
     process.exit(1);
   }
 })();

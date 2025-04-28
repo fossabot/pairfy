@@ -1,10 +1,10 @@
-import * as route from "./routes";
-import database from "./database";
+import * as route from "./routes/index.js";
+import database from "./database/index.js";
 import compression from "compression";
 import { logger } from "@pairfy/common";
-import { catchError } from "./utils";
-import { app } from "./app";
+import { catchError } from "./utils/index.js";
 import { ApiError, errorHandler } from "@pairfy/common";
+import { app } from "./app.js";
 
 const main = async () => {
   try {
