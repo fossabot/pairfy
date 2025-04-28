@@ -62,7 +62,7 @@ export async function findProductById(id_: string): Promise<any | null> {
 
 const main = async () => {
   try {
-    const id_ = "product-001"; 
+    const id_ = "product-002"; 
     const product = await findProductById(id_);
 
     if (!product) {

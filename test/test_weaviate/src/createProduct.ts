@@ -79,7 +79,7 @@ export async function createProduct(productData: any): Promise<void> {
 
 
 const product: any = {
-  id_: "product-001", 
+  id_: "product-002", 
   group_id: "group-001",
   seller_id: "seller-abc",
   thumbnail_url: "https://example.com/product.jpg",
