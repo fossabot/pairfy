@@ -18,7 +18,9 @@ curl -X POST http://localhost:8080/v1/schema \
       {
         "name": "content",
         "dataType": ["text"],
-        "description": "Content to be embedded and searched."
+        "description": "Content to be embedded and searched.",
+        "indexSearchable": true,
+        "tokenization": "word"
       }
     ]
 }'
@@ -31,3 +33,13 @@ curl http://localhost:8080/v1/schema/verba_embedding_llama3
 
 curl -X DELETE http://localhost:8080/v1/schema/verba_embedding_llama3
 
+
+
+curl -X POST http://localhost:8080/v1/objects \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "class": "verba_embedding_llama3",
+    "properties": {
+      "content": "This is an example product description that will be embedded and indexed."
+    }
+  }'
