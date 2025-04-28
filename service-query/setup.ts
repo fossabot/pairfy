@@ -80,7 +80,6 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
           description: "Product catalog entry",
           vectorizer: "none",
           properties: [
-            { name: "id", dataType: ["uuid"], indexFilterable: true },
             { name: "group_id", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
             { name: "state", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
             { name: "moderated", dataType: ["boolean"], indexFilterable: true },
