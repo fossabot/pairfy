@@ -8,6 +8,7 @@
         "deleteindex:product": "ts-node src/deleteIndexProduct.ts",
         "create:product": "ts-node src/createProduct.ts",
         "get:product": "ts-node src/findProduct.ts",
+        "search": "ts-node src/search.ts",
         "build": "tsc",
         "start:prod": "node dist/index.js",
         "lint": "npx eslint ./src --ext .ts",
