@@ -26,6 +26,8 @@ spec:
               value: "8000"
             - name: EXPRESS_TIMEOUT
               value: "120000"
+            - name: WEAVIATE_HOST
+              value: weaviate.default.svc.cluster.local:8080
             - name: DATABASE_HOST  
               valueFrom:
                 configMapKeyRef:

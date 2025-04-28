@@ -17,7 +17,7 @@ resources:
 
 weaviate:
   modules:
-    enabled: false
+    enabled: true
   config:
     persistence:
       enabled: true
@@ -29,16 +29,27 @@ weaviate:
     replication:
       factor: 2
     query:
-      port: 8003
+      port: 8080   # <== 🔥 Estándar oficial de Weaviate HTTP
+    grpc:
+      port: 50051  # <== 🚀 gRPC server standard port
+    monitoring:
+      metrics:
+        port: 2112 # <== 📊 Prometheus metrics standard port
 
 service:
   type: LoadBalancer
-  port: 8003
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: grpc
+      port: 50051
+      targetPort: 50051
 
 livenessProbe:
   httpGet:
     path: /v1/.well-known/ready
-    port: 8003
+    port: 8080
   initialDelaySeconds: 20
   periodSeconds: 10
   timeoutSeconds: 5
@@ -47,7 +58,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /v1/.well-known/ready
-    port: 8003
+    port: 8080
   initialDelaySeconds: 20
   periodSeconds: 10
   timeoutSeconds: 5
