@@ -114,7 +114,21 @@ skaffold run
 
 ### 2\. License
 
-Distributed under the MIT License.
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+This project, **Pairfy**, is free and open-source software licensed under the
+[GNU General Public License v3.0 or later](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
+You may redistribute and/or modify it under the terms of the GPL as published by
+the Free Software Foundation, either version 3 or (at your option) any later version.
+
+- **Project:** Pairfy  
+- **Description:** Decentralized e-commerce web application based on blockchain and artificial intelligence  
+- **Author:** Juan José Caballero Rey  
+- **Contact:** sudo.delete.evil@gmail.com  
+
+---
 
 ### 3\. Contact
 
