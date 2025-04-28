@@ -108,3 +108,8 @@ portForward:
     namespace: default
     port: 8080
     localPort: 8080    
+  - resourceType: service
+    resourceName: ollama
+    namespace: default 
+    port: 11434
+    localPort: 11434
