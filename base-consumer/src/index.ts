@@ -9,10 +9,10 @@ import {
   checkHandlerVariables,
   disableConnections,
   errorEvents,
-  logger,
 } from "./utils/index.js";
 import { connect } from "@nats-io/transport-node";
 import database from "./database/client.js";
+import { logger } from "@pairfy/common";
 
 const main = async () => {
   try {

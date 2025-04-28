@@ -1,19 +1,10 @@
-import { customAlphabet } from "nanoid";
-import { Logger } from "tslog";
-
-const logger = new Logger({
-  name: "POD",
-  prettyLogTemplate: "{{logLevelName}} {{dateIsoStr}} {{fileNameWithLine}}",
-  type: "pretty",
-});
+import { logger } from "@pairfy/common";
 
 const catchError = async (error?: any) => {
   logger.error(`EXIT=>${error}`);
 
   process.exit(0);
 };
-
-const generateId = customAlphabet("0123456789ABCDEFGHIKLMNOPQRSTUVWXYZ", 15);
 
 async function disableConnections(database: any, natsClient: any) {
   database.client.pool.config.connectionLimit = 0;
@@ -64,7 +55,6 @@ export const errorEvents: string[] = [
 export {
   logger,
   catchError,
-  generateId,
   disableConnections,
   sleep,
   checkHandlerVariables,
