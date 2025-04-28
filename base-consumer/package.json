@@ -18,7 +18,7 @@
   "dependencies": {
     "@nats-io/jetstream": "^3.0.0-28",
     "@nats-io/transport-node": "^3.0.2",
-    "@pairfy/common": "^1.0.129",
+    "@pairfy/common": "^1.0.131",
     "mysql2": "^3.11.4"
   },
   "devDependencies": {

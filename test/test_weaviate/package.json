@@ -5,6 +5,8 @@
     "main": "index.ts",
     "scripts": {
       "start": "ts-node src/index.ts",
+      "deleteindex:product": "ts-node src/deleteIndexProduct.ts",
+      "create:product": "ts-node src/createProduct.ts",
       "build": "tsc",
       "start:prod": "node dist/index.js",
       "lint": "npx eslint ./src --ext .ts",

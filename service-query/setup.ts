@@ -53,22 +53,24 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
   }
 })();
 
-(async () => {
-  const HOST = process.env.WEAVIATE_HOST || "localhost:8080"
 
-  console.log("Weaviate", HOST);
+
+
+(async () => {
+  const HOST = process.env.WEAVIATE_HOST || "localhost:8080";
+
+  console.log("Weaviate Host:", HOST);
 
   const client = weaviate.client({
     scheme: "http",
-    host: HOST
+    host: HOST,
   });
 
   try {
     const schema = await client.schema.getter().do();
-
     const className = "ProductV1";
 
-    const classExists = schema.classes?.some((c) => c.class === className);
+    const classExists = schema.classes?.some(c => c.class === className);
 
     if (!classExists) {
       await client.schema
@@ -76,42 +78,42 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
         .withClass({
           class: className,
           description: "Product catalog entry",
-          vectorizer: 'none',
+          vectorizer: "none",
           properties: [
-            { name: "group_id", dataType: ["text"] },
-            { name: "state", dataType: ["text"] },
-            { name: "moderated", dataType: ["boolean"] },
-            { name: "seller_id", dataType: ["text"] },
-            { name: "thumbnail_url", dataType: ["text"] },
-            { name: "name", dataType: ["text"] },
-            { name: "price", dataType: ["int"] },
-            { name: "sku", dataType: ["text"] },
-            { name: "model", dataType: ["text"] },
-            { name: "brand", dataType: ["text"] },
-            { name: "description", dataType: ["text"] },
-            { name: "category", dataType: ["text"] },
-            { name: "bullet_list", dataType: ["text[]"] },
-            { name: "color", dataType: ["text"] },
-            { name: "condition_", dataType: ["text"] },
-            { name: "country", dataType: ["text"] },
-            { name: "origin", dataType: ["text"] },
-            { name: "city", dataType: ["text"] },
-            { name: "postal", dataType: ["text"] },
-            { name: "discount", dataType: ["boolean"] },
-            { name: "discount_value", dataType: ["int"] },
-            { name: "created_at", dataType: ["number"] },
-            { name: "updated_at", dataType: ["number"] },
-            { name: "schema_v", dataType: ["int"] },
+            { name: "group_id", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "state", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "moderated", dataType: ["boolean"], indexFilterable: true },
+            { name: "seller_id", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "thumbnail_url", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "name", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "price", dataType: ["int"], indexFilterable: true },
+            { name: "sku", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "model", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "brand", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "description", dataType: ["text"], indexFilterable: true, indexSearchable: false }, // text, not text[]
+            { name: "category", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "bullet_list", dataType: ["text[]"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "color", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "condition_", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "country", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "origin", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "city", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "postal", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "discount", dataType: ["boolean"], indexFilterable: true },
+            { name: "discount_value", dataType: ["int"], indexFilterable: true },
+            { name: "created_at", dataType: ["number"], indexFilterable: true },
+            { name: "updated_at", dataType: ["number"], indexFilterable: true },
+            { name: "schema_v", dataType: ["int"], indexFilterable: true },
           ],
         })
         .do();
 
-      console.log(`✅ Weaviate schema ${className} created.`);
+      console.log(`✅ Schema '${className}' created successfully.`);
     } else {
-      console.log(`ℹ️ Weaviate schema ${className} already exists.`);
+      console.log(`ℹ️ Schema '${className}' already exists.`);
     }
   } catch (error) {
-    console.error("❌ Error preparing Weaviate schema:", error);
+    console.error("❌ Error setting up Weaviate schema:", error.message);
     throw error;
   }
 })();
