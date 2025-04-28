@@ -1,22 +1,16 @@
 {
   "name": "service-query",
   "version": "1.0.0",
-  "description": "query",
-  "main": "index.js",
-  "author": "https://github.com/rey-sudo",
-  "license": "MIT",
-
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "database": "node setup.js",
-    "build": "tsc --build",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
+    "build": "tsc --project tsconfig.json",
     "start": "node dist/index.js",
-    "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest"
+    "database": "tsx setup.ts"
   },
-  "devDependencies": {
-    "@types/node": "^22.10.1",
-    "typescript": "^5.6.3"
+  "engines": {
+    "node": ">=20.10.0"
   },
   "dependencies": {
     "@apollo/server": "^4.11.2",
@@ -26,5 +20,11 @@
     "mysql2": "^3.11.4",
     "redis": "^4.7.0",
     "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.6.3",
+    "nodemon": "^3.0.3",
+    "tsx": "^4.7.0"
   }
 }
