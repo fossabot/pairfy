@@ -103,3 +103,8 @@ portForward:
     namespace: default
     port: 8004
     localPort: 8004    
+  - resourceType: service
+    resourceName: weaviate  
+    namespace: default
+    port: 8080
+    localPort: 31132        
