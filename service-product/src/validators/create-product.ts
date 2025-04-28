@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { categoryCodes, ISOCountries } from "../utils";
+import { categoryCodes, ISOCountries } from "../utils/index.js";
 import { TiptapDocumentSchema } from "@pairfy/common";
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u;
