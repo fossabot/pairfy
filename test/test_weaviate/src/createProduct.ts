@@ -34,7 +34,6 @@ export async function createProduct(productData: any): Promise<void> {
       throw new Error("❌ Failed to generate embedding from Ollama.");
     }
 
-    // 🚀 Paso 3: Insertar en Weaviate
     await client.data
       .creator()
       .withClassName("ProductV1")
@@ -83,7 +82,7 @@ const product: any = {
   sku: "SKU-001",
   model: "WH-1000XM5",
   brand: "Sony",
-  description: { type: "doc", content: [] }, // 👈 Tiptap JSON
+  description: { type: "doc", content: [] }, 
   category: "Electronics",
   bullet_list: ["Bluetooth 5.0", "Noise Cancelling", "30h Battery"],
   color: "Black",
@@ -96,4 +95,8 @@ const product: any = {
   discount_value: 20,
 };
 
-await createProduct(product);
+const main = async () =>{
+  await createProduct(product);
+}
+
+main()
