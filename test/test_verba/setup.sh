@@ -14,14 +14,19 @@ curl -X POST http://localhost:8080/v1/schema \
     "class": "verba_embedding_llama3",
     "description": "Collection for Verba using Llama3 embeddings",
     "vectorizer": "none",
-    "replicationConfig": {
-      "factor": 1
-    },
     "properties": [
       {
         "name": "content",
         "dataType": ["text"],
-        "description": "The text content to be embedded"
+        "description": "Content text to embed"
       }
     ]
 }'
+
+
+
+curl http://localhost:8080/v1/schema/verba_embedding_llama3
+
+
+curl -X DELETE http://localhost:8080/v1/schema/verba_embedding_llama3
+
