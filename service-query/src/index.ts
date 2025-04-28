@@ -9,7 +9,12 @@ import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { redisClient } from "./database/redis.js";
 import { GraphQLError } from "graphql";
-import { getPublicAddress, logger, normalizeGraphError, RateLimiter } from "@pairfy/common";
+import {
+  getPublicAddress,
+  logger,
+  normalizeGraphError,
+  RateLimiter,
+} from "@pairfy/common";
 
 const main = async () => {
   try {
@@ -82,6 +87,10 @@ const main = async () => {
 
     app.set("trust proxy", 1);
     
+    app.use(express.json({ limit: "5mb" }));
+
+    app.use(express.urlencoded({ limit: "5mb", extended: true }));
+
     app.use(getPublicAddress);
 
     const rateLimiter = new RateLimiter(
@@ -94,7 +103,6 @@ const main = async () => {
 
     app.use(
       "/api/query/graphql",
-      express.json(),
       expressMiddleware(server, {
         context: async ({ req }) => ({}),
       })
