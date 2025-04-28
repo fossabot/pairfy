@@ -29,12 +29,12 @@ weaviate:
     replication:
       factor: 2
     query:
-      port: 8080   # <== 🔥 Estándar oficial de Weaviate HTTP
+      port: 8080   # <== Weaviate HTTP
     grpc:
-      port: 50051  # <== 🚀 gRPC server standard port
+      port: 50051  # <== gRPC server 
     monitoring:
       metrics:
-        port: 2112 # <== 📊 Prometheus metrics standard port
+        port: 2112 # <== Prometheus 
 
 service:
   type: LoadBalancer
