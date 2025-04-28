@@ -32,7 +32,9 @@ spec:
             - name: STREAM_LIST
               value: service-product
             - name: FILTER_SUBJECTS
-              value: "service-product.CreateProduct"           
+              value: "service-product.CreateProduct"    
+            - name: NATS_SERVERS
+              value: "nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222"
             - name: DATABASE_NAME
               value: service_query
             - name: DATABASE_USER

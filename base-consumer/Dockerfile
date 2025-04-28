@@ -3,12 +3,13 @@ FROM node:20-slim
 WORKDIR /app
 
 
-COPY package*.json ./
+COPY package.json .
 
 
 COPY src/handlers/service-email/package.json ./src/handlers/service-email/
+COPY src/handlers/service-query/package.json ./src/handlers/service-query/
 
-RUN npm install
+RUN npm install --verbose --no-package-lock
 
 
 COPY . .

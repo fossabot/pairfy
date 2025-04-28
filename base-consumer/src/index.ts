@@ -28,6 +28,7 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
+      "NATS_SERVERS",
     ];
 
     for (const varName of requiredEnvVars) {
@@ -69,8 +70,7 @@ const main = async () => {
 
     const natsClient = await connect({
       name: process.env.POD_NAME as string,
-      servers: ["nats:4222"],
-      reconnect: true,
+      servers: (process.env.NATS_SERVERS as string).split(","),
       pingInterval: 20 * 1000,
       maxPingOut: 5,
       reconnectTimeWait: 10 * 1000,
@@ -81,10 +81,8 @@ const main = async () => {
     });
 
     const jetStream = jetStreamManager.jetstream();
-     
-    const streamListEnv  = process.env.STREAM_LIST as string;
 
-    const streamList =streamListEnv.split(",");
+    const streamList = (process.env.STREAM_LIST as string).split(",");
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 
