@@ -1,12 +1,10 @@
-CREATE TABLE IF NOT EXISTS processed (
-  id VARCHAR(100) NOT NULL,
-  seq BIGINT NOT NULL,
-  type VARCHAR(100) NOT NULL,
-  processed BOOLEAN NOT NULL DEFAULT FALSE,
+create table if not exists processed(
+  id varchar(100) not null,
+  seq bigint not null,
+  type varchar(100) not null,
+  processed boolean default false,
   created_at BIGINT UNSIGNED NOT NULL,
+  primary key(id),
+  index idx_id_processed (id,processed)
+) ENGINE=InnoDB;
 
-  PRIMARY KEY (id),
-  INDEX idx_id_processed (id, processed)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
