@@ -1,11 +1,9 @@
 # Introduction
 
-Pairfy is a community-governed application for trading physical products.
-It is characterized by using blockchain technology and artificial intelligence to create a e-commerce ecosystem.
-Cardano's E-UTXO model provides deterministic security for transactions and contract state changes.
-Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a form of payment for the products, and even any **_stablecoin_** and **_native asset_**.
-Each purchase of a product is managed by a separate smart contract which contains a state machine that ensures secure and efficient trade.
-
+Pairfy is a decentralized application for trading physical products.
+It is a community-governed e-commerce that uses blockchain technology and artificial intelligence to generate a comprehensive value exchange ecosystem.
+Using a Cardano smart-contract allows to use **_ADA_**, **_stablecoin_** and **_native asset_** as a form of payment for the products.
+The trade between the seller and the buyer is managed by an individual isolated smart contract.
 
 
 #### Differential factors
@@ -23,7 +21,7 @@ Each purchase of a product is managed by a separate smart contract which contain
 
 #### Competitive factors
 
-Pairfy's most competitive factor is its discount liquidity pool which is fueled by sales fees and ADA generated through staking.
+Pairfy's most competitive factor is its discount liquidity pool which is fueled by trade fees and ADA generated through staking.
 This helps leverage product prices, reducing them by 10% to 25% from traditional market prices.
 
 _Example_
@@ -67,14 +65,12 @@ The community can vote to set the pool cap and the `discount_per_order` value.
 
 #### Paradigm revolution
 
-Using Turing-complete smart contracts enables high levels of innovation that dwarf traditional, private, and centralized applications.
+Using Turing-complete smart contracts enables high levels of innovation that dwarf traditional and centralized applications.
 Applications that are currently Web 2 will eventually be replaced by Web 3.
 Even large tech companies will have to adapt to this change or else disappear.
-The open source community is a giant that can never be defeated.
+The open source community is a giant.
 It allows for the distribution of value based on merit and opportunity, enables transparency, and highlights the power of community governance.
-Closed source, telemetry, data collection, will pass.
-
-
+Closed source, telemetry, private data collection, will pass.
 
 ## Syntax Highlighting
 
