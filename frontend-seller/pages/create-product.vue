@@ -317,7 +317,7 @@ watch(productPrice, (newPrice) => {
 })
 
 //test
-watch(productImages, (e) => console.log(JSON.stringify(e)))
+watch(productImages, (e) => console.log(JSON.stringify(e?.positions)))
 
 const validateParams = () => {
     const params = [

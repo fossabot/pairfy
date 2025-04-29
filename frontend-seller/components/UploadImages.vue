@@ -25,6 +25,7 @@
           class="image-item"
         >
           <img :src="img.url" alt="uploaded image" />
+          <button class="delete-button" @click="removeImage(img.id)">✖</button>
           <span class="index-badge">{{ index + 1 }}</span>
         </div>
       </div>
@@ -124,6 +125,13 @@
       });
     }
   };
+  
+
+  const removeImage = (id: string) => {
+    images.value = images.value.filter((img) => img.id !== id);
+    updatePositions();
+    emitValidation();
+  };
   </script>
   
   <style scoped>
@@ -188,6 +196,28 @@
     padding: 2px 5px;
     font-size: 0.8rem;
     border-radius: 3px;
+  }
+  
+  /* 🆕 Estilo del botón de eliminar */
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .delete-button:hover {
+    background: rgba(255, 0, 0, 1);
   }
   
   .sortable-ghost {
