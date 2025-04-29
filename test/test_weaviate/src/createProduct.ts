@@ -39,9 +39,8 @@ export async function createProduct(productData: any): Promise<void> {
     await client.data
       .creator()
       .withClassName("ProductV1")
-      // 🔥 NO usamos .withId(), dejamos que Weaviate genere su UUID
       .withProperties({
-        id_: productData.id_, // 👈 Guardamos el id de negocio aquí
+        id_: productData.id_,
         group_id: productData.group_id,
         state: productData.state || "created",
         moderated: productData.moderated ?? false,

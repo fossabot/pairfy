@@ -1,10 +1,11 @@
-import  database  from "../../database/client.js";
+import database from "../../database/client.js";
 import {
   isProcessedEvent,
   consumedEvent,
   logger,
   insertProduct,
 } from "@pairfy/common";
+import { createProductIndex } from "./weaviate.js";
 
 export const CreateProduct = async (
   event: any,
@@ -33,6 +34,12 @@ export const CreateProduct = async (
 
     if (productCreated.affectedRows !== 1) {
       throw new Error("CreateProductError");
+    }
+
+    const createIndex = await createProductIndex(dataParsed);
+
+    if(!createIndex){
+      throw new Error("CreateProductIndexError");
     }
 
     await consumedEvent(connection, event, seq);

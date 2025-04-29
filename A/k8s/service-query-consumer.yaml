@@ -39,6 +39,10 @@ spec:
               value: service_query
             - name: DATABASE_USER
               value: marketplace   
+            - name: HANDLER_WEAVIATE_HOST
+              value: weaviate.default.svc.cluster.local:8080     
+            - name: HANDLER_EMBEDDINGS_HOST
+              value: ollama.default.svc.cluster.local:11434                          
             - name: DATABASE_HOST
               valueFrom:
                 configMapKeyRef:
