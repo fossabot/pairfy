@@ -102,14 +102,12 @@ const main = async () => {
           )
         )
       );
-      
+
       streamList.forEach(async (stream) => {
-        const consumer = await jetStream.consumers.get(stream, {
-          name_prefix: process.env.DURABLE_NAME,
-          filter_subjects: filterSubjects.filter((item: string) =>
-            item.startsWith(stream)
-          ),
-        });
+        const consumer = await jetStream.consumers.get(
+          stream,
+          process.env.DURABLE_NAME
+        );
 
         console.log(`🎧 Listening on stream: ${stream}`);
 

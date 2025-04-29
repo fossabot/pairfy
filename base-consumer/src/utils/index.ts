@@ -68,6 +68,7 @@ export async function createConsumer(
         `✅ Creating consumer "${durableName}" on stream: "${stream}"`
       );
       await jetStreamManager.consumers.add(stream, {
+        durable_name: durableName,
         deliver_group: deliverGroup,
         ack_policy: AckPolicy.Explicit,
         deliver_policy: DeliverPolicy.All,
