@@ -32,12 +32,18 @@ export async function createProductIndex(product: any): Promise<boolean> {
       return false;
     }
 
+    const productId = product.id
+
+    delete product.id
+
     await weaviateClient.data
       .creator()
       .withClassName("ProductV1")
       .withProperties({
         ...product,
-        id_: product.id,
+        id_: productId,
+        discount: Boolean(product.discount),
+        moderated: Boolean(product.moderated),
         description: productDescription,
       })
       .withVector(data.embedding)
