@@ -120,13 +120,8 @@ const main = async () => {
           const message = await consumer.next();
 
           if (message) {
-            const maybe = await MODU.processEvent(message);
-
-            if (maybe) {
-              await message.ack();
-            } else {
-              await message.nak(30_000);
-            }
+            const success = await MODU.processEvent(message);
+            await (success ? message.ack() : message.nak(30_000));
           } else {
             console.log(`🔍 EmptyQueue for stream: ${stream}`);
           }
@@ -137,8 +132,6 @@ const main = async () => {
       await disableConnections(database, natsClient);
       throw error;
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////
   } catch (err) {
     catchError(err);
   }
