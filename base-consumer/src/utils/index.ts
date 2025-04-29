@@ -1,12 +1,18 @@
+import {
+  AckPolicy,
+  DeliverPolicy,
+  JetStreamManager,
+  ReplayPolicy,
+} from "@nats-io/jetstream";
 import { logger } from "@pairfy/common";
 
-const catchError = async (error?: any) => {
+export const catchError = async (error?: any) => {
   logger.error(`EXIT=>${error}`);
 
   process.exit(0);
 };
 
-async function disableConnections(database: any, natsClient: any) {
+export async function disableConnections(database: any, natsClient: any) {
   database.client.pool.config.connectionLimit = 0;
 
   try {
@@ -22,14 +28,7 @@ async function disableConnections(database: any, natsClient: any) {
   }, 30_000);
 }
 
-function sleep(seconds: number): Promise<void> {
-  if (typeof seconds !== "number" || seconds < 0) {
-    throw new Error("sleep() requires a non-negative number of seconds");
-  }
-  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
-}
-
-function checkHandlerVariables() {
+export function checkHandlerVariables() {
   const handlerVars = Object.keys(process.env).filter((key) =>
     key.startsWith("HANDLER_")
   );
@@ -52,10 +51,31 @@ export const errorEvents: string[] = [
   "SIGCONT",
 ];
 
-export {
-  logger,
-  catchError,
-  disableConnections,
-  sleep,
-  checkHandlerVariables,
-};
+export async function createConsumer(
+  jetStreamManager: JetStreamManager,
+  stream: string,
+  durableName: string,
+  deliverGroup: string
+): Promise<void> {
+  try {
+    await jetStreamManager.consumers.info(stream, durableName);
+    console.log(
+      `ℹ️ Consumer "${durableName}" already exists on stream: "${stream}"`
+    );
+  } catch (error: any) {
+    if (error.message.includes("consumer not found")) {
+      console.log(
+        `✅ Creating consumer "${durableName}" on stream: "${stream}"`
+      );
+      await jetStreamManager.consumers.add(stream, {
+        deliver_group: deliverGroup,
+        ack_policy: AckPolicy.Explicit,
+        deliver_policy: DeliverPolicy.All,
+        replay_policy: ReplayPolicy.Instant,
+        max_deliver: -1,
+      });
+    } else {
+      throw error;
+    }
+  }
+}

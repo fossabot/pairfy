@@ -7,6 +7,7 @@ import {
 import {
   catchError,
   checkHandlerVariables,
+  createConsumer,
   disableConnections,
   errorEvents,
 } from "./utils/index.js";
@@ -92,34 +93,16 @@ const main = async () => {
 
     try {
       await Promise.all(
-        streamList.map(async (stream) => {
-          try {
-            await jetStreamManager.consumers.info(
-              stream,
-              process.env.DURABLE_NAME as string
-            );
-            console.log(
-              `ℹ️ Consumer ${process.env.DURABLE_NAME} already exists on stream: ${stream}`
-            );
-          } catch (error: any) {
-            if (error.message.includes("consumer not found")) {
-              console.log(
-                `✅ Creating consumer ${process.env.DURABLE_NAME} for stream: ${stream}`
-              );
-              await jetStreamManager.consumers.add(stream, {
-                deliver_group: process.env.CONSUMER_GROUP,
-                ack_policy: AckPolicy.Explicit,
-                deliver_policy: DeliverPolicy.All,
-                replay_policy: ReplayPolicy.Instant,
-                max_deliver: -1,
-              });
-            } else {
-              throw error;
-            }
-          }
-        })
+        streamList.map((stream) =>
+          createConsumer(
+            jetStreamManager,
+            stream,
+            process.env.DURABLE_NAME as string,
+            process.env.CONSUMER_GROUP as string
+          )
+        )
       );
-
+      
       streamList.forEach(async (stream) => {
         const consumer = await jetStream.consumers.get(stream, {
           name_prefix: process.env.DURABLE_NAME,
