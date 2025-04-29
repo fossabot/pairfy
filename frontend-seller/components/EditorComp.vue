@@ -310,7 +310,7 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-content {
-  grid-template-rows: 500px 10rem;
+  grid-template-rows: 20rem 10rem;
   grid-template-columns: 1fr;
   display: grid;
   height: 100%;
