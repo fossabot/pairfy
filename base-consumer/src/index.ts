@@ -84,38 +84,37 @@ const main = async () => {
 
     const streamList = (process.env.STREAM_LIST as string).split(",");
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-
     const filterSubjects: any = process.env.FILTER_SUBJECTS
       ? process.env.FILTER_SUBJECTS.split(",").map((subject) => subject.trim())
       : [];
 
-    console.log(filterSubjects);
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
     try {
+      await Promise.all(
+        streamList.map(async (stream) => {
+          await jetStreamManager.consumers.add(stream, {
+            durable_name: process.env.DURABLE_NAME,
+            deliver_group: process.env.CONSUMER_GROUP,
+            ack_policy: AckPolicy.Explicit,
+            deliver_policy: DeliverPolicy.All,
+            replay_policy: ReplayPolicy.Instant,
+            max_deliver: -1,
+          });
+
+          console.log(`✅ Consumer created for stream: ${stream}`);
+        })
+      );
+
       streamList.forEach(async (stream) => {
-        await jetStreamManager.consumers.add(stream, {
-          durable_name: process.env.DURABLE_NAME,
-          deliver_group: process.env.CONSUMER_GROUP,
-          ack_policy: AckPolicy.Explicit,
-          deliver_policy: DeliverPolicy.All,
-          replay_policy: ReplayPolicy.Instant,
-          max_deliver: -1,
-        });
-
-        const consumerInfo = await jetStreamManager.consumers.info(
-          stream,
-          process.env.DURABLE_NAME as string
-        );
-
-        console.log(consumerInfo);
-
         const consumer = await jetStream.consumers.get(stream, {
           name_prefix: process.env.DURABLE_NAME as string,
           filter_subjects: filterSubjects.filter((item: string) =>
             item.startsWith(stream)
           ),
         });
+
+        console.log(`🎧 Listening on stream: ${stream}`);
 
         while (true) {
           const message = await consumer.next();
@@ -129,13 +128,14 @@ const main = async () => {
               await message.nak(30_000);
             }
           } else {
-            console.log(`EmptyQueue`);
+            console.log(`🔍 EmptyQueue for stream: ${stream}`);
           }
         }
       });
-    } catch (err) {
-      logger.error(err);
-      disableConnections(database, natsClient);
+    } catch (error: any) {
+      logger.error(error);
+      await disableConnections(database, natsClient);
+      throw error;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
