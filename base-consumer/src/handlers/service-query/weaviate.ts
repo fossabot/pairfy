@@ -28,13 +28,13 @@ export async function createProductIndex(product: any): Promise<boolean> {
     );
 
     if (!Array.isArray(data.embedding)) {
-      logger.error("❌ Embedding generation failed.");
+      logger.error("CreateProductIndexErrorEmbedding");
       return false;
     }
 
-    const productId = product.id
+    const productId = product.id;
 
-    delete product.id
+    delete product.id;
 
     await weaviateClient.data
       .creator()
@@ -49,10 +49,9 @@ export async function createProductIndex(product: any): Promise<boolean> {
       .withVector(data.embedding)
       .do();
 
-    console.log("✅ Product created successfully.");
     return true;
   } catch (error) {
-    logger.error(`❌ Error creating product: ${error}`);
+    logger.error(error);
     return false;
   }
 }
