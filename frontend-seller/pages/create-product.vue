@@ -121,7 +121,7 @@
                         Select the main product image and any secondary images.
                     </div>
 
-                    <UploadImages @valid="productImages = $event.value" />
+                    <UploadImagesLocal @valid="productImages = $event.value" />
                 </div>
 
                 <div class="grid-row">
