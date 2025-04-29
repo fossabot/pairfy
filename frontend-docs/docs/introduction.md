@@ -1,26 +1,29 @@
 # Introduction
 
-Pairfy is a decentralized application for trading physical products. It uses the Cardano blockchain network as a transactional and procedural layer.
+Pairfy is a community-governed application for trading physical products.
+It is characterized by using blockchain technology and artificial intelligence to create a e-commerce ecosystem.
+Cardano's E-UTXO model provides deterministic security for transactions and contract state changes.
+Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a form of payment for the products, and even any **_stablecoin_** and **_native asset_**.
 Each purchase of a product is managed by a separate smart contract which contains a state machine that ensures secure and efficient trade.
 
-Cardano's E-UTXO model provides atomic and deterministic security for transactions and contract state changes.
-Using a Cardano smart contract provides the benefit of being able to use **_ADA_** as a form of payment, and even any **_stablecoin_** and **_native asset_**.
+
 
 #### Differential factors
 
-- High transparency, community-governed.
-- Use of smart contract throughout the trade.
-- Liquidity pool to return fees to users in the form of discounts.
+- Community-governed with high transparency.
+- Each trade is an isolated smart-contract.
+- Liquidity pool to reduce the price of products.
 - Use of Cardano Network – Midnight Network.
 - Any member of the community can be a seller.
 - Community repository of products and templates.
 - Seller incentive program.
 - Open-source development.
+- Integration of AI models.
+- Product search by vectorized semantics.
 
 #### Competitive factors
 
-It's important to consider the competition compared to traditional marketplace platforms.
-Pairfy has a very important differentiating factor, its ADA liquidity pool which is fueled by sales fees and ADA generated through staking.
+Pairfy's most competitive factor is its discount liquidity pool which is fueled by sales fees and ADA generated through staking.
 This helps leverage product prices, reducing them by 10% to 25% from traditional market prices.
 
 _Example_
@@ -29,7 +32,7 @@ Although the price of ADAUSD may fluctuate depending on the time you read this,
 the price is bullish in the long term, so for this example 1 ADA = 1 USD will be used.
 
 If the liquidity pool reaches 1.000.000 ADA this liquidity can be
-divided by 100 ADA as `discount_per_order`
+divided by 100 ADA as discount_per_order
 
 ```md
 discount_per_order = 100 ADA
