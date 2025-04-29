@@ -55,13 +55,26 @@ export async function createConsumer(
   jetStreamManager: JetStreamManager,
   stream: string,
   durableName: string,
-  deliverGroup: string
+  deliverGroup: string,
+  filterSubjects: string[]
 ): Promise<void> {
   try {
     await jetStreamManager.consumers.info(stream, durableName);
+    
     console.log(
       `ℹ️ Consumer "${durableName}" already exists on stream: "${stream}"`
     );
+
+    await jetStreamManager.consumers.update(stream, durableName, {
+      filter_subjects: filterSubjects.filter((item: string) =>
+        item.startsWith(stream)
+      ),
+    });
+
+    console.log(
+      `ℹ️ Consumer "${durableName}" : "${stream}" updated`
+    );
+
   } catch (error: any) {
     if (error.message.includes("consumer not found")) {
       console.log(

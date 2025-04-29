@@ -98,7 +98,8 @@ const main = async () => {
             jetStreamManager,
             stream,
             process.env.DURABLE_NAME as string,
-            process.env.CONSUMER_GROUP as string
+            process.env.CONSUMER_GROUP as string,
+            filterSubjects
           )
         )
       );
