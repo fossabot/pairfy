@@ -59,8 +59,8 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
-                        <InputSelect v-model="productOrigin" label="Country" 
-                            :options="countries" @valid="productOrigin = $event.value">
+                        <InputSelect v-model="productOrigin" label="Country" :options="countries"
+                            @valid="productOrigin = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
@@ -120,6 +120,8 @@
                     <div class="grid-subtitle">
                         Select the main product image and any secondary images.
                     </div>
+
+                    <UploadImages @valid="productImages = $event.value" />
                 </div>
 
                 <div class="grid-row">
@@ -142,6 +144,7 @@
                     <div class="grid-subtitle">
                         Select 1 video showing the product features (optional).
                     </div>
+
                 </div>
             </div>
             <!--RIGHT-->
@@ -168,7 +171,7 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-                   
+
                     <div class="grid-item">
                         <InputProductBullet @valid="productBulletlist = $event.value" />
                     </div>
@@ -196,7 +199,8 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputSelect v-model="productCategory" :options="categories" label="Category" @valid="productCategory = $event.value">
+                        <InputSelect v-model="productCategory" :options="categories" label="Category"
+                            @valid="productCategory = $event.value">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
@@ -206,10 +210,10 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductCondition @valid="productCondition = $event.value"/>
+                        <InputProductCondition @valid="productCondition = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductColor @valid="productColor = $event.value"/>
+                        <InputProductColor @valid="productColor = $event.value" />
                     </div>
                 </div>
 
@@ -297,21 +301,23 @@ const productOrigin = ref(null)
 const productCity = ref(null)
 const productPostal = ref(null)
 const productDescription = ref(null)
+const productImages = ref(null)
 const productBulletlist = ref(null)
 const productCategory = ref(null)
 const productCondition = ref(null)
 const productColor = ref(null)
-
 const productDiscount = ref({
-  enabled: false,
-  price: productPrice.value,
-  discount: 0,
+    enabled: false,
+    price: productPrice.value,
+    discount: 0,
 })
 
 watch(productPrice, (newPrice) => {
-  productDiscount.value.price = newPrice
+    productDiscount.value.price = newPrice
 })
 
+//test
+watch(productImages, (e) => console.log(JSON.stringify(e)))
 
 const validateParams = () => {
     const params = [
@@ -324,6 +330,7 @@ const validateParams = () => {
         !productCity.value,
         !productPostal.value,
         !productDescription.value,
+        !productImages.value,
         !productBulletlist.value,
         !productCategory.value,
         !productCondition.value,
@@ -362,7 +369,7 @@ const onCreateProduct = async () => {
             "city": productCity.value,
             "postal": productPostal.value,
             "discount": productDiscount.value.enabled,
-            "discount_value": productDiscount.value.discount 
+            "discount_value": productDiscount.value.discount
         },
         async onResponseError({ response }) {
             throw new Error(JSON.stringify(response._data.data));
@@ -386,13 +393,13 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 2rem;
+    padding: 1rem 1.5rem;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .grid-title {
