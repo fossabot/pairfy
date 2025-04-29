@@ -1,6 +1,8 @@
 create table if not exists products(
   id varchar(100) not null,
   group_id varchar(100) not null,
+  media_group_id varchar(100) not null,
+  media_position JSON NOT NULL,
   state varchar(100) default 'created',
   moderated boolean default false,
   seller_id varchar(100) not null,
