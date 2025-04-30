@@ -118,7 +118,7 @@
                         </TipComp>
                     </div>
                     <div class="grid-subtitle">
-                        Select the main product image and any secondary images.
+                        Add product images with a maximum size of (5mb) (500x500).
                     </div>
 
                     <UploadImagesLocal @valid="productImages = $event.value" />

@@ -1,6 +1,8 @@
 <template>
   <div class="uploader">
-    <input type="file" ref="fileInput" multiple accept="image/*" style="display: none" @change="onFilesSelected" />
+
+    <input type="file" ref="fileInput" multiple accept="image/jpeg,image/png,image/webp,image/avif"
+      style="display: none" @change="onFilesSelected" />
 
     <div class="header" v-show="images.length">
       <div class="counter">
@@ -75,30 +77,87 @@ const triggerFileInput = () => {
   fileInput.value?.click();
 };
 
+
+
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+const MIN_WIDTH = 500;
+const MIN_HEIGHT = 500;
+const MAX_WIDTH = 5000;
+const MAX_HEIGHT = 5000;
+
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/avif',
+];
+
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
+
+const getFileExtension = (filename: string): string => {
+  const match = filename.match(/\.[^.]+$/);
+  return match ? match[0].toLowerCase() : '';
+};
+
 const onFilesSelected = (event: Event) => {
   const target = event.target as HTMLInputElement;
   const files = target.files;
   if (!files) return;
 
   const availableSlots = maxImages - images.value.length;
-  const filesToAdd = Array.from(files).slice(0, availableSlots);
+
+  const filesToAdd = Array.from(files)
+    .filter((file) => {
+      const extension = getFileExtension(file.name);
+      const isValidMime = ALLOWED_MIME_TYPES.includes(file.type);
+      const isValidExt = ALLOWED_EXTENSIONS.includes(extension);
+
+      if (!isValidMime || !isValidExt) {
+        console.warn(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`);
+        return false;
+      }
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        console.warn(`❌ "${file.name}" exceeds ${MAX_FILE_SIZE_MB}MB`);
+        return false;
+      }
+
+      return true;
+    })
+    .slice(0, availableSlots);
 
   for (const file of filesToAdd) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      images.value.push({
-        id: crypto.randomUUID(),
-        file,
-        url: e.target?.result as string,
-      });
-      updatePositions();
-      emitValidation();
+      const img = new Image();
+      img.onload = () => {
+        if (
+          img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
+          img.width > MAX_WIDTH || img.height > MAX_HEIGHT
+        ) {
+          console.warn(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`);
+          return;
+        }
+
+        images.value.push({
+          id: crypto.randomUUID(),
+          file,
+          url: e.target?.result as string,
+        });
+        updatePositions();
+        emitValidation();
+      };
+      img.src = e.target?.result as string;
     };
     reader.readAsDataURL(file);
   }
 
   target.value = '';
 };
+
+
 
 onMounted(() => {
   if (grid.value) {
@@ -189,7 +248,7 @@ const removeImage = (id: string) => {
 }
 
 .upload-button svg {
-  width: 10rem;
+  width: 8rem;
 }
 
 .upload-button:disabled {
