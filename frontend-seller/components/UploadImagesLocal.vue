@@ -189,7 +189,7 @@ const removeImage = (id: string) => {
 }
 
 .upload-button svg {
-  width: 5rem;
+  width: 10rem;
 }
 
 .upload-button:disabled {
@@ -205,7 +205,7 @@ const removeImage = (id: string) => {
 
 .empty-template {
   align-items: center;
-  height: 200px;
+  height: 20rem;
   display: flex;
 }
 
