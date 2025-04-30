@@ -213,6 +213,7 @@ const removeImage = (id: string) => {
   grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   border-top: 1px solid var(--border-a);
   box-sizing: border-box;
+  min-height: 20rem;
   display: grid;
   padding: 1rem;
   width: 100%;
@@ -225,7 +226,7 @@ const removeImage = (id: string) => {
   justify-content: center;
   align-items: center;
   position: relative;
-  min-height: 10rem;
+  height: 10rem;
   overflow: hidden;
   display: flex;
 }
