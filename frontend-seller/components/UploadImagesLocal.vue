@@ -3,7 +3,7 @@
     <input type="file" ref="fileInput" multiple accept="image/*" style="display: none" @change="onFilesSelected" />
 
     <div class="header" v-show="images.length">
-      <div class="counter" >
+      <div class="counter">
         <span :style="{ color: !images.length ? 'red' : 'black' }">
           {{ images.length }}
         </span>
@@ -166,11 +166,14 @@ const removeImage = (id: string) => {
 
 .upload-button {
   background: transparent;
+  justify-content: center;
   color: var(--text-b);
   align-items: center;
   cursor: pointer;
   display: flex;
   border: none;
+  height: 100%;
+  width: 100%;
 }
 
 .upload-button svg {
