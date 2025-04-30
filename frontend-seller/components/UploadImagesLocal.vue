@@ -2,7 +2,17 @@
   <div class="uploader">
     <input type="file" ref="fileInput" multiple accept="image/*" style="display: none" @change="onFilesSelected" />
 
-    <div class="header">
+    <div class="header" v-show="images.length">
+      <div class="counter" >
+        <span :style="{ color: !images.length ? 'red' : 'black' }">
+          {{ images.length }}
+        </span>
+
+        <span>{{ ` / ${maxImages}` }}</span>
+      </div>
+    </div>
+
+    <div class="empty-template" v-if="!images.length">
       <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= maxImages">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload">
@@ -11,28 +21,27 @@
           <line x1="12" x2="12" y1="3" y2="15" />
         </svg>
       </button>
-      <div class="counter">
-
-        <span :style="{ color: !images.length ? 'red' : 'black' }">
-          {{ images.length }}
-        </span>
-
-        <span>{{ ` / ${maxImages}` }}</span> 
-      </div>
-    </div>
-
-    <div class="empty-template" v-if="!images.length">
-      empty
     </div>
 
     <div class="image-grid" ref="grid" v-show="images.length">
-      <div v-for="(img, index) in images" :key="img.id" class="image-item">
+      <div class="image-item" v-for="(img, index) in images" :key="img.id">
         <img :src="img.url" alt="uploaded image" />
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
       </div>
+
+      <div class="image-item no-drag" data-nodrag>
+        <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= maxImages">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-plus-icon lucide-plus">
+            <path d="M5 12h14" />
+            <path d="M12 5v14" />
+          </svg>
+        </button>
+      </div>
     </div>
-    
+
   </div>
 </template>
 
@@ -96,8 +105,9 @@ onMounted(() => {
     Sortable.create(grid.value, {
       animation: 200,
       ghostClass: 'sortable-ghost',
+      draggable: '.image-item:not(.no-drag)',
       onEnd: () => {
-        const newOrder = Array.from(grid.value!.children).map((child) => {
+        const newOrder = Array.from(grid.value!.querySelectorAll('.image-item:not(.no-drag)')).map((child) => {
           const imgElement = child.querySelector('img') as HTMLImageElement;
           return images.value.find((img) => img.url === imgElement.src)?.id || '';
         });
@@ -156,15 +166,15 @@ const removeImage = (id: string) => {
 
 .upload-button {
   background: transparent;
-  padding: 0.5rem 1rem;
   color: var(--text-b);
-  font-size: 1rem;
+  align-items: center;
   cursor: pointer;
+  display: flex;
   border: none;
 }
 
 .upload-button svg {
-  width: 2rem;
+  width: 5rem;
 }
 
 .upload-button:disabled {
@@ -174,11 +184,15 @@ const removeImage = (id: string) => {
 
 .counter {
   font-size: var(--text-size-0);
-  color: var(--text-b); 
+  color: var(--text-b);
+  margin-left: 1rem;
 }
 
 .empty-template {
-  height: 20rem;
+  align-items: center;
+  height: 200px;
+  display: flex;
+
 }
 
 .image-grid {
@@ -192,10 +206,14 @@ const removeImage = (id: string) => {
 }
 
 .image-item {
+  border: 1px solid var(--border-a);
+  border-radius: var(--radius-c);
+  justify-content: center;
+  align-items: center;
   position: relative;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  min-height: 10rem;
   overflow: hidden;
+  display: flex;
 }
 
 .image-item img {
