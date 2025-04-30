@@ -1,6 +1,6 @@
 <template>
   <div class="uploader">
-
+    <ToastComp ref="toastRef" />
     <input type="file" ref="fileInput" multiple accept="image/jpeg,image/png,image/webp,image/avif"
       style="display: none" @change="onFilesSelected" />
 
@@ -50,6 +50,12 @@
 <script setup lang="ts">
 import { ref, onMounted, defineEmits } from 'vue';
 import Sortable from 'sortablejs';
+
+const toastRef = ref(null);
+
+const displayMessage = (message, type) => {
+    toastRef.value?.showToast(message, type)
+}
 
 interface UploadedImg {
   id: string;
@@ -115,12 +121,12 @@ const onFilesSelected = (event: Event) => {
       const isValidExt = ALLOWED_EXTENSIONS.includes(extension);
 
       if (!isValidMime || !isValidExt) {
-        console.warn(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`);
+        displayMessage(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`, 'error');       
         return false;
       }
 
       if (file.size > MAX_FILE_SIZE_BYTES) {
-        console.warn(`❌ "${file.name}" exceeds ${MAX_FILE_SIZE_MB}MB`);
+        displayMessage(`❌ "${file.name}" exceeds ${MAX_FILE_SIZE_MB}MB`, 'error');
         return false;
       }
 
@@ -137,7 +143,7 @@ const onFilesSelected = (event: Event) => {
           img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
           img.width > MAX_WIDTH || img.height > MAX_HEIGHT
         ) {
-          console.warn(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`);
+          displayMessage(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`, 'error');
           return;
         }
 
@@ -178,7 +184,7 @@ onMounted(() => {
 
 
         if (newOrder.includes('') || newOrder.length !== images.value.length) {
-          console.warn('❌ Inconsistent drag order: invalid image ID detected.');
+          displayMessage('❌ Inconsistent drag order: invalid image ID detected.', 'error');
           return;
         }
 
