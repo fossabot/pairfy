@@ -11,18 +11,28 @@
           <line x1="12" x2="12" y1="3" y2="15" />
         </svg>
       </button>
-      <div class="counter" :style="{ color: !images.length ? 'red' : 'black' }">
-        {{ images.length }} / {{ maxImages }}
+      <div class="counter">
+
+        <span :style="{ color: !images.length ? 'red' : 'black' }">
+          {{ images.length }}
+        </span>
+
+        <span>{{ ` / ${maxImages}` }}</span> 
       </div>
     </div>
 
-    <div ref="grid" class="image-grid">
+    <div class="empty-template" v-if="!images.length">
+      empty
+    </div>
+
+    <div class="image-grid" ref="grid" v-show="images.length">
       <div v-for="(img, index) in images" :key="img.id" class="image-item">
         <img :src="img.url" alt="uploaded image" />
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
       </div>
     </div>
+    
   </div>
 </template>
 
@@ -164,15 +174,19 @@ const removeImage = (id: string) => {
 
 .counter {
   font-size: var(--text-size-0);
+  color: var(--text-b); 
+}
+
+.empty-template {
+  height: 20rem;
 }
 
 .image-grid {
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   border-top: 1px solid var(--border-a);
   box-sizing: border-box;
   display: grid;
   padding: 1rem;
-  height: 20rem;
   width: 100%;
   gap: 1rem;
 }
@@ -186,7 +200,7 @@ const removeImage = (id: string) => {
 
 .image-item img {
   width: 100%;
-  height: 120px;
+  height: 10rem;
   object-fit: cover;
 }
 
