@@ -307,7 +307,7 @@ const removeImage = (id: string) => {
   border-radius: 3px;
 }
 
-/* 🆕 Estilo del botón de eliminar */
+
 .delete-button {
   position: absolute;
   top: 5px;
