@@ -106,15 +106,27 @@ onMounted(() => {
       animation: 200,
       ghostClass: 'sortable-ghost',
       draggable: '.image-item:not(.no-drag)',
-      onEnd: () => {
+      onEnd: (evt) => {
+
+        if (evt.oldIndex === undefined || evt.newIndex === undefined || evt.oldIndex === evt.newIndex) {
+          return;
+        }
+
         const newOrder = Array.from(grid.value!.querySelectorAll('.image-item:not(.no-drag)')).map((child) => {
           const imgElement = child.querySelector('img') as HTMLImageElement;
           return images.value.find((img) => img.url === imgElement.src)?.id || '';
         });
+
+
+        if (newOrder.includes('') || newOrder.length !== images.value.length) {
+          console.warn('❌ Inconsistent drag order: invalid image ID detected.');
+          return;
+        }
+
         images.value.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
         updatePositions();
         emitValidation();
-      },
+      }
     });
   }
 });
