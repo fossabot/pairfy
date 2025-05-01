@@ -18,12 +18,12 @@ const upload = multer({
     const isFieldValid = file.fieldname === "files";
 
     if (!isMimeAllowed || !hasValidExt || !isFieldValid) {
-      return cb(null, false); 
+      return cb(null, false); // Silenciosamente rechaza el archivo inválido
     }
 
     cb(null, true);
   }
-}).array("files", 15); 
+}).array("files", 15); // Max 15 archivos
 
 export default async function validatedUpload(
   req: Request,
