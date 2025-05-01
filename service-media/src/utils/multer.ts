@@ -18,12 +18,12 @@ const upload = multer({
     const isFieldValid = file.fieldname === "files";
 
     if (!isMimeAllowed || !hasValidExt || !isFieldValid) {
-      return cb(null, false); // No error, just reject the file
+      return cb(null, false); 
     }
 
     cb(null, true);
   }
-}).array("files", 15); // Max 15 files
+}).array("files", 15); 
 
 export default async function validatedUpload(
   req: Request,
@@ -43,19 +43,27 @@ export default async function validatedUpload(
     for (const file of files) {
       const detected = await fileTypeFromBuffer(file.buffer);
       if (!detected) {
-        return res.status(400).json({ error: `Cannot detect type for file: ${file.originalname}` });
+        return res.status(400).json({ error: `Cannot detect file type: ${file.originalname}` });
       }
 
       const { mime, ext } = detected;
       const isImage = mime.startsWith("image/");
       const isVideo = mime.startsWith("video/");
 
-      if (!isImage && !isVideo) {
-        return res.status(400).json({ error: `Unsupported file type: ${mime}` });
+      // Comparar MIME declarado vs MIME real
+      if (file.mimetype !== mime) {
+        return res.status(400).json({
+          error: `MIME mismatch in ${file.originalname} (declared: ${file.mimetype}, actual: ${mime})`
+        });
       }
 
+      // Validar extensión contra detectada
       if (!validExtRegex.test(`.${ext}`)) {
-        return res.status(400).json({ error: `Invalid extension detected: ${file.originalname}` });
+        return res.status(400).json({ error: `Invalid extension detected in ${file.originalname}` });
+      }
+
+      if (!isImage && !isVideo) {
+        return res.status(400).json({ error: `Unsupported file type: ${mime}` });
       }
 
       if (isImage) {
@@ -66,13 +74,16 @@ export default async function validatedUpload(
         try {
           const { width, height } = imageSize(file.buffer);
           if (!width || !height) {
-            return res.status(400).json({ error: `Could not determine dimensions for ${file.originalname}` });
+            return res.status(400).json({ error: `Cannot determine dimensions: ${file.originalname}` });
           }
+
           if (width < 500 || height < 500 || width > 5000 || height > 5000) {
-            return res.status(400).json({ error: `Invalid image dimensions for ${file.originalname}` });
+            return res.status(400).json({
+              error: `Invalid image dimensions in ${file.originalname}: ${width}x${height}`
+            });
           }
         } catch {
-          return res.status(400).json({ error: `Invalid image file: ${file.originalname}` });
+          return res.status(400).json({ error: `Corrupt image: ${file.originalname}` });
         }
       }
 
