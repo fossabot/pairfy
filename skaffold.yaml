@@ -17,6 +17,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
+            
     - image: pairfy/service-seller
       context: service-seller
       docker:
@@ -25,6 +26,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
+
     - image: pairfy/base-publisher
       context: base-publisher
       docker:
@@ -33,6 +35,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
+
     - image: pairfy/base-consumer
       context: base-consumer
       docker:
@@ -40,7 +43,8 @@ build:
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .            
+            dest: .         
+
     - image: pairfy/service-email
       context: service-email
       docker:
@@ -49,6 +53,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .   
+
     - image: pairfy/service-product
       context: service-product
       docker:
@@ -56,7 +61,8 @@ build:
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .                      
+            dest: .                
+
     - image: pairfy/service-llm
       context: service-llm
       docker:
@@ -67,6 +73,7 @@ build:
             dest: .
           - src: 'requirements.txt'
             dest: .
+
     - image: pairfy/service-query
       context: service-query
       docker:
@@ -75,6 +82,16 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .  
+
+    - image: pairfy/service-product
+      context: service-product
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .     
+
 deploy:
   statusCheckDeadlineSeconds: 540
   kubectl:
@@ -88,31 +105,43 @@ portForward:
     namespace: default
     port: 8000
     localPort: 8000
+
   - resourceType: service
     resourceName: service-product
     namespace: default
     port: 8001
     localPort: 8001    
+
   - resourceType: service
     resourceName: service-llm
     namespace: default
     port: 8002
     localPort: 8002
+
+  - resourceType: service
+    resourceName: service-media
+    namespace: default
+    port: 8003
+    localPort: 8003 
+
   - resourceType: service
     resourceName: service-query
     namespace: default
     port: 8004
     localPort: 8004    
+
   - resourceType: service
     resourceName: weaviate
     namespace: default
     port: 8080
     localPort: 8080    
+
   - resourceType: service
     resourceName: ollama
     namespace: default 
     port: 11434
     localPort: 11434
+
   - resourceType: service
     resourceName: nats-ui-nui
     namespace: default 

@@ -1,57 +1,38 @@
 import compression from "compression";
-import DB from "./db";
+import database from "./database";
 import * as route from "./routes";
-import { catcher, check, checkpoint } from "./pod/index";
-import { NotFoundError, errorMiddleware } from "./errors";
 import { app } from "./app";
-
+import { catchError, errorEvents } from "./utils";
+import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
 
 const main = async () => {
   try {
-    if (!process.env.POD_TIMEOUT) {
-      throw new Error("POD_TIMEOUT error");
-    }
-
-    if (!process.env.EXPRESS_PORT) {
-      throw new Error("EXPRESS_PORT error");
-    }
-
-    if (!process.env.EXPRESS_TIMEOUT) {
-      throw new Error("EXPRESS_TIMEOUT error");
-    }
-
-    if (!process.env.CORS_DOMAINS) {
-      throw new Error("CORS_DOMAINS error");
-    }
-
-    if (!process.env.SELLER_JWT_KEY) {
-      throw new Error("SELLER_JWT_KEY error");
-    }
-
-    if (!process.env.TOKEN_EXPIRATION) {
-      throw new Error("TOKEN_EXPIRATION error");
-    }
-
-    DB.connect({
-      host: "mysql",
-      port: 3306,
-      user: "marketplace",
-      password: "password",
-      database: "service_media",
-    });
-
-    checkpoint("ready");
-
-    const errorEvents: string[] = [
-      "exit",
-      "SIGINT",
-      "SIGTERM",
-      "SIGQUIT",
-      "uncaughtException",
-      "unhandledRejection",
+    const requiredEnv = [
+      "POD_TIMEOUT",
+      "EXPRESS_PORT",
+      "EXPRESS_TIMEOUT",
+      "CORS_DOMAINS",
+      "AGENT_JWT_KEY",
+      "TOKEN_EXPIRATION",
     ];
 
-    errorEvents.forEach((e: string) => process.on(e, (err) => catcher(err)));
+    for (const key of requiredEnv) {
+      if (!process.env[key]) {
+        throw new Error(`${key} error`);
+      }
+    }
+
+    errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
+
+    const databasePort = parseInt(process.env.DATABASE_PORT as string);
+
+    database.connect({
+      host: process.env.DATABASE_HOST,
+      port: databasePort,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
+    });
 
     app.post(
       "/api/media/create-image",
@@ -77,21 +58,26 @@ const main = async () => {
       route.deleteImageHandler
     );
 
-    app.get('/api/media/healthcheck', (req, res) => {
-      res.status(200).json({ status: 'UP', message: 'Test OK' });
+    app.get("/api/media/ping", (req, res) => {
+      res.status(200).json({ success: true, data: { message: "Test OK" } });
     });
 
-    app.all("*", (_req, _res) => {
-      throw new NotFoundError();
+    app.all("*", (req, _res, next) => {
+      next(
+        new ApiError(404, `Route not found: ${req.method} ${req.originalUrl}`, {
+          code: ERROR_CODES.NOT_FOUND,
+        })
+      );
     });
 
-    app.use(errorMiddleware as any);
+    app.use(errorHandler);
 
     app.use(compression());
+
+    app.listen(8003, () => logger.info(`express server listening in 8003`));
   } catch (e) {
-    catcher(e);
+    catchError(e);
   }
-  check();
 };
 
 main();

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEventId = exports.getProductId = exports.getSellerId = void 0;
+exports.getMediaGroupId = exports.getFileId = exports.getEventId = exports.getProductId = exports.getSellerId = void 0;
 exports.createId = createId;
 const nanoid_1 = require("nanoid");
 function createId(alphabet, length) {
@@ -24,3 +24,11 @@ const getEventId = () => {
     return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
 };
 exports.getEventId = getEventId;
+const getFileId = () => {
+    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
+};
+exports.getFileId = getFileId;
+const getMediaGroupId = () => {
+    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
+};
+exports.getMediaGroupId = getMediaGroupId;

@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-media
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-media
+  template:
+    metadata:
+      labels:
+        role: service-media
+    spec:
+      containers:
+        - name: service-media
+          image: pairfy/service-media
+          env:                                  
+            - name: AGENT_JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: seller-token-secret
+                  key: SELLER_TOKEN_KEY                       
+                                                        
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master   
+
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port  
+
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password         
+
+            - name: DATABASE_NAME
+              value: service_media 
+
+            - name: DATABASE_USER
+              value: marketplace 
+
+            - name : REDIS_RATELIMIT_URL
+              value: "redis://redis-limiter:6379"                
+
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-media
+spec:
+  selector:
+    role: service-media
+  ports:
+    - name: service-media
+      protocol: TCP
+      port: 8003
+      targetPort: 8003

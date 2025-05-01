@@ -1,58 +1,68 @@
-import DB from "../db";
+import {
+  getMediaGroupId,
+  sellerRequired,
+  getFileId,
+  ApiError,
+  ERROR_CODES,
+  SellerToken,
+} from "@pairfy/common";
+import database from "../database";
 import uploadMiddleware from "../utils/multer";
-import { BadRequestError } from "../errors";
 import { Request, Response } from "express";
-import { getImageId } from "../utils/nano";
-import { sellerMiddleware } from "../utils/seller";
-import { requireAuth } from "../utils/required";
-import { _ } from "../utils/pino";
 
 const createImageMiddlewares: any = [
-  sellerMiddleware,
-  requireAuth,
+  sellerRequired,
   uploadMiddleware.array("image", 15),
 ];
 
 const createImageHandler = async (req: Request, res: Response) => {
-  const SELLER = req.sellerData;
-
   let connection: any = null;
 
   let response: string[] = [];
 
   try {
+    const SELLER = req.sellerData as SellerToken
+    ;
+
     if (!req.files) {
-      throw new Error("NOT_FILES");
+      throw new ApiError(400, "No files were uploaded", {
+        code: ERROR_CODES.VALIDATION_ERROR
+      });
     }
 
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     await connection.beginTransaction();
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     for (const file of req.files as Express.Multer.File[]) {
       const schemeData = `
-      INSERT INTO media (
-        media_id,
-        media_name,
-        seller_id,
-        media_type,
-        media_mimetype,
-        media_data,
-        schema_v
+      INSERT INTO files (
+        id,
+        group_id,
+        agent_id,
+        mime_type,
+        filename,
+        media_path,
+        status,
+        created_at
        ) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-      const mediaId = getImageId();
+      const fileId = getFileId();
 
-      const mediaName = mediaId + "." + file.mimetype.split("/")[1]
+      const mediaGroupId = getMediaGroupId();
+
+      const mediaName = fileId + "." + file.mimetype.split("/")[1];
 
       const schemeValue = [
-        mediaId,
-        mediaName,
+        fileId,
+        mediaGroupId,
         SELLER.id,
         "image",
         file.mimetype,
         file.buffer,
-        0,
+        Date.now()
       ];
 
       const [result] = await connection.execute(schemeData, schemeValue);
@@ -62,15 +72,17 @@ const createImageHandler = async (req: Request, res: Response) => {
       }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////
+
     await connection.commit();
 
-    res.status(200).send({ success: true, payload: response });
+    res.status(200).send({ success: true, data: { images: response } });
   } catch (err: any) {
-    await connection.rollback();
+    if (connection) {
+      await connection.rollback();
+    }
 
-    _.error(err);
-
-    throw new BadRequestError(err.message);
+    throw err;
   } finally {
     if (connection) {
       connection.release();

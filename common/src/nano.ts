@@ -24,3 +24,11 @@ export const getProductId = () =>{
 export const getEventId = () =>{
   return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21)
 }
+
+export const getFileId = () =>{
+  return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21)
+}
+
+export const getMediaGroupId = () =>{
+  return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21)
+}

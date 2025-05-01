@@ -1,7 +1,5 @@
-import DB from "../db";
-import { BadRequestError } from "../errors";
+import database from "../database";
 import { Request, Response } from "express";
-import { _ } from "../utils/pino";
 
 const getImageMiddlewares: any = [];
 
@@ -11,12 +9,8 @@ const getImageHandler = async (req: Request, res: Response) => {
   let response: string[] = [];
   
   try {
-    res.setHeader('Cross-Origin-Resource-Policy', 'none');
 
-    res.setHeader('Cross-Origin-Opener-Policy', 'none');
-
-
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     const mediaId = req.params.mediaId.split('.')[0];
 
@@ -36,9 +30,6 @@ const getImageHandler = async (req: Request, res: Response) => {
   } catch (err) {
     await connection.rollback();
 
-    _.error(err);
-
-    throw new BadRequestError("failed");
   } finally {
     connection.release();
   }
