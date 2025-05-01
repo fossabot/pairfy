@@ -51,6 +51,16 @@ export default async function validatedUpload(
         });
       }
 
+      if (
+        file.originalname.includes("..") ||
+        file.originalname.includes("/") ||
+        file.originalname.includes("\\") ||
+        file.originalname.includes("\0")
+      ) {
+        return res.status(400).json({ error: `Invalid filename: ${file.originalname}` });
+      }
+      
+
       // 🧼 Sanitizar nombre del archivo (aunque no se usa en disco aún)
       file.originalname = filenamify(path.basename(file.originalname), { replacement: '_' });
 
