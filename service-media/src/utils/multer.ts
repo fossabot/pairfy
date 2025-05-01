@@ -6,6 +6,7 @@ import type { Request, Response, NextFunction } from "express";
 import filenamify from "filenamify";
 import ffmpeg from "fluent-ffmpeg";
 import { PassThrough } from "stream";
+import { ApiError, ERROR_CODES } from "@pairfy/common"; 
 
 const allowedMimes = [
   "image/jpeg", "image/png", "image/webp",
@@ -78,36 +79,52 @@ async function validateVideo(file: Express.Multer.File): Promise<string | null> 
 
 export default async function validatedUpload(req: Request, res: Response, next: NextFunction) {
   upload(req, res, async (err) => {
-    if (err) return res.status(400).json({ error: err.message });
+    if (err) {
+      return next(new ApiError(400, err.message, {
+        code: ERROR_CODES.VALIDATION_ERROR,
+      }));
+    }
 
     const files = req.files as Express.Multer.File[];
-    if (!files?.length) return res.status(400).json({ error: "No valid files uploaded" });
+    if (!files?.length) {
+      return next(new ApiError(400, "No valid files uploaded", {
+        code: ERROR_CODES.VALIDATION_ERROR,
+      }));
+    }
 
     for (const file of files) {
       if (isMaliciousName(file.originalname)) {
-        return res.status(400).json({ error: `Invalid or spoofed filename: ${file.originalname}` });
+        return next(new ApiError(400, `Invalid or spoofed filename: ${file.originalname}`, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
       }
 
       file.originalname = sanitizeFilename(file.originalname);
 
       const detected = await fileTypeFromBuffer(file.buffer);
       if (!detected) {
-        return res.status(400).json({ error: `Cannot detect file type: ${file.originalname}` });
+        return next(new ApiError(400, `Cannot detect file type: ${file.originalname}`, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
       }
 
       const { mime, ext } = detected;
       if (file.mimetype !== mime) {
-        return res.status(400).json({
-          error: `MIME mismatch in ${file.originalname} (declared: ${file.mimetype}, actual: ${mime})`,
-        });
+        return next(new ApiError(400, `MIME mismatch in ${file.originalname} (declared: ${file.mimetype}, actual: ${mime})`, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
       }
 
       if (!validExtRegex.test(`.${ext}`)) {
-        return res.status(400).json({ error: `Invalid extension detected in ${file.originalname}` });
+        return next(new ApiError(400, `Invalid extension detected in ${file.originalname}`, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
       }
 
       if (file.size < 1024) {
-        return res.status(400).json({ error: `File too small to be valid: ${file.originalname}` });
+        return next(new ApiError(400, `File too small to be valid: ${file.originalname}`, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
       }
 
       const typeError = mime.startsWith("image/")
@@ -116,7 +133,11 @@ export default async function validatedUpload(req: Request, res: Response, next:
         ? await validateVideo(file)
         : `Unsupported file type: ${mime}`;
 
-      if (typeError) return res.status(400).json({ error: typeError });
+      if (typeError) {
+        return next(new ApiError(400, typeError, {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        }));
+      }
     }
 
     next();
