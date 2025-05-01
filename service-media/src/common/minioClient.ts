@@ -1,17 +1,25 @@
-import { Client } from "minio";
+import { Client as MinioClient } from "minio";
 
-export const minioClient = new Client({
-  endPoint: process.env.MINIO_ENDPOINT || "localhost",
-  port: parseInt(process.env.MINIO_PORT || "9000"),
-  useSSL: process.env.MINIO_USE_SSL === "true",
-  accessKey: process.env.MINIO_ACCESS_KEY || "minioadmin",
-  secretKey: process.env.MINIO_SECRET_KEY || "minioadmin123",
-});
+interface MinioOptions {
+  endPoint: string;
+  port: number;
+  useSSL: boolean;
+  accessKey: string;
+  secretKey: string;
+}
 
-export async function ensureBucketExists(bucketName: string): Promise<void> {
-  const exists = await minioClient.bucketExists(bucketName);
-  if (!exists) {
-    await minioClient.makeBucket(bucketName, "");
-    console.log(`🪣 Created bucket: ${bucketName}`);
+export class MinioWrap {
+  private _client?: MinioClient;
+
+  get client(): MinioClient {
+    if (!this._client) {
+      throw new Error("Cannot access the MinIO client before connecting");
+    }
+    return this._client;
+  }
+
+  connect(options: MinioOptions): MinioClient {
+    this._client = new MinioClient(options);
+    return this.client;
   }
 }
