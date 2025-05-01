@@ -26,9 +26,17 @@ export const getEventId = () =>{
 }
 
 export const getFileId = () =>{
-  return createId('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 16)
+  return createId('ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789', 16)
 }
 
-export const getMediaGroupId = () =>{
-  return createId('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 16)
-}
+export const getMediaGroupId = () => {
+  const raw = createId('0123456789abcdef', 32)
+
+  return [
+    raw.slice(0, 8),
+    raw.slice(8, 12),
+    raw.slice(12, 16),
+    raw.slice(16, 20),
+    raw.slice(20),
+  ].join('-');
+};

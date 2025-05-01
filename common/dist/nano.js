@@ -25,10 +25,17 @@ const getEventId = () => {
 };
 exports.getEventId = getEventId;
 const getFileId = () => {
-    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
+    return createId('ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789', 16);
 };
 exports.getFileId = getFileId;
 const getMediaGroupId = () => {
-    return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21);
+    const raw = createId('0123456789abcdef', 32);
+    return [
+        raw.slice(0, 8),
+        raw.slice(8, 12),
+        raw.slice(12, 16),
+        raw.slice(16, 20),
+        raw.slice(20),
+    ].join('-');
 };
 exports.getMediaGroupId = getMediaGroupId;
