@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS files (
   status ENUM('pending', 'processing', 'ready', 'failed', 'deleted') DEFAULT 'pending',
   created_at BIGINT NOT NULL,
 
-  INDEX idx_group_agent ON files (media_group_id, agent_id),
-  INDEX idx_status ON files (status)
+  INDEX idx_group_agent (media_group_id, agent_id),
+  INDEX idx_status (status)
 );

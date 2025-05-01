@@ -1,9 +1,9 @@
 import compression from "compression";
-import database from "./database";
-import * as route from "./routes";
-import { app } from "./app";
-import { catchError, errorEvents } from "./utils";
+import database from "./database/index.js";
+import * as route from "./routes/index.js";
+import { catchError, errorEvents } from "./utils/index.js";
 import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
+import { app } from "./app";
 
 const main = async () => {
   try {

@@ -6,8 +6,8 @@ import {
   ERROR_CODES,
   SellerToken,
 } from "@pairfy/common";
-import database from "../database";
-import uploadMiddleware from "../utils/multer";
+import database from "../database/index.js";
+import uploadMiddleware from "../utils/multer.js";
 import { Request, Response } from "express";
 
 const createImageMiddlewares: any = [
