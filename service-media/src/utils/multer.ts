@@ -13,16 +13,15 @@ const upload = multer({
   storage: multer.memoryStorage(),
   fileFilter: (_req, file, cb) => {
     const isMimeAllowed = allowedMimes.includes(file.mimetype);
-    const isFieldValid = file.fieldname === "files";
     const hasValidExt = validExtRegex.test(file.originalname);
 
-    if (!isMimeAllowed || !isFieldValid || !hasValidExt) {
-      return cb(null, false);
+    if (!isMimeAllowed || !hasValidExt) {
+      return cb(new Error("Invalid file type or extension"));
     }
 
     cb(null, true);
   }
-}).array("files", 15); // Acepta hasta 15 archivos
+}).array("files", 15);
 
 export default async function validatedUpload(
   req: Request,
@@ -30,24 +29,31 @@ export default async function validatedUpload(
   next: NextFunction
 ) {
   upload(req, res, async (err) => {
-    if (err) return next(err);
+    if (err) {
+      return res.status(400).json({ error: err.message });
+    }
 
-    if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
+    const files = req.files as Express.Multer.File[];
+    if (!files || files.length === 0) {
       return res.status(400).json({ error: "No files uploaded" });
     }
 
-    for (const file of req.files as Express.Multer.File[]) {
+    for (const file of files) {
       const detected = await fileTypeFromBuffer(file.buffer);
       if (!detected) {
         return res.status(400).json({ error: `Cannot detect type for file: ${file.originalname}` });
       }
 
-      const { mime } = detected;
+      const { mime, ext } = detected;
       const isImage = mime.startsWith("image/");
       const isVideo = mime.startsWith("video/");
 
       if (!isImage && !isVideo) {
         return res.status(400).json({ error: `Unsupported file type: ${mime}` });
+      }
+
+      if (!validExtRegex.test(`.${ext}`)) {
+        return res.status(400).json({ error: `Invalid extension detected: ${file.originalname}` });
       }
 
       if (isImage && file.size > 5 * 1024 * 1024) {
