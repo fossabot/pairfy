@@ -1,5 +1,6 @@
 import multer from "multer";
 import { fileTypeFromBuffer } from "file-type";
+import { imageSize } from "image-size";
 import type { Request, Response, NextFunction } from "express";
 
 const allowedMimes = [
@@ -14,14 +15,15 @@ const upload = multer({
   fileFilter: (_req, file, cb) => {
     const isMimeAllowed = allowedMimes.includes(file.mimetype);
     const hasValidExt = validExtRegex.test(file.originalname);
+    const isFieldValid = file.fieldname === "files";
 
-    if (!isMimeAllowed || !hasValidExt) {
-      return cb(new Error("Invalid file type or extension"));
+    if (!isMimeAllowed || !hasValidExt || !isFieldValid) {
+      return cb(null, false); // No error, just reject the file
     }
 
     cb(null, true);
   }
-}).array("files", 15);
+}).array("files", 15); // Max 15 files
 
 export default async function validatedUpload(
   req: Request,
@@ -35,7 +37,7 @@ export default async function validatedUpload(
 
     const files = req.files as Express.Multer.File[];
     if (!files || files.length === 0) {
-      return res.status(400).json({ error: "No files uploaded" });
+      return res.status(400).json({ error: "No valid files uploaded" });
     }
 
     for (const file of files) {
@@ -56,8 +58,22 @@ export default async function validatedUpload(
         return res.status(400).json({ error: `Invalid extension detected: ${file.originalname}` });
       }
 
-      if (isImage && file.size > 5 * 1024 * 1024) {
-        return res.status(400).json({ error: `Image exceeds 5MB: ${file.originalname}` });
+      if (isImage) {
+        if (file.size > 5 * 1024 * 1024) {
+          return res.status(400).json({ error: `Image exceeds 5MB: ${file.originalname}` });
+        }
+
+        try {
+          const { width, height } = imageSize(file.buffer);
+          if (!width || !height) {
+            return res.status(400).json({ error: `Could not determine dimensions for ${file.originalname}` });
+          }
+          if (width < 500 || height < 500 || width > 5000 || height > 5000) {
+            return res.status(400).json({ error: `Invalid image dimensions for ${file.originalname}` });
+          }
+        } catch {
+          return res.status(400).json({ error: `Invalid image file: ${file.originalname}` });
+        }
       }
 
       if (isVideo && file.size > 100 * 1024 * 1024) {
