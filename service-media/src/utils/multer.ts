@@ -3,6 +3,7 @@ import { fileTypeFromBuffer } from "file-type";
 import { imageSize } from "image-size";
 import path from "path";
 import type { Request, Response, NextFunction } from "express";
+import filenamify from 'filenamify';
 
 const allowedMimes = [
   "image/jpeg", "image/png", "image/webp",
@@ -51,7 +52,7 @@ export default async function validatedUpload(
       }
 
       // 🧼 Sanitizar nombre del archivo (aunque no se usa en disco aún)
-      file.originalname = path.basename(file.originalname);
+      file.originalname = filenamify(path.basename(file.originalname), { replacement: '_' });
 
       const detected = await fileTypeFromBuffer(file.buffer);
       if (!detected) {
