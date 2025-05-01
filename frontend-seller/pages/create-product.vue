@@ -252,7 +252,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <ButtonSolid label="Publish" @click="onCreateProduct" :loading="loading" />
+                        <ButtonSolid label="Publish" @click="testCreateImages" :loading="loading" />
                     </div>
                 </div>
 
@@ -342,6 +342,13 @@ const validateParams = () => {
     return params.includes(true)
 }
 
+const testCreateImages = async () => {
+    await useUploadImages(productImages.value.images)
+        .then((res) => console.log(res))
+        .catch((error) => console.error(error));
+}
+
+
 const onCreateProduct = async () => {
     loading.value = true
 
@@ -350,11 +357,6 @@ const onCreateProduct = async () => {
         loading.value = false
         return;
     }
-
-    await useUploadImages(productImages.value.images)
-    
-    .then((res) => console.log(res))
-    .catch((error) => console.error(error));
 
     const { data, error } = await useFetch('/api/product/createProduct', {
         method: 'POST',
