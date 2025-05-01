@@ -3,6 +3,7 @@ import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
 import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
+import { ensureBucketExists } from "./common/minioClient.js";
 import { app } from "./app.js";
 
 const main = async () => {
@@ -19,6 +20,8 @@ const main = async () => {
     }
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
+    
+    ensureBucketExists('media')
 
     const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
@@ -31,11 +34,11 @@ const main = async () => {
     });
 
     app.post(
-      "/api/media/create-image",
+      "/api/media/create-files",
 
-      route.createImageMiddlewares,
+      route.createFilesMiddlewares,
 
-      route.createImageHandler
+      route.createFilesHandler
     );
 
     app.get(

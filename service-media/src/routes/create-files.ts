@@ -7,16 +7,16 @@ import {
   SellerToken,
 } from "@pairfy/common";
 import database from "../database/index.js";
-import { minioClient } from "../minioClient.js";
 import { Request, Response, RequestHandler } from "express";
 import validatedUpload from "../utils/multer.js";
+import { minioClient } from "../common/minioClient.js";
 
-const createFileMiddlewares: RequestHandler[] = [
+const createFilesMiddlewares: RequestHandler[] = [
   sellerRequired,
   validatedUpload,
 ];
 
-const createFileHandler = async (req: Request, res: Response) => {
+const createFilesHandler = async (req: Request, res: Response) => {
   let connection: any = null;
   const response: string[] = [];
 
@@ -31,22 +31,23 @@ const createFileHandler = async (req: Request, res: Response) => {
     }
 
     connection = await database.client.getConnection();
+
     await connection.beginTransaction();
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     const mediaGroupId = getMediaGroupId();
+
     const createdAt = Date.now();
 
     for (const file of files) {
       const fileId = getFileId();
+
       const mediaPath = `groups/${mediaGroupId}/${fileId}-${file.originalname}`;
 
-      await minioClient.putObject(
-        "media",
-        mediaPath,
-        file.buffer,
-        file.size,
-        { "Content-Type": file.mimetype } // ya validado antes
-      );
+      await minioClient.putObject("media", mediaPath, file.buffer, file.size, {
+        "Content-Type": file.mimetype,
+      });
 
       await connection.execute(
         `
@@ -75,6 +76,8 @@ const createFileHandler = async (req: Request, res: Response) => {
       response.push(fileId);
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
     await connection.commit();
 
     res.status(200).send({
@@ -92,4 +95,4 @@ const createFileHandler = async (req: Request, res: Response) => {
   }
 };
 
-export { createFileMiddlewares, createFileHandler };
+export { createFilesMiddlewares, createFilesHandler };
