@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     serviceSellerBase: process.env.NUXT_SERVICE_SELLER_BASE,
     serviceProductBase: process.env.NUXT_SERVICE_PRODUCT_BASE,
     serviceLlmBase: process.env.NUXT_SERVICE_LLM_BASE,
+    serviceMediaBase: process.env.NUXT_SERVICE_MEDIA_BASE,
     public: {
       apiBaseBrowser: "",
       validWallets: ["lace", "nami", "eternl"],

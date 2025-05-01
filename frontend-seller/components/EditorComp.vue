@@ -141,7 +141,7 @@ import CharacterCount from '@tiptap/extension-character-count'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { Node, mergeAttributes } from '@tiptap/core'
 
-const emit = defineEmits(['valid']) // <--- para emitir el evento valid
+const emit = defineEmits(['valid']) 
 const toastRef = ref(null)
 const editor = ref(null)
 const editorLimit = ref(6000)

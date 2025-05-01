@@ -25,7 +25,9 @@ spec:
             - name: NUXT_SERVICE_PRODUCT_BASE
               value: http://service-product.default.svc.cluster.local:8001/api
             - name: NUXT_SERVICE_LLM_BASE
-              value: http://service-llm.default.svc.cluster.local:8002/api                
+              value: http://service-llm.default.svc.cluster.local:8002/api
+            - name: NUXT_SERVICE_MEDIA_BASE
+              value: http://service-media.default.svc.cluster.local:8003/api
 
 ---
 apiVersion: v1

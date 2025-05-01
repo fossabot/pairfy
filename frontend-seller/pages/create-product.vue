@@ -317,7 +317,7 @@ watch(productPrice, (newPrice) => {
 })
 
 //test
-watch(productImages, (e) => console.log(JSON.stringify(e?.positions)))
+watch(productImages, (e) => console.log(e?.images))
 
 const validateParams = () => {
     const params = [
@@ -350,6 +350,11 @@ const onCreateProduct = async () => {
         loading.value = false
         return;
     }
+
+    await useUploadImages(productImages.value.images)
+    
+    .then((res) => console.log(res))
+    .catch((error) => console.error(error));
 
     const { data, error } = await useFetch('/api/product/createProduct', {
         method: 'POST',
