@@ -26,9 +26,9 @@ export const getEventId = () =>{
 }
 
 export const getFileId = () =>{
-  return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21)
+  return createId('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 16)
 }
 
 export const getMediaGroupId = () =>{
-  return createId("abcdefghijklmnopqrstuvwxyz0123456789", 21)
+  return createId('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz', 16)
 }
