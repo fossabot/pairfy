@@ -1,5 +1,6 @@
 export const useUploadImages = async (images: { file: File }[]) => {
   const form = new FormData();
+
   for (const { file } of images) {
     form.append("files", file);
   }
@@ -7,13 +8,20 @@ export const useUploadImages = async (images: { file: File }[]) => {
   const res = await fetch("/api/media/create-files", {
     method: "POST",
     body: form,
-    credentials: "include"
+    credentials: "include",
   });
 
-  if (!res.ok) {
-    const err = await res.json().catch((err) => console.log("ERROR1", err));
-    throw new Error(err.error || "Upload failed");
+  let responseData: any;
+  try {
+    responseData = await res.json();
+  } catch (err) {
+    console.error("Failed to parse JSON response:", err);
+    throw new Error("Upload failed: invalid server response");
   }
 
-  return await res.json();
+  if (!res.ok) {
+    throw new Error(responseData?.error || "Upload failed");
+  }
+
+  return responseData;
 };
