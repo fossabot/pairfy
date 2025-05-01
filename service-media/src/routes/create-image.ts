@@ -7,7 +7,6 @@ import {
   SellerToken,
 } from "@pairfy/common";
 import database from "../database/index.js";
-import { fileTypeFromBuffer } from "file-type";
 import { minioClient } from "../minioClient.js";
 import { Request, Response, RequestHandler } from "express";
 import validatedUpload from "../utils/multer.js";
@@ -23,9 +22,10 @@ const createFileHandler = async (req: Request, res: Response) => {
 
   try {
     const SELLER = req.sellerData as SellerToken;
+    const files = req.files as Express.Multer.File[];
 
-    if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
-      throw new ApiError(400, "No files were uploaded", {
+    if (!files?.length) {
+      throw new ApiError(400, "No valid files uploaded", {
         code: ERROR_CODES.VALIDATION_ERROR,
       });
     }
@@ -36,30 +36,18 @@ const createFileHandler = async (req: Request, res: Response) => {
     const mediaGroupId = getMediaGroupId();
     const createdAt = Date.now();
 
-    for (const file of req.files as Express.Multer.File[]) {
-      const fileType = await fileTypeFromBuffer(file.buffer);
-      if (!fileType) {
-        throw new ApiError(400, "Invalid file format", {
-          code: ERROR_CODES.VALIDATION_ERROR,
-        });
-      }
-
+    for (const file of files) {
       const fileId = getFileId();
-      const sanitizedName = file.originalname
-        .replace(/\s+/g, "_")
-        .replace(/[^a-zA-Z0-9.\-_]/g, "");
-      const mediaPath = `groups/${mediaGroupId}/${fileId}-${sanitizedName}`;
+      const mediaPath = `groups/${mediaGroupId}/${fileId}-${file.originalname}`;
 
-      // Subida a MinIO
       await minioClient.putObject(
-        "media", // bucket
+        "media",
         mediaPath,
         file.buffer,
         file.size,
-        { "Content-Type": fileType.mime }
+        { "Content-Type": file.mimetype } // ya validado antes
       );
 
-      // Inserción en base de datos
       await connection.execute(
         `
         INSERT INTO files (
@@ -76,7 +64,7 @@ const createFileHandler = async (req: Request, res: Response) => {
           fileId,
           mediaGroupId,
           SELLER.id,
-          fileType.mime,
+          file.mimetype,
           file.originalname,
           mediaPath,
           "pending",
