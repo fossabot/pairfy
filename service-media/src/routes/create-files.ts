@@ -45,7 +45,7 @@ const createFilesHandler = async (req: Request, res: Response) => {
 
       const mediaPath = `groups/${mediaGroupId}/${fileId}-${file.originalname}`;
 
-      await minioClient.putObject("media", mediaPath, file.buffer, file.size, {
+      await minioClient.client.putObject("media", mediaPath, file.buffer, file.size, {
         "Content-Type": file.mimetype,
       });
 
