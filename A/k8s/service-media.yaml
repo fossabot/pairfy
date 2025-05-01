@@ -42,16 +42,20 @@ spec:
 
             - name: DATABASE_NAME
               value: service_media 
-
             - name: DATABASE_USER
               value: marketplace 
-
             - name : REDIS_RATELIMIT_URL
               value: "redis://redis-limiter:6379"                
-
             - name : MINIO_HOST_URL
-              value: http://minio.default.svc.cluster.local:9000
-
+              value: minio
+            - name : MINIO_PORT
+              value: "9000"
+            - name : MINIO_USE_SSL
+              value: "false"
+            - name : MINIO_ACCESS_KEY
+              value: "minioadmin"
+            - name : MINIO_SECRET_KEY
+              value: "minioadmin123"                            
           resources:
             limits:
               memory: "500Mi"

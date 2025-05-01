@@ -8,7 +8,7 @@ import { app } from "./app.js";
 
 const main = async () => {
   try {
-    const requiredEnv = ["AGENT_JWT_KEY", "MINIO_HOST_URL"];
+    const requiredEnv = ["AGENT_JWT_KEY", "MINIO_HOST_URL", "MINIO_PORT", "MINIO_USE_SSL", "MINIO_ACCESS_KEY", "MINIO_SECRET_KEY"];
 
     for (const key of requiredEnv) {
       if (!process.env[key]) {
@@ -19,11 +19,11 @@ const main = async () => {
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
 
     minioClient.connect({
-      endPoint: process.env.MINIO_ENDPOINT || "localhost",
-      port: parseInt(process.env.MINIO_PORT || "9000", 10),
+      endPoint: process.env.MINIO_HOST_URL as string,
+      port: parseInt(process.env.MINIO_PORT as string, 10),
       useSSL: process.env.MINIO_USE_SSL === "true",
-      accessKey: process.env.MINIO_ACCESS_KEY || "minioadmin",
-      secretKey: process.env.MINIO_SECRET_KEY || "minioadmin",
+      accessKey: process.env.MINIO_ACCESS_KEY as string,
+      secretKey: process.env.MINIO_SECRET_KEY as string
     });
 
     ensureBucketExists(minioClient.client, "media");
