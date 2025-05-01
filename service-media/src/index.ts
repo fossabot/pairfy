@@ -3,17 +3,13 @@ import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
 import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
-import { app } from "./app";
+import { app } from "./app.js";
 
 const main = async () => {
   try {
     const requiredEnv = [
-      "POD_TIMEOUT",
-      "EXPRESS_PORT",
-      "EXPRESS_TIMEOUT",
-      "CORS_DOMAINS",
       "AGENT_JWT_KEY",
-      "TOKEN_EXPIRATION",
+      "MINIO_HOST_URL"
     ];
 
     for (const key of requiredEnv) {
