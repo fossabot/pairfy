@@ -1,6 +1,7 @@
 import multer from "multer";
 import { fileTypeFromBuffer } from "file-type";
 import { imageSize } from "image-size";
+import path from "path";
 import type { Request, Response, NextFunction } from "express";
 
 const allowedMimes = [
@@ -18,7 +19,7 @@ const upload = multer({
     const isFieldValid = file.fieldname === "files";
 
     if (!isMimeAllowed || !hasValidExt || !isFieldValid) {
-      return cb(null, false); // Silenciosamente rechaza el archivo inválido
+      return cb(null, false); // Rechaza silenciosamente archivos inválidos
     }
 
     cb(null, true);
@@ -41,6 +42,17 @@ export default async function validatedUpload(
     }
 
     for (const file of files) {
+      // 🚫 Prevención de doble extensión tipo .jpg.exe
+      const segments = file.originalname.split(".");
+      if (segments.length > 2) {
+        return res.status(400).json({
+          error: `Filename contains multiple extensions: ${file.originalname}`
+        });
+      }
+
+      // 🧼 Sanitizar nombre del archivo (aunque no se usa en disco aún)
+      file.originalname = path.basename(file.originalname);
+
       const detected = await fileTypeFromBuffer(file.buffer);
       if (!detected) {
         return res.status(400).json({ error: `Cannot detect file type: ${file.originalname}` });
@@ -50,14 +62,12 @@ export default async function validatedUpload(
       const isImage = mime.startsWith("image/");
       const isVideo = mime.startsWith("video/");
 
-      // Comparar MIME declarado vs MIME real
       if (file.mimetype !== mime) {
         return res.status(400).json({
           error: `MIME mismatch in ${file.originalname} (declared: ${file.mimetype}, actual: ${mime})`
         });
       }
 
-      // Validar extensión contra detectada
       if (!validExtRegex.test(`.${ext}`)) {
         return res.status(400).json({ error: `Invalid extension detected in ${file.originalname}` });
       }
