@@ -1,30 +1,60 @@
 import multer from "multer";
+import { fileTypeFromBuffer } from "file-type";
+import type { Request, Response, NextFunction } from "express";
 
-const storage = multer.memoryStorage();
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter: (_req, file, cb) => {
+    const allowedMimes = [
+      "image/jpeg", "image/png", "image/webp",
+      "video/mp4", "video/webm", "video/quicktime"
+    ];
 
-const uploadMiddleware = multer({
-  limits: { fileSize: 10 * 1024 * 1024 },
-  storage: storage,
-  fileFilter: function (req, file, callback) {
+    const isMimeAllowed = allowedMimes.includes(file.mimetype);
+    const isFieldValid = file.fieldname === "file";
+    const hasValidExt = /\.(jpg|jpeg|png|webp|mp4|webm|mov)$/i.test(file.originalname);
 
-    console.log(file);
-
-    const whitelist = ["image/png", "image/jpeg", "image/webp"];
-
-    if (!whitelist.includes(file.mimetype)) {
-      return callback(null, false);
+    if (!isMimeAllowed || !isFieldValid || !hasValidExt) {
+      return cb(null, false);
     }
 
-    if (file.fieldname !== 'image') {
-      return callback(null, false);
+    cb(null, true);
+  }
+}).single("file");
+
+export default async function validatedUpload(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  upload(req, res, async (err) => {
+    if (err) return next(err);
+    if (!req.file) return res.status(400).json({ error: "No file uploaded" });
+
+    const file = req.file;
+
+    const detected = await fileTypeFromBuffer(file.buffer);
+    if (!detected) {
+      return res.status(400).json({ error: "Cannot detect file type" });
     }
 
-    if (!file.originalname.match(/\.(jpg|jpeg|png|webp)$/)) {
-      return callback(null, false);
+    const { mime } = detected;
+    const isImage = mime.startsWith("image/");
+    const isVideo = mime.startsWith("video/");
+
+    if (!isImage && !isVideo) {
+      return res.status(400).json({ error: "Unsupported file type" });
     }
 
-    callback(null, true);
-  },
-});
+    // Tamaño máximo según tipo
+    if (isImage && file.size > 5 * 1024 * 1024) {
+      return res.status(400).json({ error: "Image exceeds 5MB" });
+    }
 
-export default uploadMiddleware;
+    if (isVideo && file.size > 100 * 1024 * 1024) {
+      return res.status(400).json({ error: "Video exceeds 100MB" });
+    }
+
+    next();
+  });
+}

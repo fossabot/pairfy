@@ -8,86 +8,100 @@ import {
 } from "@pairfy/common";
 import database from "../database/index.js";
 import uploadMiddleware from "../utils/multer.js";
+import { fileTypeFromBuffer } from "file-type";
+import { minioClient } from "../minioClient.js";
 import { Request, Response } from "express";
 
-const createImageMiddlewares: any = [
+const createFileMiddlewares: any = [
   sellerRequired,
   uploadMiddleware.array("image", 15),
 ];
 
-const createImageHandler = async (req: Request, res: Response) => {
+const createFileHandler = async (req: Request, res: Response) => {
   let connection: any = null;
-
-  let response: string[] = [];
+  const response: string[] = [];
 
   try {
-    const SELLER = req.sellerData as SellerToken
-    ;
+    const SELLER = req.sellerData as SellerToken;
 
-    if (!req.files) {
+    if (!req.files || (req.files as Express.Multer.File[]).length === 0) {
       throw new ApiError(400, "No files were uploaded", {
-        code: ERROR_CODES.VALIDATION_ERROR
+        code: ERROR_CODES.VALIDATION_ERROR,
       });
     }
 
     connection = await database.client.getConnection();
-
     await connection.beginTransaction();
 
-    ////////////////////////////////////////////////////////////////////////////////////////
+    const mediaGroupId = getMediaGroupId();
+    const createdAt = Date.now();
 
     for (const file of req.files as Express.Multer.File[]) {
-      const schemeData = `
-      INSERT INTO files (
-        id,
-        group_id,
-        agent_id,
-        mime_type,
-        filename,
-        media_path,
-        status,
-        created_at
-       ) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const fileType = await fileTypeFromBuffer(file.buffer);
+      if (!fileType) {
+        throw new ApiError(400, "Invalid file format", {
+          code: ERROR_CODES.VALIDATION_ERROR,
+        });
+      }
 
       const fileId = getFileId();
+      const sanitizedName = file.originalname
+        .replace(/\s+/g, "_")
+        .replace(/[^a-zA-Z0-9.\-_]/g, "");
+      const mediaPath = `groups/${mediaGroupId}/${fileId}-${sanitizedName}`;
 
-      const mediaGroupId = getMediaGroupId();
-
-      const mediaName = fileId + "." + file.mimetype.split("/")[1];
-
-      const schemeValue = [
-        fileId,
-        mediaGroupId,
-        SELLER.id,
-        "image",
-        file.mimetype,
+      // Subida a MinIO
+      await minioClient.putObject(
+        "media", // bucket
+        mediaPath,
         file.buffer,
-        Date.now()
-      ];
+        file.size,
+        { "Content-Type": fileType.mime }
+      );
 
-      const [result] = await connection.execute(schemeData, schemeValue);
+      // Inserción en base de datos
+      await connection.execute(
+        `
+        INSERT INTO files (
+          id,
+          media_group_id,
+          agent_id,
+          mime_type,
+          filename,
+          media_path,
+          status,
+          created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          fileId,
+          mediaGroupId,
+          SELLER.id,
+          fileType.mime,
+          file.originalname,
+          mediaPath,
+          "pending",
+          createdAt,
+        ]
+      );
 
-      if (result.affectedRows === 1) {
-        response.push(mediaName);
-      }
+      response.push(fileId);
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////
 
     await connection.commit();
 
-    res.status(200).send({ success: true, data: { images: response } });
+    res.status(200).send({
+      success: true,
+      data: {
+        media_group_id: mediaGroupId,
+        file_ids: response,
+      },
+    });
   } catch (err: any) {
-    if (connection) {
-      await connection.rollback();
-    }
-
+    if (connection) await connection.rollback();
     throw err;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
 
-export { createImageMiddlewares, createImageHandler };
+export { createFileMiddlewares, createFileHandler };
