@@ -55,10 +55,12 @@ export default async function validatedUpload(
         file.originalname.includes("..") ||
         file.originalname.includes("/") ||
         file.originalname.includes("\\") ||
-        file.originalname.includes("\0")
+        file.originalname.includes(String.fromCharCode(0))
       ) {
         return res.status(400).json({ error: `Invalid filename: ${file.originalname}` });
       }
+      
+      
       
 
       // 🧼 Sanitizar nombre del archivo (aunque no se usa en disco aún)
