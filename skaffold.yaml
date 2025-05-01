@@ -83,8 +83,8 @@ build:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .  
 
-    - image: pairfy/service-product
-      context: service-product
+    - image: pairfy/service-media
+      context: service-media
       docker:
         dockerfile: Dockerfile
       sync:

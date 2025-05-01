@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS files (
   mime_type VARCHAR(50),          
   filename TEXT NOT NULL,                             
   media_path TEXT NOT NULL,             
-  status ENUM('pending', 'processing', 'ready', 'failed', 'deleted') DEFAULT 'pending'
+  status ENUM('pending', 'processing', 'ready', 'failed', 'deleted') DEFAULT 'pending',
   created_at BIGINT NOT NULL,
 
   INDEX idx_group_agent ON files (media_group_id, agent_id),
