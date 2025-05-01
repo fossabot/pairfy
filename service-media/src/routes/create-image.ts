@@ -7,14 +7,14 @@ import {
   SellerToken,
 } from "@pairfy/common";
 import database from "../database/index.js";
-import uploadMiddleware from "../utils/multer.js";
 import { fileTypeFromBuffer } from "file-type";
 import { minioClient } from "../minioClient.js";
-import { Request, Response } from "express";
+import { Request, Response, RequestHandler } from "express";
+import validatedUpload from "../utils/multer.js";
 
-const createFileMiddlewares: any = [
+const createFileMiddlewares: RequestHandler[] = [
   sellerRequired,
-  uploadMiddleware.array("image", 15),
+  validatedUpload,
 ];
 
 const createFileHandler = async (req: Request, res: Response) => {
