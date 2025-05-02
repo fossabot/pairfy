@@ -41,13 +41,9 @@ export const verifyGroupHandler = async (
     );
 
     if (rows.length === 0) {
-      throw new ApiError(
-        404,
-        "No matching files found for the given media_group_id and agent_id",
-        {
-          code: ERROR_CODES.NOT_FOUND,
-        }
-      );
+      throw new ApiError(404, "No matching files found", {
+        code: ERROR_CODES.NOT_FOUND,
+      });
     }
 
     const foundIds = rows.map((r: any) => r.id);
@@ -60,7 +56,8 @@ export const verifyGroupHandler = async (
       });
     }
 
-    const [updateResult] = await connection.query(`
+    await connection.query(
+      `
        UPDATE files SET status = 'processing' 
        WHERE id IN (?) 
        AND media_group_id = ? 
@@ -69,16 +66,6 @@ export const verifyGroupHandler = async (
        `,
       [foundIds, media_group_id, agent_id]
     );
-
-    if (updateResult.affectedRows === 0) {
-      throw new ApiError(
-        409,
-        "No files updated — all files may already be processing or finalized",
-        {
-          code: ERROR_CODES.CONFLICT,
-        }
-      );
-    }
 
     const pendingFiles = rows.filter((file: any) => file.status === "pending");
 
@@ -92,7 +79,7 @@ export const verifyGroupHandler = async (
         connection,
         timestamp,
         "service-media",
-        "CreateFile",
+        "ProductFile",
         JSON.stringify(eventData),
         agent_id
       );
