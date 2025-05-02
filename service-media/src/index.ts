@@ -8,7 +8,14 @@ import { app } from "./app.js";
 
 const main = async () => {
   try {
-    const requiredEnv = ["AGENT_JWT_KEY", "MINIO_HOST_URL", "MINIO_PORT", "MINIO_USE_SSL", "MINIO_ACCESS_KEY", "MINIO_SECRET_KEY"];
+    const requiredEnv = [
+      "AGENT_JWT_KEY",
+      "MINIO_HOST_URL",
+      "MINIO_PORT",
+      "MINIO_USE_SSL",
+      "MINIO_ACCESS_KEY",
+      "MINIO_SECRET_KEY",
+    ];
 
     for (const key of requiredEnv) {
       if (!process.env[key]) {
@@ -23,7 +30,7 @@ const main = async () => {
       port: parseInt(process.env.MINIO_PORT as string, 10),
       useSSL: process.env.MINIO_USE_SSL === "true",
       accessKey: process.env.MINIO_ACCESS_KEY as string,
-      secretKey: process.env.MINIO_SECRET_KEY as string
+      secretKey: process.env.MINIO_SECRET_KEY as string,
     });
 
     ensureBucketExists(minioClient.client, "media");
@@ -55,11 +62,9 @@ const main = async () => {
     );
 
     app.get(
-      "/api/media/get-image/:mediaId",
-
-      route.getImageMiddlewares,
-
-      route.getImageHandler
+      "/api/media/get-file/groups/:groupId/:filename",
+      route.getFileMiddlewares,
+      route.getFileHandler
     );
 
     app.post(

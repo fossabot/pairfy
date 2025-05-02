@@ -18,8 +18,6 @@ export const verifyGroupHandler = async (
   let connection;
 
   try {
-    console.log(req.body);
-
     const validateParams = verifyParams.safeParse(req.body);
 
     if (!validateParams.success) {
