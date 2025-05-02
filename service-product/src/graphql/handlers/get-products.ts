@@ -1,4 +1,5 @@
 import database from "../../database/client.js";
+import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
 
 export const getProducts = async (_: any, args: any, context: any) => {
   const { cursor } = args.getProductsInput;
@@ -15,7 +16,9 @@ export const getProducts = async (_: any, args: any, context: any) => {
   if (cursor !== "NOT") {
     const timestamp = Number(cursor);
     if (isNaN(timestamp)) {
-      throw new Error("Invalid cursor");
+      throw new ApiGraphQLError(400, "Invalid cursor format", {
+        code: ERROR_CODES.VALIDATION_ERROR,
+      });
     }
     query += " AND created_at < ?";
     queryParams.push(new Date(timestamp).toISOString());
@@ -48,7 +51,10 @@ export const getProducts = async (_: any, args: any, context: any) => {
       totalCount: total_products,
     };
   } catch (err: any) {
-    throw new Error(err.message);
+    throw new ApiGraphQLError(500, "Unexpected error retrieving products", {
+      code: ERROR_CODES.INTERNAL_ERROR,
+      details: err.message,
+    });
   } finally {
     if (connection) {
       connection.release();
