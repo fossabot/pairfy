@@ -52,8 +52,7 @@ export const getProducts = async (_: any, args: any, context: any) => {
     };
   } catch (err: any) {
     throw new ApiGraphQLError(500, "Unexpected error retrieving products", {
-      code: ERROR_CODES.INTERNAL_ERROR,
-      details: err.message,
+      code: ERROR_CODES.INTERNAL_ERROR
     });
   } finally {
     if (connection) {
