@@ -30,6 +30,7 @@ export const verifyGroupHandler = async (
     await connection.beginTransaction();
 
     ///////////////////////////////////////////////////////////////////////////////////////////
+
     const timestamp = Date.now();
 
     const [rows] = await connection.query(
@@ -51,7 +52,7 @@ export const verifyGroupHandler = async (
     const missing = file_ids.filter((id) => !foundIds.includes(id));
 
     if (missing.length > 0) {
-      throw new ApiError(404, `Missing file_ids: ${missing.join(", ")}`, {
+      throw new ApiError(404, "Missing file_ids", {
         code: ERROR_CODES.NOT_FOUND,
       });
     }
@@ -70,17 +71,12 @@ export const verifyGroupHandler = async (
     const pendingFiles = rows.filter((file: any) => file.status === "pending");
 
     for (const file of pendingFiles) {
-      const eventData = {
-        bucket: "media",
-        file,
-      };
-
       await createEvent(
         connection,
         timestamp,
         "service-media",
         "ProductFile",
-        JSON.stringify(eventData),
+        JSON.stringify(file),
         agent_id
       );
     }
@@ -94,6 +90,7 @@ export const verifyGroupHandler = async (
       data: { media_group_id, file_ids },
     });
   } catch (error) {
+    if (connection) await connection.rollback();
     next(error);
   } finally {
     if (connection) connection.release();
