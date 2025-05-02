@@ -103,6 +103,8 @@ input CreateProductInput {
   postal: String!
   discount: Boolean!
   discount_value: Int!
+  media_group_id: ID!
+  file_ids: [ID!]!
 }
 
 input UpdateProductInput {

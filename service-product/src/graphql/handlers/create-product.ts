@@ -7,18 +7,19 @@ import {
   findProductBySku,
   createEvent,
   sanitizeTiptapContent,
-  sanitizeArrayGraphQL
+  sanitizeArrayGraphQL,
 } from "@pairfy/common";
 import database from "../../database/client.js";
 import { createProductSchema } from "../../validators/create-product.js";
+import { checkFileGroup } from "../../utils/verify-group.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
-    
-    args.createProductInput.bullet_list = sanitizeArrayGraphQL(args.createProductInput.bullet_list) 
-
+    args.createProductInput.bullet_list = sanitizeArrayGraphQL(
+      args.createProductInput.bullet_list
+    );
 
     const validateParams = createProductSchema.safeParse(
       args.createProductInput
@@ -51,6 +52,22 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
+    const isValidFiles = await checkFileGroup(
+      "http://service-media.default.svc.cluster.local:8003/api/media/verify-group",
+      {
+        agent_id: SELLER.id,
+        media_group_id: params.media_group_id,
+        file_ids: params.file_ids,
+      },
+      "fakesecret" ////
+    );
+
+    if (!isValidFiles) {
+      throw new ApiGraphQLError(409, "Inconsistency of image ids.", {
+        code: ERROR_CODES.CONFLICT,
+      });
+    }
+
     await connection.beginTransaction();
 
     /////////////////////////////////////////////////////////////////////// START TRANSACTION
@@ -64,6 +81,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
     const productScheme = {
       id: productId,
       group_id: groupId,
+      media_group_id: params.media_group_id,
+      media_position: params.file_ids,
       seller_id: SELLER.id,
       name: params.name,
       price: params.price,

@@ -17,18 +17,6 @@ const sessionOptions: object = {
 
 app.set("trust proxy", 1);
 
-app.use((req, _res, next) => {
-  console.log("📥 Incoming request:");
-  console.log("➡️ Method:", req.method);
-  console.log("➡️ URL:", req.originalUrl);
-  console.log("➡️ Headers:", req.headers);
-  console.log("➡️ Cookie header:", req.headers.cookie);
-  console.log("➡️ Parsed req.cookies:", req.cookies); // necesitas cookie-parser
-  console.log("➡️ Parsed req.session:", req.session); // si usas cookie-session
-  next();
-});
-
-
 app.use(cookieSession(sessionOptions));
 
 app.use(helmet());

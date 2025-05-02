@@ -30,10 +30,12 @@ export const createProductSchema = z.object({
   model: z.string().min(1).max(40).regex(modelRegex, "Invalid model format"),
   brand: z.string().min(1).max(40).regex(brandRegex, "Invalid brand format"),
   description: TiptapDocumentSchema,
-  category: z.string().min(1).refine(
-    (val) => categoryCodes.includes(val),
-    { message: 'Invalid category code' }
-  ),
+  category: z
+    .string()
+    .min(1)
+    .refine((val) => categoryCodes.includes(val), {
+      message: "Invalid category code",
+    }),
   bullet_list: z
     .array(
       z
@@ -46,9 +48,9 @@ export const createProductSchema = z.object({
     )
     .min(1, { message: "At least one feature is required." }),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, {
-    message: 'Invalid hex color format.',
+    message: "Invalid hex color format.",
   }),
-  condition_: z.enum(['new', 'used', 'refurbished']),
+  condition_: z.enum(["new", "used", "refurbished"]),
   origin: z
     .string()
     .length(2)
@@ -59,7 +61,9 @@ export const createProductSchema = z.object({
   postal: z.string().min(1).max(12).regex(postalRegex, "Invalid postal format"),
   discount: z.boolean(),
   discount_value: z.number().int().nonnegative().min(0).max(100),
+  media_group_id: z.string().regex(
+    /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/,
+    { message: "Invalid media group ID format" }
+  ),
+  file_ids: z.array(z.string().min(1).max(100)).min(1).max(11),
 });
-
-
-

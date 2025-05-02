@@ -3,8 +3,12 @@ import { ApiError, createEvent, ERROR_CODES } from "@pairfy/common";
 import type { Request, Response, NextFunction } from "express";
 import { verifyParams } from "../validators/verify-group.js";
 import { internalAuth } from "../utils/internalAuth.js";
+import express from "express";
 
-export const verifyGroupMiddlewares: any = [internalAuth];
+export const verifyGroupMiddlewares: any = [
+  express.json({ limit: "1mb", strict: true, type: ["application/json"] }),
+  internalAuth,
+];
 
 export const verifyGroupHandler = async (
   req: Request,
@@ -14,6 +18,8 @@ export const verifyGroupHandler = async (
   let connection;
 
   try {
+    console.log(req.body);
+
     const validateParams = verifyParams.safeParse(req.body);
 
     if (!validateParams.success) {
