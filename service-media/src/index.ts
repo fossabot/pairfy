@@ -46,6 +46,14 @@ const main = async () => {
       route.createFilesHandler
     );
 
+    app.post(
+      "/api/media/verify-group",
+
+      route.verifyGroupMiddlewares,
+
+      route.verifyGroupHandler
+    );
+
     app.get(
       "/api/media/get-image/:mediaId",
 
