@@ -1,8 +1,19 @@
 import database from "../../database/client.js";
 import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
+import { verifyParams } from "../../validators/get-products.js";
 
 export const getProducts = async (_: any, args: any, context: any) => {
-  const { cursor } = args.getProductsInput;
+  const isValidParams = verifyParams.safeParse(args.getProductsInput);
+
+  if (!isValidParams.success) {
+    throw new ApiGraphQLError(400, "Invalid input", {
+      code: ERROR_CODES.VALIDATION_ERROR,
+      details: isValidParams.error.format(),
+    });
+  }
+
+  const { cursor } = isValidParams.data;
+
   const { sellerData: SELLER } = context;
 
   const pageSize = 16;
@@ -52,7 +63,7 @@ export const getProducts = async (_: any, args: any, context: any) => {
     };
   } catch (err: any) {
     throw new ApiGraphQLError(500, "Unexpected error retrieving products", {
-      code: ERROR_CODES.INTERNAL_ERROR
+      code: ERROR_CODES.INTERNAL_ERROR,
     });
   } finally {
     if (connection) {

@@ -406,7 +406,7 @@ const onCreateProduct = async () => {
 .grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .grid-title {
@@ -433,7 +433,7 @@ const onCreateProduct = async () => {
 .grid-row {
     border: 1px solid var(--border-a);
     background: var(--background-a);
-    border-radius: var(--radius-c);
+    border-radius: var(--radius-b);
     margin-bottom: 1rem;
     padding: 1.5rem;
 }
