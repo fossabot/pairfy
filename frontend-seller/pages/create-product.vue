@@ -433,7 +433,7 @@ const onCreateProduct = async () => {
 .grid-row {
     border: 1px solid var(--border-a);
     background: var(--background-a);
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-c);
     margin-bottom: 1rem;
     padding: 1.5rem;
 }
