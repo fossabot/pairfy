@@ -57,9 +57,10 @@ input GetProductInput {
 } 
   
 type GetProductsResponse {
-  products: [Product]
-  cursor: String!
-  count: Int!
+  products: [Product!]!
+  nextCursor: String
+  hasMore: Boolean!
+  totalCount: Int!
 }
 
 type Query {
