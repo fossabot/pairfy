@@ -55,7 +55,9 @@ spec:
             - name : MINIO_ACCESS_KEY
               value: "minioadmin"
             - name : MINIO_SECRET_KEY
-              value: "minioadmin123"                            
+              value: "minioadmin123"    
+            - name: INTERNAL_SECRET
+              value: fakesecret
           resources:
             limits:
               memory: "500Mi"

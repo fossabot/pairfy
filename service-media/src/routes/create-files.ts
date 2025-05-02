@@ -7,7 +7,7 @@ import {
   SellerToken,
 } from "@pairfy/common";
 import database from "../database/index.js";
-import { Request, Response, RequestHandler } from "express";
+import { Request, Response, RequestHandler, NextFunction } from "express";
 import validatedUpload from "../utils/multer.js";
 import { minioClient } from "../common/minioClient.js";
 
@@ -16,7 +16,7 @@ const createFilesMiddlewares: RequestHandler[] = [
   validatedUpload,
 ];
 
-const createFilesHandler = async (req: Request, res: Response) => {
+const createFilesHandler = async (req: Request, res: Response, next: NextFunction) => {
   let connection: any = null;
   const response: string[] = [];
 
@@ -40,7 +40,12 @@ const createFilesHandler = async (req: Request, res: Response) => {
 
     const createdAt = Date.now();
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+
+      const file = files[i];
+
+      const position = i;
+
       const fileId = getFileId();
 
       const mediaPath = `groups/${mediaGroupId}/${fileId}-${file.originalname}`;
@@ -56,16 +61,18 @@ const createFilesHandler = async (req: Request, res: Response) => {
           media_group_id,
           agent_id,
           mime_type,
+          position,
           filename,
           media_path,
           status,
           created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           fileId,
           mediaGroupId,
           SELLER.id,
           file.mimetype,
+          position,
           file.originalname,
           mediaPath,
           "pending",
@@ -87,9 +94,10 @@ const createFilesHandler = async (req: Request, res: Response) => {
         file_ids: response,
       },
     });
-  } catch (err: any) {
+  } catch (error) {
     if (connection) await connection.rollback();
-    throw err;
+    
+    next(error)
   } finally {
     if (connection) connection.release();
   }

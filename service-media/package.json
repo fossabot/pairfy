@@ -13,7 +13,7 @@
     "node": ">=20.10.0"
   },
   "dependencies": {
-    "@pairfy/common": "^1.0.140",
+    "@pairfy/common": "^1.0.143",
     "axios": "^1.9.0",
     "compression": "^1.8.0",
     "cookie-session": "^2.1.0",
