@@ -49,7 +49,7 @@ export const getFileHandler = async (
       [mediaPath]
     );
 
-    if (!rows || (rows as any[]).length === 0) {
+    if (!rows || rows.length === 0) {
       throw new ApiError(404, "File not found", {
         code: ERROR_CODES.NOT_FOUND,
       });
