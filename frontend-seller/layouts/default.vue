@@ -10,8 +10,7 @@
 
         <div class="layout-logo-text" :class="{ collapsed: isCollapsed && !isHovering }"
           v-show="!isCollapsed || isHovering">
-          Pairfy
-          <span>Marketplace</span>
+          Pairfy       
         </div>
       </div>
 
@@ -35,7 +34,7 @@
 
         <NuxtLink to="/product-list">
           <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-check-icon lucide-folder-check"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="m9 13 2 2 4-4"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-folder-check-icon lucide-folder-check"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="m9 13 2 2 4-4"/></svg>
           </span>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Products</span>
@@ -179,11 +178,6 @@ nav a:hover {
   white-space: nowrap;
   visibility: initial;
   font-weight: 700;
-}
-
-.layout-logo-text span {
-  font-size: var(--text-size-2);
-  font-weight: 300;
 }
 
 .layout-logo-text.collapsed {
