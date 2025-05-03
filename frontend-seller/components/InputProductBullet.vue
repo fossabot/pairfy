@@ -7,7 +7,7 @@
         <textarea
           v-model="items[index]"
           ref="textareas"
-          placeholder=""
+          placeholder="•"
           :maxlength="maxLength"
           class="textarea"
           :class="{ 'is-invalid': showError[index] }"
