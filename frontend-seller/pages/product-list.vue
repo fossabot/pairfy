@@ -68,13 +68,13 @@ const productCount = ref(0);
 
 
 const columns = ref([
+    { label: "Image", field: "thumbnail_url" },
     { label: "ID", field: "id" },
+    { label: "Sku", field: "sku" },
     { label: "Status", field: "status" },
     { label: "Moderated", field: "moderated" },
-    { label: "Image", field: "thumbnail_url" },
     { label: "Name", field: "name" },
     { label: "Price", field: "price" },
-    { label: "Sku", field: "sku" },
     { label: "Model", field: "model" },
     { label: "Discount", field: "discount" },
     { label: "Category", field: "category" },
