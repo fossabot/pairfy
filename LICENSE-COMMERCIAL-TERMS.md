@@ -12,7 +12,7 @@ Pairfy is dual-licensed:
 
 ## ❗ Penalty for Unauthorized Use
 
-If you use Pairfy in a closed-source or proprietary project without a license:
+If you use Pairfy in a closed-source or proprietary closed-source project without a license:
 
 - You may be liable for **damages of up to $10,000 USD**, plus legal fees.
 
