@@ -5,7 +5,7 @@
     <div class="header flex">
       <div class="header-left">
         <div class="search flex">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
           <input v-model="searchQuery" type="text" placeholder="Search" class="p-2 border rounded w-full mb-3" />
         </div>
       </div>
@@ -18,11 +18,11 @@
         </div>
 
         <button @click="prevPage" :disabled="currentPage === 1">
-          <i class="pi pi-angle-left" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
         </button>
 
         <button @click="nextPage" :disabled="currentPage === totalPages">
-          <i class="pi pi-angle-right" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
         </button>
       </div>
     </div>
@@ -189,16 +189,17 @@ const nextPage = () => {
 .header {
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
+  box-sizing: border-box;
   padding: 0.75rem;
   width: inherit;
 }
 
 .header-left {
-  width: 50%;
+  width: 40%;
 }
 
 .header-right {
-  width: 50%;
+  width: 60%;
 }
 
 .pagination {
