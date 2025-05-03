@@ -116,11 +116,10 @@ skaffold run
 
 Pairfy is dual-licensed:
 
-- **GPLv3** for open-source forks. See [LICENSE](./LICENSE)
+- 🟢 **[GPLv3](./LICENSE)** for all open-source usage, including commercial use, **as long as the source code remains open**.
+- 🔒 **[Commercial License](./COMMERCIAL-LICENSE.txt)** required **only** if you fork this project and distribute a closed-source version.
 
-- **Commercial license** required only for closed-source forks. See [COMMERCIAL-LICENSE.txt](./COMMERCIAL-LICENSE.txt)
-
-Contact: sudo.delete.evil@gmail.com
+📩 Contact for commercial licensing: sudo.delete.evil@gmail.com
 
 ---
 
