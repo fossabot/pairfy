@@ -1,0 +1,25 @@
+Pairfy Commercial License Agreement
+
+Copyright (C) 2025
+Juan José Caballero Rey <sudo.delete.evil@gmail.com>
+
+This software is dual-licensed:
+
+1. Under the GNU General Public License v3 (GPLv3), you may use, modify, and redistribute this software — including for commercial purposes — **provided that your entire derivative work remains open source and compliant with the GPLv3.**
+
+2. A Commercial License is required **only if you create a modified version (fork) and do not release its complete source code under the GPLv3 or a compatible open-source license.**
+
+This includes, but is not limited to:
+- Distributing a proprietary or closed-source fork of Pairfy
+- Using a modified version of Pairfy in a commercial SaaS or internal business application **without releasing its source code**
+- Integrating Pairfy into a closed-source product or system
+
+If your use of Pairfy does not comply with the GPLv3, you must obtain a commercial license.
+
+Unauthorized use outside of the GPLv3 terms may constitute copyright infringement and could result in legal action.
+
+To obtain a commercial license, contact:
+Juan José Caballero Rey  
+Email: sudo.delete.evil@gmail.com
+
+This license does not grant exclusivity or any warranties. The software is provided "as is".

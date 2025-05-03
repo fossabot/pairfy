@@ -114,19 +114,13 @@ skaffold run
 
 ### 2\. License
 
+Pairfy is dual-licensed:
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+- **GPLv3** for open-source forks. See [LICENSE](./LICENSE)
 
-This project, **Pairfy**, is free and open-source software licensed under the
-[GNU General Public License v3.0 or later](https://www.gnu.org/licenses/gpl-3.0.en.html).
+- **Commercial license** required only for closed-source forks. See [COMMERCIAL-LICENSE.txt](./COMMERCIAL-LICENSE.txt)
 
-You may redistribute and/or modify it under the terms of the GPL as published by
-the Free Software Foundation, either version 3 or (at your option) any later version.
-
-- **Project:** Pairfy  
-- **Description:** Decentralized e-commerce web application based on blockchain and artificial intelligence  
-- **Author:** Juan José Caballero Rey  
-- **Contact:** sudo.delete.evil@gmail.com  
+Contact: sudo.delete.evil@gmail.com
 
 ---
 
