@@ -99,7 +99,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
       city: params.city,
       postal: params.postal,
       discount: params.discount,
-      discount_value: params.discount_value,
+      discount_value: 0,
+      discount_percent: params.discount_percent,   ///////////////
       created_at: timestamp,
       updated_at: timestamp,
       schema_v: 0,

@@ -60,7 +60,7 @@ export const createProductSchema = z.object({
   city: z.string().min(1).max(40).regex(cityRegex, "Invalid city format"),
   postal: z.string().min(1).max(12).regex(postalRegex, "Invalid postal format"),
   discount: z.boolean(),
-  discount_value: z.number().int().nonnegative().min(0).max(100),
+  discount_percent: z.number().int().nonnegative().min(0).max(100),
   media_group_id: z.string().regex(
     /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/,
     { message: "Invalid media group ID format" }

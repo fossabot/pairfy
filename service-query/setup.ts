@@ -82,7 +82,7 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
           properties: [
             { name: "id_", dataType: ["text"], indexFilterable: true, indexSearchable: true },
             { name: "group_id", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
-            { name: "state", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
+            { name: "status", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
             { name: "moderated", dataType: ["boolean"], indexFilterable: true },
             { name: "seller_id", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
             { name: "thumbnail_url", dataType: ["text"], indexFilterable: true, indexSearchable: true },
@@ -102,6 +102,7 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
             { name: "postal", dataType: ["text"], indexFilterable: true, indexSearchable: true, tokenization: "word" },
             { name: "discount", dataType: ["boolean"], indexFilterable: true },
             { name: "discount_value", dataType: ["int"], indexFilterable: true },
+            { name: "discount_percent", dataType: ["int"], indexFilterable: true },
             { name: "created_at", dataType: ["number"], indexFilterable: true },
             { name: "updated_at", dataType: ["number"], indexFilterable: true },
             { name: "schema_v", dataType: ["int"], indexFilterable: true },

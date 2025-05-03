@@ -5,7 +5,7 @@ scalar JSON
 type Product {
   id: ID!
   group_id: String!
-  state: String!
+  status: String!
   moderated: Boolean!
   seller_id: String!
   thumbnail_url: String
@@ -25,6 +25,7 @@ type Product {
   postal: String!
   discount: Boolean!
   discount_value: Int!
+  discount_percent: Int!
   created_at: BigInt!
   updated_at: BigInt!
   schema_v: Int!
@@ -103,7 +104,7 @@ input CreateProductInput {
   city: String!
   postal: String!
   discount: Boolean!
-  discount_value: Int!
+  discount_percent: Int!
   media_group_id: ID!
   file_ids: [ID!]!
 }

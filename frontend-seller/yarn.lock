@@ -494,7 +494,7 @@
     which "^5.0.0"
     ws "^8.18.1"
 
-"@nuxt/kit@^3.15.4", "@nuxt/kit@^3.16.1", "@nuxt/kit@^3.9.0", "@nuxt/kit@3.16.2":
+"@nuxt/kit@^3.15.4", "@nuxt/kit@^3.16.1", "@nuxt/kit@^3.16.2", "@nuxt/kit@^3.9.0", "@nuxt/kit@3.16.2":
   version "3.16.2"
   resolved "https://registry.npmjs.org/@nuxt/kit/-/kit-3.16.2.tgz"
   integrity sha512-K1SAUo2vweTfudKZzjKsZ5YJoxPLTspR5qz5+G61xtZreLpsdpDYfBseqsIAl5VFLJuszeRpWQ01jP9LfQ6Ksw==
@@ -1031,6 +1031,11 @@
   resolved "https://registry.npmjs.org/@types/resolve/-/resolve-1.20.2.tgz"
   integrity sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==
 
+"@types/web-bluetooth@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.21.tgz"
+  integrity sha512-oIQLCGWtcFZy2JW77j9k8nHzAOpqMHLQejDA48XXMWH6tjCQHz5RCFz1bzsmROyL6PUm+LLnUiI4BCn221inxA==
+
 "@unhead/vue@^2.0.2":
   version "2.0.5"
   resolved "https://registry.npmjs.org/@unhead/vue/-/vue-2.0.5.tgz"
@@ -1237,6 +1242,35 @@
   version "3.5.13"
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.5.13.tgz"
   integrity sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==
+
+"@vueuse/core@^13.1.0", "@vueuse/core@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/@vueuse/core/-/core-13.1.0.tgz"
+  integrity sha512-PAauvdRXZvTWXtGLg8cPUFjiZEddTqmogdwYpnn60t08AA5a8Q4hZokBnpTOnVNqySlFlTcRYIC8OqreV4hv3Q==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.21"
+    "@vueuse/metadata" "13.1.0"
+    "@vueuse/shared" "13.1.0"
+
+"@vueuse/metadata@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/@vueuse/metadata/-/metadata-13.1.0.tgz"
+  integrity sha512-+TDd7/a78jale5YbHX9KHW3cEDav1lz1JptwDvep2zSG8XjCsVE+9mHIzjTOaPbHUAk5XiE4jXLz51/tS+aKQw==
+
+"@vueuse/nuxt@^13.1.0":
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/@vueuse/nuxt/-/nuxt-13.1.0.tgz"
+  integrity sha512-4xdxwKanLY4+z+/ZgSZcJvwuHlgZMU3km7z4lhlbLl6WZTKS3BiztnRzcrdt4zjU512oTlH5nsPNhUhV0KXiOA==
+  dependencies:
+    "@nuxt/kit" "^3.16.2"
+    "@vueuse/core" "13.1.0"
+    "@vueuse/metadata" "13.1.0"
+    local-pkg "^1.1.1"
+
+"@vueuse/shared@13.1.0":
+  version "13.1.0"
+  resolved "https://registry.npmjs.org/@vueuse/shared/-/shared-13.1.0.tgz"
+  integrity sha512-IVS/qRRjhPTZ6C2/AM3jieqXACGwFZwWTdw5sNTSKk2m/ZpkuuN+ri+WCVUP8TqaKwJYt/KuMwmXspMAw8E6ew==
 
 "@wry/caches@^1.0.0":
   version "1.0.1"
@@ -3230,7 +3264,7 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
-nuxt@^3.16.2:
+"nuxt@^3.0.0 || ^4.0.0-0", nuxt@^3.16.2:
   version "3.16.2"
   resolved "https://registry.npmjs.org/nuxt/-/nuxt-3.16.2.tgz"
   integrity sha512-yjIC/C4HW8Pd+m0ACGliEF0HnimXYGYvUzjOsTiLQKkDDt2T+djyZ+pCl9BfhQBA8rYmnsym2jUI+ubjv1iClw==
