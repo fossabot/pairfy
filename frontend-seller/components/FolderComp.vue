@@ -39,7 +39,7 @@ const onSelect = (index) => {
 }
 
 .body {
-    background: var(--background-c);
+
     flex-direction: column;
     padding: 0.25rem;
     width: inherit;
@@ -57,7 +57,7 @@ const onSelect = (index) => {
     cursor: pointer;
     margin-top: 0.5rem;
     margin-left: 0.75rem;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1.5rem;
 }
 
 .tab.enabled {

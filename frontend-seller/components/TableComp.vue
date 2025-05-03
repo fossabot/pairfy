@@ -180,6 +180,7 @@ const nextPage = () => {
   font-size: var(--text-size-1);
   flex-direction: column;
   color: var(--text-a);
+  min-height: 100vh;
   border-top: none;
   transition: 0.2s;
   overflow: hidden;
@@ -321,7 +322,9 @@ tbody tr:nth-child(even) {
   background: var(--background-a);
 }
 
-.pagination {}
+.pagination {
+  margin-right: 1rem;
+}
 
 .pagination span {
   margin: 0 0.5rem;
