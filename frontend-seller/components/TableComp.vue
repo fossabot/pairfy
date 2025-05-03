@@ -5,7 +5,7 @@
     <div class="header flex">
       <div class="header-left">
         <div class="search flex">
-          <i class="pi pi-search" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
           <input v-model="searchQuery" type="text" placeholder="Search" class="p-2 border rounded w-full mb-3" />
         </div>
       </div>
@@ -174,10 +174,13 @@ const nextPage = () => {
 
 <style scoped>
 .datatable {
+  border: 1px solid var(--border-a);
   background: var(--background-a);
+  border-radius: var(--radius-b);
   font-size: var(--text-size-1);
   flex-direction: column;
   color: var(--text-a);
+  border-top: none;
   transition: 0.2s;
   overflow: hidden;
   width: 100%;
@@ -219,9 +222,9 @@ const nextPage = () => {
 }
 
 .search {
+  border: 1px solid var(--border-a);
   background: var(--background-b);
-  border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: var(--radius-b);
   padding: 0 1rem;
 }
 
