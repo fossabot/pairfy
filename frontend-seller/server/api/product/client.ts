@@ -1,4 +1,4 @@
-import pkg from '@apollo/client/core/core.cjs';
+import pkg from "@apollo/client/core/core.cjs";
 import { H3Event, parseCookies } from "h3";
 import fetch from "cross-fetch";
 

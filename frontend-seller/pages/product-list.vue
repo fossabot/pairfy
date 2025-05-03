@@ -5,9 +5,9 @@
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
 
-                <TableComp :columns="columns" :items="products" :limit="15" :count="productCount" :images="true"
-                    :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }" @onPrev="handleOnPrev"
-                    @onNext="handleOnNext">
+                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="15" :count="productCount"
+                    :images="true" :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }"
+                    @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                     <template #image="{ item }">
 
@@ -18,17 +18,17 @@
                     </template>
 
                     <template #col-sku="{ value }">
-                        {{ formatSKU(value) }}
+                        {{ value }}
                     </template>
 
-                    <template #col-price="{ item }">
-                        <span>{{ }}</span>
+                    <template #col-price="{ value }">
+                        <span>{{ value }}</span>
 
-                        <span v-if="item.discount">{{ ` (-${getDiscount(item.price, item.discount_value)})` }}</span>
+
                     </template>
 
                     <template #col-discount="{ value, item }">
-                        <span class="discount" :class="{ disabled: !value }">
+                        <span class="discount">
                             {{ `-${item.discount_value}%` }}
                         </span>
                     </template>
@@ -64,22 +64,21 @@ const dottedMenuOptions = ref([
     { label: "Open Page", value: "open" }
 ])
 
-const productCount = computed(() => 0);
+const productCount = ref(0);
 
-
-const productsTemp = ref({});
-
-const products = computed(() => Object.values(productsTemp.value));
 
 const columns = ref([
     { label: "ID", field: "id" },
-    { label: "Sku", field: "sku" },
+    { label: "Status", field: "status" },
+    { label: "Moderated", field: "moderated" },
+    { label: "Image", field: "thumbnail_url" },
     { label: "Name", field: "name" },
     { label: "Price", field: "price" },
+    { label: "Sku", field: "sku" },
+    { label: "Model", field: "model" },
     { label: "Discount", field: "discount" },
     { label: "Category", field: "category" },
-    { label: "Date", field: "created_at" },
-    { label: "Paused", field: "paused" },
+    { label: "Date", field: "created_at" }
 ]);
 
 const handleOnPrev = (event) => {
@@ -89,8 +88,8 @@ const handleOnPrev = (event) => {
 }
 
 const handleOnNext = (event) => {
-    console.log(event.created_at)
 
+    console.log(event.created_at)
 
 }
 
@@ -108,24 +107,36 @@ const handleDottedMenu = (event, value) => {
     }
 }
 
-function reduceArrayByIndex(data, index) {
-  const result = data.reduce((acc, item) => {
-    acc[item[index]] = item
-    return acc
-  }, {})
+const limit = 16
+const cursor = ref("NOT")
+const products = ref([])
+const nextCursor = ref(null)
+const hasMore = ref(false)
+const loading = ref(false)
 
-  return result
-}
 
-const processProductData = () => {
 
-    const reduce = reduceArrayByIndex(value.getProducts.products, "id");
-
-    for (const [key, value] of Object.entries(reduce)) {
-        productsTemp.value[key] = value;
+const { data, error } = await useFetch('/api/product/getProducts', {
+    method: 'POST',
+    credentials: 'include',
+    body: {
+        cursor: cursor.value
+    },
+    async onResponseError({ response }) {
+        throw new Error(JSON.stringify(response._data.data));
     }
+})
 
+if (data.value) {
+    products.value = data.value.products
+    nextCursor.value = data.value.nextCursor
+    hasMore.value = data.value.hasMore
+    productCount.value = data.value.totalCount
 }
+
+
+
+
 </script>
 
 <style lang="css" scoped>
