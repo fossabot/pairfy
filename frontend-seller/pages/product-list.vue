@@ -72,12 +72,12 @@ const columns = ref([
     { label: "ID", field: "id" },
     { label: "Sku", field: "sku" },
     { label: "Status", field: "status" },
-    { label: "Moderated", field: "moderated" },
     { label: "Name", field: "name" },
     { label: "Price", field: "price" },
     { label: "Model", field: "model" },
     { label: "Discount", field: "discount" },
     { label: "Category", field: "category" },
+    { label: "Moderated", field: "moderated" },
     { label: "Date", field: "created_at" }
 ]);
 
