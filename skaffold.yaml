@@ -13,6 +13,8 @@ build:
       context: frontend-seller
       docker:
         dockerfile: Dockerfile
+        buildArgs:
+          NUXT_PUBLIC_MEDIA_CDN: /api/media 
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'

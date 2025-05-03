@@ -27,9 +27,9 @@ spec:
             - name: NUXT_SERVICE_LLM_BASE
               value: http://service-llm.default.svc.cluster.local:8002/api
             - name: NUXT_SERVICE_MEDIA_BASE
-              value: http://service-media.default.svc.cluster.local:8003
+              value: http://service-media.default.svc.cluster.local:8003/api
             - name: NUXT_PUBLIC_MEDIA_CDN
-              value: https://media.pairfy.store
+              value: /api/media
 ---
 apiVersion: v1
 kind: Service
