@@ -277,6 +277,7 @@ const nextPage = () => {
 }
 
 .table {
+  border-bottom: 1px solid var(--border-a);
   font-size: var(--text-size-0);
   border-collapse: collapse;
   border-spacing: 0rem;
