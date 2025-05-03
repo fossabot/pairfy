@@ -34,7 +34,8 @@
                     @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                     <template #image="{ item }">
-                        <ImageComp :src="useMediaUrl(item.thumbnail_url)" :image-style="{ 'width': '4rem' }" />
+                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
+
                     </template>
 
                     <template #col-id="{ value }">
@@ -82,6 +83,11 @@
 </template>
 
 <script setup>
+import placeholderImage from '@/assets/placeholder/image.svg'
+
+function getImageSrc(item) {
+  return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
+}
 
 
 const dottedMenuOptions = ref([
@@ -158,7 +164,6 @@ if (data.value) {
     hasMore.value = data.value.hasMore
     productCount.value = data.value.totalCount
 }
-
 
 
 

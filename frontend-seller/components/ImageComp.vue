@@ -11,8 +11,6 @@ const props = defineProps(['src', 'containerStyle', 'imageStyle'])
 
 const imageUrl = computed(() => props.src)
 
-
-
 </script>
 
 <style lang="css" scoped>
@@ -22,7 +20,6 @@ const imageUrl = computed(() => props.src)
 }
 
 .image {
-    background: var(--background-b);
     min-width: 50px;
     min-height: 50px;
     border-radius: 4px;
