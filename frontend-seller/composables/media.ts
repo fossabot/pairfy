@@ -25,3 +25,13 @@ export const useUploadImages = async (images: { file: File }[]) => {
 
   return responseData;
 };
+
+export const useMediaUrl = (mediaPath: string): string => {
+  const config = useRuntimeConfig();
+  const base = config.public.mediaCDNBase;
+
+  const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;
+  const normalizedPath = mediaPath.startsWith("/") ? mediaPath : `/${mediaPath}`;
+
+  return `${normalizedBase}${normalizedPath}`;
+};

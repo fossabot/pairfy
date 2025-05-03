@@ -332,6 +332,6 @@ tbody tr:nth-child(even) {
 }
 
 .image {
-  padding: 0.5rem;
+
 }
 </style>

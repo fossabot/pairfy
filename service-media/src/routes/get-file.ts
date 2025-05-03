@@ -73,6 +73,7 @@ export const getFileHandler = async (
 
     res.setHeader("Content-Type", mime_type);
     res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    res.setHeader("Access-Control-Allow-Origin", "*");
     stream.pipe(res);
   } catch (err) {
     next(err);
