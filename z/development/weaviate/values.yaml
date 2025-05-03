@@ -1,0 +1,63 @@
+replicaCount: 2
+
+persistence:
+  enabled: true
+  storageClassName: "standard"
+  size: 5Gi
+  accessModes:
+    - ReadWriteOnce
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+
+weaviate:
+  config:
+    persistence:
+      enabled: true
+    cluster:
+      nodeCount: 2
+    authentication:
+      anonymousAccess:
+        enabled: true
+    replication:
+      factor: 2
+    query:
+      port: 8080
+    grpc:
+      port: 50051
+    monitoring:
+      metrics:
+        port: 2112
+
+service:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: grpc
+      port: 50051
+      targetPort: 50051
+
+livenessProbe:
+  httpGet:
+    path: /v1/.well-known/ready
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /v1/.well-known/ready
+    port: 8080
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3

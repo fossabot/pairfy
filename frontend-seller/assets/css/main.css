@@ -1,5 +1,8 @@
-body {
+* {
   font-family: "Inter", sans-serif;
+}
+
+body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -8,17 +11,17 @@ body {
 }
 
 :root {
-  --text-size-0: 12px;
-  --text-size-1: 14px;
-  --text-size-2: 16px;
-  --text-size-3: 18px;
-  --text-size-4: 20px;
-  --text-size-5: 24px;
-  --text-size-6: 28px;
-  --text-size-7: 40px;
-  --text-size-8: 56px;
-  --text-size-9: 84px;
-
+  --text-size-0: 13px;   /* Smallest text: captions, sub-labels */
+  --text-size-1: 14px;   /* Secondary labels, helper text */
+  --text-size-2: 16px;   /* Base body text */
+  --text-size-3: 18px;   /* Paragraph lead or dense UI text */
+  --text-size-4: 20px;   /* Section titles or buttons */
+  --text-size-5: 24px;   /* H4 */
+  --text-size-6: 30px;   /* H3 */
+  --text-size-7: 36px;   /* H2 */
+  --text-size-8: 48px;   /* H1 */
+  --text-size-9: 64px;   /* Hero / page title */
+  
   --body-a: 1500px;
 
   --shadow-a: 0 2px 24px rgba(0, 0, 0, 0.1);
@@ -34,22 +37,56 @@ body {
   --border-a: #d8d8d8;
   --border-b: #86868b;
 
-  --primary-a: var(--orange-a);
+  --primary-a: var(--blue-a);
   --primary-b: var(--gray-a);
 
-  --radius-a: 4px;
-  --radius-b: 8px;
-  --radius-c: 16px;
+  --radius-a: 3px;
+  --radius-b: 6px;
+  --radius-c: 12px;
   --radius-d: 24px;
 
-  --blue-a: #1573ff;
-  --gray-a: #2c3e50;
-  --green-a: #28c76f;
-  --orange-a: #ff6700;
-  --yellow-a: #ffc800;
+  --blue-a: #2563eb;
+  --gray-a: #1e293b;
+  --red-a: #ef4444;
+  --yellow-a: #facc15;
+  --green-a: #22c55e;
+  --orange-a: #f97316;
+  --purple-a: #8b5cf6;
+  --pink-a: #ec4899;
 }
 
 :root {
-  --input-radius: 8px;
-  --button-radius: 8px;
+  --input-radius: var(--radius-b);
+  --button-radius: var(--radius-b);
+}
+
+.flex {
+  align-items: center;
+  display: flex;
+}
+
+.flag {
+  width: 1rem;
+  height: 1rem;
+}
+
+input {
+  font-size: var(--text-size-1);
+}
+
+input::placeholder {
+  color: var(--text-b); 
+}
+
+label{
+  font-size: var(--text-size-0);
+}
+
+textarea{
+  font-size: var(--text-size-1);
+}
+
+textarea::placeholder {
+  font-size: var(--text-size-1);
+  color: var(--text-b); 
 }

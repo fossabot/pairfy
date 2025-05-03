@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-email-consumer
+spec:
+  selector:
+    matchLabels:
+      role: service-email-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: service-email-consumer
+    spec:
+      terminationGracePeriodSeconds: 15
+      containers:
+        - name: service-email-consumer
+          image: pairfy/base-consumer
+          ports:
+            - containerPort: 3000
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SERVICE_NAME
+              value: service-email
+            - name: CONSUMER_GROUP
+              value: service-email-group
+            - name: DURABLE_NAME
+              value: service-email-consumer
+            - name: STREAM_LIST
+              value: service-seller
+            - name: FILTER_SUBJECTS
+              value: "service-seller.CreateEmail"
+            - name: RESEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: resend-api-secret
+                  key: key
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password
+            - name: DATABASE_NAME
+              value: service_email
+            - name: DATABASE_USER
+              value: marketplace
+            - name: NATS_SERVERS
+              value: "nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222"
+            - name: HANDLER_URL_SELLER
+              value: https://s.pairfy.dev
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"

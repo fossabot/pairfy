@@ -1,31 +1,7 @@
 import { getProductInputSchema } from "../../validators/query.js";
-import { searchClient } from "../../elastic/index.js";
 import { database } from "../../database/client.js";
-import { logger } from "../../utils/index.js";
 import { GraphQLError } from "graphql";
-
-const searchIndex = async (id: string) => {
-  let result: any = [];
-
-  try {
-    const response = await searchClient.search({
-      index: "products",
-      body: {
-        query: {
-          term: {
-            id,
-          },
-        },
-      },
-    });
-
-    result = response.hits.hits;
-  } catch (err) {
-    logger.error(err);
-  } finally {
-    return result;
-  }
-};
+import { logger } from "@pairfy/common";
 
 const getProduct = async (_: any, args: any, context: any) => {
   let connection = null;
@@ -80,6 +56,7 @@ const getProduct = async (_: any, args: any, context: any) => {
       available: 0,
     };
 
+    /*
     const search = await searchIndex(PRODUCT.id);
 
     if (search.length) {
@@ -91,7 +68,7 @@ const getProduct = async (_: any, args: any, context: any) => {
       payload.sold = data.sold;
       payload.available = data.available;
     }
-
+    */
     return {
       success: true,
       payload: payload,

@@ -1,45 +1,34 @@
 import "express-async-errors";
 import express from "express";
-import cors from "cors";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import { json, urlencoded } from "body-parser";
-import { getPublicAddress } from "./utils/address";
+import { getPublicAddress, RateLimiter, sellerMiddleware } from "@pairfy/common";
 
 const app = express();
 
-const corsOrigin = process.env.CORS_DOMAINS!;
-
-const corsOptions = {
-  origin: corsOrigin?.split(",") || "*",
-  methods: ["GET", "POST"],
-  credentials: true,
-  maxAge: 86400,
-  preflightContinue: false,
-  exposedHeaders: ["Set-Cookie"],
-  optionsSuccessStatus: 204,
-};
-
 const sessionOptions: object = {
-  maxAge: 168 * 60 * 60 * 1000,
+  name: "session",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
   signed: false,
-  secure: true,
+  secure: process.env.NODE_ENV === "production",
   httpOnly: true,
-  sameSite: "none", //
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
 };
 
 app.set("trust proxy", 1);
 
-app.use(helmet());
+app.use(cookieSession(sessionOptions));
 
-app.use(cors(corsOptions));
+app.use(helmet());
 
 app.use(getPublicAddress);
 
-app.use(urlencoded({ extended: true, parameterLimit: 15 }));
+app.use(sellerMiddleware);
 
-app.use(json({ limit: 10485760 }));
+const rateLimiter = new RateLimiter(
+  process.env.REDIS_RATELIMIT_URL as string
+);
 
-app.use(cookieSession(sessionOptions));
+app.use(rateLimiter.getMiddleware());
 
 export { app };

@@ -1,22 +1,33 @@
 <!-- pages/login.vue -->
 <template>
   <div class="entry">
+
+
     <div class="entry-form">
 
       <div class="entry-form-image">
-        <img :src="miImagen" alt="Mi imagen" />
+        <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }">
+          <img :src="miImagen" alt="Mi imagen" />
+        </NuxtLink>
       </div>
 
 
       <div class="entry-form-content">
-        <LoginForm v-if="mode === 'login'" />
-        <RegisterForm v-if="mode === 'register'" />
-        <RecoveryForm v-if="mode === 'recovery'" />
 
-        <div class="entry-form-switcher">
-          <button @click="mode = 'login'">I already have an account.</button>
-          <button @click="mode = 'register'">Create a new account.</button>
-          <button @click="mode = 'recovery'">Recover password.</button>
+        <component :is="currentComponent" />
+
+        <div class="entry-form-switcher" v-if="!['verify','email'].includes(currentView)">
+
+          <NuxtLink :to="{ path: '/entry', query: { m: 'login' } }" v-if="!['login'].includes(currentView)">
+            <button @click="mode = 'login'">I already have an account</button>
+          </NuxtLink>
+          <NuxtLink :to="{ path: '/entry', query: { m: 'register' } }">
+            <button @click="mode = 'register'">Create a new account</button>
+          </NuxtLink>
+          <NuxtLink :to="{ path: '/entry', query: { m: 'recovery' } }">
+            <button @click="mode = 'recovery'">Recover password</button>
+          </NuxtLink>
+
         </div>
       </div>
 
@@ -25,14 +36,36 @@
 </template>
 
 <script setup>
-import miImagen from '@/assets/brand/icon.png'
-import { ref } from 'vue'
+import miImagen from '@/assets/brand/icon.svg'
+import RegisterForm from '~/components/RegisterForm.vue'
+import LoginForm from '~/components/LoginForm.vue'
+import VerifyView from '~/components/VerifyView.vue'
+import RecoveryForm from '~/components/RecoveryForm.vue'
+import EmailView from '~/components/EmailView.vue'
+
 
 definePageMeta({
   layout: 'entry'
 })
 
-const mode = ref('login') // 'login', 'register', 'recovery'
+const mode = ref('login')
+
+const views = {
+  login: LoginForm,
+  register: RegisterForm,
+  recovery: RecoveryForm,
+  verify: VerifyView,
+  email: EmailView 
+}
+
+const route = useRoute()
+
+const currentView = computed(() => {
+  const m = route.query.m?.toString() || 'login'
+  return m in views ? m : 'login'
+})
+
+const currentComponent = computed(() => views[currentView.value])
 
 
 </script>
@@ -47,7 +80,7 @@ const mode = ref('login') // 'login', 'register', 'recovery'
 
 .entry-form {
   background: var(--background-a);
-  border-radius: var(--radius-b);
+  border-radius: var(--radius-c);
   box-shadow: var(--shadow-a);
   margin-top: 4rem;
   padding: 1.5rem;

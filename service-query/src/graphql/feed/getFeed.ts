@@ -1,5 +1,5 @@
+import { logger } from "@pairfy/common";
 import { redisClient } from "../../database/redis.js";
-import { logger } from "../../utils/index.js";
 import { GraphQLError } from 'graphql';
 
 const getFeed = async () => {

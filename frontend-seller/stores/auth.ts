@@ -1,13 +1,9 @@
-import { defineStore } from "pinia";
-
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = useState<boolean>("isAuthenticated", () => false);
   const seller = useState<any>("seller", () => null);
   const loading = ref(false);
   const error = ref<string | null>(null);
-
-  const config = useRuntimeConfig();
-
+  
   const login = async (credentials: {
     email: string;
     password: string;
@@ -17,19 +13,17 @@ export const useAuthStore = defineStore("auth", () => {
     loading.value = true;
 
     try {
-      const response: any = await $fetch("/api/seller/login-seller", {
+      await $fetch("/api/seller/login-seller", {
         method: "POST",
         body: credentials,
         credentials: "include",
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
       });
-
-      console.log(response.data);
-
       await fetchProfile();
-      isAuthenticated.value = true;
     } catch (err: any) {
-      isAuthenticated.value = false;
-      throw err;
+      throw new Error(err.message);
     } finally {
       loading.value = false;
     }
@@ -45,14 +39,15 @@ export const useAuthStore = defineStore("auth", () => {
     try {
       const response: any = await $fetch("/api/seller/create-seller", {
         method: "POST",
-        body: credentials
+        body: credentials,
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
       });
 
-      console.log(response.data);
-      
-
+      return response;
     } catch (err: any) {
-      throw err;
+      throw new Error(err.message);
     } finally {
       loading.value = false;
     }
@@ -62,32 +57,46 @@ export const useAuthStore = defineStore("auth", () => {
     if (!import.meta.server) return;
 
     try {
-      const data = await $fetch(
-        `${config.serviceSellerBase}/seller/current-seller`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const data = await $fetch("/api/seller/current-seller", {
+        method: "GET",
+        credentials: "include",
+      });
 
       seller.value = data;
       isAuthenticated.value = true;
     } catch (err: any) {
-      console.log(err);
       isAuthenticated.value = false;
       seller.value = null;
     }
   };
 
+  const verify = async (body: { token: string }) => {
+    loading.value = true;
+
+    try {
+      const response = await $fetch("/api/seller/verify-seller", {
+        method: "POST",
+        body: body,
+        async onResponseError({ response }) {
+          throw new Error(JSON.stringify(response._data.data));
+        },
+      });
+
+      return response;
+    } catch (err: any) {
+      throw new Error(err.message);
+    } finally {
+      loading.value = false;
+    }
+  };
+
   const logout = async () => {
     try {
-      await $fetch(`${config.serviceSellerBase}/seller/logout-seller`, {
+      await $fetch("/api/seller/logout-seller", {
         method: "GET",
         credentials: "include",
       });
-    } catch {
-      // si falla, igual se limpia
-    }
+    } catch {}
 
     isAuthenticated.value = false;
     seller.value = null;
@@ -101,6 +110,7 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     register,
     logout,
+    verify,
     fetchProfile,
   };
 });

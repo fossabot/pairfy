@@ -1,25 +1,19 @@
-import DB from "../db";
-import { BadRequestError } from "../errors";
+import database from "../database/index.js";
 import { Request, Response } from "express";
-import { sellerMiddleware } from "../utils/seller";
-import { requireAuth } from "../utils/required";
-import { _ } from "../utils/pino";
+import { sellerMiddleware, sellerRequired, SellerToken } from "@pairfy/common";
 
-const deleteImageMiddlewares: any = [sellerMiddleware, requireAuth];
+const deleteImageMiddlewares: any = [sellerMiddleware, sellerRequired];
 
 const deleteImageHandler = async (req: Request, res: Response) => {
-  res.setHeader("Cross-Origin-Resource-Policy", "none");
 
-  res.setHeader("Cross-Origin-Opener-Policy", "none");
-
-  const SELLER = req.sellerData;
+  const SELLER = req.sellerData as SellerToken;
 
   const params = req.body;
 
   let connection: any = null;
 
   try {
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
 
     await connection.beginTransaction();
 
@@ -40,7 +34,6 @@ const deleteImageHandler = async (req: Request, res: Response) => {
   } catch (err: any) {
     await connection.rollback();
 
-    throw new BadRequestError(err.message);
   } finally {
     if (connection) {
       connection.release();

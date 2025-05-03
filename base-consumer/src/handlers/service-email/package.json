@@ -1,0 +1,9 @@
+{
+    "name": "service-email",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "index.js",
+    "dependencies": {
+        "resend": "^4.2.0"
+    }
+}

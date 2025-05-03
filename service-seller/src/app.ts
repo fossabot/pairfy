@@ -1,30 +1,34 @@
+import cookieSession from "cookie-session";
 import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
-import cookieSession from "cookie-session";
-import { json, urlencoded } from "body-parser";
-import { getPublicAddress } from "./utils/address";
+import { getPublicAddress, RateLimiter } from "@pairfy/common";
 
 const app = express();
 
 const sessionOptions: object = {
-  maxAge: 168 * 60 * 60 * 1000,
+  name: 'session',
+  maxAge: 7 * 24 * 60 * 60 * 1000, 
   signed: false,
-  secure: true,
+  secure: process.env.NODE_ENV === 'production',
   httpOnly: true,
-  sameSite: "none", 
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
 };
 
 app.set("trust proxy", 1);
 
 app.use(helmet());
 
-app.use(getPublicAddress);
+app.use(express.json({ limit: '5mb' }));
 
-app.use(urlencoded({ extended: true, parameterLimit: 15 }));
-
-app.use(json({ limit: 5000000 }));
+app.use(express.urlencoded({ limit: '5mb', extended: true }));
 
 app.use(cookieSession(sessionOptions));
+
+app.use(getPublicAddress);
+
+const rateLimiter = new RateLimiter(process.env.REDIS_RATE_LIMIT as string);
+
+app.use(rateLimiter.getMiddleware())
 
 export { app };

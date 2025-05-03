@@ -1,48 +1,33 @@
 {
   "name": "service-seller",
   "version": "1.0.0",
-  "description": "CRUD service for seller accounts.",
-  "main": "index.js",
-  "keywords": [
-    "pairfy",
-    "marketplace",
-    "cardano"
-  ],
-  "author": "https://github.com/Kraphene",
-  "license": "MIT",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "database": "node setup.js",
-    "build": "tsc --build",
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
+    "build": "tsc --project tsconfig.json",
     "start": "node dist/index.js",
-    "test": "jest --watchAll --no-cache --detectOpenHandles",
-    "test:ci": "jest"
+    "database": "tsx setup.ts"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "setupFilesAfterEnv": [
-      "./src/__test/setup.ts"
-    ]
+  "engines": {
+    "node": ">=20.10.0"
   },
   "dependencies": {
     "@cardano-foundation/cardano-verify-datasignature": "^1.0.11",
     "@emurgo/cardano-serialization-lib-nodejs": "^13.2.0",
-    "ajv": "^8.12.0",
+    "@pairfy/common": "^1.0.144",
     "compression": "^1.7.4",
     "cookie-session": "^2.0.0",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^7.1.0",
-    "i": "^0.3.7",
+    "ioredis": "^5.6.1",
     "jsonwebtoken": "^9.0.2",
-    "kafkajs": "^2.2.4",
     "mysql2": "^3.7.0",
     "nanoid": "^3.3.11",
     "npm": "^11.3.0",
-    "pino": "^8.17.2",
-    "postgres": "^3.4.3",
-    "unique-names-generator": "^4.7.1",
+    "pino": "^8.21.0",
+    "tslog": "^4.9.3",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -52,13 +37,18 @@
     "@types/compression": "^1.7.2",
     "@types/cookie-session": "^2.0.48",
     "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
     "@types/jest": "^28.1.3",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.10.7",
     "@types/supertest": "^2.0.12",
     "babel-jest": "^28.0.0",
     "jest": "^28.1.3",
+    "nodemon": "^3.0.3",
+    "pino-pretty": "^13.0.0",
     "supertest": "^6.2.2",
-    "ts-jest": "^28.0.5"
+    "ts-jest": "^28.0.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
   }
 }

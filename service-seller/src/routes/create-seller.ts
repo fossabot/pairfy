@@ -1,17 +1,20 @@
-import DB from "../database";
-import {
-  validateRegistration,
-  RegistrationInput,
-} from "../validators/create-seller";
-import { hashPassword } from "../utils/password";
-import { BadRequestError } from "../errors";
+import database from "../database/index.js";
 import { Request, Response } from "express";
-import { getSellerId } from "../utils/nano";
-import { createToken } from "../utils/token";
-import { getUsername } from "../utils/names";
-import { _ } from "../utils/pino";
+import { validateParams, RegistrationInput } from "../validators/create-seller.js";
+import {
+  ApiError,
+  ERROR_CODES,
+  findSellerByEmailOrUsername,
+  hashPassword,
+  getSellerId,
+  createEvent,
+  insertSeller,
+  createToken,
+  SellerEmailRegistrationToken,
+  findSellerByEmail,
+} from "@pairfy/common";
 
-const createSellerMiddlewares: any = [validateRegistration];
+const createSellerMiddlewares: any = [validateParams];
 
 const createSellerHandler = async (req: Request, res: Response) => {
   let connection = null;
@@ -21,65 +24,112 @@ const createSellerHandler = async (req: Request, res: Response) => {
   console.log(params);
 
   try {
-    connection = await DB.client.getConnection();
+    connection = await database.client.getConnection();
+
+    const sellerExists = await findSellerByEmailOrUsername(
+      connection,
+      params.email,
+      params.username
+    );
+
+    if (sellerExists) {
+      throw new ApiError(
+        400,
+        "The email address or username is already registered.",
+        {
+          code: ERROR_CODES.BAD_REQUEST,
+        }
+      );
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////
 
     await connection.beginTransaction();
 
-    const username = getUsername();
-
-    const token = createToken({
-      source: "createSeller",
-      entity: "SELLER",
-      email: params.email,
-      username,
-    });
+    const timestamp = Date.now();
 
     const password = await hashPassword(params.password);
 
-    const schemeData = `
-    INSERT INTO sellers (
-      id,
-      username,
-      email,
-      password_hash,
-      verified,
-      country,
-      terms_accepted,
-      avatar_base,
-      avatar_path,
-      public_ip,
-      schema_v
-     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    const sellerId = getSellerId();
 
-    const schemeValue = [
-      getSellerId(),
-      username,
-      params.email,
-      password,
-      true,
-      params.country,
-      params.terms_accepted,
-      "https://example.com",
-      "/avatar.jpg",
-      req.publicAddress,
-      0,
-    ];
+    const emailToken: SellerEmailRegistrationToken = {
+      source: "service-seller",
+      role: "SELLER",
+      email: params.email,
+      username: params.username,
+    };
 
-    console.log(schemeValue);
+    const token = createToken(emailToken, "1h");
 
-    await connection.execute(schemeData, schemeValue);
+    const emailScheme = {
+      type: "register:seller",
+      username: params.username,
+      email: params.email,
+      token: token,
+    };
+
+    const sellerScheme = {
+      id: sellerId,
+      username: params.username,
+      email: params.email,
+      password_hash: password,
+      verified: false,
+      country: params.country,
+      terms_accepted: params.terms_accepted,
+      avatar_base: "https://example.com",
+      avatar_path: "/avatar.jpg",
+      public_ip: req.publicAddress,
+      created_at: timestamp,
+      updated_at: timestamp,
+      schema_v: 0,
+    };
+
+    console.log(sellerScheme);
+
+    const [sellerCreated] = await insertSeller(connection, sellerScheme);
+
+    if (sellerCreated.affectedRows !== 1) {
+      throw new ApiError(500, "Unexpected error while creating seller.", {
+        code: ERROR_CODES.INTERNAL_ERROR,
+      });
+    }
+
+    const findSeller = await findSellerByEmail(connection, sellerScheme.email);
+
+    await createEvent(
+      connection,
+      timestamp,
+      "service-seller",
+      "CreateSeller",
+      JSON.stringify(findSeller),
+      sellerId
+    );
+
+    await createEvent(
+      connection,
+      timestamp,
+      "service-seller",
+      "CreateEmail",
+      JSON.stringify(emailScheme),
+      sellerId
+    );
 
     await connection.commit();
 
-    res.status(200).send({ success: true, message: "Successfully registered" });
+    //////////////////////////////////////////////////////////////////////////////////////////
+
+    res.status(200).send({
+      success: true,
+      data: {
+        message: 'Please check your email in the "all" or "spam" folder.',
+      },
+    });
   } catch (err) {
     if (connection) {
       await connection.rollback();
     }
 
-    _.error(err);
-
-    throw new BadRequestError("Invalid username or email");
+    throw err;
   } finally {
     if (connection) {
       connection.release();

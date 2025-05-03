@@ -1,5 +1,8 @@
 <template>
     <div class="p-category">
+        <div class="category-title">
+            All Categories
+        </div>
         <div class="category-grid">
             <div class="grid">
                 <div class="grid-item" v-for="category in categories" :key="category.index"
@@ -74,25 +77,29 @@ function hideModal() {
 <style scoped>
 .p-category {
     width: 100%;
-    margin-top: 1rem;
     max-width: var(--body-a);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     gap: 1rem;
 }
 
 .grid-item {
     transition: box-shadow 0.2s ease;
-    background: var(--background-a);
+    background: var(--background-b);
     border-radius: var(--radius-a);
     position: relative;
     text-align: center;
     overflow: hidden;
     cursor: pointer;
-    padding: 1rem;
+    width: 10rem;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
 
 .grid-item:hover {
@@ -100,8 +107,8 @@ function hideModal() {
 }
 
 .icon {
-    width: 10rem;
-    height: 10rem;
+    width: 6rem;
+    height: 6rem;
     object-fit: contain;
 }
 
@@ -133,5 +140,12 @@ function hideModal() {
     to {
         opacity: 1;
     }
+}
+
+.category-title{
+    font-size: var(--text-size-5);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    margin-top: 1rem;
 }
 </style>

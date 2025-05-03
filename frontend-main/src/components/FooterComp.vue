@@ -63,10 +63,10 @@
 }
 
 .footer-body {
-    max-width: 1300px;
+    max-width: var(--body-a);
+    flex-direction: column;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
     gap: 2rem;
 }
 

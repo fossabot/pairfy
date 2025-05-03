@@ -1,6 +1,6 @@
 <template>
     <div class="logo flex">
-        <img class="brand" src="@/assets/mini-logo.svg" alt="" @click="toHome">
+        <img class="brand" src="@/assets/brand/mini-logo.svg" alt="" @click="toHome">
     </div>
 </template>
 

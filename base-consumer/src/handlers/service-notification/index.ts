@@ -1,5 +1,5 @@
-import { database } from "../../database/client.js";
-import { logger } from "../../utils/index.js";
+import { logger } from "@pairfy/common";
+import  database  from "../../database/client.js";
 
 const CreateNotification = async (
   event: any,

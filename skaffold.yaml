@@ -9,22 +9,17 @@ build:
   tagPolicy:
     sha256: {}
   artifacts:
-    - image: pairfy/frontend-main
-      context: frontend-main
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
     - image: pairfy/frontend-seller
       context: frontend-seller
       docker:
         dockerfile: Dockerfile
+        buildArgs:
+          NUXT_PUBLIC_MEDIA_CDN: /api/media 
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
+            
     - image: pairfy/service-seller
       context: service-seller
       docker:
@@ -33,78 +28,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
-    - image: pairfy/service-gemini
-      context: service-gemini
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-matrix
-      context: service-matrix
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-product
-      context: service-product
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-gateway
-      context: service-gateway
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-media
-      context: service-media
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-user
-      context: service-user
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-chat
-      context: service-chat
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-query
-      context: service-query
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-location
-      context: service-location
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
+
     - image: pairfy/base-publisher
       context: base-publisher
       docker:
@@ -113,6 +37,7 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .
+
     - image: pairfy/base-consumer
       context: base-consumer
       docker:
@@ -120,47 +45,54 @@ build:
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-state
-      context: service-state
+            dest: .         
+
+    - image: pairfy/service-email
+      context: service-email
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-price
-      context: service-price
+            dest: .   
+
+    - image: pairfy/service-product
+      context: service-product
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
+            dest: .                
+
+    - image: pairfy/service-llm
+      context: service-llm
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.py'
             dest: .
-    - image: pairfy/service-notification
-      context: service-notification
+          - src: 'requirements.txt'
+            dest: .
+
+    - image: pairfy/service-query
+      context: service-query
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/testing
-      context: testing
+            dest: .  
+
+    - image: pairfy/service-media
+      context: service-media
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
-    - image: pairfy/service-feed
-      context: service-feed
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.{ts,js,json,vue}'
-            dest: .
+            dest: .     
 
 deploy:
   statusCheckDeadlineSeconds: 540
@@ -175,3 +107,47 @@ portForward:
     namespace: default
     port: 8000
     localPort: 8000
+
+  - resourceType: service
+    resourceName: service-product
+    namespace: default
+    port: 8001
+    localPort: 8001    
+
+  - resourceType: service
+    resourceName: service-llm
+    namespace: default
+    port: 8002
+    localPort: 8002
+
+  - resourceType: service
+    resourceName: service-media
+    namespace: default
+    port: 8003
+    localPort: 8003 
+
+  - resourceType: service
+    resourceName: service-query
+    namespace: default
+    port: 8004
+    localPort: 8004    
+
+  - resourceType: service
+    resourceName: weaviate
+    namespace: default
+    port: 8080
+    localPort: 8080    
+
+  - resourceType: service
+    resourceName: ollama
+    namespace: default 
+    port: 11434
+    localPort: 11434
+
+  - resourceType: service
+    resourceName: nats-ui-nui
+    namespace: default 
+    port: 31311
+    localPort: 31311
+
+

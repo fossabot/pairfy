@@ -6,7 +6,7 @@ nats context select local
 
 nats stream ls
 
-nats stream delete product 
+nats stream delete service-seller 
 
 #//////////////////////
 

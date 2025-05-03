@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-llm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-llm
+  template:
+    metadata:
+      labels:
+        app: service-llm
+    spec:
+      containers:
+        - name: service-llm
+          image: pairfy/service-llm
+          ports:
+            - containerPort: 8002
+          env:
+            - name: MODEL_PATH
+              value: /app/models/Mistral-7B-Instruct-v0.3.Q4_K_M.gguf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-llm
+spec:
+  selector:
+    app: service-llm
+  ports:
+    - protocol: TCP
+      port: 8002
+      targetPort: 8002
+  type: ClusterIP

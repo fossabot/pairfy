@@ -1,14 +1,15 @@
-FROM node:lts
-
+FROM node:20-slim
 
 WORKDIR /app
 
 
-COPY package*.json ./
+COPY package.json .
 
-RUN ls
 
-RUN npm install
+COPY src/handlers/service-email/package.json ./src/handlers/service-email/
+COPY src/handlers/service-query/package.json ./src/handlers/service-query/
+
+RUN npm install --verbose --no-package-lock
 
 
 COPY . .
@@ -16,8 +17,7 @@ COPY . .
 
 RUN npm run build
 
-
 EXPOSE 4000
 
-# Run the built JavaScript code
+
 CMD ["npm", "start"]

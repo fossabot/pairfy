@@ -17,64 +17,50 @@ spec:
         - name: service-query-consumer
           image: pairfy/base-consumer
           ports:
-            - containerPort: 3000    
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 3000
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3                  
+            - containerPort: 3000
           env:
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: POD_TIMEOUT
-              value: "120000"
-            - name: DATABASE_HOST  
-              valueFrom:
-                configMapKeyRef:
-                  name: database-config
-                  key: master  
-            - name: DATABASE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: database-config
-                  key: port                                     
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: db-password
-                  key: password   
-            - name: DATABASE_NAME
-              value: service_query       
-            - name: DATABASE_USER
-              value: marketplace 
-            - name: STREAM_LIST
-              value: product
             - name: SERVICE_NAME
               value: service-query
             - name: CONSUMER_GROUP
               value: service-query-group
             - name: DURABLE_NAME
               value: service-query-consumer
-            - name: ELASTIC_NODE
+            - name: STREAM_LIST
+              value: service-product
+            - name: FILTER_SUBJECTS
+              value: "service-product.CreateProduct"    
+            - name: NATS_SERVERS
+              value: "nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222"
+            - name: DATABASE_NAME
+              value: service_query
+            - name: DATABASE_USER
+              value: marketplace   
+            - name: HANDLER_WEAVIATE_HOST
+              value: weaviate.default.svc.cluster.local:8080     
+            - name: HANDLER_EMBEDDINGS_HOST
+              value: ollama.default.svc.cluster.local:11434                          
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port
+            - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: elastic-endpoint
-                  key: key
-            - name: ELASTIC_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: elastic-api-key
-                  key: key                     
+                  name: database-password-secret
+                  key: password              
+
           resources:
             limits:
               memory: "500Mi"
             requests:
               memory: "256Mi"
-
-
-     
