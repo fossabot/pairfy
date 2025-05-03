@@ -376,7 +376,7 @@ const onCreateProduct = async () => {
             "city": productCity.value,
             "postal": productPostal.value,
             "discount": productDiscount.value.enabled,
-            "discount_value": productDiscount.value.discount
+            "discount_percent": productDiscount.value.discount
         },
         async onResponseError({ response }) {
             throw new Error(JSON.stringify(response._data.data));
