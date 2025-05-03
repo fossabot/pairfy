@@ -34,7 +34,7 @@
                     @onPrev="handleOnPrev" @onNext="handleOnNext">
 
                     <template #image="{ item }">
-                        <ImageComp :src="useMediaUrl(item.thumbnail_url)" :image-style="{ 'width': '5rem' }" />
+                        <ImageComp :src="useMediaUrl(item.thumbnail_url)" :image-style="{ 'width': '4rem' }" />
                     </template>
 
                     <template #col-id="{ value }">

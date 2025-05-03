@@ -90,3 +90,7 @@ textarea::placeholder {
   font-size: var(--text-size-1);
   color: var(--text-b); 
 }
+
+.center{
+  justify-content: center;
+}
