@@ -39,7 +39,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Product Origin</span>
+                        <span>Origin</span>
 
                         <TipComp
                             text="National or international location from where the supplier or seller ships the product to the buyer."
@@ -342,14 +342,17 @@ const validateParams = () => {
     return params.includes(true)
 }
 
-
-
-
 const onCreateProduct = async () => {
     loading.value = true
 
     if (validateParams()) {
-        displayMessage("Please verify that all fields are filled out.", 'error', 30_000)
+        displayMessage(`
+            Some required details are missing.
+            Please ensure all mandatory fields — such as product images, category, and description —
+            are properly filled out before submitting.
+        `.trim(), 'error', 30_000)
+
+
         loading.value = false
         return;
     }
