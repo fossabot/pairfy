@@ -136,7 +136,7 @@ const validateInput = (value: string) => {
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   color: transparent;
   opacity: 0;
 }
