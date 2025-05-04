@@ -121,11 +121,22 @@
           placeholder="Write everything about the product..." rows="4"
           @keydown.enter.exact.prevent="onGenerativeSubmit" />
 
-  
+
         <div class="p-EditorComp-generative-button" @click="onGenerativeSubmit">
-          <svg v-if="!isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
-        
-          <svg v-if="isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause-icon lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>
+          <svg v-if="!isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-arrow-up-icon lucide-arrow-up">
+            <path d="m5 12 7-7 7 7" />
+            <path d="M12 19V5" />
+          </svg>
+
+          <svg v-if="isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-circle-pause-icon lucide-circle-pause">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="10" x2="10" y1="15" y2="9" />
+            <line x1="14" x2="14" y1="15" y2="9" />
+          </svg>
         </div>
       </div>
     </div>
@@ -142,7 +153,7 @@ import CharacterCount from '@tiptap/extension-character-count'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { Node, mergeAttributes } from '@tiptap/core'
 
-const emit = defineEmits(['valid']) 
+const emit = defineEmits(['valid'])
 const toastRef = ref(null)
 const editor = ref(null)
 const editorLimit = ref(6000)
@@ -198,12 +209,20 @@ const productEditorCounter = computed(() => {
   return 0
 })
 
+const stopGenerative = ref(false);
+
 const onGenerativeSubmit = async () => {
+  if (isGenerating.value) {
+    stopGenerative.value = true
+  } else {
+    stopGenerative.value = false
+  }
+
   const rawText = generativeEditor.value.trim()
-  const isPromptValid = rawText.length > 50 && rawText.length <= 1000
+  const isPromptValid = rawText.length > 30 && rawText.length <= 1000
 
   if (!isPromptValid) {
-    displayMessage('Please use a prompt of at least 50 to 1000 characters.', 'error', 10000)
+    displayMessage('Please use a prompt of at least 30 to 1000 characters.', 'error', 10000)
     return
   }
 
@@ -212,7 +231,6 @@ const onGenerativeSubmit = async () => {
   isGenerating.value = true
   editor.value.commands.blur()
   editor.value.setEditable(false)
-  editor.value.commands.setContent('')
 
   try {
     await useProductDescriptionStream(generativeEditor.value, (chunk) => {
@@ -222,6 +240,11 @@ const onGenerativeSubmit = async () => {
         ...(i < lines.length - 1 ? [{ type: 'hardBreak' }] : []),
       ])
       editor.value.chain().focus('end').insertContent(content).run()
+
+      if (stopGenerative.value) {
+        return;
+      }
+      
     })
   } catch (err) {
     console.error(err)
@@ -325,8 +348,8 @@ onBeforeUnmount(() => {
 
 .p-EditorComp-generative textarea {
   border: 1px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #f9f5ff, #f0f9ff); 
-  border-radius: var(--radius-d);
+  background: linear-gradient(135deg, #f9f5ff, #f0f9ff);
+  border-radius: var(--radius-c);
   font-size: var(--text-size-1);
   font-family: inherit;
   color: var(--text-b);
@@ -340,8 +363,8 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative textarea:focus {
-  border-color: #c084fc; 
-  background: linear-gradient(135deg, #f0f9ff, #f9f5ff); 
+  border-color: #c084fc;
+  background: linear-gradient(135deg, #f0f9ff, #f9f5ff);
   box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.2);
 }
 
@@ -432,5 +455,4 @@ onBeforeUnmount(() => {
   border: 1px solid red;
   border-radius: 5px 5px 0 0;
 }
-
 </style>
