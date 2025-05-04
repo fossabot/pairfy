@@ -60,7 +60,6 @@
     border-radius: 0px;
     color: var(--text-w);
     width: 100%;
-    max-width: var(--body-a);
     overflow: hidden;
 }
 
