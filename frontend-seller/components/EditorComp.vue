@@ -118,7 +118,7 @@
 
       <div class="p-EditorComp-generative">
         <textarea id="p-EditorComp-generative" v-model="generativeEditor"
-          placeholder="Generative AI, Write everything about the product..." rows="4"
+          placeholder="Write everything about the product..." rows="4"
           @keydown.enter.exact.prevent="onGenerativeSubmit" />
 
   
@@ -326,7 +326,7 @@ onBeforeUnmount(() => {
 .p-EditorComp-generative textarea {
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: linear-gradient(135deg, #f9f5ff, #f0f9ff); 
-  border-radius: var(--radius-c);
+  border-radius: var(--radius-d);
   font-size: var(--text-size-1);
   font-family: inherit;
   color: var(--text-b);
@@ -374,8 +374,8 @@ onBeforeUnmount(() => {
   justify-content: center;
   color: var(--text-w);
   align-items: center;
-  position: absolute;
   background: black;
+  position: absolute;
   cursor: pointer;
   display: flex;
   height: 2.5rem;
