@@ -120,11 +120,12 @@
         <textarea id="p-EditorComp-generative" v-model="generativeEditor"
           placeholder="Generative AI, Write everything about the product..." rows="4"
           @keydown.enter.exact.prevent="onGenerativeSubmit" />
-        <div class="p-EditorComp-generative-loader">
-          <span class="loader" :class="{ visible: isGenerating }" />
-        </div>
+
+  
         <div class="p-EditorComp-generative-button" @click="onGenerativeSubmit">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+          <svg v-if="!isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+        
+          <svg v-if="isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-pause-icon lucide-circle-pause"><circle cx="12" cy="12" r="10"/><line x1="10" x2="10" y1="15" y2="9"/><line x1="14" x2="14" y1="15" y2="9"/></svg>
         </div>
       </div>
     </div>
@@ -367,17 +368,6 @@ onBeforeUnmount(() => {
   background: #999;
 }
 
-.p-EditorComp-generative-loader {
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  display: flex;
-  height: 2rem;
-  bottom: 2rem;
-  width: 2rem;
-  right: 7rem;
-}
-
 .p-EditorComp-generative-button {
   border-radius: var(--radius-c);
   background: var(--primary-a);
@@ -443,31 +433,4 @@ onBeforeUnmount(() => {
   border-radius: 5px 5px 0 0;
 }
 
-
-.loader {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  border: 2px solid var(--text-b);
-  border-bottom-color: transparent;
-  animation: rotation 1s linear infinite;
-  visibility: hidden;
-
-}
-
-.loader.visible {
-  visibility: visible;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
 </style>
