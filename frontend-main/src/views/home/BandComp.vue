@@ -4,8 +4,8 @@
             <!-- Header -->
             <div class="banner-header">
                 <div class="left">
-                    <h1><span class="bold">Cardano</span>
-                        <span class="light">Marketplace</span>
+                    <h1><span class="bold">Native</span>
+                        <span class="light"> Cardano Marketplace</span>
                     </h1>
                     <ul class="features">
                         <li>✔ Community-governed</li>
