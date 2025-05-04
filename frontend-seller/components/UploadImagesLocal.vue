@@ -51,10 +51,10 @@
 import { ref, onMounted, defineEmits } from 'vue';
 import Sortable from 'sortablejs';
 
-const toastRef = ref(null);
+const toastRef = ref<any>(null);
 
-const displayMessage = (message, type) => {
-    toastRef.value?.showToast(message, type)
+const displayMessage = (message: any, type: string) => {
+  toastRef.value?.showToast(message, type)!
 }
 
 interface UploadedImg {
@@ -121,7 +121,7 @@ const onFilesSelected = (event: Event) => {
       const isValidExt = ALLOWED_EXTENSIONS.includes(extension);
 
       if (!isValidMime || !isValidExt) {
-        displayMessage(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`, 'error');       
+        displayMessage(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`, 'error');
         return false;
       }
 
@@ -254,7 +254,7 @@ const removeImage = (id: string) => {
 }
 
 .upload-button svg {
-  width: 8rem;
+  width: 6rem;
 }
 
 .upload-button:disabled {

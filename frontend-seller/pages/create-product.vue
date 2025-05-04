@@ -408,7 +408,7 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem 1.5rem;
+    padding: 1rem 2rem;
 }
 
 .grid {

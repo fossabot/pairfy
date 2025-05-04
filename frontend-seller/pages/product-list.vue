@@ -164,13 +164,11 @@ if (data.value) {
     hasMore.value = data.value.hasMore
     productCount.value = data.value.totalCount
 }
-
-
-
 </script>
+
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem 1.5rem;
+    padding: 1rem;
 }
 </style>
