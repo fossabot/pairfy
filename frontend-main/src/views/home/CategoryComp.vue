@@ -82,24 +82,22 @@ function hideModal() {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    gap: 2rem;
 }
 
 .grid-item {
     transition: box-shadow 0.2s ease;
     background: var(--background-b);
-    border-radius: var(--radius-a);
+    border-radius: 50%;
     position: relative;
     text-align: center;
     overflow: hidden;
     cursor: pointer;
-    width: 10rem;
-    height: 10rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;
+    padding: 1rem;
 }
 
 .grid-item:hover {
@@ -107,8 +105,7 @@ function hideModal() {
 }
 
 .icon {
-    width: 6rem;
-    height: 6rem;
+    width: 100%;
     object-fit: contain;
 }
 
