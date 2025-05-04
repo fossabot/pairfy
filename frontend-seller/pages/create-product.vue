@@ -356,8 +356,13 @@ const onCreateProduct = async () => {
 
     const uploadImages = await useUploadImages(productImages.value?.images).catch((err) => {
         displayMessage(err, 'error', 30_000)
-        return
+        return null
     })
+
+    if (!uploadImages || !uploadImages.success) {
+        loading.value = false
+        return
+    }
 
     const { data, error } = await useFetch('/api/product/createProduct', {
         method: 'POST',
