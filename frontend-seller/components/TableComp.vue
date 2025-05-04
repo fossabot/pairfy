@@ -300,11 +300,13 @@ const nextPage = () => {
 }
 
 .row {
+  border-left: 1px solid var(--border-a);
   padding: 0.5rem;
   max-width: 20rem;
   text-align: left;
   padding-right: 1rem;
-  border-left: 1px solid var(--border-a);
+  overflow-wrap: break-word;   
+  word-break: break-all;      
 }
 
 .row.hidden {
