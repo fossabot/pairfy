@@ -180,7 +180,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Product Details</span>
+                        <span>Details</span>
 
                         <TipComp text="Configure product details." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
@@ -219,7 +219,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Product Discount</span>
+                        <span>Discount</span>
 
                         <TipComp text="Discount" position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
@@ -245,7 +245,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        Publish
+                        Publication
                     </div>
                     <div class="grid-subtitle">
                         Publish your product.
