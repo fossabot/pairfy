@@ -370,12 +370,12 @@ onBeforeUnmount(() => {
 
 .p-EditorComp-generative-button {
   border-radius: var(--radius-c);
-  background: var(--primary-a);
   box-shadow: var(--shadow-a);
   justify-content: center;
   color: var(--text-w);
   align-items: center;
   position: absolute;
+  background: black;
   cursor: pointer;
   display: flex;
   height: 2.5rem;
