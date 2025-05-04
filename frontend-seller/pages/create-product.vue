@@ -153,7 +153,7 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Bullet List</span>
+                        <span>Features</span>
 
                         <TipComp text="List displayed at the top of the product page." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
