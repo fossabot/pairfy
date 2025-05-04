@@ -196,11 +196,11 @@ const nextPage = () => {
 }
 
 .header-left {
-  width: 40%;
+  width: 30%;
 }
 
 .header-right {
-  width: 60%;
+  width: 70%;
 }
 
 .pagination {
