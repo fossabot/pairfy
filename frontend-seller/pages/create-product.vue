@@ -439,11 +439,15 @@ const onCreateProduct = async () => {
 }
 
 .grid-row {
+    border-radius: var(--radius-b);
+    padding: 1.5rem;
+}
+
+.grid-left,
+.grid-right {
     border: 1px solid var(--border-a);
     background: var(--background-a);
     border-radius: var(--radius-b);
-    margin-bottom: 1rem;
-    padding: 1.5rem;
 }
 
 @media (max-width: 768px) {
