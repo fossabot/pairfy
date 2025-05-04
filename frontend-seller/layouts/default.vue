@@ -10,44 +10,88 @@
 
         <div class="layout-logo-text" :class="{ collapsed: isCollapsed && !isHovering }"
           v-show="!isCollapsed || isHovering">
-          Pairfy       
+          Pairfy
         </div>
       </div>
 
 
 
       <nav>
-        <NuxtLink to="/">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid-icon lucide-layout-grid"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-          </span>
+        <NuxtLink to="/home">
+          <div class="nav-button">
+            <span class="icon" :class="{ selected: currentPath === 'home' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-layout-grid-icon lucide-layout-grid">
+                <rect width="7" height="7" x="3" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="3" rx="1" />
+                <rect width="7" height="7" x="14" y="14" rx="1" />
+                <rect width="7" height="7" x="3" y="14" rx="1" />
+              </svg>
+            </span>
+          </div>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Home</span>
         </NuxtLink>
 
 
         <NuxtLink to="/product-list">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-chart-gantt-icon lucide-square-chart-gantt"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 8h7"/><path d="M8 12h6"/><path d="M11 16h5"/></svg>
-          </span>
+          <div class="nav-button">
+            <span class="icon" :class="{ selected: currentPath === 'product-list' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-square-chart-gantt-icon lucide-square-chart-gantt">
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M9 8h7" />
+                <path d="M8 12h6" />
+                <path d="M11 16h5" />
+              </svg>
+            </span>
+          </div>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Products</span>
         </NuxtLink>
 
 
         <NuxtLink to="/create-product">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-plus-icon lucide-package-plus"><path d="M16 16h6"/><path d="M19 13v6"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>
-          </span>
+          <div class="nav-button">
+            <span class="icon" :class="{ selected: currentPath === 'create-product' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-package-plus-icon lucide-package-plus">
+                <path d="M16 16h6" />
+                <path d="M19 13v6" />
+                <path
+                  d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
+                <path d="m7.5 4.27 9 5.15" />
+                <polyline points="3.29 7 12 12 20.71 7" />
+                <line x1="12" x2="12" y1="22" y2="12" />
+              </svg>
+            </span>
+
+          </div>
+
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Create product</span>
         </NuxtLink>
 
 
         <NuxtLink to="/product-books">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-search-icon lucide-package-search"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/><circle cx="18.5" cy="15.5" r="2.5"/><path d="M20.27 17.27 22 19"/></svg>
-          </span>
+          <div class="nav-button">
+            <span class="icon" :class="{ selected: currentPath === 'product-books' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-package-search-icon lucide-package-search">
+                <path
+                  d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
+                <path d="m7.5 4.27 9 5.15" />
+                <polyline points="3.29 7 12 12 20.71 7" />
+                <line x1="12" x2="12" y1="22" y2="12" />
+                <circle cx="18.5" cy="15.5" r="2.5" />
+                <path d="M20.27 17.27 22 19" />
+              </svg>
+            </span>
+          </div>
           <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
             v-show="!isCollapsed || isHovering">Product books</span>
         </NuxtLink>
@@ -63,6 +107,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+
+const route = useRoute()
+
+const currentPath = computed(() => route.name)
 
 const auth = useAuthStore()
 
@@ -83,7 +131,7 @@ if (import.meta.server) {
 
 .content {
   overflow-y: auto;
-  flex: 1; 
+  flex: 1;
 }
 
 .sidebar {
@@ -113,13 +161,29 @@ nav a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.icon {
+.nav-button {
   justify-content: center;
   align-items: center;
   display: flex;
-  width: 3rem;
-  height: 3rem;
+  width: 4rem;
+  height: 3.5rem;
   min-width: 3rem;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2 ease-in-out;
+}
+
+.icon.selected {
+  background: rgba(255, 255, 255, 0.1);
+  transition: 0.2 ease-in-out;
+  color: var(--orange-a);
+  border-radius: 50%;
 }
 
 .label {
@@ -143,8 +207,8 @@ nav a:hover {
   align-items: center;
   min-width: 3rem;
   display: flex;
-  height: 3rem;
-  width: 3rem;
+  height: 4rem;
+  width: 4rem;
 }
 
 .layout-top-image img {
@@ -152,7 +216,7 @@ nav a:hover {
 }
 
 .layout-logo-text {
-  font-size: var(--text-size-3);
+  font-size: var(--text-size-4);
   white-space: nowrap;
   visibility: initial;
   font-weight: 700;
