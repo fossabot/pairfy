@@ -7,11 +7,6 @@
         <div class="layout-top-image">
           <img src="@/assets/brand/icon.svg" alt="">
         </div>
-
-        <div class="layout-logo-text" :class="{ collapsed: isCollapsed && !isHovering }"
-          v-show="!isCollapsed || isHovering">
-          Pairfy
-        </div>
       </div>
 
 
@@ -21,7 +16,7 @@
           <div class="nav-button">
             <span class="icon" :class="{ selected: currentPath === 'home' }">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-layout-grid-icon lucide-layout-grid">
                 <rect width="7" height="7" x="3" y="3" rx="1" />
                 <rect width="7" height="7" x="14" y="3" rx="1" />
@@ -39,7 +34,7 @@
           <div class="nav-button">
             <span class="icon" :class="{ selected: currentPath === 'product-list' }">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-square-chart-gantt-icon lucide-square-chart-gantt">
                 <rect width="18" height="18" x="3" y="3" rx="2" />
                 <path d="M9 8h7" />
@@ -57,7 +52,7 @@
           <div class="nav-button">
             <span class="icon" :class="{ selected: currentPath === 'create-product' }">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-package-plus-icon lucide-package-plus">
                 <path d="M16 16h6" />
                 <path d="M19 13v6" />
@@ -80,7 +75,7 @@
           <div class="nav-button">
             <span class="icon" :class="{ selected: currentPath === 'product-books' }">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-package-search-icon lucide-package-search">
                 <path
                   d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14" />
@@ -135,7 +130,8 @@ if (import.meta.server) {
 }
 
 .sidebar {
-  background: #0a0a0a;
+  border-right: 1px solid var(--border-a);
+  background: var(--background-a);
   color: var(--text-w);
   position: relative;
   overflow: hidden;
@@ -151,14 +147,14 @@ nav {
 nav a {
   font-size: var(--text-size-1);
   text-decoration: none;
-  color: var(--text-w);
+  color: var(--text-b);
   align-items: center;
   font-weight: 500;
   display: flex;
 }
 
 nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .nav-button {
@@ -180,9 +176,9 @@ nav a:hover {
 }
 
 .icon.selected {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--background-b);
   transition: 0.2 ease-in-out;
-  color: var(--orange-a);
+  color: var(--primary-a);
   border-radius: 50%;
 }
 
@@ -215,14 +211,4 @@ nav a:hover {
   width: 2rem;
 }
 
-.layout-logo-text {
-  font-size: var(--text-size-4);
-  white-space: nowrap;
-  visibility: initial;
-  font-weight: 700;
-}
-
-.layout-logo-text.collapsed {
-  visibility: hidden;
-}
 </style>
