@@ -25,7 +25,7 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
+          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'home' }"
             v-show="!isCollapsed || isHovering">Home</span>
         </NuxtLink>
 
@@ -43,7 +43,7 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
+          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-list' }"
             v-show="!isCollapsed || isHovering">Products</span>
         </NuxtLink>
 
@@ -63,10 +63,8 @@
                 <line x1="12" x2="12" y1="22" y2="12" />
               </svg>
             </span>
-
           </div>
-
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
+          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'create-product' }"
             v-show="!isCollapsed || isHovering">Create product</span>
         </NuxtLink>
 
@@ -87,7 +85,7 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering }"
+          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-books' }"
             v-show="!isCollapsed || isHovering">Product books</span>
         </NuxtLink>
       </nav>
@@ -187,6 +185,10 @@ nav a:hover {
   white-space: nowrap;
   padding-right: 5rem;
   visibility: initial;
+}
+
+.label.selected{
+  color: var(--primary-a);
 }
 
 .label.collapsed {
