@@ -28,7 +28,7 @@ const props = defineProps({
   id: { type: String, default: 'sku' },
   modelValue: { type: String, default: '' },
   label: { type: String, default: 'SKU' },
-  placeholder: { type: String, default: 'e.g. TV55-SAMSUNG-2025' },
+  placeholder: { type: String, default: 'TV55-SAMSUNG-2025' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 20 },
