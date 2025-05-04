@@ -40,7 +40,7 @@ body {
   --primary-a: var(--blue-a);
   --primary-b: var(--gray-a);
 
-  --radius-a: 3px;
+  --radius-a: 4px;
   --radius-b: 6px;
   --radius-c: 12px;
   --radius-d: 24px;
@@ -56,7 +56,7 @@ body {
 }
 
 :root {
-  --input-radius: var(--radius-b);
+  --input-radius: var(--radius-a);
   --button-radius: var(--radius-b);
 }
 

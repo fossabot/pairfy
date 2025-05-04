@@ -135,7 +135,7 @@ if (import.meta.server) {
 }
 
 .sidebar {
-  background: var(--primary-b);
+  background: #0a0a0a;
   color: var(--text-w);
   position: relative;
   overflow: hidden;

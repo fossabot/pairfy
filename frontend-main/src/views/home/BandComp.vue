@@ -12,7 +12,7 @@
                         <li>✔ Stablecoin payments</li>
                         <li>✔ Free shipping</li>
                     </ul>
-                    <button class="shop-button">Shop now</button>
+                   
                 </div>
                 <div class="right">
                     <p><strong>5M+</strong> Factory direct supply</p>
@@ -75,6 +75,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 auto 40px auto;
+    max-width: var(--body-a);
 }
 
 .left {
