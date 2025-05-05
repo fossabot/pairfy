@@ -76,11 +76,13 @@ export const getProducts = async (_: any, args: any, context: any) => {
     const resultLength = result.length;
     const isAdvancing = !!cursor;
 
-    const hasPrevMore = (
+    const isInitialLoad = !cursor && !reverseCursor;
+
+    const hasPrevMore = !isInitialLoad && (
       (!isReversing && (isAdvancing || hasMore)) ||
       (isReversing && hasMore)
     );
-
+    
     const hasNextMore = (
       (!isReversing && hasMore) ||
       (isReversing && (isAdvancing || resultLength > 0))
