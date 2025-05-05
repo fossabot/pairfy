@@ -146,7 +146,6 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-
                     <UploadImagesLocal @valid="productImages = $event.value" />
                 </div>
 
@@ -170,8 +169,9 @@
                     <div class="grid-subtitle">
                         Optionally, upload a single video highlighting the product’s features.
                     </div>
-
                 </div>
+
+
             </div>
             <!--RIGHT-->
             <div class="grid-right">
