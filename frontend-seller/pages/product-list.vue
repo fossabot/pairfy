@@ -140,9 +140,6 @@ const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
     })
 
     if (data.value) {
-
-        console.log(data.value.hasPrevMore, data.value.hasNextMore);
-        
         products.value = data.value.products
         nextCursor.value = data.value.nextCursor
         productCount.value = data.value.totalCount
