@@ -61,7 +61,8 @@ input GetProductInput {
 type GetProductsResponse {
   products: [Product!]!
   nextCursor: String
-  hasMore: Boolean!
+  hasPrevMore: Boolean!
+  hasNextMore: Boolean!
   totalCount: Int!
 }
 

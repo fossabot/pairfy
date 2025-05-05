@@ -13,19 +13,14 @@ export const getProducts = async (_: any, args: any, context: any) => {
   }
 
   const { cursor, reverseCursor } = validation.data;
-  
   const { sellerData: SELLER } = context;
 
   const pageSize = 16;
-
   const realLimit = pageSize + 1;
 
   const queryParams: any[] = [SELLER.id];
-
   let whereClause = "WHERE seller_id = ?";
-
   let orderClause = "ORDER BY created_at DESC, id DESC";
-
 
   if (cursor) {
     const [createdAt, id] = cursor.split("_");
@@ -56,13 +51,13 @@ export const getProducts = async (_: any, args: any, context: any) => {
     const [products] = await connection.query(query, queryParams);
 
     const hasMore = products.length > pageSize;
-
     let trimmed = hasMore ? products.slice(0, pageSize) : products;
 
     let nextCursor = null;
-
     if (hasMore) {
-      const item = reverseCursor ? products[pageSize] : trimmed[trimmed.length - 1];
+      const item = reverseCursor
+        ? products[pageSize]
+        : trimmed[trimmed.length - 1];
       nextCursor = `${item.created_at}_${item.id}`;
     }
 
@@ -73,10 +68,14 @@ export const getProducts = async (_: any, args: any, context: any) => {
       [SELLER.id]
     );
 
+    const hasPrevMore = !reverseCursor && !hasMore && products.length > 0 || !!reverseCursor && hasMore;
+    const hasNextMore = !reverseCursor && hasMore;
+
     return {
       products: trimmed,
       nextCursor,
-      hasMore,
+      hasPrevMore,
+      hasNextMore,
       totalCount: total_products,
     };
   } catch (err) {

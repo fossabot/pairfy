@@ -1,6 +1,6 @@
 <template>
   <div class="datatable">
- 
+
     <div class="header flex">
       <div class="header-left">
         <div class="search flex">
@@ -18,8 +18,8 @@
         <div class="pagination flex">
           <span>{{ range }}</span>
         </div>
-
-        <button @click="prevPage" :disabled="page === 1">
+        {{ hasPrevPage }} {{ hasNextPage }}
+        <button @click="prevPage" :disabled="!hasPrevPage">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-chevron-left">
@@ -27,7 +27,7 @@
           </svg>
         </button>
 
-        <button @click="nextPage" :disabled="!hasMore">
+        <button @click="nextPage" :disabled="!hasNextPage">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-chevron-right">
@@ -86,10 +86,13 @@ const props = defineProps({
   count: { type: Number, default: 0 },
   images: { type: Boolean, default: false },
   columnWidths: { type: Object, default: () => ({}) },
-  hasMore: { type: Boolean, default: false },
-  page: { type: Number, default: 1 },
-  range: { type: String, default: "" }
+  range: { type: String, default: "" },
+  hasNextPage: { type: Boolean, default: false },
+  hasPrevPage: { type: Boolean, default: false }
 })
+
+const hasPrevPage = computed(() => props.hasPrevPage)
+const hasNextPage = computed(() => props.hasNextPage)
 
 const emit = defineEmits(["onPrev", "onNext"])
 

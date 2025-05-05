@@ -28,10 +28,11 @@
 
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
-
-                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit" :hasMore="hasMore"
-                    :page="page" :range="range" :count="productCount" :images="true" @onPrev="handleOnPrev"
-                    @onNext="handleOnNext" :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }">
+                {{ page }}{{ hasPrevPage }}{{ hasNextPage }}
+                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
+                    :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range"
+                    :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
+                    :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
@@ -111,18 +112,18 @@ const columns = ref([
 
 const products = ref([])
 const nextCursor = ref(null)
-const hasMore = ref(false)
 const loading = ref(false)
 const page = ref(1)
 const limit = ref(16)
 
 const range = computed(() => {
-  const start = (page.value - 1) * limit.value + 1
-  const end = start + products.value.length - 1
-  return `${start} - ${end} of ${productCount.value}`
+    const start = (page.value - 1) * limit.value + 1
+    const end = start + products.value.length - 1
+    return `${start} - ${end} of ${productCount.value}`
 })
 
-
+const hasNextPage = ref("a")
+const hasPrevPage = ref(false)
 
 const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
     loading.value = true
@@ -140,22 +141,30 @@ const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
     })
 
     if (data.value) {
+
+        console.log(data.value.hasPrevMore, data.value.hasNextMore);
+        
         products.value = data.value.products
         nextCursor.value = data.value.nextCursor
-        hasMore.value = data.value.hasMore
         productCount.value = data.value.totalCount
+        hasPrevPage.value = data.value.hasPrevMore
+        hasNextPage.value = data.value.hasNextMore
     }
 
     loading.value = false
 }
 
 const handleOnPrev = async (item) => {
+    if (!hasPrevPage.value) return
+
     const reverseCursor = `${item.created_at}_${item.id}`
     await loadProducts({ reverseCursor })
     if (page.value > 1) page.value -= 1
 }
 
 const handleOnNext = async (item) => {
+    if (!hasNextPage.value) return
+
     const cursor = `${item.created_at}_${item.id}`
     await loadProducts({ cursor })
     page.value += 1

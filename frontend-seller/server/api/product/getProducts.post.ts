@@ -23,7 +23,8 @@ const GET_PRODUCTS_QUERY = gql`
         created_at
       }
       nextCursor
-      hasMore
+      hasPrevMore
+      hasNextMore
       totalCount
     }
   }
