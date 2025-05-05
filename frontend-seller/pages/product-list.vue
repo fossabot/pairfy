@@ -139,7 +139,7 @@ const handleDottedMenu = (event, value) => {
 }
 
 const limit = 16
-const cursor = ref("NOT")
+const cursor = ref(null);
 const products = ref([])
 const nextCursor = ref(null)
 const hasMore = ref(false)
@@ -151,7 +151,7 @@ const { data, error } = await useFetch('/api/product/getProducts', {
     method: 'POST',
     credentials: 'include',
     body: {
-        cursor: cursor.value
+        cursor: cursor.value || undefined
     },
     async onResponseError({ response }) {
         throw new Error(JSON.stringify(response._data.data));

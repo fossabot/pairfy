@@ -3,40 +3,52 @@ import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
 import { verifyParams } from "../../validators/get-products.js";
 
 export const getProducts = async (_: any, args: any, context: any) => {
-  const isValidParams = verifyParams.safeParse(args.getProductsInput);
+  const validation = verifyParams.safeParse(args.getProductsInput);
 
-  if (!isValidParams.success) {
+  if (!validation.success) {
     throw new ApiGraphQLError(400, "Invalid input", {
       code: ERROR_CODES.VALIDATION_ERROR,
-      details: isValidParams.error.format(),
+      details: validation.error.format(),
     });
   }
 
-  const { cursor } = isValidParams.data;
-
+  const { cursor, reverseCursor } = validation.data;
+  
   const { sellerData: SELLER } = context;
 
   const pageSize = 16;
+
   const realLimit = pageSize + 1;
 
-  let connection = null;
-
-  let query = "SELECT * FROM products WHERE seller_id = ?";
   const queryParams: any[] = [SELLER.id];
 
-  if (cursor !== "NOT") {
-    const timestamp = Number(cursor);
-    if (isNaN(timestamp)) {
-      throw new ApiGraphQLError(400, "Invalid cursor format", {
-        code: ERROR_CODES.VALIDATION_ERROR,
-      });
-    }
-    query += " AND created_at < ?";
-    queryParams.push(new Date(timestamp).toISOString());
+  let whereClause = "WHERE seller_id = ?";
+
+  let orderClause = "ORDER BY created_at DESC, id DESC";
+
+
+  if (cursor) {
+    const [createdAt, id] = cursor.split("_");
+    whereClause += " AND (created_at < ? OR (created_at = ? AND id < ?))";
+    queryParams.push(createdAt, createdAt, id);
   }
 
-  query += " ORDER BY created_at DESC LIMIT ?";
+  if (reverseCursor) {
+    const [createdAt, id] = reverseCursor.split("_");
+    whereClause += " AND (created_at > ? OR (created_at = ? AND id > ?))";
+    queryParams.push(createdAt, createdAt, id);
+    orderClause = "ORDER BY created_at ASC, id ASC";
+  }
+
+  const query = `
+    SELECT * FROM products
+    ${whereClause}
+    ${orderClause}
+    LIMIT ?
+  `;
   queryParams.push(realLimit);
+
+  let connection = null;
 
   try {
     connection = await database.client.getConnection();
@@ -44,11 +56,17 @@ export const getProducts = async (_: any, args: any, context: any) => {
     const [products] = await connection.query(query, queryParams);
 
     const hasMore = products.length > pageSize;
-    const trimmedProducts = hasMore ? products.slice(0, pageSize) : products;
 
-    const nextCursor = hasMore
-      ? trimmedProducts[trimmedProducts.length - 1].created_at
-      : null;
+    let trimmed = hasMore ? products.slice(0, pageSize) : products;
+
+    let nextCursor = null;
+
+    if (hasMore) {
+      const item = reverseCursor ? products[pageSize] : trimmed[trimmed.length - 1];
+      nextCursor = `${item.created_at}_${item.id}`;
+    }
+
+    if (reverseCursor) trimmed = trimmed.reverse();
 
     const [[{ total_products }]] = await connection.query(
       "SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?",
@@ -56,18 +74,16 @@ export const getProducts = async (_: any, args: any, context: any) => {
     );
 
     return {
-      products: trimmedProducts,
+      products: trimmed,
       nextCursor,
       hasMore,
       totalCount: total_products,
     };
-  } catch (err: any) {
+  } catch (err) {
     throw new ApiGraphQLError(500, "Unexpected error retrieving products", {
       code: ERROR_CODES.INTERNAL_ERROR,
     });
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };

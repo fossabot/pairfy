@@ -50,8 +50,9 @@ type media {
 }
 
 input GetProductsInput {
-  cursor: String!
-}  
+  cursor: String
+  reverseCursor: String
+}
 
 input GetProductInput {
   id: String!
