@@ -17,8 +17,8 @@
       <div class="header-right flex">
         <div class="pagination flex">
           <span>{{ range }}</span>
+          <span>{{ page }}</span>
         </div>
-        {{ hasPrevPage }} {{ hasNextPage }}
         <button @click="prevPage" :disabled="!hasPrevPage">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
@@ -87,9 +87,12 @@ const props = defineProps({
   images: { type: Boolean, default: false },
   columnWidths: { type: Object, default: () => ({}) },
   range: { type: String, default: "" },
+  page: { type: Number, default: 1 },
   hasNextPage: { type: Boolean, default: false },
   hasPrevPage: { type: Boolean, default: false }
 })
+
+const page = computed(() => `Page ${props.page}`)
 
 const hasPrevPage = computed(() => props.hasPrevPage)
 const hasNextPage = computed(() => props.hasNextPage)

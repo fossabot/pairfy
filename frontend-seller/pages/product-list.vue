@@ -28,9 +28,8 @@
 
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
-                {{ page }}{{ hasPrevPage }}{{ hasNextPage }}
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
-                    :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range"
+                    :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
                     :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }">
 

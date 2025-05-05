@@ -15,12 +15,19 @@ export const getProducts = async (_: any, args: any, context: any) => {
   const { cursor, reverseCursor } = validation.data;
   const { sellerData: SELLER } = context;
 
+  if (cursor && reverseCursor) {
+    throw new ApiGraphQLError(400, "Cannot use both cursor and reverseCursor", {
+      code: ERROR_CODES.VALIDATION_ERROR,
+    });
+  }
+
   const pageSize = 16;
   const realLimit = pageSize + 1;
 
   const queryParams: any[] = [SELLER.id];
   let whereClause = "WHERE seller_id = ?";
   let orderClause = "ORDER BY created_at DESC, id DESC";
+  let isReversing = false;
 
   if (cursor) {
     const [createdAt, id] = cursor.split("_");
@@ -33,6 +40,7 @@ export const getProducts = async (_: any, args: any, context: any) => {
     whereClause += " AND (created_at > ? OR (created_at = ? AND id > ?))";
     queryParams.push(createdAt, createdAt, id);
     orderClause = "ORDER BY created_at ASC, id ASC";
+    isReversing = true;
   }
 
   const query = `
@@ -47,32 +55,39 @@ export const getProducts = async (_: any, args: any, context: any) => {
 
   try {
     connection = await database.client.getConnection();
+    const [result] = await connection.query(query, queryParams);
 
-    const [products] = await connection.query(query, queryParams);
+    const hasMore = result.length > pageSize;
+    const products = hasMore ? result.slice(0, pageSize) : result;
 
-    const hasMore = products.length > pageSize;
-    let trimmed = hasMore ? products.slice(0, pageSize) : products;
-
-    let nextCursor = null;
+    let nextCursor: string | null = null;
     if (hasMore) {
-      const item = reverseCursor
-        ? products[pageSize]
-        : trimmed[trimmed.length - 1];
+      const item = isReversing ? result[pageSize] : products[products.length - 1];
       nextCursor = `${item.created_at}_${item.id}`;
     }
 
-    if (reverseCursor) trimmed = trimmed.reverse();
+    const finalProducts = isReversing ? products.reverse() : products;
 
     const [[{ total_products }]] = await connection.query(
       "SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?",
       [SELLER.id]
     );
 
-    const hasPrevMore = !reverseCursor && !hasMore && products.length > 0 || !!reverseCursor && hasMore;
-    const hasNextMore = !reverseCursor && hasMore;
+    const resultLength = result.length;
+    const isAdvancing = !!cursor;
+
+    const hasPrevMore = (
+      (!isReversing && (isAdvancing || hasMore)) ||
+      (isReversing && hasMore)
+    );
+
+    const hasNextMore = (
+      (!isReversing && hasMore) ||
+      (isReversing && (isAdvancing || resultLength > 0))
+    );
 
     return {
-      products: trimmed,
+      products: finalProducts,
       nextCursor,
       hasPrevMore,
       hasNextMore,
