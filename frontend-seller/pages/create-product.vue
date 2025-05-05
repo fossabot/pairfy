@@ -103,56 +103,6 @@
 
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Upload Images</span>
-
-                        <TipComp text="Upload product images and select the main image." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
-                    <div class="grid-subtitle">
-                        Add product images with a maximum size of (5mb) (500x500).
-                    </div>
-
-                    <UploadImagesLocal @valid="productImages = $event.value" />
-                </div>
-
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Upload Video</span>
-
-                        <TipComp text="Upload a video to showcase your product." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-
-                    </div>
-                    <div class="grid-subtitle">
-                        Select 1 video showing the product features (optional).
-                    </div>
-
-                </div>
-            </div>
-            <!--RIGHT-->
-            <div class="grid-right">
-
-
-                <div class="grid-row">
-                    <div class="grid-title">
                         <span>Features</span>
 
                         <TipComp text="List displayed at the top of the product page." position="right">
@@ -177,7 +127,54 @@
                     </div>
                 </div>
 
+                <div class="grid-row">
+                    <div class="grid-title">
+                        <span>Upload Images</span>
 
+                        <TipComp text="Upload product images and select the main image." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
+                    </div>
+                    <div class="grid-subtitle">
+                        Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
+                    </div>
+
+                    <UploadImagesLocal @valid="productImages = $event.value" />
+                </div>
+
+                <div class="grid-row">
+                    <div class="grid-title">
+                        <span>Upload Video</span>
+
+                        <TipComp text="Upload a video to showcase your product." position="right">
+                            <span class="flex" style="margin-left: 0.5rem;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                    <path d="M12 17h.01" />
+                                </svg>
+                            </span>
+                        </TipComp>
+
+                    </div>
+                    <div class="grid-subtitle">
+                        Optionally, upload a single video highlighting the product’s features.
+                    </div>
+
+                </div>
+            </div>
+            <!--RIGHT-->
+            <div class="grid-right">
                 <div class="grid-row">
                     <div class="grid-title">
                         <span>Details</span>
@@ -416,7 +413,7 @@ const onCreateProduct = async () => {
 
 .grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     gap: 1rem;
 }
 

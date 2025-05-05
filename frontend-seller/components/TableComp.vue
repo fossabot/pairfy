@@ -174,6 +174,7 @@ const nextPage = () => {
 
 .pagination {
   font-size: var(--text-size-0);
+  color: var(--text-b);
   white-space: nowrap;
   margin-left: auto;
 }
