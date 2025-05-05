@@ -1,60 +1,62 @@
 <template>
   <div class="datatable">
-    <!-- Search Input -->
-
+ 
     <div class="header flex">
       <div class="header-left">
         <div class="search flex">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-search">
+            <path d="m21 21-4.34-4.34" />
+            <circle cx="11" cy="11" r="8" />
+          </svg>
           <input v-model="searchQuery" type="text" placeholder="Search" class="p-2 border rounded w-full mb-3" />
         </div>
       </div>
 
       <div class="header-right flex">
         <div class="pagination flex">
-          <span>{{ range }} of {{ count }}</span>
-
-          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+          <span>{{ range }}</span>
         </div>
 
-        <button @click="prevPage" :disabled="currentPage === 1">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+        <button @click="prevPage" :disabled="page === 1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-chevron-left">
+            <path d="m15 18-6-6 6-6" />
+          </svg>
         </button>
 
-        <button @click="nextPage" :disabled="currentPage === totalPages">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+        <button @click="nextPage" :disabled="!hasMore">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-chevron-right">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
         </button>
       </div>
     </div>
 
-    <!-- Table -->
+    <!-- Tabla -->
     <table class="table">
       <thead>
         <tr class="columns">
           <th class="column" v-if="images" />
-
           <th class="column" v-for="column in columns" :key="column.field" @click="sortBy(column.field)">
-
             <div class="box">
-              <span class="label"> {{ column.label }}</span>
-
+              <span class="label">{{ column.label }}</span>
               <div class="sort">
-
                 <span class="arrow up" :class="{ enabled: sortOrder === 1 && sortField === column.field }" />
-
-
                 <span class="arrow down" :class="{ enabled: sortOrder === -1 && sortField === column.field }" />
-
               </div>
-
             </div>
-
           </th>
         </tr>
       </thead>
+
       <tbody>
-        <tr class="rows" v-for="item in paginatedItems" :key="item.id">
-          <td class="image">
+        <tr class="rows" v-for="item in filteredItems" :key="item.id">
+          <td class="image" v-if="images">
             <slot name="image" :item="item" />
           </td>
 
@@ -68,7 +70,6 @@
           <td class="row">
             <slot name="action" :item="item" />
           </td>
-
         </tr>
       </tbody>
     </table>
@@ -76,101 +77,63 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed } from "vue"
 
+const props = defineProps({
+  items: { type: Array, default: () => [] },
+  columns: { type: Array, default: () => [] },
+  limit: { type: Number, default: 16 },
+  count: { type: Number, default: 0 },
+  images: { type: Boolean, default: false },
+  columnWidths: { type: Object, default: () => ({}) },
+  hasMore: { type: Boolean, default: false },
+  page: { type: Number, default: 1 },
+  range: { type: String, default: "" }
+})
 
-const props = defineProps(['items', 'columns', "limit", "count", "images", "columnWidths"]);
+const emit = defineEmits(["onPrev", "onNext"])
 
-const emit = defineEmits(['onPrev', 'onNext']);
+const searchQuery = ref("")
+const sortField = ref(null)
+const sortOrder = ref(0)
 
-const items = computed(() => props.items)
-
-const columns = computed(() => props.columns);
-
-const count = computed(() => props.count);
-
-
-
-const searchQuery = ref("");
-const sortField = ref(null);
-const sortOrder = ref(0);
-const rowsPerPage = ref(props.limit);
-const currentPage = ref(1);
-
-
-
-
-
-// Computed: Filtered & Sorted Data
 const filteredItems = computed(() => {
-  return items.value
+  return props.items
     .filter((item) =>
       Object.values(item).some((value) =>
         String(value).toLowerCase().includes(searchQuery.value.toLowerCase())
       )
     )
     .sort((a, b) => {
-      if (!sortField.value) return 0;
-      return sortOrder.value * (a[sortField.value] > b[sortField.value] ? 1 : -1);
-    });
-});
+      if (!sortField.value) return 0
+      return sortOrder.value * (a[sortField.value] > b[sortField.value] ? 1 : -1)
+    })
+})
 
-// Computed: Paginated Data
-const totalPages = computed(() => Math.ceil(filteredItems.value.length / rowsPerPage.value));
-
-const paginatedItems = computed(() => {
-  const start = (currentPage.value - 1) * rowsPerPage.value;
-  return filteredItems.value.slice(start, start + rowsPerPage.value);
-});
-
-const range = computed(() => {
-
-  const getRange = (totalElements, elementsPerPage, currentPage) => {
-    if (currentPage < 1) currentPage = 1;
-
-    const totalPages = Math.ceil(totalElements / elementsPerPage);
-
-    if (currentPage > totalPages) currentPage = totalPages;
-
-    const start = (currentPage - 1) * elementsPerPage + 1;
-
-    let end = start + elementsPerPage - 1;
-
-    if (end > totalElements) end = totalElements;
-
-    return `${start} - ${end}`;
-  }
-
-  return `${getRange(count.value, rowsPerPage.value, currentPage.value)}`
-});
-
-
-
-
-
-// Methods
 const sortBy = (field) => {
   if (sortField.value === field) {
-    sortOrder.value *= -1; // Toggle sorting order
+    sortOrder.value *= -1
   } else {
-    sortField.value = field;
-    sortOrder.value = 1;
+    sortField.value = field
+    sortOrder.value = 1
   }
-};
+}
 
 const prevPage = () => {
-  if (currentPage.value > 1) currentPage.value--;
-
-  emit('onPrev', paginatedItems.value[0])
-};
+  if (filteredItems.value.length) {
+    emit("onPrev", filteredItems.value[0])
+  }
+}
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) currentPage.value++;
-
-  emit('onNext', paginatedItems.value[paginatedItems.value.length - 1])
-};
-
+  if (filteredItems.value.length) {
+    emit("onNext", filteredItems.value[filteredItems.value.length - 1])
+  }
+}
 </script>
+
+
+
 
 <style scoped>
 .datatable {
@@ -305,8 +268,8 @@ const nextPage = () => {
   max-width: 20rem;
   text-align: left;
   padding-right: 1rem;
-  overflow-wrap: break-word;   
-  word-break: break-all;      
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .row.hidden {
@@ -333,7 +296,5 @@ tbody tr:nth-child(even) {
   margin: 0 0.5rem;
 }
 
-.image {
-
-}
+.image {}
 </style>

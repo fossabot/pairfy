@@ -29,9 +29,9 @@
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
 
-                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="15" :count="productCount"
-                    :images="true" :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }"
-                    @onPrev="handleOnPrev" @onNext="handleOnNext">
+                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit" :hasMore="hasMore"
+                    :page="page" :range="range" :count="productCount" :images="true" @onPrev="handleOnPrev"
+                    @onNext="handleOnNext" :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
@@ -86,9 +86,8 @@
 import placeholderImage from '@/assets/placeholder/image.svg'
 
 function getImageSrc(item) {
-  return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
+    return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
 }
-
 
 const dottedMenuOptions = ref([
     { label: "Delete Product", value: "delete" },
@@ -96,9 +95,7 @@ const dottedMenuOptions = ref([
     { label: "Open Page", value: "open" }
 ])
 
-const productCount = ref(0);
-
-
+const productCount = ref(0)
 const columns = ref([
     { label: "ID", field: "id" },
     { label: "Sku", field: "sku" },
@@ -110,61 +107,76 @@ const columns = ref([
     { label: "Category", field: "category" },
     { label: "Moderated", field: "moderated" },
     { label: "Date", field: "created_at" }
-]);
+])
 
-const handleOnPrev = (event) => {
-    console.log(event.created_at)
-
-
-}
-
-const handleOnNext = (event) => {
-
-    console.log(event.created_at)
-
-}
-
-const handleDottedMenu = (event, value) => {
-    console.log(event, value.id);
-
-    if (event === 'delete') {
-        beforeDeleteProduct(value);
-        return;
-    }
-
-    if (event === 'edit') {
-        editProduct(value.id);
-        return;
-    }
-}
-
-const limit = 16
-const cursor = ref(null);
 const products = ref([])
 const nextCursor = ref(null)
 const hasMore = ref(false)
 const loading = ref(false)
+const page = ref(1)
+const limit = ref(16)
 
-
-
-const { data, error } = await useFetch('/api/product/getProducts', {
-    method: 'POST',
-    credentials: 'include',
-    body: {
-        cursor: cursor.value || undefined
-    },
-    async onResponseError({ response }) {
-        throw new Error(JSON.stringify(response._data.data));
-    }
+const range = computed(() => {
+  const start = (page.value - 1) * limit.value + 1
+  const end = start + products.value.length - 1
+  return `${start} - ${end} of ${productCount.value}`
 })
 
-if (data.value) {
-    products.value = data.value.products
-    nextCursor.value = data.value.nextCursor
-    hasMore.value = data.value.hasMore
-    productCount.value = data.value.totalCount
+
+
+const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
+    loading.value = true
+
+    const { data, error } = await useFetch('/api/product/getProducts', {
+        method: 'POST',
+        credentials: 'include',
+        body: {
+            cursor: cursor || undefined,
+            reverseCursor: reverseCursor || undefined
+        },
+        async onResponseError({ response }) {
+            throw new Error(JSON.stringify(response._data.data))
+        }
+    })
+
+    if (data.value) {
+        products.value = data.value.products
+        nextCursor.value = data.value.nextCursor
+        hasMore.value = data.value.hasMore
+        productCount.value = data.value.totalCount
+    }
+
+    loading.value = false
 }
+
+const handleOnPrev = async (item) => {
+    const reverseCursor = `${item.created_at}_${item.id}`
+    await loadProducts({ reverseCursor })
+    if (page.value > 1) page.value -= 1
+}
+
+const handleOnNext = async (item) => {
+    const cursor = `${item.created_at}_${item.id}`
+    await loadProducts({ cursor })
+    page.value += 1
+}
+
+const handleDottedMenu = (event, value) => {
+    if (event === 'delete') {
+        beforeDeleteProduct(value)
+        return
+    }
+
+    if (event === 'edit') {
+        editProduct(value.id)
+        return
+    }
+}
+
+
+await loadProducts()
 </script>
+
 
 
 <style lang="css" scoped>
