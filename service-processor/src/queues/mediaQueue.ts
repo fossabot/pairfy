@@ -1,3 +1,4 @@
 import { Queue } from 'bullmq';
-import { connection } from '../config/redis.js';
+import { connection } from '../database/redis';
+
 export const mediaQueue = new Queue('media-processing', { connection });

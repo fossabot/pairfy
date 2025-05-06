@@ -17,15 +17,15 @@ spec:
           image: pairfy/service-processor
           command: ["node", "dist/workers/processor.js"]
           env:
-            - name: MINIO_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: minio-credentials
-                  key: accessKey
-            - name: MINIO_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: minio-credentials
-                  key: secretKey
             - name: REDIS_HOST
               value: redis-processor.default.svc.cluster.local
+            - name : MINIO_HOST_URL
+              value: minio
+            - name : MINIO_PORT
+              value: "9000"
+            - name : MINIO_USE_SSL
+              value: "false"
+            - name : MINIO_ACCESS_KEY
+              value: "minioadmin"
+            - name : MINIO_SECRET_KEY
+              value: "minioadmin123" 

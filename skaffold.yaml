@@ -161,3 +161,8 @@ portForward:
     localPort: 31311
 
 
+  - resourceType: service
+    resourceName: minio
+    namespace: default
+    port: 9000
+    localPort: 9000    
