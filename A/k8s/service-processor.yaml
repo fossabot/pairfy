@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-processor
+  template:
+    metadata:
+      labels:
+        app: service-processor
+    spec:
+      containers:
+        - name: worker
+          image: pairfy/service-processor:latest
+          command: ["node", "dist/workers/processor.js"]
+          env:
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: accessKey
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: minio-credentials
+                  key: secretKey
+            - name: REDIS_HOST
+              value: redis-processor.default.svc.cluster.local

@@ -1,23 +1,28 @@
-import fs from 'fs/promises';
-import { resizeImage } from '../utils/image-resizer';
-import { uploadToSpaces } from '../utils/upload';
+import getStream from 'get-stream';
+import { minioClient } from '../utils/minio-client';
 
-export async function handleImageJob(job: any) {
-  const { filePath } = job.data;
-  const buffer = await fs.readFile(filePath);
+export async function handleImageJob(job: Job) {
+  const { bucket, key, userId } = job.data;
+
+  const stream = await minioClient.getObject(bucket, key);
+  const buffer = await getStream.buffer(stream);
+
   const resized = await resizeImage(buffer);
-  const urls: Record<string, string> = {};
 
-  for (const [key, data] of Object.entries(resized)) {
-    const filename = `${job.id}-${key}.webp`;
-    const path = `products/images/${filename}`;
-    urls[key] = await uploadToSpaces({
-      bucket: 'ecommerce-assets',
-      key: path,
-      body: data,
+  const urls: Record<string, string> = {};
+  for (const [size, buf] of Object.entries(resized)) {
+    const baseName = key.split('/').pop()?.split('.')[0];
+    const destKey = `products/images/${userId}/${baseName}-${size}.webp`;
+
+    urls[size] = await uploadToSpaces({
+      bucket: 'media',
+      key: destKey,
+      body: buf,
       contentType: 'image/webp',
     });
   }
 
-  return { urls };
+  //createEvent
+
+  return { status: 'done', uploaded: urls };
 }
