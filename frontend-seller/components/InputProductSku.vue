@@ -6,7 +6,6 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @beforeinput="onBeforeInput"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputSku-input"
@@ -61,25 +60,13 @@ watch(() => props.focus, (newVal) => {
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
+  internalValue.value = val
 })
 
 watch(internalValue, (val) => {
   emit('update:modelValue', val)
   validateInput(val)
 })
-
-const onBeforeInput = (e: Event) => {
-  const inputEvent = e as InputEvent
-
-  if (
-    inputEvent.inputType === 'insertText' &&
-    inputEvent.data &&
-    !/^[A-Z0-9-]$/.test(inputEvent.data)
-  ) {
-    e.preventDefault()
-  }
-}
 
 const validateInput = (value: string) => {
   if (props.required && value.trim() === '') {
