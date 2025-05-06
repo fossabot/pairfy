@@ -244,7 +244,7 @@ const onGenerativeSubmit = async () => {
       if (stopGenerative.value) {
         return;
       }
-      
+
     })
   } catch (err) {
     console.error(err)
@@ -347,25 +347,25 @@ onBeforeUnmount(() => {
 }
 
 .p-EditorComp-generative textarea {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, #f9f5ff, #f0f9ff);
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  background: linear-gradient(135deg, #eef4ff, #dbeafe);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.3);
   border-radius: var(--radius-c);
   font-size: var(--text-size-1);
   font-family: inherit;
-  color: var(--text-b);
+  color: #1e3a8a;
   overflow: auto;
   resize: none;
   outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
-  box-shadow: var(--shadow-b);
   padding: 1rem;
   width: 100%;
+
 }
 
 .p-EditorComp-generative textarea:focus {
-  border-color: #c084fc;
-  background: linear-gradient(135deg, #f0f9ff, #f9f5ff);
-  box-shadow: 0 0 0 4px rgba(192, 132, 252, 0.2);
+  border-color: var(--primary-a);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .p-EditorComp-generative textarea::placeholder {

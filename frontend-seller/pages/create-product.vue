@@ -439,16 +439,23 @@ const onCreateProduct = async () => {
 }
 
 .grid-row {
-    border-bottom: 1px dashed var(--border-a);
+    background: var(--background-a);
+    border-radius: var(--radius-b);
+    box-shadow: var(--shadow-b);
+    margin-bottom: 1rem;
     padding: 1.5rem;
 }
 
-.grid-left,
 .grid-right {
-    border: 1px solid var(--border-a);
     background: var(--background-a);
     border-radius: var(--radius-b);
+    overflow: hidden;
 }
+
+.grid-right .grid-row{
+    box-shadow: initial;
+}
+
 
 @media (max-width: 768px) {
     .grid {
