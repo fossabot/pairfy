@@ -85,9 +85,20 @@
 <script setup>
 import placeholderImage from '@/assets/placeholder/image.svg'
 
-function getImageSrc(item) {
-    return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
-}
+const tabIndex = ref(0)
+
+definePageMeta({
+  key: () => `products-tab-${tabIndex.value}`
+})
+
+const products = ref([])
+const nextCursor = ref(null)
+const loading = ref(false)
+const page = ref(1)
+const limit = ref(16)
+const productCount = ref(0)
+const hasNextPage = ref(false)
+const hasPrevPage = ref(false)
 
 const dottedMenuOptions = ref([
     { label: "Delete Product", value: "delete" },
@@ -95,7 +106,6 @@ const dottedMenuOptions = ref([
     { label: "Open Page", value: "open" }
 ])
 
-const productCount = ref(0)
 const columns = ref([
     { label: "ID", field: "id" },
     { label: "Sku", field: "sku" },
@@ -109,77 +119,76 @@ const columns = ref([
     { label: "Date", field: "created_at" }
 ])
 
-const products = ref([])
-const nextCursor = ref(null)
-const loading = ref(false)
-const page = ref(1)
-const limit = ref(16)
-
 const range = computed(() => {
     const start = (page.value - 1) * limit.value + 1
     const end = start + products.value.length - 1
     return `${start} - ${end} of ${productCount.value}`
 })
 
-const hasNextPage = ref("a")
-const hasPrevPage = ref(false)
+const { data: initialData } = await useAsyncData('products', () =>
+    $fetch('/api/product/getProducts', {
+        method: 'POST',
+        credentials: 'include',
+        body: {},
+        headers: useRequestHeaders(['cookie'])
+    })
+)
+
+if (initialData.value) {
+    products.value = initialData.value.products
+    nextCursor.value = initialData.value.nextCursor
+    productCount.value = initialData.value.totalCount
+    hasPrevPage.value = initialData.value.hasPrevMore
+    hasNextPage.value = initialData.value.hasNextMore
+}
 
 const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
     loading.value = true
+    try {
+        const data = await $fetch('/api/product/getProducts', {
+            method: 'POST',
+            credentials: 'include',
+            body: {
+                cursor: cursor || undefined,
+                reverseCursor: reverseCursor || undefined
+            }
+        })
 
-    const { data, error } = await useFetch('/api/product/getProducts', {
-        method: 'POST',
-        credentials: 'include',
-        body: {
-            cursor: cursor || undefined,
-            reverseCursor: reverseCursor || undefined
-        },
-        async onResponseError({ response }) {
-            throw new Error(JSON.stringify(response._data.data))
-        }
-    })
-
-    if (data.value) {
-        products.value = data.value.products
-        nextCursor.value = data.value.nextCursor
-        productCount.value = data.value.totalCount
-        hasPrevPage.value = data.value.hasPrevMore
-        hasNextPage.value = data.value.hasNextMore
+        products.value = data.products
+        nextCursor.value = data.nextCursor
+        productCount.value = data.totalCount
+        hasPrevPage.value = data.hasPrevMore
+        hasNextPage.value = data.hasNextMore
+    } catch (err) {
+        console.error('Load error:', err)
+    } finally {
+        loading.value = false
     }
-
-    loading.value = false
-}
-
-const handleOnPrev = async (item) => {
-    if (!hasPrevPage.value) return
-
-    const reverseCursor = `${item.created_at}_${item.id}`
-    await loadProducts({ reverseCursor })
-    if (page.value > 1) page.value -= 1
 }
 
 const handleOnNext = async (item) => {
     if (!hasNextPage.value) return
-
     const cursor = `${item.created_at}_${item.id}`
     await loadProducts({ cursor })
     page.value += 1
 }
 
-const handleDottedMenu = (event, value) => {
-    if (event === 'delete') {
-        beforeDeleteProduct(value)
-        return
-    }
-
-    if (event === 'edit') {
-        editProduct(value.id)
-        return
-    }
+const handleOnPrev = async (item) => {
+    if (!hasPrevPage.value) return
+    const reverseCursor = `${item.created_at}_${item.id}`
+    await loadProducts({ reverseCursor })
+    if (page.value > 1) page.value -= 1
 }
 
+const handleDottedMenu = (event, value) => {
+    if (event === 'delete') return beforeDeleteProduct(value)
+    if (event === 'edit') return editProduct(value.id)
+}
 
-await loadProducts()
+function getImageSrc(item) {
+    return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
+}
+
 </script>
 
 
