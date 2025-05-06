@@ -3,7 +3,7 @@ import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
 import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
-import { ensureBucketExists, minioClient } from "./common/minioClient.js";
+import { ensureBucketExists, minioClient } from "./database/minio.js";
 import { app } from "./app.js";
 
 const main = async () => {

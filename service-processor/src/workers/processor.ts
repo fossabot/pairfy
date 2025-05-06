@@ -1,7 +1,7 @@
 import { Worker } from 'bullmq';
-import { connection } from '../config/redis';
 import { handleImageJob } from '../jobs/imageJob';
 import { handleVideoJob } from '../jobs/videoJob';
+import { connection } from '../database/redis';
 
 new Worker('media-processing', async job => {
   if (job.name === 'image') return await handleImageJob(job);

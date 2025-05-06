@@ -1,9 +1,10 @@
+import express from "express";
 import database from "../database/index.js";
 import { ApiError, createEvent, ERROR_CODES } from "@pairfy/common";
 import type { Request, Response, NextFunction } from "express";
 import { verifyParams } from "../validators/verify-group.js";
 import { internalAuth } from "../utils/internalAuth.js";
-import express from "express";
+
 
 export const verifyGroupMiddlewares: any = [
   express.json({ limit: "1mb", strict: true, type: ["application/json"] }),

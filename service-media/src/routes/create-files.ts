@@ -9,7 +9,7 @@ import {
 import database from "../database/index.js";
 import { Request, Response, RequestHandler, NextFunction } from "express";
 import validatedUpload from "../utils/multer.js";
-import { minioClient } from "../common/minioClient.js";
+import { minioClient } from "../database/minio.js";
 
 const createFilesMiddlewares: RequestHandler[] = [
   sellerRequired,

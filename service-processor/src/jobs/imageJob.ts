@@ -1,5 +1,7 @@
 import getStream from 'get-stream';
-import { minioClient } from '../utils/minio-client';
+import { uploadToSpaces } from '../utils/upload';
+import { resizeImage } from '../utils/image';
+import { minioClient } from '../database/minio';
 
 export async function handleImageJob(job: Job) {
   const { bucket, key, userId } = job.data;

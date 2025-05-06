@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
-import { minioClient } from "../common/minioClient.js";
 import { verifyParams } from "../validators/get-file.js";
 import database from "../database/index.js";
+import { minioClient } from "../database/minio.js";
 
 const allowedMimes = [
   "image/jpeg",

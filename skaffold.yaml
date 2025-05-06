@@ -93,6 +93,16 @@ build:
         manual:
           - src: 'src/**/*.{ts,js,json,vue}'
             dest: .     
+    - image: pairfy/service-processor
+      context: service-processor
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+          - src: 'package.json'
+            dest: .            
 
 deploy:
   statusCheckDeadlineSeconds: 540

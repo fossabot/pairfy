@@ -1,4 +1,4 @@
-import { minioClient } from './minio-client';
+import { minioClient } from "../database/minio";
 
 export async function uploadToSpaces({ bucket, key, body, contentType }: {
   bucket: string,

@@ -38,4 +38,4 @@ RUN npm install --omit=dev --legacy-peer-deps
 
 ENV NODE_ENV=production
 
-CMD ["node", "dist/workers/processorWorker.js"]
+CMD ["node", "dist/workers/processor.js"]

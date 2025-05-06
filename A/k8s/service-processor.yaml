@@ -13,8 +13,8 @@ spec:
         app: service-processor
     spec:
       containers:
-        - name: worker
-          image: pairfy/service-processor:latest
+        - name: service-processor
+          image: pairfy/service-processor
           command: ["node", "dist/workers/processor.js"]
           env:
             - name: MINIO_ACCESS_KEY
