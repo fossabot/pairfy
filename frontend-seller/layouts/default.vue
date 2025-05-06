@@ -43,7 +43,8 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-list' }"
+          <span class="label"
+            :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-list' }"
             v-show="!isCollapsed || isHovering">Products</span>
         </NuxtLink>
 
@@ -64,7 +65,8 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'create-product' }"
+          <span class="label"
+            :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'create-product' }"
             v-show="!isCollapsed || isHovering">Create product</span>
         </NuxtLink>
 
@@ -85,9 +87,30 @@
               </svg>
             </span>
           </div>
-          <span class="label" :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-books' }"
+          <span class="label"
+            :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-books' }"
             v-show="!isCollapsed || isHovering">Product books</span>
         </NuxtLink>
+
+
+        <NuxtLink to="/notifications">
+          <div class="nav-button">
+            <span class="icon" :class="{ selected: currentPath === 'notifications' }">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-bell-icon lucide-bell">
+                <path d="M10.268 21a2 2 0 0 0 3.464 0" />
+                <path
+                  d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
+              </svg>
+            </span>
+          </div>
+          <span class="label"
+            :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'notifications' }"
+            v-show="!isCollapsed || isHovering">Notifications</span>
+        </NuxtLink>
+
+
       </nav>
     </aside>
 
@@ -187,7 +210,7 @@ nav a:hover {
   visibility: initial;
 }
 
-.label.selected{
+.label.selected {
   color: var(--primary-a);
 }
 
@@ -212,5 +235,4 @@ nav a:hover {
 .layout-top-image img {
   width: 2rem;
 }
-
 </style>
