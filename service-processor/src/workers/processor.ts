@@ -2,6 +2,9 @@ import { Worker } from 'bullmq';
 import { handleImageJob } from '../jobs/imageJob.js';
 import { handleVideoJob } from '../jobs/videoJob.js';
 import { connection } from '../database/redis.js';
+import { main } from '../index.js';
+
+main();
 
 new Worker('media-processing', async job => {
   if (job.name === 'image') return await handleImageJob(job);

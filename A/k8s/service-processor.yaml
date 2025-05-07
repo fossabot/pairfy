@@ -18,7 +18,7 @@ spec:
           command: ["node", "dist/workers/processor.js"]
           env:
             - name: REDIS_HOST
-              value: redis-processor.default.svc.cluster.local
+              value: service-processor-redis.default.svc.cluster.local
             - name : MINIO_HOST_URL
               value: minio
             - name : MINIO_PORT

@@ -159,3 +159,10 @@ portForward:
     namespace: default 
     port: 31311
     localPort: 31311
+    
+  - resourceType: service
+    resourceName: service-processor-redis
+    namespace: default
+    port: 6379
+    localPort: 6379
+  

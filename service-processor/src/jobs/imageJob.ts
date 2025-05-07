@@ -1,20 +1,19 @@
-import { uploadToSpaces } from '../utils/upload.js';
-import { resizeImage } from '../utils/image.js';
-import { minioClient } from '../database/minio.js';
-import { logger } from '@pairfy/common';
-import { Readable } from 'stream';
-import { Job } from 'bullmq';
+import { uploadToSpaces } from "../utils/upload.js";
+import { resizeImage } from "../utils/image.js";
+import { minioClient } from "../database/minio.js";
+import { logger } from "@pairfy/common";
+import { Readable } from "stream";
+import { Job } from "bullmq";
 
 export const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
   const chunks: Buffer[] = [];
 
   for await (const chunk of stream) {
-    chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
   }
 
   return Buffer.concat(chunks);
 };
-
 
 export async function handleImageJob(job: Job) {
   try {
@@ -25,25 +24,33 @@ export async function handleImageJob(job: Job) {
     const resized = await resizeImage(buffer);
 
     const urls: Record<string, string> = {};
-    const baseName = key.split('/').pop()?.split('.')[0] || 'image';
+    const baseName = key.split("/").pop()?.split(".")[0] || "image";
 
     for (const [size, buf] of Object.entries(resized)) {
       const destKey = `products/images/${userId}/${baseName}-${size}.webp`;
 
       urls[size] = await uploadToSpaces({
-        bucket: 'media',
+        bucket: "media",
         key: destKey,
         body: buf,
-        contentType: 'image/webp',
+        contentType: "image/webp",
       });
     }
 
     // createEvent(urls)
 
-    return { status: 'done', uploaded: urls };
-
+    return { status: "done", uploaded: urls };
   } catch (err) {
-    logger.error(`Error processing job ${job.id}:`, err);
-    throw err; 
+    logger.error(
+      {
+        err: err instanceof Error ? err : new Error(String(err)),
+        jobId: job.id,
+        jobName: job.name,
+        jobData: job.data,
+      },
+      `❌ Failed to process job`
+    );
+
+    throw err;
   }
 }

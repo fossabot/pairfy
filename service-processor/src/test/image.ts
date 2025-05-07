@@ -6,7 +6,7 @@ const mediaQueue = new Queue('media-processing', { connection });
 (async () => {
   await mediaQueue.add('image', {
     bucket: 'media',
-    key: 'uploads/test-product.jpg',
+    key: 'test.jpg',
     userId: '123456',
   }, {
     attempts: 5,
