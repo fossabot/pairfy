@@ -1,5 +1,6 @@
-import  database  from "../../database/client.js";
-import { isProcessedEvent, consumedEvent, logger } from '@pairfy/common'
+import database from "../../database/client.js";
+import { isProcessedEvent, consumedEvent, logger } from "@pairfy/common";
+import { processFile } from "./queues/media.js";
 
 const CreateFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -9,9 +10,17 @@ const CreateFile = async (event: any, seq: number): Promise<boolean> => {
   try {
     connection = await database.client.getConnection();
 
-    const isProcessed = await isProcessedEvent(connection, event.id);
+    const processed = await isProcessedEvent(connection, event.id);
 
-    if (isProcessed) {
+    if (processed) {
+      logger.error({
+        timestamp: new Date().toISOString(),
+        service: "service-processor-consumer",
+        event: "event.repeated",
+        message: `event repeated`,
+        eventId: event.id,
+      });
+
       return Promise.resolve(true);
     }
 
@@ -21,8 +30,11 @@ const CreateFile = async (event: any, seq: number): Promise<boolean> => {
 
     ///////////////////////////////////////////////////////
 
+    const processedFile = await processFile(dataParsed);
 
-    console.log("FILE PROCESSED", dataParsed);
+    if (!processedFile) {
+      throw new Error("processFileError");
+    }
 
     ///////////////////////////////////////////////////////
 
@@ -31,8 +43,16 @@ const CreateFile = async (event: any, seq: number): Promise<boolean> => {
     await connection.commit();
 
     response = Promise.resolve(true);
-  } catch (err: any) {
-    logger.error(err);
+  } catch (error: any) {
+    logger.error({
+      timestamp: new Date().toISOString(),
+      service: "service-processor-consumer",
+      event: "event.error",
+      message: `event error`,
+      eventId: event.id,
+      error: error.message,
+      stack: error.stack
+    });
 
     if (connection) await connection.rollback();
 
