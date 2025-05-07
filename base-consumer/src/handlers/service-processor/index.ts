@@ -42,6 +42,14 @@ const CreateFile = async (event: any, seq: number): Promise<boolean> => {
 
     await connection.commit();
 
+    logger.info({
+      timestamp: new Date().toISOString(),
+      service: "service-processor-consumer",
+      event: "event.consumed",
+      message: 'event consumed',
+      eventId: event.id
+    })
+
     response = Promise.resolve(true);
   } catch (error: any) {
     logger.error({
