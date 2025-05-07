@@ -42,7 +42,6 @@ export async function processFile(event: MediaEvent): Promise<boolean> {
     );
 
     logger.info({
-      timestamp: new Date().toISOString(),
       service: "service-processor-consumer",
       event: "job.queued",
       message: "Job processed successfully",
@@ -54,7 +53,6 @@ export async function processFile(event: MediaEvent): Promise<boolean> {
     return true;
   } catch (error: any) {
     logger.error({
-      timestamp: new Date().toISOString(),
       service: "service-processor-consumer",
       event: "job.failed",
       message: "Job failed during processing",

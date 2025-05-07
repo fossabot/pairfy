@@ -7,7 +7,10 @@ exports.logger = void 0;
 const pino_1 = __importDefault(require("pino"));
 exports.logger = (0, pino_1.default)({
     level: 'info',
-    timestamp: pino_1.default.stdTimeFunctions.isoTime,
+    timestamp: () => {
+        const now = new Date();
+        return `,"timestamp":"${now.toISOString()}","time":"${now.toISOString()}","timestamp_unix_ms":${now.getTime()}`;
+    },
     formatters: {
         level: (label) => ({ level: label })
     },
