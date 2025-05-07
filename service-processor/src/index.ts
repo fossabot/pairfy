@@ -13,6 +13,8 @@ export function main() {
     if (missing.length > 0) {
       throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
     }
+
+    console.log("Online")
   }
   
 

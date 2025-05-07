@@ -3,8 +3,8 @@ import path from 'path';
 import ffmpeg from 'fluent-ffmpeg';
 import { createReadStream, existsSync, unlinkSync } from 'fs';
 import { logger } from '@pairfy/common';
-import { minioClient } from '../database/minio';
-import { uploadToSpaces } from '../utils/upload';
+import { minioClient } from '../database/minio.js';
+import { uploadToSpaces } from '../utils/upload.js';
 import { Readable } from 'stream';
 import { Job } from 'bullmq';
 
@@ -47,7 +47,6 @@ export async function handleVideoJob(job: Job) {
 
     await fs.mkdir(tempDir, { recursive: true });
 
-    // Descargar desde MinIO
     const inputStream = await minioClient.client.getObject(bucket, key);
     const videoBuffer = await streamToBuffer(inputStream);
     await fs.writeFile(localInputPath, videoBuffer);

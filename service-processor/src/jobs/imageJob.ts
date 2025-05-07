@@ -1,6 +1,6 @@
-import { uploadToSpaces } from '../utils/upload';
-import { resizeImage } from '../utils/image';
-import { minioClient } from '../database/minio';
+import { uploadToSpaces } from '../utils/upload.js';
+import { resizeImage } from '../utils/image.js';
+import { minioClient } from '../database/minio.js';
 import { logger } from '@pairfy/common';
 import { Readable } from 'stream';
 import { Job } from 'bullmq';

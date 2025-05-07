@@ -1,3 +1,7 @@
-import Redis from 'ioredis';
+import type { RedisOptions } from 'ioredis';
 
-export const connection = new Redis('redis://service-processor-redis.default.svc.cluster.local:6379');
+export const connection: RedisOptions = {
+  host: 'service-processor-redis.default.svc.cluster.local',
+  port: 6379,
+  maxRetriesPerRequest: null,
+};

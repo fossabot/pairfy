@@ -1,5 +1,5 @@
 import type { Readable } from 'stream';
-import { minioClient } from '../database/minio';
+import { minioClient } from '../database/minio.js';
 
 export async function uploadToSpaces({ bucket, key, body, contentType }: {
   bucket: string,
