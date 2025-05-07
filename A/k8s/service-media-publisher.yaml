@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-media-publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: service-media-publisher
+  template:
+    metadata:
+      labels:
+        role: service-media-publisher
+    spec:
+      containers:
+        - name: service-media-publisher
+          image: pairfy/base-publisher
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name                                                             
+            - name: POD_TIMEOUT
+              value: '120000'   
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master     
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                            
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password
+            - name: DATABASE_NAME
+              value: service_media                 
+            - name: DATABASE_USER
+              value: marketplace                                                                                                                                                                         
+            - name: STREAM_NAME
+              value: service-media
+            - name: STREAM_SUBJECT
+              value: service-media.*              
+            - name: QUERY_INTERVAL
+              value: "30000"    
+            - name: QUERY_LIMIT
+              value: "500"    
+                                             
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"       

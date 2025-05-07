@@ -151,6 +151,7 @@ if (import.meta.server) {
 }
 
 .sidebar {
+  border-top-right-radius: var(--radius-c);
   border-right: 1px solid var(--border-a);
   background: var(--background-a);
   color: var(--text-w);

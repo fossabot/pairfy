@@ -15,7 +15,6 @@ spec:
       containers:
         - name: service-processor
           image: pairfy/service-processor
-          command: ["node", "dist/workers/processor.js"]
           env:
             - name: REDIS_HOST
               value: service-processor-redis.default.svc.cluster.local
@@ -29,3 +28,22 @@ spec:
               value: "minioadmin"
             - name : MINIO_SECRET_KEY
               value: "minioadmin123" 
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password   
+            - name: DATABASE_NAME
+              value: service_processor        
+            - name: DATABASE_USER
+              value: marketplace                

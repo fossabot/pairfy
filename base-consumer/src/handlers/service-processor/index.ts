@@ -1,8 +1,7 @@
 import  database  from "../../database/client.js";
-import { sendEmail } from "./send-email.js";
 import { isProcessedEvent, consumedEvent, logger } from '@pairfy/common'
 
-const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
+const CreateFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
 
   let connection = null;
@@ -22,9 +21,8 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
 
     ///////////////////////////////////////////////////////
 
-    await sendEmail(dataParsed.type, dataParsed.email, dataParsed);
 
-    console.log("EMAIL_SEND");
+    console.log("FILE PROCESSED", dataParsed);
 
     ///////////////////////////////////////////////////////
 
@@ -47,7 +45,7 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
 };
 
 const handlers: any = {
-  CreateEmail,
+  CreateFile,
 };
 
 export const processEvent = (message: any) => {

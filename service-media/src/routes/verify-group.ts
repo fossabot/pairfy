@@ -80,7 +80,7 @@ export const verifyGroupHandler = async (
         connection,
         timestamp,
         "service-media",
-        "ProductFile",
+        "CreateFile",
         JSON.stringify(file),
         agent_id
       );
