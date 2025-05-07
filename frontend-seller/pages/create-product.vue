@@ -446,17 +446,6 @@ const onCreateProduct = async () => {
     padding: 1.5rem;
 }
 
-.grid-right {
-    background: var(--background-a);
-    border-radius: var(--radius-b);
-    overflow: hidden;
-}
-
-.grid-right .grid-row{
-    box-shadow: initial;
-}
-
-
 @media (max-width: 768px) {
     .grid {
         grid-template-columns: 1fr;
