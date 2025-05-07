@@ -153,7 +153,7 @@ if (import.meta.server) {
 .sidebar {
   border-top-right-radius: var(--radius-c);
   border-right: 1px solid var(--border-a);
-  background: var(--background-a);
+  background: var(--primary-b);
   color: var(--text-w);
   position: relative;
   overflow: hidden;
@@ -169,14 +169,14 @@ nav {
 nav a {
   font-size: var(--text-size-1);
   text-decoration: none;
-  color: var(--text-b);
+  color: var(--text-w);
   align-items: center;
   font-weight: 500;
   display: flex;
 }
 
 nav a:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .nav-button {
@@ -198,9 +198,9 @@ nav a:hover {
 }
 
 .icon.selected {
-  background: var(--background-b);
+  background: rgba(255, 255, 255, 0.1);
   transition: 0.2 ease-in-out;
-  color: var(--primary-a);
+  color: var(--orange-a);
   border-radius: 50%;
 }
 
@@ -212,7 +212,7 @@ nav a:hover {
 }
 
 .label.selected {
-  color: var(--primary-a);
+  color: var(--orange-a);
 }
 
 .label.collapsed {
