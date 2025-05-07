@@ -52,7 +52,9 @@ kind: Service
 metadata:
   name: minio
 spec:
-  type: ClusterIP
+  selector:
+    app: minio
+  type: LoadBalancer
   ports:
     - port: 9000
       targetPort: 9000
@@ -60,5 +62,4 @@ spec:
     - port: 9001
       targetPort: 9001
       name: console
-  selector:
-    app: minio
+
