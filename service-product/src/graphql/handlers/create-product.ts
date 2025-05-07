@@ -100,7 +100,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       postal: params.postal,
       discount: params.discount,
       discount_value: 0,
-      discount_percent: params.discount_percent,   ///////////////
+      discount_percent: params.discount_percent, ///////////////
       created_at: timestamp,
       updated_at: timestamp,
       schema_v: 0,
@@ -143,14 +143,10 @@ export const createProduct = async (_: any, args: any, context: any) => {
   } catch (err: any) {
     console.error(err);
 
-    if (connection) {
-      await connection.rollback();
-    }
+    if (connection) await connection.rollback();
 
     throw err;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
