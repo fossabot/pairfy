@@ -4,61 +4,37 @@ import {
   RetentionPolicy,
   StorageType,
 } from "@nats-io/jetstream";
-import { catchError, errorEvents, logger, sleep } from "./utils/index.js";
+import { catchError, errorEvents, sleep } from "./utils/index.js";
 import { database } from "./database/client.js";
 import { connect } from "@nats-io/transport-node";
+import { logger } from "@pairfy/common";
 
 const main = async () => {
   try {
-    if (!process.env.POD_NAME) {
-      throw new Error("POD_NAME error");
-    }
+    const requiredEnvVars = [
+      "POD_NAME",
+      "DATABASE_HOST",
+      "DATABASE_PORT",
+      "DATABASE_PASSWORD",
+      "DATABASE_NAME",
+      "DATABASE_USER",
+      "STREAM_NAME",
+      "STREAM_SUBJECT",
+      "QUERY_INTERVAL",
+      "QUERY_LIMIT",
+    ];
 
-    if (!process.env.POD_TIMEOUT) {
-      throw new Error("POD_TIMEOUT error");
-    }
-
-    if (!process.env.DATABASE_HOST) {
-      throw new Error("DATABASE_HOST error");
-    }
-
-    if (!process.env.DATABASE_PORT) {
-      throw new Error("DATABASE_PORT error");
-    }
-
-    if (!process.env.DATABASE_PASSWORD) {
-      throw new Error("DATABASE_PASSWORD error");
-    }
-
-    if (!process.env.DATABASE_NAME) {
-      throw new Error("DATABASE_NAME error");
-    }
-
-    if (!process.env.DATABASE_USER) {
-      throw new Error("DATABASE_USER error");
-    }
-
-    if (!process.env.STREAM_NAME) {
-      throw new Error("STREAM_NAME error");
-    }
-
-    if (!process.env.STREAM_SUBJECT) {
-      throw new Error("STREAM_SUBJECT error");
-    }
-
-    if (!process.env.QUERY_INTERVAL) {
-      throw new Error("QUERY_INTERVAL error");
-    }
-
-    if (!process.env.QUERY_LIMIT) {
-      throw new Error("QUERY_LIMIT error");
+    for (const key of requiredEnvVars) {
+      if (!process.env[key]) {
+        throw new Error(`${key} error`);
+      }
     }
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
 
-    const databasePort = parseInt(process.env.DATABASE_PORT);
+    const databasePort = parseInt(process.env.DATABASE_PORT as string, 10);
 
-    const queryLimit = parseInt(process.env.QUERY_LIMIT);
+    const queryLimit = parseInt(process.env.QUERY_LIMIT as string, 10);
 
     database.connect({
       host: process.env.DATABASE_HOST,
@@ -92,7 +68,7 @@ const main = async () => {
 
     await jetStreamManager.streams.add({
       name: process.env.STREAM_NAME,
-      subjects: [process.env.STREAM_SUBJECT],
+      subjects: [process.env.STREAM_SUBJECT as string],
       retention: RetentionPolicy.Limits,
       storage: StorageType.File,
       max_age: 0,
@@ -103,16 +79,14 @@ const main = async () => {
       num_replicas: 3,
     });
 
-    await jetStreamManager.streams.info(process.env.STREAM_NAME);
+    await jetStreamManager.streams.info(process.env.STREAM_NAME as string);
 
     const jetStream = jetStreamManager.jetstream();
 
     let connection: any = null;
 
     while (true) {
-      console.log("Iteration");
-
-      await sleep(parseInt(process.env.QUERY_INTERVAL));
+      await sleep(parseInt(process.env.QUERY_INTERVAL as string, 10));
 
       try {
         connection = await database.client.getConnection();
@@ -127,15 +101,18 @@ const main = async () => {
           [false, queryLimit]
         );
 
-        if (findEvents.length < 1) continue;
+        if (findEvents.length < 1) {
+          console.log("🔍 Empty event queue");
+          continue;
+        }
 
         console.log("Publishing: " + findEvents.length);
 
         for (const EVENT of findEvents) {
-          /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
           try {
             await connection.beginTransaction();
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             const [updateEvent] = await connection.execute(
               "UPDATE events SET published = ? WHERE id = ?",
@@ -162,25 +139,27 @@ const main = async () => {
               throw new Error("eventPublishError");
             }
 
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
             await connection.commit();
           } catch (err) {
             logger.error(err);
 
             continue;
           }
-
-          /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
-      } catch (err: any) {
-        logger.error(err);
+      } catch (error: any) {
+        logger.error({
+          service: `${process.env.STREAM_NAME as string}-publisher`,
+          event: "publisher.error",
+          message: "publisher error",
+          error: error.message,
+          stack: error.stack,
+        });
 
-        if (connection) {
-          await connection.rollback();
-        }
+        if (connection) await connection.rollback();
       } finally {
-        if (connection) {
-          connection.release();
-        }
+        if (connection) connection.release();
       }
     }
   } catch (err) {
