@@ -31,6 +31,7 @@ export async function processFile(event: MediaEvent): Promise<boolean> {
         file: event,
       },
       {
+        jobId: event.id,
         attempts: 5,
         backoff: {
           type: "exponential",

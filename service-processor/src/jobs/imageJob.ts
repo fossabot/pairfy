@@ -1,7 +1,7 @@
 import { uploadToSpaces } from "../utils/upload.js";
 import { resizeImage } from "../utils/image.js";
 import { minioClient } from "../database/minio.js";
-import { logger } from "@pairfy/common";
+import { createEvent, logger } from "@pairfy/common";
 import { Readable } from "stream";
 import { Job } from "bullmq";
 
@@ -17,38 +17,59 @@ export const streamToBuffer = async (stream: Readable): Promise<Buffer> => {
 
 export async function handleImageJob(job: Job) {
   try {
-    const { bucket, key, userId } = job.data;
+    const { bucket, file } = job.data;
 
-    const stream = await minioClient.client.getObject(bucket, key);
+    const {  id, media_group_id, filename, media_path, agent_id } = file;
+
+    const stream = await minioClient.client.getObject(bucket, media_path);
     const buffer = await streamToBuffer(stream);
-    const resized = await resizeImage(buffer);
+    const resized = await resizeImage(buffer); 
 
     const urls: Record<string, string> = {};
-    const baseName = key.split("/").pop()?.split(".")[0] || "image";
 
     for (const [size, buf] of Object.entries(resized)) {
-      const destKey = `products/images/${userId}/${baseName}-${size}.webp`;
 
-      urls[size] = await uploadToSpaces({
-        bucket: "media",
+      const originalName = filename.split(".")[0];
+
+      const destKey = `groups/${media_group_id}/${id}-${originalName}-${size}.webp`;
+
+      const url = await uploadToSpaces({
+        bucket,
         key: destKey,
         body: buf,
         contentType: "image/webp",
       });
+
+      urls[size] = url;
     }
 
-    // createEvent(urls)
+    console.log(urls)
+
+    const timestamp = Date.now()
+
+    const payload = {
+      file,
+      urls
+    }
+    await createEvent(
+      connection,
+      timestamp,
+      "service-processor",
+      "FileProcessed",
+      JSON.stringify(payload),
+      agent_id
+    );
 
     return { status: "done", uploaded: urls };
   } catch (err) {
     logger.error(
       {
-        err: err instanceof Error ? err : new Error(String(err)),
+        error: err instanceof Error ? err : new Error(String(err)),
         jobId: job.id,
         jobName: job.name,
         jobData: job.data,
       },
-      `❌ Failed to process job`
+      `❌ Failed to process image job`
     );
 
     throw err;
