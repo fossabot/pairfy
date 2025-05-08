@@ -19,7 +19,7 @@
     </Transition>
 
     <div v-if="enabled" class="final-price">
-      Final Price:
+      New price:
       <span class="final-price-value">${{ discountedPrice.toFixed(2) }}</span>
     </div>
   </div>
@@ -159,15 +159,17 @@ const discountedPrice = computed(() => {
 }
 
 .final-price {
-  font-size: var(--text-size-);
+  font-size: var(--text-size-1);
+  color: var(--text-b);
   margin-top: 0.75rem;
   font-weight: 500;
 }
 
 .final-price-value {
-  font-weight: 700;
   color: var(--primary-a, #2563eb);
   margin-left: 0.25rem;
+  color: var(--text-a);
+  font-weight: 700;
 }
 
 .fade-enter-active,
