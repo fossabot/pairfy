@@ -1,5 +1,6 @@
 import database from "../../database/client.js";
 import { isProcessedEvent, consumedEvent, logger } from "@pairfy/common";
+import { insertMedia } from "./insertMedia.js";
 
 const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -29,7 +30,38 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
 
     ///////////////////////////////////////////////////////
 
+    const timestamp = Date.now();
+
     console.log("CreateMedia", dataParsed);
+
+    const { file, urls } = dataParsed;
+
+    const mediaScheme = {
+      id: file.id,
+      media_group_id: file.media_group_id,
+      agent_id: file.agent_id,
+      product_id: file.product_id,
+      mime_type: file.mime_type,
+      position: file.position,
+      alt_text: "Zapatillas deportivas negras con suela blanca",
+      resolutions: {
+        thumbnail: urls.thumbnail,
+        small: urls.small,
+        medium: urls.medium,
+        large: urls.large
+      },
+      created_at: timestamp,
+      updated_at: timestamp,
+      schema_v: 0,
+    };
+    
+    console.log("CreateMedia2", mediaScheme);
+
+    const [mediaCreated] = await insertMedia(connection, mediaScheme);
+
+    if (mediaCreated.affectedRows !== 1) {
+      throw new Error("insertMediaError");
+    }
 
     ///////////////////////////////////////////////////////
 

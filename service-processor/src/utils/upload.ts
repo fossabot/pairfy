@@ -20,5 +20,5 @@ export async function uploadToSpaces({ bucket, key, body, contentType }: {
   });
   
 
-  return `https://${bucket}.nyc3.digitaloceanspaces.com/${key}`;
+  return key;
 }

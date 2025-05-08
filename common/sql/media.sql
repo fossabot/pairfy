@@ -1,9 +1,10 @@
 CREATE TABLE IF NOT EXISTS media (
   id VARCHAR(100) PRIMARY KEY,
+  media_group_id VARCHAR(100) NOT NULL, 
+  agent_id VARCHAR(100) NOT NULL,
   product_id varchar(100) not null,
-  type ENUM('image', 'video') NOT NULL,
-  is_primary BOOLEAN DEFAULT FALSE,
-  order_index INT DEFAULT 0,
+  mime_type VARCHAR(50), 
+  position INT NOT NULL,
   alt_text VARCHAR(255),
   resolutions JSON NOT NULL, 
   created_at BIGINT UNSIGNED NOT NULL,
