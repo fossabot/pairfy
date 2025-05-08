@@ -1,3 +1,4 @@
+import database from "../../database/client.js";
 import {
   ApiGraphQLError,
   ERROR_CODES,
@@ -9,7 +10,6 @@ import {
   sanitizeTiptapContent,
   sanitizeArrayGraphQL,
 } from "@pairfy/common";
-import database from "../../database/client.js";
 import { createProductSchema } from "../../validators/create-product.js";
 import { checkFileGroup } from "../../utils/verify-group.js";
 
@@ -32,13 +32,25 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    const params = validateParams.data;
+    args.createProductInput.description = sanitizeTiptapContent(
+      args.createProductInput.description
+    );
 
-    console.log(params);
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    const params = validateParams.data;
 
     const SELLER = context.sellerData;
 
+    const timestamp = Date.now();
+
+    const productId = getProductId();
+
+    const productGroupId = productId;
+
     connection = await database.client.getConnection();
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
     const isSkuRepeated = await findProductBySku(
       connection,
@@ -52,17 +64,20 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    const isValidFiles = await checkFileGroup(
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    const isValidGroup = await checkFileGroup(
       "http://service-media.default.svc.cluster.local:8003/api/media/verify-group",
       {
         agent_id: SELLER.id,
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
+        product_id: productId,
       },
       "fakesecret" ////
     );
 
-    if (!isValidFiles) {
+    if (!isValidGroup) {
       throw new ApiGraphQLError(409, "Inconsistency of image ids.", {
         code: ERROR_CODES.CONFLICT,
       });
@@ -72,15 +87,9 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     /////////////////////////////////////////////////////////////////////// START TRANSACTION
 
-    const timestamp = Date.now();
-
-    const productId = getProductId();
-
-    const groupId = productId;
-
     const productScheme = {
       id: productId,
-      group_id: groupId,
+      group_id: productGroupId,
       media_group_id: params.media_group_id,
       media_position: params.file_ids,
       seller_id: SELLER.id,
@@ -89,7 +98,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       sku: params.sku,
       model: params.model,
       brand: params.brand,
-      description: sanitizeTiptapContent(params.description),
+      description: params.description,
       category: params.category,
       bullet_list: params.bullet_list,
       color: params.color,
@@ -99,8 +108,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
       city: params.city,
       postal: params.postal,
       discount: params.discount,
-      discount_value: 0,
-      discount_percent: params.discount_percent, ///////////////
+      discount_value: 0, ///////////////
+      discount_percent: params.discount_percent,
       created_at: timestamp,
       updated_at: timestamp,
       schema_v: 0,

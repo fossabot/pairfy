@@ -5,7 +5,6 @@ import type { Request, Response, NextFunction } from "express";
 import { verifyParams } from "../validators/verify-group.js";
 import { internalAuth } from "../utils/internalAuth.js";
 
-
 export const verifyGroupMiddlewares: any = [
   express.json({ limit: "1mb", strict: true, type: ["application/json"] }),
   internalAuth,
@@ -28,7 +27,8 @@ export const verifyGroupHandler = async (
       });
     }
 
-    const { media_group_id, agent_id, file_ids } = validateParams.data;
+    const { product_id, media_group_id, agent_id, file_ids } =
+      validateParams.data;
 
     connection = await database.client.getConnection();
 
@@ -76,6 +76,8 @@ export const verifyGroupHandler = async (
     const pendingFiles = rows.filter((file: any) => file.status === "pending");
 
     for (const file of pendingFiles) {
+      file.product_id = product_id;
+
       await createEvent(
         connection,
         timestamp,

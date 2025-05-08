@@ -16,6 +16,7 @@ interface MediaEvent {
   media_path: string;
   status: string;
   created_at: number;
+  product_id: string;
 }
 
 export async function processFile(event: MediaEvent): Promise<boolean> {
