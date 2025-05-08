@@ -1,6 +1,5 @@
 import database from "../../database/client.js";
-import { isProcessedEvent, consumedEvent, logger } from "@pairfy/common";
-import { insertMedia } from "./insertMedia.js";
+import { isProcessedEvent, consumedEvent, logger, insertMedia } from "@pairfy/common";
 
 const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -32,8 +31,6 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
 
     const timestamp = Date.now();
 
-    console.log("CreateMedia", dataParsed);
-
     const { file, urls } = dataParsed;
 
     const mediaScheme = {
@@ -55,8 +52,6 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       schema_v: 0,
     };
     
-    console.log("CreateMedia2", mediaScheme);
-
     const [mediaCreated] = await insertMedia(connection, mediaScheme);
 
     if (mediaCreated.affectedRows !== 1) {

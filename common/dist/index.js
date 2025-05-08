@@ -44,3 +44,4 @@ __exportStar(require("./tiptapValidator"), exports);
 __exportStar(require("./sanitizeArrayGraphQL"), exports);
 __exportStar(require("./categories"), exports);
 __exportStar(require("./minio"), exports);
+__exportStar(require("./insertMedia"), exports);
