@@ -30,7 +30,7 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
     await connection.query(`USE \`${DATABASE_NAME}\`;`);
     console.log(`✅ Database '${DATABASE_NAME}' verified and selected.`);
 
-    const sqlFiles: string[] = ['events.sql', 'products.sql', 'media.sql'];
+    const sqlFiles: string[] = ['events.sql', 'products.sql', 'media.sql', 'processed.sql'];
 
     for (const file of sqlFiles) {
       console.log(`📄 Executing ${file}...`);

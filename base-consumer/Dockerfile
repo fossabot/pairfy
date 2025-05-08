@@ -9,6 +9,7 @@ COPY package.json .
 COPY src/handlers/service-email/package.json ./src/handlers/service-email/
 COPY src/handlers/service-query/package.json ./src/handlers/service-query/
 COPY src/handlers/service-processor/package.json ./src/handlers/service-processor/
+COPY src/handlers/service-product/package.json ./src/handlers/service-product/
 
 RUN npm install --verbose --no-package-lock
 

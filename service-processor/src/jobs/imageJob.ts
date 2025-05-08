@@ -65,7 +65,7 @@ export async function handleImageJob(job: Job) {
       connection,
       timestamp,
       "service-processor",
-      "FileProcessed",
+      "ProcessedFile",
       JSON.stringify(payload),
       agent_id
     );
