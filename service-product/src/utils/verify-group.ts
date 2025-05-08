@@ -5,6 +5,7 @@ interface MediaPayload {
   media_group_id: string;
   file_ids: string[];
   product_id: string;
+  thumbnail_id: string;
 }
 
 export async function checkFileGroup(

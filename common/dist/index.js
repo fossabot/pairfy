@@ -46,3 +46,4 @@ __exportStar(require("./categories"), exports);
 __exportStar(require("./minio"), exports);
 __exportStar(require("./insertMedia"), exports);
 __exportStar(require("./findMediaById"), exports);
+__exportStar(require("./updateProduct"), exports);

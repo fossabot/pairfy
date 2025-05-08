@@ -5,7 +5,9 @@ import {
   logger,
   insertMedia,
   createEvent,
-  findMediaById
+  findMediaById,
+  findProductById,
+  updateProduct,
 } from "@pairfy/common";
 
 const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
@@ -65,6 +67,19 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       throw new Error("insertMediaError");
     }
 
+    if (file.thumbnail) {
+      
+      const product = await findProductById(connection, mediaScheme.product_id);
+
+      if (product) {
+        await updateProduct(connection, product.id, product.schema_v, {
+          thumbnail_url: urls.thumbnail,
+          schema_v: product.schema_v + 1,
+        });
+      }
+
+    }
+
     const findMedia = await findMediaById(connection, mediaScheme.id);
 
     await createEvent(
@@ -87,7 +102,7 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       event: "event.consumed",
       message: "event consumed",
       eventId: event.id,
-      mediaId: mediaScheme.id
+      mediaId: mediaScheme.id,
     });
 
     response = Promise.resolve(true);

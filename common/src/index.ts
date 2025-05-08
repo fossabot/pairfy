@@ -30,3 +30,4 @@ export * from "./categories";
 export * from "./minio";
 export * from "./insertMedia";
 export * from "./findMediaById";
+export * from "./updateProduct";

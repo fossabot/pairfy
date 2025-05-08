@@ -11,7 +11,7 @@ const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u;
 const postalRegex = /^[\p{L}\p{N}\s\-]+$/u;
 const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u;
 
-export const createProductSchema = z.object({
+export const verifyParams = z.object({
   name: z
     .string()
     .min(3)

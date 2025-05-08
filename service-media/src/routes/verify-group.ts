@@ -27,7 +27,7 @@ export const verifyGroupHandler = async (
       });
     }
 
-    const { product_id, media_group_id, agent_id, file_ids } =
+    const { product_id, media_group_id, agent_id, file_ids, thumbnail_id } =
       validateParams.data;
 
     connection = await database.client.getConnection();
@@ -77,6 +77,8 @@ export const verifyGroupHandler = async (
 
     for (const file of pendingFiles) {
       file.product_id = product_id;
+
+      file.thumbnail =  file.id === thumbnail_id 
 
       await createEvent(
         connection,

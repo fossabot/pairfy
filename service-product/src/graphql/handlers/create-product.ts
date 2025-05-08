@@ -10,7 +10,7 @@ import {
   sanitizeTiptapContent,
   sanitizeArrayGraphQL,
 } from "@pairfy/common";
-import { createProductSchema } from "../../validators/create-product.js";
+import { verifyParams } from "../../validators/create-product.js";
 import { checkFileGroup } from "../../utils/verify-group.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
@@ -21,7 +21,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       args.createProductInput.bullet_list
     );
 
-    const validateParams = createProductSchema.safeParse(
+    const validateParams = verifyParams.safeParse(
       args.createProductInput
     );
 
@@ -75,6 +75,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
         product_id: productId,
+        thumbnail_id: params.file_ids[0]
       },
       "fakesecret" ////
     );
