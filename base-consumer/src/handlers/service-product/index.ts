@@ -1,5 +1,12 @@
 import database from "../../database/client.js";
-import { isProcessedEvent, consumedEvent, logger, insertMedia } from "@pairfy/common";
+import {
+  isProcessedEvent,
+  consumedEvent,
+  logger,
+  insertMedia,
+  createEvent,
+  findMediaById
+} from "@pairfy/common";
 
 const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
@@ -45,18 +52,29 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
         thumbnail: urls.thumbnail,
         small: urls.small,
         medium: urls.medium,
-        large: urls.large
+        large: urls.large,
       },
       created_at: timestamp,
       updated_at: timestamp,
       schema_v: 0,
     };
-    
+
     const [mediaCreated] = await insertMedia(connection, mediaScheme);
 
     if (mediaCreated.affectedRows !== 1) {
       throw new Error("insertMediaError");
     }
+
+    const findMedia = await findMediaById(connection, mediaScheme.id);
+
+    await createEvent(
+      connection,
+      timestamp,
+      "service-product",
+      "CreateMedia",
+      JSON.stringify(findMedia),
+      file.agent_id
+    );
 
     ///////////////////////////////////////////////////////
 
@@ -69,6 +87,7 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       event: "event.consumed",
       message: "event consumed",
       eventId: event.id,
+      mediaId: mediaScheme.id
     });
 
     response = Promise.resolve(true);

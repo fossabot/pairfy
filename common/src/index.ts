@@ -29,3 +29,4 @@ export * from "./sanitizeArrayGraphQL";
 export * from "./categories";
 export * from "./minio";
 export * from "./insertMedia";
+export * from "./findMediaById";
