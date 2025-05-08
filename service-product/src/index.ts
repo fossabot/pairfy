@@ -1,10 +1,10 @@
-import express from "express";
 import http from "http";
+import express from "express";
+import database from "./database/client.js";
 import cookieSession from "cookie-session";
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
-import database from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { catchError } from "./utils/index.js";
@@ -69,18 +69,26 @@ const main = async () => {
       typeDefs,
       resolvers,
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-
+    
       formatError: (formattedError, error) => {
-        let original: unknown = error;
-
+        let originalError = error;
+    
         if (error instanceof GraphQLError && error.originalError) {
-          original = error.originalError;
+          originalError = error.originalError;
         }
-
-        return normalizeGraphError(original);
+    
+        logger.error({
+          service: 'service-product',
+          event: 'graphql.error',
+          message: 'service-product graphql error',
+          error: formattedError.message,
+          stack: originalError instanceof Error ? originalError.stack : undefined,
+        });
+    
+        return normalizeGraphError(originalError);
       },
     });
-
+    
     const databasePort = parseInt(process.env.DATABASE_PORT as string);
 
     database.connect({

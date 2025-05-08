@@ -38,6 +38,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     ///////////////////////////////////////////////////////////////////////////////////////////
 
+    connection = await database.client.getConnection();
+
     const params = validateParams.data;
 
     const SELLER = context.sellerData;
@@ -47,8 +49,6 @@ export const createProduct = async (_: any, args: any, context: any) => {
     const productId = getProductId();
 
     const productGroupId = productId;
-
-    connection = await database.client.getConnection();
 
     ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -64,7 +64,9 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////
+    await connection.beginTransaction();
+
+    /////////////////////////////////////////////////////////////////////// START TRANSACTION
 
     const isValidGroup = await checkFileGroup(
       "http://service-media.default.svc.cluster.local:8003/api/media/verify-group",
@@ -82,10 +84,6 @@ export const createProduct = async (_: any, args: any, context: any) => {
         code: ERROR_CODES.CONFLICT,
       });
     }
-
-    await connection.beginTransaction();
-
-    /////////////////////////////////////////////////////////////////////// START TRANSACTION
 
     const productScheme = {
       id: productId,
@@ -144,14 +142,12 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     return {
       success: true,
-      message: "Product created successfully.",
+      message: `Your product was created successfully! You can now view or edit its details using ID: ${findProduct.id}`,
       data: {
         product_id: findProduct.id,
       },
     };
   } catch (err: any) {
-    console.error(err);
-
     if (connection) await connection.rollback();
 
     throw err;

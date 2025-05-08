@@ -43,7 +43,7 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       product_id: file.product_id,
       mime_type: file.mime_type,
       position: file.position,
-      alt_text: "Zapatillas deportivas negras con suela blanca",
+      alt_text: "image",
       resolutions: {
         thumbnail: urls.thumbnail,
         small: urls.small,
