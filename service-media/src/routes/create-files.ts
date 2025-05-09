@@ -39,7 +39,7 @@ const createFilesHandler = async (req: Request, res: Response, next: NextFunctio
 
     const mediaGroupId = getMediaGroupId();
 
-    const createdAt = Date.now();
+    const timestamp = Date.now();
 
     for (let i = 0; i < files.length; i++) {
 
@@ -77,7 +77,7 @@ const createFilesHandler = async (req: Request, res: Response, next: NextFunctio
           file.originalname,
           mediaPath,
           "pending",
-          createdAt,
+          timestamp,
         ]
       );
 
