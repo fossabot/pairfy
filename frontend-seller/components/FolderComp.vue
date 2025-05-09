@@ -55,7 +55,6 @@ const onSelect = (index) => {
     box-shadow: var(--shadow-a); 
     font-weight: 600;
     cursor: pointer;
-    margin-top: 0.5rem;
     margin-left: 0.75rem;
     padding: 0.75rem 1.5rem;
 }
