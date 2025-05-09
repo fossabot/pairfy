@@ -1,4 +1,3 @@
-// stores/wallet.ts
 import { defineStore } from "pinia";
 import { Buffer } from "buffer";
 
@@ -38,24 +37,22 @@ export const useWalletStore = defineStore("wallet", () => {
   };
 
   const connect = async (name: string) => {
-    const { $connector } = getContext();
-
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await $connector.connect(name, "testnet", async () => {
-          walletApi.value = await window.cardano[name].enable();
+        walletApi.value = await window.cardano[name]?.enable();
 
-          if (import.meta.client) {
-            localStorage.setItem("enabled-wallet", name);
-          }
+        console.log(walletApi.value);
 
-          console.log("WALLET_ENABLED", name);
+        if (import.meta.client) {
+          localStorage.setItem("enabled-wallet", name);
+        }
 
-          connected.value = true;
-          walletName.value = name;
+        console.log("WALLET_ENABLED", name);
 
-          resolve();
-        });
+        connected.value = true;
+        walletName.value = name;
+
+        resolve();
       } catch (err) {
         reject(err);
       }
@@ -65,7 +62,7 @@ export const useWalletStore = defineStore("wallet", () => {
   const sign = async () => {
     try {
       if (!walletApi.value) {
-        throw new Error("WalletNotEnabled");
+        return;
       }
 
       return await signMessage();
