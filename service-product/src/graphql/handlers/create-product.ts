@@ -21,9 +21,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       args.createProductInput.bullet_list
     );
 
-    const validateParams = verifyParams.safeParse(
-      args.createProductInput
-    );
+    const validateParams = verifyParams.safeParse(args.createProductInput);
 
     if (!validateParams.success) {
       const errors = JSON.stringify(validateParams.error.flatten());
@@ -75,9 +73,9 @@ export const createProduct = async (_: any, args: any, context: any) => {
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
         product_id: productId,
-        thumbnail_id: params.file_ids[0]
+        thumbnail_id: params.file_ids[0],
       },
-      "fakesecret" ////
+      process.env.INTERNAL_ENDPOINT_SECRET as string
     );
 
     if (!isValidGroup) {

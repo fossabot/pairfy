@@ -29,6 +29,7 @@ const main = async () => {
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
       "REDIS_RATELIMIT_URL",
+      "INTERNAL_ENDPOINT_SECRET"
     ];
 
     for (const varName of requiredEnvVars) {

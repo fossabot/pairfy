@@ -40,6 +40,12 @@ spec:
                   name: database-password-secret
                   key: password   
 
+            - name: INTERNAL_ENDPOINT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: internal-endpoint-secret
+                  key: key
+
             - name: NODE_ENV
               value: "development"
             - name: DATABASE_NAME

@@ -16,6 +16,7 @@ const main = async () => {
       "MINIO_USE_SSL",
       "MINIO_ACCESS_KEY",
       "MINIO_SECRET_KEY",
+      "INTERNAL_ENDPOINT_SECRET"
     ];
 
     for (const key of requiredEnv) {
