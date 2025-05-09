@@ -82,7 +82,6 @@ const validate = (val: string) => {
 .color-picker {
   border: 1px solid var(--border-a);
   border-radius: var(--radius-b);
-  padding: 0.25rem;
   background: none;
   cursor: pointer;
   height: 42px;

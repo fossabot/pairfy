@@ -11,7 +11,8 @@ import {
   sanitizeArrayGraphQL,
 } from "@pairfy/common";
 import { verifyParams } from "../../validators/create-product.js";
-import { checkFileGroup } from "../../utils/verify-group.js";
+import { checkFileGroup } from "../../utils/media.js";
+import { applyDiscount } from "../../utils/index.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
@@ -105,7 +106,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       city: params.city,
       postal: params.postal,
       discount: params.discount,
-      discount_value: 0, ///////////////
+      discount_value: applyDiscount(params.price, params.discount_percent),
       discount_percent: params.discount_percent,
       created_at: timestamp,
       updated_at: timestamp,
