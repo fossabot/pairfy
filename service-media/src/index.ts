@@ -9,6 +9,7 @@ import { app } from "./app.js";
 const main = async () => {
   try {
     const requiredEnv = [
+      "NODE_ENV",
       "AGENT_JWT_KEY",
       "MINIO_HOST_URL",
       "MINIO_PORT",

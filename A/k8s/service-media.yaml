@@ -38,8 +38,10 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: database-password-secret
-                  key: password         
+                  key: password   
 
+            - name: NODE_ENV
+              value: "development"
             - name: DATABASE_NAME
               value: service_media 
             - name: DATABASE_USER

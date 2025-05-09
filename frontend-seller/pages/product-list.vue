@@ -109,7 +109,6 @@ const dottedMenuOptions = ref([
 const columns = ref([
     { label: "ID", field: "id" },
     { label: "Sku", field: "sku" },
-    { label: "Status", field: "status" },
     { label: "Name", field: "name" },
     { label: "Price", field: "price" },
     { label: "Model", field: "model" },

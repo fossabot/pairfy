@@ -11,6 +11,12 @@ export const getFileHandler = async (
   next: NextFunction
 ) => {
   try {
+    if (process.env.NODE_ENV !== "development") {
+      throw new ApiError(403, "Access denied", {
+        code: ERROR_CODES.FORBIDDEN
+      });
+    }
+
     const validateParams = verifyParams.safeParse(req.params);
 
     if (!validateParams.success) {
@@ -39,5 +45,5 @@ export const getFileHandler = async (
     stream.pipe(res);
   } catch (err) {
     next(err);
-  } 
+  }
 };
