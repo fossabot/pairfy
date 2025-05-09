@@ -1,4 +1,4 @@
-import { CreateFile } from "./CreateFile";
+import { CreateFile } from "./CreateFile.js";
 
 
 const handlers: any = {
