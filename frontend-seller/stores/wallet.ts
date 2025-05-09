@@ -6,8 +6,6 @@ export const useWalletStore = defineStore("wallet", () => {
   const walletApi = ref<any>(null);
   const walletName = ref<string | null>(null);
 
-  const getContext = () => useNuxtApp();
-
   const getMessage = () => {
     const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE"; //env variable
 
@@ -19,9 +17,9 @@ export const useWalletStore = defineStore("wallet", () => {
       return;
     }
 
-    const address = await walletApi.value.getUsedAddresses();
+    const addresses = await walletApi.value.getUsedAddresses();
 
-    return address[0];
+    return addresses?.[0] || null;
   };
 
   const signMessage = async () => {
@@ -36,27 +34,22 @@ export const useWalletStore = defineStore("wallet", () => {
     return [signature, address];
   };
 
-  const connect = async (name: string) => {
-    return new Promise<void>(async (resolve, reject) => {
+  const createWalletApiInstance = async (name: string) => {
+    if (import.meta.client) { 
       try {
         walletApi.value = await window.cardano[name]?.enable();
-
-        console.log(walletApi.value);
-
-        if (import.meta.client) {
-          localStorage.setItem("enabled-wallet", name);
-        }
-
-        console.log("WALLET_ENABLED", name);
-
-        connected.value = true;
         walletName.value = name;
-
-        resolve();
-      } catch (err) {
-        reject(err);
+        connected.value = true;
+      } catch (error) {
+        console.error("Error creating wallet instance", error);
       }
-    });
+    }
+  };
+
+  const connect = async (name: string) => {
+    if (!walletApi.value) {
+      await createWalletApiInstance(name);
+    }
   };
 
   const sign = async () => {
