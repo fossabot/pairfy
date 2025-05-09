@@ -35,13 +35,29 @@ export const useWalletStore = defineStore("wallet", () => {
   };
 
   const createWalletApiInstance = async (name: string) => {
-    if (import.meta.client) { 
+    if (import.meta.client) {
       try {
         walletApi.value = await window.cardano[name]?.enable();
+
+        if (!walletApi.value) {
+          return;
+        }
+
+        const networkId = await walletApi.value?.getNetworkId(); // 0 = testnet, 1 = mainnet
+
+        console.log(networkId);
+
+        if (networkId !== 0) {
+          throw new Error(
+            "⚠️ Connection failed: Please switch your wallet to Testnet and try again."
+          );
+        }
+
         walletName.value = name;
         connected.value = true;
       } catch (error) {
         console.error("Error creating wallet instance", error);
+        throw error;
       }
     }
   };
