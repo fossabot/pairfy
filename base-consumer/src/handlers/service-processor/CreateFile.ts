@@ -1,16 +1,9 @@
-import database from "../../database/client.js";
-import {
-  isProcessedEvent,
-  consumedEvent,
-  logger,
-  insertProduct,
-} from "@pairfy/common";
-import { createProductIndex } from "./utils/weaviate.js";
 
-export const CreateProduct = async (
-  event: any,
-  seq: number
-): Promise<boolean> => {
+import { isProcessedEvent, consumedEvent, logger } from "@pairfy/common";
+import { processFile } from "./utils/media.js";
+import database from "../../database/client.js";
+
+export const CreateFile = async (event: any, seq: number): Promise<boolean> => {
   let response = null;
 
   let connection = null;
@@ -21,6 +14,14 @@ export const CreateProduct = async (
     const processed = await isProcessedEvent(connection, event.id);
 
     if (processed) {
+      logger.error({
+        timestamp: new Date().toISOString(),
+        service: "service-processor-consumer",
+        event: "event.repeated",
+        message: `event repeated`,
+        eventId: event.id,
+      });
+
       return Promise.resolve(true);
     }
 
@@ -30,40 +31,34 @@ export const CreateProduct = async (
 
     ///////////////////////////////////////////////////////
 
-    const [productCreated] = await insertProduct(connection, dataParsed);
+    const processedFile = await processFile(dataParsed);
 
-    if (productCreated.affectedRows !== 1) {
-      throw new Error("CreateProductError");
+    if (!processedFile) {
+      throw new Error("processFileError");
     }
-
-    const createIndex = await createProductIndex(dataParsed);
-
-    if(!createIndex){
-      throw new Error("CreateProductIndexError");
-    }
-
-    await consumedEvent(connection, event, seq);
 
     ///////////////////////////////////////////////////////
+
+    await consumedEvent(connection, event, seq);
 
     await connection.commit();
 
     logger.info({
-      service: "service-query-consumer",
+      service: "service-processor-consumer",
       event: "event.consumed",
-      message: 'event consumed',
-      eventId: event.id
-    })
+      message: "event consumed",
+      eventId: event.id,
+    });
 
     response = Promise.resolve(true);
   } catch (error: any) {
     logger.error({
-      service: "service-query-consumer",
+      service: "service-processor-consumer",
       event: "event.error",
       message: `event error`,
       eventId: event.id,
       error: error.message,
-      stack: error.stack
+      stack: error.stack,
     });
 
     if (connection) await connection.rollback();

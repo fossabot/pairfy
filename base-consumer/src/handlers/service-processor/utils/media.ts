@@ -1,4 +1,4 @@
-import { connection } from "../database/redis.js";
+import { connection } from "./redis.js";
 import { logger } from "@pairfy/common";
 import { Queue } from "bullmq";
 
