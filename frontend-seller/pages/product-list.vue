@@ -85,10 +85,12 @@
 <script setup>
 import placeholderImage from '@/assets/placeholder/image.svg'
 
+const router = useRouter()
+
 const tabIndex = ref(0)
 
 definePageMeta({
-  key: () => `products-tab-${tabIndex.value}`
+    key: () => `products-tab-${tabIndex.value}`
 })
 
 const products = ref([])
@@ -181,7 +183,10 @@ const handleOnPrev = async (item) => {
 
 const handleDottedMenu = (event, value) => {
     if (event === 'delete') return beforeDeleteProduct(value)
-    if (event === 'edit') return editProduct(value.id)
+
+    if (event === 'edit') {
+        router.push({ name: 'edit-product', query: { id: value.id } })
+    }
 }
 
 function getImageSrc(item) {
