@@ -26,19 +26,19 @@
                     </div>
                     <div class="grid-item">
                         <InputProductName v-model="productName" id="create-product-name"
-                            placeholder="e.g. Wireless Headphones" @valid="productName = $event.value" />
+                            placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
                     </div>
                     <div class="grid-item">
                         <InputProductPrice v-model="productPrice" id="create-product-price"
-                            @valid="productPrice = $event.value" />                    
+                            @valid="productPriceValid = $event.valid" />                    
                         <InputProductSku v-model="productSku" id="create-product-sku"
                             @valid="productSkuValid = $event.valid" />
                     </div>
                     <div class="grid-item">
                         <InputProductModel v-model="productModel" id="create-product-model"
-                            @valid="productModel = $event.value" />
+                            @valid="productModelValid = $event.valid" />
                         <InputProductBrand v-model="productBrand" id="create-product-brand"
-                            @valid="productBrand = $event.value" />
+                            @valid="productBrandValid = $event.valid" />
                     </div>
                 </div>
 
@@ -288,22 +288,48 @@ const categories = computed(() =>
 const countries = ref(countryList)
 
 const productName = ref(null)
+const productNameValid = ref(false)
+
 const productPrice = ref(null)
+const productPriceValid = ref(false)
 
 const productSku = ref(null)
 const productSkuValid = ref(false)
 
 const productModel = ref(null)
+const productModelValid = ref(false)
+
 const productBrand = ref(null)
+const productBrandValid = ref(false)
+
 const productOrigin = ref(null)
+const productOriginValid = ref(false)
+
 const productCity = ref(null)
+const productCityValid = ref(false)
+
 const productPostal = ref(null)
+const productPostalValid = ref(false)
+
 const productDescription = ref(null)
+const productDescriptionValid = ref(false)
+
 const productImages = ref(null)
+const productImagesValid = ref(false)
+
 const productBulletlist = ref(null)
+const productBulletlistValid = ref(false)
+
 const productCategory = ref(null)
+const productCategoryValid = ref(false)
+
 const productCondition = ref(null)
+const productConditionValid = ref(false)
+
 const productColor = ref(null)
+const productColorValid = ref(false)
+
+
 const productDiscount = ref({
     enabled: false,
     price: productPrice.value,
@@ -339,31 +365,25 @@ if (initialData.value) {
 
 
 
-
-
-
-
-
-
 //test
 watch(productImages, (e) => console.log(e?.images))
 
 const validateParams = () => {
     const params = [
-        !productName.value,
-        !productPrice.value,
+        !productNameValid.value,
+        !productPriceValid.value,
         !productSkuValid.value,
-        !productModel.value,
-        !productBrand.value,
-        !productOrigin.value,
-        !productCity.value,
-        !productPostal.value,
-        !productDescription.value,
-        !productImages.value,
-        !productBulletlist.value,
-        !productCategory.value,
-        !productCondition.value,
-        !productColor.value
+        !productModelValid.value,
+        !productBrandValid.value,
+        !productOriginValid.value,
+        !productCityValid.value,
+        !productPostalValid.value,
+        !productDescriptionValid.value,
+        !productImagesValid.value,
+        !productBulletlistValid.value,
+        !productCategoryValid.value,
+        !productConditionValid.value,
+        !productColorValid.value
     ]
 
     console.log(params)

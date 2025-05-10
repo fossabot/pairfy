@@ -6,7 +6,7 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @beforeinput="onBeforeInput"
+      @input="onInput"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputPrice-input"
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'price' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: Number, default: 0 },
   label: { type: String, default: 'Price (USD)' },
   placeholder: { type: String, default: '0' },
   focus: { type: Boolean, default: false },
@@ -35,15 +35,16 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: number): void
   (e: 'valid', payload: { valid: boolean, value: number | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const internalValue = ref(props.modelValue.toString()) 
+
 const errorMessage = ref('')
 
-const dollarRegex = /^[0-9]*$/
+const dollarRegex = /^[0-9]+$/
 
 const messages = {
   required: 'This field is required.',
@@ -62,21 +63,22 @@ watch(() => props.focus, (newVal) => {
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
+  if (val !== Number(internalValue.value)) internalValue.value = val.toString() 
 })
 
 watch(internalValue, (val) => {
-  emit('update:modelValue', val)
+  emit('update:modelValue', Number(val)) 
   validateInput(val)
 })
 
-const onBeforeInput = (e: Event) => {
+const onInput = (e: Event) => {
   const target = e.target as HTMLInputElement
-  internalValue.value = target.value.replace(/\D+/g, '')
+  const digitsOnly = target.value.replace(/\D+/g, '') 
+  internalValue.value = digitsOnly
 }
 
 const validateInput = (value: string) => {
-  const numValue = Number(value)
+  const numValue = Number(value)  
 
   const validators: { condition: boolean; message: string }[] = [
     { condition: props.required && value.trim() === '', message: messages.required },
@@ -95,9 +97,10 @@ const validateInput = (value: string) => {
   }
 
   errorMessage.value = ''
-  emit('valid', { valid: true, value: numValue })
+  emit('valid', { valid: true, value: numValue }) 
 }
 </script>
+
 
 <style scoped>
 .p-InputPrice {
