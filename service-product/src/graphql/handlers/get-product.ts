@@ -1,4 +1,6 @@
 import database from "../../database/client.js";
+import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
+
 
 export const getProduct = async (_: any, args: any, context: any) => {
   const params = args.getProductInput;
@@ -18,20 +20,16 @@ export const getProduct = async (_: any, args: any, context: any) => {
     );
 
     if (!product.length) {
-      throw new Error("NOT_PRODUCT");
+      throw new ApiGraphQLError(404, "Product not found", {
+        code: ERROR_CODES.NOT_FOUND
+      })
     }
 
     return product[0];
-  } catch (err: any) {
-    if (connection) {
-      await connection.rollback();
-    }
 
-    throw new Error(err.message);
+  } catch (error: any) {
+    throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
-
