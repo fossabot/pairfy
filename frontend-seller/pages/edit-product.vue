@@ -25,16 +25,20 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" placeholder="e.g. Wireless Headphones"
-                            @valid="productName = $event.value" />
+                        <InputProductName v-model="productName" id="create-product-name"
+                            placeholder="e.g. Wireless Headphones" @valid="productName = $event.value" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPrice id="create-product-price" @valid="productPrice = $event.value" />
-                        <InputProductSku id="create-product-sku" @valid="productSku = $event.value" />
+                        <InputProductPrice v-model="productPrice" id="create-product-price"
+                            @valid="productPrice = $event.value" />                    
+                        <InputProductSku v-model="productSku" id="create-product-sku"
+                            @valid="productSkuValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductModel id="create-product-model" @valid="productModel = $event.value" />
-                        <InputProductBrand id="create-product-brand" @valid="productBrand = $event.value" />
+                        <InputProductModel v-model="productModel" id="create-product-model"
+                            @valid="productModel = $event.value" />
+                        <InputProductBrand v-model="productBrand" id="create-product-brand"
+                            @valid="productBrand = $event.value" />
                     </div>
                 </div>
 
@@ -285,7 +289,10 @@ const countries = ref(countryList)
 
 const productName = ref(null)
 const productPrice = ref(null)
+
 const productSku = ref(null)
+const productSkuValid = ref(false)
+
 const productModel = ref(null)
 const productBrand = ref(null)
 const productOrigin = ref(null)
@@ -313,13 +320,21 @@ const { data: initialData } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
         method: 'POST',
         credentials: 'include',
-        body: {},
+        body: {
+            id: "PRD-250509-5UEPXKQ"
+        },
         headers: useRequestHeaders(['cookie'])
     })
 )
 
 if (initialData.value) {
     productData.value = initialData.value
+    
+    productName.value = initialData.value.name
+    productPrice.value = initialData.value.price
+    productSku.value  = initialData.value.sku
+    productModel.value  = initialData.value.model
+    productBrand.value  = initialData.value.brand
 }
 
 
@@ -337,7 +352,7 @@ const validateParams = () => {
     const params = [
         !productName.value,
         !productPrice.value,
-        !productSku.value,
+        !productSkuValid.value,
         !productModel.value,
         !productBrand.value,
         !productOrigin.value,
@@ -381,7 +396,7 @@ const onCreateProduct = async () => {
         return
     }
 
-    const { data, error } = await useFetch('/api/product/createProduct', {
+    const { data, error } = await useFetch('/api/product/getProduct', {
         method: 'POST',
         credentials: 'include',
         body: {
