@@ -20,17 +20,17 @@
                             </span>
                         </TipComp>
                     </div>
-                   
+
                     <div class="grid-subtitle">
                         Fill in the details to publish a new product.
-                    </div>         
+                    </div>
                     <div class="grid-item">
                         <InputProductName v-model="productName" id="create-product-name"
                             placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
-                    </div>                
+                    </div>
                     <div class="grid-item">
                         <InputProductPrice v-model="productPrice" id="create-product-price"
-                            @valid="productPriceValid = $event.valid" />                    
+                            @valid="productPriceValid = $event.valid" />
                         <InputProductSku v-model="productSku" id="create-product-sku"
                             @valid="productSkuValid = $event.valid" />
                     </div>
@@ -64,8 +64,9 @@
                         Data required for calculating shipping time.
                     </div>
                     <div class="grid-item">
+
                         <InputSelect v-model="productOrigin" label="Country" :options="countries"
-                            @valid="productOrigin = $event.value">
+                            @valid="productOriginValid = $event.valid">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
@@ -73,12 +74,12 @@
                                 </span>
                             </template>
                         </InputSelect>
-
-                        <InputProductCity id="create-product-city" @valid="productCity = $event.value" />
+                        <InputProductCity v-model="productCity" id="create-product-city"
+                            @valid="productCityValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value" />
-
+                        <InputProductPostal v-model="productPostal" id="create-product-postal"
+                            @valid="productPostalValid = $event.valid" />
                     </div>
                 </div>
 
@@ -101,8 +102,10 @@
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
                     </div>
+                    {{ productDescription }} {{ productDescriptionValid }}
+
                     <div class="grid-item">
-                        <EditorComp @valid="productDescription = $event.value" />
+                        <EditorComp v-model="productDescription" @valid="productDescriptionValid = $event.valid" />
                     </div>
                 </div>
 
@@ -355,12 +358,16 @@ const { data: initialData } = await useAsyncData('product', () =>
 
 if (initialData.value) {
     productData.value = initialData.value
-    
+
     productName.value = initialData.value.name
     productPrice.value = initialData.value.price
-    productSku.value  = initialData.value.sku
-    productModel.value  = initialData.value.model
-    productBrand.value  = initialData.value.brand
+    productSku.value = initialData.value.sku
+    productModel.value = initialData.value.model
+    productBrand.value = initialData.value.brand
+    productOrigin.value = initialData.value.origin
+    productCity.value = initialData.value.city
+    productPostal.value = initialData.value.postal
+    productDescription.value = initialData.value.description
 }
 
 

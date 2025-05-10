@@ -107,7 +107,6 @@ const props = defineProps({
   required: { type: Boolean, default: true },
   options: { type: Array, required: true },
   placeholder: { type: String, default: 'Select one...' },
-  focus: { type: Boolean, default: false },
   invalid: { type: Boolean, default: false }
 })
 
@@ -119,6 +118,11 @@ const errorMessage = ref('')
 const selectedOption = computed(() =>
   props.options.find(opt => opt.code === props.modelValue)
 )
+
+
+onMounted(() => {
+  validate(props.modelValue)
+})
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value

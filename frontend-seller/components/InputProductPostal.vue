@@ -1,21 +1,10 @@
 <template>
   <div class="p-InputProductPostal">
     <label :for="props.id" class="title-text">{{ label }}</label>
-    <input
-      ref="inputRef"
-      v-model="internalValue"
-      :id="props.id"
-      type="text"
-      @drop.prevent
-      :placeholder="placeholder"
-      class="p-InputProductPostal-input"
-      :class="{ 'is-invalid': errorMessage }"
-      :maxlength="maxLength"
-      :aria-invalid="!!errorMessage"
-      :aria-describedby="`${props.id}-error`"
-      inputmode="text"
-      @blur="validateInput(internalValue)"
-    />
+    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @drop.prevent :placeholder="placeholder"
+      class="p-InputProductPostal-input" :class="{ 'is-invalid': errorMessage }" :maxlength="maxLength"
+      :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text"
+      @blur="validateInput(internalValue)" />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
     </p>
@@ -51,6 +40,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value)
 })
 
 watch(() => props.focus, (newVal) => {
@@ -133,6 +123,7 @@ const validateInput = (value: string) => {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
