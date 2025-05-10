@@ -170,9 +170,10 @@
                         Optionally, upload a single video highlighting the product’s features.
                     </div>
                 </div>
-
-
             </div>
+
+
+
             <!--RIGHT-->
             <div class="grid-right">
                 <div class="grid-row">
@@ -252,8 +253,8 @@
                         <ButtonSolid label="Publish" @click="onCreateProduct" :loading="loading" />
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </template>
@@ -280,14 +281,6 @@ const categories = computed(() =>
 )
 
 const countries = ref(countryList)
-
-const country = ref('')
-const countryValid = ref(false)
-
-const onValidCountry = (event) => {
-    console.log("countryHandler", event)
-    countryValid.value = event
-}
 
 const productName = ref(null)
 const productPrice = ref(null)
@@ -397,7 +390,7 @@ const onCreateProduct = async () => {
 
     if (error.value) {
         displayMessage(error.value, 'error', 30_000)
-        console.error('Error al crear producto:', error)
+        console.error('Error creating the product:', error)
     }
 
     if (data.value.success) {
