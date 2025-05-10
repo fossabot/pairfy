@@ -56,6 +56,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value) 
 })
 
 watch(() => props.focus, (newVal) => {

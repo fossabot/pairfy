@@ -53,6 +53,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validateInput(internalValue.value)
 })
 
 watch(() => props.focus, (newVal) => {
@@ -74,9 +75,6 @@ const onBeforeInput = (e: Event) => {
 
   if (inputEvent.inputType === 'insertFromPaste' || !inputEvent.data) return
 
-  if (!/^[\p{L}\p{N}\s\-.,&()']$/u.test(inputEvent.data)) {
-    e.preventDefault()
-  }
 }
 
 const validateInput = (value: string) => {

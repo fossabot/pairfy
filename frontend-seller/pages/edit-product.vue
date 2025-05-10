@@ -20,14 +20,14 @@
                             </span>
                         </TipComp>
                     </div>
-                    {{ productData }}
+                   
                     <div class="grid-subtitle">
                         Fill in the details to publish a new product.
-                    </div>
+                    </div>         
                     <div class="grid-item">
                         <InputProductName v-model="productName" id="create-product-name"
                             placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
-                    </div>
+                    </div>                
                     <div class="grid-item">
                         <InputProductPrice v-model="productPrice" id="create-product-price"
                             @valid="productPriceValid = $event.valid" />                    
