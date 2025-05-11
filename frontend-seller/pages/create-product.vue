@@ -208,11 +208,13 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductCondition @valid="productCondition = $event.value" />
-                    </div>
-                    <div class="grid-item">
                         <InputProductColor @valid="productColor = $event.value" />
                     </div>
+
+                    <div class="grid-item">
+                        <InputProductCondition @valid="productCondition = $event.value" />
+                    </div>
+
                 </div>
 
                 <div class="grid-row">

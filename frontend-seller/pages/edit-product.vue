@@ -214,13 +214,14 @@
                     </div>
 
                     <div class="grid-item">
+                        <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
+                    </div>
+
+                    <div class="grid-item">
                         <InputProductCondition v-model="productCondition"
                             @valid="productConditionValid = $event.valid" />
                     </div>
 
-                    <div class="grid-item">
-                        <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
-                    </div>
                 </div>
 
                 <div class="grid-row">
