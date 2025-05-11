@@ -90,7 +90,6 @@ const validate = (val: string) => {
 .color-value {
   font-size: var(--text-size-1);
   font-family: monospace;
-  color: var(--text-b);
 }
 
 .color-picker-wrapper.is-invalid .color-picker {
