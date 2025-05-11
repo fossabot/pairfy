@@ -102,8 +102,6 @@
                     <div class="grid-subtitle">
                         Create a product description using the AI tool.
                     </div>
-                    {{ productDescription }} {{ productDescriptionValid }}
-
                     <div class="grid-item">
                         <EditorComp v-model="productDescription" @valid="productDescriptionValid = $event.valid" />
                     </div>
