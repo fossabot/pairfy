@@ -31,7 +31,7 @@
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
-                    :columnWidths="{ id: '7rem', category: '8rem', price: '7rem', created_at: '5rem' }">
+                    :columnWidths="{ id: '6rem', category: '8rem', price: '6rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
