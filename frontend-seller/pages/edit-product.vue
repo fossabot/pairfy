@@ -218,7 +218,6 @@
                             @valid="productConditionValid = $event.valid" />
                     </div>
 
-                    
                     <div class="grid-item">
                         <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
                     </div>
@@ -373,6 +372,9 @@ if (initialData.value) {
     productCategory.value = initialData.value.category
     productCondition.value = initialData.value.condition_
     productColor.value = initialData.value.color
+
+    productDiscount.value.enabled = initialData.value.discount
+    productDiscount.value.discount = initialData.value.discount_percent
 }
 
 
