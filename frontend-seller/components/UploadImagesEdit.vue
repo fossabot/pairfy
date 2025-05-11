@@ -7,14 +7,14 @@
     <div class="header" v-show="images.length">
       <div class="counter">
         <span :style="{ color: !images.length ? 'red' : 'black' }">
-          {{ images.length }}
+          {{ imageCounter }}
         </span>
-        <span>{{ ` / ${maxImages}` }}</span>
+        <span>{{ ` / ${MAX_IMAGES}` }}</span>
       </div>
     </div>
 
     <div class="empty-template" v-if="!images.length">
-      <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= maxImages">
+      <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= MAX_IMAGES">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
           stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload-icon lucide-upload">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -34,7 +34,7 @@
       </div>
 
       <div class="image-item no-drag" data-nodrag>
-        <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= maxImages">
+        <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= MAX_IMAGES">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-plus-icon lucide-plus">
@@ -50,6 +50,28 @@
 <script setup lang="ts">
 import { ref, onMounted, defineEmits, defineProps, watch } from 'vue';
 import Sortable from 'sortablejs';
+
+const MAX_IMAGES = 10;
+const MAX_FILE_SIZE_MB = 5;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+const MIN_WIDTH = 500;
+const MIN_HEIGHT = 500;
+const MAX_WIDTH = 5000;
+const MAX_HEIGHT = 5000;
+
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/avif',
+];
+
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
+
+const getFileExtension = (filename: string): string => {
+  const match = filename.match(/\.[^.]+$/);
+  return match ? match[0].toLowerCase() : '';
+};
 
 const toastRef = ref<any>(null);
 
@@ -88,8 +110,6 @@ const emit = defineEmits<{
   ): void;
 }>();
 
-const maxImages = 10;
-
 const fileInput = ref<HTMLInputElement | null>(null);
 
 const grid = ref<HTMLDivElement | null>(null);
@@ -101,6 +121,8 @@ watch(() => props.modelValue, (newVal) => {
 });
 
 const positions = computed(() => images.value.map((img) => img.id));
+
+const imageCounter = computed(() => images.value.filter(img => !img.deleted));
 
 const validate = () => {
   const hasValidImage = images.value.some(img => !img.deleted);
@@ -116,14 +138,42 @@ const onFilesSelected = (event: Event) => {
   const files = target.files;
   if (!files) return;
 
-  const availableSlots = maxImages - images.value.filter(img => !img.deleted).length;
-  const filesToAdd = Array.from(files).slice(0, availableSlots);
+  const availableSlots = MAX_IMAGES - images.value.filter(img => !img.deleted).length;
+
+  const filesToAdd = Array.from(files)
+    .filter((file) => {
+      const extension = getFileExtension(file.name);
+      const isValidMime = ALLOWED_MIME_TYPES.includes(file.type);
+      const isValidExt = ALLOWED_EXTENSIONS.includes(extension);
+
+      if (!isValidMime || !isValidExt) {
+        displayMessage(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`, 'error');
+        return false;
+      }
+
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        displayMessage(`❌ "${file.name}" exceeds ${MAX_FILE_SIZE_MB}MB`, 'error');
+        return false;
+      }
+
+      return true;
+    })
+    .slice(0, availableSlots);
+
 
   filesToAdd.forEach((file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
+        if (
+          img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
+          img.width > MAX_WIDTH || img.height > MAX_HEIGHT
+        ) {
+          displayMessage(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`, 'error');
+          return;
+        }
+
         const newImage: UploadedImg = {
           id: crypto.randomUUID(),
           file,
