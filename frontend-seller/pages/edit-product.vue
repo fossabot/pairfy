@@ -347,7 +347,7 @@ watch(productPrice, (newPrice) => {
 
 
 //test
-watch(productImages, (e) => console.log(e))
+watch(productImages, (e) => console.log(JSON.stringify(e)))
 
 const { data: initialData } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {

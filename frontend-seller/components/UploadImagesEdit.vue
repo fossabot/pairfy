@@ -9,7 +9,6 @@
         <span :style="{ color: !images.length ? 'red' : 'black' }">
           {{ images.length }}
         </span>
-
         <span>{{ ` / ${maxImages}` }}</span>
       </div>
     </div>
@@ -27,9 +26,11 @@
 
     <div class="image-grid" ref="grid" v-show="images.length">
       <div class="image-item" v-for="(img, index) in images" :key="img.id">
-        <img :src="img.url" alt="uploaded image" />
+        <img :src="img.local ? img.url : useMediaUrl(img.resolutions.large)" alt="uploaded image" />
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
+        <span v-if="img.local" class="local-label">Local</span>
+        <span v-if="img.deleted" class="deleted-label">Deleted</span>
       </div>
 
       <div class="image-item no-drag" data-nodrag>
@@ -43,12 +44,11 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits } from 'vue';
+import { ref, onMounted, defineEmits, defineProps } from 'vue';
 import Sortable from 'sortablejs';
 
 const toastRef = ref<any>(null);
@@ -61,50 +61,35 @@ interface UploadedImg {
   id: string;
   file: File;
   url: string;
+  resolutions: {
+    large: string;
+    small: string;
+    medium: string;
+    thumbnail: string;
+  };
+  local?: boolean;
+  deleted?: boolean;
 }
 
+const props = defineProps({
+  modelValue: {
+    type: Array as () => UploadedImg[],
+    required: true
+  }
+});
+
 const emit = defineEmits<{
-  (
-    e: 'valid',
-    payload:
-      | { valid: true; value: { images: UploadedImg[]; positions: string[] } }
-      | { valid: false; value: null }
-  ): void;
+  (e: 'update:modelValue', value: UploadedImg[]): void;
 }>();
 
 const maxImages = 10;
 const fileInput = ref<HTMLInputElement | null>(null);
 const grid = ref<HTMLDivElement | null>(null);
 
-const images = ref<UploadedImg[]>([]);
-const positions = ref<string[]>([]);
+const images = ref<UploadedImg[]>([...props.modelValue]);
 
 const triggerFileInput = () => {
   fileInput.value?.click();
-};
-
-
-
-const MAX_FILE_SIZE_MB = 5;
-const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
-
-const MIN_WIDTH = 500;
-const MIN_HEIGHT = 500;
-const MAX_WIDTH = 5000;
-const MAX_HEIGHT = 5000;
-
-const ALLOWED_MIME_TYPES = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/avif',
-];
-
-const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif'];
-
-const getFileExtension = (filename: string): string => {
-  const match = filename.match(/\.[^.]+$/);
-  return match ? match[0].toLowerCase() : '';
 };
 
 const onFilesSelected = (event: Event) => {
@@ -113,57 +98,32 @@ const onFilesSelected = (event: Event) => {
   if (!files) return;
 
   const availableSlots = maxImages - images.value.length;
+  const filesToAdd = Array.from(files).slice(0, availableSlots);
 
-  const filesToAdd = Array.from(files)
-    .filter((file) => {
-      const extension = getFileExtension(file.name);
-      const isValidMime = ALLOWED_MIME_TYPES.includes(file.type);
-      const isValidExt = ALLOWED_EXTENSIONS.includes(extension);
-
-      if (!isValidMime || !isValidExt) {
-        displayMessage(`❌ "${file.name}" has unsupported format (${file.type}, ${extension})`, 'error');
-        return false;
-      }
-
-      if (file.size > MAX_FILE_SIZE_BYTES) {
-        displayMessage(`❌ "${file.name}" exceeds ${MAX_FILE_SIZE_MB}MB`, 'error');
-        return false;
-      }
-
-      return true;
-    })
-    .slice(0, availableSlots);
-
-  for (const file of filesToAdd) {
+  filesToAdd.forEach((file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        if (
-          img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
-          img.width > MAX_WIDTH || img.height > MAX_HEIGHT
-        ) {
-          displayMessage(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`, 'error');
-          return;
-        }
-
-        images.value.push({
+        const newImage: UploadedImg = {
           id: crypto.randomUUID(),
           file,
-          url: e.target?.result as string,
-        });
-        updatePositions();
-        emitValidation();
+          url: e.target?.result as string,  // Local file URL
+          local: true
+        };
+
+        // Add the new image to the images array
+        images.value.push(newImage);
+
+        // Emit the updated images to update the parent v-model
+        emit('update:modelValue', images.value);
       };
       img.src = e.target?.result as string;
     };
     reader.readAsDataURL(file);
-  }
-
+  });
   target.value = '';
 };
-
-
 
 onMounted(() => {
   if (grid.value) {
@@ -172,7 +132,6 @@ onMounted(() => {
       ghostClass: 'sortable-ghost',
       draggable: '.image-item:not(.no-drag)',
       onEnd: (evt) => {
-
         if (evt.oldIndex === undefined || evt.newIndex === undefined || evt.oldIndex === evt.newIndex) {
           return;
         }
@@ -182,46 +141,25 @@ onMounted(() => {
           return images.value.find((img) => img.url === imgElement.src)?.id || '';
         });
 
-
         if (newOrder.includes('') || newOrder.length !== images.value.length) {
           displayMessage('❌ Inconsistent drag order: invalid image ID detected.', 'error');
           return;
         }
 
         images.value.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
-        updatePositions();
-        emitValidation();
+        emit('update:modelValue', images.value);
       }
     });
   }
 });
 
-const updatePositions = () => {
-  positions.value = images.value.map((img) => img.id);
-};
-
-const emitValidation = () => {
-  if (images.value.length > 0) {
-    emit('valid', {
-      valid: true,
-      value: {
-        images: images.value,
-        positions: positions.value,
-      },
-    });
-  } else {
-    emit('valid', {
-      valid: false,
-      value: null,
-    });
-  }
-};
-
-
 const removeImage = (id: string) => {
-  images.value = images.value.filter((img) => img.id !== id);
-  updatePositions();
-  emitValidation();
+  const image = images.value.find(img => img.id === id);
+  if (image) {
+    image.deleted = true;
+    // Emit the updated images to update the parent v-model
+    emit('update:modelValue', images.value);
+  }
 };
 </script>
 
@@ -313,6 +251,24 @@ const removeImage = (id: string) => {
   border-radius: 3px;
 }
 
+.local-label, .deleted-label {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 5px;
+  font-size: 0.8rem;
+  border-radius: 3px;
+}
+
+.local-label {
+  background: rgba(0, 255, 0, 0.7);
+}
+
+.deleted-label {
+  background: rgba(255, 0, 0, 0.7);
+}
 
 .delete-button {
   position: absolute;
