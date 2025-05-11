@@ -127,9 +127,8 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-
                     <div class="grid-item">
-                        <InputProductBullet @valid="productBulletlist = $event.value" />
+                        <InputProductBullet v-model="productBulletlist" @valid="productBulletlistValid = $event.valid" />
                     </div>
                 </div>
 
@@ -152,7 +151,7 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-                    <UploadImagesLocal @valid="productImages = $event.value" />
+                    <UploadImagesLocal @valid="productImagesValid = $event.valid" />
                 </div>
 
                 <div class="grid-row">
@@ -366,6 +365,7 @@ if (initialData.value) {
     productCity.value = initialData.value.city
     productPostal.value = initialData.value.postal
     productDescription.value = initialData.value.description
+    productBulletlist.value = initialData.value.bullet_list
 }
 
 

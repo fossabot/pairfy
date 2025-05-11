@@ -5,15 +5,14 @@
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
         <textarea
-          v-model="items[index]"
-          ref="textareas"
+          :value="item"
           placeholder="•"
           :maxlength="maxLength"
           class="textarea"
           :class="{ 'is-invalid': showError[index] }"
           :aria-invalid="showError[index]"
-          @focus="onFocus(index)"
-          @input="(e) => onInput(index, e)"
+          @focus="markTouched(index)"
+          @input="(e) => handleInput(index, e)"
         />
       </div>
     </div>
@@ -25,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: {
@@ -46,64 +45,71 @@ const emit = defineEmits(['update:modelValue', 'valid'])
 
 const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u
 
-const items = ref([...props.modelValue])
+const items = ref<string[]>([...props.modelValue])
 const touched = ref<boolean[]>(items.value.map(() => false))
 const showError = ref<boolean[]>(items.value.map(() => false))
 
+watch(() => props.modelValue, (newValue) => {
+  items.value = [...newValue]
+  resetValidationState()
+  validateAll()
+})
+
+function resetValidationState() {
+  touched.value = items.value.map(() => false)
+  showError.value = items.value.map(() => false)
+}
 
 const overallErrorMessage = computed(() => {
-  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
-  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
-
-  if (!hasValidItem) {
-    return 'At least one valid feature is required.'
-  }
-  if (hasInvalidFilledItem) {
-    return 'Some features contain invalid characters.'
-  }
+  const hasValid = items.value.some(isValidItem)
+  const hasInvalid = items.value.some((val) => val.trim() !== '' && !isValidItem(val))
+  if (!hasValid) return 'At least one valid feature is required.'
+  if (hasInvalid) return 'Some features contain invalid characters.'
   return ''
 })
 
-function onFocus(index: number) {
-  if (!touched.value[index]) {
-    touched.value[index] = true
-    validateItem(index)
-  }
+function isValidItem(text: string): boolean {
+  const trimmed = text.trim()
+  return trimmed !== '' && bulletRegex.test(trimmed)
 }
 
-function onInput(index: number, event: Event) {
-  const textarea = event.target as HTMLTextAreaElement
+function markTouched(index: number) {
+  touched.value[index] = true
+}
 
-  textarea.style.height = 'auto'
-  textarea.style.height = textarea.scrollHeight + 'px'
+function handleInput(index: number, event: Event) {
+  const el = event.target as HTMLTextAreaElement
+  const value = el.value
+  el.style.height = 'auto'
+  el.style.height = el.scrollHeight + 'px'
 
+  items.value[index] = value
   validateItem(index)
 
-  emit('update:modelValue', items.value)
-  emitValidEvent()
+  emit('update:modelValue', [...items.value])
+  emitValidation()
 }
 
 function validateItem(index: number) {
-  const item = items.value[index].trim()
-
-  if (item !== '' && !bulletRegex.test(item)) {
-    showError.value[index] = true
-  } else {
-    showError.value[index] = false
-  }
+  showError.value[index] = touched.value[index] && !isValidItem(items.value[index])
 }
 
-function emitValidEvent() {
-  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
-  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
-
-  if (!hasValidItem || hasInvalidFilledItem) {
-    emit('valid', { valid: false, value: null })
-  } else {
-    emit('valid', { valid: true, value: [...items.value] })
-  }
+function validateAll() {
+  items.value.forEach((_, idx) => validateItem(idx))
+  emitValidation()
 }
+
+function emitValidation() {
+  const valid = items.value.some(isValidItem) &&
+    items.value.every((val) => val.trim() === '' || isValidItem(val))
+  emit('valid', { valid, value: valid ? [...items.value] : null })
+}
+
+onMounted(() => {
+  validateAll()
+})
 </script>
+
 
 <style scoped>
 .p-EditableBulletList {
@@ -172,11 +178,11 @@ function emitValidEvent() {
 
 .error-text {
   font-size: var(--text-size-0);
-  color: var(--text-b);
-  margin-top: 1rem;
   min-height: 1.2rem; 
   visibility: hidden;
+  margin-top: 1rem;
   text-align: left;
+  color: red;
 }
 
 .error-text.visible {
