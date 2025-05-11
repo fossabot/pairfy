@@ -153,12 +153,32 @@ import CharacterCount from '@tiptap/extension-character-count'
 import { Editor, EditorContent } from '@tiptap/vue-3'
 import { Node, mergeAttributes } from '@tiptap/core'
 
-const emit = defineEmits(['valid'])
+const props = defineProps({
+  modelValue: {
+    type: Object,
+    default: () => null,
+  }
+})
+
+const emit = defineEmits(['valid', 'update:modelValue'])
 const toastRef = ref(null)
 const editor = ref(null)
 const editorLimit = ref(6000)
 const isGenerating = ref(false)
 const generativeEditor = ref('')
+
+const initialContent = ref(props.modelValue)
+
+watch(
+  () => props.modelValue,
+  (newVal) => {
+    if (editor.value && newVal) {
+      editor.value.commands.setContent(newVal)
+    }
+  },
+  { immediate: true }
+)
+
 
 const ChunkSpan = Node.create({
   name: 'chunkSpan',
@@ -190,11 +210,25 @@ const setupEditor = async () => {
         TextStyle.configure({ types: [ListItem.name] }),
       ],
       editorProps: { attributes: { class: 'editor-class' } },
-      content: ``,
+      content: initialContent.value || '',
       onUpdate: ({ editor }) => {
-        emit('valid', { valid: true, value: editor.getJSON() })
+        const json = editor.getJSON()
+        const text = editor.getText().trim()
+
+        emit('valid', { valid: text.length > 0, value: json })
+        emit('update:modelValue', json)
       },
     })
+
+
+    const text = editor.value?.getText().trim() ?? ''
+    const json = editor.value?.getJSON() ?? null
+
+    emit('valid', {
+      valid: text.length > 0,
+      value: json
+    })
+    
   })
 }
 
@@ -250,7 +284,6 @@ const onGenerativeSubmit = async () => {
     console.error(err)
   }
 
-  editor.value.commands.focus('end')
   editor.value.setEditable(true)
   isGenerating.value = false
 }
