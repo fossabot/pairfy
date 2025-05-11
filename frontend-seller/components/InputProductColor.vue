@@ -84,7 +84,7 @@ const validate = (val: string) => {
   border-radius: var(--radius-b);
   background: none;
   cursor: pointer;
-  height: 42px;
+  height: 2rem;
 }
 
 .color-value {
