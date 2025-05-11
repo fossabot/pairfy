@@ -128,7 +128,8 @@
                         List of characteristics that are displayed with priority.
                     </div>
                     <div class="grid-item">
-                        <InputProductBullet v-model="productBulletlist" @valid="productBulletlistValid = $event.valid" />
+                        <InputProductBullet v-model="productBulletlist"
+                            @valid="productBulletlistValid = $event.valid" />
                     </div>
                 </div>
 
@@ -213,10 +214,13 @@
                     </div>
 
                     <div class="grid-item">
-                        <InputProductCondition @valid="productCondition = $event.value" />
+                        <InputProductCondition v-model="productCondition"
+                            @valid="productConditionValid = $event.valid" />
                     </div>
+
+                    
                     <div class="grid-item">
-                        <InputProductColor @valid="productColor = $event.value" />
+                        <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
                     </div>
                 </div>
 
@@ -367,6 +371,8 @@ if (initialData.value) {
     productDescription.value = initialData.value.description
     productBulletlist.value = initialData.value.bullet_list
     productCategory.value = initialData.value.category
+    productCondition.value = initialData.value.condition_
+    productColor.value = initialData.value.color
 }
 
 

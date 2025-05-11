@@ -46,6 +46,10 @@ watch(internalValue, (val) => {
   validate(val)
 })
 
+onMounted(() => {
+  validate(internalValue.value)
+})
+
 const selectOption = (val: string) => {
   internalValue.value = val
 }
