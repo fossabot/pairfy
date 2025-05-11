@@ -19,21 +19,26 @@
           <span>{{ range }}</span>
           <span>{{ page }}</span>
         </div>
-        <button @click="prevPage" :disabled="!hasPrevPage">
+
+        <ButtonRounded @click="prevPage" :disabled="!hasPrevPage">
+          <template #content>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-chevron-left">
             <path d="m15 18-6-6 6-6" />
           </svg>
-        </button>
+        </template>
+        </ButtonRounded>
 
-        <button @click="nextPage" :disabled="!hasNextPage">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-chevron-right">
-            <path d="m9 18 6-6-6-6" />
-          </svg>
-        </button>
+        <ButtonRounded @click="nextPage" :disabled="!hasNextPage">
+          <template #content>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-chevron-right">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </template>
+        </ButtonRounded>
       </div>
     </div>
 
@@ -179,20 +184,6 @@ const nextPage = () => {
   margin-left: auto;
 }
 
-.header .header-right button {
-  background: var(--background-a);
-  flex-direction: column;
-  padding: 0.75rem;
-  display: flex;
-  border: none;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.header .header-right button:hover {
-  background: var(--background-b);
-}
-
 .search {
   border: 1px solid var(--border-a);
   background: var(--background-b);
@@ -270,13 +261,12 @@ const nextPage = () => {
 }
 
 .row {
-  border-left: 1px solid var(--border-a);
   padding: 0.5rem;
   max-width: 20rem;
   text-align: left;
-  padding-right: 1rem;
-  overflow-wrap: break-word;
   word-break: break-all;
+  overflow-wrap: break-word;
+  border-left: 1px solid var(--border-a);
 }
 
 .row.hidden {
