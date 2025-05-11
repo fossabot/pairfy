@@ -152,7 +152,8 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-                    <UploadImagesLocal @valid="productImagesValid = $event.valid" />
+                    {{ productImagesValid }}
+                    <UploadImagesEdit v-model="productImages" @valid="productImagesValid = $event.valid" />
                 </div>
 
                 <div class="grid-row">
@@ -344,7 +345,9 @@ watch(productPrice, (newPrice) => {
     productDiscount.value.price = newPrice
 })
 
-const productData = ref(null)
+
+//test
+watch(productImages, (e) => console.log(e))
 
 const { data: initialData } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
@@ -358,30 +361,28 @@ const { data: initialData } = await useAsyncData('product', () =>
 )
 
 if (initialData.value) {
-    productData.value = initialData.value
+    const product = initialData.value.product
+    const media = initialData.value.media
 
-    productName.value = initialData.value.name
-    productPrice.value = initialData.value.price
-    productSku.value = initialData.value.sku
-    productModel.value = initialData.value.model
-    productBrand.value = initialData.value.brand
-    productOrigin.value = initialData.value.origin
-    productCity.value = initialData.value.city
-    productPostal.value = initialData.value.postal
-    productDescription.value = initialData.value.description
-    productBulletlist.value = initialData.value.bullet_list
-    productCategory.value = initialData.value.category
-    productCondition.value = initialData.value.condition_
-    productColor.value = initialData.value.color
+    productName.value = product.name
+    productPrice.value = product.price 
+    productSku.value = product.sku
+    productModel.value = product.model
+    productBrand.value = product.brand
+    productOrigin.value = product.origin
+    productCity.value = product.city
+    productPostal.value = product.postal
+    productImages.value = media
+    productDescription.value = product.description
+    productBulletlist.value = product.bullet_list
+    productCategory.value = product.category
+    productCondition.value = product.condition_
+    productColor.value = product.color
 
-    productDiscount.value.enabled = initialData.value.discount
-    productDiscount.value.discount = initialData.value.discount_percent
+    //productDiscount.value.enabled = product.discount
+    //productDiscount.value.discount = product.discount_percent
 }
 
-
-
-//test
-watch(productImages, (e) => console.log(e?.images))
 
 const validateParams = () => {
     const params = [
