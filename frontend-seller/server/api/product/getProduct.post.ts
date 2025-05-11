@@ -7,6 +7,8 @@ const GET_PRODUCT_QUERY = gql`
     getProduct(getProductInput: $getProductVariable) {
       id
       group_id
+      media_group_id
+      media_position
       status
       moderated
       thumbnail_url

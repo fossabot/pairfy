@@ -5,6 +5,8 @@ scalar JSON
 type Product {
   id: ID!
   group_id: String!
+  media_group_id: String!
+  media_position: JSON!
   status: String!
   moderated: Boolean!
   seller_id: String!
@@ -56,10 +58,29 @@ input GetProductsInput {
 
 input GetProductInput {
   id: String!
-} 
+}
   
+type Media {
+  id: ID!
+  media_group_id: String!
+  agent_id: String!
+  product_id: String!
+  mime_type: String!
+  position: Int!
+  alt_text: String
+  resolutions: JSON!
+  created_at: BigInt!
+  updated_at: BigInt!
+  schema_v: Int!
+}
+
+type GetProductResponse{
+  product: Product!
+  media: [Media]!
+}
+
 type GetProductsResponse {
-  products: [Product!]!
+  products: [Product]!
   nextCursor: String
   hasPrevMore: Boolean!
   hasNextMore: Boolean!
@@ -68,7 +89,7 @@ type GetProductsResponse {
 
 type Query {
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
-  getProduct(getProductInput: GetProductInput!): Product!
+  getProduct(getProductInput: GetProductInput!): GetProductResponse!
 }
 
 #/////////////////////////////////////////////////
