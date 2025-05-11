@@ -25,12 +25,7 @@
     </div>
 
     <div class="image-grid" ref="grid" v-show="images.length">
-      <div
-        class="image-item"
-        v-for="(img, index) in images"
-        :key="img.id"
-        :data-id="img.id"
-      >
+      <div class="image-item" v-for="(img, index) in images" :key="img.id" :data-id="img.id">
         <img :src="img.local ? img.url : useMediaUrl(img.resolutions.large)" alt="uploaded image" />
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
@@ -55,7 +50,6 @@
 <script setup lang="ts">
 import { ref, onMounted, defineEmits, defineProps, watch } from 'vue';
 import Sortable from 'sortablejs';
-
 
 const toastRef = ref<any>(null);
 
@@ -86,10 +80,18 @@ const props = defineProps({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: UploadedImg[]): void;
+  (
+    e: 'valid',
+    payload:
+      | { valid: true; value: { images: UploadedImg[]; positions: string[] } }
+      | { valid: false; value: null }
+  ): void;
 }>();
 
 const maxImages = 10;
+
 const fileInput = ref<HTMLInputElement | null>(null);
+
 const grid = ref<HTMLDivElement | null>(null);
 
 const images = ref<UploadedImg[]>([...props.modelValue]);
@@ -97,6 +99,13 @@ const images = ref<UploadedImg[]>([...props.modelValue]);
 watch(() => props.modelValue, (newVal) => {
   images.value = [...newVal];
 });
+
+const positions = computed(() => images.value.map((img) => img.id));
+
+const validate = () => {
+  const hasValidImage = images.value.some(img => !img.deleted);
+  emit('valid', { valid: hasValidImage, value: { images: images.value, positions: positions.value } });
+};
 
 const triggerFileInput = () => {
   fileInput.value?.click();
@@ -129,6 +138,7 @@ const onFilesSelected = (event: Event) => {
         };
         images.value.push(newImage);
         emit('update:modelValue', images.value);
+        validate();
       };
       img.src = e.target?.result as string;
     };
@@ -139,6 +149,12 @@ const onFilesSelected = (event: Event) => {
 };
 
 onMounted(() => {
+
+  nextTick(() => {
+    validate();
+  });
+
+
   if (grid.value) {
     Sortable.create(grid.value, {
       animation: 200,
@@ -158,6 +174,7 @@ onMounted(() => {
 
         images.value.sort((a, b) => newOrder.indexOf(a.id) - newOrder.indexOf(b.id));
         emit('update:modelValue', images.value);
+        validate();
       }
     });
   }
@@ -165,18 +182,19 @@ onMounted(() => {
 
 const removeImage = (id: string) => {
   const index = images.value.findIndex(img => img.id === id);
-  
+
   if (index === -1) return;
 
   const image = images.value[index];
 
   if (image.local) {
-    images.value.splice(index, 1); 
+    images.value.splice(index, 1);
   } else {
     image.deleted = true;
   }
 
   emit('update:modelValue', images.value);
+  validate();
 };
 
 </script>
@@ -270,7 +288,8 @@ const removeImage = (id: string) => {
   border-radius: 3px;
 }
 
-.local-label, .deleted-label {
+.local-label,
+.deleted-label {
   position: absolute;
   bottom: 5px;
   left: 5px;

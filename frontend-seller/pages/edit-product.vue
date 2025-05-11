@@ -153,7 +153,7 @@
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
                     {{ productImagesValid }}
-                    <UploadImagesEdit v-model="productImages" @valid="productImagesValid = $event.valid" />
+                    <UploadImagesEdit v-model="productImages" @valid="testImages" />
                 </div>
 
                 <div class="grid-row">
@@ -349,19 +349,15 @@ watch(productPrice, (newPrice) => {
 //test
 watch(productImages, (ele) => {
 
-    const map = ele.map((e) => {
-        return {
-            id: e.id,
-            deleted: e.deleted,
-            local: e.local
-        } 
-    })
+    const map = ele.map((e) => e.id)
 
 
     console.log(map)
-
 })
 
+const testImages = (event) => {
+    console.log("a", event.value.positions)
+}
 
 const { data: initialData } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
