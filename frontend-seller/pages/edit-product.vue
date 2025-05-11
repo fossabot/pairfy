@@ -258,7 +258,7 @@
                     </div>
 
                     <div class="grid-item">
-                        <ButtonSolid label="Save" @click="onCreateProduct" :loading="loading" />
+                        <ButtonSolid label="Apply" @click="onCreateProduct" :loading="loading" />
                     </div>
                 </div>
             </div>
