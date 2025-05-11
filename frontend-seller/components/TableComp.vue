@@ -160,8 +160,8 @@ const nextPage = () => {
   border-bottom: 1px solid var(--border-a);
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0.75rem;
   width: inherit;
+  padding: 1rem;
 }
 
 .header-left {

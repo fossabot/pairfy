@@ -11,7 +11,7 @@
 <style lang="css" scoped>
 
 button {
-  background: var(--background-b);
+  background: transparent;
   flex-direction: column;
   color: var(--text-b);
   border-radius: 50%;
@@ -20,5 +20,10 @@ button {
   cursor: pointer;
   display: flex;
   border: none;
+}
+
+
+button:hover{
+  background: var(--background-b);
 }
 </style>
