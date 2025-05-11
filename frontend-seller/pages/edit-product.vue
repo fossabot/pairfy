@@ -203,7 +203,7 @@
 
                     <div class="grid-item">
                         <InputSelect v-model="productCategory" :options="categories" label="Category"
-                            @valid="productCategory = $event.value">
+                            @valid="productCategoryValid = $event.valid">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
@@ -366,6 +366,7 @@ if (initialData.value) {
     productPostal.value = initialData.value.postal
     productDescription.value = initialData.value.description
     productBulletlist.value = initialData.value.bullet_list
+    productCategory.value = initialData.value.category
 }
 
 
