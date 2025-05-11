@@ -25,7 +25,12 @@
     </div>
 
     <div class="image-grid" ref="grid" v-show="images.length">
-      <div class="image-item" v-for="(img, index) in images" :key="img.id">
+      <div
+        class="image-item"
+        v-for="(img, index) in images"
+        :key="img.id"
+        :data-id="img.id"
+      >
         <img :src="img.local ? img.url : useMediaUrl(img.resolutions.large)" alt="uploaded image" />
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
@@ -48,18 +53,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineEmits, defineProps } from 'vue';
+import { ref, onMounted, defineEmits, defineProps, watch } from 'vue';
 import Sortable from 'sortablejs';
+
 
 const toastRef = ref<any>(null);
 
 const displayMessage = (message: any, type: string) => {
-  toastRef.value?.showToast(message, type)!
-}
+  toastRef.value?.showToast(message, type)!;
+};
 
 interface UploadedImg {
   id: string;
-  file: File;
+  file?: File;
   url: string;
   resolutions: {
     large: string;
@@ -88,6 +94,10 @@ const grid = ref<HTMLDivElement | null>(null);
 
 const images = ref<UploadedImg[]>([...props.modelValue]);
 
+watch(() => props.modelValue, (newVal) => {
+  images.value = [...newVal];
+});
+
 const triggerFileInput = () => {
   fileInput.value?.click();
 };
@@ -108,20 +118,23 @@ const onFilesSelected = (event: Event) => {
         const newImage: UploadedImg = {
           id: crypto.randomUUID(),
           file,
-          url: e.target?.result as string,  // Local file URL
+          url: e.target?.result as string,
+          resolutions: {
+            large: '',
+            small: '',
+            medium: '',
+            thumbnail: '',
+          },
           local: true
         };
-
-        // Add the new image to the images array
         images.value.push(newImage);
-
-        // Emit the updated images to update the parent v-model
         emit('update:modelValue', images.value);
       };
       img.src = e.target?.result as string;
     };
     reader.readAsDataURL(file);
   });
+
   target.value = '';
 };
 
@@ -132,17 +145,14 @@ onMounted(() => {
       ghostClass: 'sortable-ghost',
       draggable: '.image-item:not(.no-drag)',
       onEnd: (evt) => {
-        if (evt.oldIndex === undefined || evt.newIndex === undefined || evt.oldIndex === evt.newIndex) {
-          return;
-        }
+        if (evt.oldIndex === undefined || evt.newIndex === undefined || evt.oldIndex === evt.newIndex) return;
 
-        const newOrder = Array.from(grid.value!.querySelectorAll('.image-item:not(.no-drag)')).map((child) => {
-          const imgElement = child.querySelector('img') as HTMLImageElement;
-          return images.value.find((img) => img.url === imgElement.src)?.id || '';
-        });
+        const newOrder = Array.from(grid.value!.querySelectorAll('.image-item:not(.no-drag)')).map((el) =>
+          (el as HTMLElement).dataset.id
+        );
 
-        if (newOrder.includes('') || newOrder.length !== images.value.length) {
-          displayMessage('❌ Inconsistent drag order: invalid image ID detected.', 'error');
+        if (!newOrder.every(id => id)) {
+          displayMessage('❌ Error: invalid image ID during reordering.', 'error');
           return;
         }
 
@@ -154,14 +164,23 @@ onMounted(() => {
 });
 
 const removeImage = (id: string) => {
-  const image = images.value.find(img => img.id === id);
-  if (image) {
+  const index = images.value.findIndex(img => img.id === id);
+  
+  if (index === -1) return;
+
+  const image = images.value[index];
+
+  if (image.local) {
+    images.value.splice(index, 1); 
+  } else {
     image.deleted = true;
-    // Emit the updated images to update the parent v-model
-    emit('update:modelValue', images.value);
   }
+
+  emit('update:modelValue', images.value);
 };
+
 </script>
+
 
 <style scoped>
 .uploader {

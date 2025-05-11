@@ -347,7 +347,21 @@ watch(productPrice, (newPrice) => {
 
 
 //test
-watch(productImages, (e) => console.log(JSON.stringify(e)))
+watch(productImages, (ele) => {
+
+    const map = ele.map((e) => {
+        return {
+            id: e.id,
+            deleted: e.deleted,
+            local: e.local
+        } 
+    })
+
+
+    console.log(map)
+
+})
+
 
 const { data: initialData } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
@@ -365,7 +379,7 @@ if (initialData.value) {
     const media = initialData.value.media
 
     productName.value = product.name
-    productPrice.value = product.price 
+    productPrice.value = product.price
     productSku.value = product.sku
     productModel.value = product.model
     productBrand.value = product.brand
