@@ -28,7 +28,7 @@ export const useUploadImages = async (images: { file: File }[]) => {
 
 export const useMediaUrl = (mediaPath: string): string => {
   const config = useRuntimeConfig();
-  console.log("[useMediaUrl] mediaCDNBase:", config.public.mediaCDNBase);
+  //console.log("[useMediaUrl] mediaCDNBase:", config.public.mediaCDNBase);
 
   const base = config.public.mediaCDNBase || "";
   const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;

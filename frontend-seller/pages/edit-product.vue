@@ -152,8 +152,8 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-                    {{ productImagesValid }}
-                    <UploadImagesEdit v-model="productImages" @valid="testImages" />
+                    {{ productMediaValid }}
+                    <UploadImagesEdit v-model="productMedia" @valid="onMediaChange" />
                 </div>
 
                 <div class="grid-row">
@@ -319,8 +319,9 @@ const productPostalValid = ref(false)
 const productDescription = ref(null)
 const productDescriptionValid = ref(false)
 
-const productImages = ref(null)
-const productImagesValid = ref(false)
+const productMedia = ref(null)
+const productMediaValid = ref(false)
+const productMediaPosition = ref([])
 
 const productBulletlist = ref(null)
 const productBulletlistValid = ref(false)
@@ -347,7 +348,7 @@ watch(productPrice, (newPrice) => {
 
 
 //test
-watch(productImages, (ele) => {
+watch(productMedia, (ele) => {
 
     const map = ele.map((e) => e.id)
 
@@ -355,8 +356,10 @@ watch(productImages, (ele) => {
     console.log(map)
 })
 
-const testImages = (event) => {
-    console.log("a", event.value.positions)
+const onMediaChange = (event) => {
+    console.log("positions", event.value.positions)
+    productMediaPosition.value = event.value.positions
+    productMediaValid.value = event.valid
 }
 
 const { data: initialData } = await useAsyncData('product', () =>
@@ -382,7 +385,7 @@ if (initialData.value) {
     productOrigin.value = product.origin
     productCity.value = product.city
     productPostal.value = product.postal
-    productImages.value = media
+    productMedia.value = media
     productDescription.value = product.description
     productBulletlist.value = product.bullet_list
     productCategory.value = product.category
@@ -405,7 +408,7 @@ const validateParams = () => {
         !productCityValid.value,
         !productPostalValid.value,
         !productDescriptionValid.value,
-        !productImagesValid.value,
+        !productMediaValid.value,
         !productBulletlistValid.value,
         !productCategoryValid.value,
         !productConditionValid.value,
@@ -432,7 +435,7 @@ const onCreateProduct = async () => {
         return;
     }
 
-    const uploadImages = await useUploadImages(productImages.value?.images).catch((err) => {
+    const uploadImages = await useUploadImages(productMedia.value?.images).catch((err) => {
         displayMessage(err, 'error', 30_000)
         return null
     })

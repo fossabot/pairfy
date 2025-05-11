@@ -116,7 +116,7 @@ const onFilesSelected = (event: Event) => {
   const files = target.files;
   if (!files) return;
 
-  const availableSlots = maxImages - images.value.length;
+  const availableSlots = maxImages - images.value.filter(img => !img.deleted).length;
   const filesToAdd = Array.from(files).slice(0, availableSlots);
 
   filesToAdd.forEach((file) => {
