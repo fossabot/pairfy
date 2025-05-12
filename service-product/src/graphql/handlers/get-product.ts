@@ -1,5 +1,6 @@
 import database from "../../database/client.js";
 import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
+import { sortMediaByPosition } from "../../utils/media.js";
 
 export const getProduct = async (_: any, args: any, context: any) => {
   const params = args.getProductInput;
@@ -33,7 +34,7 @@ export const getProduct = async (_: any, args: any, context: any) => {
 
     const response = {
       product,
-      media: media || [],
+      media: sortMediaByPosition(product.media_position, media),
     };
 
     return response;
