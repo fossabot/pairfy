@@ -348,7 +348,6 @@ watch(productPrice, (newPrice) => {
     productDiscount.value.price = newPrice
 })
 
-
 const onMediaChange = (event) => {
     //test
     /**  
