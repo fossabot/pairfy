@@ -149,7 +149,7 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-                    <UploadImagesLocal @valid="productImages = $event.value" />
+                    <UploadImagesLocal v-model="productImages" @valid="onImagesChange" />
                 </div>
 
                 <div class="grid-row">
@@ -326,8 +326,6 @@ const productConditionValid = ref(false)
 const productColor = ref(null)
 const productColorValid = ref(false)
 
-const productImages = ref(null)
-
 const productDiscount = ref({
     enabled: false,
     price: productPrice.value,
@@ -337,6 +335,35 @@ const productDiscount = ref({
 watch(productPrice, (newPrice) => {
     productDiscount.value.price = newPrice
 })
+
+const productImages = ref([])
+const productImagesValid = ref(false)
+const productImagesPosition = ref([])
+
+const onImagesChange = (event) => {
+    //test
+    
+    const areEqual = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    console.log("imagesCoherence", areEqual(productImages.value.map((e) => e.id), event.value.positions))
+
+    productImagesPosition.value = event.value.positions
+    productImagesValid.value = event.valid
+}
+
+
 
 //test
 watch(productImages, (e) => console.log(e))
