@@ -337,7 +337,7 @@ const productColorValid = ref(false)
 
 const productDiscountEnabled = ref(false);
 const productDiscountPercent = ref(0);
- 
+
 const productDiscount = ref({
     enabled: productDiscountEnabled.value,
     price: productPrice.value,
@@ -349,17 +349,25 @@ watch(productPrice, (newPrice) => {
 })
 
 
-//test
-watch(productMedia, (ele) => {
-
-    const map = ele.map((e) => e.id)
-
-
-    console.log(map)
-})
-
 const onMediaChange = (event) => {
-    console.log("positions", event.value.positions)
+    //test
+    /**  
+    const areEqual = (arr1, arr2) => {
+        if (arr1.length !== arr2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    console.log("mediaCoherence", areEqual(productMedia.value.map((e) => e.id), event.value.positions))
+*/
     productMediaPosition.value = event.value.positions
     productMediaValid.value = event.valid
 }
