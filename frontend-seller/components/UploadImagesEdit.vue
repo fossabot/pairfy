@@ -133,19 +133,9 @@ const triggerFileInput = () => {
   fileInput.value?.click();
 };
 
-const onFilesSelected = (event: Event) => {
-  const target = event.target as HTMLInputElement;
-  const files = target.files;
-  if (!files) return;
 
-  const availableSlots = MAX_IMAGES - images.value.filter(img => !img.deleted).length;
-
-  if (availableSlots <= 0) {
-    displayMessage(`⚠️ No more slots available (${MAX_IMAGES} max).`, 'warning');
-    return;
-  }
-
-  const filesToAdd = Array.from(files)
+function validateFiles(files: FileList, availableSlots: number): File[] {
+  return Array.from(files)
     .filter((file) => {
       const extension = getFileExtension(file.name);
       const isValidMime = ALLOWED_MIME_TYPES.includes(file.type);
@@ -164,7 +154,21 @@ const onFilesSelected = (event: Event) => {
       return true;
     })
     .slice(0, availableSlots);
+}
 
+const onFilesSelected = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  const files = target.files;
+  if (!files) return;
+
+  const availableSlots = MAX_IMAGES - images.value.filter(img => !img.deleted).length;
+
+  if (availableSlots <= 0) {
+    displayMessage(`⚠️ No more slots available (${MAX_IMAGES} max).`, 'warning');
+    return;
+  }
+
+  const filesToAdd = validateFiles(files, availableSlots)
 
   function validateImageResolution(img: HTMLImageElement, file: File): boolean {
     if (
@@ -182,7 +186,7 @@ const onFilesSelected = (event: Event) => {
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        
+
         if (!validateImageResolution(img, file)) return
 
         const newImage: UploadedImg = {
