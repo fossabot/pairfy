@@ -122,7 +122,7 @@ watch(() => props.modelValue, (newVal) => {
 
 const positions = computed(() => images.value.map((img) => img.id));
 
-const imageCounter = computed(() => images.value.filter(img => !img.deleted));
+const imageCounter = computed(() => images.value.filter(img => !img.deleted).length);
 
 const validate = () => {
   const hasValidImage = images.value.some(img => !img.deleted);
@@ -139,6 +139,11 @@ const onFilesSelected = (event: Event) => {
   if (!files) return;
 
   const availableSlots = MAX_IMAGES - images.value.filter(img => !img.deleted).length;
+
+  if (availableSlots <= 0) {
+    displayMessage(`⚠️ No more slots available (${MAX_IMAGES} max).`, 'warning');
+    return;
+  }
 
   const filesToAdd = Array.from(files)
     .filter((file) => {
