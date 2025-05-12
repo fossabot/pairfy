@@ -319,10 +319,6 @@ const productPostalValid = ref(false)
 const productDescription = ref(null)
 const productDescriptionValid = ref(false)
 
-const productMedia = ref(null)
-const productMediaValid = ref(false)
-const productMediaPosition = ref([])
-
 const productBulletlist = ref(null)
 const productBulletlistValid = ref(false)
 
@@ -334,6 +330,10 @@ const productConditionValid = ref(false)
 
 const productColor = ref(null)
 const productColorValid = ref(false)
+
+const productMedia = ref(null)
+const productMediaValid = ref(false)
+const productMediaPosition = ref([])
 
 const productDiscountEnabled = ref(false);
 const productDiscountPercent = ref(0);

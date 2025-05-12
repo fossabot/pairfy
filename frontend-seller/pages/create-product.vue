@@ -24,16 +24,20 @@
                         Fill in the details to publish a new product.
                     </div>
                     <div class="grid-item">
-                        <InputProductName id="create-product-name" placeholder="e.g. Wireless Headphones"
-                            @valid="productName = $event.value" />
+                        <InputProductName v-model="productName" id="create-product-name"
+                            placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPrice id="create-product-price" @valid="productPrice = $event.value" />
-                        <InputProductSku id="create-product-sku" @valid="productSku = $event.value" />
+                        <InputProductPrice v-model="productPrice" id="create-product-price"
+                            @valid="productPriceValid = $event.valid" />
+                        <InputProductSku v-model="productSku" id="create-product-sku"
+                            @valid="productSkuValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductModel id="create-product-model" @valid="productModel = $event.value" />
-                        <InputProductBrand id="create-product-brand" @valid="productBrand = $event.value" />
+                        <InputProductModel v-model="productModel" id="create-product-model"
+                            @valid="productModelValid = $event.valid" />
+                        <InputProductBrand v-model="productBrand" id="create-product-brand"
+                            @valid="productBrandValid = $event.valid" />
                     </div>
                 </div>
 
@@ -58,9 +62,10 @@
                     <div class="grid-subtitle">
                         Data required for calculating shipping time.
                     </div>
+             
                     <div class="grid-item">
                         <InputSelect v-model="productOrigin" label="Country" :options="countries"
-                            @valid="productOrigin = $event.value">
+                            @valid="productOriginValid = $event.valid">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
@@ -68,8 +73,8 @@
                                 </span>
                             </template>
                         </InputSelect>
-
-                        <InputProductCity id="create-product-city" @valid="productCity = $event.value" />
+                        {{ productCity }} {{ productCityValid }}
+                        <InputProductCity v-model="productCity" id="create-product-city" @valid="productCityValid = $event.valid" />
                     </div>
                     <div class="grid-item">
                         <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value" />
@@ -285,19 +290,46 @@ const categories = computed(() =>
 const countries = ref(countryList)
 
 const productName = ref(null)
+const productNameValid = ref(false)
+
 const productPrice = ref(null)
+const productPriceValid = ref(false)
+
 const productSku = ref(null)
+const productSkuValid = ref(false)
+
 const productModel = ref(null)
+const productModelValid = ref(false)
+
 const productBrand = ref(null)
+const productBrandValid = ref(false)
+
 const productOrigin = ref(null)
+const productOriginValid = ref(false)
+
 const productCity = ref(null)
+const productCityValid = ref(false)
+
 const productPostal = ref(null)
+const productPostalValid = ref(false)
+
 const productDescription = ref(null)
-const productImages = ref(null)
+const productDescriptionValid = ref(false)
+
 const productBulletlist = ref(null)
+const productBulletlistValid = ref(false)
+
 const productCategory = ref(null)
+const productCategoryValid = ref(false)
+
 const productCondition = ref(null)
+const productConditionValid = ref(false)
+
 const productColor = ref(null)
+const productColorValid = ref(false)
+
+const productImages = ref(null)
+
 const productDiscount = ref({
     enabled: false,
     price: productPrice.value,
@@ -309,24 +341,24 @@ watch(productPrice, (newPrice) => {
 })
 
 //test
-watch(productImages, (e) => console.log(e?.images))
+watch(productImages, (e) => console.log(e))
 
 const validateParams = () => {
     const params = [
-        !productName.value,
-        !productPrice.value,
-        !productSku.value,
-        !productModel.value,
-        !productBrand.value,
-        !productOrigin.value,
-        !productCity.value,
-        !productPostal.value,
-        !productDescription.value,
-        !productImages.value,
-        !productBulletlist.value,
-        !productCategory.value,
-        !productCondition.value,
-        !productColor.value
+        !productNameValid.value,
+        !productPriceValid.value,
+        !productSkuValid.value,
+        !productModelValid.value,
+        !productBrandValid.value,
+        !productOriginValid.value,
+        !productCityValid.value,
+        !productPostalValid.value,
+        !productDescriptionValid.value,
+        !productMediaValid.value,
+        !productBulletlistValid.value,
+        !productCategoryValid.value,
+        !productConditionValid.value,
+        !productColorValid.value
     ]
 
     console.log(params)

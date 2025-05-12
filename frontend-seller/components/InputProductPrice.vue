@@ -15,7 +15,7 @@
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
       inputmode="numeric"
-      @blur="validateInput(internalValue)"
+      @blur="validate"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'price' },
-  modelValue: { type: Number, default: 0 },
+  modelValue: { type: [Number, null], default: null },
   label: { type: String, default: 'Price (USD)' },
   placeholder: { type: String, default: '0' },
   focus: { type: Boolean, default: false },
@@ -35,13 +35,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number): void
+  (e: 'update:modelValue', value: number | null): void
   (e: 'valid', payload: { valid: boolean, value: number | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue.toString()) 
-
+const internalValue = ref(props.modelValue?.toString() ?? '')
 const errorMessage = ref('')
 
 const dollarRegex = /^[0-9]+$/
@@ -56,7 +55,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
-  validateInput(internalValue.value) 
+  validate()
 })
 
 watch(() => props.focus, (newVal) => {
@@ -64,43 +63,49 @@ watch(() => props.focus, (newVal) => {
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== Number(internalValue.value)) internalValue.value = val.toString() 
+  const normalized = val?.toString() ?? ''
+  if (normalized !== internalValue.value) internalValue.value = normalized
 })
 
-watch(internalValue, (val) => {
-  emit('update:modelValue', Number(val)) 
-  validateInput(val)
+watch(internalValue, () => {
+  emitNormalizedValue()
+  validate()
 })
 
-const onInput = (e: Event) => {
+function onInput(e: Event) {
   const target = e.target as HTMLInputElement
-  const digitsOnly = target.value.replace(/\D+/g, '') 
-  internalValue.value = digitsOnly
+  internalValue.value = target.value.replace(/\D+/g, '')
 }
 
-const validateInput = (value: string) => {
-  const numValue = Number(value)  
+function emitNormalizedValue() {
+  const trimmed = internalValue.value.trim()
+  const numeric = trimmed === '' ? null : Number(trimmed)
+  emit('update:modelValue', Number.isNaN(numeric!) ? null : numeric)
+}
 
-  const validators: { condition: boolean; message: string }[] = [
-    { condition: props.required && value.trim() === '', message: messages.required },
-    { condition: value.length > props.maxLength, message: messages.maxLength },
-    { condition: !dollarRegex.test(value), message: messages.invalid },
-    { condition: numValue < 5, message: messages.minValue },
-    { condition: numValue > 999999, message: messages.maxValue },
+function validate() {
+  const value = internalValue.value.trim()
+  const numValue = Number(value)
+
+  const rules = [
+    { invalid: props.required && value === '', message: messages.required },
+    { invalid: value.length > props.maxLength, message: messages.maxLength },
+    { invalid: !!value && !dollarRegex.test(value), message: messages.invalid },
+    { invalid: !!value && numValue < 5, message: messages.minValue },
+    { invalid: !!value && numValue > 999999, message: messages.maxValue },
   ]
 
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
+  const failed = rules.find(r => r.invalid)
+  if (failed) {
+    errorMessage.value = failed.message
+    emit('valid', { valid: false, value: null })
+  } else {
+    errorMessage.value = ''
+    emit('valid', { valid: true, value: value === '' ? null : numValue })
   }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value: numValue }) 
 }
 </script>
+
 
 
 <style scoped>
