@@ -92,11 +92,13 @@ function applyDiscount(price: number, percentage: number): number {
 }
 
 
+const normalizedPrice = computed(() => {
+  return originalPrice.value ?? 0
+})
+
 const discountedPrice = computed(() => {
-  if (!enabled.value || !originalPrice.value || !discountPercent.value) return originalPrice.value || 0
-
-
-  return applyDiscount(originalPrice.value, discountPercent.value)
+  if (!enabled.value || discountPercent.value === 0) return normalizedPrice.value
+  return applyDiscount(normalizedPrice.value, discountPercent.value)
 })
 </script>
 

@@ -335,11 +335,13 @@ const productConditionValid = ref(false)
 const productColor = ref(null)
 const productColorValid = ref(false)
 
-
+const productDiscountEnabled = ref(false);
+const productDiscountPercent = ref(0);
+ 
 const productDiscount = ref({
-    enabled: false,
+    enabled: productDiscountEnabled.value,
     price: productPrice.value,
-    discount: 0,
+    discount: productDiscountPercent.value
 })
 
 watch(productPrice, (newPrice) => {
@@ -392,8 +394,8 @@ if (initialData.value) {
     productCondition.value = product.condition_
     productColor.value = product.color
 
-    //productDiscount.value.enabled = product.discount
-    //productDiscount.value.discount = product.discount_percent
+    productDiscountEnabled.value = product.discount
+    productDiscountPercent.value = product.discount_percent
 }
 
 
