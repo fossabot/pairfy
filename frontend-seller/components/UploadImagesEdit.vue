@@ -166,18 +166,24 @@ const onFilesSelected = (event: Event) => {
     .slice(0, availableSlots);
 
 
+  function validateImageResolution(img: HTMLImageElement, file: File): boolean {
+    if (
+      img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
+      img.width > MAX_WIDTH || img.height > MAX_HEIGHT
+    ) {
+      displayMessage(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`, 'error');
+      return false;
+    }
+    return true;
+  }
+
   filesToAdd.forEach((file) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        if (
-          img.width < MIN_WIDTH || img.height < MIN_HEIGHT ||
-          img.width > MAX_WIDTH || img.height > MAX_HEIGHT
-        ) {
-          displayMessage(`❌ "${file.name}" rejected due to resolution: ${img.width}x${img.height}`, 'error');
-          return;
-        }
+        
+        if (!validateImageResolution(img, file)) return
 
         const newImage: UploadedImg = {
           id: crypto.randomUUID(),
