@@ -4,6 +4,7 @@ import { ApiError, createEvent, ERROR_CODES } from "@pairfy/common";
 import type { Request, Response, NextFunction } from "express";
 import { verifyParams } from "../validators/verify-group.js";
 import { internalAuth } from "../utils/internalAuth.js";
+import { generateMediaUrl } from "../utils/index.js";
 
 export const verifyGroupMiddlewares: any = [
   express.json({ limit: "1mb", strict: true, type: ["application/json"] }),
@@ -27,7 +28,7 @@ export const verifyGroupHandler = async (
       });
     }
 
-    const { product_id, media_group_id, agent_id, file_ids, thumbnail_id } =
+    const { product_id, media_group_id, agent_id, file_ids } =
       validateParams.data;
 
     connection = await database.client.getConnection();
@@ -78,8 +79,6 @@ export const verifyGroupHandler = async (
     for (const file of pendingFiles) {
       file.product_id = product_id;
 
-      file.thumbnail =  file.id === thumbnail_id 
-
       await createEvent(
         connection,
         timestamp,
@@ -90,13 +89,23 @@ export const verifyGroupHandler = async (
       );
     }
 
+    const findThumbnail = rows.filter((file: any) => file.id === file_ids[0]);
+
+    const thumbnail_url = generateMediaUrl(
+      media_group_id,
+      findThumbnail.id,
+      findThumbnail.filename,
+      "thumbnail",
+      "webp"
+    );
+
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     await connection.commit();
 
     res.status(200).json({
       success: true,
-      data: { media_group_id, file_ids },
+      data: { media_group_id, file_ids, thumbnail_url },
     });
   } catch (error) {
     if (connection) await connection.rollback();

@@ -7,6 +7,5 @@ export const verifyParams = z.object({
       ),
     file_ids: z.array(z.string().min(1).max(100)).min(1).max(11),
     agent_id: z.string().min(1).max(100),
-    product_id: z.string().min(1).max(100),
-    thumbnail_id: z.string().min(1).max(100)
+    product_id: z.string().min(1).max(100)
   });

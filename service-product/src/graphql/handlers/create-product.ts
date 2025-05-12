@@ -73,8 +73,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
         agent_id: SELLER.id,
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
-        product_id: productId,
-        thumbnail_id: params.file_ids[0],
+        product_id: productId
       },
       process.env.INTERNAL_ENDPOINT_SECRET as string
     );
@@ -91,6 +90,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
       media_group_id: params.media_group_id,
       media_position: params.file_ids,
       seller_id: SELLER.id,
+      thumbnail_url: isValidGroup.thumbnail_url,
       name: params.name,
       price: params.price,
       sku: params.sku,
