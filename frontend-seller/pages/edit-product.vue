@@ -319,7 +319,7 @@ const productPostalValid = ref(false)
 const productDescription = ref(null)
 const productDescriptionValid = ref(false)
 
-const productBulletlist = ref(null)
+const productBulletlist = ref([])
 const productBulletlistValid = ref(false)
 
 const productCategory = ref(null)

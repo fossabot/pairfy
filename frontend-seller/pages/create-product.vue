@@ -125,9 +125,8 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-                    {{ productBulletlist }} {{ productBulletlistValid }}
                     <div class="grid-item">
-                        <InputProductBullet  @valid="productBulletlistValid = $event.valid" />
+                        <InputProductBullet v-model="productBulletlist" @valid="productBulletlistValid = $event.valid" />
                     </div>
                 </div>
 
@@ -315,7 +314,7 @@ const productPostalValid = ref(false)
 const productDescription = ref(null)
 const productDescriptionValid = ref(false)
 
-const productBulletlist = ref(null)
+const productBulletlist = ref([])
 const productBulletlistValid = ref(false)
 
 const productCategory = ref(null)

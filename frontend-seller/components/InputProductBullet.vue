@@ -5,14 +5,14 @@
     <div class="list-container">
       <div v-for="(item, index) in items" :key="index" class="item">
         <textarea
-          :value="item"
+          v-model="items[index]"
           placeholder="•"
           :maxlength="maxLength"
           class="textarea"
           :class="{ 'is-invalid': showError[index] }"
           :aria-invalid="showError[index]"
           @focus="markTouched(index)"
-          @input="(e) => handleInput(index, e)"
+          @input="autoResize($event)"
         />
       </div>
     </div>
@@ -29,7 +29,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 const props = defineProps({
   modelValue: {
     type: Array as () => string[],
-    default: () => Array(4).fill(''),
+    default: () => [],
   },
   label: {
     type: String,
@@ -45,70 +45,83 @@ const emit = defineEmits(['update:modelValue', 'valid'])
 
 const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u
 
-const items = ref<string[]>([...props.modelValue])
-const touched = ref<boolean[]>(items.value.map(() => false))
-const showError = ref<boolean[]>(items.value.map(() => false))
+function normalizeToFour(arr: string[]): string[] {
+  return [...arr.slice(0, 4), ...Array(4 - arr.length).fill('')]
+}
+
+const items = ref<string[]>(normalizeToFour(props.modelValue))
+const touched = ref<boolean[]>(Array(4).fill(false))
+const showError = ref<boolean[]>(Array(4).fill(false))
 
 watch(() => props.modelValue, (newValue) => {
-  items.value = [...newValue]
-  resetValidationState()
+  items.value = normalizeToFour(newValue)
+  resetValidation()
   validateAll()
 })
 
-function resetValidationState() {
-  touched.value = items.value.map(() => false)
-  showError.value = items.value.map(() => false)
+function resetValidation() {
+  touched.value.fill(false)
+  showError.value.fill(false)
 }
 
-const overallErrorMessage = computed(() => {
-  const hasValid = items.value.some(isValidItem)
-  const hasInvalid = items.value.some((val) => val.trim() !== '' && !isValidItem(val))
-  if (!hasValid) return 'At least one valid feature is required.'
-  if (hasInvalid) return 'Some features contain invalid characters.'
-  return ''
-})
-
-function isValidItem(text: string): boolean {
-  const trimmed = text.trim()
-  return trimmed !== '' && bulletRegex.test(trimmed)
-}
+const isValidItem = (text: string): boolean =>
+  text.trim() !== '' && bulletRegex.test(text.trim())
 
 function markTouched(index: number) {
   touched.value[index] = true
 }
 
-function handleInput(index: number, event: Event) {
+function autoResize(event: Event) {
   const el = event.target as HTMLTextAreaElement
-  const value = el.value
   el.style.height = 'auto'
   el.style.height = el.scrollHeight + 'px'
-
-  items.value[index] = value
-  validateItem(index)
-
-  emit('update:modelValue', [...items.value])
-  emitValidation()
 }
 
 function validateItem(index: number) {
-  showError.value[index] = touched.value[index] && !isValidItem(items.value[index])
+  showError.value[index] =
+    touched.value[index] && !isValidItem(items.value[index])
 }
 
 function validateAll() {
-  items.value.forEach((_, idx) => validateItem(idx))
+  for (let i = 0; i < 4; i++) validateItem(i)
   emitValidation()
 }
 
+const overallErrorMessage = computed(() => {
+  const validItems = items.value.filter(isValidItem)
+  const hasInvalid = items.value.some(
+    (val) => val.trim() !== '' && !isValidItem(val)
+  )
+  if (validItems.length === 0) return 'At least one valid feature is required.'
+  if (hasInvalid) return 'Some features contain invalid characters.'
+  return ''
+})
+
+watch(items, (newItems) => {
+  const normalized = normalizeToFour(newItems)
+  const current = normalizeToFour(props.modelValue)
+
+  if (JSON.stringify(normalized) !== JSON.stringify(current)) {
+    emit('update:modelValue', normalized)
+  }
+
+  emitValidation()
+}, { deep: true })
+
+
 function emitValidation() {
-  const valid = items.value.some(isValidItem) &&
-    items.value.every((val) => val.trim() === '' || isValidItem(val))
-  emit('valid', { valid, value: valid ? [...items.value] : null })
+  const normalized = normalizeToFour(items.value)
+  const valid =
+    normalized.some(isValidItem) &&
+    normalized.every((val) => val.trim() === '' || isValidItem(val))
+  emit('valid', { valid, value: valid ? [...normalized] : null })
 }
 
 onMounted(() => {
   validateAll()
 })
 </script>
+
 
 
 <style scoped>
