@@ -109,7 +109,7 @@ onMounted(() => {
 }
 
 .p-InputProductCity-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {

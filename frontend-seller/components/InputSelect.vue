@@ -203,7 +203,7 @@ watch(
 }
 
 .dropdown-display.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .chevron-down-icon {

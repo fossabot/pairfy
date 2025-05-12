@@ -102,7 +102,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 .switch-group.is-invalid .switch-button {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {

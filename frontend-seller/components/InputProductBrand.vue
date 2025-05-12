@@ -118,7 +118,7 @@ const onBeforeInput = (e: Event) => {
 }
 
 .p-InputProductBrand-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {

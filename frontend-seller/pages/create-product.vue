@@ -62,7 +62,7 @@
                     <div class="grid-subtitle">
                         Data required for calculating shipping time.
                     </div>
-             
+
                     <div class="grid-item">
                         <InputSelect v-model="productOrigin" label="Country" :options="countries"
                             @valid="productOriginValid = $event.valid">
@@ -73,11 +73,13 @@
                                 </span>
                             </template>
                         </InputSelect>
- 
-                        <InputProductCity v-model="productCity" id="create-product-city" @valid="productCityValid = $event.valid" />
+
+                        <InputProductCity v-model="productCity" id="create-product-city"
+                            @valid="productCityValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPostal v-model="productPostal" id="create-product-postal" @valid="productPostalValid = $event.valid" />
+                        <InputProductPostal v-model="productPostal" id="create-product-postal"
+                            @valid="productPostalValid = $event.valid" />
                     </div>
                 </div>
 
@@ -126,7 +128,8 @@
                         List of characteristics that are displayed with priority.
                     </div>
                     <div class="grid-item">
-                        <InputProductBullet v-model="productBulletlist" @valid="productBulletlistValid = $event.valid" />
+                        <InputProductBullet v-model="productBulletlist"
+                            @valid="productBulletlistValid = $event.valid" />
                     </div>
                 </div>
 
@@ -201,7 +204,7 @@
 
                     <div class="grid-item">
                         <InputSelect v-model="productCategory" :options="categories" label="Category"
-                            @valid="productCategory = $event.value">
+                            @valid="productCategoryValid = $event.valid">
                             <template #option="{ option }">
                                 <span class="flex">
                                     <span>{{ option.label }}</span>
@@ -209,15 +212,13 @@
                             </template>
                         </InputSelect>
                     </div>
-
                     <div class="grid-item">
-                        <InputProductColor @valid="productColor = $event.value" />
+                        <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
                     </div>
-
                     <div class="grid-item">
-                        <InputProductCondition @valid="productCondition = $event.value" />
+                        <InputProductCondition v-model="productCondition"
+                            @valid="productConditionValid = $event.valid" />
                     </div>
-
                 </div>
 
                 <div class="grid-row">
@@ -323,7 +324,7 @@ const productCategoryValid = ref(false)
 const productCondition = ref(null)
 const productConditionValid = ref(false)
 
-const productColor = ref(null)
+const productColor = ref('#000000')
 const productColorValid = ref(false)
 
 const productDiscount = ref({
@@ -342,7 +343,7 @@ const productImagesPosition = ref([])
 
 const onImagesChange = (event) => {
     //test
-    
+
     const areEqual = (arr1, arr2) => {
         if (arr1.length !== arr2.length) {
             return false;

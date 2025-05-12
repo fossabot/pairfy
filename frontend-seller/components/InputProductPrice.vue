@@ -118,9 +118,9 @@ function validate() {
 .p-InputPrice-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
+  transition: border-color 0.2s;
   padding: 0.75rem 1rem;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .p-InputPrice-input:focus-within {
@@ -128,7 +128,7 @@ function validate() {
 }
 
 .p-InputPrice-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
