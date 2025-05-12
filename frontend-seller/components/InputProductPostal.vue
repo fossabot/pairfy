@@ -1,11 +1,22 @@
 <template>
   <div class="p-InputProductPostal">
-    <label :for="props.id" class="title-text">{{ label }}</label>
-    <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @drop.prevent :placeholder="placeholder"
-      class="p-InputProductPostal-input" :class="{ 'is-invalid': errorMessage }" :maxlength="maxLength"
-      :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text"
-      @blur="validateInput(internalValue)" />
-    <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
+    <label :for="id" class="title-text">{{ label }}</label>
+    <input
+      ref="inputRef"
+      v-model="normalizedValue"
+      :id="id"
+      type="text"
+      :placeholder="placeholder"
+      class="p-InputProductPostal-input"
+      :class="{ 'is-invalid': errorMessage }"
+      :maxlength="maxLength"
+      :aria-invalid="!!errorMessage"
+      :aria-describedby="`${id}-error`"
+      inputmode="text"
+      @drop.prevent
+      @blur="validate"
+    />
+    <p class="error-text" :class="{ visible: errorMessage }" :id="`${id}-error`">
       {{ errorMessage || '-' }}
     </p>
   </div>
@@ -14,7 +25,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'product-postal' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, null], default: null },
   label: { type: String, default: 'Postal Code' },
   placeholder: { type: String, default: '10001' },
   focus: { type: Boolean, default: false },
@@ -23,13 +34,22 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | null): void
   (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const rawValue = ref<string>(props.modelValue ?? '')
 const errorMessage = ref('')
+
+const normalizedValue = computed({
+  get: () => rawValue.value,
+  set: (val: string) => {
+    rawValue.value = val
+    emit('update:modelValue', val.trim() === '' ? null : val)
+    validate()
+  },
+})
 
 const postalRegex = /^[\p{L}\p{N}\s\-]+$/u
 
@@ -38,45 +58,37 @@ const messages = {
   invalid: 'Only letters, numbers, spaces and hyphens are allowed.',
 }
 
+const validate = () => {
+  const value = rawValue.value.trim()
+
+  const errors: string[] = []
+
+  if (props.required && value === '') {
+    errors.push(messages.required)
+  } else if (value.length > props.maxLength) {
+    errors.push(`Maximum length is ${props.maxLength} characters.`)
+  } else if (value && !postalRegex.test(value)) {
+    errors.push(messages.invalid)
+  }
+
+  errorMessage.value = errors[0] || ''
+  emit('valid', { valid: errors.length === 0, value: value || null })
+}
+
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
-  validateInput(internalValue.value)
-})
-
-watch(() => props.focus, (newVal) => {
-  if (newVal) inputRef.value?.focus()
+  validate()
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
+  if ((val ?? '') !== rawValue.value) rawValue.value = val ?? ''
 })
 
-watch(internalValue, (val) => {
-  emit('update:modelValue', val)
-  validateInput(val)
+watch(() => props.focus, (focus) => {
+  if (focus) inputRef.value?.focus()
 })
-
-const validateInput = (value: string) => {
-  const validators: { condition: boolean; message: string }[] = [
-    { condition: props.required && value.trim() === '', message: messages.required },
-    { condition: value.length > props.maxLength, message: `Maximum length is ${props.maxLength} characters.` },
-    { condition: !postalRegex.test(value), message: messages.invalid },
-  ]
-
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
-  }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value })
-}
-
-
 </script>
+
 
 <style scoped>
 .p-InputProductPostal {
@@ -98,7 +110,7 @@ const validateInput = (value: string) => {
 }
 
 .p-InputProductPostal-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {

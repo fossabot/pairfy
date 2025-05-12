@@ -73,12 +73,11 @@
                                 </span>
                             </template>
                         </InputSelect>
-                        {{ productCity }} {{ productCityValid }}
+ 
                         <InputProductCity v-model="productCity" id="create-product-city" @valid="productCityValid = $event.valid" />
                     </div>
                     <div class="grid-item">
-                        <InputProductPostal id="create-product-postal" @valid="productPostal = $event.value" />
-
+                        <InputProductPostal v-model="productPostal" id="create-product-postal" @valid="productPostalValid = $event.valid" />
                     </div>
                 </div>
 
@@ -102,7 +101,7 @@
                         Create a product description using the AI tool.
                     </div>
                     <div class="grid-item">
-                        <EditorComp @valid="productDescription = $event.value" />
+                        <EditorComp v-model="productDescription" @valid="productDescriptionValid = $event.valid" />
                     </div>
                 </div>
 
@@ -126,9 +125,9 @@
                     <div class="grid-subtitle">
                         List of characteristics that are displayed with priority.
                     </div>
-
+                    {{ productBulletlist }} {{ productBulletlistValid }}
                     <div class="grid-item">
-                        <InputProductBullet @valid="productBulletlist = $event.value" />
+                        <InputProductBullet  @valid="productBulletlistValid = $event.valid" />
                     </div>
                 </div>
 
