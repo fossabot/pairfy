@@ -363,8 +363,7 @@ const onImagesChange = (event) => {
     console.log(productImages.value.map((e) => {
         return {
             id: e.id,
-            local: e.local,
-            deleted: e.deleted
+            local: e.local
         }
     }))
 
@@ -455,11 +454,9 @@ const onApplyChanges = async () => {
             return
         }
 
-        const mediaNotDeleted = productImages.value.filter(item => !item.deleted);
+        const mediaNotLocal = productImages.value.filter(item => !item.local);
 
-        const mediaNotLocal = mediaNotDeleted.filter(item => !item.local);
-
-        const mediaLocal = mediaNotDeleted.filter(item => item.local === true);
+        const mediaLocal = productImages.value.filter(item => item.local === true);
 
         const media = {
             media_group_id: productData.value?.media_group_id,
