@@ -137,6 +137,11 @@ if (import.meta.server) {
 </script>
 
 <style scoped>
+
+*{
+  transition: 0.2s ease-in-out;
+}
+
 .layout {
   background: var(--background-b);
   background: linear-gradient(135deg,
@@ -157,9 +162,16 @@ if (import.meta.server) {
 .sidebar {
   border-bottom-right-radius: var(--radius-c);
   border-top-right-radius: var(--radius-c);
+  border-right: 1px solid var(--border-a);
   background: var(--background-a);
+  transition: width 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 14rem;
+}
+
+.sidebar.collapsed {
+  width: 4rem;
 }
 
 nav {
@@ -180,6 +192,7 @@ nav a {
 
 nav a:hover {
   background: var(--background-b);
+  color: var(--primary-a);
 }
 
 .nav-button {
@@ -188,7 +201,7 @@ nav a:hover {
   display: flex;
   width: 4rem;
   height: 3.5rem;
-  min-width: 3rem;
+  min-width: 4rem;
 }
 
 .icon {
@@ -210,7 +223,6 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 3rem;
   visibility: initial;
 }
 
@@ -230,13 +242,13 @@ nav a:hover {
 .layout-top-image {
   justify-content: center;
   align-items: center;
-  min-width: 3rem;
+  min-width: 4rem;
   display: flex;
   height: 4rem;
   width: 4rem;
 }
 
 .layout-top-image img {
-  width: 3rem;
+  width: 2.5rem;
 }
 </style>
