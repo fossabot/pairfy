@@ -211,7 +211,7 @@ nav a:hover {
 .label {
   animation: fade-in 0.5s ease forwards;
   white-space: nowrap;
-  padding-right: 5rem;
+  padding-right: 3rem;
   visibility: initial;
 }
 

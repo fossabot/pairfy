@@ -31,11 +31,10 @@
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
-                    :columnWidths="{ id: '6rem', category: '8rem', price: '6rem', created_at: '6rem', moderated: '4rem' }">
+                    :columnWidths="{ id: '7rem', category: '8rem', price: '6rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
-
                     </template>
 
                     <template #col-id="{ value }">
@@ -126,14 +125,24 @@ const range = computed(() => {
     return `${start} - ${end} of ${productCount.value}`
 })
 
-const { data: initialData } = await useAsyncData('products', () =>
+const { data: initialData, error: getProductsError } = useAsyncData('products', () =>
     $fetch('/api/product/getProducts', {
         method: 'POST',
         credentials: 'include',
         body: {},
-        headers: useRequestHeaders(['cookie'])
+        headers: useRequestHeaders(['cookie']),
+        async onResponseError({ response }) {
+            throw new Error(JSON.stringify(response._data.data));
+        },
     })
 )
+
+onMounted(() => {
+  if (getProductsError.value) {
+    console.error('Error fetching the products:', getProductsError.value)
+    displayMessage('The products could not be loaded. Please try again later.' + getProductsError.value, 'error', 10_000)
+  }
+})
 
 if (initialData.value) {
     products.value = initialData.value.products

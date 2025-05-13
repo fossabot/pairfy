@@ -364,11 +364,6 @@ const onImagesChange = (event) => {
     productImagesValid.value = event.valid
 }
 
-
-
-//test
-watch(productImages, (e) => console.log(e))
-
 const validateParams = () => {
     const params = [
         !productNameValid.value,
@@ -397,7 +392,6 @@ const onCreateProduct = async () => {
     loading.value = true
 
     try {
-
         if (validateParams()) {
             displayMessage(
                 `Some required details are missing. Please ensure all mandatory fields — such as product images, category, and description — are properly filled out before submitting.`,
@@ -414,28 +408,30 @@ const onCreateProduct = async () => {
             return null
         }
 
+        const createProductBody = {
+            name: productName.value,
+            price: productPrice.value,
+            sku: productSku.value,
+            model: productModel.value,
+            brand: productBrand.value,
+            description: productDescription.value,
+            category: productCategory.value,
+            bullet_list: productBulletlist.value,
+            color: productColor.value,
+            condition_: productCondition.value,
+            origin: productOrigin.value,
+            city: productCity.value,
+            postal: productPostal.value,
+            discount: productDiscount.value.enabled,
+            discount_percent: productDiscount.value.discount,
+            media_group_id: uploadImages.data.media_group_id,
+            file_ids: uploadImages.data.file_ids,
+        }
+
         const { data, error } = await useFetch('/api/product/createProduct', {
             method: 'POST',
             credentials: 'include',
-            body: {
-                name: productName.value,
-                price: productPrice.value,
-                sku: productSku.value,
-                model: productModel.value,
-                brand: productBrand.value,
-                description: productDescription.value,
-                category: productCategory.value,
-                bullet_list: productBulletlist.value,
-                color: productColor.value,
-                condition_: productCondition.value,
-                origin: productOrigin.value,
-                city: productCity.value,
-                postal: productPostal.value,
-                discount: productDiscount.value.enabled,
-                discount_percent: productDiscount.value.discount,
-                media_group_id: uploadImages.data.media_group_id,
-                file_ids: uploadImages.data.file_ids,
-            },
+            body: createProductBody,
             async onResponseError({ response }) {
                 throw new Error(JSON.stringify(response._data?.data || 'Unknown server error'))
             }
@@ -446,10 +442,9 @@ const onCreateProduct = async () => {
             displayMessage(error.value, 'error', 30_000)
         }
 
-        if (!data.value?.success) {
-            displayMessage(data.value?.message ?? 'Unexpected response from server.', 'error', 30_000)
-        }
-
+        if (data.value?.success) {
+            displayMessage(data.value.message, 'success', 30_000)
+        } 
     } catch (err) {
         console.error('Error during product creation:', err)
         displayMessage(err?.message || 'Product creation failed.', 'error', 30_000)

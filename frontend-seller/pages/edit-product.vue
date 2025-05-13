@@ -272,6 +272,8 @@
 import categoryList from '@/assets/json/categories.json'
 import countryList from '@/assets/json/countries.json'
 
+const route = useRoute()
+
 const toastRef = ref(null);
 
 const displayMessage = (message, type, duration) => {
@@ -281,12 +283,10 @@ const displayMessage = (message, type, duration) => {
 const loading = ref(false)
 
 const categories = computed(() =>
-
     Object.values(categoryList).map(category => ({
         label: category.label,
         code: category.code,
     }))
-
 )
 
 const countries = ref(countryList)
@@ -327,7 +327,7 @@ const productCategoryValid = ref(false)
 const productCondition = ref(null)
 const productConditionValid = ref(false)
 
-const productColor = ref(null)
+const productColor = ref('#000000')
 const productColorValid = ref(false)
 
 const productImages = ref([])
@@ -370,16 +370,26 @@ const onImagesChange = (event) => {
     productImagesValid.value = event.valid
 }
 
-const { data: initialData } = await useAsyncData('product', () =>
+const { data: initialData, error: getProductError } = useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
         method: 'POST',
         credentials: 'include',
         body: {
-            id: "PRD-250509-5UEPXKQ"
+            id: route.query.id
         },
-        headers: useRequestHeaders(['cookie'])
+        headers: useRequestHeaders(['cookie']),
+        async onResponseError({ response }) {
+            throw new Error(JSON.stringify(response._data.data));
+        },
     })
 )
+
+onMounted(() => {
+  if (getProductError.value) {
+    console.error('Error fetching the product:', getProductError.value)
+    displayMessage('The product could not be loaded. Please try again later.' + getProductError.value, 'error', 10_000)
+  }
+})
 
 if (initialData.value) {
     const product = initialData.value.product
@@ -443,7 +453,7 @@ const onCreateProduct = async () => {
         return;
     }
 
-    const uploadImages = await useUploadImages(productImages.value?.images).catch((err) => {
+    const uploadImages = await useUploadImages(productImages.value).catch((err) => {
         displayMessage(err, 'error', 30_000)
         return null
     })
@@ -453,28 +463,30 @@ const onCreateProduct = async () => {
         return
     }
 
+    const productChanges = {
+        "name": productName.value,
+        "price": productPrice.value,
+        "sku": productSku.value,
+        "model": productModel.value,
+        "brand": productBrand.value,
+        "description": productDescription.value,
+        "category": productCategory.value,
+        "bullet_list": productBulletlist.value,
+        "color": productColor.value,
+        "condition_": productCondition.value,
+        "origin": productOrigin.value,
+        "city": productCity.value,
+        "postal": productPostal.value,
+        "discount": productDiscount.value.enabled,
+        "discount_percent": productDiscount.value.discount,
+        "media_group_id": uploadImages.data.media_group_id,
+        "file_ids": uploadImages.data.file_ids
+    }
+
     const { data, error } = await useFetch('/api/product/getProduct', {
         method: 'POST',
         credentials: 'include',
-        body: {
-            "name": productName.value,
-            "price": productPrice.value,
-            "sku": productSku.value,
-            "model": productModel.value,
-            "brand": productBrand.value,
-            "description": productDescription.value,
-            "category": productCategory.value,
-            "bullet_list": productBulletlist.value,
-            "color": productColor.value,
-            "condition_": productCondition.value,
-            "origin": productOrigin.value,
-            "city": productCity.value,
-            "postal": productPostal.value,
-            "discount": productDiscount.value.enabled,
-            "discount_percent": productDiscount.value.discount,
-            "media_group_id": uploadImages.data.media_group_id,
-            "file_ids": uploadImages.data.file_ids
-        },
+        body: productChanges,
         async onResponseError({ response }) {
             throw new Error(JSON.stringify(response._data.data));
         },
