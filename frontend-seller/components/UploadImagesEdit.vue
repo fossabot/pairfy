@@ -112,13 +112,12 @@ const fileInput = ref<HTMLInputElement | null>(null);
 
 const grid = ref<HTMLDivElement | null>(null);
 
-const images = computed({
-  get: () => props.modelValue,
-  set: (val: UploadedImg[]) => emit('update:modelValue', val),
+const images = ref<UploadedImg[]>([...props.modelValue]);
+
+watch(() => props.modelValue, (newVal) => {
+  images.value = [...newVal];
 });
-
-watch(images, validate, { immediate: true });
-
+ 
 const positions = computed(() => images.value.map((img) => img.id));
 
 const imageCounter = computed(() => images.value.length);
@@ -129,7 +128,9 @@ const validate = () => {
 };
 
 const triggerFileInput = () => {
-  fileInput.value?.click();
+  if (fileInput.value) {
+    fileInput.value.click();
+  }
 };
 
 
@@ -246,7 +247,11 @@ onMounted(() => {
 
 const removeImage = (id: string) => {
   const index = images.value.findIndex(img => img.id === id);
-  if (index === -1) return;
+
+  if (index === -1) {
+  console.error("Image not found to remove", id);
+  return;
+}
 
   images.value.splice(index, 1);
   emit('update:modelValue', images.value);
