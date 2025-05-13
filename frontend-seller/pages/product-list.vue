@@ -31,7 +31,7 @@
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
-                    :columnWidths="{ id: '10rem', sku: '8rem', price: '6rem', discount: '4rem', category: '10rem', created_at: '6rem', moderated: '4rem' }">
+                    :columnWidths="{ id: '10rem', sku: '8rem', price: '6rem', model: '8rem', discount: '4rem', category: '10rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '5rem' }" />
@@ -46,7 +46,7 @@
                     </template>
 
                     <template #col-price="{ value, item }">
-                        <span>{{ `${item.discount ? item.discount_value : value}`}}</span>
+                        <span>{{ `${item.discount ? item.discount_value : value}` }}</span>
                     </template>
 
                     <template #col-category="{ value }">
@@ -55,7 +55,7 @@
 
                     <template #col-discount="{ value, item }">
                         <span>
-                            {{ `${item.discount ? '-' + item.discount_percent  + '%': 'N/a'}` }}
+                            {{ `${item.discount ? '-' + item.discount_percent + '%' : 'N/a'}` }}
                         </span>
                     </template>
 
