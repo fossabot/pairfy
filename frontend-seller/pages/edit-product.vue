@@ -282,6 +282,8 @@ const categories = computed(() =>
 
 const countries = ref(countryList)
 
+const productData = ref(null)
+
 const productName = ref(null)
 const productNameValid = ref(false)
 
@@ -395,6 +397,8 @@ if (initialData.value) {
     const product = initialData.value.product
     const media = initialData.value.media
 
+    productData.value = product
+
     productName.value = product.name
     productPrice.value = product.price
     productSku.value = product.sku
@@ -451,11 +455,15 @@ const onApplyChanges = async () => {
             return
         }
 
-        const uploadImages = await useUpdateMedia(productImages.value)
+        const localImages = productImages.value.filter(item => item.local === true);
 
-        if (!uploadImages || !uploadImages.success) {
-            displayMessage('Image upload failed. Please try again.', 'error', 30_000)
-            return 
+        if (localImages.length) {
+            const uploadMedia = await useUpdateMedia(localImages, productData.value?.media_group_id)
+
+            if (!uploadMedia || !uploadMedia.success) {
+                displayMessage('Image upload failed. Please try again.', 'error', 30_000)
+                return
+            }
         }
 
         const productChanges = {
@@ -474,8 +482,8 @@ const onApplyChanges = async () => {
             postal: productPostal.value,
             discount: productDiscount.value.enabled,
             discount_percent: productDiscount.value.discount,
-            media_group_id: uploadImages.data.media_group_id,
-            file_ids: uploadImages.data.file_ids,
+            media_group_id: uploadMedia.data.media_group_id,
+            file_ids: uploadMedia.data.file_ids,
         }
 
         const { data, error } = await useFetch('/api/product/editProduct', {

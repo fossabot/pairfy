@@ -402,11 +402,11 @@ const onCreateProduct = async () => {
             return
         }
 
-        const uploadImages = await useUploadImages(productImages.value)
+        const uploadMedia = await useUploadMedia(productImages.value)
 
-        if (!uploadImages || !uploadImages.success) {
+        if (!uploadMedia || !uploadMedia.success) {
             displayMessage('Image upload failed. Please try again.', 'error', 30_000)
-            return null
+            return
         }
 
         const createProductBody = {
@@ -425,8 +425,8 @@ const onCreateProduct = async () => {
             postal: productPostal.value,
             discount: productDiscount.value.enabled,
             discount_percent: productDiscount.value.discount,
-            media_group_id: uploadImages.data.media_group_id,
-            file_ids: uploadImages.data.file_ids,
+            media_group_id: uploadMedia.data.media_group_id,
+            file_ids: uploadMedia.data.file_ids,
         }
 
         const { data, error } = await useFetch('/api/product/createProduct', {
