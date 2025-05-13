@@ -451,7 +451,7 @@ const onApplyChanges = async () => {
             return
         }
 
-        const uploadImages = await useUploadImages(productImages.value)
+        const uploadImages = await useUpdateMedia(productImages.value)
 
         if (!uploadImages || !uploadImages.success) {
             displayMessage('Image upload failed. Please try again.', 'error', 30_000)
