@@ -23,7 +23,7 @@ export async function checkFileGroup(
     });
 
     if (response.data?.success) {
-      return response.data;
+      return response.data.data;
     } else {
       return null;
     }

@@ -91,17 +91,17 @@ export const verifyGroupHandler = async (
       );
     }
 
-    const findThumbnail = rows.filter((file: any) => file.id === file_ids[0]);
-    
-    console.log(findThumbnail);
+    const firstFile = rows.filter((file: any) => file.id === file_ids[0]);
 
     const thumbnail_url = generateMediaUrl(
       media_group_id,
-      findThumbnail.id,
-      findThumbnail.filename,
+      firstFile[0].id,
+      firstFile[0].filename,
       "thumbnail",
       "webp"
     );
+
+    console.log(thumbnail_url);
 
     ///////////////////////////////////////////////////////////////////////////////////////////
 
