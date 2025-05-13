@@ -31,7 +31,7 @@
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
-                    :columnWidths="{ id: '8rem', category: '8rem', price: '6rem', created_at: '6rem', moderated: '4rem' }">
+                    :columnWidths="{ id: '8rem', category: '8rem', price: '6rem', created_at: '4rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '5rem' }" />
@@ -60,7 +60,7 @@
                     </template>
 
                     <template #col-created_at="{ value }">
-                        {{ value }}
+                        {{ formatDate(value) }}
                     </template>
 
                     <template #action="{ item }">
@@ -202,6 +202,14 @@ const handleDottedMenu = (event, value) => {
 
 function getImageSrc(item) {
     return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
+}
+
+function formatDate(timestamp) {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 </script>

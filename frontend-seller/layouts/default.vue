@@ -170,7 +170,6 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2 ease-in-out;
 }
 
 .icon.selected {
