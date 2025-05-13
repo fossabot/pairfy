@@ -85,8 +85,8 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 .switch-button {
   border: 1px solid var(--border-a, #ccc);
+  border-radius: var(--button-radius);
   background: var(--background-a);
-  border-radius: var(--radius-b);
   font-size: var(--text-size-0);
   padding: 0.75rem 1rem;
   font-weight: 500;

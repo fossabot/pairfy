@@ -149,7 +149,7 @@ onMounted(() => {
 
 .textarea {
   width: 100%;
-  height: 43px;
+  min-height: 43px;
   max-height: 12rem;
   resize: none; 
   overflow-y: hidden;
