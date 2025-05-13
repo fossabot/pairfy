@@ -28,6 +28,8 @@ export const verifyGroupHandler = async (
       });
     }
 
+    console.log(validateParams.data);
+
     const { product_id, media_group_id, agent_id, file_ids } =
       validateParams.data;
 

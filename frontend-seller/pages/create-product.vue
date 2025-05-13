@@ -380,7 +380,7 @@ const validateParams = () => {
         !productCityValid.value,
         !productPostalValid.value,
         !productDescriptionValid.value,
-        !productMediaValid.value,
+        !productImagesValid.value,
         !productBulletlistValid.value,
         !productCategoryValid.value,
         !productConditionValid.value,
@@ -392,69 +392,69 @@ const validateParams = () => {
     return params.includes(true)
 }
 
+
 const onCreateProduct = async () => {
     loading.value = true
 
-    if (validateParams()) {
-        displayMessage(`
-            Some required details are missing.
-            Please ensure all mandatory fields — such as product images, category, and description —
-            are properly filled out before submitting.
-        `.trim(), 'error', 30_000)
+    try {
 
+        if (validateParams()) {
+            displayMessage(
+                `Some required details are missing. Please ensure all mandatory fields — such as product images, category, and description — are properly filled out before submitting.`,
+                'error',
+                30_000
+            )
+            return
+        }
 
+        const uploadImages = await useUploadImages(productImages.value)
+
+        if (!uploadImages || !uploadImages.success) {
+            displayMessage('Image upload failed. Please try again.', 'error', 30_000)
+            return null
+        }
+
+        const { data, error } = await useFetch('/api/product/createProduct', {
+            method: 'POST',
+            credentials: 'include',
+            body: {
+                name: productName.value,
+                price: productPrice.value,
+                sku: productSku.value,
+                model: productModel.value,
+                brand: productBrand.value,
+                description: productDescription.value,
+                category: productCategory.value,
+                bullet_list: productBulletlist.value,
+                color: productColor.value,
+                condition_: productCondition.value,
+                origin: productOrigin.value,
+                city: productCity.value,
+                postal: productPostal.value,
+                discount: productDiscount.value.enabled,
+                discount_percent: productDiscount.value.discount,
+                media_group_id: uploadImages.data.media_group_id,
+                file_ids: uploadImages.data.file_ids,
+            },
+            async onResponseError({ response }) {
+                throw new Error(JSON.stringify(response._data?.data || 'Unknown server error'))
+            }
+        })
+
+        if (error.value) {
+            console.error('Error creating the product:', error)
+            displayMessage(error.value, 'error', 30_000)
+        }
+
+        if (!data.value?.success) {
+            displayMessage(data.value?.message ?? 'Unexpected response from server.', 'error', 30_000)
+        }
+
+    } catch (err) {
+        console.error('Error during product creation:', err)
+        displayMessage(err?.message || 'Product creation failed.', 'error', 30_000)
+    } finally {
         loading.value = false
-        return;
-    }
-
-    const uploadImages = await useUploadImages(productImages.value?.images).catch((err) => {
-        displayMessage(err, 'error', 30_000)
-        return null
-    })
-
-    if (!uploadImages || !uploadImages.success) {
-        loading.value = false
-        return
-    }
-
-    const { data, error } = await useFetch('/api/product/createProduct', {
-        method: 'POST',
-        credentials: 'include',
-        body: {
-            "name": productName.value,
-            "price": productPrice.value,
-            "sku": productSku.value,
-            "model": productModel.value,
-            "brand": productBrand.value,
-            "description": productDescription.value,
-            "category": productCategory.value,
-            "bullet_list": productBulletlist.value,
-            "color": productColor.value,
-            "condition_": productCondition.value,
-            "origin": productOrigin.value,
-            "city": productCity.value,
-            "postal": productPostal.value,
-            "discount": productDiscount.value.enabled,
-            "discount_percent": productDiscount.value.discount,
-            "media_group_id": uploadImages.data.media_group_id,
-            "file_ids": uploadImages.data.file_ids
-        },
-        async onResponseError({ response }) {
-            throw new Error(JSON.stringify(response._data.data));
-        },
-    })
-
-    loading.value = false
-
-    console.log(data.value);
-
-    if (error.value) {
-        displayMessage(error.value, 'error', 30_000)
-        console.error('Error creating the product:', error)
-    }
-
-    if (data.value.success) {
-        displayMessage(data.value.message, 'success', 30_000)
     }
 }
 </script>

@@ -2,8 +2,6 @@ import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
 import { ZodError } from "zod";
 import { ERROR_CODES, logger } from "./index";
 
-
-
 export class ApiError extends Error {
   public statusCode: number;
   public code: string;
@@ -61,29 +59,19 @@ export const errorHandler: ErrorRequestHandler = (
   res: Response,
   _next: NextFunction
 ) => {
+  logger.error(err);
+
   const normalized = normalizeError(err);
-
-
-  try {
-    logger.error({
-      name: normalized.name,
-      message: normalized.message,
-      code: normalized.code,
-      statusCode: normalized.statusCode,
-      stack: normalized.stack,
-      ...(normalized.details && normalized.code === ERROR_CODES.VALIDATION_ERROR
-        ? { details: normalized.details }
-        : {}),
-    });
-  } catch (logErr) {
-    logger.error("Failed to log error:", logErr);
-  }
+  
+  logger.error(normalized);
 
   res.setHeader("Content-Type", "application/json");
 
   res.status(normalized.statusCode).json({
     status: normalized.statusCode,
-    message: normalized.isOperational ? normalized.message : "Internal server error",
+    message: normalized.isOperational
+      ? normalized.message
+      : "Internal server error",
     code: normalized.code,
     details:
       normalized.code === ERROR_CODES.VALIDATION_ERROR
@@ -91,9 +79,3 @@ export const errorHandler: ErrorRequestHandler = (
         : null,
   });
 };
-
-
-export const asyncHandler =
-  (fn: (...args: any[]) => Promise<any>) =>
-  (req: Request, res: Response, next: NextFunction) =>
-    Promise.resolve(fn(req, res, next)).catch(next);
