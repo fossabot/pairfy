@@ -103,9 +103,9 @@ const hasNextPage = ref(false)
 const hasPrevPage = ref(false)
 
 const dottedMenuOptions = ref([
-    { label: "Delete Product", value: "delete" },
-    { label: "Edit Product", value: "edit" },
-    { label: "Open Page", value: "open" }
+    { label: "Edit this product", value: "edit" },
+    { label: "Open product page", value: "open" }, 
+    { label: "Delete this product", value: "delete" }
 ])
 
 const columns = ref([
