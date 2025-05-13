@@ -208,6 +208,6 @@ function getImageSrc(item) {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem;
+    padding: 0.5rem;
 }
 </style>

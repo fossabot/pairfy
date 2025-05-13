@@ -7,14 +7,7 @@
         <div class="layout-top-image">
           <img src="@/assets/brand/icon.svg" alt="">
         </div>
-
-        <span class="label" v-show="!isCollapsed || isHovering">
-          <img src="@/assets/brand/logo.svg" alt="">
-        </span>
-
       </div>
-
-
 
       <nav>
         <NuxtLink to="/home">
@@ -146,6 +139,12 @@ if (import.meta.server) {
 <style scoped>
 .layout {
   background: var(--background-b);
+  background: linear-gradient(135deg,
+      #fff6e5 0%,
+      #fbe8f9 20%,
+      #e3f0ff 50%,
+      #e8f4fc 80%,
+      #e9fff0 100%);
   display: flex;
   height: 100vh;
 }
@@ -158,7 +157,6 @@ if (import.meta.server) {
 .sidebar {
   border-bottom-right-radius: var(--radius-c);
   border-top-right-radius: var(--radius-c);
-  border-right: 1px solid var(--primary-a);
   background: var(--background-a);
   position: relative;
   overflow: hidden;
