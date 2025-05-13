@@ -125,7 +125,7 @@ const range = computed(() => {
     return `${start} - ${end} of ${productCount.value}`
 })
 
-const { data: initialData, error: getProductsError } = useAsyncData('products', () =>
+const { data: initialData, error: getProductsError } = await useAsyncData('products', () =>
     $fetch('/api/product/getProducts', {
         method: 'POST',
         credentials: 'include',

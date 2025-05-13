@@ -370,7 +370,7 @@ const onImagesChange = (event) => {
     productImagesValid.value = event.valid
 }
 
-const { data: initialData, error: getProductError } = useAsyncData('product', () =>
+const { data: initialData, error: getProductError } = await useAsyncData('product', () =>
     $fetch('/api/product/getProduct', {
         method: 'POST',
         credentials: 'include',
@@ -385,10 +385,10 @@ const { data: initialData, error: getProductError } = useAsyncData('product', ()
 )
 
 onMounted(() => {
-  if (getProductError.value) {
-    console.error('Error fetching the product:', getProductError.value)
-    displayMessage('The product could not be loaded. Please try again later.' + getProductError.value, 'error', 10_000)
-  }
+    if (getProductError.value) {
+        console.error('Error fetching the product:', getProductError.value)
+        displayMessage('The product could not be loaded. Please try again later.' + getProductError.value, 'error', 10_000)
+    }
 })
 
 if (initialData.value) {
