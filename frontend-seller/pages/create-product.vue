@@ -176,12 +176,8 @@
                         Optionally, upload a single video highlighting the product’s features.
                     </div>
                 </div>
-            </div>
 
 
-
-            <!--RIGHT-->
-            <div class="grid-right">
                 <div class="grid-row">
                     <div class="grid-title">
                         <span>Other</span>
@@ -259,7 +255,12 @@
                         <ButtonSolid label="Publish" @click="onCreateProduct" :loading="loading" />
                     </div>
                 </div>
+
+
+
+
             </div>
+
 
         </div>
     </div>
@@ -456,13 +457,13 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem;
+    padding: 1rem 20rem; 
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 1rem;
+    grid-template-columns:1fr;
+    gap: 0rem;
 }
 
 .grid-title {
@@ -489,7 +490,7 @@ const onCreateProduct = async () => {
 .grid-row {
     background: var(--background-a);
     border-radius: var(--radius-b);
-    box-shadow: var(--shadow-b);
+    box-shadow: var(--shadow-a);
     margin-bottom: 1rem;
     padding: 1.5rem;
 }
