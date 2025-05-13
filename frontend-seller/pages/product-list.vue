@@ -34,7 +34,7 @@
                     :columnWidths="{ id: '8rem', category: '8rem', price: '6rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
-                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
+                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '5rem' }" />
                     </template>
 
                     <template #col-id="{ value }">
@@ -47,8 +47,10 @@
 
                     <template #col-price="{ value }">
                         <span>{{ value }}</span>
+                    </template>
 
-
+                    <template #col-category="{ value }">
+                        <span style="text-transform: lowercase;">{{ value }}</span> 
                     </template>
 
                     <template #col-discount="{ value, item }">
@@ -103,7 +105,7 @@ const hasPrevPage = ref(false)
 
 const dottedMenuOptions = ref([
     { label: "Edit this product", value: "edit" },
-    { label: "Open product page", value: "open" }, 
+    { label: "Open product page", value: "open" },
     { label: "Delete this product", value: "delete" }
 ])
 
@@ -138,10 +140,10 @@ const { data: initialData, error: getProductsError } = await useAsyncData('produ
 )
 
 onMounted(() => {
-  if (getProductsError.value) {
-    console.error('Error fetching the products:', getProductsError.value)
-    displayMessage('The products could not be loaded. Please try again later.' + getProductsError.value, 'error', 10_000)
-  }
+    if (getProductsError.value) {
+        console.error('Error fetching the products:', getProductsError.value)
+        displayMessage('The products could not be loaded. Please try again later.' + getProductsError.value, 'error', 10_000)
+    }
 })
 
 if (initialData.value) {

@@ -133,7 +133,7 @@ function validate() {
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .error-text {

@@ -16,8 +16,8 @@
 
       <div class="header-right flex">
         <div class="pagination flex">
-          <span>{{ range }}</span>
           <span>{{ page }}</span>
+          <span>{{ range }}</span>
         </div>
 
         <ButtonRounded @click="prevPage" :disabled="!hasPrevPage">
@@ -170,11 +170,11 @@ const nextPage = () => {
 }
 
 .header-left {
-  width: 30%;
+  width: 50%;
 }
 
 .header-right {
-  width: 70%;
+  width: 50%;
 }
 
 .pagination {
@@ -189,13 +189,14 @@ const nextPage = () => {
   border: 1px solid var(--border-a);
   background: var(--background-b);
   padding: 0 1rem;
+  width: 50%;
 }
 
 .search input {
   background: transparent;
   padding: 0.75rem 1rem;
   min-width: 300px;
-  width: 80%;
+  width: inherit;
   border: none;
   outline: none;
 }
