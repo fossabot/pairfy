@@ -100,9 +100,7 @@ export const verifyGroupHandler = async (
       "thumbnail",
       "webp"
     );
-
-    console.log(thumbnail_url);
-
+    
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     await connection.commit();

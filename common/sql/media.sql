@@ -10,6 +10,5 @@ CREATE TABLE IF NOT EXISTS media (
   created_at BIGINT UNSIGNED NOT NULL,
   updated_at BIGINT UNSIGNED NOT NULL,
   schema_v INT UNSIGNED NOT NULL,
-  INDEX idx_product_id (product_id),
-  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+  INDEX idx_product_id (product_id)
 );
