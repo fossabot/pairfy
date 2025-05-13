@@ -129,7 +129,6 @@ const onBeforeInput = (e: Event) => {
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin: 0.5rem 0;
   color: transparent;
   opacity: 0;
 }

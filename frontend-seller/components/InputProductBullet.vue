@@ -191,9 +191,7 @@ onMounted(() => {
 
 .error-text {
   font-size: var(--text-size-0);
-  min-height: 1.2rem; 
   visibility: hidden;
-  margin-top: 1rem;
   text-align: left;
   color: red;
 }

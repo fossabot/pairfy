@@ -113,7 +113,6 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin: 0.5rem 0;
   color: transparent;
   opacity: 0;
 }

@@ -152,7 +152,6 @@
                     <div class="grid-subtitle">
                         Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
                     </div>
-                    {{ productImagesValid }}
                     <UploadImagesEdit v-model="productImages" @valid="onImagesChange" />
                 </div>
 

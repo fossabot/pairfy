@@ -185,9 +185,9 @@ const nextPage = () => {
 }
 
 .search {
+  border-radius: var(--input-radius);
   border: 1px solid var(--border-a);
   background: var(--background-b);
-  border-radius: var(--radius-b);
   padding: 0 1rem;
 }
 
