@@ -1,16 +1,20 @@
 <template>
     <div class="container" :style="{ ...props.containerStyle }">
-        <img class="image" :src="imageUrl" :alt="imageUrl" :style="{ ...props.imageStyle }" />
+        <img class="image" :src="imageUrl" :style="{ ...props.imageStyle }" @error="onImageError"/>
     </div>
 </template>
 
 <script setup>
+import placeholderImage from '@/assets/placeholder/image.svg'
 import { computed } from 'vue';
 
 const props = defineProps(['src', 'containerStyle', 'imageStyle'])
 
-const imageUrl = computed(() => props.src)
+const imageUrl = ref(props.src);
 
+const onImageError = () => {
+    imageUrl.value = placeholderImage;  
+};
 </script>
 
 <style lang="css" scoped>
