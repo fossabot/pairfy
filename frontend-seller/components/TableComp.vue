@@ -66,7 +66,7 @@
           </td>
 
           <td class="row" v-for="column in columns" :key="column.field"
-            :style="{ maxWidth: columnWidths[column.field] || 'auto' }">
+            :style="{ width: columnWidths[column.field] || 'auto' }">
             <slot :name="`col-${column.field}`" :value="item[column.field]" :item="item">
               {{ item[column.field] }}
             </slot>
@@ -220,6 +220,7 @@ const nextPage = () => {
   border-right: 4px solid transparent;
   border-radius: 4px;
   margin: 1px;
+  margin-left: 0.5rem;
 }
 
 .arrow.up.enabled {
@@ -263,7 +264,7 @@ const nextPage = () => {
 
 .row {
   padding: 0.5rem;
-  max-width: 20rem;
+  max-width: 15rem;
   text-align: left;
   word-break: break-all;
   overflow-wrap: break-word;

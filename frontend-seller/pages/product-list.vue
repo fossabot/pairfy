@@ -31,7 +31,7 @@
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
-                    :columnWidths="{ id: '8rem', category: '8rem', price: '6rem', created_at: '4rem', moderated: '4rem' }">
+                    :columnWidths="{ id: '10rem', sku: '8rem', price: '6rem', discount: '4rem', category: '10rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
                         <ImageComp :src="getImageSrc(item)" :image-style="{ width: '5rem' }" />
@@ -45,17 +45,17 @@
                         {{ value }}
                     </template>
 
-                    <template #col-price="{ value }">
-                        <span>{{ value }}</span>
+                    <template #col-price="{ value, item }">
+                        <span>{{ `${item.discount ? item.discount_value : value}`}}</span>
                     </template>
 
                     <template #col-category="{ value }">
-                        <span style="text-transform: lowercase;">{{ value }}</span> 
+                        <span style="text-transform: lowercase;">{{ value }}</span>
                     </template>
 
                     <template #col-discount="{ value, item }">
-                        <span class="discount">
-                            {{ `-${item.discount_value}%` }}
+                        <span>
+                            {{ `${item.discount ? '-' + item.discount_percent  + '%': 'N/a'}` }}
                         </span>
                     </template>
 
@@ -205,11 +205,11 @@ function getImageSrc(item) {
 }
 
 function formatDate(timestamp) {
-  const date = new Date(timestamp);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 </script>
