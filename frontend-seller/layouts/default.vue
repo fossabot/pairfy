@@ -7,6 +7,11 @@
         <div class="layout-top-image">
           <img src="@/assets/brand/icon.svg" alt="">
         </div>
+
+        <span class="label" v-show="!isCollapsed || isHovering">
+          <img src="@/assets/brand/logo.svg" alt="">
+        </span>
+
       </div>
 
 
@@ -153,8 +158,7 @@ if (import.meta.server) {
 .sidebar {
   border-top-right-radius: var(--radius-c);
   border-right: 1px solid var(--border-a);
-  background: var(--primary-b);
-  color: var(--text-w);
+  background: var(--background-a);
   position: relative;
   overflow: hidden;
 }
@@ -169,14 +173,14 @@ nav {
 nav a {
   font-size: var(--text-size-1);
   text-decoration: none;
-  color: var(--text-w);
+  color: var(--text-a);
   align-items: center;
   font-weight: 500;
   display: flex;
 }
 
 nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--background-b);
 }
 
 .nav-button {
@@ -198,9 +202,9 @@ nav a:hover {
 }
 
 .icon.selected {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--background-b);
   transition: 0.2 ease-in-out;
-  color: var(--orange-a);
+  color: var(--primary-a);
   border-radius: 50%;
 }
 
@@ -212,7 +216,7 @@ nav a:hover {
 }
 
 .label.selected {
-  color: var(--orange-a);
+  color: var(--primary-a);
 }
 
 .label.collapsed {
@@ -234,6 +238,6 @@ nav a:hover {
 }
 
 .layout-top-image img {
-  width: 2rem;
+  width: 3rem;
 }
 </style>
