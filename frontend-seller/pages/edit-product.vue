@@ -342,7 +342,7 @@ watch(productPrice, (newPrice) => {
 
 const onImagesChange = (event) => {
     //test
-    /**  
+    
     const areEqual = (arr1, arr2) => {
         if (arr1.length !== arr2.length) {
             return false;
@@ -358,7 +358,7 @@ const onImagesChange = (event) => {
     };
 
     console.log("imagesCoherence", areEqual(productImages.value.map((e) => e.id), event.value.positions))
-*/
+
 
     console.log(productImages.value.map((e) => {
         return {
