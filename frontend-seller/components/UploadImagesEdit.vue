@@ -30,11 +30,10 @@
         <button class="delete-button" @click="removeImage(img.id)">✖</button>
         <span class="index-badge">{{ index + 1 }}</span>
         <span v-if="img.local" class="local-label">Local</span>
-        <span v-if="img.deleted" class="deleted-label">Deleted</span>
       </div>
 
       <div class="image-item no-drag" data-nodrag>
-        <button class="upload-button" @click="triggerFileInput" :disabled="images.length >= MAX_IMAGES">
+        <button class="upload-button" @click="triggerFileInput" :disabled="imageCounter >= MAX_IMAGES">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-plus-icon lucide-plus">
@@ -90,7 +89,6 @@ interface UploadedImg {
     thumbnail: string;
   };
   local?: boolean;
-  deleted?: boolean;
 }
 
 const props = defineProps({
@@ -114,18 +112,19 @@ const fileInput = ref<HTMLInputElement | null>(null);
 
 const grid = ref<HTMLDivElement | null>(null);
 
-const images = ref<UploadedImg[]>([...props.modelValue]);
-
-watch(() => props.modelValue, (newVal) => {
-  images.value = [...newVal];
+const images = computed({
+  get: () => props.modelValue,
+  set: (val: UploadedImg[]) => emit('update:modelValue', val),
 });
+
+watch(images, validate, { immediate: true });
 
 const positions = computed(() => images.value.map((img) => img.id));
 
-const imageCounter = computed(() => images.value.filter(img => !img.deleted).length);
+const imageCounter = computed(() => images.value.length);
 
 const validate = () => {
-  const hasValidImage = images.value.some(img => !img.deleted);
+  const hasValidImage = images.value.length > 0;
   emit('valid', { valid: hasValidImage, value: { images: images.value, positions: positions.value } });
 };
 
@@ -161,7 +160,7 @@ const onFilesSelected = (event: Event) => {
   const files = target.files;
   if (!files) return;
 
-  const availableSlots = MAX_IMAGES - images.value.filter(img => !img.deleted).length;
+  const availableSlots = MAX_IMAGES - images.value.length;
 
   if (availableSlots <= 0) {
     displayMessage(`⚠️ No more slots available (${MAX_IMAGES} max).`, 'warning');
@@ -247,20 +246,13 @@ onMounted(() => {
 
 const removeImage = (id: string) => {
   const index = images.value.findIndex(img => img.id === id);
-
   if (index === -1) return;
 
-  const image = images.value[index];
-
-  if (image.local) {
-    images.value.splice(index, 1);
-  } else {
-    image.deleted = true;
-  }
-
+  images.value.splice(index, 1);
   emit('update:modelValue', images.value);
   validate();
 };
+
 
 </script>
 
@@ -297,6 +289,7 @@ const removeImage = (id: string) => {
 .upload-button:hover {
   background: var(--background-b);
 }
+
 .upload-button svg {
   width: 6rem;
 }
@@ -357,8 +350,7 @@ const removeImage = (id: string) => {
   border-radius: 3px;
 }
 
-.local-label,
-.deleted-label {
+.local-label {
   position: absolute;
   bottom: 5px;
   left: 5px;
@@ -371,10 +363,6 @@ const removeImage = (id: string) => {
 
 .local-label {
   background: rgba(0, 255, 0, 0.7);
-}
-
-.deleted-label {
-  background: rgba(255, 0, 0, 0.7);
 }
 
 .delete-button {
