@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.asyncHandler = exports.errorHandler = exports.ApiError = void 0;
+exports.errorHandler = exports.ApiError = void 0;
 const zod_1 = require("zod");
 const index_1 = require("./index");
 class ApiError extends Error {
@@ -41,32 +41,20 @@ const normalizeError = (err) => {
     });
 };
 const errorHandler = (err, _req, res, _next) => {
+    index_1.logger.error(err);
     const normalized = normalizeError(err);
-    try {
-        index_1.logger.error({
-            name: normalized.name,
-            message: normalized.message,
-            code: normalized.code,
-            statusCode: normalized.statusCode,
-            stack: normalized.stack,
-            ...(normalized.details && normalized.code === index_1.ERROR_CODES.VALIDATION_ERROR
-                ? { details: normalized.details }
-                : {}),
-        });
-    }
-    catch (logErr) {
-        index_1.logger.error("Failed to log error:", logErr);
-    }
     res.setHeader("Content-Type", "application/json");
-    res.status(normalized.statusCode).json({
+    const errorResponse = {
         status: normalized.statusCode,
-        message: normalized.isOperational ? normalized.message : "Internal server error",
+        message: normalized.isOperational
+            ? normalized.message
+            : "Internal server error",
         code: normalized.code,
         details: normalized.code === index_1.ERROR_CODES.VALIDATION_ERROR
             ? normalized.details
             : null,
-    });
+    };
+    index_1.logger.error(errorResponse);
+    res.status(normalized.statusCode).json(errorResponse);
 };
 exports.errorHandler = errorHandler;
-const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
-exports.asyncHandler = asyncHandler;

@@ -92,6 +92,8 @@ export const verifyGroupHandler = async (
     }
 
     const findThumbnail = rows.filter((file: any) => file.id === file_ids[0]);
+    
+    console.log(findThumbnail);
 
     const thumbnail_url = generateMediaUrl(
       media_group_id,

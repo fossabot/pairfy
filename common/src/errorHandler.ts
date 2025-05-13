@@ -62,12 +62,10 @@ export const errorHandler: ErrorRequestHandler = (
   logger.error(err);
 
   const normalized = normalizeError(err);
-  
-  logger.error(normalized);
 
   res.setHeader("Content-Type", "application/json");
 
-  res.status(normalized.statusCode).json({
+  const errorResponse = {
     status: normalized.statusCode,
     message: normalized.isOperational
       ? normalized.message
@@ -77,5 +75,9 @@ export const errorHandler: ErrorRequestHandler = (
       normalized.code === ERROR_CODES.VALIDATION_ERROR
         ? normalized.details
         : null,
-  });
+  };
+
+  logger.error(errorResponse);
+
+  res.status(normalized.statusCode).json(errorResponse);
 };
