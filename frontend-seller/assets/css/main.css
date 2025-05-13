@@ -34,7 +34,7 @@ body {
   --text-b: #434c69;
   --text-w: #ffffff;
 
-  --border-a: #e2e6f3;
+  --border-a: rgba(21, 30, 58, 0.2);
 
   --primary-a: var(--blue-a);
   --primary-b: var(--gray-a);
