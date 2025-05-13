@@ -266,7 +266,6 @@ const nextPage = () => {
   padding: 0.5rem;
   max-width: 15rem;
   text-align: left;
-  word-break: break-all;
   overflow-wrap: break-word;
   border-left: 1px solid var(--border-a);
 }
