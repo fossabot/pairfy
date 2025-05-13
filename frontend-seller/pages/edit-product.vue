@@ -455,16 +455,30 @@ const onApplyChanges = async () => {
             return
         }
 
-        const localImages = productImages.value.filter(item => item.local === true);
+        const mediaNotDeleted = productImages.value.filter(item => !item.deleted);
 
-        if (localImages.length) {
-            const uploadMedia = await useUpdateMedia(localImages, productData.value?.media_group_id)
+        const mediaNotLocal = mediaNotDeleted.filter(item => !item.local);
 
-            if (!uploadMedia || !uploadMedia.success) {
+        const mediaLocal = mediaNotDeleted.filter(item => item.local === true);
+
+        const media = {
+            media_group_id: productData.value?.media_group_id,
+            file_ids: [...mediaNotLocal.map((e) => e.id)]
+        };
+
+        if (mediaLocal.length) {
+            const upload = await useUpdateMedia(mediaLocal, media.media_group_id)
+
+            if (!upload || !upload.success) {
                 displayMessage('Image upload failed. Please try again.', 'error', 30_000)
                 return
             }
+
+            media.media_group_id = upload.data.media_group_id
+            media.file_ids.push(...upload.data.file_ids)
         }
+
+        //sort by
 
         const productChanges = {
             name: productName.value,
@@ -482,8 +496,8 @@ const onApplyChanges = async () => {
             postal: productPostal.value,
             discount: productDiscount.value.enabled,
             discount_percent: productDiscount.value.discount,
-            media_group_id: uploadMedia.data.media_group_id,
-            file_ids: uploadMedia.data.file_ids,
+            media_group_id: media.media_group_id,
+            file_ids: media.file_ids
         }
 
         const { data, error } = await useFetch('/api/product/editProduct', {
