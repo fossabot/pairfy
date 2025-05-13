@@ -31,7 +31,7 @@ const props = defineProps({
   id: { type: String, default: 'product-model' },
   modelValue: { type: [String, null], default: null },
   label: { type: String, default: 'Model' },
-  placeholder: { type: String, default: 'XR-6400a' },
+  placeholder: { type: String, default: 'e.g. XR-6400a' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 40 },

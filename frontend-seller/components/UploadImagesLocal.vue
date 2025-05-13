@@ -283,8 +283,13 @@ const removeImage = (id: string) => {
   cursor: pointer;
   display: flex;
   border: none;
-  height: 100%;
-  width: 100%;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.upload-button:hover {
+  background: var(--background-b);
 }
 
 .upload-button svg {

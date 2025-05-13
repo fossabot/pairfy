@@ -28,7 +28,7 @@ const props = defineProps({
   id: { type: String, default: 'product-brand' },
   modelValue: { type: [String, null], default: '' },
   label: { type: String, default: 'Brand' },
-  placeholder: { type: String, default: 'Samsung' },
+  placeholder: { type: String, default: 'e.g. Samsung' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 40 },

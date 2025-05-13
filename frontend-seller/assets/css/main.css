@@ -1,5 +1,6 @@
 * {
   font-family: "Inter", sans-serif;
+  transition: 0.3s ease-in-out;
 }
 
 body {

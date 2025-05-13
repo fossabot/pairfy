@@ -97,10 +97,6 @@ if (import.meta.server) {
 </script>
 
 <style scoped>
-* {
-  transition: 0.3s ease-in-out;
-}
-
 .layout {
   background: var(--background-b);
   background: linear-gradient(135deg,
