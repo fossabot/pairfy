@@ -3,8 +3,8 @@
         <ToastComp ref="toastRef" />
 
         <div class="grid">
-            <!--LEFT-->
-            <div class="grid-left">
+          
+         
                 <div class="grid-row">
                     <div class="grid-title">
                         <span>Details</span>
@@ -207,13 +207,13 @@
                                 </span>
                             </template>
                         </InputSelect>
+
+                        <InputProductCondition v-model="productCondition"
+                        @valid="productConditionValid = $event.valid" />
                     </div>
+                    
                     <div class="grid-item">
                         <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
-                    </div>
-                    <div class="grid-item">
-                        <InputProductCondition v-model="productCondition"
-                            @valid="productConditionValid = $event.valid" />
                     </div>
                 </div>
 
@@ -259,7 +259,7 @@
 
 
 
-            </div>
+          
 
 
         </div>

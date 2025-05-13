@@ -41,7 +41,7 @@
           </div>
           <span class="label"
             :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'product-books' }"
-            v-show="!isCollapsed || isHovering">Product books</span>
+            v-show="!isCollapsed || isHovering">Books</span>
         </NuxtLink>
 
 
@@ -53,7 +53,7 @@
           </div>
           <span class="label"
             :class="{ collapsed: isCollapsed && !isHovering, selected: currentPath === 'create-product' }"
-            v-show="!isCollapsed || isHovering">Create product</span>
+            v-show="!isCollapsed || isHovering">Create</span>
         </NuxtLink>
 
 

@@ -3,266 +3,262 @@
         <ToastComp ref="toastRef" />
 
         <div class="grid">
-            <!--LEFT-->
-            <div class="grid-left">
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Details</span>
-                        <TipComp text="Edit the details of your product below." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
 
-                    <div class="grid-subtitle">
-                        Fill in the details to publish a new product.
-                    </div>
-                    <div class="grid-item">
-                        <InputProductName v-model="productName" id="create-product-name"
-                            placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
-                    </div>
-                    <div class="grid-item">
-                        <InputProductPrice v-model="productPrice" id="create-product-price"
-                            @valid="productPriceValid = $event.valid" />
-                        <InputProductSku v-model="productSku" id="create-product-sku"
-                            @valid="productSkuValid = $event.valid" />
-                    </div>
-                    <div class="grid-item">
-                        <InputProductModel v-model="productModel" id="create-product-model"
-                            @valid="productModelValid = $event.valid" />
-                        <InputProductBrand v-model="productBrand" id="create-product-brand"
-                            @valid="productBrandValid = $event.valid" />
-                    </div>
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Details</span>
+                    <TipComp text="Edit the details of your product below." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
                 </div>
 
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Origin</span>
-
-                        <TipComp
-                            text="National or international location from where the supplier or seller ships the product to the buyer."
-                            position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
-                    <div class="grid-subtitle">
-                        Data required for calculating shipping time.
-                    </div>
-                    <div class="grid-item">
-
-                        <InputSelect v-model="productOrigin" label="Country" :options="countries"
-                            @valid="productOriginValid = $event.valid">
-                            <template #option="{ option }">
-                                <span class="flex">
-                                    <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
-                                    <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
-                                </span>
-                            </template>
-                        </InputSelect>
-                        <InputProductCity v-model="productCity" id="create-product-city"
-                            @valid="productCityValid = $event.valid" />
-                    </div>
-                    <div class="grid-item">
-                        <InputProductPostal v-model="productPostal" id="create-product-postal"
-                            @valid="productPostalValid = $event.valid" />
-                    </div>
+                <div class="grid-subtitle">
+                    Fill in the details to publish a new product.
                 </div>
-
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Description</span>
-
-                        <TipComp text="Provide as input everything you know about the product." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
-                    <div class="grid-subtitle">
-                        Create a product description using the AI tool.
-                    </div>
-                    <div class="grid-item">
-                        <EditorComp v-model="productDescription" @valid="productDescriptionValid = $event.valid" />
-                    </div>
+                <div class="grid-item">
+                    <InputProductName v-model="productName" id="create-product-name"
+                        placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
                 </div>
-
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Features</span>
-
-                        <TipComp text="List displayed at the top of the product page." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-
-                    </div>
-                    <div class="grid-subtitle">
-                        List of characteristics that are displayed with priority.
-                    </div>
-                    <div class="grid-item">
-                        <InputProductBullet v-model="productBulletlist"
-                            @valid="productBulletlistValid = $event.valid" />
-                    </div>
+                <div class="grid-item">
+                    <InputProductPrice v-model="productPrice" id="create-product-price"
+                        @valid="productPriceValid = $event.valid" />
+                    <InputProductSku v-model="productSku" id="create-product-sku"
+                        @valid="productSkuValid = $event.valid" />
                 </div>
-
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Upload Images</span>
-
-                        <TipComp text="Upload product images and select the main image." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
-                    <div class="grid-subtitle">
-                        Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
-                    </div>
-                    <UploadImagesEdit v-model="productImages" @valid="onImagesChange" />
+                <div class="grid-item">
+                    <InputProductModel v-model="productModel" id="create-product-model"
+                        @valid="productModelValid = $event.valid" />
+                    <InputProductBrand v-model="productBrand" id="create-product-brand"
+                        @valid="productBrandValid = $event.valid" />
                 </div>
+            </div>
 
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Upload Video</span>
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Origin</span>
 
-                        <TipComp text="Upload a video to showcase your product." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
+                    <TipComp
+                        text="National or international location from where the supplier or seller ships the product to the buyer."
+                        position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+                </div>
+                <div class="grid-subtitle">
+                    Data required for calculating shipping time.
+                </div>
+                <div class="grid-item">
+
+                    <InputSelect v-model="productOrigin" label="Country" :options="countries"
+                        @valid="productOriginValid = $event.valid">
+                        <template #option="{ option }">
+                            <span class="flex">
+                                <img :src="`/flags/${option.code?.toLowerCase()}.svg`" alt="" class="flag" />
+                                <span style="margin-left: 0.5rem; "> {{ option.label }}</span>
                             </span>
-                        </TipComp>
+                        </template>
+                    </InputSelect>
+                    <InputProductCity v-model="productCity" id="create-product-city"
+                        @valid="productCityValid = $event.valid" />
+                </div>
+                <div class="grid-item">
+                    <InputProductPostal v-model="productPostal" id="create-product-postal"
+                        @valid="productPostalValid = $event.valid" />
+                </div>
+            </div>
 
-                    </div>
-                    <div class="grid-subtitle">
-                        Optionally, upload a single video highlighting the product’s features.
-                    </div>
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Description</span>
+
+                    <TipComp text="Provide as input everything you know about the product." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+                </div>
+                <div class="grid-subtitle">
+                    Create a product description using the AI tool.
+                </div>
+                <div class="grid-item">
+                    <EditorComp v-model="productDescription" @valid="productDescriptionValid = $event.valid" />
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Features</span>
+
+                    <TipComp text="List displayed at the top of the product page." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+
+                </div>
+                <div class="grid-subtitle">
+                    List of characteristics that are displayed with priority.
+                </div>
+                <div class="grid-item">
+                    <InputProductBullet v-model="productBulletlist" @valid="productBulletlistValid = $event.valid" />
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Upload Images</span>
+
+                    <TipComp text="Upload product images and select the main image." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+                </div>
+                <div class="grid-subtitle">
+                    Please upload product images — maximum size: 5 MB, recommended dimensions: 500×500 pixels.
+                </div>
+                <UploadImagesEdit v-model="productImages" @valid="onImagesChange" />
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Upload Video</span>
+
+                    <TipComp text="Upload a video to showcase your product." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+
+                </div>
+                <div class="grid-subtitle">
+                    Optionally, upload a single video highlighting the product’s features.
                 </div>
             </div>
 
 
 
-            <!--RIGHT-->
-            <div class="grid-right">
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Other</span>
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Other</span>
 
-                        <TipComp text="Configure product details." position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
-                            </span>
-                        </TipComp>
-                    </div>
-                    <div class="grid-subtitle">
-                        Configure product details.
-                    </div>
-
-                    <div class="grid-item">
-                        <InputSelect v-model="productCategory" :options="categories" label="Category"
-                            @valid="productCategoryValid = $event.valid">
-                            <template #option="{ option }">
-                                <span class="flex">
-                                    <span>{{ option.label }}</span>
-                                </span>
-                            </template>
-                        </InputSelect>
-                    </div>
-
-                    <div class="grid-item">
-                        <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
-                    </div>
-
-                    <div class="grid-item">
-                        <InputProductCondition v-model="productCondition"
-                            @valid="productConditionValid = $event.valid" />
-                    </div>
-
+                    <TipComp text="Configure product details." position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+                </div>
+                <div class="grid-subtitle">
+                    Configure product details.
                 </div>
 
-                <div class="grid-row">
-                    <div class="grid-title">
-                        <span>Discount</span>
-
-                        <TipComp text="Discount" position="right">
-                            <span class="flex" style="margin-left: 0.5rem;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                    <path d="M12 17h.01" />
-                                </svg>
+                <div class="grid-item">
+                    <InputSelect v-model="productCategory" :options="categories" label="Category"
+                        @valid="productCategoryValid = $event.valid">
+                        <template #option="{ option }">
+                            <span class="flex">
+                                <span>{{ option.label }}</span>
                             </span>
-                        </TipComp>
-                    </div>
+                        </template>
+                    </InputSelect>
 
-                    <div class="grid-subtitle">
-                        Apply a percentage discount to the price.
-                    </div>
-
-                    <div class="grid-item">
-                        <InputProductDiscount v-model="productDiscount" />
-                    </div>
+                    <InputProductCondition v-model="productCondition" @valid="productConditionValid = $event.valid" />
                 </div>
 
-                <div class="grid-row">
-                    <div class="grid-title">
-                        Publication
-                    </div>
-                    <div class="grid-subtitle">
-                        Save product changes.
-                    </div>
-
-                    <div class="grid-item">
-                        <ButtonSolid label="Apply" @click="onCreateProduct" :loading="loading" />
-                    </div>
+                <div class="grid-item">
+                    <InputProductColor v-model="productColor" @valid="productColorValid = $event.valid" />
                 </div>
             </div>
+
+            <div class="grid-row">
+                <div class="grid-title">
+                    <span>Discount</span>
+
+                    <TipComp text="Discount" position="right">
+                        <span class="flex" style="margin-left: 0.5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-circle-help-icon lucide-circle-help">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                <path d="M12 17h.01" />
+                            </svg>
+                        </span>
+                    </TipComp>
+                </div>
+
+                <div class="grid-subtitle">
+                    Apply a percentage discount to the price.
+                </div>
+
+                <div class="grid-item">
+                    <InputProductDiscount v-model="productDiscount" />
+                </div>
+            </div>
+
+            <div class="grid-row">
+                <div class="grid-title">
+                    Publication
+                </div>
+                <div class="grid-subtitle">
+                    Save product changes.
+                </div>
+
+                <div class="grid-item">
+                    <ButtonSolid label="Apply" @click="onCreateProduct" :loading="loading" />
+                </div>
+            </div>
+
+
+
+
+
+
 
         </div>
     </div>
@@ -509,13 +505,13 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem;
+    padding: 1rem 20rem;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: 0rem;
 }
 
 .grid-title {
@@ -542,7 +538,7 @@ const onCreateProduct = async () => {
 .grid-row {
     background: var(--background-a);
     border-radius: var(--radius-b);
-    box-shadow: var(--shadow-b);
+    box-shadow: var(--shadow-a);
     margin-bottom: 1rem;
     padding: 1.5rem;
 }
