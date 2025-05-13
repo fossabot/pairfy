@@ -123,7 +123,6 @@ const onBeforeInput = (e: Event) => {
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 700;
 }
 
 .error-text {
