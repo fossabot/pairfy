@@ -5,25 +5,23 @@ export const useUploadImages = async (images: { file: File }[]) => {
     form.append("files", file);
   }
 
-  const res = await fetch("/api/media/create-files", {
-    method: "POST",
-    body: form,
-    credentials: "include",
-  });
-
-  let responseData: any;
   try {
-    responseData = await res.json();
-  } catch (err) {
-    console.error("Failed to parse JSON response:", err);
-    throw new Error("Upload failed: invalid server response");
-  }
+    const response = await $fetch("/api/media/create-files", {
+      method: "POST",
+      body: form,
+      credentials: "include",
+      async onResponseError({ response }) {
+        throw new Error(
+          JSON.stringify(response._data?.data || "Unknown server error")
+        );
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(responseData?.error || "Upload failed");
+    return response;
+  } catch (error: any) {
+    console.error("❌ Error uploading images:", error);
+    throw error;
   }
-
-  return responseData;
 };
 
 export const useMediaUrl = (mediaPath: string): string => {
@@ -32,7 +30,9 @@ export const useMediaUrl = (mediaPath: string): string => {
 
   const base = config.public.mediaCDNBase || "";
   const normalizedBase = base.endsWith("/") ? base.slice(0, -1) : base;
-  const normalizedPath = mediaPath.startsWith("/") ? mediaPath : `/${mediaPath}`;
+  const normalizedPath = mediaPath.startsWith("/")
+    ? mediaPath
+    : `/${mediaPath}`;
 
   return `${normalizedBase}${normalizedPath}`;
 };

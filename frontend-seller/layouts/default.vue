@@ -146,12 +146,13 @@ nav a {
   text-decoration: none;
   color: var(--text-a);
   align-items: center;
+  margin-top: 1rem;
   font-weight: 700;
   display: flex;
+  
 }
 
 nav a:hover {
-  background: var(--background-b);
   color: var(--primary-a);
 }
 
@@ -160,7 +161,6 @@ nav a:hover {
   align-items: center;
   display: flex;
   width: 4rem;
-  height: 4rem;
   min-width: 4rem;
 }
 
