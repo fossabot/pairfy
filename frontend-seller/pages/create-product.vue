@@ -7,7 +7,7 @@
             <div class="grid-left">
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>New Product</span>
+                        <span>Details</span>
                         <TipComp text="Fill in the fields with information about your product." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -184,7 +184,7 @@
             <div class="grid-right">
                 <div class="grid-row">
                     <div class="grid-title">
-                        <span>Details</span>
+                        <span>Other</span>
 
                         <TipComp text="Configure product details." position="right">
                             <span class="flex" style="margin-left: 0.5rem;">
