@@ -1,7 +1,7 @@
-export const useUploadMedia = async (images: { file: File }[]) => {
+export const useUploadMedia = async (media: { file: File }[]) => {
   const form = new FormData();
 
-  for (const { file } of images) {
+  for (const { file } of media) {
     form.append("files", file);
   }
 
@@ -19,19 +19,22 @@ export const useUploadMedia = async (images: { file: File }[]) => {
 
     return response;
   } catch (error: any) {
-    console.error("❌ Error uploading images:", error);
+    console.error("❌ Error uploading media:", error);
     throw error;
   }
 };
 
-export const useUpdateMedia = async (images: { file: File }[], media_group_id: string) => {
+export const useUpdateMedia = async (media: { id: string, file: File }[], mediaGroupId: string) => {
   const form = new FormData();
 
-  for (const { file } of images) {
+  for (const { id, file } of media) {
     form.append("files", file);
+    form.append("fileIds", id);
+
+    console.log("fileid", id)
   }
 
-  form.append("media_group_id", media_group_id);
+  form.append("mediaGroupId", mediaGroupId);
 
   try {
     const response = await $fetch("/api/media/update-files", {
@@ -47,7 +50,7 @@ export const useUpdateMedia = async (images: { file: File }[], media_group_id: s
 
     return response;
   } catch (error: any) {
-    console.error("❌ Error uploading images:", error);
+    console.error("❌ Error uploading media:", error);
     throw error;
   }
 };

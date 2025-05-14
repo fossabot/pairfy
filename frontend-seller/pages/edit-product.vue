@@ -342,7 +342,7 @@ watch(productPrice, (newPrice) => {
 
 const onImagesChange = (event) => {
     //test
-    
+
     const areEqual = (arr1, arr2) => {
         if (arr1.length !== arr2.length) {
             return false;
@@ -465,6 +465,8 @@ const onApplyChanges = async () => {
 
         if (mediaLocal.length) {
             const upload = await useUpdateMedia(mediaLocal, media.media_group_id)
+
+            console.log(upload)
 
             if (!upload || !upload.success) {
                 displayMessage('Image upload failed. Please try again.', 'error', 30_000)

@@ -56,6 +56,14 @@ const main = async () => {
     );
 
     app.post(
+      "/api/media/update-files",
+
+      route.updateFilesMiddlewares,
+
+      route.updateFilesHandler
+    );
+
+    app.post(
       "/api/media/verify-group",
 
       route.verifyGroupMiddlewares,
