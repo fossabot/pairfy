@@ -32,7 +32,7 @@ body {
   --background-b: #f5f5f7;
 
   --text-a: #151e3a;
-  --text-b: #434c69;
+  --text-b: rgba(28,43,51,0.65);
   --text-w: #ffffff;
 
   --border-a: rgba(21, 30, 58, 0.2);

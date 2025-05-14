@@ -142,14 +142,16 @@ nav a {
   text-decoration: none;
   color: var(--text-a);
   align-items: center;
-  margin-top: 1rem;
+  padding: 0.5rem 0;
   font-weight: 700;
   display: flex;
   
 }
 
 nav a:hover {
+  background: var(--background-b);
   color: var(--primary-a);
+
 }
 
 .nav-button {
