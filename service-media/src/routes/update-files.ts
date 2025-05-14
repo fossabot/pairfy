@@ -26,8 +26,6 @@ const updateFilesHandler = async (
   const oldIds: string[] = [];
 
   try {
-    console.log(req.body.fileIds, req.body.mediaGroupId);
-
     const SELLER = req.sellerData as SellerToken;
 
     const files = req.files as Express.Multer.File[];
@@ -54,6 +52,10 @@ const updateFilesHandler = async (
       });
     }
 
+    const originalIds = JSON.parse(req.body.fileIds)
+
+    console.log(originalIds, req.body.mediaGroupId);
+
     await connection.beginTransaction();
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -62,8 +64,6 @@ const updateFilesHandler = async (
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-
-      const oldId = req.body.fileIds[i];
 
       const fileId = getFileId();
 
@@ -94,7 +94,7 @@ const updateFilesHandler = async (
       await insertFile(connection, fileScheme);
 
       newIds.push(fileId);
-      oldIds.push(oldId);
+      oldIds.push(originalIds[i]);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////

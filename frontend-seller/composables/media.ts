@@ -24,15 +24,20 @@ export const useUploadMedia = async (media: { file: File }[]) => {
   }
 };
 
-export const useUpdateMedia = async (media: { id: string, file: File }[], mediaGroupId: string) => {
+export const useUpdateMedia = async (
+  media: { id: string; file: File }[],
+  mediaGroupId: string
+) => {
   const form = new FormData();
+
+  const fileIds: string[] = [];
 
   for (const { id, file } of media) {
     form.append("files", file);
-    form.append("fileIds", id);
-
-    console.log("fileid", id)
+    fileIds.push(id);
   }
+
+  form.append("fileIds", JSON.stringify(fileIds));
 
   form.append("mediaGroupId", mediaGroupId);
 
