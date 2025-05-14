@@ -142,15 +142,15 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     return {
       success: true,
-      message: `Your product was created successfully! You can now view or edit its details using ID: ${findProduct.id}`,
+      message: `The product was created successfully! You can now view or edit its details using ID: ${findProduct.id}`,
       data: {
         product_id: findProduct.id,
       },
     };
-  } catch (err: any) {
+  } catch (error: any) {
     if (connection) await connection.rollback();
 
-    throw err;
+    throw error;
   } finally {
     if (connection) connection.release();
   }

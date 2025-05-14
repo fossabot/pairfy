@@ -31,3 +31,4 @@ export * from "./minio";
 export * from "./insertMedia";
 export * from "./findMediaById";
 export * from "./updateProduct";
+export * from "./findProductBySeller";

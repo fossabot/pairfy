@@ -446,15 +446,18 @@ const onApplyChanges = async () => {
 
     try {
         if (validateParams()) {
-            displayMessage(
-                `Some required details are missing.
+            const message = `Some required details are missing.
                 Please ensure all mandatory fields
                 — such as product images, category,
                 and description — are properly filled
-                 out before submitting.`,
+                out before submitting.`
+
+            displayMessage(
+                message,
                 'error',
                 30_000
             )
+
             return
         }
 
@@ -470,6 +473,7 @@ const onApplyChanges = async () => {
         const localImages = productImages.value.filter(item => item.local === true);
 
         if (localImages.length) {
+
             const uploadMedia = await useUpdateMedia(localImages, media.mediaGroupId)
 
             if (!uploadMedia || !uploadMedia.success) {
@@ -485,6 +489,7 @@ const onApplyChanges = async () => {
         }
 
         const productChanges = {
+            id: productData.value.id
             name: productName.value,
             price: productPrice.value,
             sku: productSku.value,
@@ -500,8 +505,8 @@ const onApplyChanges = async () => {
             postal: productPostal.value,
             discount: productDiscount.value.enabled,
             discount_percent: productDiscount.value.discount,
-            media_group_id: media.media_group_id,
-            file_ids: media.file_ids
+            media_group_id: media.mediaGroupId,
+            file_ids: media.fileIds
         }
 
         const { data, error } = await useFetch('/api/product/editProduct', {
