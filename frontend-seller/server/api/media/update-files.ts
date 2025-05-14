@@ -17,7 +17,13 @@ export default defineEventHandler(async (event) => {
       });
       form.append("files", blob, part.filename);
     } else if (part.name === "fileIds") {
-      form.append("fileIds", part.data.toString());
+
+      const fileIds = JSON.parse(part.data.toString()); 
+
+      fileIds.forEach((id: string) => {
+        form.append("fileIds[]", id);
+      });
+     
     } else if (part.name === "mediaGroupId") {
       form.append("mediaGroupId", part.data.toString());
     }

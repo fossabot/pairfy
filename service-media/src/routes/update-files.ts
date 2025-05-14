@@ -52,7 +52,7 @@ const updateFilesHandler = async (
       });
     }
 
-    const originalIds = JSON.parse(req.body.fileIds)
+    const originalIds = req.body.fileIds
 
     console.log(originalIds, req.body.mediaGroupId);
 
