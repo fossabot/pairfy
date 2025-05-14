@@ -447,37 +447,42 @@ const onApplyChanges = async () => {
     try {
         if (validateParams()) {
             displayMessage(
-                `Some required details are missing. Please ensure all mandatory fields — such as product images, category, and description — are properly filled out before submitting.`,
+                `Some required details are missing.
+                Please ensure all mandatory fields
+                — such as product images, category,
+                and description — are properly filled
+                 out before submitting.`,
                 'error',
                 30_000
             )
             return
         }
 
-        const mediaNotLocal = productImages.value.filter(item => !item.local);
+        const mediaGroupId = productData.value?.media_group_id
 
-        const mediaLocal = productImages.value.filter(item => item.local === true);
+        if (!mediaGroupId) return
 
         const media = {
-            media_group_id: productData.value?.media_group_id,
-            file_ids: [...mediaNotLocal.map((e) => e.id)]
+            mediaGroupId,
+            fileIds: [...productImages.value.map((e) => e.id)]
         };
 
-        if (mediaLocal.length) {
-            const upload = await useUpdateMedia(mediaLocal, media.media_group_id)
+        const localImages = productImages.value.filter(item => item.local === true);
 
-            console.log(upload)
+        if (localImages.length) {
+            const uploadMedia = await useUpdateMedia(localImages, media.mediaGroupId)
 
-            if (!upload || !upload.success) {
-                displayMessage('Image upload failed. Please try again.', 'error', 30_000)
+            if (!uploadMedia || !uploadMedia.success) {
+                displayMessage('Image uploadMedia failed. Please try again.', 'error', 30_000)
                 return
             }
 
-            media.media_group_id = upload.data.media_group_id
-            media.file_ids.push(...upload.data.file_ids)
+            media.fileIds = replaceOldIdsWithNew(
+                media.fileIds,
+                uploadMedia.data.old_ids,
+                uploadMedia.data.file_ids
+            );
         }
-
-        //sort by
 
         const productChanges = {
             name: productName.value,
@@ -522,6 +527,20 @@ const onApplyChanges = async () => {
     } finally {
         loading.value = false
     }
+}
+
+function replaceOldIdsWithNew(media, oldIds, fileIds) {
+    const replacementMap = new Map();
+
+    oldIds.forEach((oldId, i) => {
+        replacementMap.set(oldId, fileIds[i]);
+    });
+
+    console.log("replacement", Array.from(replacementMap));
+
+    return media.map(id =>
+        replacementMap.has(id) ? replacementMap.get(id) : id
+    );
 }
 </script>
 
