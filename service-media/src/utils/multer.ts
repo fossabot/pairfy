@@ -28,7 +28,7 @@ const upload = multer({
       file.fieldname === "files";
     cb(null, isValid);
   },
-}).array("files", 15);
+}).array("files", 11);
 
 function isMaliciousName(name: string): boolean {
   return (
