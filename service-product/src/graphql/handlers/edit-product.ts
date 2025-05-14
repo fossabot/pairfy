@@ -1,25 +1,48 @@
 import database from "../../database/client.js";
 import {
-  ApiError,
+  ApiGraphQLError,
   createEvent,
   ERROR_CODES,
   findProductById,
   findProductBySeller,
+  sanitizeArrayGraphQL,
+  sanitizeTiptapContent,
   SellerToken,
   updateProduct,
 } from "@pairfy/common";
+import { verifyParams } from "../../validators/edit-product.js";
 
 export const editProduct = async (_: any, args: any, context: any) => {
-  const params = args.editProductInput;
-
-  console.log(params);
-
-  const SELLER = context.sellerData as SellerToken;
 
   let connection = null;
 
   try {
+    args.editProductInput.bullet_list = sanitizeArrayGraphQL(
+      args.editProductInput.bullet_list
+    );
+
+    const validateParams = verifyParams.safeParse(args.editProductInput);
+
+    if (!validateParams.success) {
+      const errors = JSON.stringify(validateParams.error.flatten());
+      throw new ApiGraphQLError(400, `Validation failed: ${errors}`, {
+        code: ERROR_CODES.VALIDATION_ERROR,
+      });
+    }
+
+    args.editProductInput.description = sanitizeTiptapContent(
+      args.editProductInput.description
+    );
+
+    ////////////////////////////////////////////////////////////////////////////////
+
     connection = await database.client.getConnection();
+
+    const params = validateParams.data;
+
+    const SELLER = context.sellerData as SellerToken;
+
+    const timestamp = Date.now();
 
     const findProduct = await findProductBySeller(
       connection,
@@ -28,7 +51,7 @@ export const editProduct = async (_: any, args: any, context: any) => {
     );
 
     if (!findProduct) {
-      throw new ApiError(404, "The product does not exist", {
+      throw new ApiGraphQLError(404, "The product does not exist", {
         code: ERROR_CODES.NOT_FOUND,
       });
     }
@@ -36,8 +59,6 @@ export const editProduct = async (_: any, args: any, context: any) => {
     await connection.beginTransaction();
 
     /////////////////////////////////////////////////////////////////////////////////////
-
-    const timestamp = Date.now();
 
     const updateScheme: any = {
       name: params.name,
@@ -55,9 +76,7 @@ export const editProduct = async (_: any, args: any, context: any) => {
       postal: params.postal,
       discount: params.discount,
       discount_percent: params.discount_percent,
-      media_group_id: params.media_group_id,
-      file_ids: params.file_ids,
-      schema_v: findProduct.schema_v + 1
+      schema_v: findProduct.schema_v + 1,
     };
 
     console.log(updateScheme);
@@ -70,7 +89,7 @@ export const editProduct = async (_: any, args: any, context: any) => {
     );
 
     if (update.affectedRows !== 1) {
-      throw new ApiError(409, "Update failed: version mismatch or not found", {
+      throw new ApiGraphQLError(409, "Update failed: version mismatch or not found", {
         code: ERROR_CODES.UPDATE_CONFLICT,
       });
     }

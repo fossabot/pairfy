@@ -17,9 +17,10 @@ import {
   productPriceSchema,
   productSkuSchema,
 } from "./index.js";
-import { TiptapDocumentSchema } from "@pairfy/common";
+import { TiptapDocumentSchema, productIdSchema } from "@pairfy/common";
 
 export const verifyParams = z.object({
+  id: productIdSchema,
   name: productNameSchema,
   price: productPriceSchema,
   sku: productSkuSchema,

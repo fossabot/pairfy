@@ -1,4 +1,5 @@
 import { customAlphabet } from "nanoid";
+import { z } from "zod";
 
 export function createId(alphabet: string, length: number): string {
   if (!alphabet || typeof alphabet !== "string") {
@@ -16,6 +17,11 @@ export const getSellerId = () =>{
   return createId("0123456789ABCD", 21)
 }
 
+export const productIdRegex = /^PRD-\d{6}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{7}$/;
+
+export const productIdSchema = z.string().regex(productIdRegex, {
+  message: 'Invalid product ID format. Expected format: PRD-YYMMDD-XXXXXXX',
+});
 
 export const getProductId = () => {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; 

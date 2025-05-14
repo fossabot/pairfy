@@ -489,7 +489,7 @@ const onApplyChanges = async () => {
         }
 
         const productChanges = {
-            id: productData.value.id
+            id: productData.value.id, 
             name: productName.value,
             price: productPrice.value,
             sku: productSku.value,
