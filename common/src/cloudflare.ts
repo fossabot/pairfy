@@ -1,5 +1,20 @@
-import { Request, Response, NextFunction } from "express";
 import proxyaddr from "proxy-addr";
+import { Request, Response, NextFunction } from "express";
+import { SellerToken } from "./sellerAuth";
+
+declare global {
+    namespace Express {
+      interface Request {
+        publicAddress?: string;
+        sellerData?: SellerToken;
+        session?: {
+          jwt?: string;
+          [key: string]: any;
+        } | null | undefined;
+      }
+    }
+  }
+
 
 export const CLOUDFLARE_IP_RANGES = [
   "173.245.48.0/20",
