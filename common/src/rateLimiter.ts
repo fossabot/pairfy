@@ -6,8 +6,18 @@ import { verifyToken } from "./token";
 interface RateLimiterOptions {
   windowSeconds?: number;
   maxRequests?: number;
-  enableFallback?: boolean; 
+  enableFallback?: boolean;
 }
+
+const LUA_SCRIPT = `
+local current
+current = redis.call("INCR", KEYS[1])
+if tonumber(current) == 1 then
+  redis.call("EXPIRE", KEYS[1], ARGV[1])
+end
+local ttl = redis.call("TTL", KEYS[1])
+return {current, ttl}
+`;
 
 export class RateLimiter {
   private redis: Redis;
@@ -15,7 +25,7 @@ export class RateLimiter {
   private windowSeconds: number;
   private maxRequests: number;
   private enableFallback: boolean;
-  private cleanupInterval: NodeJS.Timeout; 
+  private cleanupInterval: NodeJS.Timeout;
 
   constructor(redisUrl: string, options?: RateLimiterOptions) {
     this.windowSeconds = options?.windowSeconds ?? 60;
@@ -55,9 +65,9 @@ export class RateLimiter {
     remaining: number,
     resetTimestamp: number
   ) {
-    res.setHeader("X-RateLimit-Limit", limit);
-    res.setHeader("X-RateLimit-Remaining", remaining);
-    res.setHeader("X-RateLimit-Reset", resetTimestamp);
+    res.setHeader("X-RateLimit-Limit", limit.toString());
+    res.setHeader("X-RateLimit-Remaining", remaining.toString());
+    res.setHeader("X-RateLimit-Reset", resetTimestamp.toString());
   }
 
   public shutdown() {
@@ -82,10 +92,11 @@ export class RateLimiter {
           );
         }
 
+        // Base key con IP
         key = `ratelimit:ip:${req.publicAddress}`;
 
+        // Si hay token válido, usar user sub
         const token = req.session?.jwt;
-
         if (token) {
           try {
             const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
@@ -95,32 +106,29 @@ export class RateLimiter {
               key = `ratelimit:user:${decoded.sub}`;
             }
           } catch (tokenErr) {
-            logger.warn(`[RateLimit] Invalid token for key=${key}`, tokenErr); 
+            logger.warn(`[RateLimit] Invalid token for key=${key}`, tokenErr);
           }
         }
 
-        const saved = await this.redis.set(
-          key,
-          1,
-          "EX",
-          this.windowSeconds,
-          "NX"
-        );
-
-        if (saved) {
-          this.setRateLimitHeaders(
-            res,
-            this.maxRequests,
-            this.maxRequests - 1,
-            Math.floor(Date.now() / 1000) + this.windowSeconds
+        // Validar que key nunca sea vacío (por seguridad)
+        if (!key) {
+          return next(
+            new ApiError(400, "Invalid rate limit key", {
+              code: ERROR_CODES.BAD_REQUEST,
+            })
           );
-          return next();
         }
 
-        const [current, ttl] = await Promise.all([
-          this.redis.incr(key),
-          this.redis.ttl(key),
-        ]);
+        // Ejecutar script Lua para incrementar contador y obtener TTL atomically
+        const [currentStr, ttlStr] = (await this.redis.eval(
+          LUA_SCRIPT,
+          1,
+          key,
+          this.windowSeconds
+        )) as [string, string];
+
+        const current = parseInt(currentStr, 10);
+        const ttl = parseInt(ttlStr, 10);
 
         const resetSeconds =
           ttl > 0
@@ -153,12 +161,15 @@ export class RateLimiter {
 
         logger.error("[RateLimitFallback]", err);
 
+        // Fallback local seguro: usar IP o user, pero si key está vacío usar fallback seguro con IP "unknown"
+        const fallbackKey = key || `ratelimit:fallback:unknown`;
+
         const now = Date.now();
-        const entry = this.fallbackStore.get(key);
+        const entry = this.fallbackStore.get(fallbackKey);
 
         if (!entry || entry.expiresAt < now) {
-          if (entry) this.fallbackStore.delete(key);
-          this.fallbackStore.set(key, {
+          if (entry) this.fallbackStore.delete(fallbackKey);
+          this.fallbackStore.set(fallbackKey, {
             count: 1,
             expiresAt: now + this.windowSeconds * 1000,
           });
@@ -183,7 +194,7 @@ export class RateLimiter {
         );
 
         if (entry.count > this.maxRequests) {
-          logger.warn(`[RateLimitExceededFallback]: key=${key}`);
+          logger.warn(`[RateLimitExceededFallback]: key=${fallbackKey}`);
           return next(
             new ApiError(429, "Too many requests", {
               code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
