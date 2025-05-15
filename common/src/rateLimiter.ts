@@ -49,6 +49,16 @@ export class RateLimiter {
     }, 60_000);
   }
 
+  private setRateLimitHeaders(
+    res: Response,
+    limit: number,
+    remaining: number,
+    resetTimestamp: number
+  ) {
+    res.setHeader("X-RateLimit-Limit", limit);
+    res.setHeader("X-RateLimit-Remaining", remaining);
+    res.setHeader("X-RateLimit-Reset", resetTimestamp);
+  }
 
   public shutdown() {
     clearInterval(this.cleanupInterval);
@@ -86,7 +96,6 @@ export class RateLimiter {
             }
           } catch (tokenErr) {
             logger.warn(`[RateLimit] Invalid token for key=${key}`, tokenErr); 
-            
           }
         }
 
@@ -99,33 +108,31 @@ export class RateLimiter {
         );
 
         if (saved) {
-          res.setHeader("X-RateLimit-Limit", this.maxRequests);
-          res.setHeader("X-RateLimit-Remaining", this.maxRequests - 1);
-          res.setHeader(
-            "X-RateLimit-Reset",
+          this.setRateLimitHeaders(
+            res,
+            this.maxRequests,
+            this.maxRequests - 1,
             Math.floor(Date.now() / 1000) + this.windowSeconds
           );
           return next();
         }
-
 
         const [current, ttl] = await Promise.all([
           this.redis.incr(key),
           this.redis.ttl(key),
         ]);
 
-
         const resetSeconds =
           ttl > 0
             ? Math.floor(Date.now() / 1000) + ttl
             : Math.floor(Date.now() / 1000) + this.windowSeconds;
 
-        res.setHeader("X-RateLimit-Limit", this.maxRequests);
-        res.setHeader(
-          "X-RateLimit-Remaining",
-          Math.max(0, this.maxRequests - current)
+        this.setRateLimitHeaders(
+          res,
+          this.maxRequests,
+          Math.max(0, this.maxRequests - current),
+          resetSeconds
         );
-        res.setHeader("X-RateLimit-Reset", resetSeconds);
 
         if (current > this.maxRequests) {
           logger.warn(`[RateLimitExceeded]: key=${key}, ip=${req.publicAddress}`);
@@ -156,10 +163,10 @@ export class RateLimiter {
             expiresAt: now + this.windowSeconds * 1000,
           });
 
-          res.setHeader("X-RateLimit-Limit", this.maxRequests);
-          res.setHeader("X-RateLimit-Remaining", this.maxRequests - 1);
-          res.setHeader(
-            "X-RateLimit-Reset",
+          this.setRateLimitHeaders(
+            res,
+            this.maxRequests,
+            this.maxRequests - 1,
             Math.floor(now / 1000) + this.windowSeconds
           );
 
@@ -168,12 +175,12 @@ export class RateLimiter {
 
         entry.count += 1;
 
-        res.setHeader("X-RateLimit-Limit", this.maxRequests);
-        res.setHeader(
-          "X-RateLimit-Remaining",
-          Math.max(0, this.maxRequests - entry.count)
+        this.setRateLimitHeaders(
+          res,
+          this.maxRequests,
+          Math.max(0, this.maxRequests - entry.count),
+          Math.floor(entry.expiresAt / 1000)
         );
-        res.setHeader("X-RateLimit-Reset", Math.floor(entry.expiresAt / 1000));
 
         if (entry.count > this.maxRequests) {
           logger.warn(`[RateLimitExceededFallback]: key=${key}`);
