@@ -117,10 +117,8 @@ const main = async () => {
 
     app.use(sellerMiddleware);
 
-    app.use(sellerRequired);
-
     const rateLimiter = new RateLimiterJWT({
-      source: 'service-product',
+      source: "service-product",
       redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
       maxRequests: 20,
@@ -133,6 +131,12 @@ const main = async () => {
       "/api/product/graphql",
       expressMiddleware(server, {
         context: async ({ req }) => {
+          if (!req?.sellerData) {
+            throw new ApiGraphQLError(401, "Unauthorized agent", {
+              code: ERROR_CODES.UNAUTHORIZED,
+            });
+          }
+
           const sellerData = req.sellerData as SellerToken;
 
           const allowed = await rateLimiter.check(sellerData.id);

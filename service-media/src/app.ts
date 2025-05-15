@@ -25,8 +25,6 @@ app.use(getPublicAddress);
 
 app.use(sellerMiddleware);
 
-app.use(sellerRequired);
-
 const rateLimiter = new RateLimiterJWT({
   redisUrl: process.env.REDIS_RATELIMIT_URL as string,
   jwtSecret: process.env.AGENT_JWT_KEY as string,

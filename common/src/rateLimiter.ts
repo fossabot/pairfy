@@ -41,21 +41,21 @@ export class RateLimiterJWT {
   constructor(options: RateLimiterOptions) {
     if (!options.source || options.source.trim() === "") {
       throw new Error(
-        "La opción 'source' es obligatoria y no puede estar vacía."
+        "The 'source' option is required and cannot be empty."
       );
     }
 
     if (!Number.isInteger(options.maxRequests) || options.maxRequests <= 0) {
-      throw new Error("'maxRequests' debe ser un número entero positivo.");
+      throw new Error("'maxRequests' must be a positive integer.");
     }
     
     if (!Number.isInteger(options.windowSeconds) || options.windowSeconds <= 0) {
-      throw new Error("'windowSeconds' debe ser un número entero positivo.");
+      throw new Error("'windowSeconds' must be a positive integer.");
     }
     
     if (!options.jwtSecret || options.jwtSecret.trim() === "") {
       throw new Error(
-        "La opción 'jwtSecret' es obligatoria y no puede estar vacía."
+        "The 'jwtSecret' option is required and cannot be empty."
       );
     }
 
@@ -65,7 +65,7 @@ export class RateLimiterJWT {
       this.redis = new Redis(options.redisUrl);
     } else {
       throw new Error(
-        "Debes proporcionar un redisClient o una redisUrl en RateLimiterOptions."
+        "You must provide a redisClient or a redisUrl in RateLimiterOptions."
       );
     }
 
@@ -100,7 +100,7 @@ export class RateLimiterJWT {
       console.info({
         service: this.source,
         event: "redis.reconnecting",
-        message: `[Redis]: reintentando conexión en ${time}ms`,
+        message: `[Redis]: retrying connection in ${time}ms`,
       });
     });
 
@@ -123,7 +123,7 @@ export class RateLimiterJWT {
       return null;
     }
   }
-  /**Express rateLimitJwt middleware */
+  /** Express rateLimitJwt middleware */
   middleware() {
     return async (
       req: Request,
@@ -153,7 +153,7 @@ export class RateLimiterJWT {
 
         if (result === 0) {
           return next(
-            new ApiError(429, "Demasiadas solicitudes, intenta más tarde", {
+            new ApiError(429, "Too many requests, try again later", {
               code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
             })
           );
@@ -162,14 +162,14 @@ export class RateLimiterJWT {
         return next();
       } catch (error) {
         return next(
-          new ApiError(503, "Servicio no disponible temporalmente", {
+          new ApiError(503, "Service temporarily unavailable", {
             code: ERROR_CODES.SERVICE_UNAVAILABLE,
           })
         );
       }
     };
   }
-  /**GraphQL rateLimitJwt check */
+  /** GraphQL rateLimitJwt check */
   public async check(agentId: string): Promise<boolean> {
     try {
       const key = `ratelimit:${this.source}:agent:${agentId}`;

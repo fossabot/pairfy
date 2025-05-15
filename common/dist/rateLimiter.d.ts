@@ -18,9 +18,9 @@ export declare class RateLimiterJWT {
     constructor(options: RateLimiterOptions);
     private addListeners;
     private verifyToken;
-    /**Express rateLimitJwt middleware */
+    /** Express rateLimitJwt middleware */
     middleware(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
-    /**GraphQL rateLimitJwt check */
+    /** GraphQL rateLimitJwt check */
     check(agentId: string): Promise<boolean>;
 }
 export {};

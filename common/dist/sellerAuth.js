@@ -28,7 +28,9 @@ const sellerMiddleware = (req, res, next) => {
 exports.sellerMiddleware = sellerMiddleware;
 const sellerRequired = (req, _res, next) => {
     if (!req.sellerData) {
-        return next(new Error(index_1.ERROR_CODES.UNAUTHORIZED));
+        return next(new index_1.ApiError(401, "Unauthorized seller", {
+            code: index_1.ERROR_CODES.UNAUTHORIZED,
+        }));
     }
     next();
 };

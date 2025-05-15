@@ -13,7 +13,11 @@ export interface SellerToken {
   pubkeyhash: string;
 }
 
-export const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const sellerMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (!req.session?.jwt) {
     return next();
   }
@@ -45,7 +49,11 @@ export const sellerRequired = (
   next: NextFunction
 ) => {
   if (!req.sellerData) {
-    return next(new Error(ERROR_CODES.UNAUTHORIZED))
+    return next(
+      new ApiError(401, "Unauthorized seller", {
+        code: ERROR_CODES.UNAUTHORIZED,
+      })
+    );
   }
   next();
 };
