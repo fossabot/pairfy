@@ -5,6 +5,7 @@ import {
   ERROR_CODES,
   findProductById,
   findProductBySeller,
+  findProductBySku,
   sanitizeArrayGraphQL,
   sanitizeTiptapContent,
   SellerToken,
@@ -59,23 +60,37 @@ export const editProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    if(findProduct.media_group_id !== params.media_group_id){
+    if (findProduct.media_group_id !== params.media_group_id) {
       throw new ApiGraphQLError(400, "Invalid MediaGroupId", {
         code: ERROR_CODES.VALIDATION_ERROR,
       });
     }
 
+    if (findProduct.sku !== params.sku) {
+      const isSkuRepeated = await findProductBySku(
+        connection,
+        SELLER.id,
+        params.sku
+      );
+
+      if (isSkuRepeated) {
+        throw new ApiGraphQLError(409, "Repeated Product Sku", {
+          code: ERROR_CODES.RESOURCE_ALREADY_EXISTS,
+        });
+      }
+    }
+
     await connection.beginTransaction();
 
     ///////////////////////////////////////////////////////////////////////////////////// START TRANSACTION
-    
+
     const isValidGroup = await checkFileGroup(
       "http://service-media.default.svc.cluster.local:8003/api/media/verify-group",
       {
         agent_id: SELLER.id,
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
-        product_id: params.id
+        product_id: params.id,
       },
       process.env.INTERNAL_ENDPOINT_SECRET as string
     );
