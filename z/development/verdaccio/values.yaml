@@ -1,7 +1,7 @@
 persistence:
   enabled: true
-  size: 10Gi          # PVC de 10GB
-  storageClass: ""    # Para Minikube, deja vacío o pon el storageClass que tengas
+  size: 10Gi         
+  storageClass: ""   
 
 config:
   storage: /verdaccio/storage
@@ -12,7 +12,7 @@ config:
     '@pairfy/common':
       access: $all
       publish: $authenticated
-      proxy: false        # Desactiva proxy (cache) para este paquete
+      proxy: false       
     '**':
       access: $all
       publish: $authenticated

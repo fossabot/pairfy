@@ -2,11 +2,9 @@ FROM node:20-slim
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json .npmrc ./
 
 RUN ls
-
-RUN npm config set registry http://host.docker.internal:4873/
 
 RUN npm install --verbose --no-package-lock
 
