@@ -7,6 +7,7 @@ interface RateLimiterOptions {
   windowSeconds?: number;
   maxRequests?: number;
   enableFallback?: boolean;
+  maxFallbackEntries?: number;
 }
 
 const LUA_SCRIPT = `
@@ -27,11 +28,13 @@ export class RateLimiter {
   private enableFallback: boolean;
   private cleanupInterval: NodeJS.Timeout;
   private jwtKey: string;
+  private maxFallbackEntries: number;
 
   constructor(redisUrl: string, options?: RateLimiterOptions) {
     this.windowSeconds = options?.windowSeconds ?? 60;
     this.maxRequests = options?.maxRequests ?? 20;
     this.enableFallback = options?.enableFallback ?? true;
+    this.maxFallbackEntries = options?.maxFallbackEntries ?? 1000;
 
     const envJwtKey = process.env.AGENT_JWT_KEY;
     if (!envJwtKey) {
@@ -64,6 +67,15 @@ export class RateLimiter {
         }
       }
     }, 60_000);
+
+    const gracefulShutdown = () => {
+      logger.info("RateLimiter shutting down...");
+      this.shutdown();
+      process.exit(0);
+    };
+
+    process.once("SIGINT", gracefulShutdown);
+    process.once("SIGTERM", gracefulShutdown);
   }
 
   private setRateLimitHeaders(
@@ -91,10 +103,17 @@ export class RateLimiter {
       let key = "";
 
       try {
-        // Defensive fallback if publicAddress is missing or empty
-        const publicAddress = (req as any).publicAddress || req.ip || "unknown";
+        // Asumimos req.publicAddress siempre correcto
+        const publicAddress = (req as any).publicAddress;
+        if (!publicAddress) {
+          // Opcional: abortar si no está (ya no hay fallback)
+          return next(
+            new ApiError(400, "Missing publicAddress for rate limit key", {
+              code: ERROR_CODES.BAD_REQUEST,
+            })
+          );
+        }
 
-        // Base key on IP fallback
         key = `ratelimit:ip:${publicAddress}`;
 
         const token = req.session?.jwt;
@@ -102,6 +121,7 @@ export class RateLimiter {
           try {
             const decoded = verifyToken(token, this.jwtKey) as { sub?: string };
             if (decoded?.sub) {
+              // Ya no sanitizamos, asumimos correcto
               key = `ratelimit:user:${decoded.sub}`;
             }
           } catch (tokenErr) {
@@ -109,29 +129,32 @@ export class RateLimiter {
           }
         }
 
-        if (!key) {
-          return next(
-            new ApiError(400, "Invalid rate limit key", {
-              code: ERROR_CODES.BAD_REQUEST,
-            })
-          );
-        }
-
-        // Run Lua script: returns [number current, number ttl]
-        const result = (await this.redis.eval(
+        // Ejecutar script LUA
+        const resultRaw = await this.redis.eval(
           LUA_SCRIPT,
           1,
           key,
           this.windowSeconds
-        )) as [number, number];
+        );
 
+        if (
+          !Array.isArray(resultRaw) ||
+          resultRaw.length !== 2 ||
+          typeof resultRaw[0] !== "number" ||
+          typeof resultRaw[1] !== "number"
+        ) {
+          throw new Error("Invalid Redis eval response");
+        }
+
+        const result = resultRaw as [number, number];
         const current = result[0];
-        const ttl = result[1];
+        let ttl = result[1];
 
-        const resetSeconds =
-          ttl > 0
-            ? Math.floor(Date.now() / 1000) + ttl
-            : Math.floor(Date.now() / 1000) + this.windowSeconds;
+        if (ttl <= 0) {
+          ttl = this.windowSeconds;
+        }
+
+        const resetSeconds = Math.floor(Date.now() / 1000) + ttl;
 
         this.setRateLimitHeaders(
           res,
@@ -141,10 +164,14 @@ export class RateLimiter {
         );
 
         if (current > this.maxRequests) {
-          logger.warn(`[RateLimitExceeded]: key=${key}, ip=${publicAddress}`);
-          throw new ApiError(429, "Too many requests", {
-            code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
-          });
+          logger.warn(
+            `[RateLimitExceeded]: key=${key}, publicAddress=${publicAddress}`
+          );
+          return next(
+            new ApiError(429, "Too many requests", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            })
+          );
         }
 
         return next();
@@ -162,10 +189,26 @@ export class RateLimiter {
         const fallbackKey = key || `ratelimit:fallback:unknown`;
 
         const now = Date.now();
+
+        if (
+          this.fallbackStore.size > this.maxFallbackEntries &&
+          !this.fallbackStore.has(fallbackKey)
+        ) {
+          logger.error(
+            "[RateLimitFallback] Fallback store full, rejecting request"
+          );
+          return next(
+            new ApiError(429, "Too many requests - fallback store full", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            })
+          );
+        }
+
         let entry = this.fallbackStore.get(fallbackKey);
 
         if (!entry || entry.expiresAt < now) {
           if (entry) this.fallbackStore.delete(fallbackKey);
+
           this.fallbackStore.set(fallbackKey, {
             count: 1,
             expiresAt: now + this.windowSeconds * 1000,
@@ -181,7 +224,11 @@ export class RateLimiter {
           return next();
         }
 
-        entry.count += 1;
+        entry = {
+          count: entry.count + 1,
+          expiresAt: entry.expiresAt,
+        };
+        this.fallbackStore.set(fallbackKey, entry);
 
         this.setRateLimitHeaders(
           res,
