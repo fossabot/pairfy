@@ -8,7 +8,6 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { catchError } from "./utils/index.js";
-import Redis from 'ioredis';
 import {
   sellerMiddleware,
   normalizeGraphError,
@@ -16,6 +15,9 @@ import {
   getPublicAddress,
   sellerRequired,
   RateLimiterJWT,
+  ApiGraphQLError,
+  ERROR_CODES,
+  SellerToken,
 } from "@pairfy/common";
 
 const main = async () => {
@@ -117,23 +119,32 @@ const main = async () => {
 
     app.use(sellerRequired);
 
-    const redisClient = new Redis(process.env.REDIS_RATELIMIT_URL as string);
-
     const rateLimiter = new RateLimiterJWT({
-      redisClient,
+      source: 'service-product',
+      redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
       maxRequests: 20,
       windowSeconds: 60,
     });
-    
-    app.use(rateLimiter.middleware());
 
     await server.start();
 
     app.use(
       "/api/product/graphql",
       expressMiddleware(server, {
-        context: async ({ req }) => ({ sellerData: req.sellerData }),
+        context: async ({ req }) => {
+          const sellerData = req.sellerData as SellerToken;
+
+          const allowed = await rateLimiter.check(sellerData.id);
+
+          if (!allowed) {
+            throw new ApiGraphQLError(429, "Rate limit exceeded", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            });
+          }
+
+          return { sellerData };
+        },
       })
     );
 
