@@ -66,7 +66,8 @@ export const productBulletlistSchema = z
       }
     )
   )
-  .min(1, { message: "At least one feature is required." });
+  .min(1, { message: "At least one feature is required." })
+  .max(4, { message: "No more than 4 features are allowed." });
 
 export const productColorSchema = z.string().regex(/^#[0-9A-Fa-f]{6}$/, {
   message: "Invalid hex color format.",
