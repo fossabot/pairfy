@@ -40,19 +40,20 @@ export class RateLimiterJWT {
 
   constructor(options: RateLimiterOptions) {
     if (!options.source || options.source.trim() === "") {
-      throw new Error(
-        "The 'source' option is required and cannot be empty."
-      );
+      throw new Error("The 'source' option is required and cannot be empty.");
     }
 
     if (!Number.isInteger(options.maxRequests) || options.maxRequests <= 0) {
       throw new Error("'maxRequests' must be a positive integer.");
     }
-    
-    if (!Number.isInteger(options.windowSeconds) || options.windowSeconds <= 0) {
+
+    if (
+      !Number.isInteger(options.windowSeconds) ||
+      options.windowSeconds <= 0
+    ) {
       throw new Error("'windowSeconds' must be a positive integer.");
     }
-    
+
     if (!options.jwtSecret || options.jwtSecret.trim() === "") {
       throw new Error(
         "The 'jwtSecret' option is required and cannot be empty."
@@ -75,7 +76,8 @@ export class RateLimiterJWT {
     this.jwtSecret = options.jwtSecret;
     this.maxRequests = options.maxRequests ?? 100;
     this.windowSeconds = options.windowSeconds ?? 60;
-    this.middleware = this.middleware.bind(this);
+    this.middlewareJwt = this.middlewareJwt.bind(this);
+    this.middlewareIp = this.middlewareIp.bind(this);
   }
 
   private addListeners() {
@@ -123,8 +125,9 @@ export class RateLimiterJWT {
       return null;
     }
   }
+
   /** Express rateLimitJwt middleware */
-  middleware() {
+  middlewareJwt() {
     return async (
       req: Request,
       res: Response,
@@ -169,8 +172,48 @@ export class RateLimiterJWT {
       }
     };
   }
-  /** GraphQL rateLimitJwt check */
-  public async check(agentId: string): Promise<boolean> {
+
+  /** Express middlewareIp middleware */
+  middlewareIp() {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): Promise<void> => {
+      try {
+        const ip = req.publicAddress;
+
+        const key = `ratelimit:${this.source}:ip:${ip}`;
+
+        const result = await this.redis.eval(
+          this.luaScript,
+          1,
+          key,
+          this.maxRequests,
+          this.windowSeconds
+        );
+
+        if (result === 0) {
+          return next(
+            new ApiError(429, "Too many requests from this IP", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            })
+          );
+        }
+
+        return next();
+      } catch (error) {
+        return next(
+          new ApiError(503, "Service temporarily unavailable", {
+            code: ERROR_CODES.SERVICE_UNAVAILABLE,
+          })
+        );
+      }
+    };
+  }
+
+  /** GraphQL checkId */
+  public async checkId(agentId: string): Promise<boolean> {
     try {
       const key = `ratelimit:${this.source}:agent:${agentId}`;
 
@@ -198,6 +241,41 @@ export class RateLimiterJWT {
         event: "ratelimit.error",
         message: "ratelimit error",
         error: error,
+      });
+
+      return false;
+    }
+  }
+
+  /** GraphQL checkIp */
+  public async checkIp(ip: string): Promise<boolean> {
+    try {
+      const key = `ratelimit:${this.source}:ip:${ip}`;
+
+      const result = await this.redis.eval(
+        this.luaScript,
+        1,
+        key,
+        this.maxRequests,
+        this.windowSeconds
+      );
+
+      if (result === 0) {
+        logger.warn({
+          service: this.source,
+          event: "ratelimit.exceeded",
+          message: "ratelimit exceeded by ip",
+          ip,
+        });
+      }
+
+      return result !== 0;
+    } catch (error) {
+      logger.error({
+        service: this.source,
+        event: "ratelimit.error",
+        message: "ratelimit error",
+        error,
       });
 
       return false;
