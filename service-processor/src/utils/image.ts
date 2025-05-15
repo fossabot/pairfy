@@ -13,7 +13,7 @@ export async function resizeImage(
   const entries = await Promise.all(
     Object.entries(sizes).map(async ([key, { width, height }]) => {
       const resized = await sharp(buffer)
-        .resize({ width, height, fit: "cover", withoutEnlargement: true })
+        .resize({ width, height, fit: "inside", withoutEnlargement: true })
         .toFormat("webp", { quality: 80, nearLossless: true })
         .toBuffer();
       return [key, resized] as const;
