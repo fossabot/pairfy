@@ -51,7 +51,6 @@ done
 
 echo "🎉 Done: updates were applied where needed."
 
-
 skaffold dev
 
 

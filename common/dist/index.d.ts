@@ -1,4 +1,3 @@
-import "./types/express";
 export * from "./createEvent";
 export * from "./insertSeller";
 export * from "./isProcessedEvent";

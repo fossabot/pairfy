@@ -41,14 +41,14 @@ export const getPublicAddress = (req: Request, res: Response, next: NextFunction
     const remoteAddr = req.socket.remoteAddress || "";
 
     if (!isTrustedProxy(remoteAddr, 0)) {
-      console.warn(`Bloqueado acceso no Cloudflare: ${remoteAddr}`);
+      console.warn(`Access blocked: not Cloudflare: ${remoteAddr}`);
       return res.status(403).json({ error: "Access denied: not from Cloudflare" });
     }
 
     req.publicAddress = ip;
     next();
   } catch (err) {
-    console.warn("No se pudo resolver IP real:", err);
+    console.warn("Could not resolve real IP:", err);
     return res.status(403).json({ error: "Invalid IP or proxy chain" });
   }
 };
