@@ -2,7 +2,7 @@ import compression from "compression";
 import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
-import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
+import { ApiError, ERROR_CODES, errorHandler, logger, RateLimiterJWT } from "@pairfy/common";
 import { ensureBucketExists, minioClient } from "./database/minio.js";
 import { app } from "./app.js";
 
@@ -47,10 +47,19 @@ const main = async () => {
       database: process.env.DATABASE_NAME,
     });
 
+    const rateLimiter = new RateLimiterJWT({
+      source: 'service-media',
+      redisUrl: process.env.REDIS_RATELIMIT_URL as string,
+      jwtSecret: process.env.AGENT_JWT_KEY as string,
+      maxRequests: 20,
+      windowSeconds: 60
+    });
+
     app.post(
       "/api/media/create-files",
-
-      route.createFilesMiddlewares,
+      
+      rateLimiter.middleware(),
+      ...route.createFilesMiddlewares,
 
       route.createFilesHandler
     );
@@ -58,7 +67,8 @@ const main = async () => {
     app.post(
       "/api/media/update-files",
 
-      route.updateFilesMiddlewares,
+      rateLimiter.middleware(),
+      ...route.updateFilesMiddlewares,
 
       route.updateFilesHandler
     );
@@ -75,14 +85,6 @@ const main = async () => {
       "/api/media/get-file/groups/:groupId/:filename",
       route.getFileMiddlewares,
       route.getFileHandler
-    );
-
-    app.post(
-      "/api/media/delete-image",
-
-      route.deleteImageMiddlewares,
-
-      route.deleteImageHandler
     );
 
     app.get("/api/media/ping", (req, res) => {

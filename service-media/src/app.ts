@@ -2,7 +2,7 @@ import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import { getPublicAddress, RateLimiterJWT, sellerMiddleware, sellerRequired } from "@pairfy/common";
+import { getPublicAddress, sellerMiddleware } from "@pairfy/common";
 
 const app = express();
 
@@ -24,17 +24,5 @@ app.use(helmet());
 app.use(getPublicAddress);
 
 app.use(sellerMiddleware);
-
-app.use(sellerRequired);
-
-const rateLimiter = new RateLimiterJWT({
-  source: 'service-media',
-  redisUrl: process.env.REDIS_RATELIMIT_URL as string,
-  jwtSecret: process.env.AGENT_JWT_KEY as string,
-  maxRequests: 20,
-  windowSeconds: 60
-});
-
-app.use(rateLimiter.middleware());
 
 export { app };
