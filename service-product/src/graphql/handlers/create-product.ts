@@ -8,7 +8,7 @@ import {
   findProductBySku,
   createEvent,
   sanitizeTiptapContent,
-  sanitizeArrayGraphQL,
+  sanitizeArrayStrings,
 } from "@pairfy/common";
 import { verifyParams } from "../../validators/create-product.js";
 import { checkFileGroup } from "../../utils/media.js";
@@ -18,10 +18,6 @@ export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
-    args.createProductInput.bullet_list = sanitizeArrayGraphQL(
-      args.createProductInput.bullet_list
-    );
-
     const validateParams = verifyParams.safeParse(args.createProductInput);
 
     if (!validateParams.success) {
@@ -31,6 +27,10 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
+    args.createProductInput.bullet_list = sanitizeArrayStrings(
+      args.createProductInput.bullet_list
+    );
+    
     args.createProductInput.description = sanitizeTiptapContent(
       args.createProductInput.description
     );

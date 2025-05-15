@@ -41,7 +41,7 @@ __exportStar(require("./findProductById"), exports);
 __exportStar(require("./findProductBySku"), exports);
 __exportStar(require("./countries"), exports);
 __exportStar(require("./tiptapValidator"), exports);
-__exportStar(require("./sanitizeArrayGraphQL"), exports);
+__exportStar(require("./sanitize"), exports);
 __exportStar(require("./categories"), exports);
 __exportStar(require("./minio"), exports);
 __exportStar(require("./insertMedia"), exports);

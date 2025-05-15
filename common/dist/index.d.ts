@@ -25,7 +25,7 @@ export * from "./findProductById";
 export * from "./findProductBySku";
 export * from "./countries";
 export * from "./tiptapValidator";
-export * from "./sanitizeArrayGraphQL";
+export * from "./sanitize";
 export * from "./categories";
 export * from "./minio";
 export * from "./insertMedia";

@@ -6,7 +6,7 @@ import {
   findProductById,
   findProductBySeller,
   findProductBySku,
-  sanitizeArrayGraphQL,
+  sanitizeArrayStrings,
   sanitizeTiptapContent,
   SellerToken,
   updateProduct,
@@ -19,10 +19,6 @@ export const editProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
-    args.editProductInput.bullet_list = sanitizeArrayGraphQL(
-      args.editProductInput.bullet_list
-    );
-
     const validateParams = verifyParams.safeParse(args.editProductInput);
 
     if (!validateParams.success) {
@@ -31,6 +27,10 @@ export const editProduct = async (_: any, args: any, context: any) => {
         code: ERROR_CODES.VALIDATION_ERROR,
       });
     }
+    
+    args.editProductInput.bullet_list = sanitizeArrayStrings(
+      args.editProductInput.bullet_list
+    );
 
     args.editProductInput.description = sanitizeTiptapContent(
       args.editProductInput.description
@@ -158,7 +158,7 @@ export const editProduct = async (_: any, args: any, context: any) => {
 
     await connection.commit();
 
-    return { success: true, message: "The product was updated successfully!" };
+    return { success: true, message: "The product has been successfully updated and all changes have been saved." };
   } catch (error: any) {
     if (connection) await connection.rollback();
 
