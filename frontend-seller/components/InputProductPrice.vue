@@ -6,7 +6,7 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @beforeinput="onBeforeInput"
+      @input="onInput"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputPrice-input"
@@ -15,7 +15,7 @@
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
       inputmode="numeric"
-      @blur="validateInput(internalValue)"
+      @blur="validate"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'price' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [Number, null], default: null },
   label: { type: String, default: 'Price (USD)' },
   placeholder: { type: String, default: '0' },
   focus: { type: Boolean, default: false },
@@ -35,15 +35,15 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: number | null): void
   (e: 'valid', payload: { valid: boolean, value: number | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const internalValue = ref(props.modelValue?.toString() ?? '')
 const errorMessage = ref('')
 
-const dollarRegex = /^[0-9]*$/
+const dollarRegex = /^[0-9]+$/
 
 const messages = {
   required: 'This field is required.',
@@ -55,6 +55,7 @@ const messages = {
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validate()
 })
 
 watch(() => props.focus, (newVal) => {
@@ -62,42 +63,50 @@ watch(() => props.focus, (newVal) => {
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
+  const normalized = val?.toString() ?? ''
+  if (normalized !== internalValue.value) internalValue.value = normalized
 })
 
-watch(internalValue, (val) => {
-  emit('update:modelValue', val)
-  validateInput(val)
+watch(internalValue, () => {
+  emitNormalizedValue()
+  validate()
 })
 
-const onBeforeInput = (e: Event) => {
+function onInput(e: Event) {
   const target = e.target as HTMLInputElement
   internalValue.value = target.value.replace(/\D+/g, '')
 }
 
-const validateInput = (value: string) => {
+function emitNormalizedValue() {
+  const trimmed = internalValue.value.trim()
+  const numeric = trimmed === '' ? null : Number(trimmed)
+  emit('update:modelValue', Number.isNaN(numeric!) ? null : numeric)
+}
+
+function validate() {
+  const value = internalValue.value.trim()
   const numValue = Number(value)
 
-  const validators: { condition: boolean; message: string }[] = [
-    { condition: props.required && value.trim() === '', message: messages.required },
-    { condition: value.length > props.maxLength, message: messages.maxLength },
-    { condition: !dollarRegex.test(value), message: messages.invalid },
-    { condition: numValue < 5, message: messages.minValue },
-    { condition: numValue > 999999, message: messages.maxValue },
+  const rules = [
+    { invalid: props.required && value === '', message: messages.required },
+    { invalid: value.length > props.maxLength, message: messages.maxLength },
+    { invalid: !!value && !dollarRegex.test(value), message: messages.invalid },
+    { invalid: !!value && numValue < 5, message: messages.minValue },
+    { invalid: !!value && numValue > 999999, message: messages.maxValue },
   ]
 
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
+  const failed = rules.find(r => r.invalid)
+  if (failed) {
+    errorMessage.value = failed.message
+    emit('valid', { valid: false, value: null })
+  } else {
+    errorMessage.value = ''
+    emit('valid', { valid: true, value: value === '' ? null : numValue })
   }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value: numValue })
 }
 </script>
+
+
 
 <style scoped>
 .p-InputPrice {
@@ -109,9 +118,9 @@ const validateInput = (value: string) => {
 .p-InputPrice-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
+  transition: border-color 0.2s;
   padding: 0.75rem 1rem;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .p-InputPrice-input:focus-within {
@@ -119,18 +128,16 @@ const validateInput = (value: string) => {
 }
 
 .p-InputPrice-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }

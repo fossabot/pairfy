@@ -1,24 +1,13 @@
 import pino from 'pino';
 
-const isProd = process.env.NODE_ENV === 'production';
-
 export const logger = pino({
-  level: isProd ? 'info' : 'debug',
-  timestamp: pino.stdTimeFunctions.isoTime,
-  formatters: {
-    level: (label) => ({ level: label }),
+  level: 'info',
+  timestamp: () => {
+    const now = new Date();
+    return `,"timestamp":"${now.toISOString()}","time":"${now.toISOString()}","timestamp_unix_ms":${now.getTime()}`;
   },
-  ...(isProd
-    ? {} 
-    : {
-        transport: {
-          target: 'pino-pretty', 
-          options: {
-            colorize: true,
-            translateTime: 'SYS:standard',
-            ignore: 'pid,hostname',
-          },
-        },
-      }),
+  formatters: {
+    level: (label) => ({ level: label })
+  },
+  base: null, 
 });
-

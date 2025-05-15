@@ -6,15 +6,15 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @drop.prevent
       :placeholder="placeholder"
-      class="p-InputProductCity-input"
-      :class="{ 'is-invalid': errorMessage }"
       :maxlength="maxLength"
+      inputmode="text"
+      @drop.prevent
+      @blur="validate"
+      :class="{ 'is-invalid': errorMessage }"
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
-      inputmode="text"
-      @blur="validateInput(internalValue)"
+      class="p-InputProductCity-input"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -23,9 +23,12 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch, onMounted } from 'vue'
+import type { PropType } from 'vue'
+
 const props = defineProps({
   id: { type: String, default: 'product-city' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, null] as PropType<string | null>, default: null },
   label: { type: String, default: 'City' },
   placeholder: { type: String, default: 'e.g. Los Ángeles' },
   focus: { type: Boolean, default: false },
@@ -34,12 +37,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
-  (e: 'valid', payload: { valid: boolean, value: string | null }): void
+  (e: 'update:modelValue', value: string | null): void
+  (e: 'valid', payload: { valid: boolean; value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const internalValue = ref(props.modelValue ?? '')
 const errorMessage = ref('')
 
 const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u
@@ -50,41 +53,40 @@ const messages = {
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }
 
-onMounted(() => {
-  if (props.focus) inputRef.value?.focus()
+const isEmpty = (val: string) => val.trim() === ''
+const emitValue = (val: string) => emit('update:modelValue', isEmpty(val) ? null : val)
+
+const validate = () => {
+  const val = internalValue.value
+  const trimmed = val.trim()
+
+  const validators = [
+    { condition: props.required && isEmpty(val), message: messages.required },
+    { condition: val.length > props.maxLength, message: messages.maxLength },
+    { condition: !isEmpty(val) && !cityRegex.test(trimmed), message: messages.invalid },
+  ]
+
+  const error = validators.find(v => v.condition)?.message
+  errorMessage.value = error || ''
+  emit('valid', { valid: !error, value: !error ? (isEmpty(val) ? null : trimmed) : null })
+}
+
+watch(() => props.modelValue, (val) => {
+  if (val !== internalValue.value) internalValue.value = val ?? ''
+})
+
+watch(internalValue, (val) => {
+  emitValue(val)
+  validate()
 })
 
 watch(() => props.focus, (newVal) => {
   if (newVal) inputRef.value?.focus()
+}, { immediate: true })
+
+onMounted(() => {
+  validate()
 })
-
-watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
-})
-
-watch(internalValue, (val) => {
-  emit('update:modelValue', val)
-  validateInput(val)
-})
-
-const validateInput = (value: string) => {
-  const validators = [
-    { condition: props.required && value.trim() === '', message: messages.required },
-    { condition: value.length > props.maxLength, message: messages.maxLength },
-    { condition: value.trim() !== '' && !cityRegex.test(value), message: messages.invalid },
-  ]
-
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
-  }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value })
-}
 </script>
 
 <style scoped>
@@ -107,18 +109,16 @@ const validateInput = (value: string) => {
 }
 
 .p-InputProductCity-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }

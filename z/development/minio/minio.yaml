@@ -29,6 +29,8 @@ spec:
           args:
             - server
             - /data
+            - --console-address
+            - ":9001"
           env:
             - name: MINIO_ROOT_USER
               value: "minioadmin"
@@ -50,7 +52,9 @@ kind: Service
 metadata:
   name: minio
 spec:
-  type: ClusterIP
+  selector:
+    app: minio
+  type: LoadBalancer
   ports:
     - port: 9000
       targetPort: 9000
@@ -58,5 +62,4 @@ spec:
     - port: 9001
       targetPort: 9001
       name: console
-  selector:
-    app: minio
+

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, ErrorRequestHandler } from "express";
+import { ErrorRequestHandler } from "express";
 export declare class ApiError extends Error {
     statusCode: number;
     code: string;
@@ -11,4 +11,3 @@ export declare class ApiError extends Error {
     });
 }
 export declare const errorHandler: ErrorRequestHandler;
-export declare const asyncHandler: (fn: (...args: any[]) => Promise<any>) => (req: Request, res: Response, next: NextFunction) => Promise<any>;

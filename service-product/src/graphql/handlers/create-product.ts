@@ -1,3 +1,4 @@
+import database from "../../database/client.js";
 import {
   ApiGraphQLError,
   ERROR_CODES,
@@ -7,23 +8,17 @@ import {
   findProductBySku,
   createEvent,
   sanitizeTiptapContent,
-  sanitizeArrayGraphQL,
+  sanitizeArrayStrings,
 } from "@pairfy/common";
-import database from "../../database/client.js";
-import { createProductSchema } from "../../validators/create-product.js";
-import { checkFileGroup } from "../../utils/verify-group.js";
+import { verifyParams } from "../../validators/create-product.js";
+import { checkFileGroup } from "../../utils/media.js";
+import { applyDiscount } from "../../utils/index.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
 
   try {
-    args.createProductInput.bullet_list = sanitizeArrayGraphQL(
-      args.createProductInput.bullet_list
-    );
-
-    const validateParams = createProductSchema.safeParse(
-      args.createProductInput
-    );
+    const validateParams = verifyParams.safeParse(args.createProductInput);
 
     if (!validateParams.success) {
       const errors = JSON.stringify(validateParams.error.flatten());
@@ -32,13 +27,29 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    const params = validateParams.data;
+    args.createProductInput.bullet_list = sanitizeArrayStrings(
+      args.createProductInput.bullet_list
+    );
+    
+    args.createProductInput.description = sanitizeTiptapContent(
+      args.createProductInput.description
+    );
 
-    console.log(params);
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+    connection = await database.client.getConnection();
+
+    const params = validateParams.data;
 
     const SELLER = context.sellerData;
 
-    connection = await database.client.getConnection();
+    const timestamp = Date.now();
+
+    const productId = getProductId();
+
+    const productGroupId = productId;
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
     const isSkuRepeated = await findProductBySku(
       connection,
@@ -52,44 +63,40 @@ export const createProduct = async (_: any, args: any, context: any) => {
       });
     }
 
-    const isValidFiles = await checkFileGroup(
+    await connection.beginTransaction();
+
+    /////////////////////////////////////////////////////////////////////// START TRANSACTION
+
+    const isValidGroup = await checkFileGroup(
       "http://service-media.default.svc.cluster.local:8003/api/media/verify-group",
       {
         agent_id: SELLER.id,
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
+        product_id: productId
       },
-      "fakesecret" ////
+      process.env.INTERNAL_ENDPOINT_SECRET as string
     );
 
-    if (!isValidFiles) {
+    if (!isValidGroup) {
       throw new ApiGraphQLError(409, "Inconsistency of image ids.", {
         code: ERROR_CODES.CONFLICT,
       });
     }
 
-    await connection.beginTransaction();
-
-    /////////////////////////////////////////////////////////////////////// START TRANSACTION
-
-    const timestamp = Date.now();
-
-    const productId = getProductId();
-
-    const groupId = productId;
-
     const productScheme = {
       id: productId,
-      group_id: groupId,
+      group_id: productGroupId,
       media_group_id: params.media_group_id,
       media_position: params.file_ids,
       seller_id: SELLER.id,
+      thumbnail_url: isValidGroup.thumbnail_url,
       name: params.name,
       price: params.price,
       sku: params.sku,
       model: params.model,
       brand: params.brand,
-      description: sanitizeTiptapContent(params.description),
+      description: params.description,
       category: params.category,
       bullet_list: params.bullet_list,
       color: params.color,
@@ -99,8 +106,8 @@ export const createProduct = async (_: any, args: any, context: any) => {
       city: params.city,
       postal: params.postal,
       discount: params.discount,
-      discount_value: 0,
-      discount_percent: params.discount_percent,   ///////////////
+      discount_value: applyDiscount(params.price, params.discount_percent),
+      discount_percent: params.discount_percent,
       created_at: timestamp,
       updated_at: timestamp,
       schema_v: 0,
@@ -135,22 +142,16 @@ export const createProduct = async (_: any, args: any, context: any) => {
 
     return {
       success: true,
-      message: "Product created successfully.",
+      message: `The product was created successfully! You can now view or edit its details using ID: ${findProduct.id}`,
       data: {
         product_id: findProduct.id,
       },
     };
-  } catch (err: any) {
-    console.error(err);
+  } catch (error: any) {
+    if (connection) await connection.rollback();
 
-    if (connection) {
-      await connection.rollback();
-    }
-
-    throw err;
+    throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };

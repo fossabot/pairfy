@@ -46,6 +46,10 @@ watch(internalValue, (val) => {
   validate(val)
 })
 
+onMounted(() => {
+  validate(internalValue.value)
+})
+
 const selectOption = (val: string) => {
   internalValue.value = val
 }
@@ -81,8 +85,8 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 .switch-button {
   border: 1px solid var(--border-a, #ccc);
+  border-radius: var(--button-radius);
   background: var(--background-a);
-  border-radius: var(--radius-b);
   font-size: var(--text-size-0);
   padding: 0.75rem 1rem;
   font-weight: 500;
@@ -98,18 +102,16 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 }
 
 .switch-group.is-invalid .switch-button {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }

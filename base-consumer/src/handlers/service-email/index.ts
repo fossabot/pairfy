@@ -36,15 +36,11 @@ const CreateEmail = async (event: any, seq: number): Promise<boolean> => {
   } catch (err: any) {
     logger.error(err);
 
-    if (connection) {
-      await connection.rollback();
-    }
+    if (connection) await connection.rollback();
 
     response = Promise.resolve(false);
   } finally {
-    if (connection) {
-      await connection.release();
-    }
+    if (connection) connection.release();
   }
 
   return response;

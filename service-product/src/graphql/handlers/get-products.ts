@@ -3,71 +3,103 @@ import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
 import { verifyParams } from "../../validators/get-products.js";
 
 export const getProducts = async (_: any, args: any, context: any) => {
-  const isValidParams = verifyParams.safeParse(args.getProductsInput);
+  const validation = verifyParams.safeParse(args.getProductsInput);
 
-  if (!isValidParams.success) {
+  if (!validation.success) {
     throw new ApiGraphQLError(400, "Invalid input", {
       code: ERROR_CODES.VALIDATION_ERROR,
-      details: isValidParams.error.format(),
+      details: validation.error.format(),
     });
   }
 
-  const { cursor } = isValidParams.data;
-
+  const { cursor, reverseCursor } = validation.data;
   const { sellerData: SELLER } = context;
+
+  if (cursor && reverseCursor) {
+    throw new ApiGraphQLError(400, "Cannot use both cursor and reverseCursor", {
+      code: ERROR_CODES.VALIDATION_ERROR,
+    });
+  }
 
   const pageSize = 16;
   const realLimit = pageSize + 1;
 
-  let connection = null;
-
-  let query = "SELECT * FROM products WHERE seller_id = ?";
   const queryParams: any[] = [SELLER.id];
+  let whereClause = "WHERE seller_id = ?";
+  let orderClause = "ORDER BY created_at DESC, id DESC";
+  let isReversing = false;
 
-  if (cursor !== "NOT") {
-    const timestamp = Number(cursor);
-    if (isNaN(timestamp)) {
-      throw new ApiGraphQLError(400, "Invalid cursor format", {
-        code: ERROR_CODES.VALIDATION_ERROR,
-      });
-    }
-    query += " AND created_at < ?";
-    queryParams.push(new Date(timestamp).toISOString());
+  if (cursor) {
+    const [createdAt, id] = cursor.split("_");
+    whereClause += " AND (created_at < ? OR (created_at = ? AND id < ?))";
+    queryParams.push(createdAt, createdAt, id);
   }
 
-  query += " ORDER BY created_at DESC LIMIT ?";
+  if (reverseCursor) {
+    const [createdAt, id] = reverseCursor.split("_");
+    whereClause += " AND (created_at > ? OR (created_at = ? AND id > ?))";
+    queryParams.push(createdAt, createdAt, id);
+    orderClause = "ORDER BY created_at ASC, id ASC";
+    isReversing = true;
+  }
+
+  const query = `
+    SELECT * FROM products
+    ${whereClause}
+    ${orderClause}
+    LIMIT ?
+  `;
   queryParams.push(realLimit);
+
+  let connection = null;
 
   try {
     connection = await database.client.getConnection();
+    const [result] = await connection.query(query, queryParams);
 
-    const [products] = await connection.query(query, queryParams);
+    const hasMore = result.length > pageSize;
+    const products = hasMore ? result.slice(0, pageSize) : result;
 
-    const hasMore = products.length > pageSize;
-    const trimmedProducts = hasMore ? products.slice(0, pageSize) : products;
+    let nextCursor: string | null = null;
+    if (hasMore) {
+      const item = isReversing ? result[pageSize] : products[products.length - 1];
+      nextCursor = `${item.created_at}_${item.id}`;
+    }
 
-    const nextCursor = hasMore
-      ? trimmedProducts[trimmedProducts.length - 1].created_at
-      : null;
+    const finalProducts = isReversing ? products.reverse() : products;
 
     const [[{ total_products }]] = await connection.query(
       "SELECT COUNT(*) AS total_products FROM products WHERE seller_id = ?",
       [SELLER.id]
     );
 
+    const resultLength = result.length;
+    const isAdvancing = !!cursor;
+
+    const isInitialLoad = !cursor && !reverseCursor;
+
+    const hasPrevMore = !isInitialLoad && (
+      (!isReversing && (isAdvancing || hasMore)) ||
+      (isReversing && hasMore)
+    );
+    
+    const hasNextMore = (
+      (!isReversing && hasMore) ||
+      (isReversing && (isAdvancing || resultLength > 0))
+    );
+
     return {
-      products: trimmedProducts,
+      products: finalProducts,
       nextCursor,
-      hasMore,
+      hasPrevMore,
+      hasNextMore,
       totalCount: total_products,
     };
-  } catch (err: any) {
+  } catch (err) {
     throw new ApiGraphQLError(500, "Unexpected error retrieving products", {
       code: ERROR_CODES.INTERNAL_ERROR,
     });
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };

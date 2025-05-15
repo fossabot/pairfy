@@ -1,4 +1,6 @@
 import database from "../../database/client.js";
+import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
+import { sortMediaByPosition } from "../../utils/media.js";
 
 export const getProduct = async (_: any, args: any, context: any) => {
   const params = args.getProductInput;
@@ -12,26 +14,33 @@ export const getProduct = async (_: any, args: any, context: any) => {
   try {
     connection = await database.client.getConnection();
 
-    const [product] = await connection.execute(
-      `SELECT * FROM products WHERE id = ? AND seller_id = ?`,
+    const [products] = await connection.execute(
+      `SELECT * FROM products WHERE id = ? AND seller_id = ? LIMIT 1`,
       [params.id, SELLER.id]
     );
 
-    if (!product.length) {
-      throw new Error("NOT_PRODUCT");
+    if (!products.length) {
+      throw new ApiGraphQLError(404, "Product not found", {
+        code: ERROR_CODES.NOT_FOUND,
+      });
     }
 
-    return product[0];
-  } catch (err: any) {
-    if (connection) {
-      await connection.rollback();
-    }
+    const product = products[0];
 
-    throw new Error(err.message);
+    const [media] = await connection.execute(
+      `SELECT * FROM media WHERE product_id = ?`,
+      [product.id]
+    );
+
+    const response = {
+      product,
+      media: sortMediaByPosition(product.media_position, media),
+    };
+
+    return response;
+  } catch (error: any) {
+    throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
-

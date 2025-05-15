@@ -1,3 +1,5 @@
+import database from "../database/index.js";
+import validatedUpload from "../utils/multer.js";
 import {
   getMediaGroupId,
   sellerRequired,
@@ -6,10 +8,8 @@ import {
   ERROR_CODES,
   SellerToken,
 } from "@pairfy/common";
-import database from "../database/index.js";
 import { Request, Response, RequestHandler, NextFunction } from "express";
-import validatedUpload from "../utils/multer.js";
-import { minioClient } from "../common/minioClient.js";
+import { minioClient } from "../database/minio.js";
 
 const createFilesMiddlewares: RequestHandler[] = [
   sellerRequired,
@@ -22,6 +22,7 @@ const createFilesHandler = async (req: Request, res: Response, next: NextFunctio
 
   try {
     const SELLER = req.sellerData as SellerToken;
+
     const files = req.files as Express.Multer.File[];
 
     if (!files?.length) {
@@ -38,7 +39,7 @@ const createFilesHandler = async (req: Request, res: Response, next: NextFunctio
 
     const mediaGroupId = getMediaGroupId();
 
-    const createdAt = Date.now();
+    const timestamp = Date.now();
 
     for (let i = 0; i < files.length; i++) {
 
@@ -76,7 +77,7 @@ const createFilesHandler = async (req: Request, res: Response, next: NextFunctio
           file.originalname,
           mediaPath,
           "pending",
-          createdAt,
+          timestamp,
         ]
       );
 

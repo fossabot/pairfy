@@ -1,17 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
-import { minioClient } from "../common/minioClient.js";
 import { verifyParams } from "../validators/get-file.js";
-import database from "../database/index.js";
-
-const allowedMimes = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "video/mp4",
-  "video/webm",
-  "video/quicktime",
-];
+import { minioClient } from "../database/minio.js";
 
 export const getFileMiddlewares: any = [];
 
@@ -20,9 +10,13 @@ export const getFileHandler = async (
   res: Response,
   next: NextFunction
 ) => {
-  let connection: any = null;
-
   try {
+    if (process.env.NODE_ENV !== "development") {
+      throw new ApiError(403, "Access denied", {
+        code: ERROR_CODES.FORBIDDEN
+      });
+    }
+
     const validateParams = verifyParams.safeParse(req.params);
 
     if (!validateParams.success) {
@@ -42,42 +36,14 @@ export const getFileHandler = async (
 
     const mediaPath = `groups/${groupId}/${filename}`;
 
-    connection = await database.client.getConnection();
-
-    const [rows] = await connection.execute(
-      `SELECT mime_type, status FROM files WHERE media_path = ? LIMIT 1`,
-      [mediaPath]
-    );
-
-    if (!rows || rows.length === 0) {
-      throw new ApiError(404, "File not found", {
-        code: ERROR_CODES.NOT_FOUND,
-      });
-    }
-
-    const { mime_type, status } = (rows as any[])[0];
-
-    if (status !== "ready") {
-      throw new ApiError(403, "File not ready", {
-        code: ERROR_CODES.FORBIDDEN,
-      });
-    }
-
-    if (!allowedMimes.includes(mime_type)) {
-      throw new ApiError(415, "Unsupported file type", {
-        code: ERROR_CODES.VALIDATION_ERROR,
-      });
-    }
-
     const stream = await minioClient.client.getObject("media", mediaPath);
 
-    res.setHeader("Content-Type", mime_type);
     res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+
     res.setHeader("Access-Control-Allow-Origin", "*");
+
     stream.pipe(res);
   } catch (err) {
     next(err);
-  } finally {
-    if (connection) connection.release();
   }
 };

@@ -3,7 +3,7 @@
     <label :for="props.id" class="title-text">{{ label }}</label>
     <input ref="inputRef" v-model="internalValue" :id="props.id" type="text" @drop.prevent :placeholder="placeholder"
       class="p-InputProductName-input" :class="{ 'is-invalid': errorMessage }" :maxlength="maxLength"
-      :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" @blur="validateInput(internalValue)"/>
+      :aria-invalid="!!errorMessage" :aria-describedby="`${props.id}-error`" inputmode="text" @blur="validate" />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '\u00A0' }}
     </p>
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'product-name' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, null], default: null },
   label: { type: String, default: 'Name' },
   placeholder: { type: String, default: 'Product name' },
   focus: { type: Boolean, default: false },
@@ -23,25 +23,26 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | null): void
   (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const internalValue = ref(props.modelValue ?? '')
 const errorMessage = ref('')
 
 const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u
 
-const getMessages = () => ({
+const messages = {
   required: 'This field is required.',
   minLength: `Minimum length is ${props.minLength} characters.`,
   maxLength: `Maximum length is ${props.maxLength} characters.`,
   invalid: 'Only valid characters are allowed: letters, numbers, basic punctuation.',
-})
+}
 
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validate()
 })
 
 watch(() => props.focus, (newVal) => {
@@ -49,36 +50,41 @@ watch(() => props.focus, (newVal) => {
 })
 
 watch(() => props.modelValue, (val) => {
-  if (val !== internalValue.value) internalValue.value = val
+  const normalized = val ?? ''
+  if (normalized !== internalValue.value) internalValue.value = normalized
 })
 
-watch(internalValue, (val) => {
-  emit('update:modelValue', val)
-  validateInput(val)
+watch(internalValue, () => {
+  emitNormalizedValue()
+  validate()
 })
 
-const validateInput = (value: string) => {
-  const messages = getMessages()
+function emitNormalizedValue() {
+  const normalized = internalValue.value.trim()
+  emit('update:modelValue', normalized === '' ? null : normalized)
+}
 
-  const validators: { condition: boolean; message: string }[] = [
-    { condition: props.required && !value.trim(), message: messages.required },
-    { condition: value.length < props.minLength, message: messages.minLength },
-    { condition: value.length > props.maxLength, message: messages.maxLength },
-    { condition: !productNameRegex.test(value), message: messages.invalid },
+function validate() {
+  const value = internalValue.value.trim()
+
+  const rules = [
+    { invalid: props.required && !value, message: messages.required },
+    { invalid: value.length < props.minLength, message: messages.minLength },
+    { invalid: value.length > props.maxLength, message: messages.maxLength },
+    { invalid: !!value && !productNameRegex.test(value), message: messages.invalid },
   ]
 
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
+  const failed = rules.find(rule => rule.invalid)
+  if (failed) {
+    errorMessage.value = failed.message
+    emit('valid', { valid: false, value: null })
+  } else {
+    errorMessage.value = ''
+    emit('valid', { valid: true, value: value || null })
   }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value })
 }
 </script>
+
 
 <style scoped>
 .p-InputProductName {
@@ -90,9 +96,9 @@ const validateInput = (value: string) => {
 .p-InputProductName-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
+  transition: border-color 0.2s;
   padding: 0.75rem 1rem;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .p-InputProductName-input:focus-within {
@@ -100,18 +106,16 @@ const validateInput = (value: string) => {
 }
 
 .p-InputProductName-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a)
 }
 
 .title-text {
-  font-weight: 600;
   margin-bottom: 0.75rem;
 }
 
 .error-text {
-  animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
+  animation: fadeIn 0.2s ease-in-out;
   color: transparent;
   opacity: 0;
 }

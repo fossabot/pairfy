@@ -5,7 +5,7 @@ import {
   logger,
   insertProduct,
 } from "@pairfy/common";
-import { createProductIndex } from "./weaviate.js";
+import { createProductIndex } from "./utils/weaviate.js";
 
 export const CreateProduct = async (
   event: any,
@@ -18,9 +18,9 @@ export const CreateProduct = async (
   try {
     connection = await database.client.getConnection();
 
-    const isProcessed = await isProcessedEvent(connection, event.id);
+    const processed = await isProcessedEvent(connection, event.id);
 
-    if (isProcessed) {
+    if (processed) {
       return Promise.resolve(true);
     }
 
@@ -48,19 +48,29 @@ export const CreateProduct = async (
 
     await connection.commit();
 
-    response = Promise.resolve(true);
-  } catch (err: any) {
-    logger.error(err);
+    logger.info({
+      service: "service-query-consumer",
+      event: "event.consumed",
+      message: 'event consumed',
+      eventId: event.id
+    })
 
-    if (connection) {
-      await connection.rollback();
-    }
+    response = Promise.resolve(true);
+  } catch (error: any) {
+    logger.error({
+      service: "service-query-consumer",
+      event: "event.error",
+      message: `event error`,
+      eventId: event.id,
+      error: error.message,
+      stack: error.stack
+    });
+
+    if (connection) await connection.rollback();
 
     response = Promise.resolve(false);
   } finally {
-    if (connection) {
-      await connection.release();
-    }
+    if (connection) connection.release();
   }
 
   return response;

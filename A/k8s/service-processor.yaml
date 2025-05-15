@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-processor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-processor
+  template:
+    metadata:
+      labels:
+        app: service-processor
+    spec:
+      containers:
+        - name: service-processor
+          image: pairfy/service-processor
+          env:
+            - name: REDIS_HOST
+              value: service-processor-redis.default.svc.cluster.local
+            - name : MINIO_HOST_URL
+              value: minio
+            - name : MINIO_PORT
+              value: "9000"
+            - name : MINIO_USE_SSL
+              value: "false"
+            - name : MINIO_ACCESS_KEY
+              value: "minioadmin"
+            - name : MINIO_SECRET_KEY
+              value: "minioadmin123" 
+            - name: DATABASE_HOST  
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master  
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port                                     
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password   
+            - name: DATABASE_NAME
+              value: service_processor        
+            - name: DATABASE_USER
+              value: marketplace                

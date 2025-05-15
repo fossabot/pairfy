@@ -4,15 +4,15 @@
             <!-- Header -->
             <div class="banner-header">
                 <div class="left">
-                    <h1><span class="bold">Cardano</span>
-                        <span class="light">Marketplace</span>
+                    <h1><span class="bold">Native</span>
+                        <span class="light"> Cardano Marketplace</span>
                     </h1>
                     <ul class="features">
-                        <li>✔ Community-governed</li> 
+                        <li>✔ Community-governed</li>
                         <li>✔ Stablecoin payments</li>
                         <li>✔ Free shipping</li>
                     </ul>
-                    <button class="shop-button">Shop now</button>
+                   
                 </div>
                 <div class="right">
                     <p><strong>5M+</strong> Factory direct supply</p>
@@ -25,21 +25,21 @@
             <!-- Product Sections -->
             <div class="products">
                 <div class="category">
-                    <h2>Liquidity for discounts</h2>
+                    <h2>Discount pool</h2>
                     <div class="cards">
                         <ProductCard img="eyelashes.png" title="$1.04 each, ≥3 pcs" />
                         <ProductCard img="earring.png" title="$1.00 each, ≥3 pcs" />
                     </div>
                 </div>
                 <div class="category">
-                    <h2>Fast delivery</h2>
+                    <h2>Discount Countdown</h2>
                     <div class="cards">
                         <ProductCard img="dji.png" title="$0.99 Ships in 2 days" oldPrice="$1.23" />
                         <ProductCard img="brass.png" title="$0.99 Ships in 2 days" oldPrice="$1.71" />
                     </div>
                 </div>
                 <div class="category">
-                    <h2>Buy again</h2>
+                    <h2>Benefited holders</h2>
                     <div class="cards">
                         <ProductCard img="meete.png" title="$4.24 each, ≥3 pcs" />
                         <ProductCard img="laser.png" title="$63.88" oldPrice="$68.88" />
@@ -57,15 +57,17 @@
 <style scoped>
 .banner {
     background: var(--primary-a);
-    border-radius: 12px;
+    border-radius: 0px;
     color: var(--text-w);
     width: 100%;
-    max-width: var(--body-a);
-    padding: 1rem;
+    overflow: hidden;
 }
 
 .overlay {
     padding: 40px 20px;
+    background-image: url('https://img.freepik.com/free-photo/couple-enjoying-online-order-they-received_23-2148455108.jpg');
+    background-repeat: no-repeat;
+    background-position-x: right;
 }
 
 .banner-header {
@@ -73,6 +75,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 auto 40px auto;
+    max-width: var(--body-a);
 }
 
 .left {
@@ -99,8 +102,8 @@
 }
 
 .features li {
+    font-size: var(--text-size-4);
     margin-bottom: 6px;
-    font-size: 14px;
 }
 
 .shop-button {
@@ -125,6 +128,7 @@
 }
 
 .right p {
+    font-size: var(--text-size-4);
     margin: 6px 0;
 }
 

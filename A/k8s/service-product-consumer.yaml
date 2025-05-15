@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-product-consumer
+spec:
+  selector:
+    matchLabels:
+      role: service-product-consumer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: service-product-consumer
+    spec:
+      terminationGracePeriodSeconds: 15
+      containers:
+        - name: service-product-consumer
+          image: pairfy/base-consumer
+          ports:
+            - containerPort: 3000
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: master
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: database-config
+                  key: port
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-password-secret
+                  key: password        
+            - name: SERVICE_NAME
+              value: service-product
+            - name: CONSUMER_GROUP
+              value: service-product-group
+            - name: DURABLE_NAME
+              value: service-product-consumer
+            - name: STREAM_LIST
+              value: service-processor
+            - name: FILTER_SUBJECTS
+              value: "service-processor.ProcessedFile"    
+            - name: NATS_SERVERS
+              value: "nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222"
+            - name: DATABASE_NAME
+              value: service_product
+            - name: DATABASE_USER
+              value: marketplace                                
+
+          resources:
+            limits:
+              memory: "500Mi"
+            requests:
+              memory: "256Mi"

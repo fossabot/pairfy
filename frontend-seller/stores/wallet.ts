@@ -1,4 +1,3 @@
-// stores/wallet.ts
 import { defineStore } from "pinia";
 import { Buffer } from "buffer";
 
@@ -6,8 +5,6 @@ export const useWalletStore = defineStore("wallet", () => {
   const connected = ref(false);
   const walletApi = ref<any>(null);
   const walletName = ref<string | null>(null);
-
-  const getContext = () => useNuxtApp();
 
   const getMessage = () => {
     const message = "SIGN TO AUTHENTICATE YOUR PUBLIC SIGNATURE"; //env variable
@@ -20,9 +17,9 @@ export const useWalletStore = defineStore("wallet", () => {
       return;
     }
 
-    const address = await walletApi.value.getUsedAddresses();
+    const addresses = await walletApi.value.getUsedAddresses();
 
-    return address[0];
+    return addresses?.[0] || null;
   };
 
   const signMessage = async () => {
@@ -37,35 +34,44 @@ export const useWalletStore = defineStore("wallet", () => {
     return [signature, address];
   };
 
-  const connect = async (name: string) => {
-    const { $connector } = getContext();
-
-    return new Promise<void>(async (resolve, reject) => {
+  const createWalletApiInstance = async (name: string) => {
+    if (import.meta.client) {
       try {
-        await $connector.connect(name, "testnet", async () => {
-          walletApi.value = await window.cardano[name].enable();
+        walletApi.value = await window.cardano[name]?.enable();
 
-          if (import.meta.client) {
-            localStorage.setItem("enabled-wallet", name);
-          }
+        if (!walletApi.value) {
+          return;
+        }
 
-          console.log("WALLET_ENABLED", name);
+        const networkId = await walletApi.value?.getNetworkId(); // 0 = testnet, 1 = mainnet
 
-          connected.value = true;
-          walletName.value = name;
+        console.log(networkId);
 
-          resolve();
-        });
-      } catch (err) {
-        reject(err);
+        if (networkId !== 0) {
+          throw new Error(
+            "⚠️ Connection failed: Please switch your wallet to Testnet and try again."
+          );
+        }
+
+        walletName.value = name;
+        connected.value = true;
+      } catch (error) {
+        console.error("Error creating wallet instance", error);
+        throw error;
       }
-    });
+    }
+  };
+
+  const connect = async (name: string) => {
+    if (!walletApi.value) {
+      await createWalletApiInstance(name);
+    }
   };
 
   const sign = async () => {
     try {
       if (!walletApi.value) {
-        throw new Error("WalletNotEnabled");
+        return;
       }
 
       return await signMessage();

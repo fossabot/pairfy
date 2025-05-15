@@ -47,17 +47,18 @@ const onSelect = (index) => {
 }
 
 .tab {
-    background: var(--background-b);
+    border-top-right-radius: var(--radius-b);
+    border-top-left-radius: var(--radius-b);
+    background: rgb(255 255 255 / 50%);
     font-size: var(--text-size-1);
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
     justify-content: flex-start;
-    box-shadow: var(--shadow-a); 
     font-weight: 600;
     cursor: pointer;
-    margin-top: 0.5rem;
     margin-left: 0.75rem;
     padding: 0.75rem 1.5rem;
+    border: 1px solid var(--border-a);
+    border-bottom: none;
+    backdrop-filter: blur(12px);
 }
 
 .tab.enabled {

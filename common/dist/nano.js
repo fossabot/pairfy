@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMediaGroupId = exports.getFileId = exports.getEventId = exports.getProductId = exports.getSellerId = void 0;
+exports.getMediaGroupId = exports.getFileId = exports.getEventId = exports.getProductId = exports.productIdSchema = exports.productIdRegex = exports.getSellerId = void 0;
 exports.createId = createId;
 const nanoid_1 = require("nanoid");
+const zod_1 = require("zod");
 function createId(alphabet, length) {
     if (!alphabet || typeof alphabet !== "string") {
         throw new Error("Invalid alphabet");
@@ -16,8 +17,16 @@ const getSellerId = () => {
     return createId("0123456789ABCD", 21);
 };
 exports.getSellerId = getSellerId;
+exports.productIdRegex = /^PRD-\d{6}-[ABCDEFGHJKLMNPQRSTUVWXYZ23456789]{7}$/;
+exports.productIdSchema = zod_1.z.string().regex(exports.productIdRegex, {
+    message: 'Invalid product ID format. Expected format: PRD-YYMMDD-XXXXXXX',
+});
 const getProductId = () => {
-    return createId("ACDEHILMOTUVWXY01378", 21);
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const generate = (0, nanoid_1.customAlphabet)(alphabet, 7);
+    const now = new Date();
+    const date = now.toISOString().slice(2, 10).replace(/-/g, '');
+    return `PRD-${date}-${generate()}`;
 };
 exports.getProductId = getProductId;
 const getEventId = () => {

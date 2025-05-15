@@ -5,6 +5,8 @@ scalar JSON
 type Product {
   id: ID!
   group_id: String!
+  media_group_id: String!
+  media_position: JSON!
   status: String!
   moderated: Boolean!
   seller_id: String!
@@ -50,23 +52,44 @@ type media {
 }
 
 input GetProductsInput {
-  cursor: String!
-}  
+  cursor: String
+  reverseCursor: String
+}
 
 input GetProductInput {
   id: String!
-} 
+}
   
+type Media {
+  id: ID!
+  media_group_id: String!
+  agent_id: String!
+  product_id: String!
+  mime_type: String!
+  position: Int!
+  alt_text: String
+  resolutions: JSON!
+  created_at: BigInt!
+  updated_at: BigInt!
+  schema_v: Int!
+}
+
+type GetProductResponse{
+  product: Product!
+  media: [Media]!
+}
+
 type GetProductsResponse {
-  products: [Product!]!
+  products: [Product]!
   nextCursor: String
-  hasMore: Boolean!
+  hasPrevMore: Boolean!
+  hasNextMore: Boolean!
   totalCount: Int!
 }
 
 type Query {
   getProducts(getProductsInput: GetProductsInput!): GetProductsResponse!
-  getProduct(getProductInput: GetProductInput!): Product!
+  getProduct(getProductInput: GetProductInput!): GetProductResponse!
 }
 
 #/////////////////////////////////////////////////
@@ -81,8 +104,9 @@ type CreateProductResponse {
   data: CreateProductResponseData!
 }
 
-type UpdateProductResponse {
+type EditProductResponse {
   success: Boolean!
+  message: String!
 }
 
 type DeleteProductResponse {
@@ -109,47 +133,36 @@ input CreateProductInput {
   file_ids: [ID!]!
 }
 
-input UpdateProductInput {
+input EditProductInput {
   id: ID!
-  name: String
-  price: Int
-  sku: String              
-  model: String
-  brand: String
-  features: String
-  category: String
-  keywords: String
-  bullet_list: String
-  paused: Int
-  color: String
-  color_name: String
-  variations: String
-  quality: String
-  image_set: String
-  video_set: String
-  discount: Boolean
-  discount_value: Int
-  shipping_weight: Float
-  shipping_length: Float
-  shipping_width: Float
-  shipping_height: Float
-  shipping_city: String
-  shipping_postal: String
-  shipping_instructions: String
-  shipping_fragile: Boolean
+  name: String!
+  price: Int!
+  sku: String!
+  model: String!
+  brand: String!
+  description: JSON!
+  category: String!
+  bullet_list: [String!]!
+  color: String!
+  condition_: String!
+  origin: String!
+  city: String!
+  postal: String!
+  discount: Boolean!
+  discount_percent: Int!
+  media_group_id: ID!
+  file_ids: [ID!]!
 }
 
 input DeleteProductInput {
-  id: String!
+  id: ID!
 }
 
 type Mutation {
   createProduct(createProductInput: CreateProductInput!): CreateProductResponse!
-  updateProduct(updateProductInput: UpdateProductInput!): UpdateProductResponse!
+  editProduct(editProductInput: EditProductInput!): EditProductResponse!
   deleteProduct(deleteProductInput: DeleteProductInput!): DeleteProductResponse!
 }
-
-#/////////////////////////////////////////////////
 
 `;
 

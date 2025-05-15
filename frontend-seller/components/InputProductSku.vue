@@ -6,7 +6,6 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @beforeinput="onBeforeInput"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputSku-input"
@@ -15,7 +14,7 @@
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
       inputmode="text"
-      @blur="validateInput(internalValue)"
+      @blur="validate"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -26,7 +25,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'sku' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, null], default: null },
   label: { type: String, default: 'SKU' },
   placeholder: { type: String, default: 'e.g. TV55-SAMSUNG-2025' },
   focus: { type: Boolean, default: false },
@@ -35,30 +34,14 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | null): void
   (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
 const errorMessage = ref('')
 
-
-const skuRegex = /^[A-Z0-9-]+$/
-
-const messages = {
-  required: 'This field is required.',
-  invalid: 'Invalid format. Use only UPPERCASE letters, numbers, and dashes.',
-  maxLength: `Maximum length is ${props.maxLength} characters.`,
-}
-
-onMounted(() => {
-  if (props.focus) inputRef.value?.focus()
-})
-
-watch(() => props.focus, (newVal) => {
-  if (newVal) inputRef.value?.focus()
-})
+const internalValue = ref<string | null>(props.modelValue)
 
 watch(() => props.modelValue, (val) => {
   if (val !== internalValue.value) internalValue.value = val
@@ -66,42 +49,48 @@ watch(() => props.modelValue, (val) => {
 
 watch(internalValue, (val) => {
   emit('update:modelValue', val)
-  validateInput(val)
+  validate()
 })
 
-const onBeforeInput = (e: Event) => {
-  const inputEvent = e as InputEvent
+watch(() => props.focus, (focus) => {
+  if (focus) inputRef.value?.focus()
+})
 
-  if (
-    inputEvent.inputType === 'insertText' &&
-    inputEvent.data &&
-    !/^[A-Z0-9-]$/.test(inputEvent.data)
-  ) {
-    e.preventDefault()
-  }
+onMounted(() => {
+  if (props.focus) inputRef.value?.focus()
+  validate()
+})
+
+const messages = {
+  required: 'This field is required.',
+  invalid: 'Invalid format. Use only UPPERCASE letters, numbers, and dashes.',
+  maxLength: `Maximum length is ${props.maxLength} characters.`,
 }
 
-const validateInput = (value: string) => {
-  if (props.required && value.trim() === '') {
-    errorMessage.value = messages.required
-    emit('valid', { valid: false, value: null })
-    return
+const skuRegex = /^[A-Z0-9-]+$/
+
+function validate() {
+  const value = internalValue.value?.trim() || ''
+
+  if (props.required && value === '') {
+    return setInvalid(messages.required)
   }
 
   if (value.length > props.maxLength) {
-    errorMessage.value = messages.maxLength
-    emit('valid', { valid: false, value: null })
-    return
+    return setInvalid(messages.maxLength)
   }
 
   if (!skuRegex.test(value)) {
-    errorMessage.value = messages.invalid
-    emit('valid', { valid: false, value: null })
-    return
+    return setInvalid(messages.invalid)
   }
 
   errorMessage.value = ''
-  emit('valid', { valid: true, value })
+  emit('valid', { valid: true, value: value || null })
+}
+
+function setInvalid(message: string) {
+  errorMessage.value = message
+  emit('valid', { valid: false, value: null })
 }
 </script>
 
@@ -115,9 +104,9 @@ const validateInput = (value: string) => {
 .p-InputSku-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
+  transition: border-color 0.2s;
   padding: 0.75rem 1rem;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .p-InputSku-input:focus-within {
@@ -125,18 +114,16 @@ const validateInput = (value: string) => {
 }
 
 .p-InputSku-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }

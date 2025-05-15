@@ -1,5 +1,4 @@
 import { Connection } from "mysql2/promise";
-import { logger } from "./index";
 
 export async function consumedEvent(
   connection: Connection,
@@ -11,11 +10,9 @@ export async function consumedEvent(
     [event.id, seq, event.type, true, Date.now()]
   );
 
-  const check = "affectedRows" in result && result.affectedRows === 1;
+  const checkResult = "affectedRows" in result && result.affectedRows === 1;
 
-  if (!check) {
+  if (!checkResult) {
     throw new Error("consumedEventError");
   }
-
-  logger.info("consumedEvent");
 }

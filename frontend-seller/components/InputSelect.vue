@@ -107,7 +107,6 @@ const props = defineProps({
   required: { type: Boolean, default: true },
   options: { type: Array, required: true },
   placeholder: { type: String, default: 'Select one...' },
-  focus: { type: Boolean, default: false },
   invalid: { type: Boolean, default: false }
 })
 
@@ -119,6 +118,11 @@ const errorMessage = ref('')
 const selectedOption = computed(() =>
   props.options.find(opt => opt.code === props.modelValue)
 )
+
+
+onMounted(() => {
+  validate(props.modelValue)
+})
 
 function toggleDropdown() {
   isOpen.value = !isOpen.value
@@ -199,7 +203,7 @@ watch(
 }
 
 .dropdown-display.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .chevron-down-icon {
@@ -249,13 +253,11 @@ watch(
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }

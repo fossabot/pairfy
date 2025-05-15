@@ -82,11 +82,9 @@ const validate = (val: string) => {
 .color-picker {
   border: 1px solid var(--border-a);
   border-radius: var(--radius-b);
-  padding: 0.25rem;
   background: none;
   cursor: pointer;
-  height: 42px;
-  width: 4rem;
+  height: 2rem;
 }
 
 .color-value {
@@ -100,13 +98,12 @@ const validate = (val: string) => {
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   color: transparent;
   opacity: 0;
 }

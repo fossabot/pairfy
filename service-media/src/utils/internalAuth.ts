@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { ApiError, ERROR_CODES } from "@pairfy/common";
 
-const INTERNAL_SECRET = process.env.INTERNAL_SECRET;
+const INTERNAL_SECRET = process.env.INTERNAL_ENDPOINT_SECRET;
 
 if (!INTERNAL_SECRET) {
   throw new Error("INTERNAL_SECRET must be defined");

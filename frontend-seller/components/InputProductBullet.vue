@@ -6,14 +6,13 @@
       <div v-for="(item, index) in items" :key="index" class="item">
         <textarea
           v-model="items[index]"
-          ref="textareas"
-          placeholder=""
+          placeholder="•"
           :maxlength="maxLength"
           class="textarea"
           :class="{ 'is-invalid': showError[index] }"
           :aria-invalid="showError[index]"
-          @focus="onFocus(index)"
-          @input="(e) => onInput(index, e)"
+          @focus="markTouched(index)"
+          @input="autoResize($event)"
         />
       </div>
     </div>
@@ -25,12 +24,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 
 const props = defineProps({
   modelValue: {
     type: Array as () => string[],
-    default: () => Array(4).fill(''),
+    default: () => [],
   },
   label: {
     type: String,
@@ -46,64 +45,84 @@ const emit = defineEmits(['update:modelValue', 'valid'])
 
 const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u
 
-const items = ref([...props.modelValue])
-const touched = ref<boolean[]>(items.value.map(() => false))
-const showError = ref<boolean[]>(items.value.map(() => false))
-
-
-const overallErrorMessage = computed(() => {
-  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
-  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
-
-  if (!hasValidItem) {
-    return 'At least one valid feature is required.'
-  }
-  if (hasInvalidFilledItem) {
-    return 'Some features contain invalid characters.'
-  }
-  return ''
-})
-
-function onFocus(index: number) {
-  if (!touched.value[index]) {
-    touched.value[index] = true
-    validateItem(index)
-  }
+function normalizeToFour(arr: string[]): string[] {
+  return [...arr.slice(0, 4), ...Array(4 - arr.length).fill('')]
 }
 
-function onInput(index: number, event: Event) {
-  const textarea = event.target as HTMLTextAreaElement
+const items = ref<string[]>(normalizeToFour(props.modelValue))
+const touched = ref<boolean[]>(Array(4).fill(false))
+const showError = ref<boolean[]>(Array(4).fill(false))
 
-  textarea.style.height = 'auto'
-  textarea.style.height = textarea.scrollHeight + 'px'
+watch(() => props.modelValue, (newValue) => {
+  items.value = normalizeToFour(newValue)
+  resetValidation()
+  validateAll()
+})
 
-  validateItem(index)
+function resetValidation() {
+  touched.value.fill(false)
+  showError.value.fill(false)
+}
 
-  emit('update:modelValue', items.value)
-  emitValidEvent()
+const isValidItem = (text: string): boolean =>
+  text.trim() !== '' && bulletRegex.test(text.trim())
+
+function markTouched(index: number) {
+  touched.value[index] = true
+}
+
+function autoResize(event: Event) {
+  const el = event.target as HTMLTextAreaElement
+  el.style.height = 'auto'
+  el.style.height = el.scrollHeight + 'px'
 }
 
 function validateItem(index: number) {
-  const item = items.value[index].trim()
-
-  if (item !== '' && !bulletRegex.test(item)) {
-    showError.value[index] = true
-  } else {
-    showError.value[index] = false
-  }
+  showError.value[index] =
+    touched.value[index] && !isValidItem(items.value[index])
 }
 
-function emitValidEvent() {
-  const hasValidItem = items.value.some(item => bulletRegex.test(item.trim()) && item.trim() !== '')
-  const hasInvalidFilledItem = items.value.some(item => item.trim() !== '' && !bulletRegex.test(item.trim()))
-
-  if (!hasValidItem || hasInvalidFilledItem) {
-    emit('valid', { valid: false, value: null })
-  } else {
-    emit('valid', { valid: true, value: [...items.value] })
-  }
+function validateAll() {
+  for (let i = 0; i < 4; i++) validateItem(i)
+  emitValidation()
 }
+
+const overallErrorMessage = computed(() => {
+  const validItems = items.value.filter(isValidItem)
+  const hasInvalid = items.value.some(
+    (val) => val.trim() !== '' && !isValidItem(val)
+  )
+  if (validItems.length === 0) return 'At least one valid feature is required.'
+  if (hasInvalid) return 'Some features contain invalid characters.'
+  return ''
+})
+
+watch(items, (newItems) => {
+  const normalized = normalizeToFour(newItems)
+  const current = normalizeToFour(props.modelValue)
+
+  if (JSON.stringify(normalized) !== JSON.stringify(current)) {
+    emit('update:modelValue', normalized)
+  }
+
+  emitValidation()
+}, { deep: true })
+
+
+function emitValidation() {
+  const normalized = normalizeToFour(items.value)
+  const valid =
+    normalized.some(isValidItem) &&
+    normalized.every((val) => val.trim() === '' || isValidItem(val))
+  emit('valid', { valid, value: valid ? [...normalized] : null })
+}
+
+onMounted(() => {
+  validateAll()
+})
 </script>
+
+
 
 <style scoped>
 .p-EditableBulletList {
@@ -114,7 +133,6 @@ function emitValidEvent() {
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .list-container {
@@ -131,7 +149,7 @@ function emitValidEvent() {
 
 .textarea {
   width: 100%;
-  height: 43px;
+  min-height: 43px;
   max-height: 12rem;
   resize: none; 
   overflow-y: hidden;
@@ -172,11 +190,9 @@ function emitValidEvent() {
 
 .error-text {
   font-size: var(--text-size-0);
-  color: var(--text-b);
-  margin-top: 1rem;
-  min-height: 1.2rem; 
   visibility: hidden;
   text-align: left;
+  color: red;
 }
 
 .error-text.visible {

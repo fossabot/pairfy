@@ -102,7 +102,7 @@ const validateEmail = (email) => {
 .error-text {
     animation: fadeIn 0.2s ease-in-out;
     font-size: var(--text-size-0);
-    margin-top: 0.5rem;
+    margin: 0.5rem 0;
     color: red;
 }
 

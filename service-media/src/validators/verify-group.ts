@@ -6,5 +6,6 @@ export const verifyParams = z.object({
         { message: "Invalid media group ID format" }
       ),
     file_ids: z.array(z.string().min(1).max(100)).min(1).max(11),
-    agent_id: z.string().min(1).max(100)
+    agent_id: z.string().min(1).max(100),
+    product_id: z.string().min(1).max(100)
   });

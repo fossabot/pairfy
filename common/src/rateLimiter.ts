@@ -1,119 +1,99 @@
-import Redis from "ioredis";
-import { Request, Response, NextFunction } from "express";
-import { ApiError, ERROR_CODES, logger } from "./index";
-import { verifyToken } from "./token";
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+import Redis from 'ioredis';
 
-const WINDOW_SECONDS = 60;
-const MAX_REQUESTS = 20;
+interface RateLimiterOptions {
+  windowMs?: number;
+  maxRequests?: number;
+  serviceName?: string;
+}
 
-export class RateLimiter {
-  private redis: Redis;
-  private fallbackStore: Map<string, { count: number; expiresAt: number }>;
+export class RateLimiterId {
+  private redisClient: Redis;
+  private windowMs: number;
+  private maxRequests: number;
+  private serviceName: string;
 
-  constructor(redisUrl: string) {
-    this.redis = new Redis(redisUrl, {
-      retryStrategy(times) {
-        if (times > 20) return null;
-        return Math.min(times * 100, 2000);
-      },
-    });
-
-    this.redis.on("error", (err) => {
-      logger.error("[RedisClientError]", err);
-    });
-
-    this.redis.on("connect", () => {
-      logger.info("[RedisClientConnected]");
-    });
-
-    this.fallbackStore = new Map();
+  constructor(redisUrl: string, options?: RateLimiterOptions) {
+    this.redisClient = new Redis(redisUrl);
+    this.windowMs = options?.windowMs ?? 15 * 60 * 1000;
+    this.maxRequests = options?.maxRequests ?? 100;
+    this.serviceName = options?.serviceName ?? 'unknown-service';
   }
 
-  getMiddleware() {
-    return async (
-      req: Request,
-      res: Response,
-      next: NextFunction
-    ): Promise<void> => {
-      let key = "";
-      
+  private getRateLimitHeaders(limit: number, remaining: number, resetMs: number) {
+    return {
+      'X-RateLimit-Limit': limit.toString(),
+      'X-RateLimit-Remaining': remaining.toString(),
+      'X-RateLimit-Reset': Math.floor(resetMs / 1000).toString(),
+    };
+  }
+
+  public getMiddleware(): RequestHandler {
+    return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+      const jwt = req.session?.jwt;
+
+      if (!jwt) {
+        console.log(`[RateLimiter][${this.serviceName}] ❌ Falta req.session.jwt`);
+        res.status(401).json({ error: 'Unauthorized: session JWT missing.' });
+        return;
+      }
+
+      const key = `ratelimit:${jwt}`;
+
       try {
-        if (!req.publicAddress) {
-          throw new ApiError(500, "Internal Error", {
-            code: ERROR_CODES.INTERNAL_ERROR,
+        // Ejecutamos multi para INCR y obtener TTL al mismo tiempo
+        const multi = this.redisClient.multi();
+        multi.incr(key);
+        multi.pttl(key);
+
+        const results = await multi.exec();
+        if (!results) throw new Error('Redis multi exec falló');
+
+        const [incrResult, ttlResult] = results;
+        if (incrResult[0]) throw incrResult[0];
+        if (ttlResult[0]) throw ttlResult[0];
+
+        const currentCount = incrResult[1] as number;
+        let ttl = ttlResult[1] as number;
+
+        // Si no hay expiración asignada, la ponemos
+        if (ttl === -1) {
+          // Usamos pexpire solo si es necesario para evitar sobrescribir TTL
+          await this.redisClient.pexpire(key, this.windowMs);
+          ttl = this.windowMs;
+        } else if (ttl === -2) {
+          // TTL -2 significa que la clave no existe, pero la incrementamos justo antes, así que no debería pasar
+          // por seguridad le ponemos expire
+          await this.redisClient.pexpire(key, this.windowMs);
+          ttl = this.windowMs;
+        }
+
+        const remaining = Math.max(this.maxRequests - currentCount, 0);
+        const headers = this.getRateLimitHeaders(this.maxRequests, remaining, Date.now() + ttl);
+        res.set(headers);
+
+        if (currentCount > this.maxRequests) {
+          console.log(`[RateLimiter][${this.serviceName}] ⛔ Límite excedido. JWT=${jwt}, Count=${currentCount}, Limit=${this.maxRequests}`);
+          res.set('Retry-After', Math.ceil(ttl / 1000).toString());
+          res.status(429).json({
+            error: 'Too many requests, please try again later.',
           });
+          return;
         }
 
-        key = `ratelimit:ip:${req.publicAddress}`;
-
-        const token = req.session?.jwt;
-
-        if (token) {
-          try {
-            const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
-              sub?: string;
-            };
-            if (decoded?.sub) {
-              key = `ratelimit:user:${decoded.sub}`;
-            }
-          } catch {
-            // IP
-          }
-        }
-
-        const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
-
-        if (!saved) {
-          const current = await this.redis.incr(key);
-
-          if (current > MAX_REQUESTS) {
-            logger.warn(`[RateLimitExceeded]: key=${key}`);
-            throw new ApiError(429, "Too many requests", {
-              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
-            });
-          }
-        }
-
-        return next();
-      } catch (err) {
-        if (err instanceof ApiError) {
-          return next(err);
-        }
-
-        logger.error("[RateLimitFallback]", err);
-
-        const now = Date.now();
-        const entry = this.fallbackStore.get(key);
-
-        //////////////////////////////////////////////////////////////////////
-
-        if (!entry || entry.expiresAt < now) {
-          if (entry) this.fallbackStore.delete(key);
-
-          this.fallbackStore.set(key, {
-            count: 1,
-            expiresAt: now + WINDOW_SECONDS * 1000,
-          });
-          return next();
-        }
-
-        //////////////////////////////////////////////////////////////////////
-
-        entry.count += 1;
-
-        if (entry.count > MAX_REQUESTS) {
-          logger.warn(`[RateLimitExceededFallback]: key=${key}`);
-          return next(
-            new ApiError(429, "Too many requests", {
-              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
-            })
-          );
-        }
-
-        //////////////////////////////////////////////////////////////////////
-
-        return next();
+        console.log(`[RateLimiter][${this.serviceName}] ✅ JWT=${jwt}, Count=${currentCount}/${this.maxRequests}`);
+        next();
+      } catch (error) {
+        console.log(`[RateLimiter][${this.serviceName}] 🔥 Error Redis:`, error);
+        res.status(503).json({
+          error: 'Service unavailable due to rate limiter backend failure.',
+        });
       }
     };
+  }
+
+  public async close(): Promise<void> {
+    await this.redisClient.quit();
+    console.log(`[RateLimiter][${this.serviceName}] Redis connection closed.`);
   }
 }

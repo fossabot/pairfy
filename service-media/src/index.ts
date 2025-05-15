@@ -3,18 +3,20 @@ import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
 import { ApiError, ERROR_CODES, errorHandler, logger } from "@pairfy/common";
-import { ensureBucketExists, minioClient } from "./common/minioClient.js";
+import { ensureBucketExists, minioClient } from "./database/minio.js";
 import { app } from "./app.js";
 
 const main = async () => {
   try {
     const requiredEnv = [
+      "NODE_ENV",
       "AGENT_JWT_KEY",
       "MINIO_HOST_URL",
       "MINIO_PORT",
       "MINIO_USE_SSL",
       "MINIO_ACCESS_KEY",
       "MINIO_SECRET_KEY",
+      "INTERNAL_ENDPOINT_SECRET"
     ];
 
     for (const key of requiredEnv) {
@@ -51,6 +53,14 @@ const main = async () => {
       route.createFilesMiddlewares,
 
       route.createFilesHandler
+    );
+
+    app.post(
+      "/api/media/update-files",
+
+      route.updateFilesMiddlewares,
+
+      route.updateFilesHandler
     );
 
     app.post(

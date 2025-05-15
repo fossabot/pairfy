@@ -153,7 +153,7 @@ const validatePassword = (password) => {
 
 .error-text {
     font-size: var(--text-size-0);
-    margin-top: 0.5rem;
+    margin: 0.5rem 0;
     color: red;
 }
 </style>

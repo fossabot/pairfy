@@ -13,13 +13,13 @@
     <Transition name="fade">
       <div v-if="enabled" class="input-group">
         <label for="discount" class="label-small">Discount (%)</label>
-        <input id="discount" type="number" min="1" max="100" step="1" v-model.number="discountPercent"
-          class="discount-input" placeholder="25" @keydown.prevent />
+        <input id="discount" type="number" inputmode="numeric" min="1" max="100" step="1"
+          v-model.number="discountPercent" class="discount-input" placeholder="25" @input="onInput"/>
       </div>
     </Transition>
 
     <div v-if="enabled" class="final-price">
-      Final Price:
+      New price:
       <span class="final-price-value">${{ discountedPrice.toFixed(2) }}</span>
     </div>
   </div>
@@ -62,9 +62,43 @@ watch([enabled, discountPercent], () => {
   })
 })
 
+function onInput(e: Event) {
+  const target = e.target as HTMLInputElement
+  let value = parseInt(target.value)
+
+  if (isNaN(value)) {
+    value = 0
+  } else if (value < 0) {
+    value = 0
+  } else if (value > 100) {
+    value = 100
+  }
+
+  discountPercent.value = value
+  target.value = value.toString()
+}
+
+function applyDiscount(price: number, percentage: number): number {
+  if (typeof price !== 'number' || !Number.isInteger(price) || price < 0) {
+    return 0
+  }
+
+  if (typeof percentage !== 'number' || percentage < 0 || percentage > 100) {
+    return price
+  }
+
+  const discount = (price * percentage) / 100;
+  return Math.floor(price - discount);
+}
+
+
+const normalizedPrice = computed(() => {
+  return originalPrice.value ?? 0
+})
+
 const discountedPrice = computed(() => {
-  if (!enabled.value || !originalPrice.value || !discountPercent.value) return originalPrice.value || 0
-  return originalPrice.value * (1 - discountPercent.value / 100)
+  if (!enabled.value || discountPercent.value === 0) return normalizedPrice.value
+  return applyDiscount(normalizedPrice.value, discountPercent.value)
 })
 </script>
 
@@ -159,15 +193,17 @@ const discountedPrice = computed(() => {
 }
 
 .final-price {
-  font-size: var(--text-size-);
+  font-size: var(--text-size-1);
+  color: var(--text-b);
   margin-top: 0.75rem;
   font-weight: 500;
 }
 
 .final-price-value {
-  font-weight: 700;
   color: var(--primary-a, #2563eb);
   margin-left: 0.25rem;
+  color: var(--text-a);
+  font-weight: 700;
 }
 
 .fade-enter-active,

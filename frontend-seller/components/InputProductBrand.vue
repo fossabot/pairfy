@@ -15,7 +15,7 @@
       :aria-invalid="!!errorMessage"
       :aria-describedby="`${props.id}-error`"
       inputmode="text"
-      @blur="validateInput(internalValue)"
+      @blur="validate"
     />
     <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 const props = defineProps({
   id: { type: String, default: 'product-brand' },
-  modelValue: { type: String, default: '' },
+  modelValue: { type: [String, null], default: '' },
   label: { type: String, default: 'Brand' },
   placeholder: { type: String, default: 'e.g. Samsung' },
   focus: { type: Boolean, default: false },
@@ -35,12 +35,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string | null): void
   (e: 'valid', payload: { valid: boolean, value: string | null }): void
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
-const internalValue = ref(props.modelValue)
+const internalValue = ref<string | null>(props.modelValue)
 const errorMessage = ref('')
 
 const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u
@@ -51,8 +51,32 @@ const messages = {
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }
 
+const validate = () => {
+  const value = internalValue.value?.trim() ?? ''
+
+  if (value === '' && props.required) {
+    errorMessage.value = messages.required
+    emit('valid', { valid: false, value: null })
+  } else {
+    errorMessage.value = ''
+
+    const validationResult = [
+      { condition: value.length > props.maxLength, message: messages.maxLength },
+      { condition: !brandRegex.test(value), message: messages.invalid },
+    ].find(validator => validator.condition)
+
+    if (validationResult) {
+      errorMessage.value = validationResult.message
+      emit('valid', { valid: false, value: null })
+    } else {
+      emit('valid', { valid: true, value: value || null })
+    }
+  }
+}
+
 onMounted(() => {
   if (props.focus) inputRef.value?.focus()
+  validate()
 })
 
 watch(() => props.focus, (newVal) => {
@@ -65,37 +89,12 @@ watch(() => props.modelValue, (val) => {
 
 watch(internalValue, (val) => {
   emit('update:modelValue', val)
-  validateInput(val)
+  validate()
 })
 
 const onBeforeInput = (e: Event) => {
   const inputEvent = e as InputEvent
-
-
   if (inputEvent.inputType === 'insertFromPaste' || !inputEvent.data) return
-
-  if (!/^[\p{L}\p{N}\s\-.,&()']$/u.test(inputEvent.data)) {
-    e.preventDefault()
-  }
-}
-
-const validateInput = (value: string) => {
-  const validators: { condition: boolean; message: string }[] = [
-    { condition: props.required && value.trim() === '', message: messages.required },
-    { condition: value.length > props.maxLength, message: messages.maxLength },
-    { condition: !brandRegex.test(value), message: messages.invalid },
-  ]
-
-  for (const { condition, message } of validators) {
-    if (condition) {
-      errorMessage.value = message
-      emit('valid', { valid: false, value: null })
-      return
-    }
-  }
-
-  errorMessage.value = ''
-  emit('valid', { valid: true, value })
 }
 </script>
 
@@ -119,18 +118,16 @@ const validateInput = (value: string) => {
 }
 
 .p-InputProductBrand-input.is-invalid {
-  border-color: red;
+  border-color: var(--border-a);
 }
 
 .title-text {
   margin-bottom: 0.75rem;
-  font-weight: 600;
 }
 
 .error-text {
   animation: fadeIn 0.2s ease-in-out;
   font-size: var(--text-size-0, 0.875rem);
-  margin-top: 0.5rem;
   color: transparent;
   opacity: 0;
 }
@@ -144,7 +141,6 @@ const validateInput = (value: string) => {
   from {
     opacity: 0;
   }
-
   to {
     opacity: 1;
   }

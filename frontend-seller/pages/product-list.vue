@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <FolderComp :tabs="['Products', 'Statistics']">
+        <FolderComp :tabs="['Products', 'Statistics']" v-model="tabIndex">
 
             <template #icon-0>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -28,13 +28,13 @@
 
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
-
-                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="15" :count="productCount"
-                    :images="true" :columnWidths="{ id: '7rem', category: '8rem', price: '7rem' }"
-                    @onPrev="handleOnPrev" @onNext="handleOnNext">
+                <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
+                    :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
+                    :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
+                    :columnWidths="{ id: '10rem', sku: '8rem', price: '6rem', model: '8rem', discount: '4rem', category: '10rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
-                        <ImageComp :src="useMediaUrl(item.thumbnail_url)" :image-style="{ 'width': '5rem' }" />
+                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
                     </template>
 
                     <template #col-id="{ value }">
@@ -45,20 +45,22 @@
                         {{ value }}
                     </template>
 
-                    <template #col-price="{ value }">
-                        <span>{{ value }}</span>
+                    <template #col-price="{ value, item }">
+                        <span>{{ `${item.discount ? item.discount_value : value}` }}</span>
+                    </template>
 
-
+                    <template #col-category="{ value }">
+                        <span style="text-transform: lowercase;">{{ value }}</span>
                     </template>
 
                     <template #col-discount="{ value, item }">
-                        <span class="discount">
-                            {{ `-${item.discount_value}%` }}
+                        <span>
+                            {{ `${item.discount ? '-' + item.discount_percent + '%' : 'N/a'}` }}
                         </span>
                     </template>
 
                     <template #col-created_at="{ value }">
-                        {{ value }}
+                        {{ formatDate(value) }}
                     </template>
 
                     <template #action="{ item }">
@@ -82,21 +84,34 @@
 </template>
 
 <script setup>
+import placeholderImage from '@/assets/placeholder/image.svg'
 
+const router = useRouter()
+
+const tabIndex = ref(0)
+
+definePageMeta({
+    key: () => `products-tab-${tabIndex.value}`
+})
+
+const products = ref([])
+const nextCursor = ref(null)
+const loading = ref(false)
+const page = ref(1)
+const limit = ref(16)
+const productCount = ref(0)
+const hasNextPage = ref(false)
+const hasPrevPage = ref(false)
 
 const dottedMenuOptions = ref([
-    { label: "Delete Product", value: "delete" },
-    { label: "Edit Product", value: "edit" },
-    { label: "Open Page", value: "open" }
+    { label: "Edit this product", value: "edit" },
+    { label: "Open product page", value: "open" },
+    { label: "Delete this product", value: "delete" }
 ])
-
-const productCount = ref(0);
-
 
 const columns = ref([
     { label: "ID", field: "id" },
     { label: "Sku", field: "sku" },
-    { label: "Status", field: "status" },
     { label: "Name", field: "name" },
     { label: "Price", field: "price" },
     { label: "Model", field: "model" },
@@ -104,68 +119,105 @@ const columns = ref([
     { label: "Category", field: "category" },
     { label: "Moderated", field: "moderated" },
     { label: "Date", field: "created_at" }
-]);
+])
 
-const handleOnPrev = (event) => {
-    console.log(event.created_at)
+const range = computed(() => {
+    const start = (page.value - 1) * limit.value + 1
+    const end = start + products.value.length - 1
+    return `${start} - ${end} of ${productCount.value}`
+})
 
+const { data: initialData, error: getProductsError } = await useAsyncData('products', () =>
+    $fetch('/api/product/getProducts', {
+        method: 'POST',
+        credentials: 'include',
+        body: {},
+        headers: useRequestHeaders(['cookie']),
+        async onResponseError({ response }) {
+            throw new Error(JSON.stringify(response._data.data));
+        },
+    })
+)
 
-}
-
-const handleOnNext = (event) => {
-
-    console.log(event.created_at)
-
-}
-
-const handleDottedMenu = (event, value) => {
-    console.log(event, value.id);
-
-    if (event === 'delete') {
-        beforeDeleteProduct(value);
-        return;
-    }
-
-    if (event === 'edit') {
-        editProduct(value.id);
-        return;
-    }
-}
-
-const limit = 16
-const cursor = ref("NOT")
-const products = ref([])
-const nextCursor = ref(null)
-const hasMore = ref(false)
-const loading = ref(false)
-
-
-
-const { data, error } = await useFetch('/api/product/getProducts', {
-    method: 'POST',
-    credentials: 'include',
-    body: {
-        cursor: cursor.value
-    },
-    async onResponseError({ response }) {
-        throw new Error(JSON.stringify(response._data.data));
+onMounted(() => {
+    if (getProductsError.value) {
+        console.error('Error fetching the products:', getProductsError.value)
+        displayMessage('The products could not be loaded. Please try again later.' + getProductsError.value, 'error', 10_000)
     }
 })
 
-if (data.value) {
-    products.value = data.value.products
-    nextCursor.value = data.value.nextCursor
-    hasMore.value = data.value.hasMore
-    productCount.value = data.value.totalCount
+if (initialData.value) {
+    products.value = initialData.value.products
+    nextCursor.value = initialData.value.nextCursor
+    productCount.value = initialData.value.totalCount
+    hasPrevPage.value = initialData.value.hasPrevMore
+    hasNextPage.value = initialData.value.hasNextMore
 }
 
+const loadProducts = async ({ cursor = null, reverseCursor = null } = {}) => {
+    loading.value = true
+    try {
+        const data = await $fetch('/api/product/getProducts', {
+            method: 'POST',
+            credentials: 'include',
+            body: {
+                cursor: cursor || undefined,
+                reverseCursor: reverseCursor || undefined
+            }
+        })
 
+        products.value = data.products
+        nextCursor.value = data.nextCursor
+        productCount.value = data.totalCount
+        hasPrevPage.value = data.hasPrevMore
+        hasNextPage.value = data.hasNextMore
+    } catch (err) {
+        console.error('Load error:', err)
+    } finally {
+        loading.value = false
+    }
+}
 
+const handleOnNext = async (item) => {
+    if (!hasNextPage.value) return
+    const cursor = `${item.created_at}_${item.id}`
+    await loadProducts({ cursor })
+    page.value += 1
+}
+
+const handleOnPrev = async (item) => {
+    if (!hasPrevPage.value) return
+    const reverseCursor = `${item.created_at}_${item.id}`
+    await loadProducts({ reverseCursor })
+    if (page.value > 1) page.value -= 1
+}
+
+const handleDottedMenu = (event, value) => {
+    if (event === 'delete') return beforeDeleteProduct(value)
+
+    if (event === 'edit') {
+        router.push({ name: 'edit-product', query: { id: value.id } })
+    }
+}
+
+function getImageSrc(item) {
+    return item.thumbnail_url ? useMediaUrl(item.thumbnail_url) : placeholderImage
+}
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 </script>
 
+
+
 <style lang="css" scoped>
 .card {
-    padding: 1rem 1.5rem;
+    padding: 0.5rem;
 }
 </style>
