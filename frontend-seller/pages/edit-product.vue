@@ -246,11 +246,11 @@
                     Publication
                 </div>
                 <div class="grid-subtitle">
-                    Save product changes.
+                    Save changes to apply updates to your product.
                 </div>
 
                 <div class="grid-item">
-                    <ButtonSolid label="Apply" @click="onApplyChanges" :loading="loading" />
+                    <ButtonSolid label="Apply Changes" @click="onApplyChanges" :loading="loading" />
                 </div>
             </div>
 
