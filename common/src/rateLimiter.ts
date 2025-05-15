@@ -16,8 +16,8 @@ current = redis.call("INCR", KEYS[1])
 if tonumber(current) == 1 then
   redis.call("EXPIRE", KEYS[1], ARGV[1])
 end
-local ttl = redis.call("TTL", KEYS[1])
-return {current, ttl}
+local pttl = redis.call("PTTL", KEYS[1])
+return {current, pttl}
 `;
 
 export class RateLimiter {
@@ -59,19 +59,21 @@ export class RateLimiter {
 
     this.fallbackStore = new Map();
 
+    // Cleanup expired fallback entries every 30 seconds for better memory management
     this.cleanupInterval = setInterval(() => {
       const now = Date.now();
       for (const [key, entry] of this.fallbackStore) {
-        if (entry.expiresAt < now) {
+        if (entry.expiresAt <= now) {
           this.fallbackStore.delete(key);
         }
       }
-    }, 60_000);
+    }, 30_000);
 
     const gracefulShutdown = () => {
       logger.info("RateLimiter shutting down...");
       this.shutdown();
-      process.exit(0);
+      // Mejor no llamar process.exit(0) directamente
+      // Permitir que el proceso cierre ordenadamente
     };
 
     process.once("SIGINT", gracefulShutdown);
@@ -85,7 +87,7 @@ export class RateLimiter {
     resetTimestamp: number
   ) {
     res.setHeader("X-RateLimit-Limit", limit.toString());
-    res.setHeader("X-RateLimit-Remaining", remaining.toString());
+    res.setHeader("X-RateLimit-Remaining", Math.max(0, remaining).toString());
     res.setHeader("X-RateLimit-Reset", resetTimestamp.toString());
   }
 
@@ -103,12 +105,11 @@ export class RateLimiter {
       let key = "";
 
       try {
-        // Asumimos req.publicAddress siempre correcto
+        // Obtener publicAddress de forma segura y validar
         const publicAddress = (req as any).publicAddress;
-        if (!publicAddress) {
-          // Opcional: abortar si no está (ya no hay fallback)
+        if (!publicAddress || typeof publicAddress !== "string" || !publicAddress.trim()) {
           return next(
-            new ApiError(400, "Missing publicAddress for rate limit key", {
+            new ApiError(400, "Missing or invalid publicAddress for rate limit key", {
               code: ERROR_CODES.BAD_REQUEST,
             })
           );
@@ -120,16 +121,22 @@ export class RateLimiter {
         if (token) {
           try {
             const decoded = verifyToken(token, this.jwtKey) as { sub?: string };
-            if (decoded?.sub) {
-              // Ya no sanitizamos, asumimos correcto
+            // Validar 'sub' para que sea string no vacío, alfanumérico (según convenga)
+            if (
+              decoded?.sub &&
+              typeof decoded.sub === "string" &&
+              /^[a-zA-Z0-9_-]{3,64}$/.test(decoded.sub)
+            ) {
               key = `ratelimit:user:${decoded.sub}`;
+            } else {
+              logger.warn(`[RateLimit] Invalid token sub claim for key=${key}`);
             }
           } catch (tokenErr) {
             logger.warn(`[RateLimit] Invalid token for key=${key}`, tokenErr);
           }
         }
 
-        // Ejecutar script LUA
+        // Ejecutar script LUA atómico (usando PTTL para ms)
         const resultRaw = await this.redis.eval(
           LUA_SCRIPT,
           1,
@@ -146,20 +153,19 @@ export class RateLimiter {
           throw new Error("Invalid Redis eval response");
         }
 
-        const result = resultRaw as [number, number];
-        const current = result[0];
-        let ttl = result[1];
+        const [current, pttl] = resultRaw as [number, number];
 
-        if (ttl <= 0) {
-          ttl = this.windowSeconds;
-        }
+        // pttl puede ser -1 (no expirado) o -2 (no existe)
+        // Si pttl <= 0, usar windowSeconds * 1000 ms como fallback
+        const ttlMs = pttl > 0 ? pttl : this.windowSeconds * 1000;
 
-        const resetSeconds = Math.floor(Date.now() / 1000) + ttl;
+        // Reset timestamp en segundos unix
+        const resetSeconds = Math.floor(Date.now() / 1000 + ttlMs / 1000);
 
         this.setRateLimitHeaders(
           res,
           this.maxRequests,
-          Math.max(0, this.maxRequests - current),
+          this.maxRequests - current,
           resetSeconds
         );
 
@@ -186,7 +192,12 @@ export class RateLimiter {
 
         logger.error("[RateLimitFallback]", err);
 
-        const fallbackKey = key || `ratelimit:fallback:unknown`;
+        // fallbackKey debe ser válido: si key vacío, usar una fallback genérica con IP si disponible
+        const fallbackKey =
+          key ||
+          (req as any).publicAddress
+            ? `ratelimit:fallback:ip:${(req as any).publicAddress}`
+            : `ratelimit:fallback:unknown`;
 
         const now = Date.now();
 
@@ -206,7 +217,7 @@ export class RateLimiter {
 
         let entry = this.fallbackStore.get(fallbackKey);
 
-        if (!entry || entry.expiresAt < now) {
+        if (!entry || entry.expiresAt <= now) {
           if (entry) this.fallbackStore.delete(fallbackKey);
 
           this.fallbackStore.set(fallbackKey, {
@@ -218,7 +229,7 @@ export class RateLimiter {
             res,
             this.maxRequests,
             this.maxRequests - 1,
-            Math.floor(now / 1000) + this.windowSeconds
+            Math.floor((now + this.windowSeconds * 1000) / 1000)
           );
 
           return next();
@@ -233,7 +244,7 @@ export class RateLimiter {
         this.setRateLimitHeaders(
           res,
           this.maxRequests,
-          Math.max(0, this.maxRequests - entry.count),
+          this.maxRequests - entry.count,
           Math.floor(entry.expiresAt / 1000)
         );
 
