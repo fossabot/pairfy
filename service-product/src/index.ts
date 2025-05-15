@@ -8,14 +8,14 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import { typeDefs } from "./graphql/types.js";
 import { products } from "./graphql/resolvers.js";
 import { catchError } from "./utils/index.js";
-import { GraphQLError } from "graphql";
+import Redis from 'ioredis';
 import {
-  RateLimiter,
   sellerMiddleware,
   normalizeGraphError,
   logger,
   getPublicAddress,
   sellerRequired,
+  RateLimiterJWT,
 } from "@pairfy/common";
 
 const main = async () => {
@@ -117,11 +117,16 @@ const main = async () => {
 
     app.use(sellerRequired);
 
-    const rateLimiter = new RateLimiter(
-      process.env.REDIS_RATELIMIT_URL as string
-    );
+    const redisClient = new Redis(process.env.REDIS_RATELIMIT_URL as string);
 
-    app.use(rateLimiter.getMiddleware());
+    const rateLimiter = new RateLimiterJWT({
+      redisClient,
+      jwtSecret: process.env.AGENT_JWT_KEY as string,
+      maxRequests: 20,
+      windowSeconds: 60,
+    });
+    
+    app.use(rateLimiter.middleware());
 
     await server.start();
 

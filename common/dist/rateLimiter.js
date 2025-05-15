@@ -23,39 +23,46 @@ class RateLimiterJWT {
     return current
   end
 `;
-        /**
-         * Express middleware para limitar solicitudes por usuario autenticado con JWT.
-         */
-        this.middleware = async (req, res, next) => {
+        this.redis = options.redisClient;
+        this.jwtSecret = options.jwtSecret;
+        this.maxRequests = options.maxRequests;
+        this.windowSeconds = options.windowSeconds;
+        this.middleware = this.middleware.bind(this);
+    }
+    /**
+     * Express middleware para limitar solicitudes por usuario autenticado con JWT.
+     */
+    middleware() {
+        return async (req, res, next) => {
             try {
                 const token = req.session?.jwt;
                 if (!token) {
-                    return res.status(401).json({ error: "No se proporcionó token JWT" });
+                    res.status(401).json({ error: "No se proporcionó token JWT" });
+                    return;
                 }
                 const agent = jsonwebtoken_1.default.verify(token, this.jwtSecret);
                 if (!agent?.id) {
-                    return res.status(401).json({ error: "Usuario inválido" });
+                    res.status(401).json({ error: "Usuario inválido" });
+                    return;
                 }
                 const key = `ratelimit:agent:${agent.id}`;
                 const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
                 if (result === 0) {
-                    return res
+                    res
                         .status(429)
                         .json({ error: "Demasiadas solicitudes, intenta más tarde" });
+                    return;
                 }
                 return next();
             }
             catch (error) {
                 console.error("Error en RateLimiter:", error);
-                return res
+                res
                     .status(503)
                     .json({ error: "Servicio no disponible. Intenta más tarde." });
+                return;
             }
         };
-        this.redis = options.redisClient;
-        this.jwtSecret = options.jwtSecret;
-        this.maxRequests = options.maxRequests;
-        this.windowSeconds = options.windowSeconds;
     }
     async check(agentId) {
         const key = `ratelimit:agent:${agentId}`;

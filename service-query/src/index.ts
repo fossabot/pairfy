@@ -8,12 +8,10 @@ import { assets, feed, products } from "./graphql/resolvers.js";
 import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { redisClient } from "./database/redis.js";
-import { GraphQLError } from "graphql";
 import {
   getPublicAddress,
   logger,
-  normalizeGraphError,
-  RateLimiter,
+  normalizeGraphError
 } from "@pairfy/common";
 
 const main = async () => {
@@ -93,12 +91,6 @@ const main = async () => {
     app.use(express.urlencoded({ limit: "5mb", extended: true }));
 
     app.use(getPublicAddress);
-
-    const rateLimiter = new RateLimiter(
-      process.env.REDIS_RATELIMIT_URL as string
-    );
-
-    app.use(rateLimiter.getMiddleware());
 
     await server.start();
 

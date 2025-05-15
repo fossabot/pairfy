@@ -37,51 +37,58 @@ export class RateLimiterJWT {
     this.jwtSecret = options.jwtSecret;
     this.maxRequests = options.maxRequests;
     this.windowSeconds = options.windowSeconds;
+    this.middleware = this.middleware.bind(this);
   }
 
   /**
    * Express middleware para limitar solicitudes por usuario autenticado con JWT.
    */
-  public middleware = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const token = req.session?.jwt;
-      if (!token) {
-        return res.status(401).json({ error: "No se proporcionó token JWT" });
+  middleware() {
+    return async (
+      req: Request,
+      res: Response,
+      next: NextFunction
+    ): Promise<void> => {
+      try {
+        const token = req.session?.jwt;
+        if (!token) {
+          res.status(401).json({ error: "No se proporcionó token JWT" });
+          return;
+        }
+
+        const agent = jwt.verify(token, this.jwtSecret) as { id?: string };
+        if (!agent?.id) {
+          res.status(401).json({ error: "Usuario inválido" });
+          return;
+        }
+
+        const key = `ratelimit:agent:${agent.id}`;
+
+        const result = await this.redis.eval(
+          this.luaScript,
+          1,
+          key,
+          this.maxRequests,
+          this.windowSeconds
+        );
+
+        if (result === 0) {
+          res
+            .status(429)
+            .json({ error: "Demasiadas solicitudes, intenta más tarde" });
+          return;
+        }
+
+        return next();
+      } catch (error) {
+        console.error("Error en RateLimiter:", error);
+        res
+          .status(503)
+          .json({ error: "Servicio no disponible. Intenta más tarde." });
+        return;
       }
-
-      const agent = jwt.verify(token, this.jwtSecret) as { id?: string };
-      if (!agent?.id) {
-        return res.status(401).json({ error: "Usuario inválido" });
-      }
-
-      const key = `ratelimit:agent:${agent.id}`;
-
-      const result = await this.redis.eval(
-        this.luaScript,
-        1,
-        key,
-        this.maxRequests,
-        this.windowSeconds
-      );
-
-      if (result === 0) {
-        return res
-          .status(429)
-          .json({ error: "Demasiadas solicitudes, intenta más tarde" });
-      }
-
-      return next();
-    } catch (error) {
-      console.error("Error en RateLimiter:", error);
-      return res
-        .status(503)
-        .json({ error: "Servicio no disponible. Intenta más tarde." });
-    }
-  };
+    };
+  }
 
   public async check(agentId: string): Promise<boolean> {
     const key = `ratelimit:agent:${agentId}`;

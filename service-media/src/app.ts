@@ -2,7 +2,8 @@ import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import { getPublicAddress, RateLimiter, sellerMiddleware } from "@pairfy/common";
+import { getPublicAddress, RateLimiterJWT, sellerMiddleware, sellerRequired } from "@pairfy/common";
+import Redis from 'ioredis';
 
 const app = express();
 
@@ -25,10 +26,17 @@ app.use(getPublicAddress);
 
 app.use(sellerMiddleware);
 
-const rateLimiter = new RateLimiter(
-  process.env.REDIS_RATELIMIT_URL as string
-);
+app.use(sellerRequired);
 
-app.use(rateLimiter.getMiddleware());
+const redisClient = new Redis(process.env.REDIS_RATELIMIT_URL as string);
+
+const rateLimiter = new RateLimiterJWT({
+  redisClient,
+  jwtSecret: process.env.AGENT_JWT_KEY as string,
+  maxRequests: 20,
+  windowSeconds: 60,
+});
+
+app.use(rateLimiter.middleware());
 
 export { app };

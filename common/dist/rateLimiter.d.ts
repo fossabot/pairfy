@@ -16,7 +16,7 @@ export declare class RateLimiterJWT {
     /**
      * Express middleware para limitar solicitudes por usuario autenticado con JWT.
      */
-    middleware: (req: Request, res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>;
+    middleware(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
     check(agentId: string): Promise<boolean>;
 }
 export {};
