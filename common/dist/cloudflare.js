@@ -28,7 +28,7 @@ exports.CLOUDFLARE_IP_RANGES = [
     "2405:b500::/32",
     "2405:8100::/32",
     "2a06:98c0::/29",
-    "2c0f:f248::/32"
+    "2c0f:f248::/32",
 ];
 const isTrustedProxy = proxy_addr_1.default.compile(exports.CLOUDFLARE_IP_RANGES);
 const getPublicAddress = (req, res, next) => {
@@ -41,14 +41,16 @@ const getPublicAddress = (req, res, next) => {
         const remoteAddr = req.socket.remoteAddress || "";
         if (!isTrustedProxy(remoteAddr, 0)) {
             console.warn(`Access blocked: not Cloudflare: ${remoteAddr}`);
-            return res.status(403).json({ error: "Access denied: not from Cloudflare" });
+            res.status(403).json({ error: "Access denied: not from Cloudflare" });
+            return;
         }
         req.publicAddress = ip;
         next();
     }
     catch (err) {
         console.warn("Could not resolve real IP:", err);
-        return res.status(403).json({ error: "Invalid IP or proxy chain" });
+        res.status(403).json({ error: "Invalid IP or proxy chain" });
+        return;
     }
 };
 exports.getPublicAddress = getPublicAddress;

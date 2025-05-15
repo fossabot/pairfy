@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { RequestHandler } from "express";
 import { SellerToken } from "./sellerAuth";
 declare global {
     namespace Express {
@@ -13,4 +13,4 @@ declare global {
     }
 }
 export declare const CLOUDFLARE_IP_RANGES: string[];
-export declare const getPublicAddress: (req: Request, res: Response, next: NextFunction) => void | Response<any, Record<string, any>>;
+export declare const getPublicAddress: RequestHandler;

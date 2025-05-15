@@ -1,20 +1,22 @@
 import proxyaddr from "proxy-addr";
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import { SellerToken } from "./sellerAuth";
 
 declare global {
-    namespace Express {
-      interface Request {
-        publicAddress?: string;
-        sellerData?: SellerToken;
-        session?: {
-          jwt?: string;
-          [key: string]: any;
-        } | null | undefined;
-      }
+  namespace Express {
+    interface Request {
+      publicAddress?: string;
+      sellerData?: SellerToken;
+      session?:
+        | {
+            jwt?: string;
+            [key: string]: any;
+          }
+        | null
+        | undefined;
     }
   }
-
+}
 
 export const CLOUDFLARE_IP_RANGES = [
   "173.245.48.0/20",
@@ -39,12 +41,16 @@ export const CLOUDFLARE_IP_RANGES = [
   "2405:b500::/32",
   "2405:8100::/32",
   "2a06:98c0::/29",
-  "2c0f:f248::/32"
+  "2c0f:f248::/32",
 ];
 
 const isTrustedProxy = proxyaddr.compile(CLOUDFLARE_IP_RANGES);
 
-export const getPublicAddress = (req: Request, res: Response, next: NextFunction) => {
+export const getPublicAddress: RequestHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
       req.publicAddress = req.socket.remoteAddress || "127.0.0.1";
@@ -57,20 +63,15 @@ export const getPublicAddress = (req: Request, res: Response, next: NextFunction
 
     if (!isTrustedProxy(remoteAddr, 0)) {
       console.warn(`Access blocked: not Cloudflare: ${remoteAddr}`);
-      return res.status(403).json({ error: "Access denied: not from Cloudflare" });
+      res.status(403).json({ error: "Access denied: not from Cloudflare" });
+      return;
     }
 
     req.publicAddress = ip;
     next();
   } catch (err) {
     console.warn("Could not resolve real IP:", err);
-    return res.status(403).json({ error: "Invalid IP or proxy chain" });
+    res.status(403).json({ error: "Invalid IP or proxy chain" });
+    return;
   }
 };
-
-
-
-
-
-
-

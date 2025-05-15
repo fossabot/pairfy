@@ -6,7 +6,7 @@ COPY package.json .
 
 RUN ls
 
-RUN npm config set registry http://verdaccio:4873/
+RUN npm config set registry http://host.docker.internal:4873/
 
 RUN npm install --verbose --no-package-lock
 
