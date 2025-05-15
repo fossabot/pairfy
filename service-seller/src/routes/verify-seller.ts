@@ -4,7 +4,7 @@ import {
   findSellerByEmail,
   ApiError,
   ERROR_CODES,
-  updateSeller
+  updateSeller,
 } from "@pairfy/common";
 import { Request, Response } from "express";
 import {
@@ -26,12 +26,18 @@ const verifySellerHandler = async (req: Request, res: Response) => {
       });
     }
 
-    const sellerToken = verifyToken(
+    const parsedToken = verifyToken(
       isValidToken.data.token,
       process.env.AGENT_JWT_KEY as string
     );
 
-    const isValidTokenContent = tokenTypeValidator.safeParse(sellerToken);
+    if (!parsedToken) {
+      throw new ApiError(401, "Invalid Token", {
+        code: ERROR_CODES.INVALID_CREDENTIALS,
+      });
+    }
+
+    const isValidTokenContent = tokenTypeValidator.safeParse(parsedToken);
 
     if (!isValidTokenContent.success) {
       throw new ApiError(401, "Invalid Token", {
@@ -45,36 +51,30 @@ const verifySellerHandler = async (req: Request, res: Response) => {
 
     await connection.beginTransaction();
 
-    if (sellerToken.role === "SELLER") {
-      const SELLER = await findSellerByEmail(connection, sellerToken.email);
+    const SELLER = await findSellerByEmail(connection, parsedToken.email);
 
-      console.log(SELLER);
+    console.log(SELLER);
 
-      if (SELLER.verified === 1) {
-        throw new ApiError(400, "Email is already verified", {
-          code: ERROR_CODES.EMAIL_ALREADY_VERIFIED,
-        });
+    if (SELLER.verified === 1) {
+      throw new ApiError(400, "Email is already verified", {
+        code: ERROR_CODES.EMAIL_ALREADY_VERIFIED,
+      });
+    }
+
+    const updatedSeller = await updateSeller(
+      connection,
+      SELLER.id,
+      SELLER.schema_v,
+      {
+        verified: true,
+        schema_v: SELLER.schema_v + 1,
       }
+    );
 
-      const updatedSeller = await updateSeller(
-        connection,
-        SELLER.id,
-        SELLER.schema_v,
-        {
-          verified: true,
-          schema_v: SELLER.schema_v + 1,
-        }
-      );
-
-      if (updatedSeller.affectedRows !== 1) {
-        throw new ApiError(
-          409,
-          "Update failed: version mismatch or not found",
-          {
-            code: ERROR_CODES.UPDATE_CONFLICT,
-          }
-        );
-      }
+    if (updatedSeller.affectedRows !== 1) {
+      throw new ApiError(409, "Update failed: version mismatch or not found", {
+        code: ERROR_CODES.UPDATE_CONFLICT,
+      });
     }
 
     await connection.commit();
