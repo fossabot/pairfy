@@ -1,3 +1,4 @@
+import "./types/express";
 export * from "./createEvent";
 export * from "./insertSeller";
 export * from "./isProcessedEvent";
@@ -5,7 +6,7 @@ export * from "./consumedEvent";
 export * from "./loadSql";
 export * from "./errorHandler";
 export * from "./logger";
-export * from "./getPublicAddress";
+export * from "./cloudflare";
 export * from "./rateLimiter";
 export * from "./token";
 export * from "./findSellerByEmail";

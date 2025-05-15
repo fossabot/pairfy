@@ -13,8 +13,7 @@ import {
   normalizeGraphError,
   logger,
   getPublicAddress,
-  sellerRequired,
-  RateLimiterJWT,
+  RateLimiter,
   ApiGraphQLError,
   ERROR_CODES,
   SellerToken,
@@ -117,7 +116,7 @@ const main = async () => {
 
     app.use(sellerMiddleware);
 
-    const rateLimiter = new RateLimiterJWT({
+    const rateLimiter = new RateLimiter({
       source: "service-product",
       redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
@@ -131,7 +130,7 @@ const main = async () => {
       "/api/product/graphql",
       expressMiddleware(server, {
         context: async ({ req }) => {
-          if (!req?.sellerData) {
+          if (!req.sellerData) {
             throw new ApiGraphQLError(401, "Unauthorized agent", {
               code: ERROR_CODES.UNAUTHORIZED,
             });
@@ -139,7 +138,7 @@ const main = async () => {
 
           const sellerData = req.sellerData as SellerToken;
 
-          const allowed = await rateLimiter.check(sellerData.id);
+          const allowed = await rateLimiter.checkId(sellerData.id);
 
           if (!allowed) {
             throw new ApiGraphQLError(429, "Rate limit exceeded", {

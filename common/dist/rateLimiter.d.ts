@@ -8,7 +8,7 @@ interface RateLimiterOptions {
     windowSeconds: number;
     source: string;
 }
-export declare class RateLimiterJWT {
+export declare class RateLimiter {
     private redis;
     private jwtSecret;
     private maxRequests;
@@ -19,8 +19,12 @@ export declare class RateLimiterJWT {
     private addListeners;
     private verifyToken;
     /** Express rateLimitJwt middleware */
-    middleware(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
-    /** GraphQL rateLimitJwt check */
-    check(agentId: string): Promise<boolean>;
+    middlewareJwt(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    /** Express middlewareIp middleware */
+    middlewareIp(): (req: Request, res: Response, next: NextFunction) => Promise<void>;
+    /** GraphQL checkId */
+    checkId(agentId: string): Promise<boolean>;
+    /** GraphQL checkIp */
+    checkIp(ip: string): Promise<boolean>;
 }
 export {};

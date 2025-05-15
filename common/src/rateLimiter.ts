@@ -14,7 +14,7 @@ interface RateLimiterOptions {
   source: string;
 }
 
-export class RateLimiterJWT {
+export class RateLimiter {
   private redis: Redis;
   private jwtSecret: string;
   private maxRequests: number;
