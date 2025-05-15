@@ -3,14 +3,21 @@ import { Request, Response, NextFunction } from "express";
 import { ApiError, ERROR_CODES, logger } from "./index";
 import { verifyToken } from "./token";
 
-const WINDOW_SECONDS = 60;
-const MAX_REQUESTS = 20;
+interface RateLimiterOptions {
+  windowSeconds?: number;
+  maxRequests?: number;
+}
 
 export class RateLimiter {
   private redis: Redis;
   private fallbackStore: Map<string, { count: number; expiresAt: number }>;
+  private windowSeconds: number;
+  private maxRequests: number;
 
-  constructor(redisUrl: string) {
+  constructor(redisUrl: string, options?: RateLimiterOptions) {
+    this.windowSeconds = options?.windowSeconds ?? 60;
+    this.maxRequests = options?.maxRequests ?? 20;
+
     this.redis = new Redis(redisUrl, {
       retryStrategy(times) {
         if (times > 20) return null;
@@ -27,6 +34,15 @@ export class RateLimiter {
     });
 
     this.fallbackStore = new Map();
+
+    setInterval(() => {
+      const now = Date.now();
+      for (const [key, entry] of this.fallbackStore) {
+        if (entry.expiresAt < now) {
+          this.fallbackStore.delete(key);
+        }
+      }
+    }, 60_000);
   }
 
   getMiddleware() {
@@ -36,7 +52,7 @@ export class RateLimiter {
       next: NextFunction
     ): Promise<void> => {
       let key = "";
-      
+
       try {
         if (!req.publicAddress) {
           throw new ApiError(500, "Internal Error", {
@@ -57,25 +73,49 @@ export class RateLimiter {
               key = `ratelimit:user:${decoded.sub}`;
             }
           } catch {
-            // IP
+            // fallback a IP
           }
         }
 
-        const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
+        const saved = await this.redis.set(
+          key,
+          1,
+          "EX",
+          this.windowSeconds,
+          "NX"
+        );
 
-        if (!saved) {
-          const current = await this.redis.incr(key);
+        if (saved) {
+          // Primera solicitud: set headers y sigue
+          res.setHeader("X-RateLimit-Limit", this.maxRequests);
+          res.setHeader("X-RateLimit-Remaining", this.maxRequests - 1);
+          res.setHeader(
+            "X-RateLimit-Reset",
+            Math.floor(Date.now() / 1000) + this.windowSeconds
+          );
+          return next();
+        }
 
-          if (current > MAX_REQUESTS) {
-            logger.warn(`[RateLimitExceeded]: key=${key}`);
-            throw new ApiError(429, "Too many requests", {
-              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
-            });
-          }
+        const current = await this.redis.incr(key);
+        const ttl = await this.redis.ttl(key);
+
+        res.setHeader("X-RateLimit-Limit", this.maxRequests);
+        res.setHeader("X-RateLimit-Remaining", Math.max(0, this.maxRequests - current));
+        res.setHeader(
+          "X-RateLimit-Reset",
+          Math.floor(Date.now() / 1000) + ttl
+        );
+
+        if (current > this.maxRequests) {
+          logger.warn(`[RateLimitExceeded]: key=${key}`);
+          throw new ApiError(429, "Too many requests", {
+            code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+          });
         }
 
         return next();
       } catch (err) {
+        // Fallback local si Redis falla
         if (err instanceof ApiError) {
           return next(err);
         }
@@ -85,23 +125,36 @@ export class RateLimiter {
         const now = Date.now();
         const entry = this.fallbackStore.get(key);
 
-        //////////////////////////////////////////////////////////////////////
-
         if (!entry || entry.expiresAt < now) {
           if (entry) this.fallbackStore.delete(key);
-
           this.fallbackStore.set(key, {
             count: 1,
-            expiresAt: now + WINDOW_SECONDS * 1000,
+            expiresAt: now + this.windowSeconds * 1000,
           });
+
+          res.setHeader("X-RateLimit-Limit", this.maxRequests);
+          res.setHeader("X-RateLimit-Remaining", this.maxRequests - 1);
+          res.setHeader(
+            "X-RateLimit-Reset",
+            Math.floor(now / 1000) + this.windowSeconds
+          );
+
           return next();
         }
 
-        //////////////////////////////////////////////////////////////////////
-
         entry.count += 1;
 
-        if (entry.count > MAX_REQUESTS) {
+        res.setHeader("X-RateLimit-Limit", this.maxRequests);
+        res.setHeader(
+          "X-RateLimit-Remaining",
+          Math.max(0, this.maxRequests - entry.count)
+        );
+        res.setHeader(
+          "X-RateLimit-Reset",
+          Math.floor(entry.expiresAt / 1000)
+        );
+
+        if (entry.count > this.maxRequests) {
           logger.warn(`[RateLimitExceededFallback]: key=${key}`);
           return next(
             new ApiError(429, "Too many requests", {
@@ -109,8 +162,6 @@ export class RateLimiter {
             })
           );
         }
-
-        //////////////////////////////////////////////////////////////////////
 
         return next();
       }
