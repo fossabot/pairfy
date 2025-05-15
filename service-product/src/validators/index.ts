@@ -53,13 +53,18 @@ export const productCategorySchema = z
 
 export const productBulletlistSchema = z
   .array(
-    z
-      .string()
-      .min(1, { message: "Each feature must not be empty." })
-      .max(240, { message: "Each feature must be at most 240 characters." })
-      .regex(bulletRegex, {
-        message: "Each feature contains invalid characters.",
-      })
+    z.string().refine(
+      (val) => {
+        if (val === "") return true;
+        if (val.length === 0) return false;
+        if (val.length > 240) return false;
+        return bulletRegex.test(val);
+      },
+      {
+        message:
+          "Each feature must be empty or a valid string up to 240 chars with allowed characters.",
+      }
+    )
   )
   .min(1, { message: "At least one feature is required." });
 
