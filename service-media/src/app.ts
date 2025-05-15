@@ -2,7 +2,7 @@ import "express-async-errors";
 import express from "express";
 import helmet from "helmet";
 import cookieSession from "cookie-session";
-import { getPublicAddress, RateLimiter, sellerMiddleware } from "@pairfy/common";
+import { getPublicAddress, sellerMiddleware } from "@pairfy/common";
 
 const app = express();
 
@@ -24,11 +24,5 @@ app.use(helmet());
 app.use(getPublicAddress);
 
 app.use(sellerMiddleware);
-
-const rateLimiter = new RateLimiter(
-  process.env.REDIS_RATELIMIT_URL as string
-);
-
-app.use(rateLimiter.getMiddleware());
 
 export { app };

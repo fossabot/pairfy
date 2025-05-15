@@ -3,92 +3,151 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RateLimiter = void 0;
+exports.RateLimiterJWT = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
-const index_1 = require("./index");
-const token_1 = require("./token");
-const WINDOW_SECONDS = 60;
-const MAX_REQUESTS = 20;
-class RateLimiter {
-    constructor(redisUrl) {
-        this.redis = new ioredis_1.default(redisUrl, {
-            retryStrategy(times) {
-                if (times > 20)
-                    return null;
-                return Math.min(times * 100, 2000);
-            },
-        });
-        this.redis.on("error", (err) => {
-            index_1.logger.error("[RedisClientError]", err);
-        });
-        this.redis.on("connect", () => {
-            index_1.logger.info("[RedisClientConnected]");
-        });
-        this.fallbackStore = new Map();
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const logger_1 = require("./logger");
+const errorHandler_1 = require("./errorHandler");
+const errorCodes_1 = require("./errorCodes");
+class RateLimiterJWT {
+    constructor(options) {
+        this.luaScript = `
+    local key = KEYS[1]
+    local limit = tonumber(ARGV[1])
+    local window = tonumber(ARGV[2])
+
+    local current = tonumber(redis.call("GET", key) or "0")
+    if current + 1 > limit then
+      return 0
+    else
+      current = redis.call("INCR", key)
+      if current == 1 then
+        redis.call("EXPIRE", key, window)
+      end
+      return current
+    end
+  `;
+        if (!options.source || options.source.trim() === "") {
+            throw new Error("The 'source' option is required and cannot be empty.");
+        }
+        if (!Number.isInteger(options.maxRequests) || options.maxRequests <= 0) {
+            throw new Error("'maxRequests' must be a positive integer.");
+        }
+        if (!Number.isInteger(options.windowSeconds) || options.windowSeconds <= 0) {
+            throw new Error("'windowSeconds' must be a positive integer.");
+        }
+        if (!options.jwtSecret || options.jwtSecret.trim() === "") {
+            throw new Error("The 'jwtSecret' option is required and cannot be empty.");
+        }
+        if (options.redisClient) {
+            this.redis = options.redisClient;
+        }
+        else if (options.redisUrl) {
+            this.redis = new ioredis_1.default(options.redisUrl);
+        }
+        else {
+            throw new Error("You must provide a redisClient or a redisUrl in RateLimiterOptions.");
+        }
+        this.addListeners();
+        this.source = options.source;
+        this.jwtSecret = options.jwtSecret;
+        this.maxRequests = options.maxRequests ?? 100;
+        this.windowSeconds = options.windowSeconds ?? 60;
+        this.middleware = this.middleware.bind(this);
     }
-    getMiddleware() {
+    addListeners() {
+        this.redis.on("error", (error) => {
+            console.error({
+                service: this.source,
+                event: "redis.error",
+                message: "redis listener error",
+                error,
+            });
+        });
+        this.redis.on("close", () => {
+            console.warn({
+                service: this.source,
+                event: "redis.close",
+                message: "redis close event",
+            });
+        });
+        this.redis.on("reconnecting", (time) => {
+            console.info({
+                service: this.source,
+                event: "redis.reconnecting",
+                message: `[Redis]: retrying connection in ${time}ms`,
+            });
+        });
+        this.redis.on("end", () => {
+            console.warn({
+                service: this.source,
+                event: "redis.end",
+                message: "ratelimit redis end event",
+            });
+        });
+    }
+    verifyToken(req) {
+        try {
+            const token = req.session?.jwt;
+            if (!token)
+                return null;
+            const agent = jsonwebtoken_1.default.verify(token, this.jwtSecret);
+            return agent?.id || null;
+        }
+        catch {
+            return null;
+        }
+    }
+    /** Express rateLimitJwt middleware */
+    middleware() {
         return async (req, res, next) => {
-            let key = "";
             try {
-                if (!req.publicAddress) {
-                    throw new index_1.ApiError(500, "Internal Error", {
-                        code: index_1.ERROR_CODES.INTERNAL_ERROR,
-                    });
+                const agentId = this.verifyToken(req);
+                if (!agentId) {
+                    return next(new errorHandler_1.ApiError(401, "Invalid session or token", {
+                        code: errorCodes_1.ERROR_CODES.UNAUTHORIZED,
+                    }));
                 }
-                key = `ratelimit:ip:${req.publicAddress}`;
-                const token = req.session?.jwt;
-                if (token) {
-                    try {
-                        const decoded = (0, token_1.verifyToken)(token, process.env.AGENT_JWT_KEY);
-                        if (decoded?.sub) {
-                            key = `ratelimit:user:${decoded.sub}`;
-                        }
-                    }
-                    catch {
-                        // IP
-                    }
-                }
-                const saved = await this.redis.set(key, 1, "EX", WINDOW_SECONDS, "NX");
-                if (!saved) {
-                    const current = await this.redis.incr(key);
-                    if (current > MAX_REQUESTS) {
-                        index_1.logger.warn(`[RateLimitExceeded]: key=${key}`);
-                        throw new index_1.ApiError(429, "Too many requests", {
-                            code: index_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
-                        });
-                    }
+                const key = `ratelimit:${this.source}:agent:${agentId}`;
+                const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
+                if (result === 0) {
+                    return next(new errorHandler_1.ApiError(429, "Too many requests, try again later", {
+                        code: errorCodes_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
+                    }));
                 }
                 return next();
             }
-            catch (err) {
-                if (err instanceof index_1.ApiError) {
-                    return next(err);
-                }
-                index_1.logger.error("[RateLimitFallback]", err);
-                const now = Date.now();
-                const entry = this.fallbackStore.get(key);
-                //////////////////////////////////////////////////////////////////////
-                if (!entry || entry.expiresAt < now) {
-                    if (entry)
-                        this.fallbackStore.delete(key);
-                    this.fallbackStore.set(key, {
-                        count: 1,
-                        expiresAt: now + WINDOW_SECONDS * 1000,
-                    });
-                    return next();
-                }
-                //////////////////////////////////////////////////////////////////////
-                entry.count += 1;
-                if (entry.count > MAX_REQUESTS) {
-                    index_1.logger.warn(`[RateLimitExceededFallback]: key=${key}`);
-                    return next(new index_1.ApiError(429, "Too many requests", {
-                        code: index_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
-                    }));
-                }
-                //////////////////////////////////////////////////////////////////////
-                return next();
+            catch (error) {
+                return next(new errorHandler_1.ApiError(503, "Service temporarily unavailable", {
+                    code: errorCodes_1.ERROR_CODES.SERVICE_UNAVAILABLE,
+                }));
             }
         };
     }
+    /** GraphQL rateLimitJwt check */
+    async check(agentId) {
+        try {
+            const key = `ratelimit:${this.source}:agent:${agentId}`;
+            const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
+            if (result === 0) {
+                logger_1.logger.warn({
+                    service: this.source,
+                    event: "ratelimit.exceeded",
+                    message: "ratelimit exceeded by agent",
+                    agentId,
+                });
+            }
+            return result !== 0;
+        }
+        catch (error) {
+            logger_1.logger.error({
+                service: this.source,
+                event: "ratelimit.error",
+                message: "ratelimit error",
+                error: error,
+            });
+            return false;
+        }
+    }
 }
-exports.RateLimiter = RateLimiter;
+exports.RateLimiterJWT = RateLimiterJWT;

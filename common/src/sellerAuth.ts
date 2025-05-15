@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { logger } from "./index";
+import { ApiError, ApiGraphQLError, ERROR_CODES, logger } from "./index";
 
 export interface SellerToken {
   id: string;
@@ -13,8 +13,11 @@ export interface SellerToken {
   pubkeyhash: string;
 }
 
-
-export const sellerMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const sellerMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (!req.session?.jwt) {
     return next();
   }
@@ -40,3 +43,17 @@ export const sellerMiddleware = (req: Request, res: Response, next: NextFunction
   return next();
 };
 
+export const sellerRequired = (
+  req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  if (!req.sellerData) {
+    return next(
+      new ApiError(401, "Unauthorized seller", {
+        code: ERROR_CODES.UNAUTHORIZED,
+      })
+    );
+  }
+  next();
+};
