@@ -54,15 +54,16 @@ const main = async () => {
       typeDefs,
       resolvers,
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-
       formatError: (formattedError, error) => {
-        let original: unknown = error;
+        logger.error({
+          service: "service-query",
+          event: "graphql.error",
+          message: "service-query graphql error",
+          error: formattedError,
+          stack: error,
+        });
 
-        if (error instanceof GraphQLError && error.originalError) {
-          original = error.originalError;
-        }
-
-        return normalizeGraphError(original);
+        return normalizeGraphError(error)
       },
     });
 

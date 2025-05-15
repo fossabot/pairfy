@@ -10,3 +10,4 @@ export interface SellerToken {
     pubkeyhash: string;
 }
 export declare const sellerMiddleware: (req: Request, res: Response, next: NextFunction) => void;
+export declare const sellerRequired: (req: Request, _res: Response, next: NextFunction) => void;
