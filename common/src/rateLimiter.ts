@@ -71,9 +71,10 @@ export class RateLimiter {
 
     const gracefulShutdown = () => {
       logger.info("RateLimiter shutting down...");
-      this.shutdown();
-      // Mejor no llamar process.exit(0) directamente
-      // Permitir que el proceso cierre ordenadamente
+      this.shutdown().catch((err) =>
+        logger.error("Error during RateLimiter shutdown", err)
+      );
+      // No se llama process.exit aquí para permitir cierre ordenado
     };
 
     process.once("SIGINT", gracefulShutdown);
@@ -91,9 +92,9 @@ export class RateLimiter {
     res.setHeader("X-RateLimit-Reset", resetTimestamp.toString());
   }
 
-  public shutdown() {
+  public async shutdown() {
     clearInterval(this.cleanupInterval);
-    this.redis.disconnect();
+    await this.redis.disconnect();
   }
 
   getMiddleware() {
@@ -106,8 +107,11 @@ export class RateLimiter {
 
       try {
         // Obtener publicAddress de forma segura y validar
-        const publicAddress = (req as any).publicAddress;
-        if (!publicAddress || typeof publicAddress !== "string" || !publicAddress.trim()) {
+        const rawPublicAddress = (req as any).publicAddress;
+        const publicAddress =
+          typeof rawPublicAddress === "string" ? rawPublicAddress.trim() : "";
+
+        if (!publicAddress) {
           return next(
             new ApiError(400, "Missing or invalid publicAddress for rate limit key", {
               code: ERROR_CODES.BAD_REQUEST,
@@ -121,7 +125,7 @@ export class RateLimiter {
         if (token) {
           try {
             const decoded = verifyToken(token, this.jwtKey) as { sub?: string };
-            // Validar 'sub' para que sea string no vacío, alfanumérico (según convenga)
+            // Validar 'sub' para que sea string no vacío y solo caracteres válidos
             if (
               decoded?.sub &&
               typeof decoded.sub === "string" &&
@@ -141,7 +145,7 @@ export class RateLimiter {
           LUA_SCRIPT,
           1,
           key,
-          this.windowSeconds
+          this.windowSeconds.toString() // Pasar como string explícitamente
         );
 
         if (
@@ -192,12 +196,12 @@ export class RateLimiter {
 
         logger.error("[RateLimitFallback]", err);
 
-        // fallbackKey debe ser válido: si key vacío, usar una fallback genérica con IP si disponible
+        // fallbackKey corregido con paréntesis para que la ternaria funcione bien
         const fallbackKey =
           key ||
-          (req as any).publicAddress
+          ((req as any).publicAddress
             ? `ratelimit:fallback:ip:${(req as any).publicAddress}`
-            : `ratelimit:fallback:unknown`;
+            : `ratelimit:fallback:unknown`);
 
         const now = Date.now();
 
