@@ -26,11 +26,18 @@ export class RateLimiter {
   private maxRequests: number;
   private enableFallback: boolean;
   private cleanupInterval: NodeJS.Timeout;
+  private jwtKey: string;
 
   constructor(redisUrl: string, options?: RateLimiterOptions) {
     this.windowSeconds = options?.windowSeconds ?? 60;
     this.maxRequests = options?.maxRequests ?? 20;
     this.enableFallback = options?.enableFallback ?? true;
+
+    const envJwtKey = process.env.AGENT_JWT_KEY;
+    if (!envJwtKey) {
+      throw new Error("Missing environment variable AGENT_JWT_KEY");
+    }
+    this.jwtKey = envJwtKey;
 
     this.redis = new Redis(redisUrl, {
       retryStrategy(times) {
@@ -84,24 +91,16 @@ export class RateLimiter {
       let key = "";
 
       try {
-        if (!req.publicAddress) {
-          return next(
-            new ApiError(400, "Missing public address", {
-              code: ERROR_CODES.BAD_REQUEST,
-            })
-          );
-        }
+        // Defensive fallback if publicAddress is missing or empty
+        const publicAddress = (req as any).publicAddress || req.ip || "unknown";
 
-        // Base key con IP
-        key = `ratelimit:ip:${req.publicAddress}`;
+        // Base key on IP fallback
+        key = `ratelimit:ip:${publicAddress}`;
 
-        // Si hay token válido, usar user sub
         const token = req.session?.jwt;
         if (token) {
           try {
-            const decoded = verifyToken(token, process.env.AGENT_JWT_KEY!) as {
-              sub?: string;
-            };
+            const decoded = verifyToken(token, this.jwtKey) as { sub?: string };
             if (decoded?.sub) {
               key = `ratelimit:user:${decoded.sub}`;
             }
@@ -110,7 +109,6 @@ export class RateLimiter {
           }
         }
 
-        // Validar que key nunca sea vacío (por seguridad)
         if (!key) {
           return next(
             new ApiError(400, "Invalid rate limit key", {
@@ -119,16 +117,16 @@ export class RateLimiter {
           );
         }
 
-        // Ejecutar script Lua para incrementar contador y obtener TTL atomically
-        const [currentStr, ttlStr] = (await this.redis.eval(
+        // Run Lua script: returns [number current, number ttl]
+        const result = (await this.redis.eval(
           LUA_SCRIPT,
           1,
           key,
           this.windowSeconds
-        )) as [string, string];
+        )) as [number, number];
 
-        const current = parseInt(currentStr, 10);
-        const ttl = parseInt(ttlStr, 10);
+        const current = result[0];
+        const ttl = result[1];
 
         const resetSeconds =
           ttl > 0
@@ -143,7 +141,7 @@ export class RateLimiter {
         );
 
         if (current > this.maxRequests) {
-          logger.warn(`[RateLimitExceeded]: key=${key}, ip=${req.publicAddress}`);
+          logger.warn(`[RateLimitExceeded]: key=${key}, ip=${publicAddress}`);
           throw new ApiError(429, "Too many requests", {
             code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
           });
@@ -161,11 +159,10 @@ export class RateLimiter {
 
         logger.error("[RateLimitFallback]", err);
 
-        // Fallback local seguro: usar IP o user, pero si key está vacío usar fallback seguro con IP "unknown"
         const fallbackKey = key || `ratelimit:fallback:unknown`;
 
         const now = Date.now();
-        const entry = this.fallbackStore.get(fallbackKey);
+        let entry = this.fallbackStore.get(fallbackKey);
 
         if (!entry || entry.expiresAt < now) {
           if (entry) this.fallbackStore.delete(fallbackKey);
