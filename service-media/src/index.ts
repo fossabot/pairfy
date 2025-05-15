@@ -70,7 +70,7 @@ const main = async () => {
 
       route.verifyGroupHandler
     );
-
+ 
     app.get(
       "/api/media/get-file/groups/:groupId/:filename",
       route.getFileMiddlewares,

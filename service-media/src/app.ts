@@ -25,12 +25,14 @@ app.use(getPublicAddress);
 
 app.use(sellerMiddleware);
 
+app.use(sellerRequired);
+
 const rateLimiter = new RateLimiterJWT({
+  source: 'service-media',
   redisUrl: process.env.REDIS_RATELIMIT_URL as string,
   jwtSecret: process.env.AGENT_JWT_KEY as string,
   maxRequests: 20,
-  windowSeconds: 60,
-  source: 'service-media'
+  windowSeconds: 60
 });
 
 app.use(rateLimiter.middleware());
