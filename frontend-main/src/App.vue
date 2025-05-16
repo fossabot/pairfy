@@ -71,6 +71,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .wrap {
+  background: #07262a;
   display: flex;
   flex-direction: column;
   transition: all .2s ease;

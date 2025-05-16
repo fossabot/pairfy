@@ -64,7 +64,7 @@
 
 .overlay {
     padding: 2rem;
-    background-image: url('https://img.freepik.com/free-photo/couple-enjoying-online-order-they-received_23-2148455108.jpg');
+    background-image: url('banner.jpg');
     background-repeat: no-repeat;
     background-position-x: right;
     background-size: cover;
@@ -131,6 +131,10 @@
 .right p {
     font-size: var(--text-size-4);
     margin: 6px 0;
+}
+
+li, p{
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .products {

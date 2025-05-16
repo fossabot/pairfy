@@ -46,7 +46,6 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
-  background-color: #f8f9fa;
   width: 100%;
   max-width: var(--body-a);
 }
@@ -56,7 +55,7 @@ watch(() => route.path, (newPath) => {
   list-style: none;
   padding: 1rem;
   margin: 0;
-  background: #02090a;
+  background: black;
   border-bottom-left-radius: 12px;
   color: white;
   display: flex;
