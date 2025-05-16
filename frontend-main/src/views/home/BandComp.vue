@@ -4,12 +4,13 @@
             <!-- Header -->
             <div class="banner-header">
                 <div class="left">
-                    <h1><span class="bold">Native</span>
-                        <span class="light"> Cardano Marketplace</span>
+                    <h1><span class="bold">Cardano </span>
+                        <span class="light">native marketplace</span>
                     </h1>
                     <ul class="features">
                         <li>✔ Community-governed</li>
-                        <li>✔ Stablecoin payments</li>
+                        <li>✔ Native asset payments</li> 
+                        <li>✔ Midnight network</li>
                         <li>✔ Free shipping</li>
                     </ul>
                    
@@ -26,23 +27,20 @@
             <div class="products">
                 <div class="category">
                     <h2>Discount pool</h2>
-                    <div class="cards">
-                        <ProductCard img="eyelashes.png" title="$1.04 each, ≥3 pcs" />
-                        <ProductCard img="earring.png" title="$1.00 each, ≥3 pcs" />
+                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                          1.000.000 ADA
                     </div>
                 </div>
                 <div class="category">
                     <h2>Discount Countdown</h2>
-                    <div class="cards">
-                        <ProductCard img="dji.png" title="$0.99 Ships in 2 days" oldPrice="$1.23" />
-                        <ProductCard img="brass.png" title="$0.99 Ships in 2 days" oldPrice="$1.71" />
+                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                          13d : 15h : 52m
                     </div>
                 </div>
                 <div class="category">
-                    <h2>Benefited holders</h2>
-                    <div class="cards">
-                        <ProductCard img="meete.png" title="$4.24 each, ≥3 pcs" />
-                        <ProductCard img="laser.png" title="$63.88" oldPrice="$68.88" />
+                    <h2>Benefited users</h2>
+                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                          2000 wallets
                     </div>
                 </div>
             </div>
@@ -57,14 +55,15 @@
 <style scoped>
 .banner {
     background: var(--primary-a);
-    border-radius: 0px;
     color: var(--text-w);
     width: 100%;
     overflow: hidden;
+    max-width: var(--body-a);
+    border-radius: var(--radius-a);
 }
 
 .overlay {
-    padding: 40px 20px;
+    padding: 2rem;
     background-image: url('https://img.freepik.com/free-photo/couple-enjoying-online-order-they-received_23-2148455108.jpg');
     background-repeat: no-repeat;
     background-position-x: right;
@@ -74,7 +73,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 0 auto 40px auto;
+    margin: 0 auto 2rem auto;
     max-width: var(--body-a);
 }
 
@@ -83,8 +82,8 @@
 }
 
 .left h1 {
-    font-size: 32px;
-    margin-bottom: 15px;
+    font-size: 26px;
+    margin-bottom: 1rem;
 }
 
 .left .bold {
@@ -102,7 +101,7 @@
 }
 
 .features li {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     margin-bottom: 6px;
 }
 
