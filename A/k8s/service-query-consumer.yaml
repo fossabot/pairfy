@@ -64,7 +64,7 @@ spec:
             - name: NATS_SERVERS
               valueFrom:
                 configMapKeyRef:
-                  name: nats-config
+                  name: nats-cluster-config
                   key: hosts 
 
 

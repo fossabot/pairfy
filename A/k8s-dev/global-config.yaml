@@ -18,7 +18,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nats-config
+  name: nats-cluster-config
 data:
   hosts: nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222
 ---
