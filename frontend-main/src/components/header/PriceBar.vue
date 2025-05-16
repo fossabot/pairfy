@@ -1,11 +1,10 @@
 <template>
     <div class="p-bar flex">
         <div class="p-bar-content flex">
-            <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome">
-
-            <LogoComp />
+          
             <LocationComp />
 
+           
             <span class="p-bar-price">Discount Liquidity: 1.000.000 ADA</span>
             <span class="p-bar-price">Volume 24h: 253.894 ADA</span>
             <span class="p-bar-price">ADAUSD {{ formatPriceToUSD(getADAprice) }} </span>
@@ -56,11 +55,6 @@ const { formatPriceToUSD } = inject('utils');
 </script>
 
 <style lang="css" scoped>
-
-.brand{
-    height: 2rem;
-    color: var(--text-w);
-}
 
 .p-bar {
     background: black;
