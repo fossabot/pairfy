@@ -9,14 +9,18 @@ import { database } from "./database/client.js";
 import { typeDefs } from "./graphql/types.js";
 import { redisClient } from "./database/redis.js";
 import {
+  ApiGraphQLError,
+  ERROR_CODES,
   getPublicAddress,
   logger,
-  normalizeGraphError
+  normalizeGraphError,
+  RateLimiter,
 } from "@pairfy/common";
 
 const main = async () => {
   try {
     const requiredEnvVars = [
+      "NODE_ENV",
       "DATABASE_HOST",
       "DATABASE_PORT",
       "DATABASE_USER",
@@ -24,6 +28,7 @@ const main = async () => {
       "DATABASE_NAME",
       "REDIS_HOST",
       "REDIS_RATELIMIT_URL",
+      "AGENT_JWT_KEY"
     ];
 
     for (const varName of requiredEnvVars) {
@@ -61,7 +66,7 @@ const main = async () => {
           stack: error,
         });
 
-        return normalizeGraphError(error)
+        return normalizeGraphError(error);
       },
     });
 
@@ -84,8 +89,16 @@ const main = async () => {
       .then(() => checkRedis(redisClient))
       .catch((err: any) => catchError(err));
 
+    const rateLimiter = new RateLimiter({
+      source: "service-query",
+      redisUrl: process.env.REDIS_RATELIMIT_URL as string,
+      jwtSecret: process.env.AGENT_JWT_KEY as string,
+      maxRequests: 20,
+      windowSeconds: 60
+    });
+
     app.set("trust proxy", 1);
-    
+
     app.use(express.json({ limit: "5mb" }));
 
     app.use(express.urlencoded({ limit: "5mb", extended: true }));
@@ -97,7 +110,25 @@ const main = async () => {
     app.use(
       "/api/query/graphql",
       expressMiddleware(server, {
-        context: async ({ req }) => ({}),
+        context: async ({ req }) => {
+          const publicAddress = req.publicAddress;
+
+          if (!publicAddress) {
+            throw new ApiGraphQLError(401, "Unauthorized", {
+              code: ERROR_CODES.UNAUTHORIZED,
+            });
+          }
+
+          const allowed = await rateLimiter.checkIp(publicAddress);
+
+          if (!allowed) {
+            throw new ApiGraphQLError(429, "Rate limit exceeded", {
+              code: ERROR_CODES.RATE_LIMIT_EXCEEDED,
+            });
+          }
+
+          return { publicAddress };
+        },
       })
     );
 

@@ -95,6 +95,14 @@ const main = async () => {
       database: process.env.DATABASE_NAME,
     });
 
+    const rateLimiter = new RateLimiter({
+      source: "service-product",
+      redisUrl: process.env.REDIS_RATELIMIT_URL as string,
+      jwtSecret: process.env.AGENT_JWT_KEY as string,
+      maxRequests: 20,
+      windowSeconds: 60,
+    });
+
     const sessionOptions: object = {
       name: "session",
       maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -116,14 +124,6 @@ const main = async () => {
 
     app.use(sellerMiddleware);
 
-    const rateLimiter = new RateLimiter({
-      source: "service-product",
-      redisUrl: process.env.REDIS_RATELIMIT_URL as string,
-      jwtSecret: process.env.AGENT_JWT_KEY as string,
-      maxRequests: 20,
-      windowSeconds: 60,
-    });
-
     await server.start();
 
     app.use(
@@ -131,7 +131,7 @@ const main = async () => {
       expressMiddleware(server, {
         context: async ({ req }) => {
           if (!req.sellerData) {
-            throw new ApiGraphQLError(401, "Unauthorized agent", {
+            throw new ApiGraphQLError(401, "Unauthorized", {
               code: ERROR_CODES.UNAUTHORIZED,
             });
           }
