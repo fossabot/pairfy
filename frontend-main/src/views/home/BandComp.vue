@@ -67,6 +67,8 @@
     background-image: url('https://img.freepik.com/free-photo/couple-enjoying-online-order-they-received_23-2148455108.jpg');
     background-repeat: no-repeat;
     background-position-x: right;
+    background-size: cover;
+    background-position-y: 25%;
 }
 
 .banner-header {
@@ -136,8 +138,8 @@
     flex-wrap: wrap;
     gap: 30px;
     background: white;
-    padding: 30px;
-    max-width: 1200px;
+    padding: 2rem 1rem;
+    max-width: 1000px;
     margin: 0 auto;
     color: black;
     border-radius: var(--radius-a);

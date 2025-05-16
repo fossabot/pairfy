@@ -2,18 +2,13 @@
     <header>
         <DrawerComp />
         <PriceBar />
-        <div class="header">
-            <div class="header-column left flex">
-                <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome"> 
-            </div>
-            <div class="header-column center flex">
-                <SearchComp />
-            </div>
-            <div class="header-column right flex">
-                <AgentButton />
-            </div>
-        </div>
 
+        <SubNav :items="[
+            { label: 'Home', route: '/' },
+            { label: 'Offers', route: '/offers' },
+            { label: 'Categories', route: '/categories' },
+            { label: 'Profile', route: '/account' }
+        ]" />
 
 
     </header>
@@ -27,6 +22,7 @@ import AgentButton from "@/components/header/AgentButton.vue";
 import DrawerComp from "@/components/header/DrawerComp.vue";
 import SearchComp from "@/components/header/SearchComp.vue";
 import PriceBar from "@/components/header/PriceBar.vue";
+import SubNav from "@/components/header/SubNav.vue";
 import { useQuery } from '@vue/apollo-composable';
 import { onBeforeUnmount, watch, ref } from "vue";
 import { useRoute, useRouter } from 'vue-router'

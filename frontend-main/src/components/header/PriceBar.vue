@@ -1,6 +1,7 @@
 <template>
     <div class="p-bar flex">
         <div class="p-bar-content flex">
+            <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome">
 
             <LogoComp />
             <LocationComp />
@@ -55,16 +56,24 @@ const { formatPriceToUSD } = inject('utils');
 </script>
 
 <style lang="css" scoped>
+
+.brand{
+    height: 2rem;
+    color: var(--text-w);
+}
+
 .p-bar {
+    background: black;
     justify-content: center;
     width: inherit;
-    height: 2rem;
+    height: 3rem;
 }
 
 .p-bar-content {
     justify-content: flex-end;
     max-width: var(--body-a);
     width: 100%;
+    color: white;
 }
 
 .p-bar-price,
