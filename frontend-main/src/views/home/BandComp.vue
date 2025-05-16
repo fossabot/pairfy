@@ -59,7 +59,7 @@
     width: 100%;
     overflow: hidden;
     max-width: var(--body-a);
-    border-radius: var(--radius-a);
+    border-radius: 12px;
 }
 
 .overlay {

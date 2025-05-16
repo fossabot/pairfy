@@ -7,10 +7,10 @@
             <div class="grid">
                 <div class="grid-item" v-for="category in categories" :key="category.index"
                     @click="goToCategory(category)" @mouseover="showModal(category.index)" @mouseleave="hideModal">
-                    <img class="icon" :src="category.icon" :alt="category.name" />
-                    <div class="modal flex" v-if="activeIndex === category.index">
+                    <div class="name flex">
                         {{ category.name }}
                     </div>
+
                 </div>
             </div>
         </div>
@@ -82,22 +82,23 @@ function hideModal() {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
     gap: 2rem;
 }
 
 .grid-item {
+    background: rgba(255, 255, 255, 15%);
     transition: box-shadow 0.2s ease;
-    background: var(--background-b);
-    border-radius: 50%;
+    border-radius: 12px;
     position: relative;
     text-align: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
     overflow: hidden;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
+    box-sizing: border-box;
 }
 
 .grid-item:hover {
@@ -109,24 +110,14 @@ function hideModal() {
     object-fit: contain;
 }
 
-.modal {
-    background-color: rgba(0, 0, 0, 0.4);
-    transition: opacity 0.3s ease-in-out;
-    transform: translate(-50%, -50%);
-    animation: fadeIn 0.3s forwards;
-    font-size: var(--text-size-1);
-    justify-content: center;
-    width: calc(100% + 1px);
+.name {
+    font-size: 1rem;
+    font-weight: 400;
+    font-size: var(--text-size-2);
     color: var(--text-w);
-    font-style: italic;
-    text-align: center;
-    position: absolute;
-    font-weight: 500;
-    border-radius: 0;
+    text-align: center; 
+    justify-content: center;
     padding: 1rem;
-    height: 100%;
-    left: 50%;
-    top: 50%;
 }
 
 @keyframes fadeIn {
@@ -139,10 +130,11 @@ function hideModal() {
     }
 }
 
-.category-title{
+.category-title {
     font-size: var(--text-size-5);
     margin-bottom: 1rem;
     font-weight: 700;
-    margin-top: 1rem;
+    margin-top: 2rem;
+    color: white;
 }
 </style>

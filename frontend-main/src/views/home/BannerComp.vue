@@ -1,6 +1,7 @@
 <template>
     <div class="p-banner">
         <BandComp />
+        <CategoryComp/>
     </div>
 </template>
 
