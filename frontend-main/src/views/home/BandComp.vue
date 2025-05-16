@@ -28,13 +28,13 @@
                 <div class="category">
                     <h2>Discount pool</h2>
                     <div class="cards" style="font-size: var(--text-size-4);">
-                          1.000.000 ADA
+                          1.000.000 ADA / 53%
                     </div>
                 </div>
                 <div class="category">
-                    <h2>Discount Countdown</h2>
+                    <h2>Discount airdrop</h2>
                     <div class="cards" style="font-size: var(--text-size-4);">
-                          13d : 15h : 52m
+                          43 days left
                     </div>
                 </div>
                 <div class="category">
@@ -145,6 +145,10 @@
 
 .category {
     flex: 1 1 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .category h2 {
