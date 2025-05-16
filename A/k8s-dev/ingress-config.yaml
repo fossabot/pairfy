@@ -30,7 +30,7 @@ spec:
                 port:
                   number: 8000
            
-    - host: s.pairfy.dev
+    - host: seller.pairfy.dev
       http:
         paths:
           - path: /
