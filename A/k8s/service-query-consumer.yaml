@@ -19,10 +19,8 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
+            - name: NODE_ENV
+              value: development
             - name: SERVICE_NAME
               value: service-query
             - name: CONSUMER_GROUP
@@ -32,15 +30,16 @@ spec:
             - name: STREAM_LIST
               value: service-product
             - name: FILTER_SUBJECTS
-              value: "service-product.CreateProduct"    
-            - name: NATS_SERVERS
-              value: "nats://nats-0.nats-headless.default.svc.cluster.local:4222,nats://nats-1.nats-headless.default.svc.cluster.local:4222,nats://nats-2.nats-headless.default.svc.cluster.local:4222"
+              value: "service-product.CreateProduct,service-product.UpdateProduct,service-product.CreateMedia"
             - name: DATABASE_NAME
               value: service_query
             - name: DATABASE_USER
               value: marketplace   
             - name: HANDLER_WEAVIATE_HOST
-              value: weaviate.default.svc.cluster.local:8080     
+              valueFrom:
+                configMapKeyRef:
+                  name: weaviate-config
+                  key: host
             - name: HANDLER_EMBEDDINGS_HOST
               value: ollama.default.svc.cluster.local:11434                          
             - name: DATABASE_HOST
@@ -58,7 +57,18 @@ spec:
                 secretKeyRef:
                   name: database-password-secret
                   key: password              
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_SERVERS
+              valueFrom:
+                configMapKeyRef:
+                  name: nats-config
+                  key: hosts 
 
+
+                  
           resources:
             limits:
               memory: "500Mi"
