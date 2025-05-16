@@ -27,19 +27,19 @@
             <div class="products">
                 <div class="category">
                     <h2>Discount pool</h2>
-                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                    <div class="cards" style="font-size: var(--text-size-4);">
                           1.000.000 ADA
                     </div>
                 </div>
                 <div class="category">
                     <h2>Discount Countdown</h2>
-                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                    <div class="cards" style="font-size: var(--text-size-4);">
                           13d : 15h : 52m
                     </div>
                 </div>
                 <div class="category">
                     <h2>Benefited users</h2>
-                    <div class="cards" style="font-size: var(--text-size-3); font-weight: 600;">
+                    <div class="cards" style="font-size: var(--text-size-4);">
                           2000 wallets
                     </div>
                 </div>
