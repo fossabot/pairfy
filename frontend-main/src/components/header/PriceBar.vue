@@ -68,6 +68,7 @@ const { formatPriceToUSD } = inject('utils');
     max-width: var(--body-a);
     width: 100%;
     color: white;
+    padding: 0 1rem;
 }
 
 .p-bar-price,
