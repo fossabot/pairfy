@@ -34,7 +34,7 @@
                     :columnWidths="{ id: '10rem', sku: '8rem', price: '6rem', model: '8rem', discount: '4rem', category: '10rem', created_at: '6rem', moderated: '4rem' }">
 
                     <template #image="{ item }">
-                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem' }" />
+                        <ImageComp :src="getImageSrc(item)" :image-style="{ width: '4rem', height: '4rem' }" />
                     </template>
 
                     <template #col-id="{ value }">
