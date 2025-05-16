@@ -73,7 +73,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto 1rem auto;
     max-width: var(--body-a);
 }
 
@@ -82,7 +82,7 @@
 }
 
 .left h1 {
-    font-size: 26px;
+    font-size: var(--text-size-7);
     margin-bottom: 1rem;
 }
 
@@ -140,7 +140,7 @@
     max-width: 1200px;
     margin: 0 auto;
     color: black;
-    border-radius: 10px;
+    border-radius: var(--radius-a);
 }
 
 .category {
