@@ -68,7 +68,7 @@
     max-width: var(--body-a);
     backdrop-filter: blur(10px);
     border-radius: var(--radius-c);
-    background: rgba(0, 0, 0, 0.4);
+    background: rgb(255 255 255 / 10%);
 }
 
 .overlay {
@@ -145,6 +145,6 @@
     backdrop-filter: blur(5px);
     font-size: var(--text-size-4);
     border-radius: var(--radius-c);  
-    background: rgba(0, 0, 0, 0.1);
+    background: rgb(255 255 255 / 10%);
 }
 </style>
