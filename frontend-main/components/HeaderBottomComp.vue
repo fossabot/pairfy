@@ -2,10 +2,13 @@
   <nav class="SubMenu">
     <ul class="SubMenu-body">
       <img class="brand" src="@/assets/brand/icon.svg" alt="" @click="toHome">
-      <li v-for="item in items" :key="item.label"
-        @click="navigateTo(item.route)">
+      <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)">
         {{ item.label }}
       </li>
+
+      <HeaderSearchComp />
+
+      <HeaderConnectComp />
     </ul>
   </nav>
 </template>
@@ -40,7 +43,7 @@ watch(() => route.path, (newPath) => {
 
 <style scoped>
 .brand {
-  height: 2rem;
+  height: 2.5rem;
   color: var(--text-w);
   filter: invert();
 }
@@ -52,25 +55,25 @@ watch(() => route.path, (newPath) => {
 
 .SubMenu-body {
   gap: 1rem;
-  list-style: none;
-  padding: 1rem;
   margin: 0;
-  background: black;
-  border-bottom-left-radius: 12px;
-  color: white;
+  padding: 1rem;
   display: flex;
+  list-style: none;
   align-items: center;
-  border-bottom-right-radius: 12px;
+  color: var(--text-w);
+  background: #000000;
+  border-bottom-left-radius: var(--radius-c);
+  border-bottom-right-radius: var(--radius-c);
 }
 
 .SubMenu-body li {
   cursor: pointer;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-b);
   transition: background-color 0.2s;
 }
 
 .SubMenu-body li:hover {
-  background-color: #e2e6ea;
+  background: rgba(255, 255, 255, 0.1);
 }
 </style>
