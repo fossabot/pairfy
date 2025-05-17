@@ -45,7 +45,6 @@ watch(() => route.path, (newPath) => {
 .brand {
   height: 2.5rem;
   color: var(--text-w);
-  filter: invert();
 }
 
 .SubMenu {

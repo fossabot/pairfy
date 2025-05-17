@@ -1,6 +1,6 @@
 <template>
     <div class="HomeSection2">
-        Hola
+        
     </div>
 </template>
 

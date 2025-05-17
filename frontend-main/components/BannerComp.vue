@@ -7,7 +7,7 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1>
-                            <span class="bold">Cardano</span>
+                            <span class="bold">Cardano </span>
                             <span class="light">native marketplace</span>
                         </h1>
                         <ul class="features">
@@ -116,6 +116,7 @@
 
 .Banner-header-right {
     font-size: var(--text-size-3);
+    text-align: right;
 }
 
 .Banner-header-right strong {
