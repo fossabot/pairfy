@@ -18,7 +18,7 @@ button {
     background: transparent;
     overflow-wrap: break-word;
     font-size: var(--text-size-1);
-    border-radius: var(--radius-c);
+    border-radius: var(--button-radius); 
     border: 2px solid rgba(255, 255, 255, 70%);
     transition: var(--transition-a);
 }
