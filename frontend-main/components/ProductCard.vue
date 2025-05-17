@@ -5,7 +5,7 @@
         </div>
 
         <div class="p-product-body">
-            <span class="p-product-title">{{ props.data.name, 40, '' }}</span>
+            <span class="p-product-title">{{ `${truncateByWords(props.data.name, 10)}...` }}</span>  
 
             <span class="p-product-rating flex">
                 <RatingComp :rating="4" />
@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import { truncateByWords } from '~/utils/utils'
 
 const props = defineProps(['data', 'style'])
 
@@ -89,7 +90,7 @@ span {
     margin-top: 0rem;
     font-weight: 400;
     overflow: hidden;
-   
+
     text-overflow: ellipsis;
 }
 

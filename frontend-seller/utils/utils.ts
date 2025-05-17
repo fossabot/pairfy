@@ -1,7 +1,6 @@
-export function truncateByWords(title: string, wordCount: number): string {
-  if (!title || wordCount <= 0) return "";
-
-  const words = title.trim().split(/\s+/);
+// utils/utils.ts
+export function truncateByWords(text: string, wordCount: number): string {
+  if (!text || wordCount <= 0) return "";
+  const words = text.trim().split(/\s+/);
   return words.slice(0, wordCount).join(" ");
 }
-
