@@ -30,7 +30,7 @@
                 <div class="Banner-cards">
                     <div class="box">
                         <h2>Discount pool</h2>
-                        <div class="cards">1.000.000 ADA / 53%</div>
+                        <div class="cards">834.372 ADA / 53%</div>
                     </div>
                     <div class="box">
                         <h2>Discount airdrop</h2>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="box">
                         <h2>Benefited users</h2>
-                        <div class="cards">2000 wallets</div>
+                        <div class="cards">1753 wallets</div>
                     </div>
                 </div>
 
