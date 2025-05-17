@@ -61,22 +61,19 @@
 }
 
 .banner {
-    background: var(--primary-a);
+    background: radial-gradient(rgba(0, 0, 0, 70%), transparent);
+    backdrop-filter: blur(12px);
     color: var(--text-w);
     width: 100%;
     overflow: hidden;
+    margin-top: 10rem;
     max-width: var(--body-a);
     border-radius: var(--radius-c);
-    margin-top: 2rem;
 }
 
 .overlay {
     padding: 2rem;
-    background-image: url('@/assets/banner.jpg');
-    background-repeat: no-repeat;
-    background-position-x: right;
-    background-size: cover;
-    background-position-y: 25%;
+    z-index: -2;
 }
 
 .banner-header {
@@ -88,12 +85,11 @@
 }
 
 .left {
-    max-width: 600px;
+
 }
 
 .left h1 {
-    font-size: var(--text-size-7);
-    margin-bottom: 1rem;
+    font-size: var(--text-size-9);
 }
 
 .left .bold {
@@ -112,7 +108,7 @@
 
 .features li {
     font-size: var(--text-size-3);
-    margin-bottom: 6px;
+    line-height: 1.5lh;
 }
 
 .shop-button {
@@ -138,7 +134,7 @@
 
 .right p {
     font-size: var(--text-size-4);
-    margin: 6px 0;
+    line-height: 1lh;
 }
 
 li,
