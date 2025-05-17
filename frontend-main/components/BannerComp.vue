@@ -106,7 +106,7 @@
     padding: 0;
     list-style: none;
     text-align: left;
-    margin: 1rem 0 0;
+    margin: 2rem 0 0;
     font-size: var(--text-size-3);
 }
 

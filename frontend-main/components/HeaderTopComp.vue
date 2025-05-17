@@ -35,11 +35,11 @@
 
 <style lang="css" scoped>
 .HeaderTop {
-    background: #000000;
+    background: var(--black-a);
     justify-content: center;
     width: inherit;
     height: 3rem;
-   
+
 }
 
 .HeaderTop-content {
