@@ -1,11 +1,13 @@
 <template>
-    <div class="Banner">
+    <div class="banner-wrapper">
         <section class="banner">
             <div class="overlay">
+
                 <!-- Header -->
                 <div class="banner-header">
-                    <div class="left">
-                        <h1><span class="bold">Cardano </span>
+                    <div class="header-left">
+                        <h1>
+                            <span class="bold">Cardano</span>
                             <span class="light">native marketplace</span>
                         </h1>
                         <ul class="features">
@@ -14,9 +16,9 @@
                             <li>✔ Midnight network</li>
                             <li>✔ Free shipping</li>
                         </ul>
-
                     </div>
-                    <div class="right">
+
+                    <div class="header-right">
                         <p><strong>5M+</strong> Factory direct supply</p>
                         <p><strong>10</strong> Local warehouses worldwide</p>
                         <p><strong>20M+</strong> Value dropshipping items</p>
@@ -25,190 +27,128 @@
                 </div>
 
                 <!-- Product Sections -->
-                <div class="products">
+                <div class="product-sections">
                     <div class="category">
                         <h2>Discount pool</h2>
-                        <div class="cards" style="font-size: var(--text-size-4);">
-                            1.000.000 ADA / 53%
-                        </div>
+                        <div class="cards">1.000.000 ADA / 53%</div>
                     </div>
                     <div class="category">
                         <h2>Discount airdrop</h2>
-                        <div class="cards" style="font-size: var(--text-size-4);">
-                            43 days left
-                        </div>
+                        <div class="cards">43 days left</div>
                     </div>
                     <div class="category">
                         <h2>Benefited users</h2>
-                        <div class="cards" style="font-size: var(--text-size-4);">
-                            2000 wallets
-                        </div>
+                        <div class="cards">2000 wallets</div>
                     </div>
                 </div>
+
             </div>
         </section>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 </script>
 
 <style scoped>
-.Banner {
-    display: flex;
+.banner-wrapper {
     justify-content: center;
+    display: flex;
+    width: 100%;
 }
 
 .banner {
-    background: radial-gradient(rgba(0, 0, 0, 70%), transparent);
-    backdrop-filter: blur(5px);
-    color: var(--text-w);
     width: 100%;
-    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+    border-radius: 1rem;
+    box-sizing: border-box;
     max-width: var(--body-a);
-    border-radius: var(--radius-c);
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .overlay {
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--text-w);
+    border-radius: 1rem;
     padding: 2rem;
 }
 
 .banner-header {
+    gap: 2rem;
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 2rem;
+    align-items: flex-start;
     justify-content: space-between;
-    margin: 0 auto 1rem auto;
-    max-width: var(--body-a);
-}
-
-.left {
 
 }
 
-.left h1 {
-    font-size: var(--text-size-9);
+.header-left h1 {
+    font-size: var(--text-size-8);
+    /* 48px */
+    margin-bottom: 1rem;
+    margin: 0;
 }
 
-.left .bold {
-    font-weight: bold;
+.bold {
+    font-weight: 700;
 }
 
-.left .light {
+.light {
+    opacity: 0.85;
     font-weight: 300;
+    margin-left: 0.5rem;
 }
 
 .features {
-    list-style: none;
     padding: 0;
-    margin: 0 0 20px 0;
+    list-style: none;
+    text-align: left;
+    margin: 1rem 0 0;
+    font-size: var(--text-size-3);
 }
 
 .features li {
+    margin-bottom: 0.75rem;
+}
+
+.header-right {
     font-size: var(--text-size-3);
-    line-height: 1.5lh;
+    /* 18px */
 }
 
-.shop-button {
-    background: white;
-    color: black;
-    padding: 10px 20px;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.shop-button:hover {
-    background: #f0f0f0;
-}
-
-.right {
-    text-align: right;
-    font-size: 14px;
-    max-width: 400px;
-    margin-top: 20px;
-}
-
-.right p {
+.header-right strong {
     font-size: var(--text-size-4);
-    line-height: 1lh;
+    /* 20px */
 }
 
-li,
-p {
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.products {
+.product-sections {
     display: flex;
+    gap: 2rem;
     flex-wrap: wrap;
-    gap: 30px;
-    background: white;
-    padding: 2rem 1rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    color: black;
-    border-radius: var(--radius-c);
 }
 
 .category {
-    flex: 1 1 300px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    flex: 1;
+    min-width: 200px;
 }
 
 .category h2 {
-    font-size: 18px;
-    margin-bottom: 12px;
-    font-weight: bold;
+    font-size: var(--text-size-5);
+    /* 24px */
+    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .cards {
-    display: flex;
-    gap: 16px;
-}
-
-.product-card {
-    width: 48%;
-}
-
-.product-card img {
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-.product-card .title {
-    font-size: 14px;
-    font-weight: 600;
-    margin-top: 8px;
-}
-
-.product-card .old {
-    font-size: 12px;
-    color: gray;
-    text-decoration: line-through;
-}
-
-@media (max-width: 768px) {
-    .banner-header {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .right {
-        text-align: left;
-    }
-
-    .cards {
-        flex-direction: column;
-    }
-
-    .product-card {
-        width: 100%;
-    }
+    background: var(--card-bg, #ffffff20);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: var(--text-size-4);
+    /* 20px */
+    backdrop-filter: blur(4px);
 }
 </style>
