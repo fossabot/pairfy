@@ -79,11 +79,11 @@ const selectSuggestion = (item: ProductSuggestion) => {
     font-size: var(--text-size-1);
     border-radius: var(--radius-c);
     transition: var(--transition-a);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 70%);
 }
 
 .search-input:hover{
-    border: 2px solid rgba(255, 255, 255, 0.75);
+    border: 2px solid rgba(255, 255, 255, 100%);
 }
 
 .search-input::placeholder {

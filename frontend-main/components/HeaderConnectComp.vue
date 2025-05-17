@@ -19,11 +19,11 @@ button {
     overflow-wrap: break-word;
     font-size: var(--text-size-1);
     border-radius: var(--radius-c);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 70%);
     transition: var(--transition-a);
 }
 
 button:hover{
-    border: 2px solid rgba(255, 255, 255, 0.75);
+    border: 2px solid rgba(255, 255, 255, 100%);
 }
 </style>

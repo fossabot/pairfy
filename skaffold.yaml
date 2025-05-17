@@ -9,6 +9,21 @@ build:
   tagPolicy:
     sha256: {}
   artifacts:       
+    - image: pairfy/frontend-main
+      context: frontend-main
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'pages/**/*'
+            dest: pages
+          - src: 'components/**/*'
+            dest: components
+          - src: 'app.vue'
+            dest: .
+          - src: 'nuxt.config.*'
+            dest: .
+
     - image: pairfy/frontend-seller
       context: frontend-seller
       docker:
@@ -117,10 +132,16 @@ deploy:
 
 portForward:
   - resourceType: service
+    resourceName: frontend-main
+    namespace: default
+    port: 80
+    localPort: 8081
+
+  - resourceType: service
     resourceName: frontend-seller
     namespace: default
     port: 81
-    localPort: 8081
+    localPort: 8082
 
   - resourceType: service
     resourceName: service-seller
