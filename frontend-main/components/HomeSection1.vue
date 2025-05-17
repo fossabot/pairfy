@@ -1,6 +1,6 @@
 <template>
-    <div>
-
+    <div class="p-HomeSection1">
+        xxxxx
     </div>
 </template>
 
@@ -9,5 +9,8 @@
 </script>
 
 <style lang="css" scoped>
+.p-HomeSection1 {
 
+    height: 100vh;
+}
 </style>
