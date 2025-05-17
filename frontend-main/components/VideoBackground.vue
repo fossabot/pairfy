@@ -83,8 +83,6 @@ const goToProducts = () => {
 
 .overlay-content {
     position: relative;
-    text-align: center;
-    padding-top: 10rem;
     z-index: 1;
 }
 </style>

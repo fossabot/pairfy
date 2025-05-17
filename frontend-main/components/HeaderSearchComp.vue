@@ -66,7 +66,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
     position: relative;
     margin-left: auto;
     width: 100%;
-    max-width: 40%;
+    max-width: 100%;
 }
 
 .search-input {
