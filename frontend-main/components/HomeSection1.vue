@@ -1,6 +1,6 @@
 <template>
     <div class="HomeSection1">
-     
+        <BannerComp />
     </div>
 </template>
 

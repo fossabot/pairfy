@@ -87,7 +87,7 @@ function hideModal() {
 }
 
 .grid-item {
-    background: rgba(255, 255, 255, 15%);
+    background: rgba(255, 255, 255, 10%);
     transition: box-shadow 0.2s ease;
     border-radius: 12px;
     position: relative;
