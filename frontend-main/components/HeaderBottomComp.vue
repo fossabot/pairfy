@@ -49,13 +49,14 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
-  width: 100%;
-  max-width: var(--body-a);
-  position: absolute;
-  top: 3rem;
-  transform: translateY(-1rem);
-  opacity: 0;
   animation: slideDown 0.5s ease-out forwards;
+  transform: translateY(-1rem);
+  position: absolute;
+  z-index: 10000;
+  width: 100%;
+  opacity: 0;
+  max-width: var(--body-a);
+  top: 3rem;
 }
 
 @keyframes slideDown {

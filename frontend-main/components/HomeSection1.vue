@@ -1,6 +1,8 @@
 <template>
     <div class="HomeSection1">
-        <BannerComp />
+        <VideoBackground>
+            <BannerComp />
+        </VideoBackground> 
     </div>
 </template>
 

@@ -62,18 +62,16 @@
 
 .banner {
     background: radial-gradient(rgba(0, 0, 0, 70%), transparent);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(5px);
     color: var(--text-w);
     width: 100%;
     overflow: hidden;
-    margin-top: 10rem;
     max-width: var(--body-a);
     border-radius: var(--radius-c);
 }
 
 .overlay {
     padding: 2rem;
-    z-index: -2;
 }
 
 .banner-header {
