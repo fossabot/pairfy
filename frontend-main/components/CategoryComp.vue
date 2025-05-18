@@ -17,7 +17,7 @@
         </div>
     </div>
 </template>
-
+ 
 <script setup>
 import categoryList from '@/assets/json/categories.json';
 
@@ -62,7 +62,7 @@ function hideModal() {
     border: 1px solid var(--border-a);
     transition: box-shadow 0.2s ease;
     background: var(--background-a);
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-c);
     position: relative;
     text-align: center;
     display: flex;
