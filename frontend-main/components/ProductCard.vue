@@ -5,7 +5,7 @@
         </div>
 
         <div class="p-product-body">
-            <span class="p-product-title">{{ `${truncateByWords(props.data.name, 10)}...` }}</span>  
+            <span class="p-product-title">{{ `${truncateByWords(props.data.name, 10)}...` }}</span>
 
             <span class="p-product-rating flex">
                 <RatingComp :rating="4" />
@@ -58,7 +58,6 @@ span {
     overflow: hidden;
     cursor: pointer;
     display: flex;
-    min-height: 300px;
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.2s ease;
@@ -67,11 +66,13 @@ span {
 
 .p-product-image {
     overflow: hidden;
+    width: 200px;
+    height: 200px;
 }
 
 .p-product-image img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
     border-radius: var(--radius-a);
@@ -98,7 +99,6 @@ span {
 .p-product-price {
     font-size: var(--text-size-4);
     align-items: baseline;
-    margin: 0.25rem 0;
     font-weight: 600;
     display: flex;
 }

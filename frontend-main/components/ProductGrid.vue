@@ -1,21 +1,27 @@
 <template>
-  <div class="normal">
-    <div class="title flex">
-      <span>{{ title }}</span>
-      <div class="icon flex">
 
+  <div class="ProductGrid">
+
+
+    <div class="normal">
+      <div class="title flex">
+        <span>{{ title }}</span>
+        <div class="icon flex">
+
+        </div>
+      </div>
+
+      <div class="grid">
+        <ProductCard v-for="item, index in content" :key="index" :data="item" />
       </div>
     </div>
 
-    <div class="grid">
-      <ProductCard v-for="item, index in content" :key="index" :data="item" />
-    </div>
   </div>
 </template>
 
 <script setup>
-const title = ref("Best sellers");
-
+defineProps(['title'])
+ 
 const content = ref([{
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
@@ -122,6 +128,26 @@ const content = ref([{
   discount: true,
   discount_percent: 100,
   discount_value: 200
+},
+
+{
+  id: "Asdas",
+  name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
+  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  price: 2323,
+  discount: true,
+  discount_percent: 100,
+  discount_value: 200
+},
+
+{
+  id: "Asdas",
+  name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
+  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  price: 2323,
+  discount: true,
+  discount_percent: 100,
+  discount_value: 200
 }
 
 ])
@@ -129,28 +155,40 @@ const content = ref([{
 </script>
 
 <style lang="css" scoped>
+.ProductGrid {
+  width: inherit;
+  display: flex;
+  justify-content: center;
+}
+
 .normal {
   display: flex;
   flex-direction: column;
-  width: inherit;
-  align-items: center;
+
+  box-sizing: border-box;
+  max-width: var(--body-a);
+  margin-top: 1rem;
+  padding: 1rem;
+
+  border: 1px solid var(--border-a);
+  border-radius: var(--radius-c);
+
 }
 
 .title {
-  font-size: var(--text-size-6);
-  font-weight: 700;
-  margin: 2rem 0;
-  text-align: start;
+  margin: 1rem 0;
   width: inherit;
-  max-width: var(--body-a);
+  font-weight: 700;
+  text-align: start;
+  font-size: var(--text-size-5);
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   justify-content: center;
-  max-width: var(--body-a);
+  max-width: inherit;
+  display: grid;
+  gap: 2rem;
 }
 
 .icon {

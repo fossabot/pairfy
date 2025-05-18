@@ -2,7 +2,7 @@
     <div class="HomeSection2">
         <ProductCarousel title="Technology products most purchased by the community" />
         <ProductCarousel title="Household products you may need" />
-        <ProductGrid />
+        <ProductGrid title="Best sellers of recent months" />
     </div>
 </template> 
 
