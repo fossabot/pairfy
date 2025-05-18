@@ -1,6 +1,6 @@
 <template>
     <div class="HomeSection2">
-        <ProductCarousel title="Technology products purchased by the community" />
+        <ProductCarousel title="Top 20 most purchased by the community" />
         <DividerComp />
         <ProductGrid title="Community's best-selling" />
         <DividerComp />
@@ -22,7 +22,6 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding-top: 2rem;
     display: flex;
     width: 100%;
 }

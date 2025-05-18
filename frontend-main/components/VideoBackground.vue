@@ -1,9 +1,9 @@
 <template>
     <div ref="containerRef" class="video-background">
         <ClientOnly>
-            <video ref="videoRef" v-if="!prefersReducedMotion" class="video-bg" autoplay muted loop playsinline>
+            <video class="video-bg" ref="videoRef" v-if="!prefersReducedMotion" autoplay muted loop playsinline>
 
-                <source src="@/assets/videos/video3.mp4" type="video/mp4" /> 
+                <source src="@/assets/videos/video1.mp4" type="video/mp4" />
                 Your browser does not support the video HTML5.
             </video>
         </ClientOnly>
@@ -11,6 +11,8 @@
         <div class="overlay-content">
             <slot />
         </div>
+
+       
     </div>
 </template>
 

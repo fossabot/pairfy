@@ -59,7 +59,7 @@
 
 .Banner-body {
     width: 100%;
-    margin-top: 10rem;
+    margin-top: 12rem;
     text-align: center;
     position: relative;
     box-sizing: border-box;
