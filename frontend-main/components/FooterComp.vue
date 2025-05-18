@@ -1,137 +1,158 @@
 <template>
-    <footer class="footer">
-        <div class="footer-body">
-            <div class="footer-columns">
-                <div class="footer-column">
-                    <div class="title">About Us</div>
-                    <ul>
-                        <li><a href="/about">Our Story</a></li>
-                        <li><a href="/team">Meet the Team</a></li>
-                        <li><a href="/blog">Documentation</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <div class="title">Customer Service</div>
-                    <ul>
-                        <li><a href="/faq">FAQ</a></li>
-                        <li><a href="/support">Support</a></li>
-                        <li><a href="/returns">Returns</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <nav class="footer-columns" aria-label="Footer Navigation">
 
-                    <div class="title">Contact Us</div>
-                    <ul>
-                        <li>sudo.delete.evil@gmail.com</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <div class="title">Follow Us</div>
-                    <ul class="social-links">
-                        <li><a href="#">YouTube</a></li>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">X</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025. Cardano Open Source Community.</p>
-                <div class="payment-icons">
-
-                </div>
-            </div>
+        <!-- Company -->
+        <div class="footer-column">
+          <h2 class="footer-title">Company</h2>
+          <ul>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/team">Our Team</a></li>
+            <li><a href="/blog">Blog & News</a></li>
+            <li><a href="/careers">Careers</a></li>
+            <li><a href="/partners">Partners</a></li>
+          </ul>
         </div>
-    </footer>
+
+        <!-- Help -->
+        <div class="footer-column">
+          <h2 class="footer-title">Customer Support</h2>
+          <ul>
+            <li><a href="/faq">FAQs</a></li>
+            <li><a href="/support">Help Center</a></li>
+            <li><a href="/shipping">Shipping Info</a></li>
+            <li><a href="/returns">Returns & Refunds</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="footer-column">
+          <h2 class="footer-title">Legal</h2>
+          <ul>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/cookies">Cookie Settings</a></li>
+            <li><a href="/security">Security</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-column">
+          <h2 class="footer-title">Contact</h2>
+          <ul>
+            <li><a href="mailto:support@yourshop.com">support@yourshop.com</a></li>
+            <li>Mon–Fri: 9am–6pm</li>
+            <li>+1 234 567 890</li>
+            <li>Bogotá, Colombia</li>
+          </ul>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-column">
+          <h2 class="footer-title">Follow Us</h2>
+          <ul class="social-links">
+            <li><a href="#" aria-label="YouTube">YouTube</a></li>
+            <li><a href="#" aria-label="Instagram">Instagram</a></li>
+            <li><a href="#" aria-label="Facebook">Facebook</a></li>
+            <li><a href="#" aria-label="X (Twitter)">X</a></li>
+            <li><a href="#" aria-label="GitHub">GitHub</a></li>
+          </ul>
+        </div>
+
+      </nav>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 YourShop Inc. All rights reserved.</p>
+        <div class="payment-icons">
+          <!-- Optional: Add payment method icons here -->
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script setup>
-
+// No logic needed for now
 </script>
 
-<style lang="css" scoped>
-a{
-    color: var(--text-a);
-}
-
+<style scoped>
 .footer {
-    padding: 4rem 1rem;
-    margin-top: 4rem;
-    font-size: var(--text-size-1);
-    background: var(--background-b);
-    border-top-left-radius: var(--radius-d);
-    border-top-right-radius: var(--radius-d);
+  background-color: var(--background-b);
+  padding: 4rem 1rem;
+  margin-top: 4rem;
+  font-size: var(--text-size-1);
+  border-top-left-radius: var(--radius-d);
+  border-top-right-radius: var(--radius-d);
+  color: var(--text-b);
 }
 
-.title {
-    font-size: var(--text-size-2);
-    font-weight: 700;
-    line-height: 3rem;
-}
-
-.footer-body {
-    max-width: var(--body-a);
-    flex-direction: column;
-    margin: 0 auto;
-    display: flex;
-    gap: 2rem;
+.footer-container {
+  max-width: var(--body-a);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .footer-columns {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 2rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
 }
 
 .footer-column {
-    flex: 1;
-    min-width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-title {
+  font-size: var(--text-size-2);
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .footer-column ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .footer-column ul li {
-    margin-bottom: 0.5rem;
-    color: var(--text-b);
+  margin-bottom: 0.5rem;
 }
 
 .footer-column ul li a {
-    text-decoration: none;
-    transition: color 0.3s ease;
-    
+  color: var(--text-a);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+  color: var(--primary-a);
 }
 
 .social-links li {
-    display: flex;
-    align-items: center;
-}
-
-.social-links li a {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .footer-bottom {
-    color: var(--text-b);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    border-top: 1px solid var(--border-a);
-    padding-top: 1rem;
+  border-top: 1px solid var(--border-a);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: var(--text-size-1);
 }
 
 @media (max-width: 768px) {
-    .footer-columns {
-        flex-direction: column;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-    }
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 </style>

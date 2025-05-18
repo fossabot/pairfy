@@ -60,7 +60,7 @@ body {
 
   --transition-a: 0.2s ease-in-out;
 
-  --gradient-a: radial-gradient(circle at left top, rgb(75 255 0) 0.86%, rgb(0 255 222) 38.09%, rgb(255, 255, 255) 69.81%);
+  --gradient-a: radial-gradient(circle at left top, rgb(134, 239, 90) 0.86%, rgb(16, 208, 183) 38.09%, rgb(255, 255, 255) 69.81%); 
 }
 
 :root {

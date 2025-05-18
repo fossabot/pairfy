@@ -1,6 +1,5 @@
 <template>
     <div class="HomeSection2">
-        <DividerComp />
         <ProductCarousel title="Technology products purchased by the community" />
         <DividerComp />
         <ProductCarousel title="Office and work items you may need" />
@@ -23,6 +22,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+    padding-top: 2rem;
     display: flex;
     width: 100%;
 }
