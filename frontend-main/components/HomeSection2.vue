@@ -14,6 +14,7 @@
 
 <style lang="css" scoped>
 .HomeSection2 {
+    background: var(--background-c);
     justify-content: center;
     flex-direction: column;
     align-items: center;

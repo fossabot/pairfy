@@ -6,7 +6,9 @@
             { label: 'Home', route: '/' },
             { label: 'Offers', route: '/offers' },
             { label: 'Categories', route: '/categories' },
-            { label: 'Profile', route: '/account' }
+            { label: 'Docs', route: '/docs' },
+            { label: 'Sell', route: '/account' }
+ 
         ]" />
 
     </header>

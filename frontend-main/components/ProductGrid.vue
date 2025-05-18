@@ -167,19 +167,20 @@ const content = ref([{
 
   box-sizing: border-box;
   max-width: var(--body-a);
-  margin-top: 2rem;
-  padding: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
 
-  border: 1px solid var(--border-a);
-  border-radius: var(--radius-c);
+  box-shadow: var(--shadow-b);
+  border-radius: var(--radius-a);
+  background: var(--background-a);
 
 }
 
 .title {
-  margin: 1rem 0;
   width: inherit;
   font-weight: 700;
   text-align: start;
+  margin-bottom: 1rem;
   font-size: var(--text-size-5);
 }
 

@@ -67,13 +67,13 @@ watch(() => route.path, (newPath) => {
 .SubMenu-body {
   gap: 1rem;
   margin: 0;
-  padding: 1rem;
   display: flex;
+  padding: 1.5rem;
   list-style: none;
   align-items: center;
   background: var(--background-a);
-  border-bottom-left-radius: var(--radius-c);
-  border-bottom-right-radius: var(--radius-c);
+  border-bottom-left-radius: var(--radius-b);
+  border-bottom-right-radius: var(--radius-b);
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);
 }
 

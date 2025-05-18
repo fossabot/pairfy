@@ -7,7 +7,7 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1>
-                            Cardano <span class="light">native</span> <span class="light">marketplace</span>
+                            Buy and sell <span class="light"> on the Cardano</span> <span class="light">market</span>
                         </h1>
                         <ul class="features">
                             <li>✔ Community-governed</li>
@@ -95,7 +95,7 @@
 }
 
 .light {
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .features {

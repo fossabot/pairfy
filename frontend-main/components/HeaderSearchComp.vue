@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="iphone 16" />
+            type="text" placeholder="Search" />
 
         <button class="search-button" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -77,17 +77,22 @@ const selectSuggestion = (item: ProductSuggestion) => {
     box-sizing: border-box;
     background: transparent;
     font-size: var(--text-size-1);
-    border-radius: var(--input-radius);
     transition: var(--transition-a);
-    border: 2px solid var(--border-a);
+    background: var(--background-b);
+    border-radius: var(--input-radius);
+    border: 1px solid var(--border-a);
+}
+
+.search-input:focus-within{
+    background: var(--background-a);
 }
 
 .search-input:hover {
-    border: 2px solid var(--primary-a);
+    border: 1px solid var(--primary-a);
 }
 
 .search-input::placeholder {
-    color: rgba(0, 0, 0, 0.4);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .search-input:focus::placeholder {
@@ -95,7 +100,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 }
 
 .search-button {
-    color: rgba(255, 255, 255, 0.75);
+    color: inherit;
     transform: translateY(-50%);
     background: transparent;
     border-radius: 999px;

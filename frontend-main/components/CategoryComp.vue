@@ -62,9 +62,9 @@ function hideModal() {
 
 .grid-item {
     border: 1px solid var(--border-a);
-    background: rgba(255, 255, 255, 10%);
     transition: box-shadow 0.2s ease;
-    border-radius: 12px;
+    background: var(--background-a);
+    border-radius: var(--radius-b);
     position: relative;
     text-align: center;
     display: flex;
