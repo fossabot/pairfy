@@ -1,16 +1,19 @@
 <template>
-    <div class="p-category">
-        <div class="category-title">
-            All Categories
-        </div>
-        <div class="category-grid">
-            <div class="grid">
-                <div class="grid-item" v-for="category in categories" :key="category.index"
-                    @click="goToCategory(category)" @mouseover="showModal(category.index)" @mouseleave="hideModal">
-                    <div class="name flex">
-                        {{ category.label }}
-                    </div>
 
+    <div class="CategoryComp">
+        <div class="p-category">
+            <div class="category-title">
+                All Categories
+            </div>
+            <div class="category-grid">
+                <div class="grid">
+                    <div class="grid-item" v-for="category in categories" :key="category.index"
+                        @click="goToCategory(category)" @mouseover="showModal(category.index)" @mouseleave="hideModal">
+                        <div class="name flex">
+                            {{ category.label }}
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -40,8 +43,14 @@ function hideModal() {
 </script>
 
 <style scoped>
+.CategoryComp{
+    display: flex;
+    justify-content: center;
+    width: inherit;
+}
 .p-category {
     width: 100%;
+    box-sizing: border-box;
     max-width: var(--body-a);
 }
 
@@ -52,6 +61,7 @@ function hideModal() {
 }
 
 .grid-item {
+    border: 1px solid var(--border-a);
     background: rgba(255, 255, 255, 10%);
     transition: box-shadow 0.2s ease;
     border-radius: 12px;
@@ -76,11 +86,12 @@ function hideModal() {
 }
 
 .name {
-    font-size: 1rem;
-    font-weight: 400;
     font-size: var(--text-size-2);
-    text-align: center;
+    color: var(--primary-a);
     justify-content: center;
+    text-align: center;
+    font-weight: 400;
+    font-size: 1rem;
     padding: 1rem;
 }
 
@@ -96,9 +107,7 @@ function hideModal() {
 
 .category-title {
     font-size: var(--text-size-5);
-    margin-bottom: 1rem;
     font-weight: 700;
-    margin-top: 2rem;
-    color: white;
+    margin: 2rem 0;
 }
 </style>
