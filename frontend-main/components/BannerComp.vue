@@ -7,8 +7,7 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1>
-                            <span class="bold">Cardano </span>
-                            <span class="light">native marketplace</span>
+                            Cardano <span class="light">native</span> <span class="light">marketplace</span>
                         </h1>
                         <ul class="features">
                             <li>✔ Community-governed</li>
@@ -66,7 +65,7 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border-radius: var(--radius-c);
     background: rgb(255 255 255 / 10%);
 }
@@ -87,9 +86,14 @@
 }
 
 .Banner-header-left h1 {
-    font-size: var(--text-size-8);
+    font-size: var(--text-size-9);
     margin-bottom: 1rem;
+    font-weight: 500;
     margin: 0;
+
+    background: var(--gradient-a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .bold {
@@ -97,9 +101,7 @@
 }
 
 .light {
-    opacity: 0.85;
     font-weight: 300;
-    margin-left: 0.5rem;
 }
 
 .features {
@@ -144,7 +146,6 @@
     padding: 1rem;
     backdrop-filter: blur(5px);
     font-size: var(--text-size-4);
-    border-radius: var(--radius-c);  
-    background: rgb(255 255 255 / 10%);
+    border-radius: var(--radius-d);
 }
 </style>
