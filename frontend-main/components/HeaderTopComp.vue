@@ -38,7 +38,7 @@
     background: var(--black-a);
     justify-content: center;
     width: inherit;
-    height: 2rem;
+    height: 3rem;
 }
 
 .HeaderTop-content {
