@@ -66,7 +66,7 @@ const scrollRight = () => {
 }
 
 .carousel-title {
-  font-size: var(--text-size-5);
+  font-size: var(--text-size-6);
   margin-bottom: 2rem;
   font-weight: 700;
   margin-top: 0;
@@ -79,7 +79,7 @@ const scrollRight = () => {
 }
 
 .carousel {
-  gap: 2rem;
+  gap: 1rem;
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
@@ -93,9 +93,10 @@ const scrollRight = () => {
   flex: 0 0 auto;
   width: 200px;
   height: 200px;
+  padding: 1rem;
   overflow: hidden;
-  background: var(--background-a);
   border-radius: var(--radius-c);
+  background: var(--background-a);
 }
 
 .carousel-item img {

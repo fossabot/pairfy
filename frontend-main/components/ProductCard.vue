@@ -17,7 +17,7 @@
 
                 </span>
 
-                <span class="p-product-last" v-if="props.data.discount" style="text-decoration: line-through;">
+                <span class="p-product-last" v-if="props.data.discount">
                     {{ props.data.price }}
                 </span>
 
@@ -91,7 +91,7 @@ span {
     font-size: var(--text-size-1);
     color: var(--text-a);
     margin-top: 0rem;
-    font-weight: 400;
+    font-weight: 500;
     overflow: hidden;
 
     text-overflow: ellipsis;

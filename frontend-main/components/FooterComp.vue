@@ -83,8 +83,8 @@
   padding: 4rem 1rem;
   margin-top: 4rem;
   font-size: var(--text-size-1);
-  border-top-left-radius: var(--radius-d);
-  border-top-right-radius: var(--radius-d);
+  border-top-left-radius: var(--radius-e);
+  border-top-right-radius: var(--radius-e);
   color: var(--text-b);
 }
 

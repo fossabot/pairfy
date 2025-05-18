@@ -24,7 +24,7 @@
     height: 2rem;
     position: relative;
     background: var(--background-a);
-    border-top-left-radius: var(--radius-d);
-    border-top-right-radius: var(--radius-d);
+    border-top-left-radius: var(--radius-e);
+    border-top-right-radius: var(--radius-e);
 }
 </style>
