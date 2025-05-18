@@ -1,6 +1,7 @@
 <template>
     <div class="HomeSection2">
-        <ProductCarousel />
+        <ProductCarousel title="Technology products most purchased by the community" />
+        <ProductCarousel title="Household products you may need" />
         <ProductGrid />
     </div>
 </template> 
@@ -11,10 +12,11 @@
 
 <style lang="css" scoped>
 .HomeSection2 {
-    background: var(--background-b);
     justify-content: center;
     flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
     display: flex;
-    height: 100vh;
+    width: 100%;
 }
 </style>

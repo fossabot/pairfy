@@ -102,6 +102,26 @@ const content = ref([{
   discount: true,
   discount_percent: 100,
   discount_value: 200
+},
+
+{
+  id: "Asdas",
+  name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
+  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  price: 2323,
+  discount: true,
+  discount_percent: 100,
+  discount_value: 200
+},
+
+{
+  id: "Asdas",
+  name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
+  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  price: 2323,
+  discount: true,
+  discount_percent: 100,
+  discount_value: 200
 }
 
 ])
@@ -112,18 +132,23 @@ const content = ref([{
 .normal {
   display: flex;
   flex-direction: column;
+  width: inherit;
+  align-items: center;
 }
 
 .title {
   font-size: var(--text-size-6);
   font-weight: 700;
   margin: 2rem 0;
+  text-align: start;
+  width: inherit;
+  max-width: var(--body-a);
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  gap: 2rem;
   justify-content: center;
   max-width: var(--body-a);
 }
