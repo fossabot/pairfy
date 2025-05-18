@@ -1,8 +1,8 @@
 <template>
     <div class="HomeSection2">
-        <ProductCarousel title="Top 20 most purchased by the community" />
+        <ProductCarousel title="Most purchased by the community" /> 
         <DividerComp />
-        <ProductGrid title="Community's best-selling" />
+        <ProductGrid title="Best sellers of the last month" />
         <DividerComp />
         <CategoryComp />
         <DividerComp />
