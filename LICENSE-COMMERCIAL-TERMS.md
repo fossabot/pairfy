@@ -2,9 +2,9 @@
 
 Pairfy is dual-licensed:
 
-- GPLv3 for all open-source use, open-source forks.
+1. Under the GNU General Public License v3 (GPLv3), you are free to use, modify, and redistribute this software — including for commercial purposes — **provided that your entire derivative work remains open source and fully compliant with the GPLv3.**
 
-- A commercial license is required **only** for closed-source forks.
+2. A **Commercial License** is required if you create a modified version (fork) of this software and **do not release its complete source code under the GPLv3 or a compatible open-source license.**
 
 ## 💰 Commercial License Fee
 
