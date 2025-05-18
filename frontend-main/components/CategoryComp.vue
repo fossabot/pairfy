@@ -79,7 +79,6 @@ function hideModal() {
     font-size: 1rem;
     font-weight: 400;
     font-size: var(--text-size-2);
-    color: var(--text-w);
     text-align: center;
     justify-content: center;
     padding: 1rem;

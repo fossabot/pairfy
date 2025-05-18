@@ -167,7 +167,7 @@ const content = ref([{
 
   box-sizing: border-box;
   max-width: var(--body-a);
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 1rem;
 
   border: 1px solid var(--border-a);
