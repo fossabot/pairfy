@@ -27,7 +27,6 @@ if (import.meta.server) {
 
 <style scoped>
 .layout {
-  background: var(--primary-a);
   flex-direction: column;
   height: 100vh;
 }

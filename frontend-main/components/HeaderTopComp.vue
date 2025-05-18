@@ -35,7 +35,7 @@
 
 <style lang="css" scoped>
 .HeaderTop {
-    background: var(--primary-a);
+    background: var(--black-a);
     justify-content: center;
     width: inherit;
     height: 2rem;
