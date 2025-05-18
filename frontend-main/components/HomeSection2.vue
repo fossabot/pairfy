@@ -1,9 +1,10 @@
 <template>
     <div class="HomeSection2">
         <ProductCarousel title="Technology products purchased by the community" />
-        <ProductCarousel title="Household products you may need" />
+        <ProductCarousel title="Office and work products you may need" />
         <ProductGrid title="Best sellers of recent months" />
         <CategoryComp />
+        <ProductCarousel title="Household products most used" />
     </div>
 </template> 
 
