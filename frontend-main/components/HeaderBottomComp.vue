@@ -54,7 +54,7 @@ watch(() => route.path, (newPath) => {
   z-index: 10000;
   width: 100%;
   opacity: 0;
-  top: 2rem;
+  top: 0rem;
   max-width: var(--body-a);
 }
 

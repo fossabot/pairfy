@@ -1,7 +1,5 @@
 <template>
     <header>
-        <HeaderTopComp />
-
         <HeaderBottomComp :items="[
             { label: 'Home', route: '/' },
             { label: 'Offers', route: '/offers' },

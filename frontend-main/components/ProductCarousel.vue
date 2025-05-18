@@ -32,9 +32,8 @@ const images = [
   "https://m.media-amazon.com/images/I/616klipzdtL._AC_UY218_.jpg",
   "https://m.media-amazon.com/images/I/51Y8jzQuHGL._AC_UY218_.jpg",
   "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
-  "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
-  "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
-  "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg"
+  "https://m.media-amazon.com/images/I/81uVOWLKOxL._AC_UY218_.jpg",
+  "https://m.media-amazon.com/images/I/81uVOWLKOxL._AC_UY218_.jpg",
 ]
 
 const carousel = ref<HTMLElement | null>(null)
@@ -76,10 +75,10 @@ const scrollRight = () => {
 }
 
 .carousel {
+  gap: 2rem;
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  gap: 1rem;
 }
 
 .carousel::-webkit-scrollbar {
@@ -88,7 +87,7 @@ const scrollRight = () => {
 
 .carousel-item {
   flex: 0 0 auto;
-  width: 300px;
+  width: 200px;
   height: 200px;
   overflow: hidden;
   background: var(--background-a);

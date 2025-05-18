@@ -55,9 +55,10 @@ span {
 }
 
 .p-product {
-    overflow: hidden;
-    cursor: pointer;
     display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    align-items: center;
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.2s ease;
