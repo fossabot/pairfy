@@ -64,9 +64,9 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
+    border-radius: var(--radius-c);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-c);
     background: rgba(255, 255, 255, 0.08);
 }
 
@@ -104,7 +104,7 @@
     list-style: none;
     text-align: left;
     margin: 2rem 0 0;
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 
 }
@@ -115,7 +115,7 @@
 
 .Banner-header-right {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    font-size: var(--text-size-3);
+    font-size: var(--text-size-4);
     text-align: right;
 }
 
