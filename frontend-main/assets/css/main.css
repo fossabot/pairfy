@@ -21,7 +21,8 @@ body {
   --text-size-6: 30px; /* H3 */
   --text-size-7: 36px; /* H2 */
   --text-size-8: 48px; /* H1 */
-  --text-size-9: 64px; /* Hero / page title */
+  --text-size-9: 56px;
+  --text-size-10: 64px; /* Hero / page title */
 
   --body-a: 1720px;
 

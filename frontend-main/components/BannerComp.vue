@@ -88,7 +88,7 @@
 .Banner-header-left h1 {
     margin: 0;
     margin-bottom: 1rem;
-    font-size: var(--text-size-8);
+    font-size: var(--text-size-9);
 }
 
 .bold {
