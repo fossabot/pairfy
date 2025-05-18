@@ -1,6 +1,7 @@
 <template>
-  <HomeSection1/>
-  <HomeSection2/>
+  <HomeSection1 />
+  <HomeSection2 />
+  <FooterComp />
 </template>
 
 <script setup lang="ts">

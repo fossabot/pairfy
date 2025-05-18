@@ -1,6 +1,6 @@
 <template>
     <button>
-        Connect Wallet 
+        Connect Wallet
     </button>
 </template>
 
@@ -15,15 +15,15 @@ button {
     white-space: nowrap;
     color: var(--text-w);
     padding: 0.75rem 1rem;
-    background: transparent;
+    background: var(--primary-a);
     overflow-wrap: break-word;
     font-size: var(--text-size-1);
-    border-radius: var(--button-radius); 
-    border: 2px solid rgba(255, 255, 255, 70%);
+    border-radius: var(--button-radius);
+    border: 2px solid var(--border-a);
     transition: var(--transition-a);
 }
 
-button:hover{
-    border: 2px solid rgba(255, 255, 255, 100%);
+button:hover {
+    opacity: 0.9;
 }
 </style>

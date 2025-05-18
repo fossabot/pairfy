@@ -64,7 +64,7 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     border-radius: var(--radius-c);
     background: rgb(255 255 255 / 20%);
 }

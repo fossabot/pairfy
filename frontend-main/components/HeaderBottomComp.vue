@@ -44,7 +44,6 @@ watch(() => route.path, (newPath) => {
 <style scoped>
 .brand {
   height: 2.5rem;
-  color: var(--text-w);
 }
 
 .SubMenu {
@@ -55,7 +54,7 @@ watch(() => route.path, (newPath) => {
   width: 100%;
   opacity: 0;
   max-width: var(--body-a);
-  top: 3rem;
+  top: 2rem;
 }
 
 @keyframes slideDown {
@@ -72,8 +71,7 @@ watch(() => route.path, (newPath) => {
   display: flex;
   list-style: none;
   align-items: center;
-  color: var(--text-w);
-  background: var(--gray-a);
+  background: var(--background-a);
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);
@@ -87,6 +85,7 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu-body li:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--background-b);
+  color: var(--primary-a);
 }
 </style>

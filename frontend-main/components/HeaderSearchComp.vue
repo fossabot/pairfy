@@ -66,32 +66,32 @@ const selectSuggestion = (item: ProductSuggestion) => {
     position: relative;
     margin-left: auto;
     width: 100%;
-    max-width: 50%;
+    max-width: 60%;
 }
 
 .search-input {
     width: 100%;
     outline: none;
-    color: var(--text-w);
+    color: var(--text-a);
     padding: 0.75rem 1rem;
     box-sizing: border-box;
     background: transparent;
     font-size: var(--text-size-1);
     border-radius: var(--input-radius);
     transition: var(--transition-a);
-    border: 2px solid rgba(255, 255, 255, 70%);
+    border: 2px solid var(--border-a);
 }
 
-.search-input:hover{
-    border: 2px solid rgba(255, 255, 255, 100%);
+.search-input:hover {
+    border: 2px solid var(--primary-a);
 }
 
 .search-input::placeholder {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(0, 0, 0, 0.4);
 }
 
 .search-input:focus::placeholder {
-  opacity: 0;
+    opacity: 0;
 }
 
 .search-button {
