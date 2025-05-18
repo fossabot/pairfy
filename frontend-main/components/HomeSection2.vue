@@ -2,13 +2,13 @@
     <div class="HomeSection2">
         <ProductCarousel title="Technology products purchased by the community" />
         <DividerComp />
-        <ProductCarousel title="Office and work items you may need" />
-        <DividerComp />
         <ProductGrid title="Community's best-selling" />
         <DividerComp />
         <CategoryComp />
         <DividerComp />
         <ProductCarousel title="Household products most used" />
+        <DividerComp />
+        <ProductCarousel title="Office and work items you may need" />
     </div>
 </template>
 
