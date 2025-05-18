@@ -3,9 +3,9 @@
         <DividerComp />
         <ProductCarousel title="Technology products purchased by the community" />
         <DividerComp />
-        <ProductCarousel title="Office and work products you may need" />
+        <ProductCarousel title="Office and work items you may need" />
         <DividerComp />
-        <ProductGrid title="Community's best-selling products" />
+        <ProductGrid title="Community's best-selling" />
         <DividerComp />
         <CategoryComp />
         <DividerComp />
