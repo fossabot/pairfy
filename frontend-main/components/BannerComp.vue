@@ -86,7 +86,7 @@
 }
 
 .Banner-header-left h1 {
-    font-size: var(--text-size-9);
+    font-size: var(--text-size-8);
     margin-bottom: 1rem;
     font-weight: 500;
     margin: 0;

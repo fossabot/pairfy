@@ -76,6 +76,7 @@ watch(() => route.path, (newPath) => {
   background: var(--black-a);
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 .SubMenu-body li {
