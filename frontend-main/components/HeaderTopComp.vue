@@ -38,7 +38,7 @@
     background: var(--black-a);
     justify-content: center;
     width: inherit;
-    height: 3rem;
+    height: 2rem;
 
     background: var(--gradient-a);
     -webkit-background-clip: text;

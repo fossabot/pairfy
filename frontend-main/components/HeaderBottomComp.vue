@@ -55,7 +55,7 @@ watch(() => route.path, (newPath) => {
   width: 100%;
   opacity: 0;
   max-width: var(--body-a);
-  top: 3rem;
+  top: 2rem;
 }
 
 @keyframes slideDown {
