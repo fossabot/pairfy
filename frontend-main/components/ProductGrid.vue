@@ -164,13 +164,9 @@ const content = ref([{
 .normal {
   display: flex;
   flex-direction: column;
-
   box-sizing: border-box;
   max-width: var(--body-a);
-  margin-top: 1.5rem;
-  padding: 1.5rem;
 
-  box-shadow: var(--shadow-b);
   border-radius: var(--radius-a);
   background: var(--background-a);
 
@@ -180,7 +176,6 @@ const content = ref([{
   width: inherit;
   font-weight: 700;
   text-align: start;
-  margin-bottom: 1rem;
   font-size: var(--text-size-5);
 }
 

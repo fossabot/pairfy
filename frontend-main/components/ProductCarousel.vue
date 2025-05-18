@@ -54,19 +54,17 @@ const scrollRight = () => {
 
 .container {
   width: 100%;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
   box-sizing: border-box;
   max-width: var(--body-a);
-  box-shadow: var(--shadow-b);
   background: var(--background-a);
   border-radius: var(--radius-a);
 }
 
 .carousel-title {
   font-size: var(--text-size-5);
-  margin-top: 0;
+  margin-bottom: 2rem;
   font-weight: 700;
+  margin-top: 0;
 }
 
 .carousel-container {

@@ -35,7 +35,9 @@
 
 <style lang="css" scoped>
 .HeaderTop {
+    background: var(--black-a);
     justify-content: center;
+    color: var(--text-w);
     width: inherit;
     height: 2rem;
 }
@@ -44,7 +46,7 @@
     justify-content: flex-end;
     max-width: var(--body-a);
     box-sizing: border-box;
-    color: var(--text-a);
+   
     width: inherit;
     padding: 0 1rem;
 }

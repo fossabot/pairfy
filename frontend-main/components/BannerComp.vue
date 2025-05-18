@@ -59,14 +59,15 @@
 
 .Banner-body {
     width: 100%;
-    margin-top: 10rem;
+    margin-top: 12rem;
     text-align: center;
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: var(--radius-c);
-    background: rgb(255 255 255 / 20%);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .overlay {

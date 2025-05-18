@@ -1,12 +1,17 @@
 <template>
     <div class="HomeSection2">
+        <DividerComp />
         <ProductCarousel title="Technology products purchased by the community" />
+        <DividerComp />
         <ProductCarousel title="Office and work products you may need" />
-        <ProductGrid title="Best sellers of recent months" />
+        <DividerComp />
+        <ProductGrid title="Community's best-selling products" />
+        <DividerComp />
         <CategoryComp />
+        <DividerComp />
         <ProductCarousel title="Household products most used" />
     </div>
-</template> 
+</template>
 
 <script setup>
 
@@ -14,7 +19,6 @@
 
 <style lang="css" scoped>
 .HomeSection2 {
-    background: var(--background-c);
     justify-content: center;
     flex-direction: column;
     align-items: center;

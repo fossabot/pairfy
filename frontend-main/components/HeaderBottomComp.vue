@@ -50,11 +50,12 @@ watch(() => route.path, (newPath) => {
   animation: slideDown 0.5s ease-out forwards;
   transform: translateY(-1rem);
   position: absolute;
+  color: var(--text-w);
   z-index: 10000;
   width: 100%;
   opacity: 0;
-  max-width: var(--body-a);
   top: 2rem;
+  max-width: var(--body-a);
 }
 
 @keyframes slideDown {
@@ -68,13 +69,13 @@ watch(() => route.path, (newPath) => {
   gap: 1rem;
   margin: 0;
   display: flex;
-  padding: 1.5rem;
+  padding: 1.25rem;
+  font-weight: 500;
   list-style: none;
   align-items: center;
-  background: var(--background-a);
-  border-bottom-left-radius: var(--radius-b);
-  border-bottom-right-radius: var(--radius-b);
-  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);
+  background: transparent;
+  border-bottom-left-radius: var(--radius-c);
+  border-bottom-right-radius: var(--radius-c);
 }
 
 .SubMenu-body li {
@@ -85,7 +86,6 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu-body li:hover {
-  background: var(--background-b);
-  color: var(--primary-a);
+  background: rgba(255, 255, 255, 10%);
 }
 </style>

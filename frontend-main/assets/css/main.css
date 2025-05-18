@@ -23,7 +23,7 @@ body {
   --text-size-8: 48px; /* H1 */
   --text-size-9: 64px; /* Hero / page title */
 
-  --body-a: 1800px;
+  --body-a: 1720px;
 
   --shadow-a: 0 2px 24px rgba(0, 0, 0, 0.1);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
@@ -44,6 +44,7 @@ body {
   --radius-b: 6px;
   --radius-c: 12px;
   --radius-d: 24px;
+  --radius-e: 999px;
 
   --blue-a: #225aea;
   --gray-a: #334155;
@@ -63,7 +64,7 @@ body {
 }
 
 :root {
-  --input-radius: var(--radius-b);
+  --input-radius: var(--radius-a);
   --button-radius: var(--radius-c);
 }
 

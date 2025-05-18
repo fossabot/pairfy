@@ -2,9 +2,7 @@
 
     <div class="CategoryComp">
         <div class="p-category">
-            <div class="category-title">
-                All Categories
-            </div>
+
             <div class="category-grid">
                 <div class="grid">
                     <div class="grid-item" v-for="category in categories" :key="category.index"
@@ -52,6 +50,7 @@ function hideModal() {
     width: 100%;
     box-sizing: border-box;
     max-width: var(--body-a);
+    margin-top: 1.5rem;
 }
 
 .grid {

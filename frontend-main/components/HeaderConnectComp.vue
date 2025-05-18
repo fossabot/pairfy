@@ -10,17 +10,18 @@
 
 <style lang="css" scoped>
 button {
+    border: none;
     outline: none;
     cursor: pointer;
     white-space: nowrap;
-    color: var(--text-w);
+    color: var(--text-a);
     padding: 0.75rem 1rem;
-    background: var(--primary-a);
     overflow-wrap: break-word;
+    border: 2px solid white;
     font-size: var(--text-size-1);
-    border-radius: var(--button-radius);
-    border: 2px solid var(--border-a);
+    border-radius: var(--radius-e);
     transition: var(--transition-a);
+    background: var(--background-a);
 }
 
 button:hover {
