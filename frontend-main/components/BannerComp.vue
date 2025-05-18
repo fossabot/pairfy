@@ -65,9 +65,9 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(20px);
     border-radius: var(--radius-c);
-    background: rgb(255 255 255 / 10%);
+    background: rgb(255 255 255 / 15%);
 }
 
 .overlay {
@@ -86,14 +86,9 @@
 }
 
 .Banner-header-left h1 {
-    font-size: var(--text-size-8);
-    margin-bottom: 1rem;
-    font-weight: 500;
     margin: 0;
-
-    background: var(--gradient-a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    font-size: var(--text-size-9);
 }
 
 .bold {
@@ -110,6 +105,8 @@
     text-align: left;
     margin: 2rem 0 0;
     font-size: var(--text-size-3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+
 }
 
 .features li {
@@ -117,6 +114,7 @@
 }
 
 .Banner-header-right {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     font-size: var(--text-size-3);
     text-align: right;
 }

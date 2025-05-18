@@ -10,7 +10,7 @@
 
 <style lang="css" scoped>
 .HomeSection2 {
-    background: var(--background-a);
+    background: var(--background-b);
     justify-content: center;
     display: flex;
     height: 100vh;

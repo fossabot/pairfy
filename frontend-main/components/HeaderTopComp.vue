@@ -40,6 +40,10 @@
     width: inherit;
     height: 3rem;
 
+    background: var(--gradient-a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
 }
 
 .HeaderTop-content {

@@ -58,10 +58,12 @@ span {
     overflow: hidden;
     cursor: pointer;
     display: flex;
+    padding: 1rem;
     min-height: 300px;
     flex-direction: column;
     justify-content: space-between;
     transition: transform 0.2s ease;
+    background: var(--background-a);
 }
 
 .p-product-image {
