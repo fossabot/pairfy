@@ -50,7 +50,6 @@ function hideModal() {
     width: 100%;
     box-sizing: border-box;
     max-width: var(--body-a);
-    margin-top: 1.5rem;
 }
 
 .grid {
