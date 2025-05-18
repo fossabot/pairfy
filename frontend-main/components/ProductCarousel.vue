@@ -88,7 +88,7 @@ const scrollRight = () => {
 
 .carousel-item {
   flex: 0 0 auto;
-  width: 200px;
+  width: 300px;
   height: 200px;
   overflow: hidden;
   background: var(--background-a);
