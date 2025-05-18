@@ -1,8 +1,9 @@
 <template>
     <div class="HomeSection2">
+        <ProductCarousel />
         <ProductGrid />
     </div>
-</template>
+</template> 
 
 <script setup>
 
@@ -12,6 +13,7 @@
 .HomeSection2 {
     background: var(--background-b);
     justify-content: center;
+    flex-direction: column;
     display: flex;
     height: 100vh;
 }

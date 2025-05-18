@@ -73,7 +73,7 @@ watch(() => route.path, (newPath) => {
   list-style: none;
   align-items: center;
   color: var(--text-w);
-  background: var(--black-a);
+  background: var(--gray-a);
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.05);

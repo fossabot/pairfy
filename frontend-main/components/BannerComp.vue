@@ -55,12 +55,11 @@
     justify-content: center;
     display: flex;
     width: 100%;
-    height: 100vh;
-    align-items: center;
 }
 
 .Banner-body {
     width: 100%;
+    margin-top: 10rem;
     text-align: center;
     position: relative;
     box-sizing: border-box;

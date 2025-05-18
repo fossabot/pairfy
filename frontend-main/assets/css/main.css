@@ -52,7 +52,8 @@ body {
   --orange-a: #ea580c;
   --purple-a: #6366f1;
   --pink-a: #db2777;
-  --black-a: hsl(187.5deg 66.67% 2.35%);
+  --black-a: #000000;
+  --gray-a: #161C24;
 
   --transition-a: 0.2s ease-in-out;
 
