@@ -35,15 +35,10 @@
 
 <style lang="css" scoped>
 .HeaderTop {
-    background: var(--black-a);
+    background: var(--primary-a);
     justify-content: center;
     width: inherit;
     height: 2rem;
-
-    background: var(--gradient-a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
 }
 
 .HeaderTop-content {
