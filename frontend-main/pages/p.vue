@@ -73,6 +73,20 @@
               <span>(3849)</span>
             </div>
 
+            <ProductButton>
+              <template #icon>
+                <img class="icon" src="@/assets/icon/cardano.svg" alt="">
+              </template>
+              Cardano Network
+            </ProductButton>
+
+            <ProductButton>
+              <template #icon>
+                <img class="icon" src="@/assets/icon/midnight.svg" alt="">
+              </template>
+              Midnight Network
+            </ProductButton>
+
           </div>
         </div>
       </div>
@@ -167,7 +181,7 @@ useHead({
 .productName {
   font-size: var(--text-size-5);
   line-height: 2rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .productRating {
@@ -202,5 +216,9 @@ useHead({
   height: 10px;
   margin: auto 0.5rem;
   background: var(--text-b);
+}
+
+.icon{
+  width: 2rem;
 }
 </style>
