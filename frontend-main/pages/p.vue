@@ -1,7 +1,10 @@
 <template>
-    <div class="ProductPage">
-x
+  <div class="ProductPage">
+    <div class="ProductPage-body">
+      xxxxxxxxx
     </div>
+  </div>
+  <FooterComp />
 </template>
 
 <script setup>
@@ -15,6 +18,16 @@ useHead({
 
 <style lang="css" scoped>
 .ProductPage {
-    background: var(--background-b);
-} 
+  background: var(--background-b);
+  justify-content: center;
+  display: flex;
+  width: 100%;
+}
+
+.ProductPage-body {
+  background: var(--background-a);
+  max-width: var(--body-a);
+  min-height: 100vh;
+  width: inherit;
+}
 </style>

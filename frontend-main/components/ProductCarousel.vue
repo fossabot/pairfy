@@ -109,8 +109,8 @@ const scrollRight = () => {
   top: 50%;
   z-index: 10;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 3rem;
+  height: 3rem;
   cursor: pointer;
   position: absolute;
   border-radius: 50%;

@@ -2,7 +2,7 @@
     <div class="HomeSection2">
         <ProductCarousel title="Most purchased by the community" /> 
         <DividerComp />
-        <ProductGrid title="Best sellers of the last month" />
+        <ProductGrid title="Best sellers of the month" />
         <DividerComp />
         <CategoryComp />
         <DividerComp />

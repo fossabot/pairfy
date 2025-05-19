@@ -64,7 +64,7 @@
       </nav>
 
       <div class="footer-bottom">
-        <p>&copy; 2025 YourShop Inc. All rights reserved.</p>
+        <p>&copy; 2025 Pairfy LLC. All rights reserved.</p>
         <div class="payment-icons">
           <!-- Optional: Add payment method icons here -->
         </div>
@@ -85,7 +85,7 @@
   font-size: var(--text-size-1);
   border-top-left-radius: var(--radius-e);
   border-top-right-radius: var(--radius-e);
-  color: var(--text-b);
+  color: var(--text-a);
 }
 
 .footer-container {
