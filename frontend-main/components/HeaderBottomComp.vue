@@ -1,17 +1,17 @@
 <template>
   <nav class="SubMenu">
-    <ul class="SubMenu-body">
+    <ul class="SubMenu-body" :class="{ contrast: route.name === 'p' }">
       <img class="brand" src="@/assets/brand/icon.svg" alt="" @click="toHome">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)">
         {{ item.label }}
       </li>
 
       <HeaderSearchComp />
-
       <HeaderConnectComp />
     </ul>
   </nav>
 </template>
+
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
@@ -73,9 +73,12 @@ watch(() => route.path, (newPath) => {
   font-weight: 500;
   list-style: none;
   align-items: center;
-  background: transparent;
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
+}
+
+.contrast {
+  background: var(--black-a);
 }
 
 .SubMenu-body li {

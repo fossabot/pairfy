@@ -8,7 +8,7 @@
 useHead({
   title: 'Pairfy - Cardano marketplace',
   meta: [
-    { name: 'description', content: 'Compra productos increíbles con envío rápido y seguro.' }
+    { name: 'description', content: 'Buy and sell products on Cardano blockchain.' }
   ]
 })
 </script>

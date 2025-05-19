@@ -3,7 +3,7 @@
         <VideoBackground>
             <BannerComp />
         </VideoBackground>
-        <div class="rounded"></div>
+        <div class="rounded"/>
     </div>
 </template>
 
@@ -13,7 +13,7 @@
 
 <style lang="css" scoped>
 .HomeSection1 {
-    height: 85vh;
+    height: 90vh;
     background: var(--black-a);
 }
 
