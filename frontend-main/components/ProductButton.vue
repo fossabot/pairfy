@@ -20,7 +20,8 @@
     font-size: var(--text-size-3);
     margin-top: 1rem;
     font-weight: 600;
-    padding: 2rem;
+    cursor: pointer;
+    padding: 1.5rem;
 }
 
 .content {
