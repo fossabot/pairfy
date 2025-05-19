@@ -59,6 +59,14 @@
               Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID
             </div>
 
+            <div class="productBrand">
+              <span>SAMSUNG</span>
+              <div />
+              <span>Model JCUJ3C</span>
+              <div />
+              <span>SKU J83JXOQ</span>
+            </div>
+
             <div class="productRating">
               <span>4.3</span>
               <RatingComp />
@@ -174,13 +182,25 @@ useHead({
 }
 
 .productRating span:nth-child(1) {
-  margin-right: 0.5rem; 
+  margin-right: 0.5rem;
   font-weight: 600;
 }
 
 .productRating span:nth-child(3) {
-  margin-left: 0.5rem; 
+  margin-left: 0.5rem;
 }
 
+.productBrand {
+  color: var(--text-b);
+  align-items: center;
+  margin-top: 1rem;
+  display: flex;
+}
 
+.productBrand div {
+  width: 1px;
+  height: 10px;
+  margin: auto 0.5rem;
+  background: var(--text-b);
+}
 </style>
