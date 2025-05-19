@@ -66,7 +66,7 @@ const scrollRight = () => {
 }
 
 .carousel-title {
-  font-size: var(--text-size-6);
+  font-size: var(--text-size-5);
   margin-bottom: 2rem;
   font-weight: 700;
   margin-top: 0;
