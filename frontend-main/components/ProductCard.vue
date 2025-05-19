@@ -9,7 +9,6 @@
 
             <span class="p-product-rating flex">
                 <RatingComp :rating="4" />
-                <span>4.3</span>
             </span>
 
             <span class="p-product-price">
