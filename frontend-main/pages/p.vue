@@ -165,8 +165,8 @@ useHead({
 }
 
 .productName {
-  font-size: var(--text-size-4);
-  line-height: 1.75rem;
+  font-size: var(--text-size-5);
+  line-height: 2rem;
   font-weight: 600;
 }
 
