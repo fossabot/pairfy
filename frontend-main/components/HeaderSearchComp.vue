@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Search" />
+            type="text" placeholder="Search" :class="{ contrast: route.name === 'p' }" />
 
         <button class="search-button" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -22,7 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+
+const route = useRoute()
 
 interface ProductSuggestion {
     id: string | number
@@ -72,12 +73,12 @@ const selectSuggestion = (item: ProductSuggestion) => {
 .search-input {
     width: 100%;
     outline: none;
-    color: var(--text-w);
+    color: currentColor;
     padding: 0.75rem 1rem;
     box-sizing: border-box;
     background: transparent;
     font-size: var(--text-size-1);
-    border-radius: var(--radius-e);
+    border-radius: var(--radius-f);
     transition: var(--transition-a);
     border: 2px solid rgba(255, 255, 255, 80%);
 }
@@ -90,8 +91,23 @@ const selectSuggestion = (item: ProductSuggestion) => {
     border: 2px solid rgba(255, 255, 255, 100%);
 }
 
+
+
+
+.search-input.contrast {
+    border: 2px solid rgba(0, 0, 0, 100%);
+}
+
+.search-input.contrast:focus-within {
+    border: 2px solid var(--primary-a);
+}
+
+.search-input.contrast:hover {
+    border: 2px solid var(--primary-a);
+}
+
 .search-input::placeholder {
-    color: rgba(255, 255, 255, 80%);
+    color: currentColor;
 }
 
 .search-input:focus::placeholder {

@@ -142,8 +142,8 @@
 
 .cards {
     padding: 1rem;
-    backdrop-filter: blur(5px);
     font-size: var(--text-size-4);
-    border-radius: var(--radius-d);
+    border-radius: var(--radius-f);
+    background: rgba(255,255,255,0.1);
 }
 </style>

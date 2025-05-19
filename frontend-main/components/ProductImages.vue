@@ -21,6 +21,7 @@ const selectedImageIndex = ref(0);
 const productImageList = computed(() => {
     let result = [
         "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
+        "https://m.media-amazon.com/images/I/81NLMdXhvrL._AC_UY218_.jpg",
         "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
         "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg"
     ];
@@ -36,40 +37,44 @@ const selectImage = (index) => {
 
 <style lang="css" scoped>
 .p-media {
+    background: var(--background-a);
+    border-radius: 18px;
+    height: 600px; 
+
     display: flex;
 }
 
 .p-media-nav {
     flex-direction: column;
-    padding-right: 1rem;
     padding-left: 2px;
     display: flex;
 }
 
 .p-media-nav-item {
     border: 1px solid var(--border-a);
+    transition: var(--transition-a); 
+    border-radius: var(--radius-b);
     justify-content: center;
     margin-bottom: 1rem;
-    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
-    height: 50px;
-    width: 50px;
+    height: 3rem;
+    width: 3rem;
 }
 
 .p-media-nav-item.selected {
-    outline: 1px solid var(--primary-a);
+    border: 1px solid var(--black-a);
 }
 
 .p-media-nav-item img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
 }
 
 .p-media-image {
-    width: 700px;
-    height: 500px;
+    margin: 0 auto;
+    width: 800px;
 }
 
 .p-media-image img {

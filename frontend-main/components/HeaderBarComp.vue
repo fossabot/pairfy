@@ -1,8 +1,8 @@
 <template>
   <nav class="SubMenu">
-    <ul class="SubMenu-body" :class="{ contrast: route.name === 'p' }">
-      <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome">
-      <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)">
+    <ul class="SubMenu-body" :class="{ contrast: isContrast }">
+      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="toHome" :class="{ contrast: isContrast }">
+      <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
 
@@ -16,6 +16,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+
+const isContrast = computed(() => route.name === 'p')
 
 interface SubMenuItem {
   label: string
@@ -42,7 +44,7 @@ watch(() => route.path, (newPath) => {
 </script>
 
 <style scoped>
-.brand {
+.icon {
   height: 2.5rem;
 }
 
@@ -69,26 +71,40 @@ watch(() => route.path, (newPath) => {
   gap: 1rem;
   margin: 0;
   display: flex;
-  padding: 1.25rem;
   font-weight: 500;
   list-style: none;
   align-items: center;
+  padding: 1.25rem 0;
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
-}
-
-.contrast {
-  background: var(--gray-a);
 }
 
 .SubMenu-body li {
   cursor: pointer;
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-b);
+  border-radius: var(--radius-f);
   transition: background-color 0.2s;
 }
 
 .SubMenu-body li:hover {
-  background: rgba(255, 255, 255, 10%);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+
+
+
+.SubMenu-body.contrast {
+  color: var(--text-a);
+}
+
+.icon.contrast {
+  filter: invert();
+}
+
+.SubMenu-body li.contrast:hover {
+  color: var(--primary-a);
+  background: rgba(0, 0, 0, 0.04);
 }
 </style>

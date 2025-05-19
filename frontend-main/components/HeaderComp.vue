@@ -1,6 +1,6 @@
 <template>
     <header>
-        <HeaderBottomComp :items="[
+        <HeaderBarComp :items="[
             { label: 'Home', route: '/' },
             { label: 'Offers', route: '/offers' },
             { label: 'Categories', route: '/categories' },

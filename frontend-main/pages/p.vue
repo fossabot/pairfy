@@ -1,31 +1,67 @@
 <template>
   <div class="ProductPage">
+
     <div class="ProductPage-body">
-      <div class="left">
-        <ProductImages /> 
-      </div>
+      <DividerComp />
+      <div class="ProductPage-grid">
+        <div class="left">
+          <ProductImages />
+          <DividerComp />
 
 
-      <div class="right-container">
-        <div class="right" id="buySection" ref="buySection">
-          <div class="buy-box">
-            <label>Cantidad:</label>
-            <input type="number" min="1" value="1" />
 
-            <label>Método de pago:</label>
-            <select>
-              <option>Tarjeta</option>
-              <option>Transferencia</option>
-              <option>Efectivo</option>
-            </select>
+          <h2>MacBook Air 13&quot; with M4 Chip — Power Meets Portability with Apple Intelligence</h2>
 
-            <button>Comprar Ahora</button>
+          <p><strong>Speed of Lightness</strong><br>
+            The new <strong>MacBook Air with the M4 chip</strong> lets you blaze through work, creativity, and
+            entertainment. Its ultra-thin and lightweight design makes it easy to take anywhere, while the <strong>up to
+              18-hour battery life</strong> keeps you powered all day long.</p>
+
+          <p><strong>Supercharged by M4</strong><br>
+            The Apple M4 chip delivers exceptional speed and responsiveness for everything you do—whether you're
+            multitasking across apps, editing high-resolution videos, or gaming with demanding graphics.</p>
+
+          <p><strong>Built for Apple Intelligence*</strong><br>
+            Apple Intelligence is your personal AI system that helps you write, create, and get things done with ease.
+            With <strong>groundbreaking privacy protections</strong>, your data stays secure and private — even from
+            Apple.</p>
+
+          <p><strong>All-Day Battery Life</strong><br>
+            Enjoy up to <strong>18 hours of battery life</strong>, whether you're plugged in or on the go. The
+            efficiency of the M4 ensures peak performance across every task.</p>
+
+          <p><strong>Brilliant 13.6&quot; Liquid Retina Display</strong><br>
+            Experience stunning visuals with a Liquid Retina display that supports <strong>1 billion colors</strong>.
+            Text appears ultra-sharp, and your photos and videos pop with rich contrast and vivid detail.</p>
+
+          <p><strong>Look and Sound Amazing</strong><br>
+            Elevate your video calls and content creation with a <strong>12MP front-facing camera</strong> featuring
+            Center Stage, a <strong>three-mic array</strong>, and <strong>four-speaker system</strong> with Spatial
+            Audio for immersive sound.</p>
+
+          <p><strong>Modern Connectivity Options</strong><br>
+            Includes <strong>MagSafe charging</strong>, <strong>two Thunderbolt 4 ports</strong>, <strong>Wi‑Fi
+              6E*</strong>, <strong>Bluetooth 5.3</strong>, a <strong>headphone jack</strong>, and support for
+            <strong>up to two external displays</strong>.</p>
+
+
+
+
+        </div>
+
+
+        <div class="right-container">
+
+          <div class="right" id="buySection" ref="buySection">
+            <div class="productName">
+              Apple 2025 MacBook Air 13-inch Laptop with M4 chip: Built for Apple Intelligence, 13.6-inch Liquid Retina
+              Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID; Sky Blue
+
+
+            </div>
+
           </div>
 
-        
-          <div class="right-debug-text">
-            <p v-for="i in 40" :key="i">[DERECHA] Detalle adicional {{ i }}: Información del producto o promociones.</p>
-          </div>
         </div>
       </div>
     </div>
@@ -71,30 +107,23 @@ useHead({
 }
 
 .ProductPage-body {
-  background: var(--background-a);
+  width: inherit;
+  display: flex;
+  margin-top: 6rem;
+  flex-direction: column;
   max-width: var(--body-a);
+}
+
+.ProductPage-grid {
+  background: var(--background-a);
   min-height: 100vh;
-  margin-top: 3rem;
   width: inherit;
   display: grid;
-  grid-template-columns: 1fr 350px;
+  grid-template-columns: 1fr 400px;
   gap: 2rem;
-  margin-top: 10rem;
 }
 
-.left {
-}
-
-.product-image {
-  width: 100%;
-  height: 400px;
-  background: #ddd;
-  margin-bottom: 1rem;
-}
-
-.description {
-  height: auto;
-}
+.left {}
 
 .right-container {
   position: relative;
@@ -102,13 +131,13 @@ useHead({
 }
 
 .right {
-  position: sticky;
   top: 0;
-  max-height: 100vh;
-  overflow-y: auto;
   padding: 1rem;
-  background: white;
-  border-radius: 8px;
+  overflow-y: auto;
+  position: sticky;
+  min-height: 100vh;
+  border-radius: var(--radius-d);
+  background: var(--background-b);
 }
 
 .right {
@@ -123,22 +152,8 @@ useHead({
   /* Chrome, Safari, Edge moderno */
 }
 
-.buy-box {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.buy-box input,
-.buy-box select,
-.buy-box button {
-  padding: 0.75rem;
-  font-size: 1rem;
-}
-
-.right-debug-text p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
+.productName {
+  font-size: var(--text-size-4);
+  font-weight: 600;
 }
 </style>
