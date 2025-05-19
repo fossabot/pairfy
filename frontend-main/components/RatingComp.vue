@@ -1,6 +1,6 @@
 <template>
   <div class="flex space-x-1">
-    <svg v-for="index in 5" :key="index" width="1rem" height="1rem" viewBox="0 0 24 24" 
+    <svg v-for="index in 5" :key="index" width="17px" height="17px" viewBox="0 0 24 24" 
       xmlns="http://www.w3.org/2000/svg"
       :fill="index <= rating ? 'var(--orange-a)' : 'none'"
       :stroke="index <= rating ? 'none' : 'var(--text-b)'"

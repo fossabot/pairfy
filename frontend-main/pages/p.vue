@@ -56,7 +56,7 @@
           <div class="right" id="buySection" ref="buySection">
             <div class="productName">
               Apple 2025 MacBook Air 13-inch Laptop with M4 chip: Built for Apple Intelligence, 13.6-inch Liquid Retina
-              Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID; Sky Blue
+              Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID
             </div>
 
             <div class="productRating">
@@ -163,22 +163,23 @@ useHead({
 }
 
 .productRating {
-  margin-top: 1rem;
   display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  font-size: var(--text-size-1);
 }
 
 .productRating span {
-  font-size: var(--text-size-1);
   font-weight: 400;
 }
 
 .productRating span:nth-child(1) {
-  margin-right: 1rem;
+  margin-right: 0.5rem; 
   font-weight: 600;
 }
 
 .productRating span:nth-child(3) {
-  margin-left: 1rem; 
+  margin-left: 0.5rem; 
 }
 
 
