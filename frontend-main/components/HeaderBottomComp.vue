@@ -1,7 +1,7 @@
 <template>
   <nav class="SubMenu">
     <ul class="SubMenu-body" :class="{ contrast: route.name === 'p' }">
-      <img class="brand" src="@/assets/brand/icon.svg" alt="" @click="toHome">
+      <img class="brand" src="@/assets/brand/logo.svg" alt="" @click="toHome">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)">
         {{ item.label }}
       </li>
@@ -78,7 +78,7 @@ watch(() => route.path, (newPath) => {
 }
 
 .contrast {
-  background: var(--black-a);
+  background: var(--gray-a);
 }
 
 .SubMenu-body li {

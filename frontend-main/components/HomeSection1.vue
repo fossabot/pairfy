@@ -13,7 +13,7 @@
 
 <style lang="css" scoped>
 .HomeSection1 {
-    height: 90vh;
+    height: 93vh;
     background: var(--black-a);
 }
 
