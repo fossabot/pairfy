@@ -40,8 +40,8 @@ const selectedImageIndex = ref(0);
 const productImageList = [
     "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
     "https://m.media-amazon.com/images/I/81NLMdXhvrL._AC_UY218_.jpg",
-    "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
-    "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
+    "https://m.media-amazon.com/images/I/51Z2kw-gFVL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
+    "https://m.media-amazon.com/images/I/61BKYlNqH6L.__AC_SX300_SY300_QL70_FMwebp_.jpg",
 ];
 
 const selectImage = (index) => {
@@ -62,9 +62,9 @@ const nextImage = () => {
 .p-media {
     background: var(--background-a);
     border-radius: 18px;
-    height: 600px;
-    display: flex;
     position: relative;
+    display: flex;
+    height: 600px;
 }
 
 .p-media-nav {
@@ -96,9 +96,12 @@ const nextImage = () => {
 }
 
 .p-media-image {
-    position: relative;
+    width: 600px;
+    display: flex;
     margin: 0 auto;
-    width: 800px;
+    max-height: 600px;
+    position: relative;
+    align-items: center;
 }
 
 .p-media-image img {
@@ -107,7 +110,7 @@ const nextImage = () => {
 
 .btn-nav {
     position: absolute;
-    top: 40%;
+    top: 50%;
     transform: translateY(-50%);
     font-size: 2rem;
     background: rgba(0, 0, 0, 0.04);
