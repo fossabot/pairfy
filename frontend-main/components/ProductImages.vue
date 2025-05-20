@@ -1,15 +1,6 @@
 <template>
     <div class="p-media">
-        <!-- Galería lateral -->
-        <div class="p-media-nav">
-            <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
-                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
-                @mouseover="selectImage(index)">
-                <img :src="item" :alt="'Miniatura ' + (index + 1)" />
-            </div>
-        </div>
 
-        <!-- Imagen principal + controles -->
         <div class="p-media-image">
             <img :src="productImageList[selectedImageIndex]" alt="Imagen del producto seleccionada" />
 
@@ -31,6 +22,15 @@
                 </svg>
             </button>
         </div>
+
+        <div class="p-media-nav">
+            <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
+                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
+                @mouseover="selectImage(index)">
+                <img :src="item" :alt="'Miniatura ' + (index + 1)" />
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -61,24 +61,23 @@ const nextImage = () => {
 <style scoped>
 .p-media {
     background: var(--background-a);
-    border-radius: 18px;
+    border-radius: var(--radius-d);
+    flex-direction: column;
     position: relative;
     display: flex;
-    height: 600px;
 }
 
 .p-media-nav {
-    flex-direction: column;
-    padding-left: 2px;
+    justify-content: center;
     display: flex;
 }
 
 .p-media-nav-item {
-    border: 2px solid var(--border-a);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     transition: var(--transition-a);
     border-radius: var(--radius-b);
     justify-content: center;
-    margin-bottom: 1rem;
+    margin: 0 0.5rem;
     overflow: hidden;
     cursor: pointer;
     height: 3rem;
@@ -86,7 +85,7 @@ const nextImage = () => {
 }
 
 .p-media-nav-item.selected {
-    border: 2px solid var(--black-a);
+    border: 1px solid var(--black-a);
 }
 
 .p-media-nav-item img {
@@ -97,9 +96,9 @@ const nextImage = () => {
 
 .p-media-image {
     width: 600px;
+    height: 600px;
     display: flex;
     margin: 0 auto;
-    max-height: 600px;
     position: relative;
     align-items: center;
 }
@@ -131,11 +130,11 @@ const nextImage = () => {
 }
 
 .btn-nav.left {
-    left: -5rem;
+    left: -10rem;
 }
 
 .btn-nav.right {
-    right: -5rem;
+    right: -10rem;
 }
 
 /* Mobile: ocultar componente por ahora */

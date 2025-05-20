@@ -74,18 +74,16 @@
 </template>
 
 <script setup>
-// No logic needed for now
+
 </script>
 
 <style scoped>
 .footer {
   background-color: var(--background-b);
+  font-size: var(--text-size-1);
+  color: var(--text-a);
   padding: 4rem 1rem;
   margin-top: 4rem;
-  font-size: var(--text-size-1);
-  border-top-left-radius: var(--radius-e);
-  border-top-right-radius: var(--radius-e);
-  color: var(--text-a);
 }
 
 .footer-container {
@@ -120,7 +118,7 @@
 }
 
 .footer-column ul li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .footer-column ul li a {

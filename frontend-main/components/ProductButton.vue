@@ -15,13 +15,21 @@
 
 <style scoped>
 .ProductButton {
-    border: 2px solid black;
+    transition: var(--transition-a);
     border-radius: var(--radius-c);
-    font-size: var(--text-size-3);
+    border: 1px solid black;
     margin-top: 1rem;
     font-weight: 600;
     cursor: pointer;
     padding: 1.5rem;
+}
+
+.ProductButton:focus{
+    outline: 1px solid var(--primary-a);
+} 
+
+.ProductButton:hover {
+    border: 1px solid var(--primary-a);
 }
 
 .content {

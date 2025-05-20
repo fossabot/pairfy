@@ -54,16 +54,16 @@
         <div class="right-container">
 
           <div class="right" id="buySection" ref="buySection">
+            <div class="productBrand">
+              Samsung
+            </div>
+
             <div class="productName">
               Apple 2025 MacBook Air 13-inch Laptop with M4 chip: Built for Apple Intelligence, 13.6-inch Liquid Retina
               Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID
             </div>
 
-            <div class="productBrand">
-              <span>SAMSUNG</span>
-              <div />
-              <span>Model JCUJ3C</span>
-              <div />
+            <div class="productModel">
               <span>SKU J83JXOQ</span>
             </div>
 
@@ -71,6 +71,22 @@
               <span>4.3</span>
               <RatingComp />
               <span>(3849)</span>
+            </div>
+
+            <div class="subtitle">
+              Model. <span>Check variations.</span>
+            </div>
+
+            <ProductButton>
+              <template #icon>
+                <img class="icon"
+                  src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="">
+              </template>
+              <span>Model S9-C52025</span>
+            </ProductButton>
+
+            <div class="subtitle">
+              Finish. <span>Choose your preferred network.</span>
             </div>
 
             <ProductButton>
@@ -141,7 +157,7 @@ useHead({
 }
 
 .ProductPage-grid {
-  grid-template-columns: 1fr 500px;
+  grid-template-columns: 1fr 400px;
   background: var(--background-a);
   min-height: 100vh;
   width: inherit;
@@ -158,12 +174,10 @@ useHead({
 
 .right {
   top: 0;
-  padding: 2rem;
+  padding: 1.5rem;
   overflow-y: auto;
   position: sticky;
   min-height: 100vh;
-  border-radius: var(--radius-d);
-  background: var(--background-b);
 }
 
 .right {
@@ -178,10 +192,12 @@ useHead({
   /* Chrome, Safari, Edge moderno */
 }
 
+
 .productName {
-  font-size: var(--text-size-5);
+  font-size: var(--text-size-4);
+  margin-top: 0.5rem;
   line-height: 2rem;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .productRating {
@@ -204,21 +220,39 @@ useHead({
   margin-left: 0.5rem;
 }
 
-.productBrand {
+.productModel {
   color: var(--text-b);
   align-items: center;
   margin-top: 1rem;
   display: flex;
 }
 
-.productBrand div {
+.productModel div {
   width: 1px;
   height: 10px;
   margin: auto 0.5rem;
   background: var(--text-b);
 }
 
-.icon{
+.icon {
   width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.productBrand {
+  font-size: var(--text-size-4);
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: var(--text-size-4);
+  color: var(--text-a);
+  margin-top: 2rem; 
+  font-weight: 600;
+}
+
+.subtitle span {
+  color: var(--text-b);
 }
 </style>
