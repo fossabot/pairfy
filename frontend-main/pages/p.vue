@@ -114,25 +114,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const buySection = ref(null)
-
-onMounted(() => {
-  const el = buySection.value
-  if (!el) return
-
-  el.addEventListener('wheel', (e) => {
-    const isScrollable = el.scrollHeight > el.clientHeight
-    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight
-
-    if (isScrollable && !atBottom) return
-
-    if (atBottom) {
-      el.style.overflowY = 'hidden'
-      setTimeout(() => { el.style.overflowY = 'auto' }, 100)
-    }
-  })
-})
-
 useHead({
   title: 'Pairfy - Cardano marketplace',
   meta: [
