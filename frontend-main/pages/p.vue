@@ -1,17 +1,14 @@
 <template>
     <div class="todo">
         <div class="container">
-            <DividerComp />
-
             <div class="grid" @wheel.prevent="handleScroll">
                 <div class="left">
+                   
                     <div ref="leftScroll" class="scrollable hide-scrollbar">
                         <div class="content">
-
                             <ProductImages />
                             <DividerComp />
-                            <ProductCarousel style="max-width: 1200px;" />
-
+                            <ProductGrid style="max-width: 1000px;" />
                             <p v-for="n in 40" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -20,10 +17,8 @@
                     </div>
                 </div>
 
-
-
                 <div class="right">
-                    <div ref="rightScroll" class="scrollable sticky-box">
+                    <div ref="rightScroll" class="scrollable sticky-box hide-scrollbar">
                         <div class="content">
 
 
@@ -132,7 +127,6 @@ const handleScroll = (e) => {
 <style scoped>
 .todo {
     justify-content: center;
-    padding-top: 5rem;
     display: flex;
     width: 100%;
 }
@@ -149,20 +143,13 @@ const handleScroll = (e) => {
     grid-template-columns: 1fr 400px;
     height: 100vh;
     overflow: hidden;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    height: 100vh;
-    overflow: hidden;
-    gap: 3rem;
+    gap: 4rem;
 }
 
 .left,
 .right {
     box-sizing: border-box;
-
+    padding-top: 10rem;
     overflow: hidden;
 }
 
@@ -176,7 +163,7 @@ const handleScroll = (e) => {
 }
 
 .busy-box {
-    height: 200px;
+    height: 100px;
 }
 
 .scrollable {
