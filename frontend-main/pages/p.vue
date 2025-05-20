@@ -15,7 +15,7 @@
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <ProductGrid style="max-width: 1000px;" />
+                            <ProductCarousel style="max-width: 1000px;" />
                             <p v-for="n in 100" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -77,7 +77,7 @@
                                 Cardano Network
                             </ProductButton>
 
-                            <ProductButton>
+                            <ProductButton style="margin-top: 1rem;">
                                 <template #icon>
                                     <img class="icon" src="@/assets/icon/midnight.svg" alt="">
                                 </template>
@@ -254,10 +254,10 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
-    height: 100vh;
+    grid-template-columns: 1fr 380px;
     overflow: hidden;
-    gap: 5rem;
+    height: 100vh;
+    gap: 3rem;
 }
 
 .left,
@@ -294,7 +294,6 @@ onUnmounted(() => {
 }
 
 
-/* Ocultar scrollbar en todos los navegadores compatibles */
 .hide-scrollbar {
     scrollbar-width: none;
     /* Firefox */
@@ -308,7 +307,7 @@ onUnmounted(() => {
 }
 
 .productName {
-    font-size: var(--text-size-5);
+    font-size: var(--text-size-4);
     margin-top: 0.5rem;
     line-height: 2.5rem;
     font-weight: 400;
@@ -355,13 +354,14 @@ onUnmounted(() => {
 }
 
 .productBrand {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     font-weight: 700;
 }
 
 .subtitle {
     font-size: var(--text-size-4);
     color: var(--text-a);
+    margin-bottom: 2rem;
     margin-top: 2rem;
     font-weight: 600;
 }

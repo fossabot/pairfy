@@ -15,10 +15,9 @@
 
 <style scoped>
 .ProductButton {
+    border: 1px solid rgba(0, 0, 0, 50%);
     transition: var(--transition-a);
     border-radius: var(--radius-c);
-    border: 1px solid rgba(0, 0, 0, 50%);
-    margin-top: 1rem;
     font-weight: 600;
     cursor: pointer;
     padding: 1rem;
