@@ -1,14 +1,21 @@
 <template>
     <div class="todo">
+        <div class="custom-scrollbar-container">
+            <div class="custom-scrollbar-thumb" :style="{ height: thumbHeight + 'px', top: thumbTop + 'px' }"
+                @mousedown="startDrag"></div>
+        </div>
+
+
         <div class="container">
+
             <div class="grid">
                 <div class="left">
-                   
+
                     <div ref="leftScroll" class="scrollable hide-scrollbar">
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <ProductCarousel style="max-width: 1200px;" /> 
+                            <ProductCarousel style="max-width: 1200px;" />
                             <p v-for="n in 100" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -47,7 +54,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 20" :key="n">
+                            <ProductButton v-for="n in 5" :key="n">
                                 <template #icon>
                                     <img class="icon"
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
@@ -85,57 +92,137 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-
-useHead({
-    title: 'Pairfy - Cardano marketplace',
-    meta: [
-        { name: 'description', content: 'Buy and sell products on Cardano blockchain.' }
-    ]
-})
-
-
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const leftScroll = ref(null)
 const rightScroll = ref(null)
 
-const handleScroll = (e) => {
-  const delta = e.deltaY
+const thumbHeight = ref(60) // cambiará dinámicamente
+const thumbTop = ref(0)
 
-  const right = rightScroll.value
-  const left = leftScroll.value
+const isDragging = ref(false)
+const dragStartY = ref(0)
+const startScrollY = ref(0)
 
-  const rightAtBottom = right.scrollTop + right.clientHeight >= right.scrollHeight
-  const scrollingDown = delta > 0
-  const scrollingUp = delta < 0
+const updateThumb = () => {
+    const right = rightScroll.value
+    const left = leftScroll.value
 
-  if (scrollingDown) {
-    if (!rightAtBottom) {
-      e.preventDefault()
-      right.scrollTop += delta
+    const totalScrollable =
+        right.scrollHeight - right.clientHeight +
+        left.scrollHeight - left.clientHeight
+
+    const totalScrollTop =
+        Math.min(right.scrollTop, right.scrollHeight - right.clientHeight) +
+        Math.max(0, left.scrollTop)
+
+    const containerHeight = window.innerHeight
+    thumbHeight.value = Math.max(
+        40,
+        (containerHeight / (containerHeight + totalScrollable)) * containerHeight
+    )
+    thumbTop.value = (totalScrollTop / totalScrollable) * (containerHeight - thumbHeight.value)
+}
+
+const syncScroll = (deltaY) => {
+    const right = rightScroll.value
+    const left = leftScroll.value
+
+    const rightMax = right.scrollHeight - right.clientHeight
+    const leftMax = left.scrollHeight - left.clientHeight
+
+    if (deltaY > 0) {
+        // scrolling down
+        if (right.scrollTop < rightMax) {
+            right.scrollTop = Math.min(right.scrollTop + deltaY, rightMax)
+        } else {
+            left.scrollTop = Math.min(left.scrollTop + deltaY, leftMax)
+        }
     } else {
-      e.preventDefault()
-      left.scrollTop += delta
+        // scrolling up
+        if (left.scrollTop > 0) {
+            left.scrollTop = Math.max(left.scrollTop + deltaY, 0)
+        } else {
+            right.scrollTop = Math.max(right.scrollTop + deltaY, 0)
+        }
     }
-  } else if (scrollingUp) {
-    if (left.scrollTop > 0) {
-      e.preventDefault()
-      left.scrollTop += delta
-    } else if (right.scrollTop > 0) {
-      e.preventDefault()
-      right.scrollTop += delta
+
+    updateThumb()
+}
+
+const handleWheel = (e) => {
+    e.preventDefault()
+    syncScroll(e.deltaY)
+}
+
+const startDrag = (e) => {
+    isDragging.value = true
+    dragStartY.value = e.clientY
+    startScrollY.value = thumbTop.value
+
+    document.body.style.userSelect = 'none'
+    document.body.style.pointerEvents = 'none'
+
+    document.addEventListener('mousemove', onDrag)
+    document.addEventListener('mouseup', stopDrag)
+}
+
+const onDrag = (e) => {
+    if (!isDragging.value) return
+
+    const delta = e.clientY - dragStartY.value
+    const trackHeight = window.innerHeight - thumbHeight.value
+
+    const scrollRatio = delta / trackHeight
+
+    const right = rightScroll.value
+    const left = leftScroll.value
+
+    const totalScrollable =
+        right.scrollHeight - right.clientHeight +
+        left.scrollHeight - left.clientHeight
+
+    const scrollAmount = scrollRatio * totalScrollable
+
+    const newTotalScroll =
+        startScrollY.value / trackHeight * totalScrollable + scrollAmount
+
+    // distribuir el scroll entre right y left
+    const rightMax = right.scrollHeight - right.clientHeight
+    const leftMax = left.scrollHeight - left.clientHeight
+
+    if (newTotalScroll <= rightMax) {
+        right.scrollTop = newTotalScroll
+        left.scrollTop = 0
+    } else {
+        right.scrollTop = rightMax
+        left.scrollTop = newTotalScroll - rightMax
     }
-  }
+
+    updateThumb()
+}
+
+const stopDrag = () => {
+    isDragging.value = false
+    document.body.style.userSelect = ''
+    document.body.style.pointerEvents = ''
+
+    document.removeEventListener('mousemove', onDrag)
+    document.removeEventListener('mouseup', stopDrag)
 }
 
 onMounted(() => {
-  window.addEventListener('wheel', handleScroll, { passive: false })
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('wheel', handleWheel, { passive: false })
+    updateThumb()
 })
 
 onUnmounted(() => {
-  window.removeEventListener('wheel', handleScroll)
+    document.body.style.overflow = ''
+    window.removeEventListener('wheel', handleWheel)
 })
 </script>
+
 
 <style scoped>
 .todo {
@@ -153,7 +240,7 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 380px;
     height: 100vh;
     overflow: hidden;
     gap: 3rem;
@@ -162,7 +249,7 @@ onUnmounted(() => {
 .left,
 .right {
     box-sizing: border-box;
-    padding-top: 10rem;
+    padding-top: 8rem;
     overflow: hidden;
 }
 
@@ -205,19 +292,7 @@ onUnmounted(() => {
     display: none;
     /* Chrome, Safari, Opera */
 }
-</style>
 
-
-
-
-
-
-
-
-
-
-
-<style lang="css" scoped>
 .productName {
     font-size: var(--text-size-4);
     margin-top: 0.5rem;
@@ -279,5 +354,34 @@ onUnmounted(() => {
 
 .subtitle span {
     color: var(--text-b);
+}
+
+
+
+
+
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  right: 2px;
+  width: 10px;
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 4px;
+  cursor: grab;
+  transition: background-color 0.3s;
+}
+
+.custom-scrollbar-thumb:active {
+  cursor: grabbing;
+}
+
+.custom-scrollbar-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 100vh;
+  background-color: transparent;
+  z-index: 1000;
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
     <div class="p-media">
+        <div class="p-media-nav">
+            <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
+                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
+                @mouseover="selectImage(index)">
+                <img :src="item" :alt="'Miniatura ' + (index + 1)" />
+            </div>
+        </div>
 
         <div class="p-media-image">
             <img :src="productImageList[selectedImageIndex]" alt="Imagen del producto seleccionada" />
@@ -23,13 +30,7 @@
             </button>
         </div>
 
-        <div class="p-media-nav">
-            <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
-                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
-                @mouseover="selectImage(index)">
-                <img :src="item" :alt="'Miniatura ' + (index + 1)" />
-            </div>
-        </div>
+
 
     </div>
 </template>
@@ -62,14 +63,13 @@ const nextImage = () => {
 .p-media {
     background: var(--background-a);
     border-radius: var(--radius-d);
-    flex-direction: column;
     position: relative;
     display: flex;
 }
 
 .p-media-nav {
-    justify-content: center;
     display: flex;
+    flex-direction: column;
 }
 
 .p-media-nav-item {
@@ -77,15 +77,15 @@ const nextImage = () => {
     transition: var(--transition-a);
     border-radius: var(--radius-b);
     justify-content: center;
-    margin: 0 0.5rem;
+    margin-bottom: 1rem;
     overflow: hidden;
     cursor: pointer;
-    height: 3rem;
-    width: 3rem;
+    height: 3.5rem;
+    width: 3.5rem;
 }
 
 .p-media-nav-item.selected {
-    border: 1px solid var(--black-a);
+    border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .p-media-nav-item img {
