@@ -9,7 +9,7 @@
                             <ProductImages />
                             <DividerComp />
                             <ProductCarousel style="max-width: 1200px;" /> 
-                            <p v-for="n in 40" :key="n">
+                            <p v-for="n in 100" :key="n">
                                 Este es un párrafo repetido.
                             </p>
 
@@ -47,7 +47,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 10" :key="n">
+                            <ProductButton v-for="n in 20" :key="n">
                                 <template #icon>
                                     <img class="icon"
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
@@ -99,31 +99,41 @@ useHead({
 const leftScroll = ref(null)
 const rightScroll = ref(null)
 
-let isSyncingLeft = false
-let isSyncingRight = false
+const handleScroll = (e) => {
+  const delta = e.deltaY
 
-const syncScrollLeft = () => {
-    if (isSyncingRight) return
-    isSyncingLeft = true
-    rightScroll.value.scrollTop = leftScroll.value.scrollTop
-    isSyncingLeft = false
-}
+  const right = rightScroll.value
+  const left = leftScroll.value
 
-const syncScrollRight = () => {
-    if (isSyncingLeft) return
-    isSyncingRight = true
-    leftScroll.value.scrollTop = rightScroll.value.scrollTop
-    isSyncingRight = false
+  const rightAtBottom = right.scrollTop + right.clientHeight >= right.scrollHeight
+  const scrollingDown = delta > 0
+  const scrollingUp = delta < 0
+
+  if (scrollingDown) {
+    if (!rightAtBottom) {
+      e.preventDefault()
+      right.scrollTop += delta
+    } else {
+      e.preventDefault()
+      left.scrollTop += delta
+    }
+  } else if (scrollingUp) {
+    if (left.scrollTop > 0) {
+      e.preventDefault()
+      left.scrollTop += delta
+    } else if (right.scrollTop > 0) {
+      e.preventDefault()
+      right.scrollTop += delta
+    }
+  }
 }
 
 onMounted(() => {
-    leftScroll.value.addEventListener('scroll', syncScrollLeft)
-    rightScroll.value.addEventListener('scroll', syncScrollRight)
+  window.addEventListener('wheel', handleScroll, { passive: false })
 })
 
 onUnmounted(() => {
-    leftScroll.value.removeEventListener('scroll', syncScrollLeft)
-    rightScroll.value.removeEventListener('scroll', syncScrollRight)
+  window.removeEventListener('wheel', handleScroll)
 })
 </script>
 
@@ -143,10 +153,10 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 350px;
     height: 100vh;
     overflow: hidden;
-    gap: 4rem;
+    gap: 3rem;
 }
 
 .left,
