@@ -54,7 +54,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 5" :key="n">
+                            <ProductButton v-for="n in 3" :key="n">
                                 <template #icon>
                                     <img class="icon"
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
@@ -131,17 +131,27 @@ const syncScroll = (deltaY) => {
     const rightMax = right.scrollHeight - right.clientHeight
     const leftMax = left.scrollHeight - left.clientHeight
 
+    const threshold = rightMax * 0.6
+
     if (deltaY > 0) {
         // scrolling down
-        if (right.scrollTop < rightMax) {
-            right.scrollTop = Math.min(right.scrollTop + deltaY, rightMax)
+        if (right.scrollTop < threshold) {
+            right.scrollTop = Math.min(right.scrollTop + deltaY, threshold)
+        } else if (right.scrollTop < rightMax) {
+            const rightDelta = Math.min(deltaY * 0.5, rightMax - right.scrollTop)
+            const leftDelta = deltaY - rightDelta
+            right.scrollTop += rightDelta
+            left.scrollTop = Math.min(left.scrollTop + leftDelta, leftMax)
         } else {
             left.scrollTop = Math.min(left.scrollTop + deltaY, leftMax)
         }
     } else {
         // scrolling up
         if (left.scrollTop > 0) {
-            left.scrollTop = Math.max(left.scrollTop + deltaY, 0)
+            const leftDelta = Math.min(Math.abs(deltaY), left.scrollTop)
+            const rightDelta = Math.abs(deltaY) - leftDelta
+            left.scrollTop -= leftDelta
+            right.scrollTop = Math.max(right.scrollTop - rightDelta, 0)
         } else {
             right.scrollTop = Math.max(right.scrollTop + deltaY, 0)
         }
@@ -149,6 +159,7 @@ const syncScroll = (deltaY) => {
 
     updateThumb()
 }
+
 
 const handleWheel = (e) => {
     e.preventDefault()
@@ -362,26 +373,26 @@ onUnmounted(() => {
 
 
 .custom-scrollbar-thumb {
-  position: absolute;
-  right: 2px;
-  width: 10px;
-  background-color: rgba(100, 100, 100, 0.5);
-  border-radius: 4px;
-  cursor: grab;
-  transition: background-color 0.3s;
+    position: absolute;
+    right: 2px;
+    width: 10px;
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 4px;
+    cursor: grab;
+    transition: background-color 0.3s;
 }
 
 .custom-scrollbar-thumb:active {
-  cursor: grabbing;
+    cursor: grabbing;
 }
 
 .custom-scrollbar-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 12px;
-  height: 100vh;
-  background-color: transparent;
-  z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 100vh;
+    background-color: transparent;
+    z-index: 1000;
 }
 </style>
