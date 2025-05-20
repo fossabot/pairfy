@@ -60,11 +60,14 @@
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
                                         alt="">
                                 </template>
-                                <span>Model S9-C52025</span>
+                                <div style="display: flex; flex-direction: column;">
+                                    <span>Model S9-C52025</span>
+                                    <span style="font-weight: 400; margin-top: 0.5rem;">$38 USD</span>
+                                </div>
                             </ProductButton>
 
                             <div class="subtitle">
-                                Finish. <span>Choose your preferred network.</span>
+                                Finish. <span>Choose your network.</span>
                             </div>
 
                             <ProductButton>
@@ -251,7 +254,7 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 350px;
     height: 100vh;
     overflow: hidden;
     gap: 5rem;

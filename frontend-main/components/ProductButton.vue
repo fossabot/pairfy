@@ -17,16 +17,16 @@
 .ProductButton {
     transition: var(--transition-a);
     border-radius: var(--radius-c);
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 50%);
     margin-top: 1rem;
     font-weight: 600;
     cursor: pointer;
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
-.ProductButton:focus{
+.ProductButton:focus {
     outline: 1px solid var(--primary-a);
-} 
+}
 
 .ProductButton:hover {
     border: 1px solid var(--primary-a);
