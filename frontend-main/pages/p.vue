@@ -121,7 +121,6 @@ useHead({
 
 .right-container {
   position: relative;
-  height: 100vh;
 }
 
 .right {
@@ -129,7 +128,7 @@ useHead({
   padding: 1.5rem;
   overflow-y: auto;
   position: sticky;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .right {
