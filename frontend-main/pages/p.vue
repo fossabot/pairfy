@@ -43,7 +43,7 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductButton>
+            <ProductButton v-for="n in 20" :key="n">
               <template #icon>
                 <img class="icon"
                   src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="">
@@ -69,9 +69,7 @@
               Midnight Network
             </ProductButton>
 
-            <p v-for="n in 20" :key="n">
-              Este es un párrafo repetido.
-            </p>
+
 
           </div>
         </div>
