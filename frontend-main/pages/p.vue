@@ -1,14 +1,14 @@
 <template>
     <div class="todo">
         <div class="container">
-            <div class="grid" @wheel.prevent="handleScroll">
+            <div class="grid">
                 <div class="left">
                    
                     <div ref="leftScroll" class="scrollable hide-scrollbar">
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <ProductGrid style="max-width: 1000px;" />
+                            <ProductCarousel style="max-width: 1200px;" /> 
                             <p v-for="n in 40" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -47,7 +47,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 0" :key="n">
+                            <ProductButton v-for="n in 10" :key="n">
                                 <template #icon>
                                     <img class="icon"
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
@@ -99,29 +99,32 @@ useHead({
 const leftScroll = ref(null)
 const rightScroll = ref(null)
 
-const handleScroll = (e) => {
-    const delta = e.deltaY
-    const right = rightScroll.value
-    const left = leftScroll.value
+let isSyncingLeft = false
+let isSyncingRight = false
 
-    const scrollingDown = delta > 0
-    const rightAtBottom = right.scrollTop + right.clientHeight >= right.scrollHeight
-    const leftAtBottom = left.scrollTop + left.clientHeight >= left.scrollHeight
-
-    if (scrollingDown) {
-        if (!rightAtBottom) {
-            right.scrollTop += delta
-        } else if (!leftAtBottom) {
-            left.scrollTop += delta
-        }
-    } else {
-        if (left.scrollTop > 0) {
-            left.scrollTop += delta
-        } else if (right.scrollTop > 0) {
-            right.scrollTop += delta
-        }
-    }
+const syncScrollLeft = () => {
+    if (isSyncingRight) return
+    isSyncingLeft = true
+    rightScroll.value.scrollTop = leftScroll.value.scrollTop
+    isSyncingLeft = false
 }
+
+const syncScrollRight = () => {
+    if (isSyncingLeft) return
+    isSyncingRight = true
+    leftScroll.value.scrollTop = rightScroll.value.scrollTop
+    isSyncingRight = false
+}
+
+onMounted(() => {
+    leftScroll.value.addEventListener('scroll', syncScrollLeft)
+    rightScroll.value.addEventListener('scroll', syncScrollRight)
+})
+
+onUnmounted(() => {
+    leftScroll.value.removeEventListener('scroll', syncScrollLeft)
+    rightScroll.value.removeEventListener('scroll', syncScrollRight)
+})
 </script>
 
 <style scoped>
@@ -158,7 +161,6 @@ const handleScroll = (e) => {
 }
 
 .right {
-    position: sticky;
     height: 100vh;
 }
 
