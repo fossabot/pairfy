@@ -15,7 +15,7 @@
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <ProductCarousel style="max-width: 1200px;" />
+                            <ProductGrid style="max-width: 1000px;" />
                             <p v-for="n in 100" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -54,7 +54,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 3" :key="n">
+                            <ProductButton v-for="n in 1" :key="n">
                                 <template #icon>
                                     <img class="icon"
                                         src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
@@ -131,7 +131,7 @@ const syncScroll = (deltaY) => {
     const rightMax = right.scrollHeight - right.clientHeight
     const leftMax = left.scrollHeight - left.clientHeight
 
-    const threshold = rightMax * 0.6
+    const threshold = rightMax * 0.5
 
     if (deltaY > 0) {
         // scrolling down
@@ -251,10 +251,10 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 400px;
     height: 100vh;
     overflow: hidden;
-    gap: 3rem;
+    gap: 5rem;
 }
 
 .left,
@@ -287,7 +287,7 @@ onUnmounted(() => {
 }
 
 .content {
-    height: 200%;
+    height: 100%;
 }
 
 
@@ -305,9 +305,9 @@ onUnmounted(() => {
 }
 
 .productName {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-5);
     margin-top: 0.5rem;
-    line-height: 2rem;
+    line-height: 2.5rem;
     font-weight: 400;
 }
 

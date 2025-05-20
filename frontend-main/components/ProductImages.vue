@@ -95,8 +95,8 @@ const nextImage = () => {
 }
 
 .p-media-image {
-    width: 600px;
-    height: 600px;
+    width: 500px;
+    height: 500px;
     display: flex;
     margin: 0 auto;
     position: relative;
