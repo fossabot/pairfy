@@ -112,7 +112,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 
 useHead({
   title: 'Pairfy - Cardano marketplace',
