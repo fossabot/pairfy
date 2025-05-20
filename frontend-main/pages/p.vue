@@ -7,45 +7,11 @@
         <div class="left">
           <ProductImages />
           <DividerComp />
+          <ProductCarousel style="max-width: 1200px;" />
 
-
-
-          <h2>MacBook Air 13&quot; with M4 Chip — Power Meets Portability with Apple Intelligence</h2>
-
-          <p><strong>Speed of Lightness</strong><br>
-            The new <strong>MacBook Air with the M4 chip</strong> lets you blaze through work, creativity, and
-            entertainment. Its ultra-thin and lightweight design makes it easy to take anywhere, while the <strong>up to
-              18-hour battery life</strong> keeps you powered all day long.</p>
-
-          <p><strong>Supercharged by M4</strong><br>
-            The Apple M4 chip delivers exceptional speed and responsiveness for everything you do—whether you're
-            multitasking across apps, editing high-resolution videos, or gaming with demanding graphics.</p>
-
-          <p><strong>Built for Apple Intelligence*</strong><br>
-            Apple Intelligence is your personal AI system that helps you write, create, and get things done with ease.
-            With <strong>groundbreaking privacy protections</strong>, your data stays secure and private — even from
-            Apple.</p>
-
-          <p><strong>All-Day Battery Life</strong><br>
-            Enjoy up to <strong>18 hours of battery life</strong>, whether you're plugged in or on the go. The
-            efficiency of the M4 ensures peak performance across every task.</p>
-
-          <p><strong>Brilliant 13.6&quot; Liquid Retina Display</strong><br>
-            Experience stunning visuals with a Liquid Retina display that supports <strong>1 billion colors</strong>.
-            Text appears ultra-sharp, and your photos and videos pop with rich contrast and vivid detail.</p>
-
-          <p><strong>Look and Sound Amazing</strong><br>
-            Elevate your video calls and content creation with a <strong>12MP front-facing camera</strong> featuring
-            Center Stage, a <strong>three-mic array</strong>, and <strong>four-speaker system</strong> with Spatial
-            Audio for immersive sound.</p>
-
-          <p><strong>Modern Connectivity Options</strong><br>
-            Includes <strong>MagSafe charging</strong>, <strong>two Thunderbolt 4 ports</strong>, <strong>Wi‑Fi
-              6E*</strong>, <strong>Bluetooth 5.3</strong>, a <strong>headphone jack</strong>, and support for
-            <strong>up to two external displays</strong>.
+          <p v-for="n in 40" :key="n">
+            Este es un párrafo repetido.
           </p>
-
-
 
 
         </div>
@@ -69,7 +35,7 @@
 
             <div class="productRating">
               <span>4.3</span>
-              <RatingComp :rating="4"/>
+              <RatingComp :rating="4" />
               <span>(3849)</span>
             </div>
 
@@ -102,6 +68,10 @@
               </template>
               Midnight Network
             </ProductButton>
+
+            <p v-for="n in 20" :key="n">
+              Este es un párrafo repetido.
+            </p>
 
           </div>
         </div>
@@ -145,7 +115,9 @@ useHead({
   gap: 2rem;
 }
 
-.left {}
+.left {
+  max-width: calc(--body-a - 400px);
+}
 
 .right-container {
   position: relative;
@@ -228,7 +200,7 @@ useHead({
 .subtitle {
   font-size: var(--text-size-4);
   color: var(--text-a);
-  margin-top: 2rem; 
+  margin-top: 2rem;
   font-weight: 600;
 }
 
