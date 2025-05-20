@@ -69,7 +69,7 @@
 
             <div class="productRating">
               <span>4.3</span>
-              <RatingComp />
+              <RatingComp :rating="4"/>
               <span>(3849)</span>
             </div>
 
