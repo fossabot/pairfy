@@ -80,7 +80,7 @@ const goToProducts = () => {
     transform: translate(-50%, -50%);
     object-fit: cover;
     position: absolute;
-    filter: brightness(0.65);
+    filter: brightness(0.6);
 }
 
 .overlay-content {

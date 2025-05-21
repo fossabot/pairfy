@@ -1,5 +1,6 @@
 <template>
     <div class="HomeSection2">
+        <DividerComp />
         <ProductCarousel title="Most purchased by the community" /> 
         <DividerComp />
         <ProductGrid title="Best sellers of the month" />

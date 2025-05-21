@@ -81,12 +81,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-
 const leftScroll = ref(null)
 const rightScroll = ref(null)
 
-const thumbHeight = ref(60) // cambiará dinámicamente
+useLenisMultiple([leftScroll])
+
+const thumbHeight = ref(60)
 const thumbTop = ref(0)
 
 const isDragging = ref(false)
@@ -212,6 +212,7 @@ const stopDrag = () => {
 }
 
 onMounted(() => {
+
     document.body.style.overflow = 'hidden'
     window.addEventListener('wheel', handleWheel, { passive: false })
     updateThumb()
@@ -249,7 +250,7 @@ onUnmounted(() => {
 .left,
 .right {
     box-sizing: border-box;
-    padding-top: 150px; 
+    padding-top: 150px;
     overflow: hidden;
 }
 
@@ -268,6 +269,7 @@ onUnmounted(() => {
 .scrollable {
     height: 100%;
     overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .sticky-box {

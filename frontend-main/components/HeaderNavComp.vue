@@ -49,12 +49,12 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
+  width: calc(100% - 2rem);
   justify-content: center;
   color: var(--text-w);
   position: absolute;
   z-index: 10000;
   display: flex;
-  width: 100%;
   top: 0rem;
 }
 
