@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Pairfy - Cardano native marketplace"
+  name: "Pairfy - Cardano native marketplace."
   text: "Buy and sell products cooperatively on the Cardano - Midnight network."
   tagline: Documentation
   actions:

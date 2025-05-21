@@ -45,7 +45,7 @@
                             <div class="productRating">
                                 <span>4.3</span>
                                 <RatingComp :rating="4" />
-                                <span>(3849)</span>
+                                <span>(384)</span>
                             </div>
 
                             <div class="subtitle">
@@ -242,10 +242,10 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
+    grid-template-columns: 1fr 375px;
     overflow: hidden;
     height: 100vh;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .left,

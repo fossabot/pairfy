@@ -5,7 +5,7 @@ It is a community-governed e-commerce that uses blockchain technology and artifi
 
 The trade between the seller and the buyer is managed by smart contracts or individual Plutus scripts.
 Using a Cardano smart-contract allows to use **_ADA_**, **_stablecoin_** and **_native asset_** as a form of payment for the products.
-
+In addition, the implementation of other innovative and deterministic trading logics.
 
 #### Differential factors
 
@@ -27,7 +27,9 @@ This helps leverage product prices, reducing them by 10% to 25% from traditional
 
 _Example_
 
-> **Note:** Although the price of ADA/USD may fluctuate depending on when this is read, the long-term trend is considered bullish. For the purposes of this example, a reference value of **1 ADA = 1 USD** will be used.
+::: tip
+Although the price of ADA / USD may fluctuate depending on when this is read the long-term trend is considered bullish. For the purposes of this example the reference value of **1 ADA = 1 USD** will be used.
+:::
 
 
 If the liquidity pool reaches 1.000.000 ADA this liquidity can be
@@ -46,7 +48,7 @@ Which for products over $200 represents a pretty substantial discount.
 A very generous discount is a good incentive to encourage traditional market buyers to migrate to the Cardano ecosystem.
 
 
-_Here's another example with an iPhone:_
+Here's another example with an iPhone:
 
 
 ```md
@@ -64,6 +66,10 @@ Beneficiaries: 2.500 users
 
 The community can vote to set the pool cap and the `buy_order_discount` value.
 
+You can also vote on other proposals that emerge from the ongoing discussion and the broader 
+context of the project's development, guided by the constitutional principles that shape its direction.
+
+
 #### Paradigm revolution
 
 Using Turing-complete smart contracts enables high levels of innovation that dwarf traditional and centralized applications.
@@ -79,8 +85,8 @@ You can fork the official repository to create a better commercial version of Pa
 
 If you want to make a closed fork as a black box and not share your improvements with the open-source community, then you can opt for a commercial license.
 
-This is to punish the abusive and greedy behavior of large corporations that take code from open-source developers who are driven by passion.
-READ [Hallowen docs](https://en.wikipedia.org/wiki/Halloween_documents)
+This is to punish the abusive and greedy behavior of corporations that take code from open-source developers who are driven by passion
+[READ](https://en.wikipedia.org/wiki/Halloween_documents).
 
 ## Syntax Highlighting
 
