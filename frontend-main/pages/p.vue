@@ -240,7 +240,7 @@ onUnmounted(() => {
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 375px;
+    grid-template-columns: 1fr 350px;
     overflow: hidden;
     height: 100vh;
     gap: 3rem;
