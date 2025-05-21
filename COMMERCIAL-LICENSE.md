@@ -16,17 +16,17 @@ If your intended use of Pairfy does not comply with the terms of the GPLv3, you 
 
 Unauthorized use of this software outside the scope of the GPLv3 may constitute copyright infringement and may lead to legal action.
 
-## 💰 Commercial License Fee
+## Commercial License Fee
 
 - Standard license: **$10,000 USD**
 
-## ❗ Penalty for Unauthorized Use
+## Penalty for Unauthorized Use
 
 If you use Pairfy in a closed-source or proprietary closed-source project without a license:
 
 - You may be liable for **damages of up to $100,000 USD**, plus legal fees.
 
-## 📩 To purchase a license
+## To purchase a license
 
 Email: `sudo.delete.evil@gmail.com`
 
