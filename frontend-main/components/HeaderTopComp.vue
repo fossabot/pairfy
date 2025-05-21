@@ -42,6 +42,7 @@ const isContrast = computed(() => route.name === 'p')
     border-bottom: 1px solid var(--border-a);
     width: calc(100% - 2rem);
     justify-content: center;
+    box-sizing: border-box;
     position: absolute;
     height: 2rem;
     z-index: 0;
@@ -52,7 +53,6 @@ const isContrast = computed(() => route.name === 'p')
     justify-content: flex-end;
     max-width: var(--body-a);
     box-sizing: border-box;
-    padding: 0 1rem;
     width: inherit;
 }
 
@@ -64,7 +64,6 @@ const isContrast = computed(() => route.name === 'p')
 }
 
 .HeaderTop-network svg {
-    color: var(--green-a);
     margin-right: 0.5rem;
 }
 

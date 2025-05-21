@@ -83,11 +83,20 @@ Closed source, telemetry, private data collection, will pass.
 
 You can fork the official repository to create a better commercial version of Pairfy, but you are obligated to share your improvements with the Cardano open-source community and the wider community, all under the GPLv3 license.
 
-If you want to make a closed fork as a black box and not share your improvements with the open-source community, then you can opt for a commercial license.
+If you want to make a closed-source fork and not share your improvements with the open-source community, then you can opt for a commercial license.
 
-This is to punish the abusive and greedy behavior of corporations that take code from open-source developers who are driven by passion
-[READ](https://en.wikipedia.org/wiki/Halloween_documents).
+This is to punish the abusive and greedy behavior of corporations that take code from open-source developers who are driven by passion.
 
+
+::: details
+| Company Involved                | Project / Software         | What Happened                                                                                             | Outcome / Response                                                                                         |
+|--------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| **Amazon vs. Elastic**         | Elasticsearch               | Amazon launched its own managed Elasticsearch service using the open-source version (Apache 2.0), without significant upstream contributions. Elastic accused Amazon of exploiting the project and using the name unfairly, despite legal allowance. | In response, Elastic changed the license to SSPL to restrict cloud providers. Amazon forked it into OpenSearch. |
+| **Cloud Providers (AWS, etc.)**| Redis / MongoDB             | Redis and MongoDB were offered as hosted services by cloud providers who didn’t contribute proportionally to development. This raised concerns about monetizing open-source projects without supporting their creators. | Both projects switched to more restrictive licenses (SSPL, Redis Source Available) to limit usage by major clouds. |
+| **Google vs. Docker**          | Docker / Kubernetes         | Docker introduced containerization, but Google created Kubernetes, an open-source orchestration system that built on container concepts. Kubernetes became more popular in production use, reducing Docker's central role. | Kubernetes became the industry standard. Docker remained useful for development but lost dominance in orchestration. |
+| **HashiCorp vs. Community**    | Terraform                   | Companies offered Terraform as a service without partnering with HashiCorp. In 2023, HashiCorp moved Terraform to a Business Source License (BSL), limiting commercial use by competitors. | The community responded by creating OpenTofu, a fork under the Linux Foundation to ensure long-term open-source freedom. |
+| **Oracle vs. Community**       | OpenOffice.org              | After acquiring Sun Microsystems, Oracle took control of OpenOffice.org. Many contributors distrusted Oracle's stewardship and left to form a community-driven fork, LibreOffice. | LibreOffice quickly surpassed OpenOffice in development and adoption, becoming the primary free office suite. |
+:::
 ## Syntax Highlighting
 
 VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shikijs/shiki), with additional features like line-highlighting:

@@ -6,6 +6,16 @@ Pairfy is dual-licensed:
 
 2. A **Commercial License** is required if you create a modified version (fork) of this software and **do not release its complete source code under the GPLv3 or a compatible open-source license.**
 
+This includes, but is not limited to:
+
+- Distributing a proprietary or closed-source fork of Pairfy
+- Using a modified version of Pairfy in a commercial SaaS, cloud service, or internal business application **without releasing its source code**
+- Integrating Pairfy into a closed-source product, project, system, or solution
+
+If your intended use of Pairfy does not comply with the terms of the GPLv3, you **must obtain a commercial license.**
+
+Unauthorized use of this software outside the scope of the GPLv3 may constitute copyright infringement and may lead to legal action.
+
 ## 💰 Commercial License Fee
 
 - Standard license: **$10,000 USD**
@@ -28,3 +38,6 @@ Include:
 ---
 
 All commercial terms are negotiable depending on project size and scope.
+This commercial license does not grant exclusivity or any warranties.  
+The software is provided **"as is"**, without warranty of any kind, express or implied.
+
