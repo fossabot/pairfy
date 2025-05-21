@@ -46,7 +46,7 @@ const isContrast = computed(() => route.name === 'p')
     box-sizing: border-box;
     position: fixed;
     z-index: 10000;
-    height: 2rem;
+    height: 3rem;
     top: 0;
 }
 

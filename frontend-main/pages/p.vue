@@ -38,7 +38,7 @@
               <span>(384)</span>
             </div>
 
-            <div class="subtitle text-gradient">
+            <div class="subtitle">
               Model. <span>Check variations.</span>
             </div>
 
@@ -133,7 +133,7 @@ function openChildDialog() {
 .page-wrapper {
   width: 100%;
   display: flex;
-  padding-top: 10rem;
+  padding-top: 12rem;
   justify-content: center;
 }
 
@@ -160,7 +160,7 @@ function openChildDialog() {
 
 .fixed-box {
   position: fixed;
-  top: 8rem;
+  top: 10rem;
   width: inherit;
   height: 100vh;
   right: 4rem;
@@ -211,6 +211,10 @@ function openChildDialog() {
   margin-bottom: 2rem;
   margin-top: 2rem;
   font-weight: 600;
+}
+
+.subtitle span{
+  color: var(--text-a);
 }
 
 .productName {
