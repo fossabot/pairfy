@@ -49,11 +49,10 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
-  background: var(--background-a);
   width: calc(100% - 2rem);
   justify-content: center;
   color: var(--text-w);
-  position: fixed;
+  position: absolute;
   z-index: 10000;
   display: flex;
   top: 0rem;
@@ -88,6 +87,8 @@ watch(() => route.path, (newPath) => {
 
 
 .SubMenu.contrast {
+  background: var(--background-a);
+  position: fixed;
   top: 2rem;
 }
 

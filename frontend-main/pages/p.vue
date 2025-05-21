@@ -137,8 +137,8 @@ onBeforeUnmount(() => {
 
 .fixed-box {
   position: fixed;
-  top: 7rem;
-  width: 400px;
+  top: 8rem;
+  width: inherit;
   height: 100vh;
   right: 1rem;
   padding: 1rem;
