@@ -16,16 +16,8 @@ spec:
         - name: service-query
           image: pairfy/service-query
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name                                                             
-            - name: POD_TIMEOUT
-              value: '120000'   
-            - name: EXPRESS_PORT
-              value: "8000"
-            - name: EXPRESS_TIMEOUT
-              value: "120000"
+            - name: NODE_ENV
+              value: development                                          
             - name: WEAVIATE_HOST
               value: weaviate.default.svc.cluster.local:8080
             - name: DATABASE_HOST  
@@ -51,6 +43,15 @@ spec:
               value: redis://service-state-redis:6379    
             - name : REDIS_RATELIMIT_URL
               value: "redis://redis-limiter:6379"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name       
+            - name: AGENT_JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: agent-token-secret
+                  key: AGENT_TOKEN_KEY 
                                                                                                                                                                                                                                         
           resources:
             limits:

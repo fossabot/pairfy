@@ -2,7 +2,7 @@ import compression from "compression";
 import database from "./database/index.js";
 import * as route from "./routes/index.js";
 import { catchError, errorEvents } from "./utils/index.js";
-import { ApiError, ERROR_CODES, errorHandler, logger, RateLimiterJWT } from "@pairfy/common";
+import { ApiError, ERROR_CODES, errorHandler, logger, RateLimiter } from "@pairfy/common";
 import { ensureBucketExists, minioClient } from "./database/minio.js";
 import { app } from "./app.js";
 
@@ -47,7 +47,7 @@ const main = async () => {
       database: process.env.DATABASE_NAME,
     });
 
-    const rateLimiter = new RateLimiterJWT({
+    const rateLimiter = new RateLimiter({
       source: 'service-media',
       redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
@@ -58,7 +58,7 @@ const main = async () => {
     app.post(
       "/api/media/create-files",
       
-      rateLimiter.middleware(),
+      rateLimiter.middlewareJwt(),
       ...route.createFilesMiddlewares,
 
       route.createFilesHandler
@@ -67,7 +67,7 @@ const main = async () => {
     app.post(
       "/api/media/update-files",
 
-      rateLimiter.middleware(),
+      rateLimiter.middlewareJwt(),
       ...route.updateFilesMiddlewares,
 
       route.updateFilesHandler
@@ -83,7 +83,8 @@ const main = async () => {
  
     app.get(
       "/api/media/get-file/groups/:groupId/:filename",
-      route.getFileMiddlewares,
+      rateLimiter.middlewareIp(),
+      ...route.getFileMiddlewares,
       route.getFileHandler
     );
 

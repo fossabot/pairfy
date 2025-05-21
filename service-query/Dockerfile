@@ -2,7 +2,9 @@ FROM node:20-slim
 
 WORKDIR /app
 
-COPY package.json .
+COPY .npmrc ./
+
+COPY package.json ./
 
 RUN ls
 

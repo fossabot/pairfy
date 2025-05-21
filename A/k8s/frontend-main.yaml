@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-main
+  labels:
+    app: frontend-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend-main
+  template:
+    metadata:
+      labels:
+        app: frontend-main
+    spec:
+      containers:
+        - name: frontend-main
+          image: pairfy/frontend-main
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NUXT_SERVICE_MEDIA_BASE
+              value: http://service-media.default.svc.cluster.local:8003/api
+            - name: NUXT_PUBLIC_MEDIA_CDN
+              value: /api/media
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-main
+spec:
+  selector:
+    app: frontend-main
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: ClusterIP

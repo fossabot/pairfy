@@ -22,15 +22,15 @@ spec:
     - host: pairfy.dev
       http:
         paths:
-          - path: /?(.*)
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: frontend-main
                 port:
-                  number: 8000
+                  number: 80
            
-    - host: s.pairfy.dev
+    - host: seller.pairfy.dev
       http:
         paths:
           - path: /
@@ -39,4 +39,4 @@ spec:
               service:
                 name: frontend-seller
                 port:
-                  number: 80
+                  number: 81

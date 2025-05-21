@@ -3,13 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RateLimiterJWT = void 0;
+exports.RateLimiter = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const logger_1 = require("./logger");
 const errorHandler_1 = require("./errorHandler");
 const errorCodes_1 = require("./errorCodes");
-class RateLimiterJWT {
+class RateLimiter {
     constructor(options) {
         this.luaScript = `
     local key = KEYS[1]
@@ -33,7 +33,8 @@ class RateLimiterJWT {
         if (!Number.isInteger(options.maxRequests) || options.maxRequests <= 0) {
             throw new Error("'maxRequests' must be a positive integer.");
         }
-        if (!Number.isInteger(options.windowSeconds) || options.windowSeconds <= 0) {
+        if (!Number.isInteger(options.windowSeconds) ||
+            options.windowSeconds <= 0) {
             throw new Error("'windowSeconds' must be a positive integer.");
         }
         if (!options.jwtSecret || options.jwtSecret.trim() === "") {
@@ -53,7 +54,8 @@ class RateLimiterJWT {
         this.jwtSecret = options.jwtSecret;
         this.maxRequests = options.maxRequests ?? 100;
         this.windowSeconds = options.windowSeconds ?? 60;
-        this.middleware = this.middleware.bind(this);
+        this.middlewareJwt = this.middlewareJwt.bind(this);
+        this.middlewareIp = this.middlewareIp.bind(this);
     }
     addListeners() {
         this.redis.on("error", (error) => {
@@ -99,7 +101,7 @@ class RateLimiterJWT {
         }
     }
     /** Express rateLimitJwt middleware */
-    middleware() {
+    middlewareJwt() {
         return async (req, res, next) => {
             try {
                 const agentId = this.verifyToken(req);
@@ -124,8 +126,29 @@ class RateLimiterJWT {
             }
         };
     }
-    /** GraphQL rateLimitJwt check */
-    async check(agentId) {
+    /** Express middlewareIp middleware */
+    middlewareIp() {
+        return async (req, res, next) => {
+            try {
+                const ip = req.publicAddress;
+                const key = `ratelimit:${this.source}:ip:${ip}`;
+                const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
+                if (result === 0) {
+                    return next(new errorHandler_1.ApiError(429, "Too many requests from this IP", {
+                        code: errorCodes_1.ERROR_CODES.RATE_LIMIT_EXCEEDED,
+                    }));
+                }
+                return next();
+            }
+            catch (error) {
+                return next(new errorHandler_1.ApiError(503, "Service temporarily unavailable", {
+                    code: errorCodes_1.ERROR_CODES.SERVICE_UNAVAILABLE,
+                }));
+            }
+        };
+    }
+    /** GraphQL checkId */
+    async checkId(agentId) {
         try {
             const key = `ratelimit:${this.source}:agent:${agentId}`;
             const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
@@ -149,5 +172,30 @@ class RateLimiterJWT {
             return false;
         }
     }
+    /** GraphQL checkIp */
+    async checkIp(ip) {
+        try {
+            const key = `ratelimit:${this.source}:ip:${ip}`;
+            const result = await this.redis.eval(this.luaScript, 1, key, this.maxRequests, this.windowSeconds);
+            if (result === 0) {
+                logger_1.logger.warn({
+                    service: this.source,
+                    event: "ratelimit.exceeded",
+                    message: "ratelimit exceeded by ip",
+                    ip,
+                });
+            }
+            return result !== 0;
+        }
+        catch (error) {
+            logger_1.logger.error({
+                service: this.source,
+                event: "ratelimit.error",
+                message: "ratelimit error",
+                error,
+            });
+            return false;
+        }
+    }
 }
-exports.RateLimiterJWT = RateLimiterJWT;
+exports.RateLimiter = RateLimiter;

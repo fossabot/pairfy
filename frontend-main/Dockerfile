@@ -1,27 +1,38 @@
-FROM node:lts AS build-stage
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json ./
+ARG NUXT_PUBLIC_MEDIA_CDN
+ENV NUXT_PUBLIC_MEDIA_CDN=${NUXT_PUBLIC_MEDIA_CDN:-/api/media} 
 
-RUN npm config set fetch-timeout 290000
 
-RUN npm config set fetch-retry-maxtimeout 290000
+COPY package.json package-lock.json ./
+RUN npm ci --prefer-offline --no-audit
 
-RUN npm config set fetch-retry-mintimeout 290000
-
-RUN yarn install
 
 COPY . .
 
+
 RUN npm run build
 
-FROM nginx:alpine  AS production-stage
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+FROM node:20-alpine AS runner
 
-COPY nginx.conf /etc/nginx/nginx.conf
+ENV NODE_ENV=production
 
-EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN addgroup -g 1001 -S nuxt && adduser -S nuxt -u 1001
+
+WORKDIR /app
+
+
+COPY --from=builder /app/.output ./.output
+
+
+RUN chown -R nuxt:nuxt /app
+USER nuxt
+
+EXPOSE 3000
+
+
+CMD ["node", ".output/server/index.mjs"]

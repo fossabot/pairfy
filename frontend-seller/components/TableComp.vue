@@ -263,7 +263,7 @@ const nextPage = () => {
 }
 
 .row {
-  padding: 0.5rem;
+  padding: 1rem;
   max-width: 15rem;
   text-align: left;
   overflow-wrap: break-word;
