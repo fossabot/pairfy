@@ -1,7 +1,7 @@
 <template>
-  <nav class="SubMenu">
+  <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
-      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="toHome" :class="{ contrast: isContrast }">
+      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="" :class="{ contrast: isContrast }">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
@@ -49,32 +49,25 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
-  animation: slideDown 0.5s ease-out forwards;
-  transform: translateY(-1rem);
-  position: absolute;
+  justify-content: center;
   color: var(--text-w);
+  position: absolute;
   z-index: 10000;
+  display: flex;
   width: 100%;
-  opacity: 0;
   top: 0rem;
-  max-width: var(--body-a);
-}
-
-@keyframes slideDown {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 .SubMenu-body {
   gap: 1rem;
   margin: 0;
   display: flex;
+  width: inherit;
   font-weight: 500;
   list-style: none;
   align-items: center;
   padding: 1.25rem 0;
+  max-width: var(--body-a);
   border-bottom-left-radius: var(--radius-c);
   border-bottom-right-radius: var(--radius-c);
 }
@@ -93,7 +86,9 @@ watch(() => route.path, (newPath) => {
 
 
 
-
+.SubMenu.contrast {
+  top: 2rem;
+}
 
 .SubMenu-body.contrast {
   color: var(--text-a);

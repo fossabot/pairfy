@@ -14,10 +14,8 @@
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <p v-for="n in 100" :key="n">
-                                Este es un párrafo repetido.
-                            </p>
-
+                            <img class="test-image" v-for="n in 10" :key="n"
+                                src="https://m.media-amazon.com/images/G/01/apple/MacBook_Air_M4_Product_Page_LW__en-US_01._CB549121584_.jpg" />
                         </div>
                     </div>
                 </div>
@@ -52,7 +50,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductModel v-for="n in 3" :key="n"/>
+                            <ProductModel v-for="n in 10" :key="n" />
 
                             <div class="subtitle">
                                 Finish. <span>Choose your network.</span>
@@ -72,7 +70,7 @@
                                 Midnight Network
                             </ProductButton>
 
-                            <div class="busy-box"/>
+                            <div class="busy-box" />
 
                         </div>
                     </div>
@@ -245,13 +243,13 @@ onUnmounted(() => {
     grid-template-columns: 1fr 375px;
     overflow: hidden;
     height: 100vh;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .left,
 .right {
     box-sizing: border-box;
-    padding-top: 8rem;
+    padding-top: 9rem;
     overflow: hidden;
 }
 
@@ -360,7 +358,10 @@ onUnmounted(() => {
 
 
 
-
+.test-image {
+    width: 100%;
+    max-width: (var(--body-a) - 400px);
+}
 
 
 .custom-scrollbar-thumb {

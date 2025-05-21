@@ -1,12 +1,13 @@
 <template>
     <header>
-        <HeaderBarComp :items="[
+        <HeaderTopComp />
+        <HeaderNavComp :items="[
             { label: 'Home', route: '/' },
             { label: 'Offers', route: '/offers' },
             { label: 'Categories', route: '/categories' },
             { label: 'Docs', route: '/docs' },
             { label: 'Sell', route: '/account' }
- 
+
         ]" />
 
     </header>
@@ -29,12 +30,11 @@ header {
     font-size: var(--text-size-1);
 }
 
+
 /* Default styles apply to all devices */
 
 /* Small phones (up to 480px) */
-@media (max-width: 480px) {
-
-}
+@media (max-width: 480px) {}
 
 /* Large phones and small tablets (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {}
