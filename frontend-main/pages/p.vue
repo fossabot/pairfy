@@ -249,7 +249,7 @@ onUnmounted(() => {
 .left,
 .right {
     box-sizing: border-box;
-    padding-top: 9rem;
+    padding-top: 150px; 
     overflow: hidden;
 }
 
