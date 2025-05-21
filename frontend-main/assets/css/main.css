@@ -112,17 +112,23 @@ textarea::placeholder {
   justify-content: center;
 }
 
-
 .fade-title {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.6s ease-out forwards;
 }
 
-
 @keyframes fadeUp {
   to {
       opacity: 1;
       transform: translateY(0);
   }
+}
+
+.text-gradient {
+  background: linear-gradient(90deg, #225aea, #3f8efc, #6ba9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }

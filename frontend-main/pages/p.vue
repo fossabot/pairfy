@@ -38,13 +38,13 @@
               <span>(384)</span>
             </div>
 
-            <div class="subtitle">
+            <div class="subtitle text-gradient">
               Model. <span>Check variations.</span>
             </div>
 
             <ProductModel v-for="n in 1" :key="n" />
 
-            <div class="subtitle">
+            <div class="subtitle text-gradient">
               Finish. <span>Choose your network.</span>
             </div>
 
@@ -208,14 +208,9 @@ function openChildDialog() {
 
 .subtitle {
   font-size: var(--text-size-4);
-  color: var(--text-a);
   margin-bottom: 2rem;
   margin-top: 2rem;
   font-weight: 600;
-}
-
-.subtitle span {
-  color: var(--text-b);
 }
 
 .productName {
