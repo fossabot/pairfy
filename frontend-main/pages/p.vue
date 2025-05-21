@@ -12,8 +12,8 @@
 
 
       <div class="right-column">
-        <div class="fixed-box">
-          <div class="right-scroll">
+        <div class="fixed-box" >
+          <div class="right-scroll" ref="rightScrollRef">
 
             <div class="productBrand">
               Samsung
@@ -96,12 +96,24 @@ function removeLenis() {
 }
 
 
+const rightScrollRef = ref(null)
+
+const syncScroll = () => {
+  if (rightScrollRef.value) {
+    rightScrollRef.value.scrollTop = window.scrollY
+  }
+}
+
+useLenisMultiple([rightScrollRef])
+
 onMounted(() => {
   addLenis()
+  window.addEventListener('scroll', syncScroll)
 })
 
 onBeforeUnmount(() => {
   removeLenis()
+  window.removeEventListener('scroll', syncScroll)
 })
 
 </script>
@@ -140,7 +152,7 @@ onBeforeUnmount(() => {
   top: 8rem;
   width: inherit;
   height: 100vh;
-  right: 1rem;
+  right: 4rem;
   padding: 1rem;
   box-sizing: border-box;
   overflow: hidden;
@@ -150,7 +162,16 @@ onBeforeUnmount(() => {
 .right-scroll {
   height: 100%;
   overflow-y: auto;
-  padding-right: 10px;
+}
+
+.right-scroll {
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+}
+
+.right-scroll::-webkit-scrollbar {
+  display: none; /* Safari y Chrome */
 }
 
 .product-section {
@@ -168,7 +189,7 @@ onBeforeUnmount(() => {
 }
 
 .busy-box {
-    height: 100px;
+    height: 200px;
 }
 
 .subtitle {
