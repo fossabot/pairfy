@@ -82,7 +82,7 @@
 }
 
 .discount {
-    color: var(--red-a);
+    color: var(--green-a);
     font-weight: 300;
 }
 

@@ -27,18 +27,18 @@ This helps leverage product prices, reducing them by 10% to 25% from traditional
 
 _Example_
 
-Although the price of ADA/USD may fluctuate depending on the time you read this, 
-the price is bullish in the long term, so for this example 1 ADA = 1 USD will be used.
+> **Note:** Although the price of ADA/USD may fluctuate depending on when this is read, the long-term trend is considered bullish. For the purposes of this example, a reference value of **1 ADA = 1 USD** will be used.
+
 
 If the liquidity pool reaches 1.000.000 ADA this liquidity can be
-divided by 100 ADA as discount_per_order
+divided by 100 ADA as a form of discount for each buy order.
 
 ```md
-discount_per_order = 100 ADA
+buy_order_discount = 100 ADA
 
-1_000_000 ADA / discount_per_order = 10_000 discounts
+1_000_000 ADA / buy_order_discount = 10_000 discounts
 
-Beneficiaries: 10_000 users
+Beneficiaries: 10.000 users
 ```
 
 This means that 10,000 buy orders will have a discount of 100 ADA.
@@ -50,19 +50,19 @@ _Here's another example with an iPhone:_
 
 
 ```md
-discount_per_order = 200 ADA
+buy_order_discount = 200 ADA
 
-500_000 ADA / discount_per_order = 2_500 discounts
+500_000 ADA / buy_order_discount = 2_500 discounts
 
 Original Iphone 17 price = 1000USD
 Price with discount applied = 800USD
 
-Beneficiaries: 2_500 users 
+Beneficiaries: 2.500 users 
 
 ```
 
 
-The community can vote to set the pool cap and the `discount_per_order` value.
+The community can vote to set the pool cap and the `buy_order_discount` value.
 
 #### Paradigm revolution
 
