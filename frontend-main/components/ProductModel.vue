@@ -13,7 +13,7 @@
 
             <div class="price">
                 <span>$38 USD</span>
-                <span class="discount">-10% OFF</span>
+                <span class="discount">-10% Off</span>
                 <span class="saved">Save $250</span>
             </div>
         </div>
@@ -92,6 +92,6 @@
     width: 1px;
     height: 0.75rem;
     margin: 0 0.75rem;
-    background: var(--text-b)
+    background: var(--border-a)
 }
 </style>
