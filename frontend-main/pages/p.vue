@@ -40,7 +40,7 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductModel v-for="n in 10" :key="n" />
+            <ProductModel v-for="n in 1" :key="n" />
 
             <div class="subtitle">
               Finish. <span>Choose your network.</span>
