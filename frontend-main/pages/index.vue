@@ -10,7 +10,7 @@ import Lenis from 'lenis'
 let lenis: Lenis | null = null
 let frameId: number
 
-onMounted(() => {
+function addLenis() {
   lenis = new Lenis({
     smooth: true,
   })
@@ -21,11 +21,21 @@ onMounted(() => {
   }
 
   frameId = requestAnimationFrame(raf)
+}
+
+
+function removeLenis() {
+  if (frameId) cancelAnimationFrame(frameId)
+  lenis?.destroy()
+}
+
+
+onMounted(() => {
+  addLenis()
 })
 
 onBeforeUnmount(() => {
-  if (frameId) cancelAnimationFrame(frameId)
-  lenis?.destroy()
+  removeLenis()
 })
 
 
