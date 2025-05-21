@@ -6,7 +6,7 @@
                 <!-- Header -->
                 <div class="Banner-header">
                     <div class="Banner-header-left">
-                        <h1>
+                        <h1 class="fade-title">
                             Buy and sell <span class="light"> on the Cardano</span> <span class="light">market</span>
                         </h1>
                         <ul class="features">
@@ -144,6 +144,6 @@
     padding: 1rem;
     font-size: var(--text-size-4);
     border-radius: var(--radius-f);
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 </style>
