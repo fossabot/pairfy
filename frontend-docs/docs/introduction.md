@@ -10,15 +10,15 @@ Using a Cardano smart-contract allows to use **_ADA_**, **_stablecoin_** and **_
 #### Differential factors
 
 - Community-governed with chain vote.
-- Each trade is an isolated smart-contract.
 - The **liquidity pool** to reduce the price of products.
 - Use of Cardano Network – Midnight Network.
+- Each trade is an isolated smart-contract.
 - Any member of the community can be a seller.
 - Community repository of products and templates.
 - Seller incentive program.
 - Open-source development.
 - Integration of AI models.
-- Product search by vectorized semantics.
+- Product search by AI vectorized semantics.
 
 #### Competitive factors
 
@@ -27,7 +27,7 @@ This helps leverage product prices, reducing them by 10% to 25% from traditional
 
 _Example_
 
-Although the price of ADAUSD may fluctuate depending on the time you read this, 
+Although the price of ADA/USD may fluctuate depending on the time you read this, 
 the price is bullish in the long term, so for this example 1 ADA = 1 USD will be used.
 
 If the liquidity pool reaches 1.000.000 ADA this liquidity can be
@@ -72,6 +72,15 @@ Even large tech companies will have to adapt to this change or else disappear.
 The open source community is a giant.
 It allows for the distribution of value based on merit and opportunity, enables transparency, and highlights the power of community governance.
 Closed source, telemetry, private data collection, will pass.
+
+#### Licenses
+
+You can fork the official repository to create a better commercial version of Pairfy, but you are obligated to share your improvements with the Cardano open-source community and the wider community, all under the GPLv3 license.
+
+If you want to make a closed fork as a black box and not share your improvements with the open-source community, then you can opt for a commercial license.
+
+This is to punish the abusive and greedy behavior of large corporations that take code from open-source developers who are driven by passion.
+READ [Hallowen docs](https://en.wikipedia.org/wiki/Halloween_documents)
 
 ## Syntax Highlighting
 

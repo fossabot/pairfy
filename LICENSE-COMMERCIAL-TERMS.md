@@ -8,13 +8,13 @@ Pairfy is dual-licensed:
 
 ## 💰 Commercial License Fee
 
-- Standard license: **$1,000 USD**
+- Standard license: **$10,000 USD**
 
 ## ❗ Penalty for Unauthorized Use
 
 If you use Pairfy in a closed-source or proprietary closed-source project without a license:
 
-- You may be liable for **damages of up to $10,000 USD**, plus legal fees.
+- You may be liable for **damages of up to $100,000 USD**, plus legal fees.
 
 ## 📩 To purchase a license
 
