@@ -13,7 +13,7 @@
 
             <div class="price">
                 <span>$38 USD</span>
-                <span class="discount">-10% Off</span>
+                <span class="discount">-25% Off</span>
                 <span class="saved">Save $250</span>
             </div>
         </div>
@@ -29,6 +29,7 @@
     border: 1px solid rgba(0, 0, 0, 50%);
     transition: var(--transition-a);
     border-radius: var(--radius-c);
+    margin-bottom: 1rem;
     font-weight: 600;
     cursor: pointer;
     padding: 1rem;
@@ -50,6 +51,7 @@
 .color {
     border-radius: 50%;
     background: gray;
+    opacity: 0.5;
     height: 1rem;
     width: 1rem;
 }
@@ -81,7 +83,6 @@
 
 .discount {
     color: var(--red-a);
-    font-weight: 600;
 }
 
 .saved {

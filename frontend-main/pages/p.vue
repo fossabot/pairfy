@@ -15,7 +15,6 @@
                         <div class="content">
                             <ProductImages />
                             <DividerComp />
-                            <ProductCarousel style="max-width: 1000px;" />
                             <p v-for="n in 100" :key="n">
                                 Este es un párrafo repetido.
                             </p>
@@ -54,7 +53,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductModel />
+                            <ProductModel v-for="n in 3" :key="n"/>
 
                             <div class="subtitle">
                                 Finish. <span>Choose your network.</span>
@@ -74,7 +73,7 @@
                                 Midnight Network
                             </ProductButton>
 
-                            <div class="busy-box"></div>
+                            <div class="busy-box"/>
 
                         </div>
                     </div>
