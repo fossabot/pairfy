@@ -1,9 +1,11 @@
 <template>
   <div class="page-wrapper">
-    <div class="container">
- 
-      <div class="left-column">
+    <DialogComp ref="dialogRef">
+      <p>Contenido del diálogo</p>
+    </DialogComp>
 
+    <div class="container">
+      <div class="left-column">
         <ProductImages />
         <DividerComp />
         <img class="test-image" v-for="n in 10" :key="n"
@@ -12,7 +14,7 @@
 
 
       <div class="right-column">
-        <div class="fixed-box" >
+        <div class="fixed-box">
           <div class="right-scroll" ref="rightScrollRef">
 
             <div class="productBrand">
@@ -46,7 +48,7 @@
               Finish. <span>Choose your network.</span>
             </div>
 
-            <ProductButton>
+            <ProductButton @click="openChildDialog">
               <template #icon>
                 <img class="icon" src="@/assets/icon/cardano.svg" alt="">
               </template>
@@ -116,6 +118,15 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', syncScroll)
 })
 
+
+
+
+const dialogRef = ref(null);
+
+function openChildDialog() {
+  dialogRef.value?.openDialog();
+}
+
 </script>
 
 <style scoped>
@@ -166,12 +177,15 @@ onBeforeUnmount(() => {
 
 .right-scroll {
   overflow-y: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 .right-scroll::-webkit-scrollbar {
-  display: none; /* Safari y Chrome */
+  display: none;
+  /* Safari y Chrome */
 }
 
 .product-section {
@@ -183,70 +197,70 @@ onBeforeUnmount(() => {
 }
 
 .icon {
-    width: 2rem;
-    height: 2rem;
-    object-fit: contain;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
 }
 
 .busy-box {
-    height: 200px;
+  height: 200px;
 }
 
 .subtitle {
-    font-size: var(--text-size-4);
-    color: var(--text-a);
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-    font-weight: 600;
+  font-size: var(--text-size-4);
+  color: var(--text-a);
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  font-weight: 600;
 }
 
 .subtitle span {
-    color: var(--text-b);
+  color: var(--text-b);
 }
 
 .productName {
-    font-size: var(--text-size-3);
-    margin-top: 0.5rem;
-    line-height: 2rem;
-    font-weight: 400;
+  font-size: var(--text-size-3);
+  margin-top: 0.5rem;
+  line-height: 2rem;
+  font-weight: 400;
 }
 
 .productRating {
-    display: flex;
-    margin-top: 1rem;
-    align-items: center;
-    font-size: var(--text-size-1);
+  display: flex;
+  margin-top: 1rem;
+  align-items: center;
+  font-size: var(--text-size-1);
 }
 
 .productRating span {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 .productRating span:nth-child(1) {
-    margin-right: 0.5rem;
-    font-weight: 600;
+  margin-right: 0.5rem;
+  font-weight: 600;
 }
 
 .productRating span:nth-child(3) {
-    margin-left: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .productModel {
-    color: var(--text-b);
-    align-items: center;
-    margin-top: 1rem;
-    display: flex;
+  color: var(--text-b);
+  align-items: center;
+  margin-top: 1rem;
+  display: flex;
 }
 
 .productBrand {
-    font-size: var(--text-size-3);
-    font-weight: 700;
+  font-size: var(--text-size-3);
+  font-weight: 700;
 }
 
 .productModel div {
-    width: 1px;
-    height: 10px;
-    margin: auto 0.5rem;
-    background: var(--text-b);
+  width: 1px;
+  height: 10px;
+  margin: auto 0.5rem;
+  background: var(--text-b);
 }
 </style>
