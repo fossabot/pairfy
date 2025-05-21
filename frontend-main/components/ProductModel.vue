@@ -83,10 +83,12 @@
 
 .discount {
     color: var(--red-a);
+    font-weight: 300;
 }
 
 .saved {
     color: var(--text-b);
+    font-weight: 300;
 }
 
 .divider {

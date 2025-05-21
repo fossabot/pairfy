@@ -176,7 +176,7 @@ const content = ref([{
   width: inherit;
   font-weight: 700;
   text-align: start;
-  font-size: var(--text-size-6);
+  font-size: var(--text-size-5);
 }
 
 .grid {

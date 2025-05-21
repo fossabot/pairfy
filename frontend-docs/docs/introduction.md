@@ -2,15 +2,16 @@
 
 Pairfy is a decentralized application for trading physical products.
 It is a community-governed e-commerce that uses blockchain technology and artificial intelligence to generate a comprehensive value exchange ecosystem.
+
+The trade between the seller and the buyer is managed by smart contracts or individual Plutus scripts.
 Using a Cardano smart-contract allows to use **_ADA_**, **_stablecoin_** and **_native asset_** as a form of payment for the products.
-The trade between the seller and the buyer is managed by an individual isolated smart contract.
 
 
 #### Differential factors
 
-- Community-governed with high transparency.
+- Community-governed with chain vote.
 - Each trade is an isolated smart-contract.
-- Liquidity pool to reduce the price of products.
+- The **liquidity pool** to reduce the price of products.
 - Use of Cardano Network – Midnight Network.
 - Any member of the community can be a seller.
 - Community repository of products and templates.
