@@ -40,7 +40,7 @@ const emit = defineEmits<{
     (e: 'select', item: ProductSuggestion): void
 }>()
 
-let timeout: number | undefined
+let timeout: any
 
 const onInput = () => {
     showSuggestions.value = true
@@ -64,10 +64,10 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 <style scoped>
 .header-search {
-    position: relative;
-    margin-left: auto;
     width: 100%;
-    max-width: 55%;
+    max-width: 60%;
+    margin-left: auto;
+    position: relative;
 }
 
 .search-input {

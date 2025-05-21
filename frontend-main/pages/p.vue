@@ -54,17 +54,7 @@
                                 Model. <span>Check variations.</span>
                             </div>
 
-                            <ProductButton v-for="n in 1" :key="n">
-                                <template #icon>
-                                    <img class="icon"
-                                        src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg"
-                                        alt="">
-                                </template>
-                                <div style="display: flex; flex-direction: column;">
-                                    <span>Model S9-C52025</span>
-                                    <span style="font-weight: 400; margin-top: 0.5rem;">$38 USD</span>
-                                </div>
-                            </ProductButton>
+                            <ProductModel />
 
                             <div class="subtitle">
                                 Finish. <span>Choose your network.</span>
@@ -307,9 +297,9 @@ onUnmounted(() => {
 }
 
 .productName {
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     margin-top: 0.5rem;
-    line-height: 2.5rem;
+    line-height: 2rem;
     font-weight: 400;
 }
 
