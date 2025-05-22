@@ -12,9 +12,7 @@
       <div class="left-column">
         <ProductImages />
         <DividerComp />
-        {{ product.description }}
-        <img class="test-image" v-for="n in 10" :key="n"
-          src="https://m.media-amazon.com/images/G/01/apple/MacBook_Air_M4_Product_Page_LW__en-US_01._CB549121584_.jpg" />
+        <ProductDescription />
       </div>
 
 
