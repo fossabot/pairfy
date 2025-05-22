@@ -6,23 +6,49 @@
 
         <div class="body">
             <div class="model flex">
-                <span>Model S9-C52025</span>
+                <span>{{ model }} {{ condition }}</span>
                 <span class="divider" />
-                <span class="color" />
+                <span class="color" :style="{ backgroundColor: color }" />
             </div>
 
             <div class="price">
-                <span>$38 USD</span>
-                <span class="discount">-25% Off</span>
-                <span class="saved">Save $250</span>
+                <span>{{ realPrice }}</span>
+                <span class="discount">{{ discountTag }}</span>
+                <span class="saved">{{ save }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { formatUSD } from '~/utils/utils'
 
+const props = defineProps({
+    model: String,
+    condition: String,
+    color: String,
+    price: [Number],
+    discount: [Boolean],
+    discount_percent: [Number],
+    discount_value: [Number]
+})
+
+const model = computed(() => props.model)
+const condition = computed(() => props.condition)
+const color = computed(() => props.color)
+const price = computed(() => props.price)
+const discount = computed(() => props.discount)
+const discount_percent = computed(() => props.discount_percent)
+const discount_value = computed(() => props.discount_value)
+
+
+
+const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
+const discountTag = computed(() => discount.value ? `-${discount_percent.value}% Off` : '') 
+const save = computed(() => discount.value ? `Save ${formatUSD(price.value - discount_value.value)}` : '')
 </script>
+
 
 <style scoped>
 .ProductModel {
@@ -50,7 +76,7 @@
 
 .color {
     border-radius: 50%;
-    background: gray;
+    background: transparent;
     opacity: 0.5;
     height: 1rem;
     width: 1rem;

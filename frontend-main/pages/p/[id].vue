@@ -6,11 +6,13 @@
       <p>Contenido del diálogo</p>
     </DialogComp>
 
-    <div class="container">
+    <LoadingComp v-if="loading" :size="32" :border-width="3" />
+
+    <div class="container" v-if="product">
       <div class="left-column">
         <ProductImages />
         <DividerComp />
-        {{ productData }}
+        {{ product }}
         <img class="test-image" v-for="n in 10" :key="n"
           src="https://m.media-amazon.com/images/G/01/apple/MacBook_Air_M4_Product_Page_LW__en-US_01._CB549121584_.jpg" />
       </div>
@@ -20,22 +22,19 @@
         <div class="fixed-box">
           <div class="right-scroll" ref="rightScrollRef">
 
-            <div class="productBrand">
-              Samsung
+            <div class="product-brand">
+              {{ product.brand }}
             </div>
 
-            <div class="productName">
-              Apple 2025 MacBook Air 13-inch Laptop with M4 chip: Built for Apple Intelligence,
-              13.6-inch
-              Liquid Retina
-              Display, 16GB Unified Memory, 256GB SSD Storage, 12MP Center Stage Camera, Touch ID
+            <div class="product-name">
+              {{ product.name }}
             </div>
 
-            <div class="productModel">
-              <span>SKU J83JXOQ</span>
+            <div class="product-sku">
+              <span>{{ product.sku }}</span>
             </div>
 
-            <div class="productRating">
+            <div class="product-rating">
               <span>4.3</span>
               <RatingComp :rating="4" />
               <span>(384)</span>
@@ -45,7 +44,9 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductModel v-for="n in 1" :key="n" />
+            <ProductModel v-for="n in 1" :key="n" :model="product.model" :condition="product.condition_"
+              :color="product.color" :price="product.price" :discount="product.discount"
+              :discount_percent="product.discount_percent" :discount_value="product.discount_value" />
 
             <div class="subtitle">
               Finish. <span>Choose your network.</span>
@@ -80,6 +81,10 @@ import Lenis from 'lenis'
 import { gql } from 'graphql-tag'
 
 const route = useRoute();
+
+const productStore = useProductStore()
+const product = computed(() => productStore.product)
+const media = computed(() => productStore.media)
 
 const toastRef = ref(null);
 
@@ -149,8 +154,6 @@ const { $apollo } = useNuxtApp()
 
 const loading = ref(true)
 
-const productData = ref(null)
-
 const getProductError = ref(null)
 
 let pollIntervalId = null
@@ -167,10 +170,10 @@ async function fetchProduct() {
       fetchPolicy: 'no-cache'
     })
 
-    productData.value = data.getProduct
+    productStore.setProductData(data.getProduct)
   } catch (err) {
     getProductError.value = err
-    showGetProductError() 
+    showGetProductError()
   } finally {
     loading.value = false
   }
@@ -233,7 +236,7 @@ fetchProduct()
 onMounted(() => {
   addLenis()
   addScrollListener()
-  showGetProductError() 
+  showGetProductError()
   fetchProductPolling()
 })
 
@@ -332,46 +335,46 @@ onBeforeUnmount(() => {
   color: var(--text-a);
 }
 
-.productName {
+.product-name {
   font-size: var(--text-size-3);
   margin-top: 0.5rem;
   line-height: 2rem;
   font-weight: 400;
 }
 
-.productRating {
+.product-rating {
   display: flex;
   margin-top: 1rem;
   align-items: center;
   font-size: var(--text-size-1);
 }
 
-.productRating span {
+.product-rating span {
   font-weight: 400;
 }
 
-.productRating span:nth-child(1) {
+.product-rating span:nth-child(1) {
   margin-right: 0.5rem;
   font-weight: 600;
 }
 
-.productRating span:nth-child(3) {
+.product-rating span:nth-child(3) {
   margin-left: 0.5rem;
 }
 
-.productModel {
+.product-sku {
   color: var(--text-b);
   align-items: center;
   margin-top: 1rem;
   display: flex;
 }
 
-.productBrand {
+.product-brand {
   font-size: var(--text-size-3);
   font-weight: 700;
 }
 
-.productModel div {
+.product-sku div {
   width: 1px;
   height: 10px;
   margin: auto 0.5rem;
