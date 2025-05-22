@@ -86,25 +86,8 @@ const toastRef = ref(null);
 const dialogRef = ref(null);
 
 let lenis = null
+
 let frameId;
-
-function addLenis() {
-  lenis = new Lenis({
-    smooth: true,
-  })
-
-  const raf = (time) => {
-    lenis?.raf(time)
-    frameId = requestAnimationFrame(raf)
-  }
-
-  frameId = requestAnimationFrame(raf)
-}
-
-function removeLenis() {
-  if (frameId) cancelAnimationFrame(frameId)
-  lenis?.destroy()
-}
 
 const rightScrollRef = ref(null)
 
@@ -170,22 +153,53 @@ const productData = ref(null)
 
 const getProductError = ref(null)
 
-try {
-  const { data } = await $apollo.query({
-    query: GET_PRODUCT_QUERY,
-    variables: {
-      getProductVariable: {
-        id: route.params.id
-      }
-    },
-    fetchPolicy: 'no-cache'
+let pollIntervalId = null
+
+async function fetchProduct() {
+  try {
+    const { data } = await $apollo.query({
+      query: GET_PRODUCT_QUERY,
+      variables: {
+        getProductVariable: {
+          id: route.params.id
+        }
+      },
+      fetchPolicy: 'no-cache'
+    })
+
+    productData.value = data.getProduct
+  } catch (err) {
+    getProductError.value = err
+    showGetProductError() 
+  } finally {
+    loading.value = false
+  }
+}
+
+function fetchProductPolling() {
+  pollIntervalId = setInterval(fetchProduct, 30_000)
+}
+
+function clearIntervals() {
+  clearInterval(pollIntervalId)
+}
+
+function addLenis() {
+  lenis = new Lenis({
+    smooth: true,
   })
 
-  productData.value = data.getProduct
-} catch (err) {
-  getProductError.value = err
-} finally {
-  loading.value = false
+  const raf = (time) => {
+    lenis?.raf(time)
+    frameId = requestAnimationFrame(raf)
+  }
+
+  frameId = requestAnimationFrame(raf)
+}
+
+function removeLenis() {
+  if (frameId) cancelAnimationFrame(frameId)
+  lenis?.destroy()
 }
 
 function displayMessage(message, type, duration) {
@@ -203,19 +217,30 @@ function removeScrollListener() {
   window.removeEventListener('scroll', syncScroll)
 }
 
-function showSetupErrors() {
-  displayMessage(getProductError.value, 'error')
+function showGetProductError() {
+  if (getProductError.value) displayMessage(getProductError.value, 'error')
+
 }
+
+
+
+
+
+
+
+fetchProduct()
 
 onMounted(() => {
   addLenis()
   addScrollListener()
-  showSetupErrors()
+  showGetProductError() 
+  fetchProductPolling()
 })
 
 onBeforeUnmount(() => {
   removeLenis()
   removeScrollListener()
+  clearIntervals()
 })
 </script>
 
