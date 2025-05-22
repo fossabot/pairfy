@@ -21,6 +21,14 @@ export const CreateProduct = async (
     const processed = await isProcessedEvent(connection, event.id);
 
     if (processed) {
+      
+      logger.error({
+        service: "service-query-consumer",
+        event: "event.repeated",
+        message: `event repeated`,
+        eventId: event.id,
+      });
+
       return Promise.resolve(true);
     }
 
@@ -62,8 +70,7 @@ export const CreateProduct = async (
       event: "event.error",
       message: `event error`,
       eventId: event.id,
-      error: error.message,
-      stack: error.stack
+      error,
     });
 
     if (connection) await connection.rollback();

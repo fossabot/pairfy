@@ -51,7 +51,13 @@ export async function createProductIndex(product: any): Promise<boolean> {
 
     return true;
   } catch (error) {
-    logger.error(error);
+    logger.error({
+      service: "service-query-consumer",
+      event: "weaviate.error",
+      message: `Weaviate create product index error`,
+      error
+    });
+
     return false;
   }
 }

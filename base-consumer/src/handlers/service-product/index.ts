@@ -19,8 +19,8 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
     const processed = await isProcessedEvent(connection, event.id);
 
     if (processed) {
+
       logger.error({
-        timestamp: new Date().toISOString(),
         service: "service-product-consumer",
         event: "event.repeated",
         message: `event repeated`,
@@ -97,8 +97,7 @@ const ProcessedFile = async (event: any, seq: number): Promise<boolean> => {
       event: "event.error",
       message: `event error`,
       eventId: event.id,
-      error: error.message,
-      stack: error.stack,
+      error
     });
 
     if (connection) await connection.rollback();
