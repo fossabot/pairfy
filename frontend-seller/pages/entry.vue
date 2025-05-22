@@ -82,7 +82,7 @@ const currentComponent = computed(() => views[currentView.value])
   background: var(--background-a);
   border-radius: var(--radius-c);
   box-shadow: var(--shadow-a);
-  margin-top: 4rem;
+  margin-top: 10rem;
   padding: 1.5rem;
   width: 300px;
 }

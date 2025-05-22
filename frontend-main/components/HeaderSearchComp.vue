@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Search" :class="{ contrast: route.name === 'p' }" />
+            type="text" placeholder="Search" :class="{ contrast: isContrast }" />
 
         <button class="search-button" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -24,6 +24,8 @@
 <script setup lang="ts">
 
 const route = useRoute()
+
+const isContrast = computed(() => route.name === 'p-id')
 
 interface ProductSuggestion {
     id: string | number

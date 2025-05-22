@@ -1,6 +1,4 @@
-import {
-  jetstreamManager
-} from "@nats-io/jetstream";
+import { jetstreamManager } from "@nats-io/jetstream";
 import {
   catchError,
   checkHandlerVariables,
@@ -85,6 +83,8 @@ const main = async () => {
     const filterSubjects: any = process.env.FILTER_SUBJECTS
       ? process.env.FILTER_SUBJECTS.split(",").map((subject) => subject.trim())
       : [];
+
+    console.log("Listening:", filterSubjects);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
 

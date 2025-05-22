@@ -12,51 +12,67 @@ body {
 }
 
 :root {
-  --text-size-0: 13px;   /* Smallest text: captions, sub-labels */
-  --text-size-1: 14px;   /* Secondary labels, helper text */
-  --text-size-2: 16px;   /* Base body text */
-  --text-size-3: 18px;   /* Paragraph lead or dense UI text */
-  --text-size-4: 20px;   /* Section titles or buttons */
-  --text-size-5: 24px;   /* H4 */
-  --text-size-6: 30px;   /* H3 */
-  --text-size-7: 36px;   /* H2 */
-  --text-size-8: 48px;   /* H1 */
-  --text-size-9: 64px;   /* Hero / page title */
-  
+  --text-size-0: 12px; /* Smallest text: captions, sub-labels */
+  --text-size-1: 14px; /* Secondary labels, helper text */
+  --text-size-2: 16px; /* Base body text */
+  --text-size-3: 18px; /* Paragraph lead or dense UI text */
+  --text-size-4: 20px; /* Section titles or buttons */
+  --text-size-5: 24px; /* H4 */
+  --text-size-6: 30px; /* H3 */
+  --text-size-7: 36px; /* H2 */
+  --text-size-8: 48px; /* H1 */
+  --text-size-9: 56px;
+  --text-size-10: 64px; /* Hero / page title */
+
   --body-a: 1500px;
 
-  --shadow-a: 0 2px 24px rgba(0, 0, 0, 0.1);
+  --shadow-a: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --background-a: #ffffff;
   --background-b: #f5f5f7;
+  --background-c: #f0f0f2;
 
-  --text-a: #151e3a;
-  --text-b: rgba(28,43,51,0.65);
+  --text-a: #1d1d1f;
+  --text-b: #86868b;
   --text-w: #ffffff;
 
-  --border-a: rgba(21, 30, 58, 0.2);
+  --border-a: #00000029;
+  --border-b: rgba(0, 0, 0, 50%);
 
   --primary-a: var(--blue-a);
-  --primary-b: var(--gray-a);
 
   --radius-a: 4px;
   --radius-b: 6px;
   --radius-c: 12px;
-  --radius-d: 24px;
+  --radius-d: 18px;
+  --radius-e: 28px;
+  --radius-f: 999px;
 
-  --blue-a:   #225aea;  
-  --gray-a:   #334155; 
-  --red-a:    #dc2626; 
-  --yellow-a: #eab308;  
-  --green-a:  #16a34a;  
-  --orange-a: #ea580c; 
-  --purple-a: #6366f1; 
-  --pink-a:   #db2777; 
+  --blue-a: #225aea;
+  --gray-a: #334155;
+  --red-a: #dc2626;
+  --yellow-a: #fbbc04;
+  --yellow-b: #ffe600;
+  --green-a: #16a34a;
+  --orange-a: #ea580c;
+  --purple-a: #6366f1;
+  --pink-a: #db2777;
+  --black-a: #000000;
+  --gray-a: #161c24;
+
+  --gradient-a: linear-gradient(
+    135deg,
+    #fff6e5 0%,
+    #fbe8f9 5%,
+    #e3f0ff 50%,
+    #e8f4fc 80%,
+    #e9fff0 100%
+  );
 }
 
 :root {
-  --input-radius: var(--radius-a);
+  --input-radius: var(--radius-b);
   --button-radius: var(--radius-b);
 }
 
@@ -75,23 +91,23 @@ input {
 }
 
 input::placeholder {
-  color: var(--text-b); 
+  color: var(--text-b);
 }
 
-label{
+label {
   font-size: var(--text-size-1);
   font-weight: 600;
 }
 
-textarea{
+textarea {
   font-size: var(--text-size-1);
 }
 
 textarea::placeholder {
   font-size: var(--text-size-1);
-  color: var(--text-b); 
+  color: var(--text-b);
 }
 
-.center{
+.center {
   justify-content: center;
 }

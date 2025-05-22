@@ -32,7 +32,7 @@
 <script setup>
 const route = useRoute()
 
-const isContrast = computed(() => route.name === 'p')
+const isContrast = computed(() => route.name === 'p-id')
 
 
 </script>
@@ -46,7 +46,7 @@ const isContrast = computed(() => route.name === 'p')
     box-sizing: border-box;
     position: fixed;
     z-index: 10000;
-    height: 3rem;
+    height: 2rem;
     top: 0;
 }
 

@@ -163,7 +163,7 @@ function openChildDialog() {
   top: 10rem;
   width: inherit;
   height: 100vh;
-  right: 4rem;
+  right: 5rem;
   padding: 1rem;
   box-sizing: border-box;
   overflow: hidden;

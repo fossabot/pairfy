@@ -1,6 +1,6 @@
 * {
   font-family: "Inter", sans-serif;
-  transition: 0.3s ease-in-out;
+  transition: var(--transition-a);
 }
 
 body {
@@ -26,7 +26,7 @@ body {
 
   --body-a: 1650px;
 
-  --shadow-a: 0 2px 24px rgba(0, 0, 0, 0.1);
+  --shadow-a: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --background-a: #ffffff;
@@ -62,13 +62,7 @@ body {
   --gray-a: #161c24;
 
   --transition-a: 0.2s ease-in-out;
-
-  --gradient-a: radial-gradient(
-    circle at left top,
-    rgb(134, 239, 90) 0.86%,
-    rgb(16, 208, 183) 38.09%,
-    rgb(255, 255, 255) 69.81%
-  );
+  
 }
 
 :root {

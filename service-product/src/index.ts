@@ -99,7 +99,7 @@ const main = async () => {
       source: "service-product",
       redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
-      maxRequests: 20,
+      maxRequests: 100,
       windowSeconds: 60,
     });
 

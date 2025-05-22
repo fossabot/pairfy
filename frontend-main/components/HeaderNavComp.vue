@@ -17,7 +17,7 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-const isContrast = computed(() => route.name === 'p')
+const isContrast = computed(() => route.name === 'p-id')
 
 interface SubMenuItem {
   label: string
@@ -89,7 +89,7 @@ watch(() => route.path, (newPath) => {
   box-shadow: 0 10px 10px 10px white;
   background: var(--background-a);
   position: fixed;
-  top: 3rem;
+  top: 2rem;
 }
 
 .SubMenu-body.contrast {
