@@ -39,7 +39,7 @@ spec:
               value: service_query       
             - name: DATABASE_USER
               value: marketplace    
-            - name: REDIS_HOST
+            - name: SERVICE_STATE_REDIS
               value: redis://service-state-redis:6379    
             - name : REDIS_RATELIMIT_URL
               value: "redis://redis-limiter:6379"

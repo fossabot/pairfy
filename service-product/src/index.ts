@@ -155,7 +155,7 @@ const main = async () => {
       httpServer.listen({ port: 8001 }, resolve)
     );
 
-    logger.info("ONLINE");
+    logger.info("Online");
   } catch (err) {
     catchError(err);
   }

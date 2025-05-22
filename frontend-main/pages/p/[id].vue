@@ -44,7 +44,7 @@
 
             <ProductModel v-for="n in 1" :key="n" />
 
-            <div class="subtitle text-gradient">
+            <div class="subtitle">
               Finish. <span>Choose your network.</span>
             </div>
 
