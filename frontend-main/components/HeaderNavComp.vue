@@ -68,8 +68,6 @@ watch(() => route.path, (newPath) => {
   align-items: center;
   padding: 1.25rem 0;
   max-width: var(--body-a);
-  border-bottom-left-radius: var(--radius-c);
-  border-bottom-right-radius: var(--radius-c);
 }
 
 .SubMenu-body li {
@@ -87,6 +85,7 @@ watch(() => route.path, (newPath) => {
 
 
 .SubMenu.contrast {
+  border-bottom: 1px solid var(--border-a);
   box-shadow: 0 10px 10px 10px white;
   background: var(--background-a);
   position: fixed;
