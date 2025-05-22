@@ -83,15 +83,7 @@ const route = useRoute();
 
 const toastRef = ref(null);
 
-const displayMessage = (message, type, duration) => {
-  toastRef.value?.showToast(message, type, duration)
-}
-
 const dialogRef = ref(null);
-
-function openChildDialog() {
-  dialogRef.value?.openDialog();
-}
 
 let lenis = null
 let frameId;
@@ -109,12 +101,10 @@ function addLenis() {
   frameId = requestAnimationFrame(raf)
 }
 
-
 function removeLenis() {
   if (frameId) cancelAnimationFrame(frameId)
   lenis?.destroy()
 }
-
 
 const rightScrollRef = ref(null)
 
@@ -174,7 +164,11 @@ const GET_PRODUCT_QUERY = gql`
 
 const { $apollo } = useNuxtApp()
 
+const loading = ref(true)
+
 const productData = ref(null)
+
+const getProductError = ref(null)
 
 try {
   const { data } = await $apollo.query({
@@ -189,10 +183,16 @@ try {
 
   productData.value = data.getProduct
 } catch (err) {
-
-  displayMessage(err, 'error')
+  getProductError.value = err
 } finally {
-  displayMessage('sucesss', 'sucesss')
+  loading.value = false
+}
+
+function displayMessage(message, type, duration) {
+  toastRef.value?.showToast(message, type, duration)
+}
+function openChildDialog() {
+  dialogRef.value?.openDialog();
 }
 
 function addScrollListener() {
@@ -203,9 +203,14 @@ function removeScrollListener() {
   window.removeEventListener('scroll', syncScroll)
 }
 
+function showSetupErrors() {
+  displayMessage(getProductError.value, 'error')
+}
+
 onMounted(() => {
   addLenis()
   addScrollListener()
+  showSetupErrors()
 })
 
 onBeforeUnmount(() => {
