@@ -1,4 +1,4 @@
-import { getProduct } from "./handlers/get-product.js";
+import { getProduct } from "./handlers/getProduct.js";
 import { createProduct } from "./handlers/create-product.js";
 import { editProduct } from "./handlers/edit-product.js";
 import { deleteProduct } from "./handlers/delete-product.js";

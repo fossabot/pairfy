@@ -47,3 +47,5 @@ __exportStar(require("./insertMedia"), exports);
 __exportStar(require("./findMediaById"), exports);
 __exportStar(require("./updateProduct"), exports);
 __exportStar(require("./findProductBySeller"), exports);
+__exportStar(require("./findMediasByProductId"), exports);
+__exportStar(require("./sortMediaByPosition"), exports);

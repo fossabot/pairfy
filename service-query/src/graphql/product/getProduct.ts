@@ -1,96 +1,43 @@
-import { getProductInputSchema } from "../../validators/query.js";
 import { database } from "../../database/client.js";
-import { GraphQLError } from "graphql";
-import { logger } from "@pairfy/common";
+import {
+  ApiGraphQLError,
+  ERROR_CODES,
+  findMediasByProductId,
+  sortMediaByPosition,
+  findProductById,
+} from "@pairfy/common";
 
-const getProduct = async (_: any, args: any, context: any) => {
+export const getProduct = async (_: any, args: any, context: any) => {
+  const params = args.getProductInput;
+
+  console.log(params);
+
   let connection = null;
 
   try {
-    const parsedParams: any = getProductInputSchema.safeParse(
-      args.getProductInput
-    );
-
-    console.log(parsedParams);
-
-    if (!parsedParams.success) {
-      const fieldErrors = parsedParams.error.flatten().fieldErrors;
-
-      logger.warn("Zod validation failed", {
-        path: "searchProduct",
-        input: parsedParams,
-        errors: fieldErrors,
-      });
-
-      throw new GraphQLError("Validation Error", {
-        extensions: {
-          code: "BAD_USER_INPUT",
-          validationErrors: fieldErrors,
-        },
-      });
-    }
-
-    //////////////////////////////////////////////////
-
-    const params = parsedParams.data;
-
     connection = await database.client.getConnection();
 
-    const [product] = await connection.execute(
-      "SELECT * FROM products WHERE id = ?",
-      [params.id]
-    );
+    const findProduct = await findProductById(connection, params.id);
 
-    if (!product.length) {
-      throw new Error("ProductExistenceError");
+    if (!findProduct) {
+      throw new ApiGraphQLError(404, "Product not found", {
+        code: ERROR_CODES.NOT_FOUND,
+      });
     }
 
-    const PRODUCT = product[0];
+    const product = findProduct;
 
-    let payload = {
-      ...PRODUCT,
-      rating: 0,
-      reviews: 0,
-      best_seller: false,
-      sold: 0,
-      available: 0,
+    const findMedia = await findMediasByProductId(connection, product.id);
+
+    const response = {
+      product,
+      media:  findMedia.length ? sortMediaByPosition(product.media_position, findMedia) : []
     };
 
-    /*
-    const search = await searchIndex(PRODUCT.id);
-
-    if (search.length) {
-      const data = search[0]._source;
-
-      payload.rating = data.rating;
-      payload.reviews = data.reviews;
-      payload.best_seller = data.best_seller;
-      payload.sold = data.sold;
-      payload.available = data.available;
-    }
-    */
-    return {
-      success: true,
-      payload: payload,
-    };
-  } catch (err: any) {
-    logger.error(err);
-
-    if (connection) {
-      await connection.rollback();
-    }
-
-    throw new GraphQLError(
-      "Something went wrong while searching for products.",
-      {
-        extensions: { code: "INTERNAL_SERVER_ERROR" },
-      }
-    );
+    return response;
+  } catch (error: any) {
+    throw error;
   } finally {
-    if (connection) {
-      connection.release();
-    }
+    if (connection) connection.release();
   }
 };
-
-export { getProduct };

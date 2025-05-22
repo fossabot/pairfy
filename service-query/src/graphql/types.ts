@@ -1,41 +1,55 @@
 const typeDefs = `#graphql
+scalar BigInt
+scalar JSON
 
 type Product {
-    id: String!
-    state: String!
-    state_label: String!
-    moderated: Int!
-    seller_id: String!
-    name: String!
-    price: Int!
-    collateral: Int!
-    sku: String!
-    model: String!
-    brand: String!
-    features: String!
-    category: String!
-    keywords: String!
-    bullet_list: String!
-    paused: Int!
-    color: String!
-    color_name: String!
-    quality: String!
-    country: String!
-    media_url: String!
-    image_path: String!
-    video_path: String!
-    image_set: String!
-    video_set: String!
-    discount: Boolean!
-    discount_value: Int!
-    shipping_city: String!
-    shipping_postal: String!
-    created_at: String!
-    rating: Float!
-    reviews: Int!
-    best_seller: Boolean!
-    sold: Int!
-    available: Int!
+  id: ID!
+  group_id: String!
+  media_group_id: String!
+  media_position: JSON!
+  status: String!
+  moderated: Boolean!
+  seller_id: String!
+  thumbnail_url: String
+  name: String!
+  price: Int!
+  sku: String!
+  model: String!
+  brand: String!
+  description: JSON!
+  category: String!
+  bullet_list: [String!]!
+  color: String!
+  condition_: String!
+  country: String!
+  origin: String!
+  city: String!
+  postal: String!
+  discount: Boolean!
+  discount_value: Int!
+  discount_percent: Int!
+  created_at: BigInt!
+  updated_at: BigInt!
+  schema_v: Int!
+}
+
+enum media_type {
+  image
+  video
+}
+
+type Media {
+  id: ID!
+  media_group_id: String!
+  agent_id: String!
+  product_id: String!
+  mime_type: String!
+  position: Int!
+  alt_text: String
+  resolutions: JSON!
+  created_at: BigInt!
+  updated_at: BigInt!
+  schema_v: Int!
 }
 
 type ProductSource {
@@ -60,11 +74,11 @@ type SearchProductResponse {
   _source: ProductSource!
 }
 
-type GetProductResponse {
-  success: Boolean!
-  payload: Product!
+type GetProductResponse{
+  product: Product!
+  media: [Media]!
 }
-
+  
 input GetProductInput {
   id: String!
 } 

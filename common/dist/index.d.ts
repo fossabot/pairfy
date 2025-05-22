@@ -31,3 +31,5 @@ export * from "./insertMedia";
 export * from "./findMediaById";
 export * from "./updateProduct";
 export * from "./findProductBySeller";
+export * from "./findMediasByProductId";
+export * from "./sortMediaByPosition";
