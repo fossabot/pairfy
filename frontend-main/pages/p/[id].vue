@@ -6,7 +6,7 @@
       <p>Contenido del diálogo</p>
     </DialogComp>
 
-    <LoadingComp v-if="loading" :size="32" :border-width="3" />
+    <LoadingWall v-if="loading" />
 
     <div class="container" v-if="product">
       <div class="left-column">
@@ -261,7 +261,6 @@ onBeforeUnmount(() => {
   max-width: var(--body-a);
   box-sizing: border-box;
 }
-
 
 .left-column {
   width: inherit;
