@@ -1,53 +1,7 @@
-import { gql } from "graphql-tag";
-import { serviceQueryClient } from "./client";
+/*import { gql } from "graphql-tag";
 import { throwRemoteError } from "~/server/utils/fetch";
 
-const GET_PRODUCT_QUERY = gql`
-  query GetProduct($getProductVariable: GetProductInput!) {
-    getProduct(getProductInput: $getProductVariable) {
-        product {
-          id
-          group_id
-          media_group_id
-          media_position
-          status
-          moderated
-          thumbnail_url
-          name
-          price
-          sku
-          model
-          brand
-          description
-          category
-          bullet_list
-          color
-          condition_
-          country
-          origin
-          city
-          postal
-          discount
-          discount_value
-          discount_percent
-          created_at
-        }
 
-        media {
-          id  
-          media_group_id  
-          product_id  
-          mime_type  
-          position  
-          alt_text  
-          resolutions  
-          created_at  
-          updated_at  
-        }
-          
-    }
-  }
-`;
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -67,4 +21,29 @@ export default defineEventHandler(async (event) => {
   } catch (err) {
     throwRemoteError(err);
   }
+});
+
+*/
+
+// server/api/query/getProduct.ts
+export default defineEventHandler(async (event) => {
+
+  const config = useRuntimeConfig();
+  
+  const body = await readBody(event);
+
+  const cookies = parseCookies(event);
+  const sessionCookie = cookies.session;
+
+  const response = await $fetch(`${config.serviceQueryBase}/query/graphql`, {
+    method: "POST",
+    body,
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: sessionCookie ? `session=${sessionCookie}` : "",
+    },
+    credentials: "include",
+  });
+
+  return response;
 });

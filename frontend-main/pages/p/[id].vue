@@ -77,6 +77,7 @@
 
 <script setup>
 import Lenis from 'lenis'
+import { gql } from 'graphql-tag'
 
 const route = useRoute();
 
@@ -125,22 +126,73 @@ const syncScroll = () => {
 
 useLenisMultiple([rightScrollRef])
 
+const GET_PRODUCT_QUERY = gql`
+  query GetProduct($getProductVariable: GetProductInput!) {
+    getProduct(getProductInput: $getProductVariable) {
+      product {
+        id
+        group_id
+        media_group_id
+        media_position
+        status
+        moderated
+        thumbnail_url
+        name
+        price
+        sku
+        model
+        brand
+        description
+        category
+        bullet_list
+        color
+        condition_
+        country
+        origin
+        city
+        postal
+        discount
+        discount_value
+        discount_percent
+        created_at
+      }
+
+      media {
+        id
+        media_group_id
+        product_id
+        mime_type
+        position
+        alt_text
+        resolutions
+        created_at
+        updated_at
+      }
+    }
+  }
+`;
+
+const { $apollo } = useNuxtApp()
+
 const productData = ref(null)
 
-const { data: initialData, error: getProductError } = await useAsyncData('product', () =>
-  $fetch('/api/query/getProduct', {
-    method: 'POST',
-    body: {
-      id: route.params.id
+try {
+  const { data } = await $apollo.query({
+    query: GET_PRODUCT_QUERY,
+    variables: {
+      getProductVariable: {
+        id: route.params.id
+      }
     },
-    async onResponseError({ response }) {
-      throw new Error(JSON.stringify(response._data.data));
-    },
+    fetchPolicy: 'no-cache'
   })
-)
 
-if (initialData.value) {
-  productData.value = initialData.value.product
+  productData.value = data.getProduct
+} catch (err) {
+
+  displayMessage(err, 'error')
+} finally {
+  displayMessage('sucesss', 'sucesss')
 }
 
 function addScrollListener() {
@@ -154,11 +206,6 @@ function removeScrollListener() {
 onMounted(() => {
   addLenis()
   addScrollListener()
-
-  if (getProductError.value) {
-    console.error('Error fetching the product:', getProductError.value)
-    displayMessage('The product could not be loaded. Please try again later.' + getProductError.value, 'error', 10_000)
-  }
 })
 
 onBeforeUnmount(() => {
