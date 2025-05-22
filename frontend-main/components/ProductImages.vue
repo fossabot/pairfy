@@ -2,14 +2,15 @@
     <div class="p-media">
         <div class="p-media-nav">
             <div class="p-media-nav-item flex" :class="{ selected: selectedImageIndex === index }"
-                v-for="(item, index) in productImageList" :key="item" @click="selectImage(index)"
-                @mouseover="selectImage(index)">
-                <img :src="item" :alt="'Miniatura ' + (index + 1)" />
+                v-for="(item, index) in productImageList" :key="index" @click="selectImage(index)"
+                @mouseover="selectImage(index)" :aria-selected="selectedImageIndex === index" role="button"
+                tabindex="0">
+                <img :src="getImageSrc(item)" :alt="'small ' + (index + 1)" />
             </div>
         </div>
 
         <div class="p-media-image">
-            <img :src="productImageList[selectedImageIndex]" alt="Imagen del producto seleccionada" />
+            <img :src="getImageSrc(productImageList[selectedImageIndex])" alt="Imagen del producto seleccionada" />
 
             <button class="btn-nav left" @click="prevImage" aria-label="Imagen anterior"
                 v-if="productImageList.length > 1">
@@ -36,27 +37,39 @@
 </template>
 
 <script setup>
-const selectedImageIndex = ref(0);
+import placeholderImage from '@/assets/placeholder/image.svg'
 
-const productImageList = [
-    "https://m.media-amazon.com/images/I/712dp0yAydL._AC_SX679_.jpg",
-    "https://m.media-amazon.com/images/I/81NLMdXhvrL._AC_UY218_.jpg",
-    "https://m.media-amazon.com/images/I/51Z2kw-gFVL.__AC_SX300_SY300_QL70_FMwebp_.jpg",
-    "https://m.media-amazon.com/images/I/61BKYlNqH6L.__AC_SX300_SY300_QL70_FMwebp_.jpg",
-];
+const productStore = useProductStore()
+const product = computed(() => productStore.product)
+
+const media = computed(() => productStore.media)
+
+const productImageList = computed(() =>
+  media.value.map(item => item.resolutions.large)
+)
+
+const selectedImageIndex = ref(0)
 
 const selectImage = (index) => {
-    selectedImageIndex.value = index;
-};
+  selectedImageIndex.value = index
+}
 
 const prevImage = () => {
-    selectedImageIndex.value =
-        (selectedImageIndex.value - 1 + productImageList.length) % productImageList.length;
-};
+  const total = productImageList.value.length
+  selectedImageIndex.value =
+    (selectedImageIndex.value - 1 + total) % total
+}
 
 const nextImage = () => {
-    selectedImageIndex.value = (selectedImageIndex.value + 1) % productImageList.length;
-};
+  const total = productImageList.value.length
+  selectedImageIndex.value =
+    (selectedImageIndex.value + 1) % total
+}
+
+function getImageSrc(item) {
+    return item ? useMediaUrl(item) : placeholderImage
+}
+
 </script>
 
 <style scoped>
@@ -104,6 +117,7 @@ const nextImage = () => {
 }
 
 .p-media-image img {
+    transition: opacity 0.3s ease;
     width: 100%;
 }
 
@@ -130,11 +144,11 @@ const nextImage = () => {
 }
 
 .btn-nav.left {
-    left: -10rem;
+    left: -8rem;
 }
 
 .btn-nav.right {
-    right: -10rem;
+    right: -8rem;
 }
 
 /* Mobile: ocultar componente por ahora */

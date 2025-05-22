@@ -33,9 +33,11 @@ type Product {
   schema_v: Int!
 }
 
-enum media_type {
-  image
-  video
+type MediaResolutions {
+  large: String!
+  medium: String!
+  small: String!
+  thumbnail: String!
 }
 
 type Media {
@@ -46,7 +48,7 @@ type Media {
   mime_type: String!
   position: Int!
   alt_text: String
-  resolutions: JSON!
+  resolutions: MediaResolutions!
   created_at: BigInt!
   updated_at: BigInt!
   schema_v: Int!
