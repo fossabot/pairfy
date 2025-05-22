@@ -31,7 +31,7 @@
             </div>
 
             <div class="product-sku">
-              <span>{{ product.sku }}</span>
+              <span>SKU {{ product.sku }}</span>
             </div>
 
             <div class="product-rating">

@@ -6,7 +6,9 @@
 
         <div class="body">
             <div class="model flex">
-                <span>{{ model }} {{ condition }}</span>
+                <span>{{ model }}</span>
+                <span class="divider" />
+                <span class="condition">{{ condition }}</span>
                 <span class="divider" />
                 <span class="color" :style="{ backgroundColor: color }" />
             </div>
@@ -55,6 +57,7 @@ const save = computed(() => discount.value ? `Save ${formatUSD(price.value - dis
     border: 1px solid var(--border-b);
     transition: var(--transition-a);
     border-radius: var(--radius-c);
+    font-size: var(--text-size-1);
     margin-bottom: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -121,5 +124,10 @@ const save = computed(() => discount.value ? `Save ${formatUSD(price.value - dis
     height: 0.75rem;
     margin: 0 0.75rem;
     background: var(--border-a)
+}
+
+.condition{
+    color: var(--text-b);
+    font-weight: 400;
 }
 </style>
