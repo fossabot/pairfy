@@ -1,5 +1,5 @@
 import { gql } from "graphql-tag";
-import { getServiceProductClient } from "./client";
+import { serviceQueryClient } from "./client";
 import { throwRemoteError } from "~/server/utils/fetch";
 
 const GET_PRODUCT_QUERY = gql`
@@ -52,7 +52,7 @@ const GET_PRODUCT_QUERY = gql`
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
-  const client = getServiceProductClient(event);
+  const client = serviceQueryClient(event);
 
   try {
     const res = await client.query({

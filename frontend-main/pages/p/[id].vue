@@ -1,5 +1,7 @@
 <template>
   <div class="page-wrapper">
+    <ToastComp ref="toastRef" />
+
     <DialogComp ref="dialogRef">
       <p>Contenido del diálogo</p>
     </DialogComp>
@@ -8,6 +10,7 @@
       <div class="left-column">
         <ProductImages />
         <DividerComp />
+        {{ productData }}
         <img class="test-image" v-for="n in 10" :key="n"
           src="https://m.media-amazon.com/images/G/01/apple/MacBook_Air_M4_Product_Page_LW__en-US_01._CB549121584_.jpg" />
       </div>
@@ -75,6 +78,20 @@
 <script setup>
 import Lenis from 'lenis'
 
+const route = useRoute();
+
+const toastRef = ref(null);
+
+const displayMessage = (message, type, duration) => {
+  toastRef.value?.showToast(message, type, duration)
+}
+
+const dialogRef = ref(null);
+
+function openChildDialog() {
+  dialogRef.value?.openDialog();
+}
+
 let lenis = null
 let frameId;
 
@@ -108,25 +125,46 @@ const syncScroll = () => {
 
 useLenisMultiple([rightScrollRef])
 
+const productData = ref(null)
+
+const { data: initialData, error: getProductError } = await useAsyncData('product', () =>
+  $fetch('/api/query/getProduct', {
+    method: 'POST',
+    body: {
+      id: route.params.id
+    },
+    async onResponseError({ response }) {
+      throw new Error(JSON.stringify(response._data.data));
+    },
+  })
+)
+
+if (initialData.value) {
+  productData.value = initialData.value.product
+}
+
+function addScrollListener() {
+  window.addEventListener('scroll', syncScroll)
+}
+
+function removeScrollListener() {
+  window.removeEventListener('scroll', syncScroll)
+}
+
 onMounted(() => {
   addLenis()
-  window.addEventListener('scroll', syncScroll)
+  addScrollListener()
+
+  if (getProductError.value) {
+    console.error('Error fetching the product:', getProductError.value)
+    displayMessage('The product could not be loaded. Please try again later.' + getProductError.value, 'error', 10_000)
+  }
 })
 
 onBeforeUnmount(() => {
   removeLenis()
-  window.removeEventListener('scroll', syncScroll)
+  removeScrollListener()
 })
-
-
-
-
-const dialogRef = ref(null);
-
-function openChildDialog() {
-  dialogRef.value?.openDialog();
-}
-
 </script>
 
 <style scoped>
@@ -213,7 +251,7 @@ function openChildDialog() {
   font-weight: 600;
 }
 
-.subtitle span{
+.subtitle span {
   color: var(--text-a);
 }
 
