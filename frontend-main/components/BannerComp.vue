@@ -7,7 +7,7 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1 class="fade-title">
-                            Buy and sell <span class="light"> cooperatively on Cardano</span> 
+                            Buy and sell <span class="light"> cooperatively on Cardano</span>
                         </h1>
                         <ul class="features">
                             <li>✔ Community-governed (DAO)</li>
@@ -64,9 +64,10 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     border-radius: var(--radius-d);
-    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    -webkit-backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 8%);
 }
 
