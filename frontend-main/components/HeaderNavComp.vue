@@ -1,7 +1,7 @@
 <template>
   <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
-      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="" :class="{ contrast: isContrast }">
+      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')" :class="{ contrast: isContrast }">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
@@ -94,10 +94,6 @@ watch(() => route.path, (newPath) => {
 
 .SubMenu-body.contrast {
   color: var(--text-a);
-}
-
-.icon.contrast {
-  filter: invert();
 }
 
 .SubMenu-body li.contrast:hover {
