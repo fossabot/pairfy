@@ -8,8 +8,8 @@
                     {{ typedPlaceholder }}
                 </span>
             </div>
-            <button type="submit" class="send-button" :disabled="isSubmitting || !prompt.trim()" title="Enviar">
-                ➤
+            <button class="send-button flex center" type="submit" :disabled="isSubmitting || !prompt.trim()" title="Enviar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-icon lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
             </button>
         </form>
     </div>
@@ -104,9 +104,15 @@ onBeforeUnmount(() => {
     box-sizing: border-box;
     background: transparent;
     border-radius: var(--radius-d);
+    transition: var(--transition-a);
     max-width: calc(var(--body-a) - 20rem);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     border: 2px solid rgba(255, 255, 255, 80%);
+}
+
+.chat-form:hover{
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #888;
 }
 
 .input-wrapper {

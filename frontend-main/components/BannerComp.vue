@@ -67,7 +67,7 @@
     backdrop-filter: blur(20px);
     border-radius: var(--radius-d);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 5%);
+    background: rgba(255, 255, 255, 8%);
 }
 
 .overlay {
