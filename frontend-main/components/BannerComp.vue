@@ -89,7 +89,7 @@
 .Banner-header-left h1 {
     margin: 0;
     margin-bottom: 1rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     font-size: var(--text-size-9);
 }
 
