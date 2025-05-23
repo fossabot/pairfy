@@ -135,11 +135,11 @@ onBeforeUnmount(() => {
     position: absolute;
     top: 6px;
     left: 8px;
-    color: rgba(255, 255, 255, 80%);
-    font-size: 16px;
+    color: rgba(255, 255, 255, 90%);
+    font-size: var(--text-size-2);
     pointer-events: none;
-    z-index: 1;
     white-space: nowrap;
+    z-index: 1;
 }
 
 .send-button {
