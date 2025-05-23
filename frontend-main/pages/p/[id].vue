@@ -13,6 +13,7 @@
         <ProductImages />
         <DividerComp />
         <ProductBullet />
+        <DividerComp />
         <ProductDescription />
       </div>
 

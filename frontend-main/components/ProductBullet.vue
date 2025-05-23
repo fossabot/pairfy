@@ -20,9 +20,9 @@ const bullets = computed(() => product.value.bullet_list)
 
 <style scoped>
 .ProductDescription {
-    border: 1px solid var(--border-a); 
+    background: var(--background-b);
     border-radius: var(--radius-c);
-    padding: 1rem;
+    padding: 1.5rem;
 }
 
 .title {
