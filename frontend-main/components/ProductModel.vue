@@ -1,5 +1,5 @@
 <template>
-    <div class="ProductModel flex">
+    <div class="ProductModel flex" :class="{ isCurrent }">
         <div class="icon flex">
             <img src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="">
         </div>
@@ -26,7 +26,10 @@
 import { computed } from 'vue'
 import { formatUSD } from '~/utils/utils'
 
+const route = useRoute()
+
 const props = defineProps({
+    id: String,
     model: String,
     condition: String,
     color: String,
@@ -44,10 +47,10 @@ const discount = computed(() => props.discount)
 const discount_percent = computed(() => props.discount_percent)
 const discount_value = computed(() => props.discount_value)
 
-
+const isCurrent = computed(() => props.id === route.params?.id)
 
 const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
-const discountTag = computed(() => discount.value ? `-${discount_percent.value}% Off` : '') 
+const discountTag = computed(() => discount.value ? `-${discount_percent.value}% Off` : '')
 const save = computed(() => discount.value ? `Save ${formatUSD(price.value - discount_value.value)}` : '')
 </script>
 
@@ -69,6 +72,10 @@ const save = computed(() => discount.value ? `Save ${formatUSD(price.value - dis
 }
 
 .ProductModel:hover {
+    border: 1px solid var(--primary-a);
+}
+
+.ProductModel.isCurrent {
     border: 1px solid var(--primary-a);
 }
 
@@ -126,7 +133,7 @@ const save = computed(() => discount.value ? `Save ${formatUSD(price.value - dis
     background: var(--border-a)
 }
 
-.condition{
+.condition {
     color: var(--text-b);
     font-weight: 400;
 }

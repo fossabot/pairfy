@@ -44,9 +44,9 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductModel v-for="n in 1" :key="n" :model="product.model" :condition="product.condition_"
+            <ProductModel v-for="n in 1" :key="n" :id="product.id" :model="product.model" :condition="product.condition_"
               :color="product.color" :price="product.price" :discount="product.discount"
-              :discount_percent="product.discount_percent" :discount_value="product.discount_value" />
+              :discount_percent="product.discount_percent" :discount_value="product.discount_value"/>
 
             <div class="subtitle">
               Finish. <span>Choose your network.</span>
