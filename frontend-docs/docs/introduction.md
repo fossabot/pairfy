@@ -9,7 +9,7 @@ In addition, the implementation of other innovative and deterministic trading lo
 
 #### Differential factors
 
-- Community-governed with chain vote.
+- Community-governed with chain vote (DAO model).
 - The **liquidity pool** to reduce the price of products.
 - Use of Cardano Network – Midnight Network.
 - Each trade is an isolated smart-contract.
