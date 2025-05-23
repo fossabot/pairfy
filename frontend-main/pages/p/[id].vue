@@ -12,6 +12,7 @@
       <div class="left-column">
         <ProductImages />
         <DividerComp />
+        <ProductBullet />
         <ProductDescription />
       </div>
 

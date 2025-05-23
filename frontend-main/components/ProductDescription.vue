@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="title">Description</div>
         <editor-content v-if="product" :editor="editor" />
     </div>
 </template>
@@ -64,11 +63,6 @@ onBeforeUnmount(() => {
     line-height: 2rem;
 }
 
-.title {
-    font-size: var(--text-size-3);
-    font-weight: 600;
-    line-height: 4rem;
-}
 
 /* Default styles apply to all devices */
 
@@ -76,11 +70,6 @@ onBeforeUnmount(() => {
 @media (max-width: 480px) {
     ::v-deep(.editor-class) {
         padding: 0 1rem; 
-    }
-
-    .title{
-        padding: 0 1rem; 
-        line-height: 3rem;
     }
 }
 
