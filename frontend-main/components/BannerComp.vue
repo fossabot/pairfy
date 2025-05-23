@@ -7,10 +7,10 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1 class="fade-title">
-                            Buy and sell <span class="light"> on the Cardano</span> <span class="light">market</span>
+                            Buy and sell <span class="light"> cooperatively on Cardano</span> 
                         </h1>
                         <ul class="features">
-                            <li>✔ Community-governed</li>
+                            <li>✔ Community-governed (DAO)</li>
                             <li>✔ Native asset payments</li>
                             <li>✔ Midnight network</li>
                             <li>✔ Free shipping</li>
@@ -64,10 +64,10 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    border-radius: var(--radius-c);
+    border-radius: var(--radius-d);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 5%);
 }
 
 .overlay {
@@ -88,6 +88,7 @@
 .Banner-header-left h1 {
     margin: 0;
     margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     font-size: var(--text-size-9);
 }
 
