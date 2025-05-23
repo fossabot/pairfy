@@ -1,8 +1,19 @@
 <template>
-  <div  class="dialog-backdrop" v-if="visible" @click="closeDialog">
+  <div class="dialog-backdrop" v-if="visible" @click="close">
     <div class="dialog-box" @click.stop>
+
+      <div class="header flex">
+        <button class="flex center" @click="close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-x-icon lucide-x">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      </div>
+
       <slot />
-      <button @click="closeDialog">Cerrar</button>
     </div>
   </div>
 </template>
@@ -12,15 +23,15 @@ import { ref, defineExpose } from 'vue';
 
 const visible = ref(false);
 
-function openDialog() {
+function open() {
   visible.value = true;
 }
 
-function closeDialog() {
+function close() {
   visible.value = false;
 }
 
-defineExpose({ openDialog, closeDialog });
+defineExpose({ open, close });
 </script>
 
 <style scoped>
@@ -30,17 +41,28 @@ defineExpose({ openDialog, closeDialog });
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 20000;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .dialog-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
+  background: var(--background-a);
+  border-radius: var(--radius-c);
   min-width: 300px;
+  padding: 1.5rem;
+}
+
+button {
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.header{
+  justify-content: flex-end; 
+  width: 100%;
 }
 </style>

@@ -210,7 +210,7 @@ function displayMessage(message, type, duration) {
   toastRef.value?.showToast(message, type, duration)
 }
 function openChildDialog() {
-  dialogRef.value?.openDialog();
+  dialogRef.value?.open();
 }
 
 function addScrollListener() {
@@ -225,9 +225,6 @@ function showGetProductError() {
   if (getProductError.value) displayMessage(getProductError.value, 'error')
 
 }
-
-
-
 
 
 
