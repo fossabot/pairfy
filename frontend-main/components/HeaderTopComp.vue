@@ -32,7 +32,7 @@
 <script setup>
 const route = useRoute()
 
-const isContrast = computed(() => route.name === 'p-id')
+const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 
 
 </script>

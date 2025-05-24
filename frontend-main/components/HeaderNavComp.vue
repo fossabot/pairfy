@@ -18,7 +18,7 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-const isContrast = computed(() => route.name === 'p-id')
+const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 
 interface SubMenuItem {
   label: string
