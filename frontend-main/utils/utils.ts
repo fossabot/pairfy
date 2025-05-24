@@ -4,3 +4,16 @@ export function truncateByWords(text: string, wordCount: number): string {
   const words = text.trim().split(/\s+/);
   return words.slice(0, wordCount).join(" ");
 }
+
+export function formatUSD(amount: number) {
+  if (typeof amount !== "number" || !Number.isFinite(amount)) {
+    throw new TypeError("Amount must be a finite number");
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(amount);
+}

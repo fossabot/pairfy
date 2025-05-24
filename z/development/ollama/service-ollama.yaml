@@ -48,13 +48,6 @@ spec:
           image: ollama/ollama:latest
           ports:
             - containerPort: 11434
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "500m"
-            limits:
-              memory: "1Gi"
-              cpu: "1000m"
           volumeMounts:
             - name: ollama-data
               mountPath: /root/.ollama

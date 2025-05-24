@@ -1,10 +1,11 @@
 <template>
     <div class="HomeSection2">
-        <ProductCarousel title="Most purchased by the community" /> 
         <DividerComp />
         <ProductGrid title="Best sellers of the month" />
         <DividerComp />
         <CategoryComp />
+        <DividerComp />
+        <ProductCarousel title="Most purchased by the community" /> 
         <DividerComp />
         <ProductCarousel title="Household products most used" />
         <DividerComp />

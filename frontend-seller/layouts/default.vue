@@ -98,13 +98,7 @@ if (import.meta.server) {
 
 <style scoped>
 .layout {
-  background: var(--background-b);
-  background: linear-gradient(135deg,
-      #fff6e5 0%,
-      #fbe8f9 5%,
-      #e3f0ff 50%,
-      #e8f4fc 80%,
-      #e9fff0 100%);
+  background: var(--gradient-a);
   display: flex;
   height: 100vh;
 }
@@ -117,7 +111,6 @@ if (import.meta.server) {
 .sidebar {
   border-bottom-right-radius: var(--radius-c);
   border-top-right-radius: var(--radius-c);
-  border-right: 1px solid var(--border-a);
   background: var(--background-a);
   box-shadow: var(--shadow-a);
   transition: width 0.3s ease;

@@ -1,7 +1,8 @@
 <template>
   <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
-      <img class="icon" src="@/assets/brand/icon.svg" alt="" @click="" :class="{ contrast: isContrast }">
+      <img class="icon" v-if="!isContrast" src="https://media.pairfy.io/brand/icon-white.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="isContrast" src="https://media.pairfy.io/brand/icon.svg" alt="" @click="navigateTo('/')">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
@@ -17,7 +18,7 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-const isContrast = computed(() => route.name === 'p')
+const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 
 interface SubMenuItem {
   label: string
@@ -45,16 +46,17 @@ watch(() => route.path, (newPath) => {
 
 <style scoped>
 .icon {
+  margin-right: 0.25rem;
   height: 2.5rem;
 }
 
 .SubMenu {
+  width: calc(100% - 2rem);
   justify-content: center;
   color: var(--text-w);
   position: absolute;
   z-index: 10000;
   display: flex;
-  width: 100%;
   top: 0rem;
 }
 
@@ -68,8 +70,6 @@ watch(() => route.path, (newPath) => {
   align-items: center;
   padding: 1.25rem 0;
   max-width: var(--body-a);
-  border-bottom-left-radius: var(--radius-c);
-  border-bottom-right-radius: var(--radius-c);
 }
 
 .SubMenu-body li {
@@ -87,15 +87,15 @@ watch(() => route.path, (newPath) => {
 
 
 .SubMenu.contrast {
+  border-bottom: 1px solid var(--border-a);
+  box-shadow: 0 13px 10px 10px white;
+  background: var(--background-a);
+  position: fixed;
   top: 2rem;
 }
 
 .SubMenu-body.contrast {
   color: var(--text-a);
-}
-
-.icon.contrast {
-  filter: invert();
 }
 
 .SubMenu-body li.contrast:hover {

@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Search" :class="{ contrast: route.name === 'p' }" />
+            type="text" placeholder="Classic search" :class="{ contrast: isContrast }" />
 
         <button class="search-button" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -24,6 +24,8 @@
 <script setup lang="ts">
 
 const route = useRoute()
+
+const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 
 interface ProductSuggestion {
     id: string | number
@@ -65,8 +67,9 @@ const selectSuggestion = (item: ProductSuggestion) => {
 <style scoped>
 .header-search {
     width: 100%;
-    max-width: 60%;
+    max-width: 55%;
     margin-left: auto;
+    margin: 0 auto;
     position: relative;
 }
 
@@ -80,7 +83,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
     font-size: var(--text-size-1);
     border-radius: var(--radius-f);
     transition: var(--transition-a);
-    border: 2px solid rgba(255, 255, 255, 80%);
+    border: 2px solid rgba(255, 255, 255, 70%);
 }
 
 .search-input:focus-within {
@@ -95,7 +98,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 
 .search-input.contrast {
-    border: 2px solid rgba(0, 0, 0, 100%);
+    border: 2px solid rgba(0, 0, 0, 80%);
 }
 
 .search-input.contrast:focus-within {
@@ -153,6 +156,6 @@ const selectSuggestion = (item: ProductSuggestion) => {
 }
 
 .suggestion-item:hover {
-    background-color: #f5f5f5;
+    background: #f5f5f5;
 }
 </style>

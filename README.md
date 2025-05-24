@@ -114,12 +114,10 @@ skaffold run
 
 ### 2\. License
 
-This repository is dual-licensed:
+This project is licensed under the terms of the [Apache License 2.0](./LICENSE).
 
-- **[GPLv3](./LICENSE)** **Open-source forks** for all open-source usage, including commercial use, as long as the source code remains open.
-- **[Commercial License](./COMMERCIAL-LICENSE.md)** **Closed-source forks** required **only** if you fork this project and distribute a **closed-source** version.
-
-📩 Contact for commercial licensing: sudo.delete.evil@gmail.com
+Copyright © 2025  
+**Pairfy - Juan José Caballero Rey - Cardano Pioneer 1st Cohort**
 
 ---
 

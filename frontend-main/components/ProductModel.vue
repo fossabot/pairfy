@@ -1,34 +1,66 @@
 <template>
-    <div class="ProductModel flex">
+    <div class="ProductModel flex" :class="{ isCurrent }">
         <div class="icon flex">
             <img src="https://m.media-amazon.com/images/I/61cCf94xIEL.__AC_SX300_SY300_QL70_FMwebp_.jpg" alt="">
         </div>
 
         <div class="body">
             <div class="model flex">
-                <span>Model S9-C52025</span>
+                <span>{{ model }}</span>
                 <span class="divider" />
-                <span class="color" />
+                <span class="condition">{{ condition }}</span>
+                <span class="divider" />
+                <span class="color" :style="{ backgroundColor: color }" />
             </div>
 
             <div class="price">
-                <span>$38 USD</span>
-                <span class="discount">-25% Off</span>
-                <span class="saved">Save $250</span>
+                <span>{{ realPrice }}</span>
+                <span class="discount">{{ discountTag }}</span>
+                <span class="saved">{{ save }}</span>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { formatUSD } from '~/utils/utils'
 
+const route = useRoute()
+
+const props = defineProps({
+    id: String,
+    model: String,
+    condition: String,
+    color: String,
+    price: [Number],
+    discount: [Boolean],
+    discount_percent: [Number],
+    discount_value: [Number]
+})
+
+const model = computed(() => props.model)
+const condition = computed(() => props.condition)
+const color = computed(() => props.color)
+const price = computed(() => props.price)
+const discount = computed(() => props.discount)
+const discount_percent = computed(() => props.discount_percent)
+const discount_value = computed(() => props.discount_value)
+
+const isCurrent = computed(() => props.id === route.params?.id)
+
+const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
+const discountTag = computed(() => discount.value ? `-${discount_percent.value}% Off` : '')
+const save = computed(() => discount.value ? `Save ${formatUSD(price.value - discount_value.value)}` : '')
 </script>
+
 
 <style scoped>
 .ProductModel {
     border: 1px solid var(--border-b);
     transition: var(--transition-a);
     border-radius: var(--radius-c);
+    font-size: var(--text-size-1);
     margin-bottom: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -43,6 +75,10 @@
     border: 1px solid var(--primary-a);
 }
 
+.ProductModel.isCurrent {
+    border: 1px solid var(--primary-a);
+}
+
 .body {
     display: flex;
     flex-direction: column;
@@ -50,7 +86,7 @@
 
 .color {
     border-radius: 50%;
-    background: gray;
+    background: transparent;
     opacity: 0.5;
     height: 1rem;
     width: 1rem;
@@ -95,5 +131,10 @@
     height: 0.75rem;
     margin: 0 0.75rem;
     background: var(--border-a)
+}
+
+.condition {
+    color: var(--text-b);
+    font-weight: 400;
 }
 </style>

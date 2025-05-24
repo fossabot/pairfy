@@ -1,7 +1,9 @@
 import { CreateProduct } from "./CreateProduct.js";
+import { CreateMedia } from "./CreateMedia.js";
 
 const handlers: any = {
     CreateProduct,
+    CreateMedia
   };
   
   export const processEvent = (message: any) => {

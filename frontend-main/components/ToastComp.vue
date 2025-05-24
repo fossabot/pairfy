@@ -20,7 +20,7 @@
   function showToast(
     message: string,
     type: "success" | "error" | "info" | "default" = "default",
-    duration = 3000
+    duration = 5000
   ) {
     const id = counter++;
     toasts.value.push({ id, message, type });
@@ -41,7 +41,7 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 9999;
+    z-index: 20000;
     display: flex;
     flex-direction: column;
     gap: 1rem;

@@ -26,9 +26,10 @@ const main = async () => {
       "DATABASE_USER",
       "DATABASE_PASSWORD",
       "DATABASE_NAME",
-      "REDIS_HOST",
+      "SERVICE_STATE_REDIS",
       "REDIS_RATELIMIT_URL",
-      "AGENT_JWT_KEY"
+      "AGENT_JWT_KEY",
+      "EMBEDDING_HOST"
     ];
 
     for (const varName of requiredEnvVars) {
@@ -38,6 +39,8 @@ const main = async () => {
     }
 
     errorEvents.forEach((e: string) => process.on(e, (err) => catchError(err)));
+
+    console.log("✅ ENV variables configured");
 
     ///////////////////////////////////////////////////////////////////////////////////
 
@@ -80,22 +83,28 @@ const main = async () => {
       database: process.env.DATABASE_NAME,
     });
 
+    console.log("✅ Database connected");
+
     await redisClient
       .connect({
-        url: process.env.REDIS_HOST,
+        url: process.env.SERVICE_STATE_REDIS,
         connectTimeout: 100000,
         keepAlive: 100000,
       })
       .then(() => checkRedis(redisClient))
       .catch((err: any) => catchError(err));
 
+    console.log("✅ RedisClient connected");
+
     const rateLimiter = new RateLimiter({
       source: "service-query",
       redisUrl: process.env.REDIS_RATELIMIT_URL as string,
       jwtSecret: process.env.AGENT_JWT_KEY as string,
-      maxRequests: 20,
-      windowSeconds: 60
+      maxRequests: 100,
+      windowSeconds: 60,
     });
+
+    console.log("✅ RateLimiter configured");
 
     app.set("trust proxy", 1);
 
@@ -136,7 +145,7 @@ const main = async () => {
       httpServer.listen({ port: 8004 }, resolve)
     );
 
-    logger.info("ONLINE");
+    logger.info("Online");
   } catch (err) {
     catchError(err);
   }
