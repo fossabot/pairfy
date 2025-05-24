@@ -33,6 +33,27 @@ type Product {
   schema_v: Int!
 }
 
+type SearchProductsResponse{
+  id: ID!
+  thumbnail_url: String
+  name: String!
+  price: Int!
+  sku: String!
+  model: String!
+  brand: String!
+  category: String!
+  bullet_list: [String!]!
+  color: String!
+  condition_: String!
+  origin: String!
+  city: String!
+  postal: String!
+  discount: Boolean!
+  discount_value: Int!
+  discount_percent: Int!
+  created_at: BigInt!
+}
+
 type MediaResolutions {
   large: String!
   medium: String!
@@ -72,10 +93,6 @@ type ProductSource {
   best_seller: Boolean!
 }
 
-type SearchProductResponse {
-  _source: ProductSource!
-}
-
 type GetProductResponse{
   product: Product!
   media: [Media]!
@@ -112,24 +129,14 @@ input SortInput {
   discount_value: StringFilterInput!
 }
 
-input SearchProductInput {
-  text: String!
-  sku: StringFilterInput!
-  brand: StringFilterInput!
-  model: StringFilterInput!
-  category: StringFilterInput!
-  quality: StringFilterInput!
-  discount: BooleanFilterInput!
-  best_seller: BooleanFilterInput!
-  price: PriceFilterInput!
-  sort: SortInput!
-  tag: String
+input SearchProductsInput {
+  prompt: String!
 } 
 
 type Query {
   getFeed: String!
   getProduct(getProductInput: GetProductInput!): GetProductResponse!
-  searchProduct(searchProductInput: SearchProductInput!): [SearchProductResponse]!
+  searchProducts(searchProductsInput: SearchProductsInput!): [SearchProductsResponse]!
   getAssetPrice: Float!
 }
 

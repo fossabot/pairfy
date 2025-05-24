@@ -41,19 +41,3 @@ export const sortInputSchema = z.object({
   discount_value: sortFieldSchema
 });
 
-export const searchProductInputSchema = z.object({
-    text: z.string().min(1, 'Search text is required').max(300, 'Search text too long'),
-    sku: stringFilterInputSchema,
-    brand: stringFilterInputSchema,
-    model: stringFilterInputSchema,
-    category: stringFilterInputSchema,
-    quality: stringFilterInputSchema,
-    discount: booleanFilterInputSchema,
-    best_seller: booleanFilterInputSchema,
-    price: priceFilterInputSchema,
-    sort: sortInputSchema,
-    tag: z.string()
-    .max(32, 'Tag is too long')
-    .regex(/^$|^[a-z0-9-_]+$/, 'Tag must be lowercase and contain only letters, numbers, hyphens or underscores')
-  });
-  

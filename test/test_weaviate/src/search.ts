@@ -67,12 +67,12 @@ export async function findProductByVector(name: string): Promise<any[] | null> {
       .withWhere({
         operator: "And",
         operands: [
-          { path: ["category"], operator: "Equal", valueText: "Electronics" }, 
-          { path: ["discount"], operator: "Equal", valueBoolean: true },         
-          { path: ["price"], operator: "GreaterThan", valueInt: 100 }           
+          //{ path: ["category"], operator: "Equal", valueText: "Electronics" }, 
+          //{ path: ["discount"], operator: "Equal", valueBoolean: true },         
+          { path: ["price"], operator: "GreaterThan", valueInt: 10 }           
         ]
       })
-      .withLimit(20)
+      .withLimit(10)
       .do();
 
     const products = response.data?.Get?.ProductV1 || [];
@@ -96,7 +96,7 @@ export async function findProductByVector(name: string): Promise<any[] | null> {
 // 🔥 Ejemplo de uso:
 const main = async () => {
   try {
-    const name = "Bluetooth";
+    const name = "razer";
     const products = await findProductByVector(name);
 
     if (!products) {

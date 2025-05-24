@@ -18,8 +18,6 @@ spec:
           env:
             - name: NODE_ENV
               value: development                                          
-            - name: WEAVIATE_HOST
-              value: weaviate.default.svc.cluster.local:8080
             - name: DATABASE_HOST  
               valueFrom:
                 configMapKeyRef:
@@ -52,7 +50,16 @@ spec:
                 secretKeyRef:
                   name: agent-token-secret
                   key: AGENT_TOKEN_KEY 
-                                                                                                                                                                                                                                        
+            - name: WEAVIATE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: weaviate-config
+                  key: host 
+            - name: EMBEDDING_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: embedding-config
+                  key: host                                                                                                                                                                                                                                                         
           resources:
             limits:
               memory: "500Mi"

@@ -29,6 +29,7 @@ const main = async () => {
       "SERVICE_STATE_REDIS",
       "REDIS_RATELIMIT_URL",
       "AGENT_JWT_KEY",
+      "EMBEDDING_HOST"
     ];
 
     for (const varName of requiredEnvVars) {
