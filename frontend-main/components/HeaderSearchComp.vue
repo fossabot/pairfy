@@ -67,8 +67,9 @@ const selectSuggestion = (item: ProductSuggestion) => {
 <style scoped>
 .header-search {
     width: 100%;
-    max-width: 60%;
+    max-width: 55%;
     margin-left: auto;
+    margin: 0 auto;
     position: relative;
 }
 

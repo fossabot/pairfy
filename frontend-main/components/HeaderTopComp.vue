@@ -40,10 +40,8 @@ const isContrast = computed(() => route.name === 'p-id')
 <style lang="css" scoped>
 .HeaderTop {
     border-bottom: 1px solid var(--border-a);
-    background: var(--primary-a);
     justify-content: center;
     box-sizing: border-box;
-    color: var(--text-w);
     position: fixed;
     z-index: 10000;
     height: 2rem;
