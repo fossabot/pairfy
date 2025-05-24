@@ -79,24 +79,17 @@ The open source community is a giant.
 It allows for the distribution of value based on merit and opportunity, enables transparency, and highlights the power of community governance.
 Closed source, telemetry, private data collection, will pass.
 
-#### Licenses
+#### License
 
-You can fork the official repository to create a better commercial version of Pairfy, but you are obligated to share your improvements with the Cardano open-source community and the wider community, all under the GPLv3 license.
+## Apache License 2.0 Summary
 
-If you want to make a closed-source fork and not share your improvements with the open-source community, then you can opt for a commercial license.
+| Category               | Description                                                                                   |
+|------------------------|-----------------------------------------------------------------------------------------------|
+| ✅ Allowed             | - Use for personal and commercial purposes<br>- Modify the source code<br>- Redistribute original or modified versions<br>- Re-license your modifications<br>- Use in closed-source/proprietary software<br>- Keep changes private (if not redistributed)<br>- Includes a patent grant for added legal protection |
+| 📌 Obligations         | - Keep original copyright notices<br>- Include the full Apache 2.0 license<br>- **Indicate if you made changes** (e.g., in file headers, README, or NOTICE)<br>- Include `NOTICE` file if present in the original<br>- Do not imply your version is the original<br>- Do not use trademarks without permission |
+| ❌ Restrictions        | - Do not remove or alter license/copyright notices<br>- Do not claim authorship of the original<br>- Do not use logos or names as if they were yours<br>- No liability or warranty: software is provided "as is" |
+| 🎯 Ideal For           | - Open source with commercial intent<br>- Integrating into proprietary products<br>- Legal clarity and patent protection<br>- Attribution without copyleft requirements |
 
-This is to punish the abusive and greedy behavior of corporations that take code from open-source developers who are driven by passion.
-
-
-::: details
-| Company Involved                | Project / Software         | What Happened                                                                                             | Outcome / Response                                                                                         |
-|--------------------------------|-----------------------------|------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
-| **Amazon vs. Elastic**         | Elasticsearch               | Amazon launched its own managed Elasticsearch service using the open-source version (Apache 2.0), without significant upstream contributions. Elastic accused Amazon of exploiting the project and using the name unfairly, despite legal allowance. | In response, Elastic changed the license to SSPL to restrict cloud providers. Amazon forked it into OpenSearch. |
-| **Cloud Providers (AWS, etc.)**| Redis / MongoDB             | Redis and MongoDB were offered as hosted services by cloud providers who didn’t contribute proportionally to development. This raised concerns about monetizing open-source projects without supporting their creators. | Both projects switched to more restrictive licenses (SSPL, Redis Source Available) to limit usage by major clouds. |
-| **Google vs. Docker**          | Docker / Kubernetes         | Docker introduced containerization, but Google created Kubernetes, an open-source orchestration system that built on container concepts. Kubernetes became more popular in production use, reducing Docker's central role. | Kubernetes became the industry standard. Docker remained useful for development but lost dominance in orchestration. |
-| **HashiCorp vs. Community**    | Terraform                   | Companies offered Terraform as a service without partnering with HashiCorp. In 2023, HashiCorp moved Terraform to a Business Source License (BSL), limiting commercial use by competitors. | The community responded by creating OpenTofu, a fork under the Linux Foundation to ensure long-term open-source freedom. |
-| **Oracle vs. Community**       | OpenOffice.org              | After acquiring Sun Microsystems, Oracle took control of OpenOffice.org. Many contributors distrusted Oracle's stewardship and left to form a community-driven fork, LibreOffice. | LibreOffice quickly surpassed OpenOffice in development and adoption, becoming the primary free office suite. |
-:::
 ## Syntax Highlighting
 
 VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shikijs/shiki), with additional features like line-highlighting:
