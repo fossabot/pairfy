@@ -13,6 +13,6 @@
     border: 1px solid var(--border-a);
     border-radius: var(--radius-b);
     box-sizing: border-box;
-    height: 20rem;
+    height: 15rem;
 }
 </style>

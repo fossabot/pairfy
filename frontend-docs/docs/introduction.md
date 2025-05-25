@@ -7,6 +7,10 @@ The trade between the seller and the buyer is managed by smart contracts or indi
 Using a Cardano smart-contract allows to use **_ADA_**, **_stablecoin_** and **_native asset_** as a form of payment for the products.
 In addition, the implementation of other innovative and deterministic trading logics. It is compatible with the midnight network.
 
+Pairfy was funded in Cardano Catalyst round 11.
+![Catalyst](assets/f11.png)
+
+
 #### Differential factors
 
 - Community-governed with chain vote (DAO model).

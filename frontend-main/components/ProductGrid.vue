@@ -23,7 +23,7 @@ defineProps(['title'])
 const content = ref([{
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 1000,
   discount: true,
   discount_percent: 100,
@@ -72,7 +72,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 18
 },
 {
   id: "Asdas",
@@ -81,7 +81,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 65
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
@@ -89,7 +89,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 23
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
@@ -97,7 +97,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 33
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
@@ -105,7 +105,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 78
 },
 
 {
@@ -115,7 +115,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 90
 },
 
 {
@@ -125,7 +125,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 166
 },
 
 {
@@ -135,7 +135,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 23
 },
 
 {
@@ -145,7 +145,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 55
 }
 
 ])

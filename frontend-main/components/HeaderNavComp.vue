@@ -51,7 +51,7 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu {
-  width: calc(100% - 2rem);
+  width: 100%;
   justify-content: center;
   color: var(--text-w);
   position: absolute;
