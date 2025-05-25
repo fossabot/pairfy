@@ -48,17 +48,21 @@ const onSelect = (index) => {
 .tab {
     border-top-right-radius: var(--radius-b);
     border-top-left-radius: var(--radius-b);
-    background: rgb(255 255 255 / 50%);
+    border: 1px solid var(--border-a);
+    transition: var(--transition-a);
     font-size: var(--text-size-1);
     backdrop-filter: blur(12px);
     justify-content: flex-start;
+    border-bottom: none;
     font-weight: 600;
     cursor: pointer;
     margin-left: 0.75rem;
     padding: 0.75rem 1.5rem;
-    border: 1px solid var(--border-a);
-    border-bottom: none;
 
+}
+
+.tab:hover {
+    color: var(--primary-a);
 }
 
 .tab.enabled {
@@ -74,9 +78,5 @@ const onSelect = (index) => {
 .icon {
     justify-content: center;
     margin-right: 0.5rem;
-}
-
-.icon i {
-    font-size: var(--text-size-3);
 }
 </style>
