@@ -46,7 +46,7 @@ watch(() => route.path, (newPath) => {
 
 <style scoped>
 .icon {
-  margin-right: 0.25rem;
+  margin-right: 0.5rem;
   height: 2.5rem;
 }
 

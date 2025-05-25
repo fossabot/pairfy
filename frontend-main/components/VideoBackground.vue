@@ -6,7 +6,7 @@
                 <source src="@/assets/videos/2.mp4" type="video/mp4" />
                 Your browser does not support the video HTML5.
             </video>
-        </ClientOnly>
+        </ClientOnly> 
 
         <div class="overlay-content"> 
             <slot />
