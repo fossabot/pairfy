@@ -79,12 +79,12 @@ const onSelect = (id) => {
 
 .ProductCard-title {
     margin-top: 0rem;
-    font-weight: 500;
+    font-weight: 400;
     overflow: hidden;
     line-height: 1.5;
     color: var(--text-a);
     text-overflow: ellipsis;
-    font-size: var(--text-size-1);
+    font-size: var(--text-size-2);
 }
 
 .ProductCard-price {
@@ -104,6 +104,7 @@ const onSelect = (id) => {
 .ProductCard-rating {
     display: flex;
     align-items: center;
+    margin-top: 0.25rem;
     font-size: var(--text-size-1);
 }
 

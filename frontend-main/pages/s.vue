@@ -1,6 +1,7 @@
 <template>
     <div class="search-page">
         <SearchFilter />
+        <DividerComp />
         <ProductGrid />
         <FooterComp />
     </div>
@@ -12,7 +13,10 @@
 
 <style lang="css" scoped>
 .search-page {
+    flex-direction: column;
+    align-items: center;
     padding-top: 9rem;
+    display: flex;
     width: 100%;
 }
 </style>

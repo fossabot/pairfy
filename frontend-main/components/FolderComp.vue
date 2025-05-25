@@ -50,6 +50,7 @@ const onSelect = (index) => {
     border-top-left-radius: var(--radius-b);
     background: rgb(255 255 255 / 50%);
     font-size: var(--text-size-1);
+    backdrop-filter: blur(12px);
     justify-content: flex-start;
     font-weight: 600;
     cursor: pointer;
@@ -57,7 +58,7 @@ const onSelect = (index) => {
     padding: 0.75rem 1.5rem;
     border: 1px solid var(--border-a);
     border-bottom: none;
-    backdrop-filter: blur(12px);
+
 }
 
 .tab.enabled {

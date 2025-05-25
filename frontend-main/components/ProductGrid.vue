@@ -161,7 +161,6 @@ const content = ref([{
 
 .ProductGrid-body {
   display: flex;
-  margin-top: 1rem;
   flex-direction: column;
   box-sizing: border-box;
   max-width: var(--body-a);
