@@ -19,6 +19,8 @@ In addition, the implementation of other innovative and deterministic trading lo
 - Open-source development (Apache 2.0).
 - Integration of AI models.
 - Product search by AI vectorized semantics.
+- Use of collective intelligence that enables strategic cooperation and mutual benefit for ecosystem members 
+(market investigation, supplier analysis, development, innovation, etc).
 
 #### Competitive factors
 

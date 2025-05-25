@@ -1,9 +1,7 @@
 <template>
-
   <div class="ProductGrid">
 
-
-    <div class="normal">
+    <div class="ProductGrid-body">
       <div class="title flex">
         <span>{{ title }}</span>
         <div class="icon flex">
@@ -21,15 +19,15 @@
 
 <script setup>
 defineProps(['title'])
- 
+  
 const content = ref([{
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
   image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
-  price: 2323,
+  price: 1000,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 34
 },
 {
   id: "Asdas",
@@ -38,7 +36,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 15
 },
 {
   id: "Asdas",
@@ -47,7 +45,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 19
 },
 {
   id: "Asdas",
@@ -56,7 +54,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 20
 },
 {
   id: "Asdas",
@@ -65,7 +63,7 @@ const content = ref([{
   price: 2323,
   discount: true,
   discount_percent: 100,
-  discount_value: 200
+  discount_value: 50
 },
 {
   id: "Asdas",
@@ -156,17 +154,17 @@ const content = ref([{
 
 <style lang="css" scoped>
 .ProductGrid {
-  width: inherit;
   display: flex;
+  width: inherit;
   justify-content: center;
 }
 
-.normal {
+.ProductGrid-body {
   display: flex;
+  margin-top: 1rem;
   flex-direction: column;
   box-sizing: border-box;
   max-width: var(--body-a);
-
   border-radius: var(--radius-a);
   background: var(--background-a);
 
@@ -180,11 +178,11 @@ const content = ref([{
 }
 
 .grid {
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   justify-content: center;
   max-width: inherit;
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .icon {
@@ -201,7 +199,7 @@ const content = ref([{
 
 
 @media (max-width: 480px) {
-  .normal {
+  .ProductGrid-body {
     padding: 0 0.5rem;
   }
 

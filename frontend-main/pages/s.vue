@@ -1,6 +1,8 @@
 <template>
-    <div>
-x
+    <div class="search-page">
+        <SearchFilter />
+        <ProductGrid />
+        <FooterComp />
     </div>
 </template>
 
@@ -9,5 +11,8 @@ x
 </script>
 
 <style lang="css" scoped>
-
+.search-page {
+    padding-top: 9rem;
+    width: 100%;
+}
 </style>

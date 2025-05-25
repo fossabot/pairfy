@@ -10,10 +10,12 @@ export function formatUSD(amount: number) {
     throw new TypeError("Amount must be a finite number");
   }
 
-  return new Intl.NumberFormat("en-US", {
+  const formatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(amount);
+
+  return formatted.replace(/\$/g, "").trim();
 }

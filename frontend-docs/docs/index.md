@@ -15,7 +15,7 @@ hero:
       link: /api-examples
 
 features:
-  - title: 🔥 Open Source GPL v3 
+  - title: 🔥 Open Source - Apache 2.0
     details: Project funded by the Catalyst program with open-source license.
   - title: 🤝 Community-governed 
     details: Democratic constitutional model with decentralized participation.

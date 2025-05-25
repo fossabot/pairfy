@@ -1,5 +1,5 @@
 <template>
-    <div class="carpet flex">
+    <div class="FolderComp flex">
 
         <div class="body">
             <div class="tabs flex">
@@ -7,12 +7,12 @@
                     :class="{ enabled: activeTab === index }" @click="onSelect(index)">
 
                     <div class="icon flex">
-                        <slot :name="`icon-${index}`"/>
+                        <slot :name="`icon-${index}`" />
                     </div>
                     <span> {{ item }}</span>
                 </div>
             </div>
-       
+
             <slot name="content" :index="activeTab"></slot>
         </div>
     </div>
@@ -31,11 +31,12 @@ const onSelect = (index) => {
 </script>
 
 <style lang="css" scoped>
-.carpet {
-    border-radius: var(--radius-b);
+.FolderComp {
+    width: inherit;
     overflow: hidden;
-    transition: 0.2s;
-    width: 100%;
+    max-width: var(--body-a);
+    transition: var(--transition-a);
+    border-radius: var(--radius-b);
 }
 
 .body {
