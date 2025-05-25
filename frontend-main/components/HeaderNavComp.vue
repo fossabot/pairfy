@@ -1,8 +1,8 @@
 <template>
   <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
-      <img class="icon" v-if="!isContrast" src="https://media.pairfy.io/brand/icon-white.svg" alt="" @click="navigateTo('/')">
-      <img class="icon" v-if="isContrast" src="https://media.pairfy.io/brand/icon.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="!isContrast" src="@/assets/brand/icon-white.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="isContrast" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')">
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
