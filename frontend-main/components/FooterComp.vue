@@ -81,9 +81,11 @@
 .footer {
   background-color: var(--background-b);
   font-size: var(--text-size-1);
+  box-sizing: border-box;
   color: var(--text-a);
   padding: 4rem 1rem;
   margin-top: 4rem;
+  width: 100%;
 }
 
 .footer-container {

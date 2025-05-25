@@ -281,7 +281,7 @@ function getImageSrc(item) {
   background: var(--background-a);
   border-radius: var(--radius-d);
   box-sizing: border-box;
-  width: 70vw;
+  width: 65vw;
   height: 70vh;
   display: flex;
   flex-direction: column;
@@ -291,7 +291,7 @@ function getImageSrc(item) {
 
 .modal-image {
   max-width: 100%;
-  max-height: 50vh;
+  max-height: 40vh;
   object-fit: contain;
   margin-top: auto;
 }

@@ -2,11 +2,11 @@
     <header>
         <HeaderTopComp />
         <HeaderNavComp :items="[
-            { label: 'Best sellers', route: '/offers' }, 
+            { label: 'Ranking', route: '/ranking' }, 
             { label: 'Categories', route: '/categories' },
             { label: 'Docs', route: '/docs' },
             { label: 'Support', route: '/support' },
-            { label: 'Sell', route: '/account' },
+            { label: 'Sell', route: '/sell' },
         ]" />
 
     </header>

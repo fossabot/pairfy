@@ -14,7 +14,7 @@
             </div>
 
             <div class="price">
-                <span>{{ realPrice }}</span>
+                <span>{{ `$${realPrice}` }}</span>
                 <span class="discount">{{ discountTag }}</span>
                 <span class="saved">{{ save }}</span>
             </div>

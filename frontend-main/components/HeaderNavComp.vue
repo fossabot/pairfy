@@ -46,12 +46,12 @@ watch(() => route.path, (newPath) => {
 
 <style scoped>
 .icon {
-  margin-right: 0.25rem;
+  margin-right: 0.5rem;
   height: 2.5rem;
 }
 
 .SubMenu {
-  width: calc(100% - 2rem);
+  width: 100%;
   justify-content: center;
   color: var(--text-w);
   position: absolute;

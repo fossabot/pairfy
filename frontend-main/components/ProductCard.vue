@@ -1,34 +1,27 @@
 <template>
-    <div class="p-product" @click="onSelect(props.data.id)">
-        <div class="p-product-image">
+    <div class="ProductCard" @click="onSelect(props.data.id)">
+        <div class="ProductCard-image">
             <img :src="props.data.image" :style="{ ...props.style }" alt="">
         </div>
 
-        <div class="p-product-body">
-            <span class="p-product-title">{{ `${truncateByWords(props.data.name, 10)}...` }}</span>
+        <div class="ProductCard-body">
+            <span class="ProductCard-title">{{ `${truncateByWords(props.data.name, 20)}...` }}</span>
 
-            <span class="p-product-rating flex">
+            <span class="ProductCard-rating">
                 <RatingComp :rating="4" />
+                <span>(1562)</span>
             </span>
 
-            <span class="p-product-price">
-                <span>
-
-                </span>
-
-                <span class="p-product-last" v-if="props.data.discount">
-                    {{ props.data.price }}
-                </span>
-
+            <span class="ProductCard-price">
+                <small>$</small>
+                <span>{{ formatUSD(props.data.discount ? props.data.discount_value : props.data.price) }}</span>
             </span>
-
-
         </div>
     </div>
 </template>
 
 <script setup>
-import { truncateByWords } from '~/utils/utils'
+import { truncateByWords, formatUSD } from '~/utils/utils'
 
 const props = defineProps(['data', 'style'])
 
@@ -49,78 +42,77 @@ const onSelect = (id) => {
 </script>
 
 <style lang="css" scoped>
-span {
-    line-height: 1.5rem;
-}
-
-.p-product {
+.ProductCard {
+    padding: 1rem;
     display: flex;
     cursor: pointer;
     overflow: hidden;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
+    border-radius: var(--radius-b);
     transition: transform 0.2s ease;
     background: var(--background-a);
+    border: 1px solid var(--border-a);
 }
 
-.p-product-image {
+.ProductCard-image {
     overflow: hidden;
     width: 200px;
     height: 200px;
 }
 
-.p-product-image img {
+.ProductCard-image img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     transition: transform 0.3s ease;
     border-radius: var(--radius-a);
-
 }
 
-.p-product-body {
+.ProductCard-body {
     padding: 0rem;
     display: flex;
     flex-direction: column;
     font-size: var(--text-size-1);
 }
 
-.p-product-title {
-    font-size: var(--text-size-1);
-    color: var(--text-a);
+.ProductCard-title {
     margin-top: 0rem;
-    font-weight: 500;
+    font-weight: 400;
     overflow: hidden;
-
+    line-height: 1.5;
+    color: var(--text-a);
     text-overflow: ellipsis;
+    font-size: var(--text-size-2);
 }
 
-.p-product-price {
-    font-size: var(--text-size-4);
-    align-items: baseline;
-    font-weight: 600;
+.ProductCard-price {
+    font-size: var(--text-size-5);
+    align-items: center;
+    margin-top: 0.25rem;
+    font-weight: 500;
     display: flex;
 }
 
-
-.p-product-last {
-    font-size: var(--text-size-1);
-    background: transparent;
-    max-width: fit-content;
-    display: inline-block;
-    color: var(--text-b);
-    white-space: nowrap;
-    margin-left: 0.5rem;
-    text-align: center;
-    font-weight: 400;
+.ProductCard-price small {
+    font-size: var(--text-size-0);
+    margin-bottom: 8px;
+    margin-right: 2px;
 }
 
-.p-product-rating {}
+.ProductCard-rating {
+    display: flex;
+    align-items: center;
+    margin-top: 0.25rem;
+    font-size: var(--text-size-1);
+}
 
-.p-product-rating span {
+.ProductCard-rating span {
+    font-size: var(--text-size-0);
     color: var(--text-b);
-    margin-left: 0.5rem;
-    font-weight: 500;
+    margin-left: 0.25rem;
+    font-weight: 400;
+    line-height: 0;
 }
 </style>

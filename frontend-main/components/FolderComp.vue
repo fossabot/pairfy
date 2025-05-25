@@ -1,5 +1,5 @@
 <template>
-    <div class="carpet flex">
+    <div class="FolderComp flex">
 
         <div class="body">
             <div class="tabs flex">
@@ -7,12 +7,12 @@
                     :class="{ enabled: activeTab === index }" @click="onSelect(index)">
 
                     <div class="icon flex">
-                        <slot :name="`icon-${index}`"/>
+                        <slot :name="`icon-${index}`" />
                     </div>
                     <span> {{ item }}</span>
                 </div>
             </div>
-       
+
             <slot name="content" :index="activeTab"></slot>
         </div>
     </div>
@@ -31,11 +31,12 @@ const onSelect = (index) => {
 </script>
 
 <style lang="css" scoped>
-.carpet {
-    border-radius: var(--radius-b);
+.FolderComp {
+    width: inherit;
     overflow: hidden;
-    transition: 0.2s;
-    width: 100%;
+    max-width: var(--body-a);
+    transition: var(--transition-a);
+    border-radius: var(--radius-b);
 }
 
 .body {
@@ -47,16 +48,21 @@ const onSelect = (index) => {
 .tab {
     border-top-right-radius: var(--radius-b);
     border-top-left-radius: var(--radius-b);
-    background: rgb(255 255 255 / 50%);
+    border: 1px solid var(--border-a);
+    transition: var(--transition-a);
     font-size: var(--text-size-1);
+    backdrop-filter: blur(12px);
     justify-content: flex-start;
+    border-bottom: none;
     font-weight: 600;
     cursor: pointer;
     margin-left: 0.75rem;
     padding: 0.75rem 1.5rem;
-    border: 1px solid var(--border-a);
-    border-bottom: none;
-    backdrop-filter: blur(12px);
+
+}
+
+.tab:hover {
+    color: var(--primary-a);
 }
 
 .tab.enabled {
@@ -72,9 +78,5 @@ const onSelect = (index) => {
 .icon {
     justify-content: center;
     margin-right: 0.5rem;
-}
-
-.icon i {
-    font-size: var(--text-size-3);
 }
 </style>
