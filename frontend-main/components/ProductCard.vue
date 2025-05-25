@@ -8,9 +8,7 @@
             <span class="ProductCard-title">{{ `${truncateByWords(props.data.name, 20)}...` }}</span>
 
             <span class="ProductCard-rating">
-                <span>
-                    <RatingComp :rating="4" />
-                </span>
+                <RatingComp :rating="4" />
                 <span>(1562)</span>
             </span>
 
@@ -110,15 +108,10 @@ const onSelect = (id) => {
 }
 
 .ProductCard-rating span {
-    margin-right: 0.5rem;
+    font-size: var(--text-size-0);
     color: var(--text-b);
-    font-weight: 300;
-    line-height: 0;
-}
-
-.ProductCard-rating span:nth-child(1) {
-    color: var(--text-a);
-    font-weight: 600;
+    margin-left: 0.25rem;
+    font-weight: 400;
     line-height: 0;
 }
 </style>
