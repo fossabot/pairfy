@@ -250,7 +250,7 @@ onBeforeUnmount(() => {
 .page-wrapper {
   width: 100%;
   display: flex;
-  padding-top: 12rem;
+  padding-top: 10rem;
   justify-content: center;
 }
 

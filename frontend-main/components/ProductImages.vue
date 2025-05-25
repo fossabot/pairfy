@@ -234,8 +234,8 @@ function getImageSrc(item) {
 }
 
 .p-media-image {
-  width: 550px;
-  height: 550px;
+  width: 600px;
+  height: 600px;
   display: flex;
   margin: 0 auto;
   position: relative;

@@ -15,7 +15,7 @@
 .search-page {
     flex-direction: column;
     align-items: center;
-    padding-top: 9rem;
+    padding-top: 8rem;
     display: flex;
     width: 100%;
 }

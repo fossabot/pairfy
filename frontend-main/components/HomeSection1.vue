@@ -2,9 +2,9 @@
     <div class="HomeSection1">
         <VideoBackground>
             <BannerComp />
-            <HomeChat/>
+            <HomeChat />
         </VideoBackground>
-    
+
     </div>
 </template>
 
@@ -17,5 +17,4 @@
     height: 100vh;
     background: var(--black-a);
 }
-
 </style>

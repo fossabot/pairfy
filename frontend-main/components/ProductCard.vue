@@ -84,7 +84,7 @@ const onSelect = (id) => {
     line-height: 1.5;
     color: var(--text-a);
     text-overflow: ellipsis;
-    font-size: var(--text-size-2);
+    font-size: var(--text-size-1);
 }
 
 .ProductCard-price {
