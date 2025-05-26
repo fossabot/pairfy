@@ -12,7 +12,7 @@
 
 <style scoped>
 .container {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 280px 1fr;
     padding-top: 8rem;
     display: grid;
     gap: 2rem;

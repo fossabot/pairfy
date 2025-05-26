@@ -10,7 +10,7 @@
 
     <div class="container" v-if="product">
       <div class="left-column">
-        <ProductImages />
+        <ProductMedia />
         <DividerComp />
         <ProductBullet />
         <DividerComp />

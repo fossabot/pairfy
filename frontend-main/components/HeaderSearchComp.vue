@@ -92,6 +92,10 @@ const selectSuggestion = (item: ProductSuggestion) => {
     border: 2px solid rgba(255, 255, 255, 100%);
 }
 
+.search-input::placeholder{
+    opacity: 0.5;
+}
+
 
 
 
