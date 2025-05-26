@@ -10,9 +10,10 @@
 
 <style lang="css" scoped>
 .SearchPanel {
+    border-top-right-radius: var(--radius-d);
+    border: 1px solid var(--border-a);
     background: var(--background-b);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    border-top-right-radius: var(--radius-c);
+    border-left: none;
     height: fit-content;
     position: sticky;
     min-height: 100vh;
