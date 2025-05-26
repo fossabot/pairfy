@@ -1,12 +1,11 @@
 <template>
-  <div class="page-wrapper">
+  <div class="product-page">
     <ToastComp ref="toastRef" />
 
     <DialogComp ref="dialogRef">
       <p>Contenido del diálogo</p>
     </DialogComp>
 
-    <LoadingWall v-if="loading" />
 
     <div class="container" v-if="product">
       <div class="left-column">
@@ -44,9 +43,9 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductModel v-for="n in 1" :key="n" :id="product.id" :model="product.model" :condition="product.condition_"
-              :color="product.color" :price="product.price" :discount="product.discount"
-              :discount_percent="product.discount_percent" :discount_value="product.discount_value"/>
+            <ProductModel v-for="n in 1" :key="n" :id="product.id" :model="product.model"
+              :condition="product.condition_" :color="product.color" :price="product.price" :discount="product.discount"
+              :discount_percent="product.discount_percent" :discount_value="product.discount_value" />
 
             <div class="subtitle">
               Finish. <span>Choose your network.</span>
@@ -247,7 +246,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.page-wrapper {
+.product-page {
   width: 100%;
   display: flex;
   padding-top: 10rem;
@@ -263,13 +262,12 @@ onBeforeUnmount(() => {
 
 .left-column {
   width: inherit;
-  max-width: calc(var(--body-a) - 400px);
   box-sizing: border-box;
+  max-width: calc(var(--body-a) - 375px);
 }
 
-
 .right-column {
-  width: 400px;
+  width: 375px;
   box-sizing: border-box;
 }
 

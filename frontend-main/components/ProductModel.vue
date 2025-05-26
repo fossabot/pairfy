@@ -8,8 +8,6 @@
             <div class="model flex">
                 <span>{{ model }}</span>
                 <span class="divider" />
-                <span class="condition">{{ condition }}</span>
-                <span class="divider" />
                 <span class="color" :style="{ backgroundColor: color }" />
             </div>
 
