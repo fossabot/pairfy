@@ -5,7 +5,6 @@
 
         <main class="results">
             <SearchPrompt />
-            <DividerComp /> 
             <ProductGrid title="Results" />
         </main>
     </div>

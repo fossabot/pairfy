@@ -2,11 +2,7 @@
   <div class="ProductGrid">
 
     <div class="ProductGrid-body">
-      <div class="title flex">
-        <span>{{ title }}</span>
-      </div>
-
-      <div class="grid">
+      <div class="ProductGrid-grid">
         <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
           <ProductCard :data="item" />
         </div>
@@ -18,8 +14,6 @@
 
 <script setup>
 import { gsap } from 'gsap'
-
-defineProps(['title'])
 
 const content = ref([])
 
@@ -61,15 +55,7 @@ onMounted(() => {
   background: var(--background-a);
 }
 
-.title {
-  width: inherit;
-  font-weight: 700;
-  text-align: start;
-  line-height: 4rem;
-  font-size: var(--text-size-4);
-}
-
-.grid {
+.ProductGrid-grid {
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   justify-content: center;
   display: grid;
@@ -79,11 +65,6 @@ onMounted(() => {
 @media (max-width: 480px) {
   .ProductGrid-body {
     padding: 0 0.5rem;
-  }
-
-  .title {
-    font-size: var(--text-size-3);
-    margin: 1rem 0;
   }
 
   .grid {

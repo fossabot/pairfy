@@ -48,9 +48,9 @@ function submitPrompt() {
     width: inherit;
     display: flex;
     padding: 1rem;
+    max-width: 50%;
     margin-top: 4rem;
-    max-width: 800px;
-    margin: 2rem auto;
+    margin: 4rem auto;
     position: relative;
     align-items: center;
     box-sizing: border-box;
