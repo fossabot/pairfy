@@ -1,6 +1,6 @@
 <template>
     <aside class="SearchPanel">
-        
+
     </aside>
 </template>
 
@@ -11,7 +11,7 @@
 <style lang="css" scoped>
 .SearchPanel {
     border-top-right-radius: var(--radius-d);
-    border: 1px solid var(--border-a);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     background: var(--background-b);
     border-left: none;
     position: sticky;

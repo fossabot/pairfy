@@ -15,7 +15,7 @@
 
             <span class="ProductCard-price">
                 <small>$</small>
-                <span>{{ formatUSD(data.discount ? data.discount_value : data.price) }}</span>
+                <span>{{ realPrice}}</span>
             </span>
         </div>
     </div>
@@ -39,6 +39,13 @@ const onSelect = (id) => {
         params: { ...route.params, id }
     })
 }
+
+const price = computed(() => props.data.price)
+const discount = computed(() => props.data.discount)
+const discount_percent = computed(() => props.data.discount_percent)
+const discount_value = computed(() => props.data.discount_value)
+
+const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
 </script>
 
 <style scoped>
