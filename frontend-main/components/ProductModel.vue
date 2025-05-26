@@ -9,6 +9,10 @@
                 <span>{{ model }}</span>
                 <span class="divider" />
                 <span class="color" :style="{ backgroundColor: color }" />
+                <div class="flex" v-if="condition === 'used'">
+                    <span class="divider" />
+                    <span class="condition">{{ condition }}</span>
+                </div>
             </div>
 
             <div class="price">
@@ -49,7 +53,7 @@ const isCurrent = computed(() => props.id === route.params?.id)
 
 const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
 const discountTag = computed(() => discount.value ? `-${discount_percent.value}% Off` : '')
-const save = computed(() => discount.value ? `Save ${formatUSD(price.value - discount_value.value)}` : '')
+const save = computed(() => discount.value ? `Save $${formatUSD(price.value - discount_value.value)}` : '')
 </script>
 
 
@@ -132,7 +136,7 @@ const save = computed(() => discount.value ? `Save ${formatUSD(price.value - dis
 }
 
 .condition {
-    color: var(--text-b);
-    font-weight: 400;
+    text-transform: capitalize;
+    font-weight: 300;
 }
 </style>
