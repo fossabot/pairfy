@@ -14,7 +14,6 @@
     border: 1px solid var(--border-a);
     background: var(--background-b);
     border-left: none;
-    height: fit-content;
     position: sticky;
     min-height: 100vh;
     height: 100%;

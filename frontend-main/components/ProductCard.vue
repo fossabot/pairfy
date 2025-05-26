@@ -68,29 +68,6 @@ const onSelect = (id) => {
     }
 }
 
-.loader-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    background: #f3f3f3;
-}
-
-.loader {
-    width: 28px;
-    height: 28px;
-    border: 3px solid #ccc;
-    border-top-color: #333;
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 .ProductCard-image {
     width: 100%;
     aspect-ratio: 4 / 3;
