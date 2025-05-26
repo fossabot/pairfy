@@ -28,13 +28,13 @@ const testResult = ref(
             "city": "Los angeles",
             "postal": "341001",
             "discount": true,
-            "discount_value": 900,
+            "discount_value": 75,
             "discount_percent": 10,
             "created_at": 1747953104123
         },
         {
             "id": "PRD-250522-RWMS6HR",
-            "thumbnail_url": "https://m.media-amazon.com/images/I/61j3uzJvVLL._AC_UY218_.jpg",
+            "thumbnail_url": "https://m.media-amazon.com/images/I/614Jk1dIoGL._AC_UY218_.jpg",
             "name": "Razer Blade 15 Gaming Laptop: NVIDIA GeForce RTX 3070-10th Gen Intel 8-Core i7 CPU - 15.6 FHD 360Hz - 16GB RAM - 1TB SSD - CNC Aluminum - Chroma RGB - THX Spatial Audio - Thunderbolt 3",
             "price": 1000,
             "sku": "RAZER16-I9-3070",
@@ -53,13 +53,13 @@ const testResult = ref(
             "city": "Los angeles",
             "postal": "341001",
             "discount": true,
-            "discount_value": 900,
+            "discount_value": 34,
             "discount_percent": 10,
             "created_at": 1747953104123
         },
         {
             "id": "PRD-250522-RWMS6HR",
-            "thumbnail_url": "https://m.media-amazon.com/images/I/61j3uzJvVLL._AC_UY218_.jpg",
+            "thumbnail_url": "https://m.media-amazon.com/images/I/81-QcFPVt-L._AC_UY218_.jpg",
             "name": "Razer Blade 15 Gaming Laptop: NVIDIA GeForce RTX 3070-10th Gen Intel 8-Core i7 CPU - 15.6 FHD 360Hz - 16GB RAM - 1TB SSD - CNC Aluminum - Chroma RGB - THX Spatial Audio - Thunderbolt 3",
             "price": 1000,
             "sku": "RAZER16-I9-3070",
@@ -78,7 +78,7 @@ const testResult = ref(
             "city": "Los angeles",
             "postal": "341001",
             "discount": true,
-            "discount_value": 900,
+            "discount_value": 146,
             "discount_percent": 10,
             "created_at": 1747953104123
         },

@@ -52,14 +52,13 @@ onMounted(() => {
   flex-direction: column;
   box-sizing: border-box;
   border-radius: var(--radius-a);
-  background: var(--background-a);
 }
 
 .ProductGrid-grid {
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   justify-content: center;
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 @media (max-width: 480px) {

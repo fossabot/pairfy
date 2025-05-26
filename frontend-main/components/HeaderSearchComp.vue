@@ -25,7 +25,7 @@
 
 const route = useRoute()
 
-const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
+const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 
 interface ProductSuggestion {
     id: string | number
@@ -66,7 +66,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 <style scoped>
 .header-search {
-    width: 100%;
+    width: 60%;
     margin: 0 auto;
     position: relative;
 }
@@ -92,7 +92,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
     border: 2px solid rgba(255, 255, 255, 100%);
 }
 
-.search-input::placeholder{
+.search-input::placeholder {
     opacity: 0.6;
 }
 
@@ -102,7 +102,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 .search-input.contrast {
     color: var(--text-a);
     background: var(--background-b);
-    border: 1px solid var(--border-a);
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .search-input.contrast:focus-within {

@@ -64,7 +64,6 @@ const realPrice = computed(() => formatUSD(discount.value ? discount_value.value
     border-radius: var(--radius-b);
     justify-content: space-between;
     background: var(--background-a);
-    border: 1px solid var(--border-a);
     animation: fadeInUp 0.5s forwards;
 }
 
