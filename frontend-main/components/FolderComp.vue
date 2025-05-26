@@ -21,7 +21,7 @@
 <script setup>
 import { ref } from "vue";
 
-const props = defineProps(['tabs', 'icons'])
+const props = defineProps(['tabs'])
 
 const activeTab = ref(0);
 
