@@ -2,7 +2,7 @@
     <div class="ProductCard" :style="{ animationDelay: `${index * 100}ms` }" @click="onSelect(data.id)">
         <div class="ProductCard-image">
             <LoadingComp v-if="loading" :size="32" :borderWidth="3"/>
-            <img v-show="!loading" :src="data.image" :alt="data.name" @load="loading = false" />
+            <img v-show="!loading" :src="data.thumbnail_url" :alt="data.name" @load="loading = false" />
         </div>
 
         <div class="ProductCard-body">
@@ -43,17 +43,21 @@ const onSelect = (id) => {
 
 <style scoped>
 .ProductCard {
+    gap: 1rem;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    cursor: pointer;
     overflow: hidden;
+    align-items: center;
+    box-sizing: border-box;
+    flex-direction: column;
+    transform: translateY(20px);
     border-radius: var(--radius-b);
+    justify-content: space-between;
     background: var(--background-a);
     border: 1px solid var(--border-a);
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(20px);
     animation: fadeInUp 0.5s forwards;
 }
 
@@ -103,17 +107,23 @@ const onSelect = (id) => {
 .ProductCard-body {
     padding: 1rem;
     display: flex;
+    padding-top: 0;
+    width: inherit;
     flex-direction: column;
+    box-sizing: border-box;
     font-size: var(--text-size-1);
 }
 
 .ProductCard-title {
+    height: 4rem;
     font-weight: 400;
-    color: var(--text-a);
-    font-size: var(--text-size-1);
     line-height: 1.5;
     overflow: hidden;
+    color: var(--text-a);
+    word-break: break-word;
     text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    font-size: var(--text-size-1);
 }
 
 .ProductCard-price {
