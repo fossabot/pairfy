@@ -1,5 +1,5 @@
 <template>
-   <div class="loading-wall center">
+   <div class="LoadingWall center">
     <LoadingComp  :size="32" :border-width="3" style="margin-top: 5rem;"/>
    </div>
 </template>
@@ -9,8 +9,9 @@
 </script>
 
 <style lang="css" scoped>
-.loading-wall {
-  height: 100vh;
+.LoadingWall {
+  min-height: 100vh;
+  height: 100%;
   width: inherit;
   max-width: var(--body-a);
 }

@@ -41,6 +41,7 @@ function submitPrompt() {
 <style scoped>
 .SearchPrompt {
     width: 100%;
+    height: 20rem;
     box-sizing: border-box;
 }
 
@@ -50,7 +51,7 @@ function submitPrompt() {
     padding: 1rem;
     max-width: 50%;
     margin-top: 4rem;
-    margin: 4rem auto;
+    margin: auto auto;
     position: relative;
     align-items: center;
     box-sizing: border-box;

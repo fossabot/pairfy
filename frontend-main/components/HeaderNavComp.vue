@@ -56,7 +56,7 @@ watch(() => route.path, (newPath) => {
   position: absolute;
   z-index: 10000;
   display: flex;
-  top: 0rem;
+  top: 1rem;
 }
 
 .SubMenu-body {
@@ -67,7 +67,7 @@ watch(() => route.path, (newPath) => {
   font-weight: 500;
   list-style: none;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   max-width: var(--body-a);
 }
 
