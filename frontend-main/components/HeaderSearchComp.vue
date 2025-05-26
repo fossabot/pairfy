@@ -66,7 +66,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 <style scoped>
 .header-search {
-    width: 60%;
+    width: 55%;
     margin: 0 auto;
     position: relative;
 }
@@ -101,8 +101,8 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 .search-input.contrast {
     color: var(--text-a);
-    background: var(--background-a);
-    border: 1px solid var(--border-a);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: var(--background-b);
 }
 
 .search-input.contrast:focus-within {
@@ -132,7 +132,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
     height: inherit;
     padding: 0.5rem;
     display: flex;
-    right: 0.5rem;
+    right: 0.75rem;
     border: none;
     top: 50%;
 }
