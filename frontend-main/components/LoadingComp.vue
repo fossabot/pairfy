@@ -1,9 +1,9 @@
 <template>
-    <div class="loader-wrapper">
+    <div class="LoadingComp">
       <div
-        class="loader"
+        class="LoadingComp-loader"
         :style="loaderStyle"
-      ></div>
+      />
     </div>
   </template>
   
@@ -37,14 +37,14 @@
   </script>
   
   <style scoped>
-  .loader-wrapper {
-    display: flex;
+  .LoadingComp {
     justify-content: center;
     align-items: center;
-    min-height: 100px;
+    display: flex;
+    height: 100%;
   }
   
-  .loader {
+  .LoadingComp-loader {
     border-style: solid;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;

@@ -88,7 +88,7 @@ watch(() => route.path, (newPath) => {
 
 .SubMenu.contrast {
   border-bottom: 1px solid var(--border-a);
-  box-shadow: 0 12px 10px 8px white;
+  box-shadow: 0 10px 10px 8px rgba(255, 255, 255, 90%);
   background: var(--background-a);
   position: fixed;
   top: 2rem;

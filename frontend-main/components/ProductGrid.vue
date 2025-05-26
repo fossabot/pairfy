@@ -10,7 +10,9 @@
       </div>
 
       <div class="grid">
-        <ProductCard v-for="item, index in content" :key="index" :data="item" />
+        <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
+          <ProductCard :data="item" />
+        </div>
       </div>
     </div>
 
@@ -18,12 +20,16 @@
 </template>
 
 <script setup>
+import { gsap } from 'gsap'
+
 defineProps(['title'])
-  
-const content = ref([{
+
+const content = ref([])
+
+const originalData = ref([{
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ZKaWBFsJL._MCnd_AC_.jpg",
   price: 1000,
   discount: true,
   discount_percent: 100,
@@ -32,7 +38,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ZKaWBFsJL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -41,7 +47,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ZKaWBFsJL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -50,7 +56,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -59,7 +65,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -68,7 +74,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -77,7 +83,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -85,7 +91,7 @@ const content = ref([{
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -93,7 +99,7 @@ const content = ref([{
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -101,7 +107,7 @@ const content = ref([{
 }, {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -111,7 +117,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -121,7 +127,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -131,7 +137,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -141,7 +147,7 @@ const content = ref([{
 {
   id: "Asdas",
   name: `Acer Aspire 3 A315-24P-R7VH Slim Laptop | 15.6" Full HD IPS Display | AMD Ryzen 3 7320U Quad-Core Processor | AMD Radeon Graphics | 8GB LPDDR5 | 128GB NVMe SSD | Wi-Fi 6 | Windows 11 Home in S Model`,
-  image: "https://m.media-amazon.com/images/I/61gKkYQn6lL._AC_UY218_.jpg",
+  image: "https://m.media-amazon.com/images/I/41ico-u74tL._MCnd_AC_.jpg",
   price: 2323,
   discount: true,
   discount_percent: 100,
@@ -150,34 +156,53 @@ const content = ref([{
 
 ])
 
+
+onMounted(() => {
+  setTimeout(() => {
+    content.value = [...originalData.value]
+
+    requestAnimationFrame(() => {
+      gsap.from('.product-card', {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power2.out'
+      })
+    })
+  }, 200)
+})
+
 </script>
 
 <style lang="css" scoped>
 .ProductGrid {
+  padding-right: 2rem;
   display: flex;
-  width: inherit;
+  width: 100%;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .ProductGrid-body {
+  width: inherit;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  max-width: var(--body-a);
   border-radius: var(--radius-a);
   background: var(--background-a);
-
 }
 
 .title {
   width: inherit;
   font-weight: 700;
   text-align: start;
-  font-size: var(--text-size-5);
+  line-height: 4rem;
+  font-size: var(--text-size-4);
 }
 
 .grid {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   justify-content: center;
   max-width: inherit;
   display: grid;
