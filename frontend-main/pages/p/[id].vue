@@ -226,11 +226,8 @@ function showGetProductError() {
 }
 
 
-
-
-fetchProduct()
-
 onMounted(() => {
+  fetchProduct()
   addLenis()
   addScrollListener()
   showGetProductError()

@@ -56,7 +56,7 @@ async function fetchProducts() {
 
         console.log(data)
 
-        search.setResultData(data.searchProducts)
+        search.setResultData(data.searchProducts);
     } catch (err) {
         console.log(err)
         searchProductsError.value = err
@@ -74,9 +74,9 @@ function displayMessage(message, type, duration) {
     toastRef.value?.showToast(message, type, duration)
 }
 
-fetchProducts()
 
 onMounted(() => {
+    fetchProducts()
     showGetProductError()
 })
 </script>

@@ -80,7 +80,7 @@
   border-top: 1px solid var(--border-a);
   font-size: var(--text-size-1);
   box-sizing: border-box;
-  color: var(--text-a);
+  color: var(--text-b);
   padding: 4rem 1rem;
   margin-top: 4rem;
   width: 100%;
@@ -107,8 +107,9 @@
 
 .footer-title {
   font-size: var(--text-size-2);
-  font-weight: 700;
+  color: var(--text-a);
   margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .footer-column ul {
