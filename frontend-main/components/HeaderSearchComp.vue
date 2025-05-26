@@ -101,8 +101,8 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 .search-input.contrast {
     color: var(--text-a);
-    background: var(--background-b);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: var(--background-a);
+    border: 1px solid var(--border-a);
 }
 
 .search-input.contrast:focus-within {
