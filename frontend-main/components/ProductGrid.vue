@@ -55,7 +55,7 @@ onMounted(() => {
 }
 
 .ProductGrid-grid {
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   justify-content: center;
   display: grid;
   gap: 2rem;
