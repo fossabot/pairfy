@@ -5,7 +5,7 @@
 
         <!-- Company -->
         <div class="footer-column">
-          <h2 class="footer-title">Company</h2>
+          <h2 class="footer-title">DAO</h2>
           <ul>
             <li><a href="/about">About Us</a></li>
             <li><a href="/team">Our Team</a></li>

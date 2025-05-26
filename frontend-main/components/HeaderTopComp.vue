@@ -32,14 +32,13 @@
 <script setup>
 const route = useRoute()
 
-const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
+const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 
 
 </script>
 
 <style lang="css" scoped>
 .HeaderTop {
-    border-bottom: 1px solid var(--border-a);
     background: var(--background-a);
     justify-content: center;
     box-sizing: border-box;
@@ -53,8 +52,8 @@ const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 
 .HeaderTop-content {
     justify-content: flex-end;
-    max-width: var(--body-a);
     box-sizing: border-box;
+    padding: 0 2rem;
     width: inherit;
 }
 

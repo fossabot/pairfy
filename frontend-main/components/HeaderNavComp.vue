@@ -2,7 +2,7 @@
   <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
       <img class="icon" v-if="!isContrast" src="@/assets/brand/icon-white.svg" alt="" @click="navigateTo('/')">
-      <img class="icon" v-if="isContrast" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="isContrast" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')"> 
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
@@ -52,6 +52,7 @@ watch(() => route.path, (newPath) => {
 .SubMenu {
   width: 100%;
   justify-content: center;
+  box-sizing: border-box;
   color: var(--text-w);
   position: absolute;
   z-index: 10000;
@@ -64,10 +65,11 @@ watch(() => route.path, (newPath) => {
   margin: 0;
   display: flex;
   width: inherit;
+  color: inherit;
   font-weight: 500;
   list-style: none;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.75rem 2rem;
   max-width: var(--body-a);
 }
 
@@ -87,14 +89,16 @@ watch(() => route.path, (newPath) => {
 
 .SubMenu.contrast {
   border-bottom: 1px solid var(--border-a);
-  box-shadow: 0 10px 10px 8px rgba(255, 255, 255, 90%);
   background: var(--background-a);
+  box-shadow: var(--shadow-b);
   position: fixed;
-  top: 2rem;
+  max-width: 100%;
+  top: 2rem; 
 }
 
 .SubMenu-body.contrast {
   color: var(--text-a);
+  max-width: 100%;
 }
 
 .SubMenu-body li.contrast:hover {

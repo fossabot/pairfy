@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Classic search" :class="{ contrast: isContrast }" />
+            type="text" placeholder="Search" :class="{ contrast: isContrast }" />
 
         <button class="search-button" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -100,8 +100,9 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 
 .search-input.contrast {
-    border: 1px solid transparent;
+    color: var(--text-a);
     background: var(--background-b);
+    border: 1px solid var(--border-a);
 }
 
 .search-input.contrast:focus-within {

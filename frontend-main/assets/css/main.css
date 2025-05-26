@@ -40,6 +40,7 @@ body {
   --border-b: rgba(0, 0, 0, 50%);
 
   --primary-a: var(--blue-a);
+  --primary-b: var(--blue-b);
 
   --radius-a: 4px;
   --radius-b: 6px;
@@ -49,6 +50,7 @@ body {
   --radius-f: 999px;
 
   --blue-a: #225aea;
+  --blue-b: #0941D1;
   --gray-a: #334155;
   --red-a: #dc2626;
   --yellow-a: #fbbc04;
