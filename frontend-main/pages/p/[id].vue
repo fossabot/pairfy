@@ -223,7 +223,6 @@ function removeScrollListener() {
 
 function showGetProductError() {
   if (getProductError.value) displayMessage(getProductError.value, 'error')
-
 }
 
 
