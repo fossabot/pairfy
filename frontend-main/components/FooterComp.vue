@@ -138,14 +138,11 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--border-a);
-  padding-top: 1rem;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  display: flex;
   gap: 1rem;
-  font-size: var(--text-size-1);
 }
 
 @media (max-width: 768px) {
