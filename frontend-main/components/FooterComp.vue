@@ -77,11 +77,10 @@
 
 <style scoped>
 .footer {
-  background-color: var(--primary-a);
   border-top: 1px solid var(--border-a);
   font-size: var(--text-size-1);
   box-sizing: border-box;
-  color: var(--text-w);
+  color: var(--text-a);
   padding: 4rem 1rem;
   margin-top: 4rem;
   width: 100%;
