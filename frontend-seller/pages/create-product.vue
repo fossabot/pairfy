@@ -3,8 +3,6 @@
         <ToastComp ref="toastRef" />
 
         <div class="grid">
-
-
             <div class="grid-row">
                 <div class="grid-title">
                     <span>Information</span>
@@ -25,7 +23,7 @@
                 </div>
                 <div class="grid-item">
                     <InputProductName v-model="productName" id="create-product-name"
-                        placeholder="e.g. Wireless Headphones" @valid="productNameValid = $event.valid" />
+                        placeholder="e.g. Headphones" @valid="productNameValid = $event.valid" />
                 </div>
                 <div class="grid-item">
                     <InputProductPrice v-model="productPrice" id="create-product-price"
@@ -254,12 +252,6 @@
                 </div>
             </div>
 
-
-
-
-
-
-
         </div>
     </div>
 </template>
@@ -461,12 +453,17 @@ const onCreateProduct = async () => {
 
 <style lang="css" scoped>
 .card {
-    padding: 1rem 20rem;
+    width: 100%;
+    display: flex;
+    padding-top: 1rem;
+    justify-content: center;
 }
 
 .grid {
-    display: grid;
     grid-template-columns: 1fr;
+    max-width: 70%;
+    width: inherit;
+    display: grid;
     gap: 0rem;
 }
 
@@ -476,7 +473,6 @@ const onCreateProduct = async () => {
     font-weight: bold;
     display: flex;
 }
-
 
 .grid-subtitle {
     font-size: var(--text-size-1);
@@ -496,7 +492,7 @@ const onCreateProduct = async () => {
     border-radius: var(--radius-b);
     box-shadow: var(--shadow-a);
     margin-bottom: 1rem;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
 }
 
 @media (max-width: 768px) {

@@ -27,7 +27,7 @@ const props = defineProps({
   id: { type: String, default: 'sku' },
   modelValue: { type: [String, null], default: null },
   label: { type: String, default: 'SKU' },
-  placeholder: { type: String, default: 'e.g. TV55-SAMSUNG-2025' },
+  placeholder: { type: String, default: 'e.g. RZ-RTX4090' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 20 },
@@ -104,7 +104,7 @@ function setInvalid(message: string) {
 .p-InputSku-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
-  transition: border-color 0.2s;
+  transition: var(--transition-a);
   padding: 0.75rem 1rem;
   outline: none;
 }
@@ -113,8 +113,16 @@ function setInvalid(message: string) {
   border: 1px solid var(--primary-a, #2563eb);
 }
 
-.p-InputSku-input.is-invalid {
-  border-color: var(--border-a);
+input:focus::placeholder {
+  color: transparent;
+}
+
+input:hover {
+  border: 1px solid var(--primary-a);
+}
+
+input:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .title-text {

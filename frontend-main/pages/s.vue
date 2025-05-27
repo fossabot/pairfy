@@ -48,7 +48,7 @@ async function fetchProducts() {
             query: SEARCH_PRODUCTS_QUERY,
             variables: {
                 searchProductsVariable: {
-                    prompt: "razer"
+                    prompt: "laptop"
                 }
             },
             fetchPolicy: 'no-cache'

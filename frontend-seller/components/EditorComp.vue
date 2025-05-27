@@ -208,7 +208,7 @@ const setupEditor = async () => {
         TextStyle.configure({ types: [ListItem.name] }),
       ],
       editorProps: { attributes: { class: 'editor-class' } },
-      content: initialContent.value.html || '',
+      content: initialContent.value?.html || '',
       onUpdate: ({ editor }) => {
         const json = editor.getJSON()
         const text = editor.getText().trim()
@@ -266,19 +266,22 @@ const onGenerativeSubmit = async () => {
   editor.value.setEditable(false)
 
   try {
-    await useProductDescriptionStream(generativeEditor.value, (chunk) => {
-      const lines = chunk.split('\n')
-      const content = lines.flatMap((line, i) => [
-        { type: 'chunkSpan', content: line ? [{ type: 'text', text: line }] : [] },
-        ...(i < lines.length - 1 ? [{ type: 'hardBreak' }] : []),
-      ])
-      editor.value.chain().focus('end').insertContent(content).run()
+    await useProductDescriptionStream(generativeEditor.value, (paragraph) => {
+      if (!stopGenerative.value) {
+        const content = {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'chunkSpan',
+              content: [{ type: 'text', text: paragraph }],
+            },
+          ],
+        };
 
-      if (stopGenerative.value) {
-        return;
+        editor.value.chain().focus('end').insertContent(content).run();
       }
+    });
 
-    })
   } catch (err) {
     console.error(err)
   }
@@ -424,6 +427,7 @@ onBeforeUnmount(() => {
 }
 
 .EditorComp-generative-button {
+  transition: var(--transition-a);
   border-radius: var(--radius-e);
   background: var(--primary-a);
   box-shadow: var(--shadow-a);
@@ -437,6 +441,10 @@ onBeforeUnmount(() => {
   bottom: 2rem;
   width: 2.5rem;
   right: 2rem;
+}
+
+.EditorComp-generative-button:hover {
+  opacity: 0.8;
 }
 
 .EditorComp-control {

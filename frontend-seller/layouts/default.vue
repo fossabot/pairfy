@@ -1,7 +1,6 @@
 <template>
   <div class="layout">
-    <aside :class="['sidebar', { collapsed: isCollapsed && !isHovering }]" @mouseenter="isHovering = true"
-      @mouseleave="isHovering = false">
+    <aside :class="['sidebar', { collapsed: isCollapsed && !isHovering }]">
 
       <div class="layout-top">
         <div class="layout-top-image">
@@ -88,7 +87,7 @@ const currentPath = computed(() => route.name)
 
 const auth = useAuthStore()
 
-const isCollapsed = ref(true)
+const isCollapsed = ref(false)
 const isHovering = ref(false)
 
 if (import.meta.server) {
@@ -111,6 +110,7 @@ if (import.meta.server) {
 .sidebar {
   border-bottom-right-radius: var(--radius-c);
   border-top-right-radius: var(--radius-c);
+  border-radius: initial;
   background: var(--background-a);
   box-shadow: var(--shadow-a);
   transition: width 0.3s ease;
@@ -136,7 +136,7 @@ nav a {
   color: var(--text-a);
   align-items: center;
   padding: 0.5rem 0;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   
 }

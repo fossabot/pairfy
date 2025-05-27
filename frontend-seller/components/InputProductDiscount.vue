@@ -192,6 +192,11 @@ const discountedPrice = computed(() => {
   width: 100%;
 }
 
+.price-input:hover,
+.discount-input:hover{
+  border: 1px solid var(--primary-a);
+}
+
 .final-price {
   font-size: var(--text-size-1);
   color: var(--text-b);

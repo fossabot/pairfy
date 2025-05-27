@@ -27,7 +27,7 @@
 const props = defineProps({
   id: { type: String, default: 'price' },
   modelValue: { type: [Number, null], default: null },
-  label: { type: String, default: 'Price (USD)' },
+  label: { type: String, default: 'Price' },
   placeholder: { type: String, default: '0' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
@@ -118,7 +118,7 @@ function validate() {
 .p-InputPrice-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
-  transition: border-color 0.2s;
+  transition: var(--transition-a);
   padding: 0.75rem 1rem;
   outline: none;
 }
@@ -127,8 +127,16 @@ function validate() {
   border: 1px solid var(--primary-a, #2563eb);
 }
 
-.p-InputPrice-input.is-invalid {
-  border-color: var(--border-a);
+input:focus::placeholder {
+  color: transparent;
+}
+
+input:hover {
+  border: 1px solid var(--primary-a);
+}
+
+input:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .title-text {
