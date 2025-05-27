@@ -2,6 +2,7 @@ import weaviate from "weaviate-ts-client";
 import axiosRetry from "axios-retry";
 import axios from "axios";
 import { logger } from "@pairfy/common";
+import { extractEmbeddingTextFromTiptap } from "./tiptap";
 
 axiosRetry(axios, {
   retries: 3,
@@ -17,8 +18,10 @@ export const weaviateClient = weaviate.client({
 
 export async function createProductIndex(product: any): Promise<boolean> {
   try {
-    const productDescription = JSON.stringify(product.description);
+    const productDescription = extractEmbeddingTextFromTiptap(product.description);
 
+    console.log(productDescription);
+    
     const { data } = await axios.post<{ embedding: number[] }>(
       `http://${process.env.HANDLER_EMBEDDINGS_HOST as string}/api/embeddings`,
       {
