@@ -2,7 +2,7 @@
     <div class="HeaderTop flex" v-if="isContrast">
         <div class="HeaderTop-content flex">
 
-            <span class="HeaderTop-price">Discount Liquidity: 1.000.000 ADA</span>
+            <span class="HeaderTop-price">Discount Liquidity: 834.000 ADA</span>
             <span class="HeaderTop-price">Volume 24h: 253.894 ADA</span>
             <span class="HeaderTop-price">ADAUSD 1.5 </span>
             <span class="HeaderTop-price">IUSD 1.0</span>
