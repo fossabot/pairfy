@@ -35,7 +35,7 @@ const setupEditor = () => {
 watch(product, (value) => {
     if (value) {
         if (editor.value) {
-            editor.value.commands.setContent(value.description);
+            editor.value.commands.setContent(value.description.html)
         }
     }
 
@@ -51,12 +51,12 @@ onBeforeUnmount(() => {
     }
 })
 
-
 </script>
 
 <style lang="css" scoped>
 ::v-deep(.editor-class) {
     line-height: 2rem;
+    color: var(--text-b);
 }
 
 

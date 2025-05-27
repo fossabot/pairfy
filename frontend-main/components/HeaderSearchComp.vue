@@ -3,7 +3,7 @@
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
             type="text" placeholder="Classic search" :class="{ contrast: isContrast }" />
 
-        <button class="search-button" @click="emitSearch">
+        <button class="search-button flex center" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-search-icon lucide-search">

@@ -95,7 +95,7 @@ watch(() => route.path, (newPath) => {
 }
 
 .SubMenu-body.contrast {
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 0;
   color: var(--text-a);
 }
 
