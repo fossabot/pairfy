@@ -18,17 +18,11 @@ const content = ref([])
 
 const search = useSearchStore()
 
-onMounted(() => {
-  content.value = [...search.result]
-  animateCards()
-})
-
-
 watch(
   () => search.result,
   (result) => {
     content.value = [...result]
-    animateCards()
+    animateCards() 
   },
   { deep: true, immediate: false }
 )
