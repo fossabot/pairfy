@@ -2,7 +2,7 @@
     <div class="ProductCard" :style="{ animationDelay: `${index * 100}ms` }" @click="onSelect(data.id)">
         <div class="ProductCard-image">
             <LoadingComp v-if="loading" :size="32" :borderWidth="3"/>
-            <img v-show="!loading" :src="data.thumbnail_url" :alt="data.name" @load="loading = false" />
+            <img v-show="!loading" :src="getImageSrc(data.thumbnail_url)" :alt="data.name" @load="loading = false" />
         </div>
 
         <div class="ProductCard-body">
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import placeholderImage from '@/assets/placeholder/image.svg'
 import { truncateByWords, formatUSD } from '~/utils/utils'
 
 const props = defineProps({
@@ -46,6 +47,10 @@ const discount_percent = computed(() => props.data.discount_percent)
 const discount_value = computed(() => props.data.discount_value)
 
 const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
+
+function getImageSrc(item) {
+  return item ? useMediaUrl(item) : placeholderImage
+}
 </script>
 
 <style scoped>

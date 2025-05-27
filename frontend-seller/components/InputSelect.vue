@@ -231,7 +231,7 @@ watch(
   top: calc(100% - 30px);
   left: 0;
   right: 0;
-  max-height: 200px;
+  max-height: 400px;
   list-style: none;
   overflow-y: auto;
   z-index: 1000;

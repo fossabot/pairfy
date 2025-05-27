@@ -28,6 +28,8 @@
 
             <template #content="{ index }">
                 <!----------------CONTENT---------------->
+                <div v-if="!products.length">Empty</div>
+
                 <TableComp v-if="products.length" :columns="columns" :items="products" :limit="limit"
                     :hasNextPage="hasNextPage" :hasPrevPage="hasPrevPage" :range="range" :page="page"
                     :count="productCount" :images="true" @onPrev="handleOnPrev" @onNext="handleOnNext"
@@ -72,10 +74,6 @@
                     </template>
 
                 </TableComp>
-
-
-
-
                 <!----------------CONTENT---------------->
             </template>
 

@@ -106,7 +106,7 @@ input CreateProductInput {
   sku: String!
   model: String!
   brand: String!
-  description: JSON!
+  description: String!
   category: String!
   bullet_list: [String!]!
   color: String!

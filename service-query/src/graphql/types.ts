@@ -35,7 +35,7 @@ type Product {
 
 type SearchProductsResponse{
   id: ID!
-  thumbnail_url: String
+  thumbnail_url: String!
   name: String!
   price: Int!
   sku: String!

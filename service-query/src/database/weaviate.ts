@@ -29,6 +29,7 @@ export async function findProductsByPrompt(name: string): Promise<any[]> {
       group_id
       media_group_id
       seller_id
+      thumbnail_url
       name
       sku
       price

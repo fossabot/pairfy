@@ -97,7 +97,7 @@ export const verifyGroupHandler = async (
       media_group_id,
       firstFile[0].id,
       firstFile[0].filename,
-      "thumbnail",
+      "medium",
       "webp"
     );
     
