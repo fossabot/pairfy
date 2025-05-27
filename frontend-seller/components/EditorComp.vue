@@ -208,7 +208,7 @@ const setupEditor = async () => {
         TextStyle.configure({ types: [ListItem.name] }),
       ],
       editorProps: { attributes: { class: 'editor-class' } },
-      content: initialContent.value || '',
+      content: initialContent.value.html || '',
       onUpdate: ({ editor }) => {
         const json = editor.getJSON()
         const text = editor.getText().trim()
