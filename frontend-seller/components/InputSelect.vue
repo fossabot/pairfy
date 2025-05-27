@@ -171,7 +171,7 @@ watch(
   margin-left: auto;
   flex-shrink: 0;
   pointer-events: none;
-  transition: transform 0.2s ease;
+  transition: var(--transition-a);
 }
 
 .dropdown-display[aria-expanded="true"] .chevron-down-icon {
@@ -236,7 +236,7 @@ watch(
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s;
+  transition: var(--transition-a);
 }
 
 .fade-enter,

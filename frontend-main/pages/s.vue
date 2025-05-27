@@ -44,13 +44,26 @@ const loading = ref(true)
 
 const searchProductsError = ref(null)
 
-async function fetchProducts() {
+
+watch(
+    () => route.query.prompt,
+    (prompt) =>
+       {
+        if(import.meta.client){
+            searchProducts(prompt)
+        }
+       }
+    ,
+    { immediate: true }
+)
+
+async function searchProducts(prompt) {
     try {
         const { data } = await $apollo.query({
             query: SEARCH_PRODUCTS_QUERY,
             variables: {
                 searchProductsVariable: {
-                    prompt: route.query?.prompt || ''
+                    prompt
                     //vectorial: route.query?.vectorial || false
                 }
             },
@@ -77,9 +90,7 @@ function displayMessage(message, type, duration) {
     toastRef.value?.showToast(message, type, duration)
 }
 
-
 onMounted(() => {
-    fetchProducts()
     showGetProductError()
 })
 </script>

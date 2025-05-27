@@ -40,7 +40,6 @@ body {
   --border-b: rgba(0, 0, 0, 50%);
 
   --primary-a: var(--orange-a);
-  --primary-b: var(--blue-b);
 
   --radius-a: 4px;
   --radius-b: 6px;

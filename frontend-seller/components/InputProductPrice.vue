@@ -28,7 +28,7 @@ const props = defineProps({
   id: { type: String, default: 'price' },
   modelValue: { type: [Number, null], default: null },
   label: { type: String, default: 'Price' },
-  placeholder: { type: String, default: '0' },
+  placeholder: { type: String, default: '0 USD' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
   maxLength: { type: Number, default: 9 },

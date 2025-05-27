@@ -19,11 +19,11 @@
 </template>
 
 <script setup>
-const prompt = ref('')
 
+const prompt = ref('')
 const isSubmitting = ref(false)
 
-const typedPlaceholder = ref('asdsdasd')
+const router = useRouter()
 
 function submitPrompt() {
     const trimmed = prompt.value.trim()
@@ -31,13 +31,21 @@ function submitPrompt() {
 
     isSubmitting.value = true
 
+    router.push({
+        query: {
+            ...router.currentRoute.value.query,
+            prompt: trimmed
+        }
+    })
+
     setTimeout(() => {
-        prompt.value = ''
         isSubmitting.value = false
     }, 1000)
 }
-
 </script>
+
+
+
 <style scoped>
 .SearchPrompt {
     width: 100%;

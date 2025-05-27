@@ -1,6 +1,5 @@
 <template>
   <div class="ProductGrid">
-
     <div class="ProductGrid-body">
       <div class="ProductGrid-grid">
         <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
@@ -20,22 +19,33 @@ const content = ref([])
 const search = useSearchStore()
 
 onMounted(() => {
-  setTimeout(() => {
-    content.value = [...search.result]
-
-    requestAnimationFrame(() => {
-      gsap.from('.product-card', {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: 'power2.out'
-      })
-    })
-  }, 200)
+  content.value = [...search.result]
+  animateCards()
 })
 
+
+watch(
+  () => search.result,
+  (result) => {
+    content.value = [...result]
+    animateCards()
+  },
+  { deep: true, immediate: false }
+)
+
+function animateCards() {
+  requestAnimationFrame(() => {
+    gsap.from('.product-card', {
+      opacity: 0,
+      y: 20,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: 'power2.out'
+    })
+  })
+}
 </script>
+
 
 <style lang="css" scoped>
 .ProductGrid {
