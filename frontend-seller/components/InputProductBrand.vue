@@ -46,7 +46,7 @@ const errorMessage = ref('')
 const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u
 
 const messages = {
-  required: 'This field is required.',
+  required: '*',
   invalid: 'Only letters, numbers, spaces, and basic symbols like - . , & ( ) are allowed.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }

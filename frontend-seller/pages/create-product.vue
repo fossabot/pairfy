@@ -5,7 +5,7 @@
         <div class="grid">
             <div class="grid-row">
                 <div class="grid-title">
-                    <span>Information</span>
+                    <span>Create</span>
                     <TipComp text="Fill in the fields with information about your product." position="right">
                         <span class="flex" style="margin-left: 0.5rem;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
@@ -489,7 +489,7 @@ const onCreateProduct = async () => {
 
 .grid-row {
     background: var(--background-a);
-    border-radius: var(--radius-b);
+    border-radius: var(--radius-a);
     box-shadow: var(--shadow-a);
     margin-bottom: 1rem;
     padding: 2rem 1.5rem;

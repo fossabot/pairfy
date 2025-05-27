@@ -25,7 +25,7 @@
 
 const route = useRoute()
 
-const isContrast = computed(() => ['p-id', 's'].includes(route.name))
+const isContrast = computed(() => ['p-id', 's'].includes(route.name as string))
 
 interface ProductSuggestion {
     id: string | number

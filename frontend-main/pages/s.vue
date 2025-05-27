@@ -32,6 +32,8 @@ const SEARCH_PRODUCTS_QUERY = gql`
   }
 `;
 
+const route = useRoute()
+
 const search = useSearchStore()
 
 const toastRef = ref(null);
@@ -48,7 +50,8 @@ async function fetchProducts() {
             query: SEARCH_PRODUCTS_QUERY,
             variables: {
                 searchProductsVariable: {
-                    prompt: "laptop"
+                    prompt: route.query?.prompt || ''
+                    //vectorial: route.query?.vectorial || false
                 }
             },
             fetchPolicy: 'no-cache'

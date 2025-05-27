@@ -26,7 +26,7 @@ body {
 
   --body-a: 1500px;
 
-  --shadow-a: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-a: 0 6px 20px rgba(0, 0, 0, 0.08);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --background-a: #ffffff;
@@ -64,8 +64,8 @@ body {
   --gradient-a: linear-gradient(
     135deg,
     #fff6e5 0%,
-    #fbe8f9 5%,
-    #e3f0ff 50%,
+    #fbe8f9 0%,
+    #e3f0ff 25%,
     #e8f4fc 80%,
     #e9fff0 100%
   );
@@ -74,7 +74,7 @@ body {
 }
 
 :root {
-  --input-radius: var(--radius-b);
+  --input-radius: var(--radius-a);
   --button-radius: var(--radius-b);
 }
 

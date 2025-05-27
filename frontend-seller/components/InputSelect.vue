@@ -89,7 +89,7 @@ function select(option) {
 
 function validate(value) {
   if (props.required && !value) {
-    errorMessage.value = 'This field is required.'
+    errorMessage.value = '*'
     emit('valid', { valid: false, value: null })
     return false
   }
@@ -125,7 +125,7 @@ watch(
   () => props.invalid,
   (val) => {
     if (val) {
-      errorMessage.value = 'This field is required.'
+      errorMessage.value = '*'
     } else if (!val && !props.required) {
       errorMessage.value = ''
     }

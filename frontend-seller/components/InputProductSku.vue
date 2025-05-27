@@ -26,7 +26,7 @@
 const props = defineProps({
   id: { type: String, default: 'sku' },
   modelValue: { type: [String, null], default: null },
-  label: { type: String, default: 'SKU' },
+  label: { type: String, default: 'Sku' },
   placeholder: { type: String, default: 'e.g. RZ-RTX4090' },
   focus: { type: Boolean, default: false },
   required: { type: Boolean, default: true },
@@ -62,7 +62,7 @@ onMounted(() => {
 })
 
 const messages = {
-  required: 'This field is required.',
+  required: '*',
   invalid: 'Invalid format. Use only UPPERCASE letters, numbers, and dashes.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }

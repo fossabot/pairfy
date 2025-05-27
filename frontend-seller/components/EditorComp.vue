@@ -311,7 +311,7 @@ onBeforeUnmount(() => {
   color: var(--text-a);
   overflow-y: scroll;
   height: auto;
-  max-height: 90%;
+  max-height: 95%;
   padding: 1rem;
   outline: none;
 
@@ -369,7 +369,7 @@ onBeforeUnmount(() => {
 }
 
 .EditorComp-content {
-  grid-template-rows: 20rem 10rem;
+  grid-template-rows: 30rem 10rem;
   grid-template-columns: 1fr;
   display: grid;
   height: 100%;
@@ -395,7 +395,9 @@ onBeforeUnmount(() => {
   outline: none;
   padding: 1rem;
   width: 100%;
-
+  overflow: scroll;
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* Internet Explorer 10+ */
 }
 
 .EditorComp-generative textarea:focus {
@@ -408,7 +410,8 @@ onBeforeUnmount(() => {
 }
 
 .EditorComp-generative textarea::-webkit-scrollbar {
-  width: 0.8rem;
+  width: 0.6rem;
+  display: none;    
 }
 
 .EditorComp-generative textarea::-webkit-scrollbar-track {
@@ -416,7 +419,6 @@ onBeforeUnmount(() => {
 }
 
 .EditorComp-generative textarea::-webkit-scrollbar-thumb {
-  border: 2px solid var(--background-b);
   background: #888;
   border-radius: 4px;
   cursor: pointer;

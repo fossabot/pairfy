@@ -54,7 +54,7 @@ const normalizedValue = computed({
 const postalRegex = /^[\p{L}\p{N}\s\-]+$/u
 
 const messages = {
-  required: 'This field is required.',
+  required: '*',
   invalid: 'Only letters, numbers, spaces and hyphens are allowed.',
 }
 
