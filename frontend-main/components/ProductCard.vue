@@ -6,7 +6,10 @@
         </div>
 
         <div class="ProductCard-body">
-            <div class="ProductCard-title">{{ truncateByWords(data.name, 15) }}...</div>
+            
+            <div class="ProductCard-title">
+                {{ `${truncateByWords(data.name, 15)}...` }}
+            </div>
 
             <div class="ProductCard-rating">
                 <RatingComp :rating="4" />
@@ -128,7 +131,7 @@ function getImageSrc(item) {
     display: flex;
     align-items: center;
     font-weight: 500;
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
     font-size: var(--text-size-5);
 }
 

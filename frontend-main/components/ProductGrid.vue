@@ -43,9 +43,8 @@ function animateCards() {
 
 <style lang="css" scoped>
 .ProductGrid {
-  padding-right: 2rem;
-  display: flex;
   width: 100%;
+  display: flex;
   justify-content: center;
   box-sizing: border-box;
 }

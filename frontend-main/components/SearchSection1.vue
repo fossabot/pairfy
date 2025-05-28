@@ -1,27 +1,36 @@
 <template>
-    <div class="container">
+    <div class="SearchSection">
 
-        <SearchPanel />
+        <div class="SearchSection-body">
+            <SearchPanel />
 
-        <main class="results">
-            <SearchPrompt />
-            <ProductGrid title="Results" />
-        </main>
+            <main class="SearchSection-results">
+                <SearchPrompt />
+                <DividerComp /> 
+                <ProductGrid title="Results" />
+            </main>
+        </div>
     </div>
 </template>
 
 <style scoped>
-.container {
-    grid-template-columns: 280px 1fr;
-    padding-top: 8rem;
-    display: grid;
-    gap: 2rem;
-
+.SearchSection {
+    display: flex;
+    justify-content: center;
 }
 
-.results {
-    display: flex;
-    flex-direction: column;
+.SearchSection-body {
+    grid-template-columns: 280px 1fr;
+    max-width: var(--body-a);
+    padding-top: 8rem;
+    display: grid;
     width: 100%;
+    gap: 2rem;
+}
+
+.SearchSection-results {
+    flex-direction: column;
+    width: inherit;
+    display: flex;
 }
 </style>

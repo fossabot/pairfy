@@ -1,223 +1,250 @@
 <template>
-    <div class="SearchPanel">
-      <form @submit.prevent="applyFilters">
-        <div class="filters">
-          <label>
-            SKU:
-            <input v-model="filters.sku" type="text" placeholder="e.g. ABC123" />
-          </label>
-  
-          <label>
-            Precio mínimo:
-            <input v-model.number="filters.priceMin" type="number" min="0" step="any" />
-          </label>
-  
-          <label>
-            Precio máximo:
-            <input v-model.number="filters.priceMax" type="number" min="0" step="any" />
-          </label>
-  
-          <label>
-            Categoría:
-            <input v-model="filters.category" type="text" />
-          </label>
-  
-          <label>
-            Marca:
-            <input v-model="filters.brand" type="text" />
-          </label>
-  
-          <label>
-            Modelo:
-            <input v-model="filters.model" type="text" />
-          </label>
-  
-          <label>
-            Condición:
-            <select v-model="filters.condition">
-              <option disabled value="">Selecciona una</option>
-              <option value="new">Nuevo</option>
-              <option value="used">Usado</option>
-              <option value="refurbished">Reacondicionado</option>
-            </select>
-          </label>
+  <div class="SearchPanel">
+    <form @submit.prevent="applyFilters">
+      <div class="filters">
+        <label>
+          SKU
+          <input v-model="filters.sku" type="text" placeholder="e.g. RZ16-3090" />
+        </label>
 
-          <label>
-            % mínimo de descuento:
-            <input v-model.number="filters.discountPercentMin" type="number" min="0" max="100" />
-          </label>
-  
-          <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-  
-          <div class="actions">
-            <button type="submit">Aplicar filtros</button>
-            <button type="button" @click="resetFilters">Limpiar</button>
-          </div>
+        <label>
+          Min price
+          <input v-model.number="filters.priceMin" type="number" min="0" step="any" placeholder="e.g. 100" />
+        </label>
+
+        <label>
+          Max price
+          <input v-model.number="filters.priceMax" type="number" min="0" step="any" placeholder="e.g. 1000" />
+        </label>
+
+        <label>
+          Category
+          <input v-model="filters.category" type="text" />
+        </label>
+
+        <label>
+          Brand
+          <input v-model="filters.brand" type="text" placeholder="e.g. Samsung" />
+        </label>
+
+        <label>
+          Model
+          <input v-model="filters.model" type="text" placeholder="e.g. Pro 16" />
+        </label>
+
+        <label>
+          Condition
+          <select v-model="filters.condition">
+            <option disabled value="">Select</option>
+            <option value="new">new</option>
+            <option value="used">used</option>
+            <option value="refurbished">refurbished</option>
+          </select>
+        </label>
+
+        <label>
+          Min discount
+          <input v-model.number="filters.discountPercentMin" type="number" min="0" max="100" placeholder="%" />
+        </label>
+
+        <div v-if="errorMessage" class="error">{{ errorMessage }}</div>
+
+        <div class="actions">
+          <button type="submit">Apply Filters</button>
+          <button type="button" @click="resetFilters">Limpiar</button>
         </div>
-      </form>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { z } from 'zod';
-  
-  type Condition = 'new' | 'used' | 'refurbished';
-  
-  interface ProductSearchFilters {
-    sku?: string;
-    priceMin?: number;
-    priceMax?: number;
-    category?: string;
-    brand?: string;
-    model?: string;
-    condition?: Condition;
-    discountPercentMin?: number;
-  }
-  
-  const router = useRouter();
-  const route = useRoute();
-  
-  const filters = ref<ProductSearchFilters>({});
-  const errorMessage = ref<string | null>(null);
-  
-  const filterSchema = z.object({
-    sku: z.string().optional(),
-    priceMin: z.coerce.number().optional(),
-    priceMax: z.coerce.number().optional(),
-    category: z.string().optional(),
-    brand: z.string().optional(),
-    model: z.string().optional(),
-    condition: z.enum(['new', 'used', 'refurbished']).optional(),
-    discountPercentMin: z.coerce.number().min(0).max(100).optional()
-  });
-  
-  onMounted(() => {
-    const parsed = filterSchema.safeParse(route.query);
-    if (parsed.success) {
-      filters.value = parsed.data;
-    } else {
-      console.warn("Parámetros inválidos en la URL", parsed.error);
-    }
-  });
-  
-  function applyFilters() {
-    errorMessage.value = null;
-  
-    const f = filters.value;
-  
-    if (f.priceMin !== undefined && f.priceMax !== undefined && f.priceMin > f.priceMax) {
-      errorMessage.value = 'El precio mínimo no puede ser mayor que el máximo.';
-      return;
-    }
-  
-    const query: Record<string, string> = {};
+      </div>
+    </form>
+  </div>
+</template>
 
-    Object.entries(f).forEach(([key, val]) => {
-      if (val !== undefined) {
-        query[key] = String(val);
-      }
-    });
-  
-    router.push({ name: 's', query: { ...route.query, ...query } });
+<script setup lang="ts">
+import { z } from 'zod';
+
+type Condition = 'new' | 'used' | 'refurbished';
+
+interface ProductSearchFilters {
+  sku?: string;
+  priceMin?: number;
+  priceMax?: number;
+  category?: string;
+  brand?: string;
+  model?: string;
+  condition?: Condition;
+  discountPercentMin?: number;
+}
+
+const router = useRouter();
+const route = useRoute();
+
+const filters = ref<ProductSearchFilters>({});
+const errorMessage = ref<string | null>(null);
+
+const filterSchema = z.object({
+  sku: z.string().optional(),
+  priceMin: z.coerce.number().optional(),
+  priceMax: z.coerce.number().optional(),
+  category: z.string().optional(),
+  brand: z.string().optional(),
+  model: z.string().optional(),
+  condition: z.enum(['new', 'used', 'refurbished']).optional(),
+  discountPercentMin: z.coerce.number().min(0).max(100).optional()
+});
+
+onMounted(() => {
+  const parsed = filterSchema.safeParse(route.query);
+  if (parsed.success) {
+    filters.value = parsed.data;
+  } else {
+    console.warn("Invalid parameters in the URL", parsed.error);
   }
-  
-  function resetFilters() {
-    filters.value = {};
-    const cleanedQuery = { ...route.query };
-    Object.keys(cleanedQuery).forEach((key) => {
-      if (filterSchema.shape[key as keyof typeof filterSchema.shape]) {
-        delete cleanedQuery[key];
-      }
-    });
-    router.push({ query: cleanedQuery });
+});
+
+function applyFilters() {
+  errorMessage.value = null;
+
+  const f = filters.value;
+
+  if (f.priceMin !== undefined && f.priceMax !== undefined && f.priceMin > f.priceMax) {
+    errorMessage.value = 'The minimum price cannot be greater than the maximum.';
+    return;
   }
-  </script>
-  
-  <style scoped>
-  .SearchPanel {
-    border-top-right-radius: var(--radius-d);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    background: var(--background-b);
-    border-left: none;
-    position: sticky;
-    min-height: 100vh;
-    box-sizing: border-box;
-    padding: 1rem;
-    height: 100%;
-  }
-  
-  .filters {
-    width: 100%;
-    max-width: 420px;
-    display: grid;
-    gap: 1.5rem;
-  }
-  
-  label {
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    color: #374151;
-    font-size: 0.95rem;
-  }
-  
-  input,
-  select {
-    margin-top: 0.5rem;
-    padding: 0.6rem 0.75rem;
-    font-size: 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.5rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    background: #f9fafb;
-  }
-  
-  input:focus,
-  select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-    background: #fff;
-  }
-  
-  .actions {
-    display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-  }
-  
-  button {
-    background-color: #3b82f6;
-    color: white;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: #2563eb;
-  }
-  
-  button[type="button"] {
-    background-color: #e5e7eb;
-    color: #374151;
-  }
-  
-  button[type="button"]:hover {
-    background-color: #d1d5db;
-  }
-  
-  .error {
-    color: #dc2626;
-    font-size: 0.9rem;
-    font-weight: 500;
-    background-color: #fee2e2;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.375rem;
-  }
-  </style>
-  
-  
+
+  const query: Record<string, string> = {};
+
+  Object.entries(f).forEach(([key, val]) => {
+    if (val !== undefined) {
+      query[key] = String(val);
+    }
+  });
+
+  router.push({ name: 's', query: { ...route.query, ...query } });
+}
+
+function resetFilters() {
+  filters.value = {};
+  const cleanedQuery = { ...route.query };
+  Object.keys(cleanedQuery).forEach((key) => {
+    if (filterSchema.shape[key as keyof typeof filterSchema.shape]) {
+      delete cleanedQuery[key];
+    }
+  });
+  router.push({ query: cleanedQuery });
+}
+</script>
+
+<style scoped>
+.SearchPanel {
+  border: 1px solid var(--border-a);
+  border-radius: var(--radius-c);
+  box-sizing: border-box;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.filters {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+label {
+  display: flex;
+  font-weight: 600;
+  color: vaR(--text-a);
+  flex-direction: column;
+  font-size: var(--text-size-0);
+}
+
+input,
+select {
+  width: 100%;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--text-size-1);
+  border: 1px solid var(--border-a);
+  border-radius: var(--input-radius);
+  transition: var(--transition-a);
+  background: var(--background-a);
+}
+
+select{
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' fill='currentColor' class='chevron-down' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.585l3.71-3.355a.75.75 0 111.04 1.08l-4 3.615a.75.75 0 01-1.04 0l-4-3.615a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+select{
+  font-size: var(--text-size-1);
+}
+
+select option{
+  font-size: var(--text-size-0);
+}
+
+input::placeholder {
+  font-size: var(--text-size-0);
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+
+select:invalid {
+  color: var(--text-b);
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-a);
+}
+
+
+.actions {
+  gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  transition: var(--transition-a);
+  border-radius: var(--radius-b);
+  background: var(--primary-a);
+  padding: 0.75rem 1rem;
+  color: var(--text-w);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button[type="button"] {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+button[type="button"]:hover {
+  background-color: #d1d5db;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background-color: #fee2e2;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+}
+</style>
