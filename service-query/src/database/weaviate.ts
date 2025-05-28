@@ -88,7 +88,7 @@ export async function findProductsByPrompt(
       .get()
       .withClassName("ProductV1")
       .withFields(FIELDS)
-      .withLimit(20);
+      .withLimit(100);
 
     if (operands.length > 0) {
       query.withWhere({ operator: "And", operands });

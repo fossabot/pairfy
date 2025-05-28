@@ -19,7 +19,11 @@
 
         <label>
           Category
-          <input v-model="filters.category" type="text" />
+
+          <select v-model="filters.category">
+            <option disabled value="">Select</option>
+            <option v-for="item in categories" :key="item.code" :value="item.code">{{ item.label }}</option>
+          </select>
         </label>
 
         <label>
@@ -36,9 +40,9 @@
           Condition
           <select v-model="filters.condition">
             <option disabled value="">Select</option>
-            <option value="new">new</option>
-            <option value="used">used</option>
-            <option value="refurbished">refurbished</option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+            <option value="refurbished">Refurbished</option>
           </select>
         </label>
 
@@ -51,7 +55,7 @@
 
         <div class="actions">
           <button type="submit">Apply Filters</button>
-          <button type="button" @click="resetFilters">Limpiar</button>
+          <button type="button" @click="resetFilters">Clear</button>
         </div>
       </div>
     </form>
@@ -60,7 +64,16 @@
 
 <script setup lang="ts">
 import { z } from 'zod';
+import categoryList from "@/assets/json/categories.json"
 
+const categories = computed(() =>
+
+  Object.values(categoryList).map(category => ({
+    label: category.label,
+    code: category.code,
+  }))
+
+)
 type Condition = 'new' | 'used' | 'refurbished';
 
 interface ProductSearchFilters {
@@ -173,7 +186,7 @@ select {
   background: var(--background-a);
 }
 
-select{
+select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' fill='currentColor' class='chevron-down' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 10.585l3.71-3.355a.75.75 0 111.04 1.08l-4 3.615a.75.75 0 01-1.04 0l-4-3.615a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -181,11 +194,11 @@ select{
   background-size: 1rem;
 }
 
-select{
+select {
   font-size: var(--text-size-1);
 }
 
-select option{
+select option {
   font-size: var(--text-size-0);
 }
 
@@ -195,10 +208,6 @@ input::placeholder {
 
 input:focus::placeholder {
   color: transparent;
-}
-
-select:invalid {
-  color: var(--text-b);
 }
 
 input:focus,

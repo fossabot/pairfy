@@ -2,7 +2,7 @@
   <div class="ProductGrid">
     <div class="ProductGrid-body">
       <div class="title">
-        Results for "{{ prompt }}" (3411) 
+        Results for "{{ prompt }}" <span>({{ count }}) </span>
       </div>
       <div class="ProductGrid-grid">
         <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
@@ -21,7 +21,9 @@ const content = ref([])
 
 const search = useSearchStore()
 
-const prompt = computed(() => search.prompt) 
+const prompt = computed(() => search.prompt)
+
+const count = computed(() => search.result.length)
 
 watch(
   () => search.result,
@@ -63,7 +65,7 @@ function animateCards() {
 }
 
 .ProductGrid-grid {
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   justify-content: center;
   margin-top: 1rem;
   display: grid;
@@ -73,6 +75,10 @@ function animateCards() {
 .title {
   font-size: var(--text-size-4);
   font-weight: 600;
+}
+
+.title span {
+  font-weight: 400;
 }
 
 @media (max-width: 480px) {
