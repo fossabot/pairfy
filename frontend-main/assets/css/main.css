@@ -23,7 +23,7 @@ body {
   --text-size-9: 56px;
   --text-size-10: 64px; /* Hero / page title */
 
-  --body-a: 1700px;
+  --body-a: 1650px;
 
   --shadow-a: 0 6px 20px rgba(0, 0, 0, 0.08);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
@@ -33,7 +33,7 @@ body {
   --background-c: #f0f0f2;
 
   --text-a: #1d1d1f;
-  --text-b: #65686C; 
+  --text-b: #65686c;
   --text-w: #ffffff;
 
   --border-a: #00000029;
@@ -50,20 +50,17 @@ body {
 
   --orange-a: #ff6900;
 
---blue-a:   #3a86ff;
---gray-a:   #3e3e3e;
---red-a:    #ff3d00;
---yellow-a: #ffca28;
---yellow-b: #ffe082;
---green-a:  #43a047;
---purple-a: #b85cff;
---pink-a:   #ff5e87;
---black-a:  #1e1e1e;
-  
-  
+  --blue-a: #3a86ff;
+  --gray-a: #3e3e3e;
+  --red-a: #ff3d00;
+  --yellow-a: #ffca28;
+  --yellow-b: #ffe082;
+  --green-a: #43a047;
+  --purple-a: #b85cff;
+  --pink-a: #ff5e87;
+  --black-a: #1e1e1e;
 
   --transition-a: 0.2s ease-in-out;
-  
 }
 
 :root {
@@ -115,8 +112,8 @@ textarea::placeholder {
 
 @keyframes fadeUp {
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

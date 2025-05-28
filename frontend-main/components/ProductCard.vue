@@ -6,9 +6,10 @@
         </div>
 
         <div class="ProductCard-body">
-            
+
             <div class="ProductCard-title">
-                {{ `${truncateByWords(data.name, 15)}...` }}
+                <span>{{ `${data.brand} -` }}</span>
+                <span>{{ `${truncateByWords(data.name, 15)}...` }}</span>
             </div>
 
             <div class="ProductCard-rating">
@@ -23,7 +24,7 @@
                 <span class="last-price">{{ `$${formatUSD(price)}` }}</span>
             </div>
 
-            <div class="ProductCard-discount">
+            <div class="ProductCard-discount" v-if="discount">
                 <span>{{ `-${discount_percent}% deal` }}</span>
                 <span>{{ save }}</span>
             </div>
@@ -125,6 +126,11 @@ function getImageSrc(item) {
     text-overflow: ellipsis;
     overflow-wrap: break-word;
     font-size: var(--text-size-1);
+}
+
+.ProductCard-title span:nth-child(1) {
+    margin-right: 0.5rem;
+    font-weight: 600;
 }
 
 .ProductCard-price {
