@@ -51,7 +51,6 @@ type SearchProductsResponse{
   discount: Boolean!
   discount_value: Int!
   discount_percent: Int!
-  created_at: BigInt!
 }
 
 type MediaResolutions {
@@ -129,8 +128,28 @@ input SortInput {
   discount_value: StringFilterInput!
 }
 
+enum Condition {
+  new
+  used
+  refurbished
+}
+
+input SearchProductsFiltersInput {
+  sku: String
+  priceMin: Int
+  priceMax: Int
+  category: String
+  brand: String
+  model: String
+  condition: Condition
+  discount: Boolean
+  discountPercentMin: Int
+}
+
 input SearchProductsInput {
   prompt: String!
+  vectorized: Boolean!
+  filters: SearchProductsFiltersInput!
 } 
 
 type Query {
