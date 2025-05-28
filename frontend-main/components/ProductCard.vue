@@ -6,19 +6,25 @@
         </div>
 
         <div class="ProductCard-body">
-            <span class="ProductCard-title">{{ truncateByWords(data.name, 15) }}...</span>
+            <div class="ProductCard-title">{{ truncateByWords(data.name, 15) }}...</div>
 
-            <span class="ProductCard-rating">
+            <div class="ProductCard-rating">
                 <RatingComp :rating="4" />
                 <span>(1562)</span>
-            </span>
+            </div>
 
-            <span class="ProductCard-price">
+            <div class="ProductCard-price">
                 <small>$</small>
                 <span>{{ realPrice }}</span>
-                <span class="last-price">{{ price }}</span>
-                <span class="discount-percent">{{ `-${discount_percent}%` }}</span>
-            </span>
+
+                <span class="last-price">{{ `$${formatUSD(price)}` }}</span>
+            </div>
+
+            <div class="ProductCard-discount">
+                <span>{{ `-${discount_percent}% deal` }}</span>
+                <span>{{ save }}</span>
+            </div>
+
         </div>
     </div>
 </template>
@@ -49,6 +55,8 @@ const discount_percent = computed(() => props.data.discount_percent)
 const discount_value = computed(() => props.data.discount_value)
 
 const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
+
+const save = computed(() => discount.value ? `Save ${formatUSD(price.value - discount_value.value)} USD` : '')
 
 function getImageSrc(item) {
     return item ? useMediaUrl(item) : placeholderImage
@@ -149,12 +157,18 @@ function getImageSrc(item) {
     font-size: var(--text-size-0);
     text-decoration: line-through;
     color: var(--text-b);
-    margin-left: 0.25rem;
-}
-
-.discount-percent {
     margin-left: 0.5rem;
-    color: var(--red-a);
 }
 
+.ProductCard-discount {
+    font-size: var(--text-size-2);
+    color: var(--green-a);
+    margin-top: 0.5rem;
+}
+
+.ProductCard-discount span:nth-child(2) {
+    font-size: var(--text-size-0);
+    color: var(--text-b);
+    margin-left: 0.5rem;
+}
 </style>

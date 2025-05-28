@@ -50,15 +50,16 @@ body {
 
   --orange-a: #ff6900;
 
-  --blue-a:   #1e56d3;  
-  --gray-a:   #2b2f36;   
-  --red-a:    #e03a1d;   
-  --yellow-a: #ffb100;   
-  --yellow-b: #ffd54f;   
-  --green-a:  #2ba24c;  
-  --purple-a: #7c3aed;   
-  --pink-a:   #ec4899;  
-  --black-a:  #1a1a1a;  
+--blue-a:   #3a86ff;
+--gray-a:   #3e3e3e;
+--red-a:    #ff3d00;
+--yellow-a: #ffca28;
+--yellow-b: #ffe082;
+--green-a:  #43a047;
+--purple-a: #b85cff;
+--pink-a:   #ff5e87;
+--black-a:  #1e1e1e;
+  
   
 
   --transition-a: 0.2s ease-in-out;

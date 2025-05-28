@@ -4,7 +4,7 @@
         <div class="filters">
           <label>
             SKU:
-            <input v-model="filters.sku" type="text" placeholder="Ej: ABC123" />
+            <input v-model="filters.sku" type="text" placeholder="e.g. ABC123" />
           </label>
   
           <label>
@@ -88,7 +88,7 @@
     brand: z.string().optional(),
     model: z.string().optional(),
     condition: z.enum(['new', 'used', 'refurbished']).optional(),
-    discountPercentMin: z.coerce.number().optional()
+    discountPercentMin: z.coerce.number().min(0).max(100).optional()
   });
   
   onMounted(() => {
@@ -141,33 +141,83 @@
     border-left: none;
     position: sticky;
     min-height: 100vh;
+    box-sizing: border-box;
+    padding: 1rem;
     height: 100%;
   }
   
   .filters {
+    width: 100%;
+    max-width: 420px;
     display: grid;
-    gap: 1rem;
-    max-width: 400px;
+    gap: 1.5rem;
   }
   
   label {
     display: flex;
     flex-direction: column;
-    font-weight: bold;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+  }
+  
+  input,
+  select {
+    margin-top: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: #f9fafb;
+  }
+  
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    background: #fff;
   }
   
   .actions {
     display: flex;
     gap: 1rem;
+    justify-content: flex-end;
   }
   
   button {
-    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #2563eb;
+  }
+  
+  button[type="button"] {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+  
+  button[type="button"]:hover {
+    background-color: #d1d5db;
   }
   
   .error {
-    color: red;
+    color: #dc2626;
     font-size: 0.9rem;
+    font-weight: 500;
+    background-color: #fee2e2;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
   }
   </style>
+  
   
