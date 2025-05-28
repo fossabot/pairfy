@@ -1,6 +1,9 @@
 <template>
   <div class="ProductGrid">
     <div class="ProductGrid-body">
+      <div class="title">
+        Results for "{{ prompt }}" (3411) 
+      </div>
       <div class="ProductGrid-grid">
         <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
           <ProductCard :data="item" />
@@ -18,11 +21,13 @@ const content = ref([])
 
 const search = useSearchStore()
 
+const prompt = computed(() => search.prompt) 
+
 watch(
   () => search.result,
   (result) => {
     content.value = [...result]
-    animateCards() 
+    animateCards()
   },
   { deep: true, immediate: false }
 )
@@ -60,8 +65,14 @@ function animateCards() {
 .ProductGrid-grid {
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   justify-content: center;
+  margin-top: 1rem;
   display: grid;
   gap: 2rem;
+}
+
+.title {
+  font-size: var(--text-size-4);
+  font-weight: 600;
 }
 
 @media (max-width: 480px) {

@@ -10,7 +10,7 @@
             <div class="ProductCard-title">
                 <span>{{ `${data.brand} -` }}</span>
                 <span>{{ `${truncateByWords(data.name, 15)}...` }}</span>
-            </div>
+            </div> 
 
             <div class="ProductCard-rating">
                 <RatingComp :rating="4" />
@@ -117,7 +117,7 @@ function getImageSrc(item) {
 }
 
 .ProductCard-title {
-    height: 4rem;
+    height: 5rem;
     font-weight: 400;
     line-height: 1.5;
     overflow: hidden;
@@ -151,7 +151,7 @@ function getImageSrc(item) {
     display: flex;
     align-items: center;
     font-size: var(--text-size-1);
-    margin-top: 0.25rem;
+    margin-top: 0.5rem;
 }
 
 .ProductCard-rating span {

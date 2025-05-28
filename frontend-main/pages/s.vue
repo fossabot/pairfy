@@ -43,13 +43,15 @@ const loading = ref(true)
 
 const searchProductsError = ref(null)
 
-
 watch(
     () => route.query,
     (query) => {
         if (import.meta.client) {
-            if (query?.prompt) {
-                searchProducts(query?.prompt)
+            let prompt = query?.prompt;
+
+            if (prompt) {
+                searchProducts(prompt)
+                search.setPrompt(prompt)
             }
         }
     }
