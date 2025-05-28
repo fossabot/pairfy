@@ -39,8 +39,8 @@ const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 
 <style lang="css" scoped>
 .HeaderTop {
+    border-bottom: 1px solid var(--border-a);
     background: var(--background-a);
-    max-width: var(--body-a);
     justify-content: center;
     box-sizing: border-box;
     color: var(--text-a);
@@ -53,6 +53,7 @@ const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 
 .HeaderTop-content {
     justify-content: flex-end;
+    max-width: var(--body-a);
     box-sizing: border-box;
     width: inherit;
 }
@@ -61,7 +62,7 @@ const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 .HeaderTop-network {
     font-size: var(--text-size-0);
     margin-left: 2rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .HeaderTop-network svg {
