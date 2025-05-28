@@ -17,7 +17,7 @@ export const searchProducts = async (_: any, args: any, context: any) => {
 
     const params = parsed.data;
 
-    const result = await findProductsByPrompt(params.prompt, params.filters);
+    const result = await findProductsByPrompt(params.prompt, params.vectorized, params.filters);
 
     console.log(result)
 

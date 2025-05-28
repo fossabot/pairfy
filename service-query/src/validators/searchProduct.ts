@@ -61,6 +61,6 @@ export const validateParams = z.object({
     })
     .min(1, "Search text is required")
     .max(300, "Search text too long"),
-
+  vectorized: z.boolean(),
   filters: ProductSearchFiltersSchema.optional().default({})
 });

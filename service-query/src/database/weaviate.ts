@@ -52,6 +52,7 @@ interface ProductSearchFilters {
 
 export async function findProductsByPrompt(
   prompt: string,
+  vectorized: boolean,
   filters: ProductSearchFilters = {}
 ): Promise<any[]> {
   const operands: any[] = [];
@@ -60,92 +61,61 @@ export async function findProductsByPrompt(
     operands.push({ path: ["sku"], operator: "Equal", valueText: filters.sku });
   }
   if (filters.priceMin !== undefined) {
-    operands.push({
-      path: ["price"],
-      operator: "GreaterThanEqual",
-      valueInt: filters.priceMin,
-    });
+    operands.push({ path: ["price"], operator: "GreaterThanEqual", valueInt: filters.priceMin });
   }
   if (filters.priceMax !== undefined) {
-    operands.push({
-      path: ["price"],
-      operator: "LessThanEqual",
-      valueInt: filters.priceMax,
-    });
+    operands.push({ path: ["price"], operator: "LessThanEqual", valueInt: filters.priceMax });
   }
   if (filters.category) {
-    operands.push({
-      path: ["category"],
-      operator: "Equal",
-      valueText: filters.category,
-    });
+    operands.push({ path: ["category"], operator: "Equal", valueText: filters.category });
   }
   if (filters.brand) {
-    operands.push({
-      path: ["brand"],
-      operator: "Equal",
-      valueText: filters.brand,
-    });
+    operands.push({ path: ["brand"], operator: "Equal", valueText: filters.brand });
   }
   if (filters.model) {
-    operands.push({
-      path: ["model"],
-      operator: "Equal",
-      valueText: filters.model,
-    });
+    operands.push({ path: ["model"], operator: "Equal", valueText: filters.model });
   }
   if (filters.condition) {
-    operands.push({
-      path: ["condition_"],
-      operator: "Equal",
-      valueText: filters.condition,
-    });
+    operands.push({ path: ["condition_"], operator: "Equal", valueText: filters.condition });
   }
   if (filters.discount !== undefined) {
-    operands.push({
-      path: ["discount"],
-      operator: "Equal",
-      valueBoolean: filters.discount,
-    });
+    operands.push({ path: ["discount"], operator: "Equal", valueBoolean: filters.discount });
   }
   if (filters.discountPercentMin !== undefined) {
-    operands.push({
-      path: ["discount_percent"],
-      operator: "GreaterThanEqual",
-      valueInt: filters.discountPercentMin,
-    });
+    operands.push({ path: ["discount_percent"], operator: "GreaterThanEqual", valueInt: filters.discountPercentMin });
   }
 
   if (!prompt.trim()) return [];
 
   try {
-    const { data } = await axios.post<{ embedding: number[] }>(
-      `http://${EMBEDDING_HOST}`,
-      { model: "nomic-embed-text", prompt }
-    );
-
-    const vector = data.embedding;
-
-    if (!Array.isArray(vector) || vector.length === 0) return [];
-
-    console.log(operands);
-    
     const query = weaviateClient.graphql
-    .get()
-    .withClassName("ProductV1")
-    .withFields(FIELDS)
-    .withNearVector({ vector, certainty: 0.7 })
-    .withLimit(20);
+      .get()
+      .withClassName("ProductV1")
+      .withFields(FIELDS)
+      .withLimit(20);
 
     if (operands.length > 0) {
-      query.withWhere({
-        operator: "And",
-        operands,
+      query.withWhere({ operator: "And", operands });
+    }
+
+    if (vectorized) {
+      const { data } = await axios.post<{ embedding: number[] }>(
+        `http://${EMBEDDING_HOST}`,
+        { model: "nomic-embed-text", prompt }
+      );
+
+      const vector = data.embedding;
+      if (!Array.isArray(vector) || vector.length === 0) return [];
+
+      query.withNearVector({ vector, certainty: 0.7 });
+    } else {
+      query.withBm25({
+        query: prompt,
+        properties: ["name", "sku", "brand", "category", "model"],
       });
     }
-    
-    const result = await query.do();
 
+    const result = await query.do();
     const products = result.data?.Get?.ProductV1 || [];
 
     return products.map(({ _additional, id_, ...rest }: any) => ({
