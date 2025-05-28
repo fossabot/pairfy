@@ -142,7 +142,6 @@ input SearchProductsFiltersInput {
   brand: String
   model: String
   condition: Condition
-  discount: Boolean
   discountPercentMin: Int
 }
 

@@ -42,8 +42,6 @@ export const ProductSearchFiltersSchema = z
 
     condition: ConditionEnum.optional(),
 
-    discount: z.boolean().optional(),
-
     discountPercentMin: z
       .number()
       .min(0, "Minimum discount must be at least 0%")

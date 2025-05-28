@@ -1,7 +1,7 @@
 <template>
     <div class="ProductCard" :style="{ animationDelay: `${index * 100}ms` }" @click="onSelect(data.id)">
         <div class="ProductCard-image">
-            <LoadingComp v-if="loading" :size="32" :borderWidth="3"/>
+            <LoadingComp v-if="loading" :size="32" :borderWidth="3" />
             <img v-show="!loading" :src="getImageSrc(data.thumbnail_url)" :alt="data.name" @load="loading = false" />
         </div>
 
@@ -15,7 +15,9 @@
 
             <span class="ProductCard-price">
                 <small>$</small>
-                <span>{{ realPrice}}</span>
+                <span>{{ realPrice }}</span>
+                <span class="last-price">{{ price }}</span>
+                <span class="discount-percent">{{ `-${discount_percent}%` }}</span>
             </span>
         </div>
     </div>
@@ -49,7 +51,7 @@ const discount_value = computed(() => props.data.discount_value)
 const realPrice = computed(() => formatUSD(discount.value ? discount_value.value : price.value))
 
 function getImageSrc(item) {
-  return item ? useMediaUrl(item) : placeholderImage
+    return item ? useMediaUrl(item) : placeholderImage
 }
 </script>
 
@@ -139,7 +141,20 @@ function getImageSrc(item) {
     font-size: var(--text-size-0);
     color: var(--text-b);
     margin-left: 0.25rem;
-    line-height: normal; 
+    line-height: normal;
     font-weight: 400;
 }
+
+.last-price {
+    font-size: var(--text-size-0);
+    text-decoration: line-through;
+    color: var(--text-b);
+    margin-left: 0.25rem;
+}
+
+.discount-percent {
+    margin-left: 0.5rem;
+    color: var(--red-a);
+}
+
 </style>

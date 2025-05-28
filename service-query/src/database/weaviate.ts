@@ -46,7 +46,6 @@ interface ProductSearchFilters {
   brand?: string;
   model?: string;
   condition?: Condition;
-  discount?: boolean;
   discountPercentMin?: number;
 }
 
@@ -77,9 +76,6 @@ export async function findProductsByPrompt(
   }
   if (filters.condition) {
     operands.push({ path: ["condition_"], operator: "Equal", valueText: filters.condition });
-  }
-  if (filters.discount !== undefined) {
-    operands.push({ path: ["discount"], operator: "Equal", valueBoolean: filters.discount });
   }
   if (filters.discountPercentMin !== undefined) {
     operands.push({ path: ["discount_percent"], operator: "GreaterThanEqual", valueInt: filters.discountPercentMin });

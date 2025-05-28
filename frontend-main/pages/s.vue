@@ -69,6 +69,30 @@ async function searchProducts(prompt) {
             filters["priceMin"] = Number(route.query?.priceMin)
         }
 
+        if (route.query?.priceMax) {
+            filters["priceMax"] = Number(route.query?.priceMax)
+        }
+
+        if (route.query?.category) {
+            filters["category"] = route.query?.category
+        }
+
+        if (route.query?.brand) {
+            filters["brand"] = route.query?.brand
+        }
+
+        if (route.query?.model) {
+            filters["model"] = route.query?.model
+        }
+
+        if (route.query?.condition) {
+            filters["condition"] = route.query?.condition
+        }
+
+        if (route.query?.discountPercentMin) {
+            filters["discountPercentMin"] = Number(route.query?.discountPercentMin)
+        }
+
         console.log(filters, "filters")
 
         const { data } = await $apollo.query({
