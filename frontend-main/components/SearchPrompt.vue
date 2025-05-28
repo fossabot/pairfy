@@ -32,9 +32,11 @@ function submitPrompt() {
     isSubmitting.value = true
 
     router.push({
+        name: 's',
         query: {
             ...router.currentRoute.value.query,
-            prompt: trimmed
+            prompt: trimmed,
+            vectorized: true
         }
     })
 

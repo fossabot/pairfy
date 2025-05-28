@@ -27,7 +27,6 @@ const SEARCH_PRODUCTS_QUERY = gql`
         discount
         discount_value
         discount_percent
-        created_at
     }
   }
 `;
@@ -47,12 +46,13 @@ const searchProductsError = ref(null)
 
 watch(
     () => route.query.prompt,
-    (prompt) =>
-       {
-        if(import.meta.client){
-            searchProducts(prompt)
+    (prompt) => {
+        if (import.meta.client) {
+            if (prompt) {
+                searchProducts(prompt)
+            }
         }
-       }
+    }
     ,
     { immediate: true }
 )
@@ -63,8 +63,9 @@ async function searchProducts(prompt) {
             query: SEARCH_PRODUCTS_QUERY,
             variables: {
                 searchProductsVariable: {
-                    prompt
-                    //vectorial: route.query?.vectorial || false
+                    prompt,
+                    vectorized: route.query?.vectorized === 'true' || false,
+                    filters: {}
                 }
             },
             fetchPolicy: 'no-cache'

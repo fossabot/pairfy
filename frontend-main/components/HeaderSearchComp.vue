@@ -24,6 +24,7 @@
 <script setup lang="ts">
 
 const route = useRoute()
+const router = useRouter()
 
 const isContrast = computed(() => ['p-id', 's'].includes(route.name as string))
 
@@ -55,6 +56,18 @@ const onInput = () => {
 const emitSearch = () => {
     showSuggestions.value = false
     emit('search', searchQuery.value)
+
+    const trimmed = searchQuery.value.trim()
+    if (!trimmed) return
+
+    router.push({
+        name: 's',
+        query: {
+            ...router.currentRoute.value.query,
+            prompt: trimmed,
+            vectorized: false
+        }
+    })
 }
 
 const selectSuggestion = (item: ProductSuggestion) => {

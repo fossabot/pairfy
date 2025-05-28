@@ -99,6 +99,8 @@ export async function findProductsByPrompt(
     }
 
     if (vectorized) {
+      console.log("VECTORIZED SEARCH", prompt)
+
       const { data } = await axios.post<{ embedding: number[] }>(
         `http://${EMBEDDING_HOST}`,
         { model: "nomic-embed-text", prompt }
@@ -109,6 +111,8 @@ export async function findProductsByPrompt(
 
       query.withNearVector({ vector, certainty: 0.7 });
     } else {
+      console.log("CLASSIC SEARCH", prompt)
+
       query.withBm25({
         query: prompt,
         properties: ["name", "sku", "brand", "category", "model"],

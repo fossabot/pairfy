@@ -19,7 +19,7 @@ export const searchProducts = async (_: any, args: any, context: any) => {
 
     const result = await findProductsByPrompt(params.prompt, params.vectorized, params.filters);
 
-    console.log(result)
+    console.log(result.length)
 
     return result;
   } catch (error: any) {

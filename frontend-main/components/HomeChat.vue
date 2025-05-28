@@ -16,6 +16,9 @@
 </template>
 
 <script setup>
+
+const router = useRouter()
+
 const prompt = ref('')
 const isSubmitting = ref(false)
 const placeholderVisible = ref(true)
@@ -66,6 +69,14 @@ function submitPrompt() {
     if (!trimmed) return
 
     isSubmitting.value = true
+
+    router.push({
+        name: 's',
+        query: {
+            prompt: trimmed,
+            vectorized: true
+        }
+    })
 
     setTimeout(() => {
         prompt.value = ''
