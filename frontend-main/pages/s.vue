@@ -45,11 +45,11 @@ const searchProductsError = ref(null)
 
 
 watch(
-    () => route.query.prompt,
-    (prompt) => {
+    () => route.query,
+    (query) => {
         if (import.meta.client) {
-            if (prompt) {
-                searchProducts(prompt)
+            if (query?.prompt) {
+                searchProducts(query?.prompt)
             }
         }
     }
@@ -59,13 +59,25 @@ watch(
 
 async function searchProducts(prompt) {
     try {
+        let filters = {}
+
+        if (route.query?.sku) {
+            filters["sku"] = route.query?.sku
+        }
+
+        if (route.query?.priceMin) {
+            filters["priceMin"] = Number(route.query?.priceMin)
+        }
+
+        console.log(filters, "filters")
+
         const { data } = await $apollo.query({
             query: SEARCH_PRODUCTS_QUERY,
             variables: {
                 searchProductsVariable: {
                     prompt,
-                    vectorized: route.query?.vectorized === 'true' || false,
-                    filters: {}
+                    vectorized: route.query?.vectorized === 'true',
+                    filters
                 }
             },
             fetchPolicy: 'no-cache'
