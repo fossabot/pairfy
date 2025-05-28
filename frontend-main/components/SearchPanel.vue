@@ -197,7 +197,6 @@ input:focus::placeholder {
   color: transparent;
 }
 
-
 select:invalid {
   color: var(--text-b);
 }
@@ -231,12 +230,12 @@ button:hover {
 }
 
 button[type="button"] {
-  background-color: #e5e7eb;
-  color: #374151;
+  background: var(--background-b);
+  color: var(--text-a);
 }
 
 button[type="button"]:hover {
-  background-color: #d1d5db;
+  background: var(--background-b);
 }
 
 .error {
