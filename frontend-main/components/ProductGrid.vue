@@ -2,8 +2,13 @@
   <div class="ProductGrid">
     <div class="ProductGrid-body">
 
-      <div class="title">
+      <div class="title flex">
         Results for "{{ prompt }}" <span>({{ count }})</span>
+
+        <button class="clear-filters flex" v-if="search.filters" @click="search.clearFilters()">
+          <span>Filters</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
       </div>
 
       <div class="ProductGrid-grid">
@@ -82,9 +87,22 @@ function animateCards() {
 }
 
 .title span {
+  margin-left: 0.25rem;
   font-weight: 400;
 }
 
+.clear-filters {
+  background: var(--background-b);
+  margin-left: 1rem;
+  cursor: pointer;
+  border: none;
+  height: 2rem;
+}
+
+.clear-filters svg{
+  margin-left: 0.25rem;
+  color: var(--text-b);
+}
 @media (max-width: 480px) {
   .ProductGrid-body {
     padding: 0 0.5rem;

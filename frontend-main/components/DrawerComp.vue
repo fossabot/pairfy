@@ -1,18 +1,22 @@
 <template>
-  <div v-if="modelValue" class="wrapper" @click="close">
-    <div v-if="overlay" class="overlay"></div>
+  <div class="wrapper" v-show="visible" @click="close">
+    <div class="overlay" v-if="overlay"  :class="{ 'overlay-visible': modelValue }"></div>
 
-    <div class="drawer" :class="[
-      position === 'right' ? 'drawer-right' : 'drawer-left',
-      { open: modelValue },
-    ]" :style="{ width, transform: modelValue ? 'translateX(0)' : initialTransform }" @click.stop>
+    <div
+      class="drawer"
+      :class="[
+        position === 'right' ? 'drawer-right' : 'drawer-left',
+        { open: isOpen },
+      ]"
+      :style="{ width }"
+      @click.stop
+    >
       <slot />
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
 
 const props = defineProps({
   modelValue: Boolean,
@@ -37,28 +41,57 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
+const visible = ref(props.modelValue)
+const isOpen = ref(false)
+
+watch(() => props.modelValue, async (val) => {
+  if (val) {
+    visible.value = true
+    await nextTick()
+   
+    requestAnimationFrame(() => {
+      isOpen.value = true
+    })
+  } else {
+    isOpen.value = false
+    setTimeout(() => {
+      visible.value = false
+    }, 300)
+  }
+})
+
 function close() {
   if (!props.persistent) {
     emit('update:modelValue', false)
   }
 }
 
-const initialTransform = computed(() =>
-  props.position === 'right' ? 'translateX(100%)' : 'translateX(-100%)'
-)
+function onKeyDown(e) {
+  if (e.key === 'Escape' && !props.persistent) {
+    close()
+  }
+}
+
+onMounted(() => window.addEventListener('keydown', onKeyDown))
+onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown))
 </script>
 
 <style scoped>
 .wrapper {
-  inset: 0;
   position: fixed;
+  inset: 0;
   z-index: 10000;
 }
 
 .overlay {
+  position: absolute;
   inset: 0;
   z-index: 0;
-  position: absolute;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s ease;
+}
+
+.overlay-visible {
   background: rgba(0, 0, 0, 0.2);
 }
 
@@ -69,15 +102,21 @@ const initialTransform = computed(() =>
   overflow-y: auto;
   position: absolute;
   box-shadow: var(--shadow-a);
-  transition: var(--transition-a);
   background: var(--background-a);
+  transition: transform 0.3s ease;
 }
 
 .drawer-right {
   right: 0;
+  transform: translateX(100%);
 }
 
 .drawer-left {
   left: 0;
+  transform: translateX(-100%);
+}
+
+.drawer.open {
+  transform: translateX(0);
 }
 </style>

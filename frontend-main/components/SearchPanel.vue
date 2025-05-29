@@ -1,20 +1,24 @@
 <template>
   <div class="SearchPanel">
+    <p class="title">
+      Search Filters 
+    </p>
+
     <form @submit.prevent="applyFilters">
       <div class="filters">
         <label>
           SKU
-          <input v-model="filters.sku" type="text" placeholder="e.g. RZ16-3090" />
+          <input v-model="filters.sku" type="text" placeholder="RZ16-3090" />
         </label>
 
         <label>
           Min price
-          <input v-model.number="filters.priceMin" type="number" min="0" step="any" placeholder="e.g. 100" />
+          <input v-model.number="filters.priceMin" type="number" min="0" step="any" placeholder="100" />
         </label>
 
         <label>
           Max price
-          <input v-model.number="filters.priceMax" type="number" min="0" step="any" placeholder="e.g. 1000" />
+          <input v-model.number="filters.priceMax" type="number" min="0" step="any" placeholder="1000" />
         </label>
 
         <label>
@@ -27,12 +31,12 @@
 
         <label>
           Brand
-          <input v-model="filters.brand" type="text" placeholder="e.g. Samsung" />
+          <input v-model="filters.brand" type="text" placeholder="Samsung" />
         </label>
 
         <label>
           Model
-          <input v-model="filters.model" type="text" placeholder="e.g. Pro 16" />
+          <input v-model="filters.model" type="text" placeholder="Pro 16" />
         </label>
 
         <label>
@@ -64,7 +68,8 @@
 <script setup lang="ts">
 import categoryList from "@/assets/json/categories.json"
 import { z } from 'zod'
-import { useRoute, useRouter } from 'vue-router'
+
+const search = useSearchStore()
 
 const emit = defineEmits<{
   (e: 'onApply'): void
@@ -112,10 +117,15 @@ onMounted(() => {
   const parsed = filterSchema.safeParse(route.query);
   if (parsed.success) {
     filters.value = parsed.data;
+    storeFilterNumber()
   } else {
     console.warn("Invalid parameters in the URL", parsed.error);
   }
 });
+
+function storeFilterNumber(){
+  search.setFilters(Object.keys(filters.value).length)
+}
 
 function applyFilters() {
   errorMessage.value = null;
@@ -136,6 +146,9 @@ function applyFilters() {
   });
 
   router.push({ name: 's', query: { ...route.query, ...query } });
+
+  storeFilterNumber()
+
   emit('onApply');
 }
 
@@ -148,6 +161,9 @@ function resetFilters() {
     }
   });
   router.push({ query: cleanedQuery });
+
+  storeFilterNumber()
+  
   emit('onClear');
 }
 </script>
@@ -160,6 +176,11 @@ function resetFilters() {
   padding: 1.5rem;
   height: 100%;
   width: 100%;
+}
+
+.title{
+  font-size: var(--text-size-3);
+  font-weight: 700;
 }
 
 .filters {
@@ -208,6 +229,7 @@ select option {
 
 input::placeholder {
   font-size: var(--text-size-1);
+  opacity: 0.7;
 }
 
 input:focus::placeholder {
