@@ -1,7 +1,7 @@
 <template>
     <header>
         <HeaderNavComp :items="[
-            { label: 'Ranking', route: '/ranking' },
+            { label: 'Trending', route: '/docs' },
             { label: 'Categories', route: '/categories' },
             { label: 'Docs', route: '/docs' },
             { label: 'Support', route: '/support' },

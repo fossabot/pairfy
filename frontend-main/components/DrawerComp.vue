@@ -68,9 +68,9 @@ const initialTransform = computed(() =>
   height: 100%;
   overflow-y: auto;
   position: absolute;
+  box-shadow: var(--shadow-a);
   transition: var(--transition-a);
   background: var(--background-a);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .drawer-right {

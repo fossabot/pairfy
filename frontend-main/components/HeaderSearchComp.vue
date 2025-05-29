@@ -1,7 +1,7 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Classic search" :class="{ contrast: isContrast }" />
+            type="text" placeholder="Classic search" />
 
         <button class="search-button flex center" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -25,8 +25,6 @@
 
 const route = useRoute()
 const router = useRouter()
-
-const isContrast = computed(() => ['p-id', 's'].includes(route.name as string))
 
 interface ProductSuggestion {
     id: string | number
@@ -87,44 +85,28 @@ const selectSuggestion = (item: ProductSuggestion) => {
 .search-input {
     width: 100%;
     outline: none;
-    color: currentColor;
+    color: var(--text-a);
     padding: 0.75rem 1rem;
     box-sizing: border-box;
-    background: transparent;
     font-size: var(--text-size-1);
     border-radius: var(--radius-f);
     transition: var(--transition-a);
-    border: 2px solid rgba(255, 255, 255, 70%);
+    background: var(--background-b);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
 }
 
 .search-input:focus-within {
-    border: 2px solid rgba(255, 255, 255, 100%);
+    background: var(--background-a);
+    border: 1px solid var(--primary-a);
 }
 
 .search-input:hover {
-    border: 2px solid rgba(255, 255, 255, 100%);
+    border: 1px solid var(--primary-a);
 }
 
 .search-input::placeholder {
     opacity: 0.7;
-}
-
-
-
-
-.search-input.contrast {
-    color: var(--text-a);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: var(--background-b);
-}
-
-.search-input.contrast:focus-within {
-    border: 1px solid var(--primary-a);
-    background: var(--background-a);
-}
-
-.search-input.contrast:hover {
-    border: 1px solid var(--primary-a);
 }
 
 .search-input::placeholder {

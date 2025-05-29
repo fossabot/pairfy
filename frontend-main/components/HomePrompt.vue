@@ -25,9 +25,9 @@ const placeholderVisible = ref(true)
 const animationActive = ref(true)
 
 const suggestions = [
-     'Type your prompt here.',
     "I want to buy some comfortable sneakers for walking long distances, that aren't too expensive.",
-    "I'm looking for a lightweight laptop to work from home, with a good battery life, and that isn't too expensive."
+    "I'm looking for a lightweight laptop to work from home, with a good battery life, and that isn't too expensive.",
+    'Type your prompt here.'
 ]
 
 const typedPlaceholder = ref('')

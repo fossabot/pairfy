@@ -3,12 +3,16 @@
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
       <img class="icon" v-if="!isContrast" src="@/assets/brand/icon-white.svg" alt="" @click="navigateTo('/')">
       <img class="icon" v-if="isContrast" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')">
+      
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
 
-      <HeaderSearchComp />
-      <HeaderConnectComp />
+      <HeaderSearchComp v-if="isContrast" />
+
+      <div style="margin-left: auto;">
+        <HeaderConnectComp />
+      </div>
     </ul>
   </nav>
 </template>
@@ -54,7 +58,7 @@ watch(() => route.path, (newPath) => {
   justify-content: center;
   box-sizing: border-box;
   color: var(--text-w);
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   display: flex;
   height: 4rem;
@@ -91,7 +95,6 @@ watch(() => route.path, (newPath) => {
 .SubMenu.contrast {
   background: var(--background-a);
   box-shadow: var(--shadow-b);
-  position: fixed;
   top: 2rem;
 }
 
