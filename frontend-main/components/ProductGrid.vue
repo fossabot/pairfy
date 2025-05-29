@@ -71,9 +71,9 @@ function animateCards() {
 .ProductGrid-grid {
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   display: grid;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .title {

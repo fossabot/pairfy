@@ -2,7 +2,7 @@
     <div class="HomeSection1">
         <VideoBackground>
             <BannerComp />
-            <HomeChat />
+            <HomePrompt />
         </VideoBackground>
 
     </div>

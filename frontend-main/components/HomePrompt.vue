@@ -42,7 +42,7 @@ function typeText() {
     const currentText = suggestions[index]
     if (charIndex < currentText.length) {
         typedPlaceholder.value += currentText[charIndex++]
-        typingTimer = setTimeout(typeText, 50)
+        typingTimer = setTimeout(typeText, 30)
     } else {
         rotateTimer = setTimeout(() => {
             index = (index + 1) % suggestions.length

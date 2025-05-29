@@ -84,6 +84,7 @@ function getImageSrc(item) {
     justify-content: space-between;
     background: var(--background-a);
     animation: fadeInUp 0.5s forwards;
+    border: 1px solid var(--border-a);
 }
 
 @keyframes fadeInUp {

@@ -207,7 +207,7 @@ select option {
 }
 
 input::placeholder {
-  font-size: var(--text-size-0);
+  font-size: var(--text-size-1);
 }
 
 input:focus::placeholder {
