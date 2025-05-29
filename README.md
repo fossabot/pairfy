@@ -3,6 +3,7 @@
 Pairfy is an e-commerce protocol that uses smart contracts for the process of selling and buying physical products on Cardano using the ADA cryptocurrency.
 
 ![Descripción de la imagen](z/docs/portada.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frey-sudo%2Fpairfy.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Frey-sudo%2Fpairfy?ref=badge_shield)
 
 [Whitepaper V1](z/latex/whitepaper.pdf) 👈
 
@@ -120,6 +121,9 @@ Copyright © 2025
 **Pairfy - Juan José Caballero Rey - Cardano Pioneer 1st Cohort**
 
 ---
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Frey-sudo%2Fpairfy.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Frey-sudo%2Fpairfy?ref=badge_large)
 
 ### 3\. Contact
 
