@@ -254,7 +254,7 @@ onBeforeUnmount(() => {
   width: inherit;
   box-sizing: border-box;
   max-width: var(--body-a);
-  grid-template-columns: 1fr 375px;
+  grid-template-columns: 1fr 350px;
 }
 
 .left-column {
@@ -263,21 +263,20 @@ onBeforeUnmount(() => {
 }
 
 .right-column {
-  width: 375px;
+  width: 350px;
   box-sizing: border-box;
 }
 
 
 .fixed-box {
-  position: fixed;
   top: 10rem;
-  width: inherit;
+  right: 6rem;
   height: 100vh;
-  right: 5rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow: hidden;
+  width: inherit;
   z-index: 11000;
+  position: fixed;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .right-scroll {
