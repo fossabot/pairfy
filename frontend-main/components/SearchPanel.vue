@@ -148,12 +148,9 @@ function resetFilters() {
 
 <style scoped>
 .SearchPanel {
-  border: 1px solid var(--border-a);
-  border-radius: var(--radius-c);
   box-sizing: border-box;
   min-height: 100vh;
   overflow-y: auto;
-  padding: 1rem;
   height: 100%;
   width: 100%;
 }
@@ -167,8 +164,8 @@ function resetFilters() {
 
 label {
   display: flex;
-  font-weight: 600;
-  color: vaR(--text-a);
+  font-weight: 700;
+  color: var(--text-a);
   flex-direction: column;
   font-size: var(--text-size-0);
 }

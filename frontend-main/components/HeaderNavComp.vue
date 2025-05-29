@@ -57,6 +57,7 @@ watch(() => route.path, (newPath) => {
   position: absolute;
   z-index: 10000;
   display: flex;
+  height: 4rem;
   top: 1rem;
 }
 

@@ -51,19 +51,19 @@
               Finish. <span>Choose your network.</span>
             </div>
 
-            <ProductButton @click="openChildDialog">
+            <BuyButton @click="openChildDialog">
               <template #icon>
                 <img class="icon" src="@/assets/icon/cardano.svg" alt="">
               </template>
               Cardano Network
-            </ProductButton>
+            </BuyButton>
 
-            <ProductButton style="margin-top: 1rem;">
+            <BuyButton style="margin-top: 1rem;">
               <template #icon>
                 <img class="icon" src="@/assets/icon/midnight.svg" alt="">
               </template>
               Midnight Network
-            </ProductButton>
+            </BuyButton>
 
             <div class="busy-box" />
 
@@ -250,16 +250,16 @@ onBeforeUnmount(() => {
 }
 
 .container {
-  display: flex;
+  display: grid;
   width: inherit;
-  max-width: var(--body-a);
   box-sizing: border-box;
+  max-width: var(--body-a);
+  grid-template-columns: 1fr 375px;
 }
 
 .left-column {
   width: inherit;
   box-sizing: border-box;
-  max-width: calc(var(--body-a) - 375px);
 }
 
 .right-column {

@@ -492,7 +492,7 @@ const onCreateProduct = async () => {
     border-radius: var(--radius-a);
     box-shadow: var(--shadow-a);
     margin-bottom: 1rem;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
 }
 
 @media (max-width: 768px) {
