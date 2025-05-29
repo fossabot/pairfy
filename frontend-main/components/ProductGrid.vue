@@ -1,9 +1,11 @@
 <template>
   <div class="ProductGrid">
     <div class="ProductGrid-body">
+
       <div class="title">
-        Results for {{ `"${prompt}"` }} <span>({{ count }}) </span>
+        Results for "{{ prompt }}" <span>({{ count }})</span>
       </div>
+
       <div class="ProductGrid-grid">
         <div class="product-card" v-for="(item, index) in content" :key="item.id + '-' + index">
           <ProductCard :data="item" />
@@ -17,11 +19,13 @@
 <script setup>
 import { gsap } from 'gsap'
 
+const route = useRoute()
+
 const content = ref([])
 
 const search = useSearchStore()
 
-const prompt = computed(() => search.prompt || 'keyword')
+const prompt = computed(() => route.query.prompt || 'keyword')
 
 const count = computed(() => search.result.length)
 

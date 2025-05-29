@@ -62,7 +62,7 @@ onMounted(() => {
 })
 
 const messages = {
-  required: '*',
+  required: '•',
   invalid: 'Invalid format. Use only UPPERCASE letters, numbers, and dashes.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }

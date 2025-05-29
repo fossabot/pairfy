@@ -34,7 +34,7 @@ const errorMessage = ref('')
 const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u
 
 const messages = {
-  required: '*',
+  required: '•',
   minLength: `Minimum length is ${props.minLength} characters.`,
   maxLength: `Maximum length is ${props.maxLength} characters.`,
   invalid: 'Only valid characters are allowed: letters, numbers, basic punctuation.',

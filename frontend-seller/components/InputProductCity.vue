@@ -48,7 +48,7 @@ const errorMessage = ref('')
 const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u
 
 const messages = {
-  required: '*',
+  required: '•',
   invalid: 'Only letters, spaces, and symbols like - . , ’ ( ) are allowed.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }

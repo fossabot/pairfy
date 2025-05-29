@@ -50,7 +50,7 @@ const errorMessage = ref('');
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 
 const messages = {
-  required: '*',
+  required: '•',
   invalid: 'Only letters, numbers, dashes, and spaces are allowed.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 };

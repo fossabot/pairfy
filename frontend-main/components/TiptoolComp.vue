@@ -86,14 +86,14 @@ onMounted(() => {
 }
 
 .tooltip {
-  background: #1e293b;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  white-space: nowrap;
-  pointer-events: none;
   opacity: 0;
+  white-space: nowrap;
+  color: var(--text-w);
+  pointer-events: none;
+  background: #1e293b;
+  padding: 0.5rem 0.5rem;
+  font-size: var(--text-size-1);
+  border-radius: var(--radius-b);
   animation: fadeIn 0.2s ease forwards;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }

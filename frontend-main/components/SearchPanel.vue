@@ -19,7 +19,6 @@
 
         <label>
           Category
-
           <select v-model="filters.category">
             <option disabled value="">Select</option>
             <option v-for="item in categories" :key="item.code" :value="item.code">{{ item.label }}</option>
@@ -63,17 +62,22 @@
 </template>
 
 <script setup lang="ts">
-import { z } from 'zod';
 import categoryList from "@/assets/json/categories.json"
+import { z } from 'zod'
+import { useRoute, useRouter } from 'vue-router'
+
+const emit = defineEmits<{
+  (e: 'onApply'): void
+  (e: 'onClear'): void
+}>()
 
 const categories = computed(() =>
-
   Object.values(categoryList).map(category => ({
     label: category.label,
     code: category.code,
   }))
-
 )
+
 type Condition = 'new' | 'used' | 'refurbished';
 
 interface ProductSearchFilters {
@@ -132,6 +136,7 @@ function applyFilters() {
   });
 
   router.push({ name: 's', query: { ...route.query, ...query } });
+  emit('onApply');
 }
 
 function resetFilters() {
@@ -143,6 +148,7 @@ function resetFilters() {
     }
   });
   router.push({ query: cleanedQuery });
+  emit('onClear');
 }
 </script>
 
@@ -151,6 +157,7 @@ function resetFilters() {
   box-sizing: border-box;
   min-height: 100vh;
   overflow-y: auto;
+  padding: 1.5rem;
   height: 100%;
   width: 100%;
 }
@@ -175,7 +182,7 @@ select {
   width: 100%;
   margin-top: 0.5rem;
   box-sizing: border-box;
-  padding: 0.5rem 0.75rem;
+  padding: 0.75rem 0.75rem;
   font-size: var(--text-size-1);
   border: 1px solid var(--border-a);
   border-radius: var(--input-radius);
@@ -213,7 +220,6 @@ select:focus {
   border-color: var(--primary-a);
 }
 
-
 .actions {
   gap: 1rem;
   display: flex;
@@ -222,7 +228,7 @@ select:focus {
 
 button {
   transition: var(--transition-a);
-  border-radius: var(--radius-b);
+  border-radius: var(--radius-f);
   background: var(--primary-a);
   padding: 0.75rem 1rem;
   color: var(--text-w);

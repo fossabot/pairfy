@@ -46,7 +46,7 @@ const errorMessage = ref('')
 const dollarRegex = /^[0-9]+$/
 
 const messages = {
-  required: '*',
+  required: '•',
   invalid: 'Only whole dollar amounts are allowed.',
   maxLength: `Maximum length is ${props.maxLength} digits.`,
   minValue: 'Minimum is $5.',

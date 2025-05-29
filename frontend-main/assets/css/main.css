@@ -62,7 +62,7 @@ body {
 }
 
 :root {
-  --input-radius: var(--radius-a);
+  --input-radius: var(--radius-b);
   --button-radius: var(--radius-c);
 }
 
