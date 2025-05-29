@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
 const router = useRouter()
 
 const videoRef = ref<HTMLVideoElement | null>(null)
@@ -80,7 +79,7 @@ const goToProducts = () => {
     transform: translate(-50%, -50%);
     object-fit: cover;
     position: absolute;
-    filter: brightness(0.6);
+    filter: brightness(0.3);
 }
 
 .overlay-content {

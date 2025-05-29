@@ -118,7 +118,7 @@ function getImageSrc(item) {
 }
 
 .ProductCard-title {
-    height: 5rem;
+    height: 82px;
     font-weight: 400;
     line-height: 1.5;
     overflow: hidden;

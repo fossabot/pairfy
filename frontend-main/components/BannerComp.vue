@@ -64,11 +64,11 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(2px);
     border-radius: var(--radius-d);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 8%);
+    -webkit-backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 5%);
 }
 
 .overlay {
