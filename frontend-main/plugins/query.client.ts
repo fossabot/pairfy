@@ -4,7 +4,7 @@ import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client/core";
 export default defineNuxtPlugin(() => {
   const apolloClient = new ApolloClient({
     link: new HttpLink({
-      uri: "/api/query/getProduct",
+      uri: "/api/query/graphql",
       fetch,
       credentials: "include", 
     }),

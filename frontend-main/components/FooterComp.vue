@@ -5,7 +5,7 @@
 
         <!-- Company -->
         <div class="footer-column">
-          <h2 class="footer-title">Company</h2>
+          <h2 class="footer-title">DAO</h2>
           <ul>
             <li><a href="/about">About Us</a></li>
             <li><a href="/team">Our Team</a></li>
@@ -42,10 +42,8 @@
         <div class="footer-column">
           <h2 class="footer-title">Contact</h2>
           <ul>
-            <li><a href="mailto:support@yourshop.com">support@yourshop.com</a></li>
-            <li>Mon–Fri: 9am–6pm</li>
-            <li>+1 234 567 890</li>
-            <li>Bogotá, Colombia</li>
+            <li><a href="mailto:sudo.delete.evil@gmail.com">sudo.delete.evil@gmail.com</a></li>
+            <li>Naples, Florida</li>
           </ul>
         </div>
 
@@ -79,10 +77,10 @@
 
 <style scoped>
 .footer {
-  background-color: var(--background-b);
+  border-top: 1px solid var(--border-a);
   font-size: var(--text-size-1);
   box-sizing: border-box;
-  color: var(--text-a);
+  color: var(--text-b);
   padding: 4rem 1rem;
   margin-top: 4rem;
   width: 100%;
@@ -109,8 +107,9 @@
 
 .footer-title {
   font-size: var(--text-size-2);
-  font-weight: 700;
+  color: var(--text-a);
   margin-bottom: 1rem;
+  font-weight: 700;
 }
 
 .footer-column ul {
@@ -124,13 +123,13 @@
 }
 
 .footer-column ul li a {
-  color: var(--text-a);
+  color: inherit;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: var(--transition-a);
 }
 
 .footer-column ul li a:hover {
-  color: var(--primary-a);
+  text-decoration: underline;
 }
 
 .social-links li {
@@ -139,14 +138,11 @@
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--border-a);
-  padding-top: 1rem;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  display: flex;
   gap: 1rem;
-  font-size: var(--text-size-1);
 }
 
 @media (max-width: 768px) {

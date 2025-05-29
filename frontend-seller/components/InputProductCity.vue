@@ -48,7 +48,7 @@ const errorMessage = ref('')
 const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u
 
 const messages = {
-  required: 'This field is required.',
+  required: '•',
   invalid: 'Only letters, spaces, and symbols like - . , ’ ( ) are allowed.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 }
@@ -99,17 +99,25 @@ onMounted(() => {
 .p-InputProductCity-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
+  transition: var(--transition-a);
   padding: 0.75rem 1rem;
   outline: none;
-  transition: border-color 0.2s;
 }
 
 .p-InputProductCity-input:focus-within {
   border: 1px solid var(--primary-a, #2563eb);
 }
 
-.p-InputProductCity-input.is-invalid {
-  border-color: var(--border-a);
+input:focus::placeholder {
+  color: transparent;
+}
+
+input:hover {
+  border: 1px solid var(--primary-a);
+}
+
+input:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .title-text {

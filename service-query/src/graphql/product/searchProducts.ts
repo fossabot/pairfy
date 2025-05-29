@@ -1,4 +1,4 @@
-import { ApiGraphQLError, ERROR_CODES, logger } from "@pairfy/common";
+import { ApiGraphQLError, ERROR_CODES } from "@pairfy/common";
 import { validateParams } from "../../validators/searchProduct.js";
 import { findProductsByPrompt } from "../../database/weaviate.js";
 
@@ -17,9 +17,9 @@ export const searchProducts = async (_: any, args: any, context: any) => {
 
     const params = parsed.data;
 
-    const result = await findProductsByPrompt(params.prompt);
+    const result = await findProductsByPrompt(params.prompt, params.vectorized, params.filters);
 
-    console.log(result)
+    console.log(result.length)
 
     return result;
   } catch (error: any) {

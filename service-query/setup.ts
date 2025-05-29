@@ -191,6 +191,9 @@ if (!DATABASE_HOST || !DATABASE_USER || !DATABASE_PASSWORD || !DATABASE_NAME) {
     ////NEW PROPERTIES
 
     { name: "available", dataType: ["int"], indexFilterable: true },
+    { name: "rating", dataType: ["int"], indexFilterable: true },
+    { name: "rating_value", dataType: ["int"], indexFilterable: true },
+    { name: "sold", dataType: ["int"], indexFilterable: true }
   ];
 
   try {

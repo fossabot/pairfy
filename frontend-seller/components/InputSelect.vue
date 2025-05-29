@@ -1,34 +1,17 @@
 <template>
-  <div
-    class="p-InputSelect"
-    ref="dropdownRef"
-    @blur="validate(props.modelValue)"
-    @keydown.enter.prevent="toggleDropdown"
-    @keydown.space.prevent="toggleDropdown"
-    tabindex="0"
-  >
+  <div class="p-InputSelect" ref="dropdownRef" @blur="validate(props.modelValue)"
+    @keydown.enter.prevent="toggleDropdown" @keydown.space.prevent="toggleDropdown" tabindex="0">
     <label :for="props.id" class="title-text">{{ label }}</label>
 
     <!-- Display -->
-    <div
-      class="dropdown-display"
-      :class="{ 'is-invalid': errorMessage }"
-      role="combobox"
-      :aria-expanded="isOpen.toString()"
-      aria-haspopup="listbox"
-      :aria-controls="`${props.id}-listbox`"
-      @click="toggleDropdown"
-    >
+    <div class="dropdown-display" :class="{ 'is-invalid': errorMessage }" role="combobox"
+      :aria-expanded="isOpen.toString()" aria-haspopup="listbox" :aria-controls="`${props.id}-listbox`"
+      @click="toggleDropdown">
       <template v-if="selectedOption">
         <slot name="option" :option="selectedOption">
           <span class="flex items-center gap-2">
-            <img
-              :src="`/flags/${selectedOption.code}.svg`"
-              @error="onFlagError"
-              class="flag-icon"
-              alt=""
-              aria-hidden="true"
-            />
+            <img :src="`/flags/${selectedOption.code}.svg`" @error="onFlagError" class="flag-icon" alt=""
+              aria-hidden="true" />
             {{ selectedOption.label }}
           </span>
         </slot>
@@ -37,48 +20,22 @@
         <span class="placeholder">{{ placeholder }}</span>
       </template>
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="chevron-down-icon"
-        aria-hidden="true"
-      >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-down-icon"
+        aria-hidden="true">
         <path d="m6 9 6 6 6-6" />
       </svg>
     </div>
 
     <!-- Dropdown -->
     <transition name="fade">
-      <ul
-        v-if="isOpen"
-        :id="`${props.id}-listbox`"
-        class="dropdown-list"
-        role="listbox"
-      >
-        <li
-          v-for="option in options"
-          :key="option.code"
-          class="dropdown-item"
-          @click.stop="select(option)"
-          :id="`option-${option.code}`"
-          role="option"
-        >
+      <ul v-if="isOpen" :id="`${props.id}-listbox`" class="dropdown-list" role="listbox">
+        <li v-for="option in options" :key="option.code" class="dropdown-item" @click.stop="select(option)"
+          :id="`option-${option.code}`" role="option">
           <slot name="option" :option="option">
             <span class="flex items-center gap-2">
-              <img
-                :src="`/flags/${option.code}.svg`"
-                @error="onFlagError"
-                class="flag-icon"
-                alt=""
-                aria-hidden="true"
-              />
+              <img :src="`/flags/${option.code}.svg`" @error="onFlagError" class="flag-icon" alt=""
+                aria-hidden="true" />
               {{ option.label }}
             </span>
           </slot>
@@ -87,11 +44,7 @@
     </transition>
 
     <!-- Error -->
-    <p
-      class="error-text"
-      :class="{ visible: errorMessage }"
-      :id="`${props.id}-error`"
-    >
+    <p class="error-text" :class="{ visible: errorMessage }" :id="`${props.id}-error`">
       {{ errorMessage || '-' }}
     </p>
   </div>
@@ -136,7 +89,7 @@ function select(option) {
 
 function validate(value) {
   if (props.required && !value) {
-    errorMessage.value = 'This field is required.'
+    errorMessage.value = '•'
     emit('valid', { valid: false, value: null })
     return false
   }
@@ -172,7 +125,7 @@ watch(
   () => props.invalid,
   (val) => {
     if (val) {
-      errorMessage.value = 'This field is required.'
+      errorMessage.value = '•'
     } else if (!val && !props.required) {
       errorMessage.value = ''
     }
@@ -202,15 +155,23 @@ watch(
   justify-content: space-between;
 }
 
-.dropdown-display.is-invalid {
-  border-color: var(--border-a);
+.dropdown-display:hover {
+  border-color: var(--primary-a);
+}
+
+.dropdown-display:focus::placeholder {
+  color: transparent;
+}
+
+.dropdown-display:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .chevron-down-icon {
   margin-left: auto;
   flex-shrink: 0;
   pointer-events: none;
-  transition: transform 0.2s ease;
+  transition: var(--transition-a);
 }
 
 .dropdown-display[aria-expanded="true"] .chevron-down-icon {
@@ -231,7 +192,7 @@ watch(
   top: calc(100% - 30px);
   left: 0;
   right: 0;
-  max-height: 200px;
+  max-height: 400px;
   list-style: none;
   overflow-y: auto;
   z-index: 1000;
@@ -273,10 +234,13 @@ watch(
   object-fit: contain;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.2s;
+.fade-enter-active,
+.fade-leave-active {
+  transition: var(--transition-a);
 }
-.fade-enter, .fade-leave-to {
+
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 
@@ -284,6 +248,7 @@ watch(
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

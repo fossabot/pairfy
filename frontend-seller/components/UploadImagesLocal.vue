@@ -104,8 +104,8 @@ const emit = defineEmits<{
   (
     e: 'valid',
     payload:
-      | { valid: true; value: { images: UploadedImg[]; positions: string[] } }
-      | { valid: false; value: null }
+      | { valid: boolean; value: { images: UploadedImg[]; positions: string[] } }
+      | { valid: boolean; value: null }
   ): void;
 }>();
 
@@ -293,7 +293,7 @@ const removeImage = (id: string) => {
 }
 
 .upload-button svg {
-  width: 6rem;
+  width: 5rem;
 }
 
 .upload-button:disabled {

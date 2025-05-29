@@ -1,6 +1,6 @@
 export const useProductDescriptionStream = async (
   prompt: string,
-  onChunk: (text: string) => void
+  onChunk: (paragraph: string) => void
 ) => {
   try {
     const response = await fetch("/api/llm/product-description", {
@@ -17,30 +17,26 @@ export const useProductDescriptionStream = async (
     const reader = response.body.getReader();
     const decoder = new TextDecoder("utf-8");
 
+    let buffer = "";
     let done = false;
 
     while (!done) {
       const { value, done: readerDone } = await reader.read();
-
-      if (value) {
-        const chunk = decoder.decode(value, { stream: true });
-
-        if (!chunk) continue;
-
-
-        if (chunk.startsWith('{')) {
-          try {
-            const parsed = JSON.parse(chunk);
-            if (parsed?.error) continue;
-          } catch {
-       
-          }
-        }
-
-        onChunk(chunk);
-      }
-
       done = readerDone;
+
+      if (!value) continue;
+
+      const chunk = decoder.decode(value, { stream: true });
+      if (!chunk) continue;
+
+      buffer += chunk;
+      buffer = flushParagraphsFromBuffer(buffer, onChunk);
+    }
+
+
+    const final = buffer.replace(/\s*\n\s*/g, " ").trim();
+    if (final) {
+      onChunk(final);
     }
 
   } catch (err) {
@@ -48,3 +44,22 @@ export const useProductDescriptionStream = async (
     throw err;
   }
 };
+
+function flushParagraphsFromBuffer(
+  buffer: string,
+  onChunk: (text: string) => void
+): string {
+  while (buffer.indexOf("\n\n") !== -1) {
+    const index = buffer.indexOf("\n\n");
+    const rawParagraph = buffer.slice(0, index);
+    const paragraph = rawParagraph.replace(/\s*\n\s*/g, " ").trim();
+
+    if (paragraph) {
+      onChunk(paragraph);
+    }
+
+    buffer = buffer.slice(index + 2);
+  }
+
+  return buffer;
+}

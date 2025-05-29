@@ -161,6 +161,10 @@ onMounted(() => {
   outline: none;
 }
 
+.textarea:hover {
+  border: 1px solid var(--primary-a);
+}
+
 .textarea:focus-within {
   border: 1px solid var(--primary-a);
 }

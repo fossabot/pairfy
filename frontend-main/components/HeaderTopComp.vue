@@ -2,7 +2,7 @@
     <div class="HeaderTop flex" v-if="isContrast">
         <div class="HeaderTop-content flex">
 
-            <span class="HeaderTop-price">Discount Liquidity: 1.000.000 ADA</span>
+            <span class="HeaderTop-price">Discount Liquidity: 834.000 ADA</span>
             <span class="HeaderTop-price">Volume 24h: 253.894 ADA</span>
             <span class="HeaderTop-price">ADAUSD 1.5 </span>
             <span class="HeaderTop-price">IUSD 1.0</span>
@@ -32,7 +32,7 @@
 <script setup>
 const route = useRoute()
 
-const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
+const isContrast = computed(() => ['p-id', 's'].includes(route.name))
 
 
 </script>
@@ -43,6 +43,7 @@ const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
     background: var(--background-a);
     justify-content: center;
     box-sizing: border-box;
+    color: var(--text-a);
     position: fixed;
     z-index: 10000;
     height: 2rem;
@@ -61,7 +62,7 @@ const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
 .HeaderTop-network {
     font-size: var(--text-size-0);
     margin-left: 2rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .HeaderTop-network svg {

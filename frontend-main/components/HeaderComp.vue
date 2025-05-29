@@ -1,14 +1,14 @@
 <template>
     <header>
-        <HeaderTopComp />
         <HeaderNavComp :items="[
-            { label: 'Ranking', route: '/ranking' }, 
+            { label: 'Trending', route: '/docs' },
             { label: 'Categories', route: '/categories' },
             { label: 'Docs', route: '/docs' },
-            { label: 'Support', route: '/support' },
-            { label: 'Sell', route: '/sell' },
+            { label: 'Sellers', route: '/sell' },
+            { label: 'Support', route: '/support' }
         ]" />
 
+        <HeaderTopComp />
     </header>
 </template>
 

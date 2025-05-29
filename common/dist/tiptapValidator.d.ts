@@ -10,4 +10,3 @@ export declare const TiptapDocumentSchema: z.ZodObject<{
     type: "doc";
     content: any[];
 }>;
-export declare function sanitizeTiptapContent(node: any): any;

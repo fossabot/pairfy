@@ -16,6 +16,9 @@
 </template>
 
 <script setup>
+
+const router = useRouter()
+
 const prompt = ref('')
 const isSubmitting = ref(false)
 const placeholderVisible = ref(true)
@@ -39,7 +42,7 @@ function typeText() {
     const currentText = suggestions[index]
     if (charIndex < currentText.length) {
         typedPlaceholder.value += currentText[charIndex++]
-        typingTimer = setTimeout(typeText, 50)
+        typingTimer = setTimeout(typeText, 30)
     } else {
         rotateTimer = setTimeout(() => {
             index = (index + 1) % suggestions.length
@@ -66,6 +69,14 @@ function submitPrompt() {
     if (!trimmed) return
 
     isSubmitting.value = true
+
+    router.push({
+        name: 's',
+        query: {
+            prompt: trimmed,
+            vectorized: true
+        }
+    })
 
     setTimeout(() => {
         prompt.value = ''

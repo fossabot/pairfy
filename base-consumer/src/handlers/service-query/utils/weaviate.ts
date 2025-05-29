@@ -17,13 +17,11 @@ export const weaviateClient = weaviate.client({
 
 export async function createProductIndex(product: any): Promise<boolean> {
   try {
-    const productDescription = JSON.stringify(product.description);
-
     const { data } = await axios.post<{ embedding: number[] }>(
       `http://${process.env.HANDLER_EMBEDDINGS_HOST as string}/api/embeddings`,
       {
         model: "nomic-embed-text",
-        prompt: `${product.name} ${product.category} ${productDescription}`,
+        prompt: `${product.name} ${product.category} ${product.description.text}`,
       }
     );
 
@@ -31,6 +29,12 @@ export async function createProductIndex(product: any): Promise<boolean> {
       logger.error("CreateProductIndexErrorEmbedding");
       return false;
     }
+    const defaultValues = {
+      available: 0,
+      rating: 0,
+      rating_value: 0,
+      sold: 0
+    };
 
     const productId = product.id;
 
@@ -44,7 +48,8 @@ export async function createProductIndex(product: any): Promise<boolean> {
         id_: productId,
         discount: Boolean(product.discount),
         moderated: Boolean(product.moderated),
-        description: productDescription,
+        description: product.description.text,
+        ...defaultValues
       })
       .withVector(data.embedding)
       .do();

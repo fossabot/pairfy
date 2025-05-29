@@ -7,7 +7,7 @@
                 <div class="Banner-header">
                     <div class="Banner-header-left">
                         <h1 class="fade-title">
-                            Buy and sell <span class="light"> cooperatively on Cardano</span>
+                            Buy and sell products on Cardano
                         </h1>
                         <ul class="features">
                             <li>✔ Community-governed (DAO)</li>
@@ -64,11 +64,11 @@
     position: relative;
     box-sizing: border-box;
     max-width: var(--body-a);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(2px);
     border-radius: var(--radius-d);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 8%);
+    -webkit-backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 5%);
 }
 
 .overlay {
@@ -88,6 +88,7 @@
 
 .Banner-header-left h1 {
     margin: 0;
+    font-weight: 400;
     margin-bottom: 1rem;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     font-size: var(--text-size-9);
@@ -106,7 +107,7 @@
     list-style: none;
     text-align: left;
     margin: 2rem 0 0;
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 
 }
@@ -117,12 +118,12 @@
 
 .Banner-header-right {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-    font-size: var(--text-size-4);
+    font-size: var(--text-size-3);
     text-align: right;
 }
 
 .Banner-header-right strong {
-    font-size: var(--text-size-4);
+    font-size: inherit;
 }
 
 .Banner-cards {
@@ -137,7 +138,7 @@
 }
 
 .box h2 {
-    font-size: var(--text-size-5);
+    font-size: var(--text-size-4);
     margin-bottom: 0.75rem;
     margin-bottom: 0.5rem;
 }

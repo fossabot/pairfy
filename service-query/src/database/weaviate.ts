@@ -1,93 +1,129 @@
 import weaviate from "weaviate-ts-client";
 import axios from "axios";
 
+const WEAVIATE_HOST = process.env.WEAVIATE_HOST as string;
+const EMBEDDING_HOST = process.env.EMBEDDING_HOST as string;
+
 export const weaviateClient = weaviate.client({
   scheme: "http",
-  host: process.env.WEAVIATE_HOST as string,
+  host: WEAVIATE_HOST,
 });
 
-export async function findProductsByPrompt(name: string): Promise<any[]> {
-  const EMBEDDING_HOST = process.env.EMBEDDING_HOST as string;
+const FIELDS = `
+  id_
+  group_id
+  seller_id
+  thumbnail_url
+  name
+  sku
+  price
+  category
+  brand
+  model
+  bullet_list
+  color
+  condition_
+  country
+  origin
+  city
+  postal
+  discount
+  discount_value
+  discount_percent
+
+  _additional {
+    certainty
+  }
+`;
+
+type Condition = "new" | "used" | "refurbished";
+
+interface ProductSearchFilters {
+  sku?: string;
+  priceMin?: number;
+  priceMax?: number;
+  category?: string;
+  brand?: string;
+  model?: string;
+  condition?: Condition;
+  discountPercentMin?: number;
+}
+
+export async function findProductsByPrompt(
+  prompt: string,
+  vectorized: boolean,
+  filters: ProductSearchFilters = {}
+): Promise<any[]> {
+  const operands: any[] = [];
+
+  if (filters.sku) {
+    operands.push({ path: ["sku"], operator: "Equal", valueText: filters.sku });
+  }
+  if (filters.priceMin !== undefined) {
+    operands.push({ path: ["price"], operator: "GreaterThanEqual", valueInt: filters.priceMin });
+  }
+  if (filters.priceMax !== undefined) {
+    operands.push({ path: ["price"], operator: "LessThanEqual", valueInt: filters.priceMax });
+  }
+  if (filters.category) {
+    operands.push({ path: ["category"], operator: "Equal", valueText: filters.category });
+  }
+  if (filters.brand) {
+    operands.push({ path: ["brand"], operator: "Equal", valueText: filters.brand });
+  }
+  if (filters.model) {
+    operands.push({ path: ["model"], operator: "Equal", valueText: filters.model });
+  }
+  if (filters.condition) {
+    operands.push({ path: ["condition_"], operator: "Equal", valueText: filters.condition });
+  }
+  if (filters.discountPercentMin !== undefined) {
+    operands.push({ path: ["discount_percent"], operator: "GreaterThanEqual", valueInt: filters.discountPercentMin });
+  }
+
+  if (!prompt.trim()) return [];
 
   try {
-    const vectorized = await axios.post<{ embedding: number[] }>(
-      `http://${EMBEDDING_HOST}`,
-      {
-        model: "nomic-embed-text",
-        prompt: name,
-      }
-    );
-
-    const vector = vectorized.data.embedding;
-
-    if (!vector || !Array.isArray(vector)) {
-      return [];
-    }
-
-    const scheme = `
-      id_
-      group_id
-      media_group_id
-      seller_id
-      name
-      sku
-      price
-      description
-      category
-      brand
-      model
-      bullet_list
-      color
-      condition_
-      country
-      origin
-      city
-      postal
-      discount
-      discount_value
-      discount_percent
-      created_at
-      updated_at
-        _additional {
-      certainty
-    }
-    `;
-
-    const response = await weaviateClient.graphql
+    const query = weaviateClient.graphql
       .get()
       .withClassName("ProductV1")
-      .withFields(scheme)
-      .withNearVector({
-        vector,
-        certainty: 0.7,
-      })
-      .withWhere({
-        operator: "And",
-        operands: [
-          //{ path: ["category"], operator: "Equal", valueText: "Electronics" },
-          //{ path: ["discount"], operator: "Equal", valueBoolean: true },
-          { path: ["price"], operator: "GreaterThan", valueInt: 10 },
-        ],
-      })
-      .withLimit(10)
-      .do();
+      .withFields(FIELDS)
+      .withLimit(100);
 
-    const products = response.data?.Get?.ProductV1 || [];
-
-    if (products.length === 0) {
-      return [];
+    if (operands.length > 0) {
+      query.withWhere({ operator: "And", operands });
     }
 
-    const transformedArray = products.map((item: any) => {
-      const { _additional, id_, ...rest } = item;
-      return {
-        ...rest,
-        id: id_,
-      };
-    });
+    if (vectorized) {
+      console.log("VECTORIZED SEARCH", prompt)
 
-    return transformedArray;
+      const { data } = await axios.post<{ embedding: number[] }>(
+        `http://${EMBEDDING_HOST}`,
+        { model: "nomic-embed-text", prompt }
+      );
+
+      const vector = data.embedding;
+      if (!Array.isArray(vector) || vector.length === 0) return [];
+
+      query.withNearVector({ vector, certainty: 0.7 });
+    } else {
+      console.log("CLASSIC SEARCH", prompt)
+
+      query.withBm25({
+        query: prompt,
+        properties: ["name", "sku", "brand", "category", "model"],
+      });
+    }
+
+    const result = await query.do();
+    const products = result.data?.Get?.ProductV1 || [];
+
+    return products.map(({ _additional, id_, ...rest }: any) => ({
+      ...rest,
+      id: id_,
+    }));
   } catch (error: any) {
+    console.error("Error in findProductsByPrompt:", error.message || error);
     return [];
   }
 }

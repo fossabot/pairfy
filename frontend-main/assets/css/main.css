@@ -23,9 +23,9 @@ body {
   --text-size-9: 56px;
   --text-size-10: 64px; /* Hero / page title */
 
-  --body-a: 1650px;
+  --body-a: 1600px;
 
-  --shadow-a: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-a: 0 6px 20px rgba(0, 0, 0, 0.08);
   --shadow-b: 0 1px 2px 0 rgba(0, 0, 0, 0.12);
 
   --background-a: #ffffff;
@@ -33,13 +33,11 @@ body {
   --background-c: #f0f0f2;
 
   --text-a: #1d1d1f;
-  --text-b: #565959; 
+  --text-b: #65686c;
   --text-w: #ffffff;
 
   --border-a: #00000029;
-  --border-b: rgba(0, 0, 0, 50%);
-
-  --primary-a: var(--blue-a);
+  --primary-a: var(--orange-a);
 
   --radius-a: 4px;
   --radius-b: 6px;
@@ -48,24 +46,23 @@ body {
   --radius-e: 28px;
   --radius-f: 999px;
 
-  --blue-a: #225aea;
-  --gray-a: #334155;
-  --red-a: #dc2626;
-  --yellow-a: #fbbc04;
-  --yellow-b: #ffe600;
-  --green-a: #16a34a;
-  --orange-a: #ea580c;
-  --purple-a: #6366f1;
-  --pink-a: #db2777;
-  --black-a: #000000;
-  --gray-a: #161c24;
+  --orange-a: #ff6900;
+
+  --blue-a: #3a86ff;
+  --gray-a: #3e3e3e;
+  --red-a: #ff3d00;
+  --yellow-a: #ffca28;
+  --yellow-b: #ffe082;
+  --green-a: #43a047;
+  --purple-a: #b85cff;
+  --pink-a: #ff5e87;
+  --black-a: #1e1e1e;
 
   --transition-a: 0.2s ease-in-out;
-  
 }
 
 :root {
-  --input-radius: var(--radius-a);
+  --input-radius: var(--radius-b);
   --button-radius: var(--radius-c);
 }
 
@@ -113,8 +110,8 @@ textarea::placeholder {
 
 @keyframes fadeUp {
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

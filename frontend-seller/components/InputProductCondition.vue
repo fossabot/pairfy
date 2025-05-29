@@ -85,7 +85,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
 .switch-button {
   border: 1px solid var(--border-a, #ccc);
-  border-radius: var(--button-radius);
+  border-radius: var(--input-radius); 
   background: var(--background-a);
   font-size: var(--text-size-0);
   padding: 0.75rem 1rem;
@@ -95,14 +95,14 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
   flex: 1;
 }
 
+.switch-button:hover {
+  border: 1px solid var(--primary-a);
+}
+
 .switch-button.active {
   background-color: var(--primary-a);
   border-color: var(--primary-a);
   color: var(--text-w);
-}
-
-.switch-group.is-invalid .switch-button {
-  border-color: var(--border-a);
 }
 
 .title-text {

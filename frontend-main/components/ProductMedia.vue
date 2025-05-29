@@ -1,10 +1,10 @@
 <template>
-  <div class="p-media">
-    <div class="p-media-nav">
+  <div class="ProductMedia">
+    <div class="ProductMedia-nav">
       <div
         v-for="(item, index) in visibleThumbnails"
         :key="'visible-' + index"
-        class="p-media-nav-item flex"
+        class="ProductMedia-nav-item flex"
         :class="{ selected: selectedImageIndex === index && !modalSelectedImage }"
         @click="selectImage(index)"
         @mouseover="selectImage(index)"
@@ -19,7 +19,7 @@
 
       <div
         v-if="hiddenThumbnails.length"
-        class="p-media-nav-item flex more-thumbnail"
+        class="ProductMedia-nav-item flex more-thumbnail"
         @click="openDialog(0)"
         @keydown.enter="openDialog(0)"
         @keydown.space.prevent="openDialog(0)"
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Image -->
-    <div class="p-media-image">
+    <div class="ProductMedia-image">
       <img
         :src="getImageSrc(modalSelectedImage || visibleThumbnails[selectedImageIndex])"
         alt="Imagen principal del producto"
@@ -97,7 +97,7 @@
           <div
             v-for="(item, index) in productImageList"
             :key="'modal-thumb-' + index"
-            class="p-media-nav-item flex"
+            class="ProductMedia-nav-item flex"
             :class="{ selected: modalIndex === index }"
             @click.stop="selectModalImage(index)"
             @keydown.enter.stop="selectModalImage(index)"
@@ -190,19 +190,19 @@ function getImageSrc(item) {
 </script>
 
 <style scoped>
-.p-media {
+.ProductMedia {
   background: var(--background-a);
   border-radius: var(--radius-d);
   position: relative;
   display: flex;
 }
 
-.p-media-nav {
+.ProductMedia-nav {
   display: flex;
   flex-direction: column;
 }
 
-.p-media-nav-item {
+.ProductMedia-nav-item {
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: var(--transition-a);
   border-radius: var(--radius-b);
@@ -216,11 +216,11 @@ function getImageSrc(item) {
   align-items: center;
 }
 
-.p-media-nav-item.selected {
+.ProductMedia-nav-item.selected {
   border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
-.p-media-nav-item img {
+.ProductMedia-nav-item img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -233,16 +233,16 @@ function getImageSrc(item) {
   align-items: center;
 }
 
-.p-media-image {
-  width: 550px;
-  height: 550px;
+.ProductMedia-image {
+  width: 500px;
+  height: 500px;
   display: flex;
   margin: 0 auto;
   position: relative;
   align-items: center;
 }
 
-.p-media-image img {
+.ProductMedia-image img {
   transition: opacity 0.3s ease;
   width: 100%;
 }
@@ -314,7 +314,7 @@ function getImageSrc(item) {
   overflow-x: auto;
 }
 
-.modal-thumbnails .p-media-nav-item {
+.modal-thumbnails .ProductMedia-nav-item {
   height: 4rem;
   width: 4rem;
   margin-bottom: 0;
@@ -322,7 +322,7 @@ function getImageSrc(item) {
 }
 
 @media (max-width: 480px) {
-  .p-media {
+  .ProductMedia {
     display: none;
   }
 }

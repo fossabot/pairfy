@@ -6,8 +6,6 @@
       v-model="internalValue"
       :id="props.id"
       type="text"
-      @input="onInput"
-      @paste="onPaste"
       @drop.prevent
       :placeholder="placeholder"
       class="p-InputProductModel-input"
@@ -52,7 +50,7 @@ const errorMessage = ref('');
 const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 
 const messages = {
-  required: 'This field is required.',
+  required: '•',
   invalid: 'Only letters, numbers, dashes, and spaces are allowed.',
   maxLength: `Maximum length is ${props.maxLength} characters.`,
 };
@@ -105,7 +103,7 @@ watch(internalValue, (newVal) => {
 .p-InputProductModel-input {
   border: 1px solid var(--border-a, #ccc);
   border-radius: var(--input-radius, 6px);
-  transition: border-color 0.2s;
+  transition: var(--transition-a);
   padding: 0.75rem 1rem;
   outline: none;
 }
@@ -114,8 +112,16 @@ watch(internalValue, (newVal) => {
   border: 1px solid var(--primary-a, #2563eb);
 }
 
-.p-InputProductModel-input.is-invalid {
-  border-color: var(--border-a);
+input:focus::placeholder {
+  color: transparent;
+}
+
+input:hover {
+  border: 1px solid var(--primary-a);
+}
+
+input:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .title-text {

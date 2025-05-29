@@ -34,7 +34,7 @@ const errorMessage = ref('')
 const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u
 
 const messages = {
-  required: 'This field is required.',
+  required: '•',
   minLength: `Minimum length is ${props.minLength} characters.`,
   maxLength: `Maximum length is ${props.maxLength} characters.`,
   invalid: 'Only valid characters are allowed: letters, numbers, basic punctuation.',
@@ -94,19 +94,23 @@ function validate() {
 }
 
 .p-InputProductName-input {
-  border: 1px solid var(--border-a, #ccc);
-  border-radius: var(--input-radius, 6px);
-  transition: border-color 0.2s;
+  border: 1px solid var(--border-a);
+  border-radius: var(--input-radius);
+  transition: var(--transition-a);
   padding: 0.75rem 1rem;
   outline: none;
 }
 
-.p-InputProductName-input:focus-within {
-  border-color: var(--primary-a, #2563eb);
+input:focus::placeholder {
+  color: transparent;
 }
 
-.p-InputProductName-input.is-invalid {
-  border-color: var(--border-a)
+input:hover {
+  border: 1px solid var(--primary-a);
+}
+
+input:focus-within {
+  border: 1px solid var(--primary-a);
 }
 
 .title-text {

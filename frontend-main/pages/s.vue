@@ -1,22 +1,169 @@
 <template>
-    <div class="search-page">
-        <SearchFilter />
-        <DividerComp />
-        <ProductGrid />
-        <FooterComp />
-    </div>
+    <ToastComp ref="toastRef" />
+    <SearchSection1 />
+    <FooterComp />
 </template>
 
 <script setup>
+import Lenis from 'lenis'
+import { gql } from 'graphql-tag'
 
-</script>
+let lenis = null
+let frameId;
 
-<style lang="css" scoped>
-.search-page {
-    flex-direction: column;
-    align-items: center;
-    padding-top: 9rem;
-    display: flex;
-    width: 100%;
+const SEARCH_PRODUCTS_QUERY = gql`
+  query SearchProducts($searchProductsVariable: SearchProductsInput!) {
+    searchProducts(searchProductsInput: $searchProductsVariable) {
+        id
+        thumbnail_url
+        name
+        price
+        sku
+        model
+        brand
+        category
+        bullet_list
+        color
+        condition_
+        origin
+        city
+        postal
+        discount
+        discount_value
+        discount_percent
+    }
+  }
+`;
+
+const route = useRoute()
+
+const search = useSearchStore()
+
+const toastRef = ref(null);
+
+const { $apollo } = useNuxtApp()
+
+const loading = ref(true)
+
+const searchProductsError = ref(null)
+
+watch(
+    () => route.query,
+    (query) => {
+        if (import.meta.client) {
+            let prompt = query?.prompt;
+
+            if (prompt) {
+                searchProducts(prompt)
+                search.setPrompt(prompt)
+            }
+        }
+    }
+    ,
+    { immediate: true }
+)
+
+async function searchProducts(prompt) {
+    try {
+        let filters = {}
+
+        if (route.query?.sku) {
+            filters["sku"] = route.query?.sku
+        }
+
+        if (route.query?.priceMin) {
+            filters["priceMin"] = Number(route.query?.priceMin)
+        }
+
+        if (route.query?.priceMax) {
+            filters["priceMax"] = Number(route.query?.priceMax)
+        }
+
+        if (route.query?.category) {
+            filters["category"] = route.query?.category
+        }
+
+        if (route.query?.brand) {
+            filters["brand"] = route.query?.brand
+        }
+
+        if (route.query?.model) {
+            filters["model"] = route.query?.model
+        }
+
+        if (route.query?.condition) {
+            filters["condition"] = route.query?.condition
+        }
+
+        if (route.query?.discountPercentMin) {
+            filters["discountPercentMin"] = Number(route.query?.discountPercentMin)
+        }
+
+        console.log(filters, "filters")
+
+        const { data } = await $apollo.query({
+            query: SEARCH_PRODUCTS_QUERY,
+            variables: {
+                searchProductsVariable: {
+                    prompt,
+                    vectorized: route.query?.vectorized === 'true',
+                    filters
+                }
+            },
+            fetchPolicy: 'no-cache'
+        })
+
+        console.log(data)
+
+        search.setResultData(data.searchProducts);
+    } catch (err) {
+        console.log(err)
+        searchProductsError.value = err
+        showGetProductError()
+    } finally {
+        loading.value = false
+    }
 }
-</style>
+
+function showGetProductError() {
+    if (searchProductsError.value) displayMessage(searchProductsError.value, 'error')
+}
+
+function displayMessage(message, type, duration) {
+    toastRef.value?.showToast(message, type, duration)
+}
+
+function addLenis() {
+  lenis = new Lenis({
+    smooth: true,
+  })
+
+  const raf = (time) => {
+    lenis?.raf(time)
+    frameId = requestAnimationFrame(raf)
+  }
+
+  frameId = requestAnimationFrame(raf)
+}
+
+function removeLenis() {
+  if (frameId) cancelAnimationFrame(frameId)
+  lenis?.destroy()
+}
+
+onMounted(() => {
+    addLenis()
+    showGetProductError()
+})
+
+onBeforeUnmount(() => {
+  removeLenis()
+})
+
+useHead({
+  title: 'Pairfy - Cardano marketplace',
+  meta: [
+    { name: 'description', content: 'Buy and sell products on Cardano blockchain.' }
+  ]
+})
+</script>

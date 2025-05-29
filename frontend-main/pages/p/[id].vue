@@ -1,16 +1,15 @@
 <template>
-  <div class="page-wrapper">
+  <div class="product-page">
     <ToastComp ref="toastRef" />
 
     <DialogComp ref="dialogRef">
       <p>Contenido del diálogo</p>
     </DialogComp>
 
-    <LoadingWall v-if="loading" />
 
     <div class="container" v-if="product">
       <div class="left-column">
-        <ProductImages />
+        <ProductMedia />
         <DividerComp />
         <ProductBullet />
         <DividerComp />
@@ -44,27 +43,27 @@
               Model. <span>Check variations.</span>
             </div>
 
-            <ProductModel v-for="n in 1" :key="n" :id="product.id" :model="product.model" :condition="product.condition_"
-              :color="product.color" :price="product.price" :discount="product.discount"
-              :discount_percent="product.discount_percent" :discount_value="product.discount_value"/>
+            <ProductModel v-for="n in 1" :key="n" :id="product.id" :model="product.model"
+              :condition="product.condition_" :color="product.color" :price="product.price" :discount="product.discount"
+              :discount_percent="product.discount_percent" :discount_value="product.discount_value" />
 
             <div class="subtitle">
               Finish. <span>Choose your network.</span>
             </div>
 
-            <ProductButton @click="openChildDialog">
+            <BuyButton @click="openChildDialog">
               <template #icon>
                 <img class="icon" src="@/assets/icon/cardano.svg" alt="">
               </template>
               Cardano Network
-            </ProductButton>
+            </BuyButton>
 
-            <ProductButton style="margin-top: 1rem;">
+            <BuyButton style="margin-top: 1rem;">
               <template #icon>
                 <img class="icon" src="@/assets/icon/midnight.svg" alt="">
               </template>
               Midnight Network
-            </ProductButton>
+            </BuyButton>
 
             <div class="busy-box" />
 
@@ -224,15 +223,11 @@ function removeScrollListener() {
 
 function showGetProductError() {
   if (getProductError.value) displayMessage(getProductError.value, 'error')
-
 }
 
 
-
-
-fetchProduct()
-
 onMounted(() => {
+  fetchProduct()
   addLenis()
   addScrollListener()
   showGetProductError()
@@ -247,43 +242,41 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.page-wrapper {
+.product-page {
   width: 100%;
   display: flex;
-  padding-top: 12rem;
+  padding-top: 10rem;
   justify-content: center;
 }
 
 .container {
-  display: flex;
+  display: grid;
   width: inherit;
-  max-width: var(--body-a);
   box-sizing: border-box;
+  max-width: var(--body-a);
+  grid-template-columns: 1fr 350px;
 }
 
 .left-column {
   width: inherit;
-  max-width: calc(var(--body-a) - 400px);
   box-sizing: border-box;
 }
 
-
 .right-column {
-  width: 400px;
+  width: 350px;
   box-sizing: border-box;
 }
 
 
 .fixed-box {
-  position: fixed;
   top: 10rem;
-  width: inherit;
+  right: 6rem;
   height: 100vh;
-  right: 5rem;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow: hidden;
+  width: inherit;
   z-index: 11000;
+  position: fixed;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .right-scroll {

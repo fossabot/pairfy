@@ -7,12 +7,15 @@ import {
   findProductById,
   findProductBySku,
   createEvent,
-  sanitizeTiptapContent,
   sanitizeArrayStrings,
 } from "@pairfy/common";
 import { verifyParams } from "../../validators/create-product.js";
 import { checkFileGroup } from "../../utils/media.js";
-import { applyDiscount } from "../../utils/index.js";
+import {
+  applyDiscount,
+  extractTextFromHTML,
+  sanitizeTiptapContent,
+} from "../../utils/index.js";
 
 export const createProduct = async (_: any, args: any, context: any) => {
   let connection = null;
@@ -30,7 +33,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
     args.createProductInput.bullet_list = sanitizeArrayStrings(
       args.createProductInput.bullet_list
     );
-    
+
     args.createProductInput.description = sanitizeTiptapContent(
       args.createProductInput.description
     );
@@ -73,7 +76,7 @@ export const createProduct = async (_: any, args: any, context: any) => {
         agent_id: SELLER.id,
         media_group_id: params.media_group_id,
         file_ids: params.file_ids,
-        product_id: productId
+        product_id: productId,
       },
       process.env.INTERNAL_ENDPOINT_SECRET as string
     );
@@ -96,7 +99,10 @@ export const createProduct = async (_: any, args: any, context: any) => {
       sku: params.sku,
       model: params.model,
       brand: params.brand,
-      description: params.description,
+      description: {
+        html: params.description,
+        text: extractTextFromHTML(params.description),
+      },
       category: params.category,
       bullet_list: params.bullet_list,
       color: params.color,

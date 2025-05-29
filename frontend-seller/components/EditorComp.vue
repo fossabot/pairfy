@@ -1,9 +1,9 @@
 <template>
-  <div class="p-EditorComp" :class="{ invalid: false }" v-if="editor">
+  <div class="EditorComp" :class="{ invalid: false }" v-if="editor">
     <ToastComp ref="toastRef" />
 
-    <div class="p-EditorComp-control">
-      <div class="p-EditorComp-control-group">
+    <div class="EditorComp-control">
+      <div class="EditorComp-control-group">
         <button @click="editor.chain().focus().toggleBold().run()"
           :disabled="!editor.can().chain().focus().toggleBold().run()"
           :class="{ 'is-active': editor.isActive('bold') }">
@@ -37,7 +37,7 @@
         </button>
       </div>
 
-      <div class="p-EditorComp-control-group">
+      <div class="EditorComp-control-group">
         <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
           :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -76,7 +76,7 @@
         </button>
       </div>
 
-      <div class="p-EditorComp-control-group">
+      <div class="EditorComp-control-group">
         <button @click="editor.chain().focus().toggleBulletList().run()"
           :class="{ 'is-active': editor.isActive('bulletList') }">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -106,23 +106,23 @@
         </button>
       </div>
 
-      <div class="p-EditorComp-control-counter">
+      <div class="EditorComp-control-counter">
         <span :style="{ color: productEditorCounter < 1 ? 'red' : 'black' }">{{ productEditorCounter }}</span>
         <span> {{ ` / ${editorLimit}` }}</span>
       </div>
 
     </div>
 
-    <div class="p-EditorComp-content">
+    <div class="EditorComp-content">
       <editor-content :editor="editor" />
 
-      <div class="p-EditorComp-generative">
-        <textarea id="p-EditorComp-generative" v-model="generativeEditor"
+      <div class="EditorComp-generative">
+        <textarea id="EditorComp-generative" v-model="generativeEditor"
           placeholder="Write everything about the product..." rows="4"
           @keydown.enter.exact.prevent="onGenerativeSubmit" />
 
 
-        <div class="p-EditorComp-generative-button" @click="onGenerativeSubmit">
+        <div class="EditorComp-generative-button" @click="onGenerativeSubmit">
           <svg v-if="!isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
             class="lucide lucide-arrow-up-icon lucide-arrow-up">
@@ -130,13 +130,11 @@
             <path d="M12 19V5" />
           </svg>
 
-          <svg v-if="isGenerating" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-circle-pause-icon lucide-circle-pause">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="10" x2="10" y1="15" y2="9" />
-            <line x1="14" x2="14" y1="15" y2="9" />
+          <svg v-if="isGenerating" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16"
+            fill="currentColor" class="size-4">
+            <rect width="10" height="10" x="3" y="3" rx="1.5" />
           </svg>
+
         </div>
       </div>
     </div>
@@ -188,10 +186,10 @@ const ChunkSpan = Node.create({
   atom: false,
   selectable: false,
   addAttributes() {
-    return { class: { default: 'chunk-animate' } }
+    return { class: { default: 'c' } }
   },
   parseHTML() {
-    return [{ tag: 'span.chunk-animate' }]
+    return [{ tag: 'span.c' }]
   },
   renderHTML({ HTMLAttributes }) {
     return ['span', mergeAttributes(HTMLAttributes), 0]
@@ -210,12 +208,13 @@ const setupEditor = async () => {
         TextStyle.configure({ types: [ListItem.name] }),
       ],
       editorProps: { attributes: { class: 'editor-class' } },
-      content: initialContent.value || '',
+      content: initialContent.value?.html || '',
       onUpdate: ({ editor }) => {
         const json = editor.getJSON()
         const text = editor.getText().trim()
+        const html = editor.getHTML()
 
-        emit('valid', { valid: text.length > 0, value: json })
+        emit('valid', { valid: text.length > 0, value: html })
         emit('update:modelValue', json)
       },
     })
@@ -228,7 +227,7 @@ const setupEditor = async () => {
       valid: text.length > 0,
       value: json
     })
-    
+
   })
 }
 
@@ -267,19 +266,22 @@ const onGenerativeSubmit = async () => {
   editor.value.setEditable(false)
 
   try {
-    await useProductDescriptionStream(generativeEditor.value, (chunk) => {
-      const lines = chunk.split('\n')
-      const content = lines.flatMap((line, i) => [
-        { type: 'chunkSpan', content: line ? [{ type: 'text', text: line }] : [] },
-        ...(i < lines.length - 1 ? [{ type: 'hardBreak' }] : []),
-      ])
-      editor.value.chain().focus('end').insertContent(content).run()
+    await useProductDescriptionStream(generativeEditor.value, (paragraph) => {
+      if (!stopGenerative.value) {
+        const content = {
+          type: 'paragraph',
+          content: [
+            {
+              type: 'chunkSpan',
+              content: [{ type: 'text', text: paragraph }],
+            },
+          ],
+        };
 
-      if (stopGenerative.value) {
-        return;
+        editor.value.chain().focus('end').insertContent(content).run();
       }
+    });
 
-    })
   } catch (err) {
     console.error(err)
   }
@@ -309,14 +311,14 @@ onBeforeUnmount(() => {
   color: var(--text-a);
   overflow-y: scroll;
   height: auto;
-  max-height: 90%;
+  max-height: 95%;
   padding: 1rem;
   outline: none;
 
 }
 
 
-::v-deep(.chunk-animate) {
+::v-deep(.c) {
   display: inline-block;
   opacity: 0;
   transform: translateY(6px);
@@ -357,7 +359,7 @@ onBeforeUnmount(() => {
   pointer-events: none;
 }
 
-.p-EditorComp {
+.EditorComp {
   border: 1px solid var(--border-a);
   border-radius: var(--radius-b);
   position: relative;
@@ -366,20 +368,20 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
-.p-EditorComp-content {
-  grid-template-rows: 20rem 10rem;
+.EditorComp-content {
+  grid-template-rows: 30rem 10rem;
   grid-template-columns: 1fr;
   display: grid;
   height: 100%;
 }
 
-.p-EditorComp-generative {
+.EditorComp-generative {
   position: relative;
   display: flex;
   padding: 1rem;
 }
 
-.p-EditorComp-generative textarea {
+.EditorComp-generative textarea {
   transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
   background: linear-gradient(135deg, #eef4ff, #dbeafe);
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
@@ -393,39 +395,42 @@ onBeforeUnmount(() => {
   outline: none;
   padding: 1rem;
   width: 100%;
-
+  overflow: scroll;
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* Internet Explorer 10+ */
 }
 
-.p-EditorComp-generative textarea:focus {
+.EditorComp-generative textarea:focus {
   border-color: var(--primary-a);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
-.p-EditorComp-generative textarea::placeholder {
+.EditorComp-generative textarea::placeholder {
   color: var(--text-b);
 }
 
-.p-EditorComp-generative textarea::-webkit-scrollbar {
-  width: 0.8rem;
+.EditorComp-generative textarea::-webkit-scrollbar {
+  width: 0.6rem;
+  display: none;    
 }
 
-.p-EditorComp-generative textarea::-webkit-scrollbar-track {
+.EditorComp-generative textarea::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.p-EditorComp-generative textarea::-webkit-scrollbar-thumb {
-  border: 2px solid var(--background-b);
+.EditorComp-generative textarea::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.p-EditorComp-generative textarea::-webkit-scrollbar-thumb:hover {
+.EditorComp-generative textarea::-webkit-scrollbar-thumb:hover {
   background: #999;
 }
 
-.p-EditorComp-generative-button {
-  border-radius: var(--radius-c);
+.EditorComp-generative-button {
+  transition: var(--transition-a);
+  border-radius: var(--radius-e);
   background: var(--primary-a);
   box-shadow: var(--shadow-a);
   justify-content: center;
@@ -440,7 +445,11 @@ onBeforeUnmount(() => {
   right: 2rem;
 }
 
-.p-EditorComp-control {
+.EditorComp-generative-button:hover {
+  opacity: 0.8;
+}
+
+.EditorComp-control {
   border-bottom: 1px solid var(--border-a);
   background: var(--background-a);
   align-items: center;
@@ -450,12 +459,12 @@ onBeforeUnmount(() => {
   top: 0;
 }
 
-.p-EditorComp-control-group {
+.EditorComp-control-group {
   display: flex;
   margin-right: 1rem
 }
 
-.p-EditorComp-control button {
+.EditorComp-control button {
   border: 1px solid var(--border-a);
   border-radius: var(--radius-b);
   background: transparent;
@@ -469,16 +478,16 @@ onBeforeUnmount(() => {
   cursor: pointer;
 }
 
-.p-EditorComp-control button svg {
+.EditorComp-control button svg {
   width: var(--text-size-2);
   height: var(--text-size-2);
 }
 
-.p-EditorComp-control button.is-active {
+.EditorComp-control button.is-active {
   border: 1px solid gray;
 }
 
-.p-EditorComp-control-counter {
+.EditorComp-control-counter {
   font-size: var(--text-size-0);
   color: var(--text-b);
 }

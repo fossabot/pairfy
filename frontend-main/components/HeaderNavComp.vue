@@ -1,14 +1,18 @@
 <template>
   <nav class="SubMenu" :class="{ contrast: isContrast }">
     <ul class="SubMenu-body" :class="{ contrast: isContrast }">
-      <img class="icon" v-if="!isContrast" src="https://media.pairfy.io/brand/icon-white.svg" alt="" @click="navigateTo('/')">
-      <img class="icon" v-if="isContrast" src="https://media.pairfy.io/brand/icon.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="!isContrast" src="@/assets/brand/icon-white.svg" alt="" @click="navigateTo('/')">
+      <img class="icon" v-if="isContrast" src="@/assets/brand/icon.svg" alt="" @click="navigateTo('/')">
+      
       <li v-for="item in items" :key="item.label" @click="navigateTo(item.route)" :class="{ contrast: isContrast }">
         {{ item.label }}
       </li>
 
-      <HeaderSearchComp />
-      <HeaderConnectComp />
+      <HeaderSearchComp v-if="isContrast" />
+
+      <div style="margin-left: auto;">
+        <HeaderConnectComp />
+      </div>
     </ul>
   </nav>
 </template>
@@ -18,7 +22,7 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
+const isContrast = computed(() => ['p-id', 's'].includes(route.name as string))
 
 interface SubMenuItem {
   label: string
@@ -46,18 +50,19 @@ watch(() => route.path, (newPath) => {
 
 <style scoped>
 .icon {
-  margin-right: 0.5rem;
   height: 2.5rem;
 }
 
 .SubMenu {
   width: 100%;
   justify-content: center;
+  box-sizing: border-box;
   color: var(--text-w);
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   display: flex;
-  top: 0rem;
+  height: 4rem;
+  top: 1rem;
 }
 
 .SubMenu-body {
@@ -65,10 +70,11 @@ watch(() => route.path, (newPath) => {
   margin: 0;
   display: flex;
   width: inherit;
+  color: inherit;
   font-weight: 500;
   list-style: none;
   align-items: center;
-  padding: 1.25rem 0;
+  padding: 0.75rem 0rem;
   max-width: var(--body-a);
 }
 
@@ -87,14 +93,13 @@ watch(() => route.path, (newPath) => {
 
 
 .SubMenu.contrast {
-  border-bottom: 1px solid var(--border-a);
-  box-shadow: 0 13px 10px 10px white;
   background: var(--background-a);
-  position: fixed;
+  box-shadow: var(--shadow-b);
   top: 2rem;
 }
 
 .SubMenu-body.contrast {
+  padding: 0.75rem 0;
   color: var(--text-a);
 }
 

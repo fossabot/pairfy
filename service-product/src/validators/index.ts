@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { categoryCodes, ISOCountries } from "../utils/index.js";
+import { categoryCodes, extractTextFromHTML, ISOCountries } from "../utils/index.js";
 
 export const productNameRegex = /^[\p{L}\p{N} .,'"\-(/&|＆):+]+$/u;
 export const productPriceRegex = /^[0-9]*$/;
@@ -8,7 +8,7 @@ export const modelRegex = /^[a-zA-Z0-9\- ]*$/;
 export const brandRegex = /^[\p{L}\p{N}\s\-.,&()']+$/u;
 export const cityRegex = /^[\p{L}\p{M}\s\-'.(),]+$/u;
 export const postalRegex = /^[\p{L}\p{N}\s\-]+$/u;
-export const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]{1,240}$/u;
+export const bulletRegex = /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}\n]{1,240}$/u;
 
 export const productNameSchema = z
   .string()
@@ -113,3 +113,15 @@ export const productFileIds = z
   .array(z.string().min(1).max(100))
   .min(1)
   .max(11);
+
+export const tiptapContentSchema = z
+  .string()
+  .trim()
+  .min(1, { message: "Content cannot be empty." })
+  .max(100_000, { message: "Content cannot exceed 100,000 characters." })
+  .regex(/<[^>]+>/, {
+    message: "Content must contain at least one valid HTML tag.",
+  })
+  .refine((val) => extractTextFromHTML(val).length <= 6000, {
+    message: "Plain text content cannot exceed 6,000 characters.",
+  });

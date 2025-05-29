@@ -16,7 +16,7 @@ const product = computed(() => productStore.product)
 
 const editor = ref(null);
 
-const setupEditor = async () => {
+const setupEditor = () => {
     editor.value = new Editor({
         editable: false,
         extensions: [
@@ -28,22 +28,18 @@ const setupEditor = async () => {
                 class: 'editor-class',
             },
         },
-        content: "",
+        content: product.value.description.html || "",
     })
-
-    if (product.value) {
-        editor.value.commands.setContent(product.value.description);
-    }
 }
 
-watch(product, async (value) => {
+watch(product, (value) => {
     if (value) {
         if (editor.value) {
-            editor.value.commands.setContent(value.description); 
+            editor.value.commands.setContent(value.description.html)
         }
     }
 
-}, { immediate: true })
+}, { immediate: true, deep: true })
 
 onMounted(() => {
     setupEditor();
@@ -55,12 +51,12 @@ onBeforeUnmount(() => {
     }
 })
 
-
 </script>
 
 <style lang="css" scoped>
 ::v-deep(.editor-class) {
     line-height: 2rem;
+    color: var(--text-b);
 }
 
 
@@ -69,7 +65,7 @@ onBeforeUnmount(() => {
 /* Small phones (up to 480px) */
 @media (max-width: 480px) {
     ::v-deep(.editor-class) {
-        padding: 0 1rem; 
+        padding: 0 1rem;
     }
 }
 

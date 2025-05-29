@@ -1,9 +1,9 @@
 <template>
     <div class="header-search">
         <input class="search-input" v-model="searchQuery" @input="onInput" @keydown.enter.prevent="emitSearch"
-            type="text" placeholder="Classic search" :class="{ contrast: isContrast }" />
+            type="text" placeholder="Classic search" />
 
-        <button class="search-button" @click="emitSearch">
+        <button class="search-button flex center" @click="emitSearch">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-search-icon lucide-search">
@@ -24,8 +24,7 @@
 <script setup lang="ts">
 
 const route = useRoute()
-
-const isContrast = computed(() =>  ['p-id', 's'].includes(route.name))
+const router = useRouter()
 
 interface ProductSuggestion {
     id: string | number
@@ -55,6 +54,18 @@ const onInput = () => {
 const emitSearch = () => {
     showSuggestions.value = false
     emit('search', searchQuery.value)
+
+    const trimmed = searchQuery.value.trim()
+    if (!trimmed) return
+
+    router.push({
+        name: 's',
+        query: {
+            ...router.currentRoute.value.query,
+            prompt: trimmed,
+            vectorized: false
+        }
+    })
 }
 
 const selectSuggestion = (item: ProductSuggestion) => {
@@ -66,9 +77,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
 
 <style scoped>
 .header-search {
-    width: 100%;
-    max-width: 55%;
-    margin-left: auto;
+    width: 50%;
     margin: 0 auto;
     position: relative;
 }
@@ -76,37 +85,28 @@ const selectSuggestion = (item: ProductSuggestion) => {
 .search-input {
     width: 100%;
     outline: none;
-    color: currentColor;
+    color: var(--text-a);
     padding: 0.75rem 1rem;
     box-sizing: border-box;
-    background: transparent;
     font-size: var(--text-size-1);
     border-radius: var(--radius-f);
     transition: var(--transition-a);
-    border: 2px solid rgba(255, 255, 255, 70%);
+    background: var(--background-b);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+
 }
 
 .search-input:focus-within {
-    border: 2px solid rgba(255, 255, 255, 100%);
+    background: var(--background-a);
+    border: 1px solid var(--primary-a);
 }
 
 .search-input:hover {
-    border: 2px solid rgba(255, 255, 255, 100%);
+    border: 1px solid var(--primary-a);
 }
 
-
-
-
-.search-input.contrast {
-    border: 2px solid rgba(0, 0, 0, 80%);
-}
-
-.search-input.contrast:focus-within {
-    border: 2px solid var(--primary-a);
-}
-
-.search-input.contrast:hover {
-    border: 2px solid var(--primary-a);
+.search-input::placeholder {
+    opacity: 0.7;
 }
 
 .search-input::placeholder {
@@ -127,7 +127,7 @@ const selectSuggestion = (item: ProductSuggestion) => {
     height: inherit;
     padding: 0.5rem;
     display: flex;
-    right: 0.5rem;
+    right: 0.75rem;
     border: none;
     top: 50%;
 }
